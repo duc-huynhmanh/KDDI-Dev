@@ -1,0 +1,102 @@
+<apex:component controller="auMainTopCompCtrl" allowDML="true" >
+  <apex:attribute type="Integer" name="nbLikes" assignTo="{!iCountLikes}" description="Number of Likes"/>
+  <apex:attribute type="Integer" name="nbComments" assignTo="{!iCountComments}" description="Number of Comments"/>
+  <apex:attribute type="Integer" name="typeOfScreen" assignTo="{!iTypeOfScreen}" description="Type of Screen"/>
+
+  <style>
+
+    nav.document-navigation > ul > li.current {
+      background-color: #fdece3;
+    }
+
+  </style>
+
+  <script>
+
+    var $j = jQuery.noConflict();
+
+  </script>
+
+  <apex:outputPanel rendered="{!IsShowAsideSA}">
+
+    <div class="side-menu hide">
+      <nav class="document-navigation">
+        <ul>
+          <li class="nav-messages {!IF(IsSaMessages, 'current', '')}"><a href="/saMessages">通知メッセージ</a></li>
+          <li class="nav-reports {!IF(IsSaReports, 'current', '')}"><a href="/saReport">レポート</a></li>
+          <li class="nav-chat {!IF(IsSaChatter, 'current', '')}"><a href="/saChatter">チャット</a></li>
+          <li class="nav-daily-reports {!IF(IsSaDailyReport, 'current', '')}"><a href="/saDailyReport">日報</a></li>
+          <li class="nav-enquete {!IF(IsSaEnquete, 'current', '')}"><a href="/saHearing">ヒアリング</a></li>
+          <li class="nav-documents {!IF(IsSaDocuments, 'current', '')}"><a href="/saDocuments">資料集</a></li>
+          <li class="nav-ranking {!IF(IsSaRanking, 'current', '')}"><a href="/saRanking">ランキング</a></li>
+          <li class="nav-home"><a href="/saHome">ホーム</a></li>
+        </ul>
+      </nav>
+      <div class="user-info">
+        <!-- #DynamicItem -->
+        <span class="name">{!currentUser.Name}</span>
+        <span class="organization">{!currentUser.UserRole.Name}</span>
+      </div>
+      <div class="btn logout"><a href="{!$Site.Prefix}/secur/logout.jsp" class="ui-color-1">ログアウト</a></div>
+    </div>
+  </apex:outputPanel>
+
+
+  <apex:outputPanel rendered="{!IsShowAsideHonbuDirect}">
+
+    <div class="side-menu hide">
+      <nav class="document-navigation">
+        <ul>
+          <li class="nav-documents {!IF(IsHonbuDirect, 'current', '')}"><a href="/auHonbuDirect">auチャンネル</a></li>
+          <li class="nav-home"><a href="/home">ホーム</a></li>
+        </ul>
+      </nav>
+      <div class="user-info">
+        <!-- #DynamicItem -->
+        <span class="name">{!currentUser.Name}</span>
+        <span class="organization">{!currentUser.UserRole.Name}</span>
+      </div>
+      <div class="btn logout"><a href="{!$Site.Prefix}/secur/logout.jsp" class="ui-color-1">ログアウト</a></div>
+    </div>
+  </apex:outputPanel>
+
+  <apex:outputPanel rendered="{!IsShowAsideToDo}">
+
+    <div class="side-menu hide">
+      <nav class="document-navigation">
+        <ul>
+          <li class="nav-todo {!IF(IsToDo, 'current', '')}"><a href="/saTasks">To Do</a></li>
+          <li class="nav-home"><a href="/home">ホーム</a></li>
+        </ul>
+      </nav>
+      <div class="user-info">
+        <!-- #DynamicItem -->
+        <span class="name">{!currentUser.Name}</span>
+        <span class="organization">{!currentUser.UserRole.Name}</span>
+      </div>
+      <div class="btn logout"><a href="{!$Site.Prefix}/secur/logout.jsp" class="ui-color-1">ログアウト</a></div>
+    </div>
+  </apex:outputPanel>
+
+  <apex:outputPanel rendered="{!IsShowAsideHearing}">
+
+    <div class="side-menu hide">
+      <nav class="document-navigation">
+        <ul>
+          <li class="nav-enquete {!IF(IsSaEnquete, 'current', '')}"><a href="/saHearing">ヒアリング</a></li>
+          <li class="nav-home"><a href="/Home">ホーム</a></li>
+        </ul>
+      </nav>
+      <div class="user-info">
+        <!-- #DynamicItem -->
+        <span class="name">{!currentUser.Name}</span>
+        <span class="organization">{!currentUser.UserRole.Name}</span>
+      </div>
+      <div class="btn logout"><a href="{!$Site.Prefix}/secur/logout.jsp" class="ui-color-1">ログアウト</a></div>
+    </div>
+  </apex:outputPanel>
+
+
+  <div class="protect-screen hide"></div>
+
+</apex:component>

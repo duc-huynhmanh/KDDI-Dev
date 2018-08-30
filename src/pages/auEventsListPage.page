@@ -1,0 +1,1194 @@
+<apex:page cache="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" doctype="html-5.0" controller="auEventsListCtrl">
+
+<html class="no-js" lang="en-GB">
+
+<c:auMainHeaderComp />
+
+<head>
+
+  <apex:stylesheet value="{!URLFOR($Resource.jQueryUI, 'jquery-ui-1.12.1.custom/jquery-ui.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.jQueryTimepicker, 'jquery.timepicker.css')}"/>
+
+  <apex:includescript value="{!URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/external/jquery/jquery.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.datepicker-ja.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryTimepicker,'jquery.timepicker.min.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryMin)}"/>
+
+  <style>
+
+    .col0{
+      width: 55px;
+      overflow-x: hidden;
+    }
+
+    .col1{
+      width: 170px;
+      overflow-x: hidden;
+    }
+    .col3{
+      max-width: 70%;
+      overflow-x: hidden;
+    }
+    .col4{
+      max-width: 400px;
+      overflow-x: hidden;
+    }
+    .col3 p, .col4 p{
+      word-break: break-all;
+      word-wrap: break-word;
+      white-space: normal;
+    }
+
+    .content {
+      padding: 1em;
+    }
+
+    .selectDate {
+      min-width: 9em;
+      margin-left: 1em;
+    }
+
+    .dataTables_scrollBody {
+      max-height: 45rem !IMPORTANT;
+    }
+
+    .event-article__info {
+      font-size: 1.5rem;
+      height: 4rem;
+    }
+    .event-article__info, .event-article__title {
+      font-size: 1.5rem;
+      height: 4rem;
+      padding-right: 2rem;
+    }
+
+    .isfin {
+      width: auto !important;
+      background-color: inherit !important;
+
+    }
+
+    .event-article__info .isfin span {
+      width: auto;
+      background-color: inherit;
+      margin-left: 0.5rem;
+      text-align: left;
+    }
+
+    .event-section__head {
+      font-size: 1.5rem; 
+      height: 3rem;      
+    }
+    .event-icons-desc {
+      font-size: 1.2rem;       
+    }
+
+    .icon--date.is-announcing {
+      background-color: #ed5500;
+    }
+    .icon--date.is-other {
+      background-color: #777;
+    }
+    .event-info__head span {
+      color: #fff;
+    }
+    .u-buttons-container a {
+      width: 12rem;
+    }
+
+    .event-section__head {
+      font-size: 1.5rem;
+      height: 2.7 rem;
+      background-color: #63c1f1;
+    }
+
+    .linkdate {
+      font-size: 1.4rem;
+      margin-top: 1rem;
+    }
+
+    .linkdate-active {
+      cursor: pointer;
+      cursor: hand;
+      text-decoration: underline;
+    }
+
+    .icon--knowledge-letter {
+      height: 2rem;
+      width: 2rem;
+    }
+
+    .close-label {
+      font-size: 1.6rem;
+      line-height: 1.8 !important;
+    }
+
+    .button--update.button--update--space{
+      margin-right: 5rem;
+    }
+
+    .ui-datepicker {
+      z-index: 5 !important;
+    }
+
+    .datepicker {
+      width: 8.5rem;
+    }
+    .timepicker {
+      width: 5rem;
+    }
+    .thspanwithoutarrow {
+      top: auto !important;
+    }
+
+    .attachInput {
+      height: 4rem;
+      width: 4.5rem;
+      position: absolute;
+      right: 6.5rem;
+      top: 4rem;
+      opacity: 0;
+      overflow: hidden;
+   }
+
+    .icon-attach {
+      height: 3rem;
+      width: 3rem;
+      position: absolute;
+      right: 1rem;
+      top: 4.5rem;
+      pointer-events: none;
+    }
+
+    .event-list--attachment {
+      height: 2.5rem;
+      padding-left: 1rem;
+      background-color: #eee;
+      border-bottom: 1px solid #fff;
+      line-height: 2.5;
+      overflow: hidden;
+    }
+
+    .event-list--attachment .button--delete-list {
+      float: right;
+    }
+
+    .event-list--attachment {
+      height: auto;
+      overflow: auto;
+    }
+
+    .isLink {
+      cursor: pointer;
+      cursor: hand;      
+    }
+
+    .linkPutInTop {
+      float: right;
+      margin-right: 1rem
+    }
+
+    .linkstyle {
+      text-decoration: underline;
+    }
+    .linkstyle:hover {
+      color: blue;
+    }
+    .linkstyle a:hover {
+      color: blue;
+    }
+
+    .no-attach {
+      opacity: 0.25;
+    }
+
+    .button--call {
+      width: auto;
+    }
+    ].section--timeline {
+      position: relative;
+    }
+    .pagination{
+      margin-left: 1rem;
+    }
+    .scrollDiv .section-inner:first-child{
+      margin-top: 0;
+    }
+  </style>
+
+  <script>
+
+    var $j = jQuery.noConflict();
+
+    $( function() {
+      $.datepicker.setDefaults($.datepicker.regional['ja']);
+      $(".datepicker").datepicker({ dateFormat: 'yy/mm/dd' });
+      $(".timepicker").timepicker({ timeFormat: 'H:i',
+                                    step: 15 });
+
+      $(".testtouch").bind('touchstart',function(e) { e.target.click(); });
+
+    } );
+
+    function callEventUpdateId(key) {
+        var obj = $j('.EventUpdateIdInput');
+        obj.val(key);
+        refreshEventEdit();
+    }
+
+    function callEventJunctionDeleteId(key) {
+        var obj = $j('.EventJunctionDeleteIdInput');
+        obj.val(key);
+        refreshEventJunctionDeleteEdit();
+    }
+
+    function callShowOldData() {
+        var obj = $j('.OldDataInput');
+        obj.val(1 - obj.val());
+        refreshData();
+    }
+
+    function addDatePickerComponent() {
+      $(".datepicker").datepicker({ dateFormat: 'yy/mm/dd' });
+      $(".timepicker").timepicker({ timeFormat: 'H:i',
+                                    step: 15 });
+    }
+
+    function callAddEvtNewAttachmentId(key) {
+        if (checkFileSize()) {
+          var obj = $j('.EventUpdateIdInput');
+          obj.val(key);
+          addEvtNewAttachment();          
+        }
+    }
+
+    function callEventDeleteAttachment(key) {
+        var obj = $j('.AttachmentIdInput');
+        obj.val(key);
+        jsEventAttachmentDelete();
+    }
+
+    function callEventPutInTopAttachment(key) {
+        var obj = $j('.AttachmentIdInput');
+        obj.val(key);
+        jsEventAttachmentPutInTop();
+    }
+
+    function callDummyMethod() {
+        jsDummyMethod();
+    }
+
+    function checkFileSize() {
+        var goodSize = true;
+
+        $j('input[type=file]').each(function()
+        {
+            if(this.files.length > 0 && typeof this.files[0] !== 'undefined')
+            {
+                var file = this.files[0],
+                    size = typeof ActiveXObject !== 'undefined' ?
+                        getIEFileSize(file)
+                        :
+                        file.fileSize || file.size;
+     
+                goodSize = 65 * 1024 * 1024 > size;
+                if(!goodSize) {
+                    alert('ファイルは大きすぎです。65Moまでのファイルを選択してください。');
+                }
+     
+                return goodSize;
+            }
+        });
+
+        return goodSize;
+    }
+
+    window.onload = function onLoadJS() {
+      // Send an alert if there is an error message (Attachment failed?)
+      var obj = $j('.errorMessageInput');
+      if (obj.val().length > 0) {
+        alert(obj.val());
+        obj.val('');        
+      }
+    }
+
+  </script>
+
+</head>
+
+
+<body class="event" >
+  <!--[if lt IE 7]>
+  <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+  <apex:form >
+
+    <c:auMainTopComp typeOfScreen="{!typeOfScreen}" />
+
+    <apex:outputPanel >
+
+      <apex:inputText styleClass="errorMessageInput" value="{!errorMessage}" style="display: none;" />
+
+      <apex:actionRegion id="area51c" renderRegionOnly="false">
+        <apex:inputText id="attachmentId" styleClass="AttachmentIdInput" value="{!attachmentId}" style="display: none;" />
+        <apex:actionFunction name="jsEventAttachmentDelete" action="{!eventAttachmentDelete}" rerender="editEvent11" />
+        <apex:actionFunction name="jsEventAttachmentPutInTop" action="{!eventAttachmentPutInTop}" rerender="editEvent11" />
+      </apex:actionRegion>
+
+      <apex:actionFunction name="jsDummyMethod" action="{!dummy}" />
+
+      <apex:actionFunction name="addEvtNewAttachment" action="{!addEvtNewAttachment}" />
+
+
+      <apex:actionRegion id="area51a" renderRegionOnly="false">
+      <apex:inputText id="eventUpdateId" styleClass="EventUpdateIdInput" value="{!evtUpdateId}" style="display: none;" />
+      <apex:actionFunction name="refreshEventEdit" action="{!refreshEventEdit}" rerender="editEvent1, editEvent2, editEvent3, editEvent4, editEvent5, editEvent6, editEvent7, editEvent8, editEvent9, editEvent10, editEvent11" oncomplete="addDatePickerComponent();"/>
+      </apex:actionRegion>
+    
+      <apex:actionRegion id="area51b" renderRegionOnly="false">
+      <apex:inputText id="eventJunctionDeleteId" styleClass="EventJunctionDeleteIdInput" value="{!evtJunctionDeleteId}" style="display: none;" />
+      <apex:actionFunction name="refreshEventJunctionDeleteEdit" action="{!refreshEventJunctionDelete}" rerender="editEvent1, editEvent2, editEvent3, editEvent4, editEvent5, editEvent6, editEvent7, editEvent8, editEvent9, editEvent10, editEvent11" oncomplete="addDatePickerComponent();"/>
+      </apex:actionRegion>
+
+      <apex:inputText id="oldData" styleClass="OldDataInput" value="{!isOldData}" style="display: none;" />
+      <apex:actionFunction name="refreshData" action="{!refreshPage}" />
+
+    </apex:outputPanel>
+
+    <div class="container js-get-height" id="container">
+
+      <main class="main main--event clear" id="main" role="main">
+        <article class="content content--event" id="content">
+
+          <header class="content-header search-tools">
+            <div class="content-header__top" style="margin-top: -1.5rem; margin-bottom: -0.5rem;">
+              <div class="mdl-grid" style="height: 4.5em; padding-bottom: 0;">
+                <div class="mdl-cell mdl-cell--2-col">
+                  <apex:outputPanel rendered="{!(!isRestrictedUser && isShopUser)}">
+                    <div class="u-buttons-container search-buttons" style="padding-top: 0.5em">
+                      <a class="js-popup-trigger" data-popup=".popup--event" style="float: left;margin-left: 0;"><i class="icon icon--pen"></i>新規イベント登録</a>
+                    </div>
+                  </apex:outputPanel>
+                </div>
+                <div class="mdl-cell mdl-cell--2-col">
+  
+                  <apex:outputPanel rendered="{!!(isOldData == 0)}">
+                      <a onclick="callShowOldData();" class="linkdate linkdate-active" style="float: left;margin-left: 3rem;">予定</a>
+                      <a class="linkdate" style="float: left;margin-left: 1rem;">実施済</a>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!(isOldData == 0)}">
+                      <a class="linkdate" style="float: left;margin-left: 3rem;">予定</a>
+                      <a class="linkdate linkdate-active" onclick="callShowOldData();" style="float: left;margin-left: 1rem;">実施済</a>
+                  </apex:outputPanel>
+
+                </div>
+
+                <div class="mdl-cell mdl-cell--8-col">
+                  <ul class="event-icons-desc">
+                    <li> <i class="icon icon--date is-kickoff"></i><span>キックオフ会</span> </li>
+                    <li> <i class="icon icon--date is-kai"></i><span>CXチーム会</span> </li>
+                    <li> <i class="icon icon--date is-announcing"></i><span>オーナー向け発表会</span> </li>
+                    <li> <i class="icon icon--date is-other"></i><span>その他</span> </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="mdl-grid" id="dataDisplayArea" style="height: 4.5em; margin-top: 0; padding-top: 0">
+            <apex:actionRegion >
+              <div class="mdl-cell mdl-cell--1-col" style="width: 6.5em;">
+                  <apex:selectList styleclass="search-numbers__select" id="pageSize" value="{!pageSize}" size="1" disabled="{!recordsCount < 5}" style="margin-top: 1rem; height: 2.5em;">
+                    <apex:actionSupport event="onchange" action="{!setSizeSaveCurrentPageSize}"/>
+                    <apex:selectOption itemValue="5" itemLabel="5 件表示"/>
+                    <apex:selectOption itemValue="10" itemLabel="10 件表示"/>
+                    <apex:selectOption itemValue="20" itemLabel="20 件表示"/>
+                    <apex:selectOption itemValue="50" itemLabel="50 件表示"/>
+                  </apex:selectList>
+              </div>
+              <div class="mdl-cell mdl-cell--5-col search-pagination" style="width: calc(100% - 13.5em); margin-left: 1rem;">
+                <apex:outputPanel id="pnlPagination">
+                  <apex:outputPanel rendered="{!!(recOrdscount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1)}">
+                    <div style="height: 53px;" />
+                  </apex:outputPanel>
+                  <apex:outputPanel rendered="{!recOrdscount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1}">
+                    <nav>
+                    <apex:panelGroup rendered="{!pageNum == 1}" style="display: inline-block; width: 27px;" />
+                      <ul class="pagination">
+                        <li>
+                          <apex:panelGroup rendered="{!pageNum > 1}" >
+                            <apex:outputLink value="javascript:void(0)">
+                              <apex:actionSupport event="onclick" action="{!goToPagePrev}" />
+                              <i class="material-icons">navigate_before</i>
+                            </apex:outputLink>
+                          </apex:panelGroup>
+                        </li>
+                        <!-- 1st button -->
+                        <li class="{!IF(pageNum == 1, 'active', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage1}"/>
+                            <apex:outputText value="1" />
+                          </apex:outputLink>
+                        </li>
+                        <!-- 2nd button -->
+                        <li class="{!IF(pageNum == 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage2}"/>
+                            <apex:outputText value="2" />
+                          </apex:outputLink>
+                        </li>
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4), 'hidden', '')}">
+                          <span>…</span>
+                        </li>
+                        <!-- 3rd button -->
+                        <li class="{!IF(pageNum == 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage3}" />
+                            <apex:outputText value="3" />
+                          </apex:outputLink>
+                        </li>
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPagePrev}" />
+                            <apex:outputText value="{!pageNum - 1}" />
+                          </apex:outputLink>
+                        </li>
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr5}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 5}" />
+                          </apex:outputLink>                          
+                        </li>
+                        <!-- 4th button -->
+                        <li class="{!IF(pageNum == 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage4}" />
+                            <apex:outputText value="4" />
+                          </apex:outputLink>
+                        </li>
+                        <li class="active {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <a href="#">{!pageNum}</a>
+                        </li>
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr4}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 4}" />
+                          </apex:outputLink>                          
+                        </li>
+                        <!-- 5th button -->
+                        <li class="{!IF(pageNum == 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage5}" />
+                            <apex:outputText value="5" />
+                          </apex:outputLink>
+                        </li>
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageNext}" />
+                            <apex:outputText value="{!pageNum + 1}" />
+                          </apex:outputLink>
+                        </li>
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr3}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 3}" />
+                          </apex:outputLink>
+                        </li>
+                        <!-- 6th button -->
+                        <li class="{!IF(pageNum == 6, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage6}" />
+                            <apex:outputText value="6" />
+                          </apex:outputLink>
+                        </li>
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage2ndNext}" />
+                            <apex:outputText value="{!pageNum + 2}" />
+                          </apex:outputLink>
+                        </li>
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr2}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 2}" />
+                          </apex:outputLink>
+                        </li>
+                        <!-- 7th button -->
+                        <li class="{!IF(pageNum == 7, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage7}"/>
+                            <apex:outputText value="7" />
+                          </apex:outputLink>                          
+                        </li>
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <span>…</span>
+                        </li>
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 1, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr1}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 1}" />
+                          </apex:outputLink>
+                        </li>
+                        <!-- 8th button -->
+                        <li class="{!IF(pageNum == 8, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 8 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage8}" />
+                            <apex:outputText value="8" />
+                          </apex:outputLink>                          
+                        </li>
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1), 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLast}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1)}" />
+                          </apex:outputLink>
+                        </li>
+                        <li>
+                          <apex:panelGroup rendered="{!hasNext}" >
+                            <apex:outputLink value="javascript:void(0)">
+                              <apex:actionSupport event="onclick" action="{!goToPageNext}" />
+                              <i class="material-icons">navigate_next</i>
+                            </apex:outputLink>
+                          </apex:panelGroup>
+                        </li>
+                      </ul>
+                    </nav>
+                  </apex:outputPanel>
+                </apex:outputPanel>
+              </div>
+              <div class="mdl-cell mdl-cell--4-col search-numbers" style="width: 8em; position: absolute; right: 2.3em;">
+                <apex:outputPanel id="pnlDataCount" style="display: inline-block; margin-top: 1rem; margin-right: 1em;">
+                  <span class="search-numbers__total"><span>{!RecordsCountLabel}</span><small>件</small></span>
+                </apex:outputPanel>
+              </div>
+          </apex:actionRegion>
+          </div>
+            </div>
+          </header>
+
+
+
+          <div class="event-container" style="max-height: calc(100% - 10em); overflow-y: scroll;">
+            <div class="event-article">
+
+            <apex:outputPanel id="lstEvents">
+              <apex:repeat value="{!lsPeriods}" var="priod" >
+
+                <section class="event-section">
+                  <h5 class="event-section__head">{!priod.periodName}</h5>
+
+                  <ul class="event-article__list">
+
+                    <apex:repeat value="{!priod.lsEvents}" var="evt" >
+                      <li class="event-article__item testtouch" onclick="callEventUpdateId('{!evt.Id}');">
+                        <i class="js-slide-info-trigger icon icon--date {!IF(evt.Type__c == 'TeamMeeting', 'is-kai', IF(evt.Type__c == 'Kickoff', 'is-kickoff', IF(evt.Type__c == 'OwnerMeeting', 'is-announcing', 'is-other')))}" data-target=".event-info" style="cursor: pointer; cursor: hand;">{!DAY(evt.EventDate__c)}</i> 
+
+
+                        <i class="js-slide-info-trigger icon icon--datex linkstyle" data-target=".event-info"
+                           style="cursor: pointer; cursor: hand;left: auto; right: 2rem;top: 4.7rem;background-colorx: #eee;font-size: 1.5rem;font-style: normal;">詳細</i> 
+
+                        <apex:outputLabel for="upload--file" style="cursor: pointer; cursor: hand;">
+                        <i class="icon icon--datex"
+                           style="cursor: pointer; cursor: hand;left: auto; right: 6.5rem;background-colorx: #eee;"><img class="icon-attach {!IF(evt.Attachments.Size == 0, 'no-attach', '')}" src="{!URLFOR($Resource.auStyling,'/images/icon-attach.png')}" /></i> 
+                        </apex:outputLabel>
+
+                        <apex:inputFile disabled="{!!evt.UserRecordAccess.HasEditAccess}"
+                                        id="upload--file" 
+                                        styleclass="attachInput" 
+                                        value="{!evtNewAttachment.Body}" 
+                                        filename="{!evtNewAttachment.Name}" 
+                                        filesize="{!evtNewAttachmentSize}" 
+                                        contentType="{!evtNewAttachment.ContentType}" 
+                                        onchange="callAddEvtNewAttachmentId('{!evt.Id}');"
+                                        style="cursor: pointer; cursor: hand;" />
+
+
+                        <div class="event-article__desc">
+                          <p class="event-article__title" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">{!evt.CreatedBy__r.DisplayedUsernameFormula__c} {!IF(evt.Type__c == 'TeamMeeting', '/ テーマ：', '')}{!evt.EventName__c}</p>
+                          <ul class="event-article__info">
+                            <li style="width: 10rem; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                              <span class="date">時間</span>{!evt.TechnicalTimeFormatted__c}</li> <!-- {!evt.EventDateFormatted__c}  -->
+                            <li style="width: 8.3rem; white-space: nowrap; overflow-y: hidden; overflow-x: visible;">
+                              <span class="date">完了</span>
+                              <apex:actionRegion id="area51d" renderRegionOnly="false">
+                                <apex:inputField value="{!evt.IsFinished__c}"
+                                                 rendered="{!evt.UserRecordAccess.HasEditAccess}"
+                                                 style="text-align: left; margin-left: 1rem;">
+                                  <apex:actionSupport event="onchange" action="{!saveFlags}" rerender="lstEvents" >
+                                    <apex:param name="dataId" assignto="{!dataId}" value="{!evt.Id}"/>
+                                  </apex:actionSupport>
+                                </apex:inputField>
+                                <span class="isfin">
+                                  <apex:outputField value="{!evt.IsFinished__c}"
+                                                    rendered="{!!evt.UserRecordAccess.HasEditAccess}"
+                                                    />
+                                </span>
+                              </apex:actionRegion></li>
+
+                            <li style="width: 20rem; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                              <span class="location">場所</span>{!evt.Location__c}
+                            </li>
+                            <li style="width: calc(100% - 51rem); text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                              <span class="attendance">参加者</span>{!evt.Members__c}
+                            </li>
+
+<!--
+                            <li style="width: 5rem; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;" onclick="callEventUpdateId('{!evt.Id}');" >
+                        <i class="js-slide-info-trigger {!IF(evt.Type__c == 'TeamMeeting', 'is-kai', IF(evt.Type__c == 'Kickoff', 'is-kickoff', IF(evt.Type__c == 'OwnerMeeting', 'is-announcing', 'is-other')))}" data-target=".event-info" style="cursor: pointer; cursor: hand;font-style: normal;">詳細</i> 
+                            </li>
+-->
+
+
+                          </ul>
+                        </div>
+                      </li>
+                    </apex:repeat>
+                    
+                  </ul>
+
+                </section>
+
+              </apex:repeat>
+              <div style="height: 2rem;"></div>     
+            </apex:outputPanel>
+            </div>
+
+
+
+
+            <div class="event-info js-slide-width">
+              <div class="event-info__top">
+                <button class="button button--dropdown js-slide-info-close"></button> 
+                <div class="event-info__head clearfix">
+                  <span class="close-label">閉じる</span> 
+                  <div class="event-info__edit">
+                    <apex:outputPanel id="editEvent9">
+                      <apex:commandLink value="更新" 
+                                        rendered="{!evtUpdate.UserRecordAccess.HasEditAccess}" 
+                                        styleClass="button button--update button--update--space"
+                                        action="{!doSaveUpdateEvt}" />
+                      <apex:commandLink value="削除" 
+                                        rendered="{!evtUpdate.UserRecordAccess.HasDeleteAccess}" 
+                                        styleClass="button button--delete" 
+                                        onclick="return confirm('このデータを削除してよろしいですか？');" action="{!doSaveDeleteEvt}" />
+                      </apex:outputPanel>
+                  </div>
+                </div>
+              </div>
+              <div class="event-detail u-flex clearfix">
+                <div class="event-desc is-top">
+                  <div class="event-desc__inner">
+                    <table class="table--event-info">
+
+                      <tr>
+                        <th>タイトル</th>
+                        <td class="u-mt32">
+                          <apex:inputField id="editEvent1" value="{!evtUpdate.EventName__c}" styleclass="is-long"/>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>活動タイプ</th>
+                        <td>
+                          <apex:inputField id="editEvent2" styleclass="is-middle" value="{!evtUpdate.Type__c}" />
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>場所</th>
+                        <td>
+                          <apex:inputField id="editEvent3" styleclass="is-long" value="{!evtUpdate.Location__c}" />
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>日時</th>
+                        <td>
+
+                          <div class="search-filter">
+                            <apex:outputPanel id="editEvent4"> 
+                              <fieldset class="filter-daterange">
+                                <apex:input value="{!evtUpdateDateStr}" styleclass="datepicker is-short" html-placeholder="yyyy/mm/dd" />
+                                <label><i class="material-icons">chevron_right</i></label>
+                                </fieldset>
+                                <fieldset class="filter-daterange" >
+                                <apex:input value="{!evtUpdateTimeStartStr}" styleclass="timepicker is-short" html-placeholder="hh:mm" />
+                              </fieldset>
+                              <span class="arrow arrow--right"></span> 
+                              <fieldset class="filter-daterange">
+                                <apex:input value="{!evtUpdateTimeEndStr}" styleclass="timepicker is-short" html-placeholder="hh:mm" />
+                              </fieldset>
+                              <fieldset class="filter-daterange" style="margin-left: 2rem;height:35px;margin-top:5px;margin-right:0.5rem;" >
+                                  完了
+                              </fieldset>
+                              <fieldset class="filter-daterange">
+                                  <apex:inputField value="{!evtUpdate.IsFinished__c}" styleclass="is-short" />
+                              </fieldset>
+
+                            </apex:outputPanel>
+                          </div>
+
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>備考</th>
+                        <td>
+                          <apex:inputField id="editEvent5" styleclass="is-half" value="{!evtUpdate.Comment__c}" />
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>メンバー</th>
+                        <td>
+                          <apex:inputField id="editEvent6" styleclass="is-long" value="{!evtUpdate.Members__c}" />
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>STPDシート</th>
+                        <td class="last-child">
+                          <apex:outputPanel id="editEvent10">
+                            <apex:outputPanel rendered="{!evtUpdate.UserRecordAccess.HasEditAccess}">
+                              <a class="button button--call js-popup-trigger" data-popup=".popup--theme-list-update"><i class="icon icon--list"></i>STPDシート選択</a> 
+                            </apex:outputPanel>
+                          </apex:outputPanel>
+                          <apex:outputPanel id="editEvent7">
+                            <ul class="theme-list--event">
+                              <apex:repeat value="{!lsSTPDJunctionUpdate}" var="stpdjunc" >
+                                <li>
+                                  <apex:outputLink value="/stpd" styleClass="linkstyle" target="_blank">
+                                    <apex:param name="stpd" value="{!stpdjunc.stpd__c}" />
+                                    <span class="theme-list--event__desc" style="max-width: calc(100% - 16rem);text-decoration: underline;">{!stpdjunc.stpd__r.Thema__c}</span>
+                                  </apex:outputLink>
+                                  <a class="button button--delete-list" onclick="callEventJunctionDeleteId('{!stpdjunc.stpd__c}');">削除<i class="icon icon--close"></i></a> 
+                                  <div class="icon-container">
+                                    <i class="icon icon--knowledge-letter is-s{!IF(stpdjunc.stpd__r.IsCompleteS__c > 0, '', '-off')}"></i>
+                                    <i class="icon icon--knowledge-letter is-t{!IF(stpdjunc.stpd__r.IsCompleteT__c > 0, '', '-off')}"></i>
+                                    <i class="icon icon--knowledge-letter is-p{!IF(stpdjunc.stpd__r.IsCompleteP__c > 0, '', '-off')}"></i>
+                                    <i class="icon icon--knowledge-letter is-d{!IF(stpdjunc.stpd__r.IsCompleteD__c > 0, '', '-off')}"></i>
+                                  </div>
+                                </li>
+                              </apex:repeat>
+                            </ul>
+                          </apex:outputPanel>
+                        </td>
+                      </tr>
+
+                    <tr>
+                      <th>添付</th>
+                      <td>
+                        <apex:outputPanel id="editEvent11">
+                            <apex:repeat value="{!lsEventUpdateAttachment}" var="att">
+                              <ul class="event-list--attachment">
+                                <li>
+                                  <apex:outputLink value="{!URLFOR($Action.Attachment.Download, att.Id)}" target="_blank" styleclass="isLink linkstyle">表示</apex:outputLink>
+
+                                  &nbsp;&nbsp;&nbsp;{!att.Name}
+
+                                  <apex:outputPanel rendered="{!evtUpdate.UserRecordAccess.HasEditAccess}">
+                                    <a class="button button--delete-list linkstyle" onclick="callEventDeleteAttachment('{!att.ID}');">削除<i class="icon icon--close"></i></a> 
+
+                                    <a onclick="callEventPutInTopAttachment('{!att.ID}');" class="isLink linkPutInTop linkstyle">先頭へ</a> 
+                                  </apex:outputPanel>
+
+                                </li>
+                              </ul>
+                            </apex:repeat>
+                        </apex:outputPanel>
+                      </td>
+                    </tr>
+
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </main>
+
+
+      <div class="popup popup--event">
+
+        <div class="popup-inner">
+          <table class="table--event-info">
+            <tr>
+              <th>タイトル</th>
+              <td class="u-mt32">
+                <apex:inputField styleclass="is-long" value="{!evtNew.EventName__c}" />
+              </td>
+            </tr>
+
+            <tr>
+              <th>活動タイプ</th>
+              <td>
+                <apex:inputField styleclass="is-middle" value="{!evtNew.Type__c}" />
+              </td>
+            </tr>
+            
+            <tr>
+              <th>場所</th>
+              <td>
+                <apex:inputField styleclass="is-long" value="{!evtNew.Location__c}" />
+              </td>
+            </tr>
+
+            <tr>
+              <th>日時</th>
+              <td>
+
+                <div class="search-filter">
+                  <fieldset class="filter-daterange">
+                    <apex:input value="{!evtNewDateStr}" styleclass="datepicker is-short" html-placeholder="yyyy/mm/dd" />
+                    <label><i class="material-icons">chevron_right</i></label>
+                  </fieldset>
+                  <fieldset class="filter-daterange">
+                    <apex:input value="{!evtNewTimeStartStr}" styleclass="timepicker is-short" html-placeholder="hh:mm" />
+                  </fieldset>
+                  <span class="arrow arrow--right"></span> 
+                  <fieldset class="filter-daterange">
+                    <apex:input value="{!evtNewTimeEndStr}" styleclass="timepicker is-short" html-placeholder="hh:mm" />
+                  </fieldset>
+                  <fieldset class="filter-daterange" style="margin-left: 2rem;height:35px;margin-top:5px;margin-right:0.5rem;" >
+                      完了
+                  </fieldset>
+                  <fieldset class="filter-daterange">
+                      <apex:inputField value="{!evtNew.IsFinished__c}" styleclass="is-short" />
+                  </fieldset>
+
+
+                </div>
+
+              </td>
+            </tr>
+
+            <tr>
+              <th>備考</th>
+              <td>
+                <apex:inputField styleclass="is-half" value="{!evtNew.Comment__c}" />
+              </td>
+            </tr>
+
+            <tr>
+              <th>メンバー</th>
+              <td>
+                <apex:inputField styleclass="is-long" value="{!evtNew.Members__c}" />
+              </td>
+            </tr>
+
+            <tr>
+              <th>STPDシート</th>
+              <td class="last-child">
+                <a href="" class="button button--call js-popup-trigger" data-popup=".popup--theme-list-new"><i class="icon icon--list"></i>STPDシート選択</a>
+              </td>
+            </tr>
+
+          </table>
+        </div>
+        <div class="popup__button-container u-text-center">
+          <a class="button button--cancel js-popup-close">キャンセル</a>
+          <apex:commandLink value="イベントを登録する" styleClass="button button--post" action="{!doSaveNewEvt}" /> 
+        </div>
+      </div>
+
+
+
+
+
+      <div class="popup popup--theme-list popup--theme-list-new">
+        <div class="popup-inner">
+<!--
+          <header class="content-header search-tools">
+            <div class="content-header__top">
+              <div class="search-filter clearfix">
+                <fieldset class="filter-daterange">
+                  <label>日付</label>
+                  <input type="text" class="ui-datepicker-input"/>
+                  <label>
+                    <i class="material-icons">chevron_right</i>
+                  </label>
+                  <input type="text" class="ui-datepicker-input"/>
+                </fieldset>
+                <fieldset class="filter-category">
+                  <label>カテゴリ</label> 
+                  <select class="search-category__select">
+                    <option>全て</option>
+                  </select>
+                </fieldset>
+                <fieldset class="filter-status">
+                  <label>ステータス</label> 
+                  <select class="search-status__select">
+                    <option>全て</option>
+                  </select>
+                </fieldset>
+                <fieldset class="filter-button"> <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">絞り込む</button> </fieldset>
+              </div>
+            </div>
+            <div class="content-header__bottom">
+              <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--3-col"></div>
+                <div class="mdl-cell mdl-cell--6-col search-pagination">
+                  <nav>
+                    <ul class="pagination">
+                      <li> <a href="#" aria-label="Previous"><i class="material-icons">navigate_before</i></a> </li>
+                      <li><a href="#">1</a></li>
+                      <li><span>…</span></li>
+                      <li class="active"><a href="#">12</a></li>
+                      <li><a href="#">13</a></li>
+                      <li><a href="#">14</a></li>
+                      <li><a href="#">15</a></li>
+                      <li><span>…</span></li>
+                      <li><a href="#">36</a></li>
+                      <li> <a href="#" aria-label="Next"><i class="material-icons">navigate_next</i></a> </li>
+                    </ul>
+                  </nav>
+                </div>
+                <div class="mdl-cell mdl-cell--3-col search-numbers">
+                  <select class="search-numbers__select">
+                    <option>25件表示</option>
+                  </select>
+                  <span class="search-numbers__total"><i>/</i><span>185</span><small>件</small></span> 
+                </div>
+              </div>
+            </div>
+          </header>
+-->
+          <div class="theme-list">
+            <table class="mdl-data-table mdl-js-data-table table table--theme js-table-data is-long">
+              <thead>
+                <tr>
+                  <th class="mdl-data-table__cell--non-numeric sort" data-sort="checkbox"> </th>
+                  <th class="mdl-data-table__cell--non-numeric sort" data-sort="date">
+<!--
+                    <ul>
+                      <li class="active"><i class="material-icons">arrow_drop_up</i></li>
+                      <li><i class="material-icons">arrow_drop_down</i></li>
+                    </ul>
+-->
+                    <span>投稿ID ／ 投稿日<br/>投稿者 ／ ステータス</span> 
+                  </th>
+                  <th class="mdl-data-table__cell--non-numeric sort" data-sort="shop">
+<!--
+                    <ul>
+                      <li class="active"><i class="material-icons">arrow_drop_up</i></li>
+                      <li><i class="material-icons">arrow_drop_down</i></li>
+                    </ul>
+-->
+                    <span>店舗</span> 
+                  </th>
+                  <th class="mdl-data-table__cell--non-numeric sort" data-sort="theme">
+<!--
+                    <ul>
+                      <li class="active"><i class="material-icons">arrow_drop_up</i></li>
+                      <li><i class="material-icons">arrow_drop_down</i></li>
+                    </ul>
+-->
+                    <span>投稿内容【テーマ】</span> 
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <apex:repeat value="{!lsSTPDNew}" var="stpd" >
+                    <tr>
+                      <td class="col0">
+                        <div class="u-center-vertical u-text-center">
+                          <apex:inputField value="{!stpd.TechnicalAlwaysFalse__c}" />
+                        </div>
+                      </td>
+                      <td class="base-info js-base-info col1">
+                        <p>
+                          <span class="u-sub-colour"><apex:outputText value="{0,date,yyyy.MM.dd}"> <apex:param value="{!stpd.FullLastModifiedDateValue__c}" /> </apex:outputText></span>
+                          <br/>
+                          <i class="icon icon--knowledge-letter is-s{!IF(stpd.IsCompleteS__c > 0, '', '-off')}"></i>
+                          <i class="icon icon--knowledge-letter is-t{!IF(stpd.IsCompleteT__c > 0, '', '-off')}"></i>
+                          <i class="icon icon--knowledge-letter is-p{!IF(stpd.IsCompleteP__c > 0, '', '-off')}"></i>
+                          <i class="icon icon--knowledge-letter is-d{!IF(stpd.IsCompleteD__c > 0, '', '-off')}"></i>
+                        </p>
+                      </td>
+                      <td class="col2">
+                        <p>
+                        {!stpd.CreatedBy__r.Account.Parent.Name}<br/>
+                        {!stpd.CreatedBy__r.Account.Name}
+                        </p>
+                      </td>
+                      <td class="col3">
+                        <p>{!stpd.ThemaShortDisplayed__c}</p>
+                      </td>
+                    </tr>
+                </apex:repeat>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="popup__button-container u-text-center">
+          <a class="button button--cancel js-popup-close">キャンセル</a>
+          <apex:commandLink value="テーマを登録する" styleClass="button button--post" action="{!doSaveNewEvt}" />
+        </div>
+      </div>
+
+
+
+
+
+      <div class="popup popup--theme-list popup--theme-list-update">
+        <div class="popup-inner">
+<!--
+          <header class="content-header search-tools">
+            <div class="content-header__top">
+              <div class="search-filter clearfix">
+                <fieldset class="filter-daterange">
+                  <label>日付</label>
+                  <input type="text" class="ui-datepicker-input"/>
+                  <label>
+                    <i class="material-icons">chevron_right</i>
+                  </label>
+                  <input type="text" class="ui-datepicker-input"/>
+                </fieldset>
+                <fieldset class="filter-category">
+                  <label>カテゴリ</label> 
+                  <select class="search-category__select">
+                    <option>全て</option>
+                  </select>
+                </fieldset>
+                <fieldset class="filter-status">
+                  <label>ステータス</label> 
+                  <select class="search-status__select">
+                    <option>全て</option>
+                  </select>
+                </fieldset>
+                <fieldset class="filter-button"> <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">絞り込む</button> </fieldset>
+              </div>
+            </div>
+            <div class="content-header__bottom">
+              <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--3-col"></div>
+                <div class="mdl-cell mdl-cell--6-col search-pagination">
+                  <nav>
+                    <ul class="pagination">
+                      <li> <a href="#" aria-label="Previous"><i class="material-icons">navigate_before</i></a> </li>
+                      <li><a href="#">1</a></li>
+                      <li><span>…</span></li>
+                      <li class="active"><a href="#">12</a></li>
+                      <li><a href="#">13</a></li>
+                      <li><a href="#">14</a></li>
+                      <li><a href="#">15</a></li>
+                      <li><span>…</span></li>
+                      <li><a href="#">36</a></li>
+                      <li> <a href="#" aria-label="Next"><i class="material-icons">navigate_next</i></a> </li>
+                    </ul>
+                  </nav>
+                </div>
+                <div class="mdl-cell mdl-cell--3-col search-numbers">
+                  <select class="search-numbers__select">
+                    <option>25件表示</option>
+                  </select>
+                  <span class="search-numbers__total"><i>/</i><span>185</span><small>件</small></span> 
+                </div>
+              </div>
+            </div>
+          </header>
+-->
+
+          <div class="theme-list">
+            <table class="mdl-data-table mdl-js-data-table table table--theme js-table-data is-long">
+              <thead>
+                <tr>
+                  <th class="mdl-data-table__cell--non-numeric sort" data-sort="checkbox"> </th>
+                  <th class="mdl-data-table__cell--non-numeric sort" data-sort="date">
+<!--
+                    <ul>
+                      <li class="active"><i class="material-icons">arrow_drop_up</i></li>
+                      <li><i class="material-icons">arrow_drop_down</i></li>
+                    </ul>
+-->
+                    <span class="thspanwithoutarrow">投稿ID ／ 投稿日<br/>投稿者 ／ ステータス</span> 
+                  </th>
+                  <th class="mdl-data-table__cell--non-numeric sort" data-sort="shop">
+<!--
+                    <ul>
+                      <li class="active"><i class="material-icons">arrow_drop_up</i></li>
+                      <li><i class="material-icons">arrow_drop_down</i></li>
+                    </ul>
+-->
+                    <span class="thspanwithoutarrow">店舗</span> 
+                  </th>
+                  <th class="mdl-data-table__cell--non-numeric sort" data-sort="theme">
+<!--
+                    <ul>
+                      <li class="active"><i class="material-icons">arrow_drop_up</i></li>
+                      <li><i class="material-icons">arrow_drop_down</i></li>
+                    </ul>
+-->
+                    <span class="thspanwithoutarrow">投稿内容【テーマ】</span> 
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+
+                  <apex:repeat value="{!lsSTPDUpdate}" var="stpd" >
+                      <tr>
+                        <td class="col0">
+                          <div class="u-center-vertical u-text-center">
+                            <apex:inputField id="editEvent8" value="{!stpd.TechnicalAlwaysFalse__c}" />
+                          </div>
+                        </td>
+                        <td class="base-info js-base-info col1">
+                          <p>
+                            <span class="u-sub-colour"><apex:outputText value="{0,date,yyyy.MM.dd}"> <apex:param value="{!stpd.FullLastModifiedDateValue__c}" /> </apex:outputText></span>
+                            <br/>
+                            <i class="icon icon--knowledge-letter is-s{!IF(stpd.IsCompleteS__c > 0, '', '-off')}"></i>
+                            <i class="icon icon--knowledge-letter is-t{!IF(stpd.IsCompleteT__c > 0, '', '-off')}"></i>
+                            <i class="icon icon--knowledge-letter is-p{!IF(stpd.IsCompleteP__c > 0, '', '-off')}"></i>
+                            <i class="icon icon--knowledge-letter is-d{!IF(stpd.IsCompleteD__c > 0, '', '-off')}"></i>
+                          </p>
+                        </td>
+                        <td class="col2">
+                          <p>
+                          {!stpd.CreatedBy__r.Account.Parent.Name}<br/>
+                          {!stpd.CreatedBy__r.Account.Name}
+                          </p>
+                        </td>
+                        <td class="col3">
+                          <p>{!stpd.ThemaShortDisplayed__c}</p>
+                        </td>
+                      </tr>
+                  </apex:repeat>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="popup__button-container u-text-center">
+          <a class="button button--cancel js-popup-close">キャンセル</a>
+          <apex:commandLink value="テーマを登録する" styleClass="button button--post" action="{!doSaveUpdateEvt}" />
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+    <script src="{!URLFOR($Resource.auStyling,'/js/scripts.min.js')}" type="text/javascript"></script>
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      
+      ga('create', 'UA-xxxxxx', 'auto');
+      ga('send', 'pageview');
+      
+    </script> 
+
+  </apex:form>
+
+</body>
+
+</html>
+
+
+</apex:page>

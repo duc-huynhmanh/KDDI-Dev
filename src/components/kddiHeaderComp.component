@@ -1,0 +1,25 @@
+<apex:component >
+
+  <style type="text/css">
+
+  </style>
+
+  <!-- 導入元にBootstrapが必要 -->
+  <apex:stylesheet value="{!URLFOR($Resource.KDDI_CustomizedMaterials, 'KDDI_CustomizedMaterials/KDDI_VisualforceHeaderStyle.css')}" />
+  <div class="kddi-visualforce-header">
+    <div class="kddi-visualforce-header-content" >
+      <div class="kddi-visualforce-logo-cover">
+        <div class="kddi-logo"></div>
+      </div>
+      <div class="dropdown">
+        <a style="text-decoration: none;" href="/home/home.jsp">
+          <div class="user-info" type="button">
+            <span class="username">管理画面トップに戻る</span>
+          </div>
+        </a>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+  
+</apex:component>

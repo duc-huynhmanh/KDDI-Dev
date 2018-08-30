@@ -1,0 +1,533 @@
+42.0 APEX_CODE,FINEST;APEX_PROFILING,INFO;CALLOUT,INFO;DB,INFO;NBA,INFO;SYSTEM,DEBUG;VALIDATION,INFO;VISUALFORCE,INFO;WAVE,INFO;WORKFLOW,INFO
+11:04:29.0 (70444)|USER_INFO|[EXTERNAL]|005N00000057PfO|thomas.remy+kddi_gwdev01@globalway.co.jp|Japan Standard Time|GMT+09:00
+11:04:29.0 (108152)|EXECUTION_STARTED
+11:04:29.0 (112876)|CODE_UNIT_STARTED|[EXTERNAL]|066N0000000M4pW|VF: /apex/sadailyreport
+11:04:29.0 (250517)|VF_DESERIALIZE_VIEWSTATE_BEGIN|066N0000000M4pW
+11:04:29.0 (3521709)|HEAP_ALLOCATE|[72]|Bytes:3
+11:04:29.0 (3559690)|HEAP_ALLOCATE|[77]|Bytes:152
+11:04:29.0 (3574303)|HEAP_ALLOCATE|[342]|Bytes:408
+11:04:29.0 (3589754)|HEAP_ALLOCATE|[355]|Bytes:408
+11:04:29.0 (3602265)|HEAP_ALLOCATE|[467]|Bytes:48
+11:04:29.0 (3627043)|HEAP_ALLOCATE|[139]|Bytes:6
+11:04:29.0 (4488611)|HEAP_ALLOCATE|[50]|Bytes:5
+11:04:29.0 (4515902)|HEAP_ALLOCATE|[56]|Bytes:5
+11:04:29.0 (4525209)|HEAP_ALLOCATE|[64]|Bytes:7
+11:04:29.0 (5232966)|VARIABLE_SCOPE_BEGIN|[3]|saDailyReportCtrl.SOURCE|String|false|true
+11:04:29.0 (5244463)|VARIABLE_SCOPE_BEGIN|[4]|saDailyReportCtrl.SOURCE_ID|String|false|true
+11:04:29.0 (6256075)|VARIABLE_SCOPE_BEGIN|[25]|auMainTopCompCtrl.TYPE_SCREEN_ACCOUNT_LIST|Integer|false|true
+11:04:29.0 (6266887)|VARIABLE_SCOPE_BEGIN|[26]|auMainTopCompCtrl.TYPE_SCREEN_ACTIVITY_LIST|Integer|false|true
+11:04:29.0 (6273638)|VARIABLE_SCOPE_BEGIN|[7]|auMainTopCompCtrl.TYPE_SCREEN_CX_SCREEN|Integer|false|true
+11:04:29.0 (6279886)|VARIABLE_SCOPE_BEGIN|[8]|auMainTopCompCtrl.TYPE_SCREEN_CX_TIMELINE|Integer|false|true
+11:04:29.0 (6291695)|VARIABLE_SCOPE_BEGIN|[9]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE|Integer|false|true
+11:04:29.0 (6297957)|VARIABLE_SCOPE_BEGIN|[10]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE_LIST|Integer|false|true
+11:04:29.0 (6304725)|VARIABLE_SCOPE_BEGIN|[27]|auMainTopCompCtrl.TYPE_SCREEN_FILE_LIST|Integer|false|true
+11:04:29.0 (6311667)|VARIABLE_SCOPE_BEGIN|[24]|auMainTopCompCtrl.TYPE_SCREEN_HONBU_DIRECT|Integer|false|true
+11:04:29.0 (6318331)|VARIABLE_SCOPE_BEGIN|[11]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_DASHBOARD|Integer|false|true
+11:04:29.0 (6323880)|VARIABLE_SCOPE_BEGIN|[12]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_LIST|Integer|false|true
+11:04:29.0 (6329813)|VARIABLE_SCOPE_BEGIN|[15]|auMainTopCompCtrl.TYPE_SCREEN_SA_CHATTER|Integer|false|true
+11:04:29.0 (6335479)|VARIABLE_SCOPE_BEGIN|[16]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORT|Integer|false|true
+11:04:29.0 (6341172)|VARIABLE_SCOPE_BEGIN|[22]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORTLIST|Integer|false|true
+11:04:29.0 (6347507)|VARIABLE_SCOPE_BEGIN|[18]|auMainTopCompCtrl.TYPE_SCREEN_SA_DOCUMENTS|Integer|false|true
+11:04:29.0 (6353215)|VARIABLE_SCOPE_BEGIN|[17]|auMainTopCompCtrl.TYPE_SCREEN_SA_ENQUETE|Integer|false|true
+11:04:29.0 (6359075)|VARIABLE_SCOPE_BEGIN|[20]|auMainTopCompCtrl.TYPE_SCREEN_SA_LINKS|Integer|false|true
+11:04:29.0 (6364820)|VARIABLE_SCOPE_BEGIN|[13]|auMainTopCompCtrl.TYPE_SCREEN_SA_MESSAGES|Integer|false|true
+11:04:29.0 (6370631)|VARIABLE_SCOPE_BEGIN|[19]|auMainTopCompCtrl.TYPE_SCREEN_SA_RANKING|Integer|false|true
+11:04:29.0 (6376561)|VARIABLE_SCOPE_BEGIN|[14]|auMainTopCompCtrl.TYPE_SCREEN_SA_REPORTS|Integer|false|true
+11:04:29.0 (6382327)|VARIABLE_SCOPE_BEGIN|[23]|auMainTopCompCtrl.TYPE_SCREEN_SA_TODO|Integer|false|true
+11:04:29.0 (6388750)|VARIABLE_SCOPE_BEGIN|[21]|auMainTopCompCtrl.TYPE_SCREEN_SA_USRSETTINGS|Integer|false|true
+11:04:29.0 (6394849)|VARIABLE_SCOPE_BEGIN|[4]|auMainTopCompCtrl.TYPE_SCREEN_STPD_EVENT|Integer|false|true
+11:04:29.0 (6401252)|VARIABLE_SCOPE_BEGIN|[6]|auMainTopCompCtrl.TYPE_SCREEN_STPD_SCREEN|Integer|false|true
+11:04:29.0 (6407406)|VARIABLE_SCOPE_BEGIN|[5]|auMainTopCompCtrl.TYPE_SCREEN_STPD_TIMELINE|Integer|false|true
+11:04:29.0 (6413539)|VARIABLE_SCOPE_BEGIN|[3]|auMainTopCompCtrl.TYPE_SCREEN_SWITCH|Integer|false|true
+11:04:29.0 (7555770)|VF_DESERIALIZE_VIEWSTATE_END
+11:04:29.0 (9571805)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (9835979)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:284
+11:04:29.0 (9849353)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:150
+11:04:29.0 (9862505)|METHOD_ENTRY|[1]|01pN0000000Mill|auMainTopCompCtrl.auMainTopCompCtrl()
+11:04:29.0 (9869820)|STATEMENT_EXECUTE|[1]
+11:04:29.0 (9875250)|STATEMENT_EXECUTE|[1]
+11:04:29.0 (9877121)|STATEMENT_EXECUTE|[3]
+11:04:29.0 (9883855)|HEAP_ALLOCATE|[3]|Bytes:4
+11:04:29.0 (9907699)|VARIABLE_ASSIGNMENT|[3]|auMainTopCompCtrl.TYPE_SCREEN_SWITCH|0
+11:04:29.0 (9912724)|STATEMENT_EXECUTE|[4]
+11:04:29.0 (9915857)|HEAP_ALLOCATE|[4]|Bytes:4
+11:04:29.0 (9925706)|VARIABLE_ASSIGNMENT|[4]|auMainTopCompCtrl.TYPE_SCREEN_STPD_EVENT|11
+11:04:29.0 (9930370)|STATEMENT_EXECUTE|[5]
+11:04:29.0 (9932504)|HEAP_ALLOCATE|[5]|Bytes:4
+11:04:29.0 (9939271)|VARIABLE_ASSIGNMENT|[5]|auMainTopCompCtrl.TYPE_SCREEN_STPD_TIMELINE|12
+11:04:29.0 (9945323)|STATEMENT_EXECUTE|[6]
+11:04:29.0 (9947866)|HEAP_ALLOCATE|[6]|Bytes:4
+11:04:29.0 (9955077)|VARIABLE_ASSIGNMENT|[6]|auMainTopCompCtrl.TYPE_SCREEN_STPD_SCREEN|13
+11:04:29.0 (9958851)|STATEMENT_EXECUTE|[7]
+11:04:29.0 (9960961)|HEAP_ALLOCATE|[7]|Bytes:4
+11:04:29.0 (9966339)|VARIABLE_ASSIGNMENT|[7]|auMainTopCompCtrl.TYPE_SCREEN_CX_SCREEN|21
+11:04:29.0 (9969823)|STATEMENT_EXECUTE|[8]
+11:04:29.0 (9971655)|HEAP_ALLOCATE|[8]|Bytes:4
+11:04:29.0 (9976921)|VARIABLE_ASSIGNMENT|[8]|auMainTopCompCtrl.TYPE_SCREEN_CX_TIMELINE|22
+11:04:29.0 (9980649)|STATEMENT_EXECUTE|[9]
+11:04:29.0 (9982902)|HEAP_ALLOCATE|[9]|Bytes:4
+11:04:29.0 (9987988)|VARIABLE_ASSIGNMENT|[9]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE|31
+11:04:29.0 (9991425)|STATEMENT_EXECUTE|[10]
+11:04:29.0 (9993807)|HEAP_ALLOCATE|[10]|Bytes:4
+11:04:29.0 (9999213)|VARIABLE_ASSIGNMENT|[10]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE_LIST|32
+11:04:29.0 (10002909)|STATEMENT_EXECUTE|[11]
+11:04:29.0 (10005718)|HEAP_ALLOCATE|[11]|Bytes:4
+11:04:29.0 (10011873)|VARIABLE_ASSIGNMENT|[11]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_DASHBOARD|41
+11:04:29.0 (10015734)|STATEMENT_EXECUTE|[12]
+11:04:29.0 (10017862)|HEAP_ALLOCATE|[12]|Bytes:4
+11:04:29.0 (10023274)|VARIABLE_ASSIGNMENT|[12]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_LIST|42
+11:04:29.0 (10026877)|STATEMENT_EXECUTE|[13]
+11:04:29.0 (10028944)|HEAP_ALLOCATE|[13]|Bytes:4
+11:04:29.0 (10034938)|VARIABLE_ASSIGNMENT|[13]|auMainTopCompCtrl.TYPE_SCREEN_SA_MESSAGES|51
+11:04:29.0 (10038325)|STATEMENT_EXECUTE|[14]
+11:04:29.0 (10040627)|HEAP_ALLOCATE|[14]|Bytes:4
+11:04:29.0 (10046454)|VARIABLE_ASSIGNMENT|[14]|auMainTopCompCtrl.TYPE_SCREEN_SA_REPORTS|52
+11:04:29.0 (10050050)|STATEMENT_EXECUTE|[15]
+11:04:29.0 (10052012)|HEAP_ALLOCATE|[15]|Bytes:4
+11:04:29.0 (10057736)|VARIABLE_ASSIGNMENT|[15]|auMainTopCompCtrl.TYPE_SCREEN_SA_CHATTER|53
+11:04:29.0 (10061180)|STATEMENT_EXECUTE|[16]
+11:04:29.0 (10063196)|HEAP_ALLOCATE|[16]|Bytes:4
+11:04:29.0 (10068912)|VARIABLE_ASSIGNMENT|[16]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORT|54
+11:04:29.0 (10072909)|STATEMENT_EXECUTE|[17]
+11:04:29.0 (10074947)|HEAP_ALLOCATE|[17]|Bytes:4
+11:04:29.0 (10080696)|VARIABLE_ASSIGNMENT|[17]|auMainTopCompCtrl.TYPE_SCREEN_SA_ENQUETE|55
+11:04:29.0 (10084030)|STATEMENT_EXECUTE|[18]
+11:04:29.0 (10086185)|HEAP_ALLOCATE|[18]|Bytes:4
+11:04:29.0 (10091734)|VARIABLE_ASSIGNMENT|[18]|auMainTopCompCtrl.TYPE_SCREEN_SA_DOCUMENTS|56
+11:04:29.0 (10095491)|STATEMENT_EXECUTE|[19]
+11:04:29.0 (10097475)|HEAP_ALLOCATE|[19]|Bytes:4
+11:04:29.0 (10103629)|VARIABLE_ASSIGNMENT|[19]|auMainTopCompCtrl.TYPE_SCREEN_SA_RANKING|57
+11:04:29.0 (10106839)|STATEMENT_EXECUTE|[20]
+11:04:29.0 (10108852)|HEAP_ALLOCATE|[20]|Bytes:4
+11:04:29.0 (10114678)|VARIABLE_ASSIGNMENT|[20]|auMainTopCompCtrl.TYPE_SCREEN_SA_LINKS|58
+11:04:29.0 (10118522)|STATEMENT_EXECUTE|[21]
+11:04:29.0 (10120564)|HEAP_ALLOCATE|[21]|Bytes:4
+11:04:29.0 (10126804)|VARIABLE_ASSIGNMENT|[21]|auMainTopCompCtrl.TYPE_SCREEN_SA_USRSETTINGS|59
+11:04:29.0 (10130782)|STATEMENT_EXECUTE|[22]
+11:04:29.0 (10132714)|HEAP_ALLOCATE|[22]|Bytes:4
+11:04:29.0 (10138203)|VARIABLE_ASSIGNMENT|[22]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORTLIST|60
+11:04:29.0 (10142350)|STATEMENT_EXECUTE|[23]
+11:04:29.0 (10144472)|HEAP_ALLOCATE|[23]|Bytes:4
+11:04:29.0 (10153518)|VARIABLE_ASSIGNMENT|[23]|auMainTopCompCtrl.TYPE_SCREEN_SA_TODO|61
+11:04:29.0 (10158036)|STATEMENT_EXECUTE|[24]
+11:04:29.0 (10160167)|HEAP_ALLOCATE|[24]|Bytes:4
+11:04:29.0 (10165679)|VARIABLE_ASSIGNMENT|[24]|auMainTopCompCtrl.TYPE_SCREEN_HONBU_DIRECT|71
+11:04:29.0 (10169900)|STATEMENT_EXECUTE|[25]
+11:04:29.0 (10171989)|HEAP_ALLOCATE|[25]|Bytes:4
+11:04:29.0 (10178426)|VARIABLE_ASSIGNMENT|[25]|auMainTopCompCtrl.TYPE_SCREEN_ACCOUNT_LIST|81
+11:04:29.0 (10182486)|STATEMENT_EXECUTE|[26]
+11:04:29.0 (10184845)|HEAP_ALLOCATE|[26]|Bytes:4
+11:04:29.0 (10189790)|VARIABLE_ASSIGNMENT|[26]|auMainTopCompCtrl.TYPE_SCREEN_ACTIVITY_LIST|82
+11:04:29.0 (10193270)|STATEMENT_EXECUTE|[27]
+11:04:29.0 (10195172)|HEAP_ALLOCATE|[27]|Bytes:4
+11:04:29.0 (10200759)|VARIABLE_ASSIGNMENT|[27]|auMainTopCompCtrl.TYPE_SCREEN_FILE_LIST|83
+11:04:29.0 (10208645)|METHOD_EXIT|[1]|auMainTopCompCtrl
+11:04:29.0 (10215075)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+11:04:29.0 (10221626)|VARIABLE_SCOPE_BEGIN|[80]|this|auMainTopCompCtrl|true|false
+11:04:29.0 (10288302)|VARIABLE_ASSIGNMENT|[80]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (10302554)|STATEMENT_EXECUTE|[80]
+11:04:29.0 (10304373)|STATEMENT_EXECUTE|[81]
+11:04:29.0 (10354642)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (10402846)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (10437908)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (10471675)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (10492186)|HEAP_ALLOCATE|[81]|Bytes:5
+11:04:29.0 (10590099)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (10624829)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+11:04:29.0 (10631886)|VARIABLE_SCOPE_BEGIN|[98]|this|auMainTopCompCtrl|true|false
+11:04:29.0 (10664182)|VARIABLE_ASSIGNMENT|[98]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (10673869)|STATEMENT_EXECUTE|[98]
+11:04:29.0 (10675595)|STATEMENT_EXECUTE|[99]
+11:04:29.0 (10706821)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (10721326)|HEAP_ALLOCATE|[99]|Bytes:5
+11:04:29.0 (10780837)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (10809727)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+11:04:29.0 (10815898)|VARIABLE_SCOPE_BEGIN|[102]|this|auMainTopCompCtrl|true|false
+11:04:29.0 (10846010)|VARIABLE_ASSIGNMENT|[102]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (10854504)|STATEMENT_EXECUTE|[102]
+11:04:29.0 (10856530)|STATEMENT_EXECUTE|[103]
+11:04:29.0 (10886823)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (10900914)|HEAP_ALLOCATE|[103]|Bytes:5
+11:04:29.0 (10982860)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (11005570)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+11:04:29.0 (11017685)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iCountComments|null|0x6a364be
+11:04:29.0 (11058846)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (11071193)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+11:04:29.0 (11078481)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iCountLikes|null|0x6a364be
+11:04:29.0 (11157846)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (11193224)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:26
+11:04:29.0 (11200848)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:460
+11:04:29.0 (11205614)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:113
+11:04:29.0 (11209540)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:39
+11:04:29.0 (11213095)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+11:04:29.0 (11221316)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saDailyReportCtrl.SOURCE|"src"
+11:04:29.0 (11225797)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:2
+11:04:29.0 (11231262)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saDailyReportCtrl.SOURCE_ID|"id"
+11:04:29.0 (11239161)|METHOD_ENTRY|[1]|01pN0000000aE0W|saDailyReportCtrl.saDailyReportCtrl()
+11:04:29.0 (11244170)|STATEMENT_EXECUTE|[1]
+11:04:29.0 (11247567)|STATEMENT_EXECUTE|[1]
+11:04:29.0 (11255245)|SYSTEM_MODE_ENTER|false
+11:04:29.0 (11262213)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:5
+11:04:29.0 (11267213)|STATEMENT_EXECUTE|[650]
+11:04:29.0 (11269034)|STATEMENT_EXECUTE|[677]
+11:04:29.0 (11273764)|SYSTEM_MODE_EXIT|false
+11:04:29.0 (11280541)|METHOD_EXIT|[1]|saDailyReportCtrl
+11:04:29.0 (11294826)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:76
+11:04:29.0 (11299912)|VARIABLE_SCOPE_BEGIN|[92]|this|saDailyReportCtrl|true|false
+11:04:29.0 (11622702)|VARIABLE_ASSIGNMENT|[92]|this|{"BusinessLocationName":"","currentInquiryReply":"0x3f3b7ddb","currentInquiryReplyDetail":"0x22207816","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x7037e5be","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (11642484)|SYSTEM_MODE_ENTER|false
+11:04:29.0 (11649585)|HEAP_ALLOCATE|[92]|Bytes:5
+11:04:29.0 (11654488)|STATEMENT_EXECUTE|[92]
+11:04:29.0 (11656373)|STATEMENT_EXECUTE|[92]
+11:04:29.0 (11661411)|SYSTEM_MODE_EXIT|false
+11:04:29.0 (11722697)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (11745706)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+11:04:29.0 (11750488)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+11:04:29.0 (11759738)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iTypeOfScreen|54|0x6a364be
+11:04:29.0 (11913261)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (12006035)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (12088010)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (12294681)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (13523380)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (15416364)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (15468875)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (15509155)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (15546855)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (15581751)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (15630146)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (15666108)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+11:04:29.0 (15673922)|VARIABLE_SCOPE_BEGIN|[80]|this|auMainTopCompCtrl|true|false
+11:04:29.0 (15709946)|VARIABLE_ASSIGNMENT|[80]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (15720437)|STATEMENT_EXECUTE|[80]
+11:04:29.0 (15722431)|STATEMENT_EXECUTE|[81]
+11:04:29.0 (15753577)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (15790222)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (15820762)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (15850048)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (15862877)|HEAP_ALLOCATE|[81]|Bytes:5
+11:04:29.0 (15912494)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (15944360)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+11:04:29.0 (15950256)|VARIABLE_SCOPE_BEGIN|[98]|this|auMainTopCompCtrl|true|false
+11:04:29.0 (15979493)|VARIABLE_ASSIGNMENT|[98]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (15987837)|STATEMENT_EXECUTE|[98]
+11:04:29.0 (15989645)|STATEMENT_EXECUTE|[99]
+11:04:29.0 (16013457)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (16027490)|HEAP_ALLOCATE|[99]|Bytes:5
+11:04:29.0 (16072419)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (16100050)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+11:04:29.0 (16105832)|VARIABLE_SCOPE_BEGIN|[102]|this|auMainTopCompCtrl|true|false
+11:04:29.0 (16134712)|VARIABLE_ASSIGNMENT|[102]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (16142656)|STATEMENT_EXECUTE|[102]
+11:04:29.0 (16144440)|STATEMENT_EXECUTE|[103]
+11:04:29.0 (16168254)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (16180945)|HEAP_ALLOCATE|[103]|Bytes:5
+11:04:29.0 (18931601)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (18956129)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:16
+11:04:29.0 (18961833)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:76
+11:04:29.0 (18972658)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.messageError|"正しいデーターを入れてください。"|0x307b032e
+11:04:29.0 (19003430)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (19017096)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:76
+11:04:29.0 (19024990)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.messageQuestion|""|0x307b032e
+11:04:29.0 (19047511)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (19061473)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:5
+11:04:29.0 (19065497)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:76
+11:04:29.0 (19071785)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.isPreview|true|0x307b032e
+11:04:29.0 (19094231)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (19105520)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:76
+11:04:29.0 (19112836)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.idBusinessLocation|""|0x307b032e
+11:04:29.0 (19134298)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (19145339)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+11:04:29.0 (19149112)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:76
+11:04:29.0 (19155286)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iCurrentDay|0|0x307b032e
+11:04:29.0 (19242143)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (19256132)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+11:04:29.0 (19263921)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iCountComments|null|0x6a364be
+11:04:29.0 (19312897)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (19331805)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+11:04:29.0 (19340745)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iCountLikes|null|0x6a364be
+11:04:29.0 (19385496)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (19431877)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:76
+11:04:29.0 (19440460)|VARIABLE_SCOPE_BEGIN|[92]|this|saDailyReportCtrl|true|false
+11:04:29.0 (19622257)|VARIABLE_ASSIGNMENT|[92]|this|{"BusinessLocationName":"","currentInquiryReply":"0x3f3b7ddb","currentInquiryReplyDetail":"0x22207816","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"正しいデーターを入れてください。","messageQuestion":"","mpQuestions":"0x7037e5be","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (19642167)|SYSTEM_MODE_ENTER|false
+11:04:29.0 (19649232)|HEAP_ALLOCATE|[92]|Bytes:5
+11:04:29.0 (19654767)|STATEMENT_EXECUTE|[92]
+11:04:29.0 (19656916)|STATEMENT_EXECUTE|[92]
+11:04:29.0 (19661436)|SYSTEM_MODE_EXIT|false
+11:04:29.0 (19704681)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (19720082)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+11:04:29.0 (19724682)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+11:04:29.0 (19736595)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iTypeOfScreen|54|0x6a364be
+11:04:29.0 (19876453)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (22246323)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:76
+11:04:29.0 (22257193)|VARIABLE_SCOPE_BEGIN|[199]|this|saDailyReportCtrl|true|false
+11:04:29.0 (22431975)|VARIABLE_ASSIGNMENT|[199]|this|{"BusinessLocationName":"","currentInquiryReply":"0x3f3b7ddb","currentInquiryReplyDetail":"0x22207816","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"正しいデーターを入れてください。","messageQuestion":"","mpQuestions":"0x7037e5be","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (22453198)|SYSTEM_MODE_ENTER|false
+11:04:29.0 (22461102)|HEAP_ALLOCATE|[201]|Bytes:5
+11:04:29.0 (22467299)|STATEMENT_EXECUTE|[199]
+11:04:29.0 (22469240)|STATEMENT_EXECUTE|[201]
+11:04:29.0 (22634152)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"BusinessLocationName":"","currentInquiryReply":"0x3f3b7ddb","currentInquiryReplyDetail":"0x22207816","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"正しいデーターを入れてください。","messageQuestion":"","mpQuestions":"0x7037e5be","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (22650767)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|""
+11:04:29.0 (22661970)|VARIABLE_ASSIGNMENT|[6]|this.messageError|""|0x307b032e
+11:04:29.0 (22673583)|STATEMENT_EXECUTE|[202]
+11:04:29.0 (22814346)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"BusinessLocationName":"","currentInquiryReply":"0x3f3b7ddb","currentInquiryReplyDetail":"0x22207816","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x7037e5be","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (22829194)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|""
+11:04:29.0 (22838079)|VARIABLE_ASSIGNMENT|[7]|this.messageQuestion|""|0x307b032e
+11:04:29.0 (22847784)|STATEMENT_EXECUTE|[204]
+11:04:29.0 (22849535)|STATEMENT_EXECUTE|[204]
+11:04:29.0 (22851023)|STATEMENT_EXECUTE|[206]
+11:04:29.0 (23045464)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"BusinessLocationName":"","currentInquiryReply":"0x3f3b7ddb","currentInquiryReplyDetail":"0x22207816","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x7037e5be","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (23102473)|HEAP_ALLOCATE|[206]|Bytes:4
+11:04:29.0 (23135616)|VARIABLE_ASSIGNMENT|[206]|this.dCurrentDay|"2018-06-30T00:00:00.000Z"|0x307b032e
+11:04:29.0 (23142259)|STATEMENT_EXECUTE|[208]
+11:04:29.0 (23157224)|HEAP_ALLOCATE|[208]|Bytes:4
+11:04:29.0 (23380014)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"BusinessLocationName":"","currentInquiryReply":"0x3f3b7ddb","currentInquiryReplyDetail":"0x22207816","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x7037e5be","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (23394998)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+11:04:29.0 (23406227)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|[]|0xab8bbe3
+11:04:29.0 (23417300)|VARIABLE_ASSIGNMENT|[22]|this.currentInquiryReplyDetail|[]|0x307b032e
+11:04:29.0 (23426691)|STATEMENT_EXECUTE|[209]
+11:04:29.0 (23440769)|HEAP_ALLOCATE|[209]|Bytes:4
+11:04:29.0 (23612828)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"BusinessLocationName":"","currentInquiryReply":"0x3f3b7ddb","currentInquiryReplyDetail":"0xab8bbe3","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x7037e5be","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (23632813)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{}|0x73f4b5ff
+11:04:29.0 (23643842)|VARIABLE_ASSIGNMENT|[24]|this.mpQuestions|{}|0x307b032e
+11:04:29.0 (23653129)|STATEMENT_EXECUTE|[211]
+11:04:29.0 (23792932)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"BusinessLocationName":"","currentInquiryReply":"0x3f3b7ddb","currentInquiryReplyDetail":"0xab8bbe3","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x73f4b5ff","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (23807803)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|""
+11:04:29.0 (23816580)|VARIABLE_ASSIGNMENT|[23]|this.BusinessLocationName|""|0x307b032e
+11:04:29.0 (23829154)|HEAP_ALLOCATE|[212]|Bytes:81
+11:04:29.0 (23846179)|HEAP_ALLOCATE|[212]|Bytes:4
+11:04:29.0 (23855554)|HEAP_ALLOCATE|[212]|Bytes:7
+11:04:29.0 (24006050)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"BusinessLocationName":"","currentInquiryReply":"0x3f3b7ddb","currentInquiryReplyDetail":"0xab8bbe3","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x73f4b5ff","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (24397829)|SOQL_EXECUTE_BEGIN|[212]|Aggregations:0|SELECT Id, BusinessLocationName__c FROM saBusinessLocation__c 
+11:04:29.0 (25885782)|SOQL_EXECUTE_END|[212]|Rows:0
+11:04:29.0 (26051435)|HEAP_ALLOCATE|[212]|Bytes:54
+11:04:29.0 (26061612)|HEAP_ALLOCATE|[212]|Bytes:8
+11:04:29.0 (26086741)|SYSTEM_METHOD_ENTRY|[7]|QueryLocatorIterator.QueryLocatorIterator()
+11:04:29.0 (26091306)|STATEMENT_EXECUTE|[7]
+11:04:29.0 (26098179)|SYSTEM_METHOD_EXIT|[7]|QueryLocatorIterator
+11:04:29.0 (26106142)|HEAP_ALLOCATE|[212]|Bytes:28
+11:04:29.0 (26122819)|HEAP_ALLOCATE|[212]|Bytes:8
+11:04:29.0 (26126502)|HEAP_ALLOCATE|[212]|Bytes:8
+11:04:29.0 (26131694)|VARIABLE_SCOPE_BEGIN|[15]|this|Database.QueryLocatorIterator|true|false
+11:04:29.0 (26156793)|VARIABLE_ASSIGNMENT|[15]|this|{}|0x2f56f888
+11:04:29.0 (26163417)|VARIABLE_SCOPE_BEGIN|[15]|values|List<SObject>|true|false
+11:04:29.0 (26171633)|VARIABLE_ASSIGNMENT|[15]|values|null|
+11:04:29.0 (26175484)|VARIABLE_SCOPE_BEGIN|[15]|ql|Database.QueryLocator|true|false
+11:04:29.0 (26194435)|VARIABLE_ASSIGNMENT|[15]|ql|{"query":"SELECT Id, BusinessL (61 more) ..."}|0x7d8cb734
+11:04:29.0 (26200682)|VARIABLE_SCOPE_BEGIN|[15]|totalNumRecords|Integer|false|false
+11:04:29.0 (26208069)|VARIABLE_ASSIGNMENT|[15]|totalNumRecords|0
+11:04:29.0 (26212449)|VARIABLE_SCOPE_BEGIN|[15]|queryMoreSize|Integer|false|false
+11:04:29.0 (26219223)|VARIABLE_ASSIGNMENT|[15]|queryMoreSize|50000
+11:04:29.0 (26301230)|HEAP_ALLOCATE|[212]|Bytes:28
+11:04:29.0 (26327744)|METHOD_ENTRY|[212]||Database.QueryLocatorIterator.hasNext()
+11:04:29.0 (26348173)|METHOD_EXIT|[212]||Database.QueryLocatorIterator.hasNext()
+11:04:29.0 (26381193)|VARIABLE_ASSIGNMENT|[212]|bl|null|
+11:04:29.0 (26388422)|STATEMENT_EXECUTE|[212]
+11:04:29.0 (26403590)|STATEMENT_EXECUTE|[219]
+11:04:29.0 (26407422)|HEAP_ALLOCATE|[219]|Bytes:195
+11:04:29.0 (26421705)|HEAP_ALLOCATE|[219]|Bytes:4
+11:04:29.0 (26443758)|HEAP_ALLOCATE|[219]|Bytes:7
+11:04:29.0 (26477140)|HEAP_ALLOCATE|[223]|Bytes:89
+11:04:29.0 (26486695)|SYSTEM_METHOD_ENTRY|[1]|UserInfo.UserInfo()
+11:04:29.0 (26490344)|STATEMENT_EXECUTE|[1]
+11:04:29.0 (26495211)|SYSTEM_METHOD_EXIT|[1]|UserInfo
+11:04:29.0 (26504957)|METHOD_ENTRY|[223]||System.UserInfo.getUserId()
+11:04:29.0 (26542057)|METHOD_EXIT|[223]||System.UserInfo.getUserId()
+11:04:29.0 (27034873)|SOQL_EXECUTE_BEGIN|[219]|Aggregations:0|SELECT Id, saBusinessLocation__c, Status__c, saInquiry__c, Comment__c FROM saInquiryReply__c WHERE (saInquiry__r.Type__c = 'DAILY_REPORT' AND DailyReportDate__c = :tmpVar1 AND User__c = :tmpVar2)
+11:04:29.0 (32185554)|SOQL_EXECUTE_END|[219]|Rows:0
+11:04:29.0 (32209419)|HEAP_ALLOCATE|[219]|Bytes:4
+11:04:29.0 (32221323)|HEAP_ALLOCATE|[219]|Bytes:0
+11:04:29.0 (32281441)|HEAP_ALLOCATE|[219]|Bytes:4
+11:04:29.0 (32299261)|VARIABLE_SCOPE_BEGIN|[219]|lsInqRep|List<saInquiryReply__c>|true|false
+11:04:29.0 (32314571)|VARIABLE_ASSIGNMENT|[219]|lsInqRep|[]|0x539a2fdb
+11:04:29.0 (32367603)|STATEMENT_EXECUTE|[225]
+11:04:29.0 (32370153)|STATEMENT_EXECUTE|[227]
+11:04:29.0 (32374106)|HEAP_ALLOCATE|[227]|Bytes:207
+11:04:29.0 (32387897)|HEAP_ALLOCATE|[227]|Bytes:4
+11:04:29.0 (32578173)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"BusinessLocationName":"","currentInquiryReply":"0x3f3b7ddb","currentInquiryReplyDetail":"0xab8bbe3","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x73f4b5ff","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (32605347)|HEAP_ALLOCATE|[227]|Bytes:7
+11:04:29.0 (32614862)|METHOD_ENTRY|[232]||System.UserInfo.getUserId()
+11:04:29.0 (32636545)|METHOD_EXIT|[232]||System.UserInfo.getUserId()
+11:04:29.0 (33170052)|SOQL_EXECUTE_BEGIN|[227]|Aggregations:0|SELECT Id, saBusinessLocation__c, Status__c FROM saInquiryReply__c WHERE (saInquiry__r.Type__c = 'DAILY_REPORT' AND DailyReportDate__c = :tmpVar1 AND saBusinessLocation__c = :tmpVar2 AND User__c != :tmpVar3)
+11:04:29.0 (35522985)|SOQL_EXECUTE_END|[227]|Rows:0
+11:04:29.0 (35545974)|HEAP_ALLOCATE|[227]|Bytes:4
+11:04:29.0 (35557655)|HEAP_ALLOCATE|[227]|Bytes:0
+11:04:29.0 (35581138)|HEAP_ALLOCATE|[227]|Bytes:4
+11:04:29.0 (35591897)|VARIABLE_SCOPE_BEGIN|[227]|lsInqOtherPeople|List<saInquiryReply__c>|true|false
+11:04:29.0 (35607623)|VARIABLE_ASSIGNMENT|[227]|lsInqOtherPeople|[]|0x3ef44450
+11:04:29.0 (35640482)|STATEMENT_EXECUTE|[234]
+11:04:29.0 (35643021)|STATEMENT_EXECUTE|[240]
+11:04:29.0 (35646150)|VARIABLE_SCOPE_BEGIN|[240]|lsTemplate|List<saInquiryReply__c>|true|false
+11:04:29.0 (35657013)|VARIABLE_ASSIGNMENT|[240]|lsTemplate|null|
+11:04:29.0 (35832225)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"BusinessLocationName":"","currentInquiryReply":"0x3f3b7ddb","currentInquiryReplyDetail":"0xab8bbe3","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x73f4b5ff","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (35854176)|STATEMENT_EXECUTE|[252]
+11:04:29.0 (35856195)|STATEMENT_EXECUTE|[253]
+11:04:29.0 (35860032)|HEAP_ALLOCATE|[253]|Bytes:393
+11:04:29.0 (35874620)|HEAP_ALLOCATE|[253]|Bytes:4
+11:04:29.0 (35904139)|METHOD_ENTRY|[259]||System.UserInfo.getUserId()
+11:04:29.0 (35927140)|METHOD_EXIT|[259]||System.UserInfo.getUserId()
+11:04:29.0 (36342441)|SOQL_EXECUTE_BEGIN|[253]|Aggregations:0|SELECT Id, saBusinessLocation__c, Status__c, saInquiry__c, Comment__c FROM saInquiryReply__c WHERE (saInquiry__r.Type__c = 'DAILY_REPORT' AND (saInquiry__r.ValidFrom__c = NULL OR saInquiry__r.ValidFrom__c <= :tmpVar1) AND (saInquiry__r.ValidTo__c = NULL OR saInquiry__r.ValidTo__c >= :tmpVar2) AND DailyReportDate__c = NULL AND User__c = :tmpVar3) ORDER BY CreatedDate DESC NULLS FIRST LIMIT 1
+11:04:29.0 (40364602)|SOQL_EXECUTE_END|[253]|Rows:1
+11:04:29.0 (40385509)|HEAP_ALLOCATE|[253]|Bytes:8
+11:04:29.0 (40398330)|HEAP_ALLOCATE|[253]|Bytes:89
+11:04:29.0 (40422284)|HEAP_ALLOCATE|[253]|Bytes:8
+11:04:29.0 (40450013)|VARIABLE_ASSIGNMENT|[253]|lsTemplate|[{"Id":"a0KN0000007Kg4nMAC","Status__c":"WAITING_REPLY","saInquiry__c":"a0IN0000006RUllMAG"}]|0x5b55f7e
+11:04:29.0 (40457115)|STATEMENT_EXECUTE|[264]
+11:04:29.0 (40461312)|HEAP_ALLOCATE|[264]|Bytes:11
+11:04:29.0 (40548255)|HEAP_ALLOCATE|[264]|Bytes:101
+11:04:29.0 (40571539)|HEAP_ALLOCATE|[264]|Bytes:112
+11:04:29.0 (40589748)|USER_DEBUG|[264]|DEBUG|Template : (saInquiryReply__c:{Id=a0KN0000007Kg4nMAC, Status__c=WAITING_REPLY, saInquiry__c=a0IN0000006RUllMAG})
+11:04:29.0 (40619587)|STATEMENT_EXECUTE|[265]
+11:04:29.0 (40622191)|STATEMENT_EXECUTE|[271]
+11:04:29.0 (40635737)|HEAP_ALLOCATE|[271]|Bytes:16
+11:04:29.0 (40666534)|VARIABLE_SCOPE_BEGIN|[271]|idInquiry|Id|false|false
+11:04:29.0 (40738605)|VARIABLE_ASSIGNMENT|[271]|idInquiry|"a0IN0000006RUllMAG"
+11:04:29.0 (40745509)|STATEMENT_EXECUTE|[272]
+11:04:29.0 (40765595)|HEAP_ALLOCATE|[272]|Bytes:4
+11:04:29.0 (41029998)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"BusinessLocationName":"","currentInquiryReply":"0x3f3b7ddb","currentInquiryReplyDetail":"0xab8bbe3","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x73f4b5ff","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (41049869)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{}|0x35ff5683
+11:04:29.0 (41062192)|VARIABLE_ASSIGNMENT|[21]|this.currentInquiryReply|{}|0x307b032e
+11:04:29.0 (41073738)|STATEMENT_EXECUTE|[273]
+11:04:29.0 (41219516)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"BusinessLocationName":"","currentInquiryReply":"0x35ff5683","currentInquiryReplyDetail":"0xab8bbe3","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x73f4b5ff","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (41308100)|VARIABLE_ASSIGNMENT|[273]|this.saInquiry__c|"a0IN0000006RUllMAG"|0x35ff5683
+11:04:29.0 (41465151)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"BusinessLocationName":"","currentInquiryReply":"0x35ff5683","currentInquiryReplyDetail":"0xab8bbe3","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x73f4b5ff","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (41483810)|STATEMENT_EXECUTE|[277]
+11:04:29.0 (41486014)|STATEMENT_EXECUTE|[280]
+11:04:29.0 (41492083)|METHOD_ENTRY|[280]||System.UserInfo.getUserId()
+11:04:29.0 (41514584)|METHOD_EXIT|[280]||System.UserInfo.getUserId()
+11:04:29.0 (41529822)|HEAP_ALLOCATE|[280]|Bytes:4
+11:04:29.0 (41671799)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"BusinessLocationName":"","currentInquiryReply":"0x35ff5683","currentInquiryReplyDetail":"0xab8bbe3","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x73f4b5ff","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (41728575)|VARIABLE_ASSIGNMENT|[280]|this.User__c|"005N00000057PfOIAU"|0x35ff5683
+11:04:29.0 (41735603)|STATEMENT_EXECUTE|[281]
+11:04:29.0 (41882574)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"BusinessLocationName":"","currentInquiryReply":"0x35ff5683","currentInquiryReplyDetail":"0xab8bbe3","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x73f4b5ff","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (41938934)|VARIABLE_ASSIGNMENT|[281]|this.DailyReportDate__c|"2018-06-30T00:00:00.000Z"|0x35ff5683
+11:04:29.0 (41946496)|STATEMENT_EXECUTE|[282]
+11:04:29.0 (41950545)|HEAP_ALLOCATE|[282]|Bytes:13
+11:04:29.0 (42100241)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"BusinessLocationName":"","currentInquiryReply":"0x35ff5683","currentInquiryReplyDetail":"0xab8bbe3","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x73f4b5ff","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (42148804)|VARIABLE_ASSIGNMENT|[282]|this.Status__c|"WAITING_REPLY"|0x35ff5683
+11:04:29.0 (42156533)|STATEMENT_EXECUTE|[283]
+11:04:29.0 (42305772)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"BusinessLocationName":"","currentInquiryReply":"0x35ff5683","currentInquiryReplyDetail":"0xab8bbe3","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x73f4b5ff","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (42351036)|VARIABLE_ASSIGNMENT|[283]|this.Comment__c|""|0x35ff5683
+11:04:29.0 (42357933)|STATEMENT_EXECUTE|[285]
+11:04:29.0 (42361563)|HEAP_ALLOCATE|[285]|Bytes:625
+11:04:29.0 (42376545)|HEAP_ALLOCATE|[285]|Bytes:4
+11:04:29.0 (42843161)|SOQL_EXECUTE_BEGIN|[285]|Aggregations:0|SELECT Id, QuestionLabel__c, AnswerType__c, NumberPossibleReplies__c, IsShortReply__c, SortNo__c, IsRequired__c, Reply01Label__c, Reply02Label__c, Reply03Label__c, Reply04Label__c, Reply05Label__c, Reply06Label__c, Reply07Label__c, Reply08Label__c, Reply09Label__c, Reply10Label__c, Reply11Label__c, Reply12Label__c, Reply13Label__c, Reply14Label__c, Reply15Label__c, Reply16Label__c, Reply17Label__c, Reply18Label__c, Reply19Label__c, Reply20Label__c, Reply21Label__c, Reply22Label__c, Reply23Label__c, Reply24Label__c, Reply25Label__c FROM saInquiryDetail__c WHERE saInquiry__c = :tmpVar1 ORDER BY SortNo__c ASC NULLS FIRST
+11:04:29.0 (52192555)|SOQL_EXECUTE_END|[285]|Rows:1
+11:04:29.0 (52214212)|HEAP_ALLOCATE|[285]|Bytes:8
+11:04:29.0 (52236588)|HEAP_ALLOCATE|[285]|Bytes:282
+11:04:29.0 (52276356)|HEAP_ALLOCATE|[285]|Bytes:8
+11:04:29.0 (52294778)|VARIABLE_SCOPE_BEGIN|[285]|lsTmpQuest|List<saInquiryDetail__c>|true|false
+11:04:29.0 (52328859)|VARIABLE_ASSIGNMENT|[285]|lsTmpQuest|[{"Id":"a0JN0000008h2r2MAA","QuestionLabel__c":"Works?","AnswerType__c":"CHECKBOX","NumberPossibleReplies__c":2,"IsShortReply__c":true,"SortNo__c":0,"IsRequired__c":false,"Reply01Label__c":"Yes!","Reply02Label__c":"No!"}]|0x2ad289c6
+11:04:29.0 (52485070)|HEAP_ALLOCATE|[295]|Bytes:5
+11:04:29.0 (52504774)|HEAP_ALLOCATE|[295]|Bytes:40
+11:04:29.0 (52515907)|VARIABLE_SCOPE_BEGIN|[295]|quest|saInquiryDetail__c|true|false
+11:04:29.0 (52542439)|VARIABLE_ASSIGNMENT|[295]|quest|{"Id":"a0JN0000008h2r2MAA","QuestionLabel__c":"Works?","AnswerType__c":"CHECKBOX","NumberPossibleReplies__c":2,"IsShortReply__c":true,"SortNo__c":0,"IsRequired__c":false,"Reply01Label__c":"Yes!","Reply02Label__c":"No!"}|0x29164ff
+11:04:29.0 (52551156)|STATEMENT_EXECUTE|[295]
+11:04:29.0 (52553227)|STATEMENT_EXECUTE|[296]
+11:04:29.0 (52576289)|HEAP_ALLOCATE|[296]|Bytes:4
+11:04:29.0 (52634341)|VARIABLE_SCOPE_BEGIN|[296]|questReply|saInquiryReplyDetail__c|true|false
+11:04:29.0 (52648585)|VARIABLE_ASSIGNMENT|[296]|questReply|{}|0x3c3341d2
+11:04:29.0 (52654631)|STATEMENT_EXECUTE|[297]
+11:04:29.0 (52737810)|VARIABLE_ASSIGNMENT|[297]|this.saInquiryDetail__c|"a0JN0000008h2r2MAA"|0x3c3341d2
+11:04:29.0 (52745281)|STATEMENT_EXECUTE|[298]
+11:04:29.0 (52926988)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"BusinessLocationName":"","currentInquiryReply":"0x35ff5683","currentInquiryReplyDetail":"0xab8bbe3","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x73f4b5ff","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (52959533)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+11:04:29.0 (52967496)|STATEMENT_EXECUTE|[299]
+11:04:29.0 (53116208)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"BusinessLocationName":"","currentInquiryReply":"0x35ff5683","currentInquiryReplyDetail":"0xab8bbe3","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x73f4b5ff","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (53152111)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:-4
+11:04:29.0 (53169562)|HEAP_ALLOCATE|[295]|Bytes:5
+11:04:29.0 (53183589)|VARIABLE_ASSIGNMENT|[295]|quest|null|
+11:04:29.0 (53193919)|SYSTEM_MODE_EXIT|false
+11:04:29.0 (69240533)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (69270514)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+11:04:29.0 (69282293)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iCountComments|null|0x6a364be
+11:04:29.0 (69330281)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (69342929)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+11:04:29.0 (69350748)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iCountLikes|null|0x6a364be
+11:04:29.0 (69410247)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (69453847)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:76
+11:04:29.0 (69461667)|VARIABLE_SCOPE_BEGIN|[92]|this|saDailyReportCtrl|true|false
+11:04:29.0 (69654745)|VARIABLE_ASSIGNMENT|[92]|this|{"BusinessLocationName":"","currentInquiryReply":"0x35ff5683","currentInquiryReplyDetail":"0xab8bbe3","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x73f4b5ff","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (69675969)|SYSTEM_MODE_ENTER|false
+11:04:29.0 (69683097)|HEAP_ALLOCATE|[92]|Bytes:5
+11:04:29.0 (69688904)|STATEMENT_EXECUTE|[92]
+11:04:29.0 (69691097)|STATEMENT_EXECUTE|[92]
+11:04:29.0 (69696262)|SYSTEM_MODE_EXIT|false
+11:04:29.0 (69743950)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (69761047)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+11:04:29.0 (69765685)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+11:04:29.0 (69774901)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iTypeOfScreen|54|0x6a364be
+11:04:29.0 (69842340)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (69876143)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+11:04:29.0 (69882627)|VARIABLE_SCOPE_BEGIN|[80]|this|auMainTopCompCtrl|true|false
+11:04:29.0 (69918473)|VARIABLE_ASSIGNMENT|[80]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (69928835)|STATEMENT_EXECUTE|[80]
+11:04:29.0 (69930728)|STATEMENT_EXECUTE|[81]
+11:04:29.0 (69960491)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (69996092)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (70026547)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (70056712)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (70071004)|HEAP_ALLOCATE|[81]|Bytes:5
+11:04:29.0 (70138086)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (70169178)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+11:04:29.0 (70175743)|VARIABLE_SCOPE_BEGIN|[98]|this|auMainTopCompCtrl|true|false
+11:04:29.0 (70204679)|VARIABLE_ASSIGNMENT|[98]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (70213865)|STATEMENT_EXECUTE|[98]
+11:04:29.0 (70215607)|STATEMENT_EXECUTE|[99]
+11:04:29.0 (70240000)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (70253821)|HEAP_ALLOCATE|[99]|Bytes:5
+11:04:29.0 (70308948)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (70336694)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+11:04:29.0 (70342767)|VARIABLE_SCOPE_BEGIN|[102]|this|auMainTopCompCtrl|true|false
+11:04:29.0 (70370853)|VARIABLE_ASSIGNMENT|[102]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (70379117)|STATEMENT_EXECUTE|[102]
+11:04:29.0 (70380982)|STATEMENT_EXECUTE|[103]
+11:04:29.0 (70405377)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x21437c8a","iTypeOfScreen":54,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6a364be
+11:04:29.0 (70418381)|HEAP_ALLOCATE|[103]|Bytes:5
+11:04:29.0 (70498683)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (70592877)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (70690388)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (70854403)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (73209766)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (73297995)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (73933049)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (73974164)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:76
+11:04:29.0 (73983160)|VARIABLE_SCOPE_BEGIN|[141]|this|saDailyReportCtrl|true|false
+11:04:29.0 (74157751)|VARIABLE_ASSIGNMENT|[141]|this|{"BusinessLocationName":"","currentInquiryReply":"0x35ff5683","currentInquiryReplyDetail":"0xab8bbe3","dailyReportId":"a0IN0000006RUllMAG","dCurrentDay":"2018-06-30T00:00:00Z","dCurrentMonth":"2018-07-01T00:00:00Z","iCurrentDay":0,"idBusinessLocation":"","isIPhone":false,"isPreview":true,"lsBusinessLocation":"0x18bdf7f4","messageError":"","messageQuestion":"","mpQuestions":"0x73f4b5ff","myUser":"0x14868bc6","sourceOfTheCall":"preview"}|0x307b032e
+11:04:29.0 (74178576)|SYSTEM_MODE_ENTER|false
+11:04:29.0 (74185884)|HEAP_ALLOCATE|[142]|Bytes:5
+11:04:29.0 (74191565)|STATEMENT_EXECUTE|[141]
+11:04:29.0 (74193629)|STATEMENT_EXECUTE|[142]
+11:04:29.0 (74248799)|HEAP_ALLOCATE|[142]|Bytes:4
+11:04:29.0 (74259968)|HEAP_ALLOCATE|[142]|Bytes:1
+11:04:29.0 (74280386)|HEAP_ALLOCATE|[142]|Bytes:1
+11:04:29.0 (74294301)|HEAP_ALLOCATE|[142]|Bytes:1
+11:04:29.0 (74320016)|HEAP_ALLOCATE|[142]|Bytes:2
+11:04:29.0 (74334897)|HEAP_ALLOCATE|[142]|Bytes:9
+11:04:29.0 (74341254)|HEAP_ALLOCATE|[142]|Bytes:10
+11:04:29.0 (74348377)|SYSTEM_MODE_EXIT|false
+11:04:29.0 (74530233)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (74944788)|SYSTEM_MODE_ENTER|true
+11:04:29.0 (88936834)|VF_SERIALIZE_VIEWSTATE_BEGIN|066N0000000M4pW
+11:04:29.0 (92575939)|VF_SERIALIZE_VIEWSTATE_END
+11:04:29.95 (95799024)|CUMULATIVE_LIMIT_USAGE
+11:04:29.95 (95799024)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 5 out of 100
+  Number of query rows: 2 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+11:04:29.95 (95799024)|CUMULATIVE_LIMIT_USAGE_END
+
+11:04:29.0 (95835886)|CODE_UNIT_FINISHED|VF: /apex/sadailyreport
+11:04:29.0 (96584114)|EXECUTION_FINISHED
+x/sadailyreport
+11:04:29.0 (95967129)|EXECUTION_FINISHED

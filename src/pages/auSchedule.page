@@ -1,0 +1,1976 @@
+<apex:page controller="auScheduleCtrl" showHeader="false" sidebar="false" standardStylesheets="true" applyHtmlTag="false" applyBodyTag="false" cache="false" action="{!redirectIfNecessaryDesktop}" docType="html-5.0">
+
+<apex:form id="allForm">
+
+<html lang="ja">
+<head>
+  <meta charset="utf-8"/>
+  <title>auポータル</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  
+  <apex:stylesheet value="{!URLFOR($Resource.auResSchedule,'/css/sanitize.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResSchedule,'/css/common.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResSchedule,'/clockpicker/jquery-clockpicker.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResSchedule,'/css/style-calender.css')}"/>
+
+  <!-- libraries -->
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js/jquery-3.2.1.min.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'clockpicker/jquery-clockpicker.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'truncate/trunk8.js')}"/> 
+    
+  <!-- scripts -->
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js/jquery_calender-slider.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js/jquery_daily-schedule-input.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js/jquery_daily-schedule-item.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js/jquery_custom-dialog.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js/script_check_ua-ipad.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js/script_fitting.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js/script_calender.js')}"/> 
+
+  <apex:includescript value="{!URLFOR($Resource.auStyling,'/js/autosize.min.js')}"/> 
+  
+  <!-- 
+  【ルートレベルに抜き出した呼び出し口として】
+  アニメーションとインタラクションロジックについては、ルートレベルを汚染しないように作っておりますが、使い勝手を考慮し以下の回避手段を用意しました。
+  
+  script_exports.js に抜き出した呼び出し口をコールするためのメソッドを必要に応じて用意してください。
+  現状でリクエストのあった、script_calender_init() をご用意してあります。
+  script_calender_init() 等は、body onload="script_calender_init()" にて呼び出した場合は、
+  タイミングの都合により、先の処理が正しく呼び出せないことがあるようなので、このページ末にあるように、
+  ロード済後に呼び出してください。
+  
+  現状で抜き出しているメソッドは以下を用意してあります。
+  
+  ・横スライドアニメーションの制御
+  script_fitting.js/
+  auportal.exports.slideAtIndex(index) // 0（スライドの初期位置） <= index <= 1（左に１段スライドする）
+  
+  ・各ビューに対するカットインできる
+  script_calender.js/
+  auportal.exports.setView_01_01_01() // 01_01_01 相当画面にアニメーション遷移する
+  auportal.exports.setView_01_01_02() // 01_01_02 相当画面にアニメーション遷移する
+  auportal.exports.setView_01_01_03() // 01_01_03 相当画面にアニメーション遷移する
+  auportal.exports.setView_01_01_05() // 01_01_05 相当画面にアニメーション遷移する
+  auportal.exports.setView_01_01_06() // 01_01_06 相当画面にアニメーション遷移する
+  -->
+
+  <script>
+
+    var $j = jQuery.noConflict();
+
+    function jsShowDetailWithCreateEvent(e, param1, param2) {
+      jsCtrlShowDetailWithCreateEvent(param1, param2);
+    }
+
+    function jsShowDetailWithoutCreateEvent(e) {
+      jsCtrlShowDetailWithoutCreateEvent();
+    }
+
+    function jsShowDay(e, param1) {
+      jsCtrlShowDay(param1);
+    }
+
+    function jsShowOtherDepartment(e) {
+      jsCtrlShowOtherDepartment();
+    }
+
+    function jsDeleteEvent(param1) {
+      jsCtrlDeleteEvent(param1);
+    }
+
+    function jsAfterDayEventsSave() {
+
+        if ($j('.message-error').val().length > 0) {
+          alert($j('.message-error').val());
+          $j('.message-error').val("正しいデーターを入れてください。");
+        } else {
+          $j('.message-error').val("正しいデーターを入れてください。");
+          $j(".modal-dialog").CustomDialog("showModeless", "保存しました。", 3000);
+          setView_01_01_01();
+          jsAfterDayEventsSaveAfterSuccess();
+        }
+    }
+
+    function jsAfterPrepareConfirm() {
+
+        if ($j('.message-error').val().length > 0) {
+          alert($j('.message-error').val());
+          $j('.message-error').val("正しいデーターを入れてください。");
+        } else {
+          $j('.message-error').val("正しいデーターを入れてください。");
+          setView_01_02_08();
+
+          $j(".dailyreport-entry-form.confirm .btn-close").off("click");
+          $j(".dailyreport-entry-form.confirm .btn-close").on("click", function (e) {
+            setView_01_01_05();
+            setLogic_DailyScheduleItems();
+          });
+
+          $j(".dailyreport-entry-form.confirm .btn-cancel").off("click");
+          $j(".dailyreport-entry-form.confirm .btn-cancel").on("click", function (e) {
+            setView_01_01_05();
+            setLogic_DailyScheduleItems();
+          });
+        }
+
+    }
+
+    function jsAfterSendMail() {
+
+        if ($j('.message-error').val().length > 0) {
+          alert($j('.message-error').val());
+          $j('.message-error').val("正しいデーターを入れてください。");
+        } else {
+          $j('.message-error').val("正しいデーターを入れてください。");
+          $j(".modal-dialog").CustomDialog("showModeless", "送信しました。", 3000);
+          setView_01_01_01();
+          jsAfterDayEventsSaveAfterSuccess();
+        }
+    }
+
+    function jsCheckError() {
+        if ($j('.message-error').val().length > 0) {
+          alert($j('.message-error').val());
+          $j('.message-error').val("正しいデーターを入れてください。");
+        } else {
+          $j('.message-error').val("正しいデーターを入れてください。");
+        }
+    }
+
+    function jsTruncate() {
+      $j('.truncate').trunk8();
+    }
+
+  </script>
+
+  <style type="text/css">
+    .select-category .col-category2 a{
+      -webkit-user-drag: none;
+    }
+
+    .isEvent .description {
+      display: none;
+    }
+
+    .isNotEvent .event-list {
+      display: none;
+    }
+
+    ul li, ol li {
+      margin-left: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      display: inherit;
+    }
+
+    body a:hover {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .force-border {
+      border-style: groove;
+    }
+
+    body {
+      font-size: 100%;
+    }
+    .clockpicker-button {
+      font-size: 150% !important;
+    }
+
+/*
+    .shop-name select {
+      height: 25px;
+      box-sizing: border-box;
+      padding: 0 5px;
+      border: 1px solid #b3b3b3;
+      border-radius: 3px;
+      -webkit-appearance: none;
+      font-size: 12px;
+      font-size: 1.2rem;      
+      vertical-align: middle;
+      margin-top: 2px;
+    }
+*/    
+    .dailyreport-item-body .related-shops .shop-name input {
+      width: calc(100% - 20px);
+      // margin-left: 1rem;
+      vertical-align: middle;
+    }
+
+    .dailyreport-entry-form.confirm .confirm-send-to {
+      padding-top: 2px;
+      padding-bottom: 10px;
+    }
+    .dailyreport-entry-form.confirm .col-bcc {
+      padding-bottom: 0;
+    }
+
+    .dailyreport-entry-form.confirm div.dailyreport-items {
+      height: auto;
+    }
+
+    .dailyreport-confirm-body {
+      overflow: scroll;
+    }
+
+    .dailyreport-entry-form footer .btn-send {
+      width: 152px;
+    }
+    .dailyreport-entry-form footer .btn-setting-send-to {
+      right: 155px;
+    }
+    .dailyreport-send-to {
+      padding-right: 200px;
+    }
+
+    .email-title-title {
+      position: absolute;
+      text-align: left;
+      vertical-align: middle;
+      padding-left: 19px;
+      line-height: 30px;
+      color: #fff;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+
+    .dailyreport-confirm-body {
+        /* Used for scrollbar bottom in confirm screen */
+        padding-bottom: 55px
+    }
+
+/*
+    .email-title-title {
+      height: 100%;
+      position: absolute;
+      text-align: left;
+      vertical-align: middle;
+      line-height: 70px;
+      padding-left: 13px;
+      color: #fff;
+      font-size: 1.7rem;
+    }
+    .dailyreport-entry-form.confirm header .email-title {
+      padding-left: 60px;
+    }
+*/
+
+    .daily-schedule-timeindex li {
+      color: #888;
+    }
+
+    .locator p {
+      font-size: 1.8rem;
+    }
+
+    .daily-schedule-item {
+      border-top: 1px solid #fff;
+    }
+
+    li.div-1 > a {
+      padding-right: 120px;
+    }
+
+    html {
+      font-family:  -apple-system, BlinkMacSystemFont, Meiryo, "Helvetica Neue", "Original Yu Gothic", "Yu Gothic", YuGothic, Verdana, "M+ 1p", sans-serif !important;
+    }
+
+  body, td, h1, h2, h3, h4, h5, h6, body .x-btn button, body .btn, body .btnImportant, body .btnDisabled, body .btnCancel, .messages .msgContent .actionBtn, body .menuButton .menuButtonButton, body .menuButton .menuButtonMenu a, body .menuButton .menuButtonMenu input.theOption, .mCalendar .header td, body .miniTab, .welcomeMsg h2, body .dr-tbpnl-cntnt, .reportTab .miniTab .links, body.lookupTab div.srch, body.ideaTab #ideaSubtabs {
+      font-family:  -apple-system, BlinkMacSystemFont, Meiryo, "Helvetica Neue", "Original Yu Gothic", "Yu Gothic", YuGothic, Verdana, "M+ 1p", sans-serif !important;
+  }
+
+
+    .related-files {
+      margin: 10px 0;
+      margin-top: 10px;
+      margin-right: 0px;
+      margin-bottom: 10px;
+      margin-left: 0px;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    .attachInput {
+      height: 1rem;
+      width: 1rem;
+      position: absolute;
+      left: 0.5rem;
+      opacity: 0;
+      overflow: hidden;
+   }
+
+   .attachInputLabel {
+    font-size: 15px;
+    margin-bottom: 10px;
+   }
+
+    .button--delete-list {
+/*
+      width: 5.75rem;
+      height: 2.5rem;
+*/
+      background-color: #000;
+      color: #fff;
+/*
+      font-size: .833rem;
+      padding: .8rem;
+      line-height: 1;
+*/
+      background-image: none;
+      border-width: 0;
+      font-size: 1rem;
+      line-height: 2;
+
+    }
+
+    .list--attachment {
+      font-size: 1rem;
+      line-height: 2;
+    }
+
+    .export-csv-container {
+      display: inline-block;
+      float: right;
+    }
+
+
+    .export-csv {
+      display: inline-block;
+      width: 130px;
+      height: 25px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      text-align: center;
+      font-size: 15px;
+      font-size: 1.5rem;
+      line-height: 25px;
+      color: #ffffff;
+      background-color: #ed5500;
+    }
+
+    .export-csv:hover {
+      color: #ffffff;
+      background-color: #f17733;
+    }
+
+    
+    .list--attachment {
+      height: 2.5rem;
+      padding-left: 1rem;
+      background-color: #eee;
+      border-bottom: 1px solid #fff;
+      line-height: 2.5;
+      overflow: hidden;
+    }
+
+    .list--attachment .button--delete-list {
+      float: right;
+    }
+
+    .isLink {
+      cursor: pointer;
+      cursor: hand;      
+    }
+
+    .linkPutInTop {
+      float: right;
+      margin-right: 1rem
+    }
+
+    .select-category .col-category3 {
+      float: right;
+      clear: none;
+      margin: auto;
+      margin-top: 16px;
+      margin-right: 20px;
+      margin-bottom: 20px;
+      width: 160px;
+    }
+
+    .select-category {
+    height: 570px;
+    }
+
+  </style>
+
+</head>
+
+<body class="page-schedule">
+
+  <apex:inputHidden id="messageError" html-class="message-error" value="{!messageError}" />
+  <apex:inputHidden html-class="otherDepartmentCode" value="{!otherDepartmentCode}" />
+
+  <apex:actionFunction name="jsCtrlShowDetailWithCreateEvent"
+                       action="{!showDetailWithCreateEvent}"
+                       rerender="pnlCalendar, pnlDailyScheduleItems, pnlDailyReportItems"
+                       oncomplete="setLogic_DailyScheduleItems();setView_01_01_05();setLogic_MonthlyCalendar();$j('.clockpicker-begin').attr('readonly', true);$j('.clockpicker-end').attr('readonly', true);$j('.clockpicker-begin').clockpicker();$j('.clockpicker-end').clockpicker();setLogic_ListEvents();">
+    <apex:param name="firstParam" assignTo="{!createEventParam1}" value="" />
+    <apex:param name="secondParam" assignTo="{!createEventParam2}" value="" />
+  </apex:actionFunction>
+
+  <apex:actionFunction name="jsCtrlShowDetailWithoutCreateEvent"
+                       action="{!dummyAction}"
+                       rerender="pnlCalendar, pnlDailyScheduleItems, pnlDailyReportItems"
+                       oncomplete="setLogic_DailyScheduleItems();setLogic_MonthlyCalendar();$j('.clockpicker-begin').attr('readonly', true);$j('.clockpicker-end').attr('readonly', true);$j('.clockpicker-begin').clockpicker();$j('.clockpicker-end').clockpicker();setLogic_ListEvents();"/>
+
+  <apex:actionFunction name="jsCtrlShowDay"
+                       action="{!showDay}"
+                       rerender="pnlCalendar, pnlDailyScheduleItems, pnlDailyReportItems"
+                       oncomplete="setLogic_DailyScheduleItems();setLogic_MonthlyCalendar();$j('.clockpicker-begin').attr('readonly', true);$j('.clockpicker-end').attr('readonly', true);$j('.clockpicker-begin').clockpicker();$j('.clockpicker-end').clockpicker();setLogic_ListEvents();">
+    <apex:param name="firstParam" assignTo="{!showDayParam1}" value="" />
+  </apex:actionFunction>
+
+  <apex:actionFunction name="jsCtrlDeleteEvent"
+                       action="{!doDeleteCurrentEvent}"
+                       rerender="pnlCalendar, pnlDailyScheduleItems, pnlDailyReportItems"
+                       oncomplete="setLogic_DailyScheduleItems();setLogic_MonthlyCalendar();$j('.clockpicker-begin').attr('readonly', true);$j('.clockpicker-end').attr('readonly', true);$j('.clockpicker-begin').clockpicker();$j('.clockpicker-end').clockpicker();setLogic_ListEvents();">
+    <apex:param name="firstParam" assignTo="{!deleteEventParam1}" value="" />
+  </apex:actionFunction>
+
+  <apex:actionFunction name="jsCtrlShowOtherDepartment"
+                       action="{!refreshOtherDepartment}"
+                       rerender="usrOtherGrp"
+                       oncomplete="jsTruncate();"/>
+
+  <apex:actionFunction name="jsAfterDayEventsSaveAfterSuccess"
+                       action="{!dummyAction}"
+                       rerender="pnlCalendar, pnlDailyScheduleItems, pnlDailyReportItems"
+                       oncomplete="setLogic_MonthlyCalendar();setLogic_DailyScheduleItems();$j('.clockpicker-begin').attr('readonly', true);$j('.clockpicker-end').attr('readonly', true);$j('.clockpicker-begin').clockpicker();$j('.clockpicker-end').clockpicker();setLogic_ListEvents();" />
+
+  <div class="protect-screen hide"></div>
+  
+  <!-- template-popup -->
+  <div class="modal-dialog hide"><p>ダイアログメッセージ</p><div class="btn-cancel"><a href="#">キャンセル</a></div><div class="btn-ok"><a href="#">OK</a></div></div>
+
+  <!-- 01-01-04(typ.) -->
+  <section class="select-category modal-win hide">
+    <header><a href="#" class="btn-close">閉じる</a></header>
+    <div class="select-category-body">
+      <div class="col-category1">
+        <h5>社外</h5>
+        <ul>
+          <li><a class="select-category-link" href="#"><span class="category1 icon icon2"></span><span class="label icon2">代理店商談</span></a></li>
+          <li><a class="select-category-link" href="#"><span class="category1 icon icon1"></span><span class="label icon1">拠点フォロー</span></a></li>
+          <li><a class="select-category-link" href="#"><span class="category1 icon icon3"></span><span class="label icon3">イベント対応</span></a></li>
+          <li><a class="select-category-link" href="#"><span class="category1 icon icon7"></span><span class="label icon7">移動</span></a></li>
+          <li><a class="select-category-link" href="#"><span class="category1 icon icon8"></span><span class="label icon8">接待・接受</span></a></li>
+          <li><a class="select-category-link" href="#"><span class="category1 icon icon9"></span><span class="label">店長会議</span></a></li>
+          <li><a class="select-category-link" href="#"><span class="category1 icon icon4"></span><span class="label">異業種連携</span></a></li>
+          <li><a class="select-category-link" href="#"><span class="category1 icon icon5"></span><span class="label">他キャリア視察</span></a></li>
+          <li><a class="select-category-link" href="#"><span class="category1 icon icon6"></span><span class="label">サンプリング</span></a></li>
+        </ul>
+      </div>
+      <div class="col-category2">
+        <h5>社内</h5>
+        <ul>
+          <li><a class="select-category-link" href="#"><span class="category2 icon icon2"></span><span class="label21">会議</span><span class="label22">ミーティング</span></a></li>
+          <li><a class="select-category-link" href="#"><span class="category2 icon icon3"></span><span class="label">社内行事</span></a></li>
+          <li><a class="select-category-link" href="#"><span class="category2 icon icon4"></span><span class="label21">資料制作</span><span class="label22">事務処理</span></a></li>
+          <li><a class="select-category-link" href="#"><span class="category2 icon icon5"></span><span class="label21">ヒアリング</span><span class="label22">アンケート</span></a></li>
+          <li><a class="select-category-link" href="#"><span class="category2 icon icon6"></span><span class="label">架電</span></a></li>
+          <li><a class="select-category-link" href="#"><span class="category2 icon icon7"></span><span class="label">資格試験</span></a></li>
+          <li><a class="select-category-link" href="#"><span class="category2 icon icon8"></span><span class="label">店舗研修</span></a></li>
+        </ul>
+      </div>
+      <div class="col-category3">
+        <h5>その他</h5>
+        <ul>
+          <li><a class="select-category-link" href="#"><span class="category3 icon icon1"></span><span class="label">その他</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01-03-02(typ.) -->
+  <section class="setting-send-to top-view modal-win hide">
+    <header><h4 class="setting-title">送信先詳細設定</h4><a href="#" class="btn-close">閉じる</a></header>
+    <div class="setting-content-body">
+      <div class="todoform">
+
+        <apex:inputHidden html-class="currentMailList" value="{!currentMailList}" />
+
+        <div class="select-group">
+          <apex:selectList id="patternSelect" 
+                           value="{!patternData}"
+                           size="1">
+            <apex:selectOptions value="{!selectPattern}"/>
+          </apex:selectList>
+
+          <apex:commandLink value="表示"
+                            action="{!acquisition}"
+                            styleClass="btn-select-group ui-color-1"
+                            reRender="toTextArea,ccTextArea,bccTextArea"
+                            oncomplete="jsTruncate();"/>
+        </div>
+        
+        <div class="col-to">
+          <h5>To</h5>
+          <apex:outputPanel id="toTextArea" styleclass="address-list-to" layout="block">
+            <ul>
+              <apex:repeat value="{!mailToAddressList}" var="usr">
+                <li class="mailRow" style="{!IF(usr.isDeleted, 'display: none;', '')}">
+
+                  <apex:inputHidden html-class="mailIsDeleted" value="{!usr.isDeleted}" />
+
+                  <!-- Note &nbsp; is necessary because of a bug in trunk8 which does not cut before the end of the 1st work -->
+                  <span class="name truncate" style="padding-left: 0">&nbsp; {!usr.userName}</span>
+                  <span class="email truncate" style="padding-left: 0;width: 210px;">&nbsp; {!usr.email}</span>
+
+                  <apex:commandLink value="削除"
+                                    styleclass="btn-delete"
+                                    onclick="if (confirm('このデータを削除してよろしいですか？') == true) {$j(this).closest('.mailRow').find('.mailIsDeleted').val(true);}"
+                                    rerender="toTextArea"
+                                    oncomplete="jsTruncate();"/>
+
+                </li>
+              </apex:repeat>
+            </ul>
+          </apex:outputPanel>
+
+          <apex:inputTextarea id="toInputArea"
+                              value="{!mailToManualList}"
+                              style="font-size: 11px; {!IF(classInputManualEmailTo == 'error', 'border-color: red;', '')}" />
+
+          <div class="controllers">
+
+            <a href="#" class="btn-organization ui-color-2" mailList="To">組織から参照</a>
+
+            <apex:commandLink value="追加"
+                              action="{!addAddressManualTo}"
+                              styleClass="btn-add ui-color-1"
+                              reRender="messageError,toTextArea,toInputArea"
+                              oncomplete="jsTruncate();jsCheckError();"/>
+          </div>
+        
+        </div>
+
+        <div class="col-cc">
+          <h5>Cc</h5>
+          <apex:outputPanel id="ccTextArea" styleclass="address-list-cc" layout="block">
+            <ul>
+              <apex:repeat value="{!mailCcAddressList}" var="usr">
+                <li class="mailRow" style="{!IF(usr.isDeleted, 'display: none;', '')}">
+
+                  <apex:inputHidden html-class="mailIsDeleted" value="{!usr.isDeleted}" />
+
+                  <!-- Note &nbsp; is necessary because of a bug in trunk8 which does not cut before the end of the 1st work -->
+                  <span class="name truncate" style="padding-left: 0">&nbsp; {!usr.userName}</span>
+                  <span class="email truncate" style="padding-left: 0;width: 210px;">&nbsp; {!usr.email}</span>
+
+                  <apex:commandLink value="削除"
+                                    styleclass="btn-delete"
+                                    onclick="if (confirm('このデータを削除してよろしいですか？') == true) {$j(this).closest('.mailRow').find('.mailIsDeleted').val(true);}"
+                                    rerender="ccTextArea"
+                                    oncomplete="jsTruncate();"/>
+                </li>
+              </apex:repeat>
+            </ul>
+          </apex:outputPanel>
+
+          <apex:inputTextarea id="ccInputArea"
+                              value="{!mailCcManualList}"
+                              style="font-size: 11px; {!IF(classInputManualEmailCc == 'error', 'border-color: red;', '')}" />
+
+          <div class="controllers">
+            <a href="#" class="btn-organization ui-color-2" mailList="Cc">組織から参照</a>
+
+            <apex:commandLink value="追加"
+                              action="{!addAddressManualCc}"
+                              styleClass="btn-add ui-color-1"
+                              reRender="messageError,ccTextArea,ccInputArea"
+                              oncomplete="jsTruncate();jsCheckError();"/>
+          </div>
+        </div>
+        <div class="col-bcc">
+          <h5>Bcc</h5>
+
+          <apex:outputPanel id="bccTextArea" styleclass="address-list-bcc" layout="block">
+            <ul>
+              <apex:repeat value="{!mailBccAddressList}" var="usr">
+                <li class="mailRow" style="{!IF(usr.isDeleted, 'display: none;', '')}">
+
+                  <apex:inputHidden html-class="mailIsDeleted" value="{!usr.isDeleted}" />
+
+                  <!-- Note &nbsp; is necessary because of a bug in trunk8 which does not cut before the end of the 1st work -->
+                  <span class="name truncate" style="padding-left: 0">&nbsp; {!usr.userName}</span>
+                  <span class="email truncate" style="padding-left: 0;width: 210px;">&nbsp; {!usr.email}</span>
+
+                  <apex:commandLink value="削除"
+                                    styleclass="btn-delete"
+                                    onclick="if (confirm('このデータを削除してよろしいですか？') == true) {$j(this).closest('.mailRow').find('.mailIsDeleted').val(true);}"
+                                    rerender="bccTextArea"
+                                    oncomplete="jsTruncate();"/>
+                </li>
+              </apex:repeat>
+            </ul>
+          </apex:outputPanel>
+
+          <apex:inputTextarea id="bccInputArea"
+                              value="{!mailBccManualList}"
+                              style="font-size: 11px; {!IF(classInputManualEmailBcc == 'error', 'border-color: red;', '')}" />
+
+          <div class="controllers">
+            <a href="#" class="btn-organization ui-color-2" mailList="Bcc">組織から参照</a>
+
+            <apex:commandLink value="追加"
+                              action="{!addAddressManualBcc}"
+                              styleClass="btn-add ui-color-1"
+                              reRender="messageError,bccTextArea,bccInputArea"
+                              oncomplete="jsTruncate();jsCheckError();"/>
+          </div>
+
+        </div>
+
+        <div class="setting-controllers">
+          <a href="#" class="btn-save-as ui-color-3">この送信グループを別名で保存</a>
+
+          <apex:commandLink value="この内容で設定"
+                            action="{!patternSaveFuncSameName}"
+                            styleclass="btn-done ui-color-1"
+                            rerender="patternSelectToSend, patternSelect" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01-03-03(typ.) -->
+  <section class="setting-send-to save-as modal-win hide">
+    <header><h4 class="setting-title">名前をつけて保存</h4><a href="#" class="btn-close">閉じる</a></header>
+    <div class="setting-content-body">
+      <div class="todoform">
+        <h5>送信グループ名</h5>
+        <div class="filename">
+          <apex:inputText value="{!changePatternTextNewName}"
+                          styleClass="force-border" />
+        </div>
+
+        <div class="setting-controllers">
+
+          <apex:commandLink value="作成"
+                            action="{!patternSaveFuncOtherName}"
+                            styleclass="btn-save ui-color-1"
+                            rerender="patternSelectToSend, patternSelect" />
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- 01-03-05(typ.) -->
+  <section class="setting-send-to select-members-own-department modal-win hide">
+    <header><h4 class="setting-title">組織から参照</h4><a href="#" class="btn-close">閉じる</a></header>
+    <div class="sub-header">
+      <a href="#" class="btn-other-departments ui-color-3">他部署</a>
+      <h5>{!mpOrganization[currentUserOrganization]}</h5>
+    </div>
+    <div class="setting-content-body">
+      <div class="todoform">
+        <apex:outputPanel id="usrOwnGrp" styleclass="members-list" layout="block">
+          <ul>
+            <apex:repeat value="{!lsUsrOwnGroup}" var="usr">
+              <li>
+                <label>
+                  <apex:inputField value="{!usr.TechnicalAlwaysFalse__c}"
+                                   styleClass="checkbox" />
+                  <span class="checkbox-label">
+                    <span class="name truncate">{!usr.KDDIEmployeeId__c}</span>
+                    <span class="position truncate">{!usr.DisplayedUsernameFormula__c}</span>
+                  </span>
+                </label>
+              </li>
+            </apex:repeat>
+          </ul>
+        </apex:outputPanel>
+        <div class="setting-controllers">
+          <apex:commandLink value="追加"
+                            action="{!addAddressOwnOrg}"
+                            styleclass="btn-add ui-color-1"
+                            rerender="toTextArea, ccTextArea, bccTextArea, usrOwnGrp" 
+                            oncomplete="jsTruncate();"/>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- 01-03-06(typ.) -->
+  <section class="setting-send-to other-department-list modal-win hide">
+    <header><h4 class="setting-title">組織から参照</h4><a href="#" class="btn-close">閉じる</a></header>
+    <div class="sub-header"><a href="#" class="btn-cancel ui-color-3">戻る</a><h5>他部署</h5></div>
+    <div class="setting-content-body">
+      <div class="todoform">
+        <div class="organization-list">
+          <ul>
+            <apex:repeat value="{!lsOrganization}" var="orgKey">
+              <li style="{!IF(orgKey == currentUserOrganization, 'display: none;', '')}">
+
+                <apex:commandLink value="{!mpOrganization[orgKey]}"
+                                  action="{!dummyAction}"
+                                  html-departmentCode="{!orgKey}"
+                                  rerender="dummy" />
+<!--                <a href="#" class="truncate" departmentCode="{!orgKey}" >{!mpOrganization[orgKey]}</a> -->
+              </li>
+            </apex:repeat>
+          </ul>
+        </div>
+        <div class="setting-controllers">
+<!--          <a href="#" class="btn-add ui-color-1">追加</a> -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- 01-03-07(typ.) -->
+  <section class="setting-send-to select-members-other-departments modal-win hide">
+    <header><h4 class="setting-title">組織から参照</h4><a href="#" class="btn-close">閉じる</a></header>
+    <div class="sub-header"><a href="#" class="btn-cancel ui-color-3">戻る</a>
+      <h5 class="otherDepartmentTitle"></h5>
+    </div>
+    <div class="setting-content-body">
+      <div class="todoform">
+
+        <apex:outputPanel id="usrOtherGrp" styleclass="members-list" layout="block">
+          <ul>
+            <apex:repeat value="{!lsUsrOtherGroup}" var="usr">
+              <li>
+                <label>
+                  <apex:inputField value="{!usr.TechnicalAlwaysFalse__c}"
+                                   styleClass="checkbox" />
+                  <span class="checkbox-label">
+                    <span class="name truncate">{!usr.KDDIEmployeeId__c}</span>
+                    <span class="position truncate">{!usr.DisplayedUsernameFormula__c}</span>
+                  </span>
+                </label>
+              </li>
+            </apex:repeat>
+          </ul>
+        </apex:outputPanel>
+
+        <div class="setting-controllers">
+
+          <apex:commandLink value="追加"
+                            action="{!addAddressOtherOrg}"
+                            styleclass="btn-add ui-color-1"
+                            rerender="toTextArea, ccTextArea, bccTextArea, usrOwnGrp" 
+                            oncomplete="jsTruncate();"/>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- template-body -->
+  <div class="document-container">
+
+		<c:auMainTopComp2 typeOfScreen="{!typeOfScreen}" />
+
+<!--
+    <header class="document-header">
+      <div class="logo"><h1><a href="#">auポータルトップ</a></h1></div>
+      <div class="left"><img src="images/placeholder-header1.png" style="position: absolute; right: 0; top: 0;"></div>
+    <div class="right"><img src="images/placeholder-header2.png" style="position: absolute; left: 0; top: 0;"><img src="images/placeholder-header3.png" style="position: absolute; right: 0; top: 0;"></div>
+    </header>
+-->
+    <div class="document-contents">
+
+      <div class="slide-container">
+        <div class="col-1 left">
+          <!-- #View 01-01-01(typ.) -->
+          <section class="monthly-calender hide">
+	          <apex:outputPanel id="pnlCalendar">
+	            <header class="monthly-calender-header">
+	              <h2><time>{!CurrentMonthLabel}</time></h2>
+	              <ul class="monthly-calender-nav">
+		              <li class="item-prev">
+                    <apex:commandLink value="先月" 
+			              									action="{!gotoPreviousMonth}"
+			              									rerender="pnlCalendar"
+			              									oncomplete="setLogic_MonthlyCalendar();"/>
+                  </li>
+		              <li class="item-next">
+                    <apex:commandLink value="翌月" 
+			              									action="{!gotoNextMonth}"
+			              									rerender="pnlCalendar"
+			              									oncomplete="setLogic_MonthlyCalendar();"/>
+                  </li>
+	              </ul>
+	            </header>
+	            <div class="monthly-calender-body">
+	              <table>
+	                <caption>カレンダー</caption>
+	                <thead>
+	                  <tr>
+	                    <th>日</th>
+	                    <th>月</th>
+	                    <th>火</th>
+	                    <th>水</th>
+	                    <th>木</th>
+	                    <th>金</th>
+	                    <th>土</th>
+	                  </tr>
+	                </thead>
+	                <tbody>
+
+	                    <!-- #DynamicItem 
+
+	                    ◆カレンダーアイテム◆
+
+	                    <td class="calender-item %sunday-saturday% %send% %today% %selected% %blank%"><a href="#"><time>%date%</time><span class="icon-send">送信済</span><span class="icon-categories">%report-item-icons%</span></a></td>
+
+	                    %sunday-saturday%
+	                    sunday [日曜日のセルに指定]
+	                    なし [平日のセル]
+	                    saturday [土曜日のセルに指定]
+
+	                    %send%
+	                    send [送信済の日の場合に指定]
+	                    なし [送信済ではない場合]
+
+	                    %today%
+	                    today [本日の日付の場合に指定]
+	                    なし [本日ではない場合のセル]
+
+	                    %selected%
+	                    selected [選択中の場合に指定（右ペインに日のスケジュールが標示されている日）]
+	                    なし [選択していない通常のセル]
+
+	                    %blank%
+	                    blank [日にちの設定がないセルに指定]
+	                    なし [カレンダーの日にちの設定があるセルの場合]
+
+	                    ※日にちの設定がないセルの場合の例）
+
+	                    日曜
+	                    <td class="calender-item sunday blank"><a href="#"><time>-</time><span class="icon-send">送信済</span><span class="icon-categories"></span></a></td>
+
+	                    平日
+	                    <td class="calender-item blank"><a href="#"><time>-</time><span class="icon-send">送信済</span><span class="icon-categories"></span></a></td>
+
+	                    土曜
+	                    <td class="calender-item saturday blank"><a href="#"><time>-</time><span class="icon-send">送信済</span><span class="icon-categories"></span></a></td>
+
+	                    ----------
+
+	                    %report-item-icons%
+	                    その日に登録されている日報のカテゴリを表すアイコンに対応する以下のタグを指定
+	                    ※最大で10こまで
+
+	                      <span class="%category-no%"></span>
+
+	                      %category-no%
+	                      category1 [カテゴリー１番目（社外）の日報の場合に指定]
+	                      category2 [カテゴリー２番目（社内）の日報の場合に指定]
+	                      category3 [カテゴリー３番目（その他）の日報の場合に指定]
+
+	                    -->
+
+										<apex:repeat value="{!lsDaysOfMonth}" var="varWeek" >
+			                <!-- week x -->
+			                <tr>
+								        <apex:repeat value="{!varWeek}" var="varDay">
+				                  <td class="calender-item {!IF(varDay.isBlank, 'blank', '')} {!IF(varDay.isToday, 'today', '')} {!IF(varDay.isSelected, 'selected', '')} {!IF(varDay.isSent, 'send', '')} {!IF(varDay.isSunday, 'sunday', '')} {!IF(varDay.isSaturday, 'saturday', '')}"><a href="#"><time>{!IF(varDay.isBlank, '', varDay.dayDate)}</time><span class="icon-send">送信済</span><span class="icon-categories">
+										        <apex:repeat value="{!varDay.lsEvt}" var="varEvt">
+															<span class="{!varEvt.categoryClsNm} {!varEvt.iconClsNm}"></span>
+											      </apex:repeat>
+				                  </span></a></td>
+			                  </apex:repeat>
+			                </tr>
+		                </apex:repeat>
+
+	                </tbody>
+	              </table>
+	            </div>
+	          </apex:outputPanel>
+          </section>
+        </div>
+        <div class="col-2 right">
+          <!-- #View 01-01-01(typ.) -->
+          <section class="calender-description hide">
+            <div class="locator"><p>日付を選択し、日々の活動記録を作成することができます。<br></br>すでに記録されている日付を選択することで、<br></br>活動記録の閲覧・編集が可能です。</p></div>
+          </section>
+          <!-- #View 01-01-06(typ.) -->
+          <outputPanel class="daily-schedule hide">
+            <header class="daily-schedule-header">
+              <h2><time></time></h2>
+            </header>
+            <div class="daily-schedule-body">
+              <div class="daily-schedule-rule"><span class="line"></span></div>
+	              <ol class="daily-schedule-items">
+              <apex:outputPanel id="pnlDailyScheduleItems">
+	                <!-- #DynamicItem
+
+	                ◆登録済アイテム◆
+
+	                <li class="daily-schedule-item %category% %beginTime% %hour%"></li>
+
+	                %category%
+	                category1 [社外], category2 [社内], category3 [その他]
+
+	                %beginTime%
+	                t0800 [8:00] ～ t2300 [23:00]
+
+	                %hour%
+	                hour1 [1時間] ～ hour16 [16時間]
+	                ※ 08:00 開始時　最大 16時間
+	                ※ 23:00 開始時　最大 1時間
+
+	                -->
+
+<!--
+	                <li class="daily-schedule-item category1 icon icon1 begin0800 end1000"><a href="#">拠点フォロー</a></li>
+	                <li class="daily-schedule-item category2 icon icon4 begin1500 end1600"><a href="#">資料作成・事務処理</a></li>
+	                <li class="daily-schedule-item category3 icon icon1 begin1800 end1900"><a href="#">その他</a></li>
+	                <li class="daily-schedule-item category0 icon begin2000 end2100"><a href="#">未選択</a></li>
+-->
+
+									<apex:repeat value="{!clsDayCurrentDay}" var="varEvent" >
+		                <li class="daily-schedule-item {!varEvent.categoryClsNm} {!varEvent.clsNmTimeStart} {!varEvent.clsNmTimeEnd} {!varEvent.clsNmDiv} {!varEvent.clsNmCol} icon {!varEvent.iconClsNm} sortNo_{!varEvent.sortNo}" style="{!IF(varEvent.isDeleted, 'display: none;', '')}">
+ 	                  	<a href="#" style="-webkit-user-drag: none;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">{!IF(!varEvent.evt.IsPrivate, '', '(非公開) ')}{!varEvent.evtTitle}</a>
+                      <span class="time">{!varEvent.nmTimeFull}</span>
+   	                </li>
+
+                <!-- div-1 col-1 -->
+
+									</apex:repeat>                
+
+              </apex:outputPanel>
+	              </ol>
+              <div class="daily-schedule-timeindex">
+                <ol>
+                  <li><time>6:00</time></li>
+                  <li><time>7:00</time></li>
+                  <li><time>8:00</time></li>
+                  <li><time>9:00</time></li>
+                  <li><time>10:00</time></li>
+                  <li><time>11:00</time></li>
+                  <li><time>12:00</time></li>
+                  <li><time>13:00</time></li>
+                  <li><time>14:00</time></li>
+                  <li><time>15:00</time></li>
+                  <li><time>16:00</time></li>
+                  <li><time>17:00</time></li>
+                  <li><time>18:00</time></li>
+                  <li><time>19:00</time></li>
+                  <li><time>20:00</time></li>
+                  <li><time>21:00</time></li>
+                  <li><time>22:00</time></li>
+                  <li><time>23:00</time></li>
+                  <li><time>24:00</time></li>
+                </ol>
+              </div>
+            </div>
+          </outputPanel>
+        </div>
+        <div class="col-3 right">
+          <!-- #View 01-01-02(typ.) -->
+          <section class="daily-description hide">
+            <header>
+              <div class="btn-save ui-color-1 disable"><a href="#">保存</a></div>
+              <div class="email-title"><!--<input type="text" value="" placeholder="日報送信タイトル入力欄"></input>--></div>
+              <div class="btn-close"><a href="#">閉じる</a></div>
+            </header>
+          <div class="locator"><p>カレンダーをドラッグして時間から入力するか、<br></br>長押しをして項目から入力する。</p></div>
+          </section>
+          <!-- #View 01-01-03(typ.) -->
+          <section class="dailyreport-entry-form edit hide">
+            <div class="todoform">
+              <header>
+                <div class="btn-save ui-color-1">
+                  <apex:commandLink value="保存"
+                                    action="{!saveDayEventsWithRefresh}"
+                                    rerender="messageError, lkupShops"
+                                    oncomplete="jsAfterDayEventsSave();" />
+                </div>
+
+                <div class="email-title"><!--<input type="text" value="" placeholder="日報送信タイトル入力欄"></input>--></div>
+                <div class="btn-close"><a href="#">閉じる</a></div>
+              </header>
+              <div class="dailyreport-entry-form-body">
+                <apex:outputPanel id="pnlDailyReportItems">
+
+                  <ul class="dailyreport-items">
+
+                    <apex:repeat value="{!clsDayCurrentDay}" var="varEvent" >
+
+                      <li class="dailyreport-item" style="{!IF(varEvent.isDeleted, 'display: none;', '')}">
+                        <div class="dailyreport-item-header" sortNo="{!varEvent.sortNo}">
+
+                          <apex:inputHidden html-class="evtCategory" value="{!varEvent.categoryClsNm}" />
+                          <apex:inputHidden html-class="evtIcon" value="{!varEvent.iconClsNm}" />
+                          <apex:inputHidden html-class="evtIsDeleted" value="{!varEvent.isDeleted}" />
+<!--
+                          <apex:inputHidden html-class="evtIsSelected" value="{!varEvent.isSelected}" />
+-->
+
+                          <h3 class="{!varEvent.categoryClsNm} icon {!varEvent.iconClsNm}">
+                            <label>
+<!--
+                              <input type="checkbox" class="checkbox" checked="{!varEvent.isSelected}"
+                                     onchange="$j(this).closest('.dailyreport-item-header').find('.evtIsSelected').val(false);" />
+-->                              
+                              <apex:inputCheckbox value="{!varEvent.isSelected}"
+                                                  styleclass="checkbox" />
+                              <span class="checkbox-label">{!varEvent.categoryNm}</span>
+                            </label>
+                          </h3>
+                          <div class="btn-select-category"><a href="#">カテゴリー選択</a></div>
+                          <div class="btn-delete">
+                            <apex:commandLink value="削除"
+                                              onclick="if (confirm('このデータを削除してよろしいですか？') == true) {$j(this).closest('.dailyreport-item-header').find('.evtIsDeleted').val(true);}"
+                                              rerender="pnlCalendar, pnlDailyScheduleItems, pnlDailyReportItems"
+                                              oncomplete="setLogic_DailyScheduleItems();setLogic_MonthlyCalendar();$j('.clockpicker-begin').attr('readonly', true);$j('.clockpicker-end').attr('readonly', true);$j('.clockpicker-begin').clockpicker();$j('.clockpicker-end').clockpicker();setLogic_ListEvents();"/>
+                          </div>
+                        </div>
+                        <div class="dailyreport-item-body {!IF(varEvent.categoryNm == 'イベント対応', 'isEvent', 'isNotEvent')}">
+                          <div class="time">
+                            <apex:inputText value="{!varEvent.startTime}"
+                                            html-placeholder="開始時間"
+                                            styleclass="clockpicker-begin" 
+                                            disabled="{!varEvent.evt.IsAllDayEvent}"/>
+                            &nbsp;-&nbsp;
+                            <apex:inputText value="{!varEvent.endTime}"
+                                            html-placeholder="終了時間"
+                                            styleclass="clockpicker-end"
+                                            disabled="{!varEvent.evt.IsAllDayEvent}"/>
+                          </div>
+
+                          <div class="subject">
+                            <apex:inputText value="{!varEvent.evtTitle}"
+                                            html-placeholder="件名" />
+                          </div>
+
+                          <div class="description">
+                            <apex:inputTextarea value="{!varEvent.description}" />
+                          </div>
+
+                          <ul class="event-list">
+                            <li class="event-list-item">
+                              <h4 class="event-list-item-title">＜au＞</h4>
+                              <ul>
+                                <li>
+                                  <h5 class="event-item-heading">新規合計（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputField value="{!varEvent.evt.AuNewMNP__c}"
+                                                     type="text"
+                                                     html-min="0"
+                                                     html-maxlength="6"
+                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                  </span>
+                                </li>
+                                <li>
+                                  <h5 class="event-item-heading">新規ハンドセット（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputField value="{!varEvent.evt.AuNewTablet__c}"
+                                                     type="text"
+                                                     html-min="0"
+                                                     html-maxlength="6"
+                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                  </span>
+                                </li>
+                                <li>
+                                  <h5 class="event-item-heading">新規MNP（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputField value="{!varEvent.evt.AuNewRooter__c}"
+                                                     type="text"
+                                                     html-min="0"
+                                                     html-maxlength="6"
+                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                  </span>
+                                </li>
+                                <li>
+                                  <h5 class="event-item-heading">機変（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputField value="{!varEvent.evt.AuModelChange__c}"
+                                                     type="text"
+                                                     html-min="0"
+                                                     html-maxlength="6"
+                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                  </span>
+                                </li>
+                                <li>
+                                  <h5 class="event-item-heading">総販（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputField value="{!varEvent.evt.AuTotal__c}"
+                                                     type="text"
+                                                     html-min="0"
+                                                     html-maxlength="6"
+                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            
+                            <li class="event-list-item">
+                              <h4 class="event-list-item-title">＜BBC＞</h4>
+                              <ul>
+                                <li>
+                                  <h5 class="event-item-heading">BBC:ひかり（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputField value="{!varEvent.evt.BBCHikari__c}"
+                                                     type="text"
+                                                     html-min="0"
+                                                     html-maxlength="6"
+                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                  </span>
+                                </li>
+                                <li>
+                                  <h5 class="event-item-heading">BBC:ケーブルトス（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputField value="{!varEvent.evt.BBCCableTosu__c}"
+                                                     type="text"
+                                                     html-min="0"
+                                                     html-maxlength="6"
+                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            
+                            <li class="event-list-item">
+                              <h4 class="event-list-item-title">＜UQモバイル成約実績＝新規加入＋sim単体販売実績＞</h4>
+                              <span class="event-list-item-title-note">※UQモバイル取扱店のみご報告をお願いします。</span>
+                              <ul>
+                                <li>
+                                  <h5 class="event-item-heading">UQモバイル：auスタッフ直取（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputField value="{!varEvent.evt.UQ_2__c}"
+                                                     type="text"
+                                                     html-min="0"
+                                                     html-maxlength="6"
+                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                  </span>
+                                </li>
+
+                                <li>
+                                  <h5 class="event-item-heading">UQモバイル：UQ振り成約実績（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputField value="{!varEvent.evt.UQ_3__c}"
+                                                     type="text"
+                                                     html-min="0"
+                                                     html-maxlength="6"
+                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            
+                             <li class="event-list-item">
+                              <h4 class="event-list-item-title">＜ライフデザイン関連商材＞</h4>
+                              <span class="event-list-item-title-note">※WALLET Market商材については、取扱い店のみご報告をお願いします。</span>
+                              <ul>
+                                <li>
+                                  <h5 class="event-item-heading">auでんき（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputField value="{!varEvent.evt.auDenki__c}"
+                                                     type="text"
+                                                     html-min="0"
+                                                     html-maxlength="6"
+                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                  </span>
+                                </li>
+                                <li>
+                                  <h5 class="event-item-heading">WALLET Market（円）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputField value="{!varEvent.evt.WALLET_Market__c}"
+                                                     type="text"
+                                                     html-min="0"
+                                                     html-maxlength="18"
+                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                  </span>
+                                </li>
+                                <li>
+                                  <h5 class="event-item-heading">ウォーターサーバー（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputField value="{!varEvent.evt.WaterServer__c}"
+                                                     type="text"
+                                                     html-min="0"
+                                                     html-maxlength="6"
+                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+<!--                            
+                            <li class="event-list-note">
+                              支店・部内共有のために、上記以外の項目を追加したい場合はコンシューマ事業本部企画部へにご連絡ください。
+                            </li>
+-->
+                          </ul>
+
+
+                          <div class="related-shops">
+                            <h4 class="title">代理店/店舗</h4>
+                            <apex:outputPanel id="lkupShops">
+                              <span class="shop-name">
+                                <apex:inputField value="{!varEvent.evt.Account__c}"
+                                                 html-placeholder="代理店/店舗"/>
+                              </span>
+                            </apex:outputPanel>
+                          </div>
+
+
+                          <div class="related-files">
+
+                            <apex:repeat value="{!varEvent.evt.Attachments}" var="att">
+                              <ul class="list--attachment">
+                                <li>
+                                  <apex:outputLink value="{!URLFOR($Action.Attachment.Download, att.Id)}" target="_blank" styleclass="isLink linkstyle">表示</apex:outputLink>
+
+                                  &nbsp;&nbsp;&nbsp;{!att.Name}
+
+                                </li>
+                              </ul>
+                            </apex:repeat>
+
+
+                          </div>
+                        </div>
+                      </li>
+                    </apex:repeat>                
+
+                  </ul>
+                </apex:outputPanel>
+              </div>
+              <footer>
+                <div class="dailyreport-send-to">
+                  <apex:selectList id="patternSelectToSend" 
+                                   value="{!patternDataToSend}"
+                                   size="1">
+                    <apex:selectOptions value="{!selectPattern}"/>
+                  </apex:selectList>
+                </div>
+                <div class="btn-setting-send-to"><a href="#">送信先設定</a></div>
+                <div class="btn-send ui-color-1">
+                  <apex:commandLink value="送信プレビュー"
+                                    action="{!confirmEmail}"
+                                    rerender="messageError, lkupShops, pnlConfirmEmail, pnlConfirmEmailTitle"
+                                    oncomplete="jsAfterPrepareConfirm();autosize(document.querySelectorAll('.autogrow'));" />
+                </div>
+              </footer>
+            </div>
+          </section>
+
+
+          <!-- #View 01-01-08(typ.) -->
+          <section class="dailyreport-entry-form confirm hide">
+            <div>
+              <header>
+                  <div class="email-title-title">
+                    件名
+                  </div>
+                <div class="email-title">
+                  <apex:outputPanel id="pnlConfirmEmailTitle">
+                    <apex:inputText value="{!mailTitle}"
+                                    html-placeholder="日報送信タイトル入力欄" />
+                  </apex:outputPanel>
+                </div>
+                <div class="btn-close"><a href="#">閉じる</a></div>
+              </header>
+              <div class="dailyreport-confirm-body">
+                <apex:outputPanel id="pnlConfirmEmail">
+                  <div class="confirm-send-to">
+                    <div class="col-to" style="{!IF(mailToAddressListConfirm != NULL && mailToAddressListConfirm.size > 0, '', 'display: none;')}">
+                      <h5>To</h5>
+                      <div class="address-list-to">
+                        <ul>
+                          <apex:repeat value="{!mailToAddressListConfirm}" var="usr">
+                            <li class="truncate">{!usr.userName} &lt;{!usr.email}&gt;</li>
+                          </apex:repeat>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-cc" style="{!IF(mailCcAddressListConfirm != NULL && mailCcAddressListConfirm.size > 0, '', 'display: none;')}">
+                      <h5>Cc</h5>
+                      <div class="address-list-to">
+                        <ul>
+                          <apex:repeat value="{!mailCcAddressListConfirm}" var="usr">
+                            <li class="truncate">{!usr.userName} &lt;{!usr.email}&gt;</li>
+                          </apex:repeat>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-bcc" style="{!IF(mailBccAddressListConfirm != NULL && mailBccAddressListConfirm.size > 0, '', 'display: none;')}">
+                      <h5>Bcc</h5>
+                      <div class="address-list-to">
+                        <ul>
+                          <apex:repeat value="{!mailBccAddressListConfirm}" var="usr">
+                            <li class="truncate">{!usr.userName} &lt;{!usr.email}&gt;</li>
+                          </apex:repeat>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dailyreport-items">
+                    <apex:inputTextarea value="{!emailHeader}"
+                                        style="font-size: 11px;"
+                                        styleClass="autogrow force-border" />
+
+                    <apex:inputTextarea value="{!resultTextArea}"
+                                        style="font-size: 11px;"
+                                        styleClass="autogrow force-border" />
+
+                    <apex:inputTextarea value="{!emailSignature}"
+                                        style="font-size: 11px;"
+                                        styleClass="autogrow force-border" />
+                  </div>
+                </apex:outputPanel>                
+              </div>
+            <footer>
+              <div class="btn-cancel ui-color-3"><a href="#">戻る</a></div>
+
+              <div class="btn-send ui-color-1">
+                <apex:commandLink value="送信"
+                                  action="{!sendEmail}"
+                                  rerender="messageError"
+                                  oncomplete="jsAfterSendMail();" />
+              </div>
+            </footer>
+          </div>
+          </section>
+
+        </div>
+      </div>
+      
+<!--
+      <nav class="document-navigation">
+        <h2><span>営業日報</span></h2>
+        <ul>
+          <li class="item-calender current"><a href="01-01-01.html">カレンダー</a></li>
+          <li class="item-list"><a href="01-02-01.html">活動一覧</a></li>
+          <li class="item-top"><a href="#">auポータル<br></br>トップ</a></li>
+        </ul>
+      </nav>
+-->      
+
+    </div>
+    <footer class="document-footer"></footer>
+  </div>
+  <script>
+
+    function setLogic_MonthlyCalendar() {
+      console.log("setLogic_MonthlyCalendar");
+      $j(".calender-item").off("click");
+      $j(".calender-item").on("click", onClickCalenderItem);
+    }
+
+
+  function setLogic_ListEvents() {
+    console.log("setLogic_ListEvents");
+    
+    $j(".btn-select-category").off("click");
+    $j(".btn-select-category").on("click", function (e) {
+      $j(".currentEvent").removeClass("currentEvent");
+      $j(e.currentTarget).parent().addClass("currentEvent");
+      setView_01_01_04();
+      setLogic_SelectCategoryScreen();
+    });
+
+    $j(".dailyreport-entry-form .btn-close").off("click");
+    $j(".dailyreport-entry-form .btn-close").on("click", function (e) {
+      setView_01_01_01();
+      setLogic_MonthlyCalendar();
+    });
+
+    $j(".dailyreport-entry-form .btn-setting-send-to").off("click");
+    $j(".dailyreport-entry-form .btn-setting-send-to").on("click", function (e) {
+      setView_01_03_02();
+      setLogic_SelectMailMain();
+    });
+
+  }
+
+
+  function setLogic_SelectMailMain() {
+    console.log("setLogic_SelectMailMain");
+
+    $j(".setting-send-to .btn-close").off("click");
+    $j(".setting-send-to .btn-close").on("click", function (e) {
+      $j(".protect-screen").fadeOut();
+      hideAllSettingSendTo();
+    });
+
+    $j(".setting-send-to .btn-done").off("click");
+    $j(".setting-send-to .btn-done").on("click", function (e) {
+      $j(".protect-screen").fadeOut();
+      hideAllSettingSendTo();
+    });
+
+    $j(".setting-send-to.top-view").find(".btn-organization").off("click");
+    $j(".setting-send-to.top-view").find(".btn-organization").on("click", function (e) {
+      var $target = $j(e.currentTarget);
+      $j(".currentMailList").val($target.attr("mailList"));
+      setView_01_03_05();
+
+      $j(".setting-send-to.select-members-own-department").find(".btn-close").off("click");
+      $j(".setting-send-to.select-members-own-department").find(".btn-close").on("click", function (e) {
+        setView_01_03_02();
+        $j(".setting-send-to.select-members-own-department").hide();
+        setLogic_SelectMailMain();
+      });
+
+      $j(".setting-send-to.select-members-own-department").find(".btn-other-departments").off("click");
+      $j(".setting-send-to.select-members-own-department").find(".btn-other-departments").on("click", function (e) {
+        setView_01_03_06();
+        $j(".setting-send-to.select-members-own-department").hide();
+        setLogic_SelectMailListOtherDepartment();
+      });
+
+      $j(".setting-send-to.select-members-own-department").find(".btn-add").off("click");
+      $j(".setting-send-to.select-members-own-department").find(".btn-add").on("click", function (e) {
+        setView_01_03_02();
+        $j(".setting-send-to.select-members-own-department").hide();
+        setLogic_SelectMailMain();
+      });
+
+    });
+
+    $j(".setting-send-to.top-view").find(".btn-save-as").off("click");
+    $j(".setting-send-to.top-view").find(".btn-save-as").on("click", function (e) {
+      setView_01_03_03();
+
+      jsTruncate();
+    
+      $j(".setting-send-to .btn-close").off("click");
+      $j(".setting-send-to .btn-close").on("click", function (e) {
+        setView_01_03_02();
+        $j(".setting-send-to.save-as").hide();
+        setLogic_SelectMailMain();
+      });
+      $j(".setting-send-to.save-as").find(".btn-save").off("click");
+      $j(".setting-send-to.save-as").find(".btn-save").on("click", function (e) {
+        $j(".protect-screen").fadeOut();
+        hideAllSettingSendTo();
+      });
+
+
+    });
+
+  }
+
+
+
+
+  function setLogic_SelectMailListOtherDepartment() {
+    console.log("setLogic_SelectMailListOtherDepartment");
+
+    jsTruncate();
+    
+    $j(".setting-send-to .btn-close").off("click");
+    $j(".setting-send-to .btn-close").on("click", function (e) {
+      setView_01_03_02();
+      $j(".setting-send-to.other-department-list").hide();
+      setLogic_SelectMailMain();
+    });
+    $j($j(".setting-send-to.other-department-list").find(".btn-cancel")).off("click");
+    $j($j(".setting-send-to.other-department-list").find(".btn-cancel")).on("click", function (e) {
+      setView_01_03_05();
+      $j(".setting-send-to.other-department-list").hide();
+    });
+    $j(".setting-send-to.other-department-list").find("li > a").off("click");
+    $j(".setting-send-to.other-department-list").find("li > a").on("click", function (e) {
+      var $target = $j(e.currentTarget);
+      $j(".otherDepartmentTitle").text($target.text());
+      $j(".otherDepartmentCode").val($target.attr("departmentCode"));
+
+      console.log("＊＊＊ Event: showOtherDepartment");
+      $j(".page-schedule").triggerHandler("showOtherDepartment");
+
+      setView_01_03_07();
+      $j(".setting-send-to.other-department-list").hide();
+
+
+      jsTruncate();
+      
+      $j(".setting-send-to .btn-close").off("click");
+      $j(".setting-send-to .btn-close").on("click", function (e) {
+        setView_01_03_02();
+        $j(".setting-send-to.select-members-other-departments").hide();
+        setLogic_SelectMailMain();
+      });
+      $j(".setting-send-to.select-members-other-departments").find(".btn-cancel").off("click");
+      $j(".setting-send-to.select-members-other-departments").find(".btn-cancel").on("click", function (e) {
+        setView_01_03_06();
+        $j(".setting-send-to.select-members-other-departments").hide();
+        setLogic_SelectMailListOtherDepartment();
+      });
+      $j(".setting-send-to.select-members-other-departments").find(".btn-add").off("click");
+      $j(".setting-send-to.select-members-other-departments").find(".btn-add").on("click", function (e) {
+        setView_01_03_02();
+        $j(".setting-send-to.select-members-other-departments").hide();
+        setLogic_SelectMailMain();
+      });
+
+    });
+    $j(".setting-send-to.other-department-list").find(".btn-add").off("click");
+    $j(".setting-send-to.other-department-list").find(".btn-add").on("click", function (e) {
+      setView_01_03_02();
+      $j(".setting-send-to.other-department-list").hide();
+      setLogic_SelectMailMain();
+    });
+
+
+  }
+
+    function setLogic_DailyScheduleItems() {
+      console.log("setLogic_DailyScheduleItems");
+
+      // for daily schedule item location ********************************
+      $j(".daily-schedule-item").DailyScheduleItem({
+        $scheduleTimeindex: $j(".daily-schedule-timeindex"),
+        $scheduleBody: $j(".daily-schedule-body")
+      });
+
+/*      
+      // attach event listener
+      $(".daily-schedule").off("mousedown");
+      $(".daily-schedule").off("mouseup");
+      $(".daily-schedule").off("mousemove");
+      $(".daily-schedule").on("mousedown", onMouseDownForCreateSchedule);
+      $(".daily-schedule").on("mouseup", onMouseUpForCreateSchedule);
+      $(".daily-schedule").on("mousemove", onMouseMoveForCreateSchedule);
+*/
+
+      $j(".daily-description .btn-close").off("click");
+      $j(".daily-description .btn-close").on("click", function (e) {
+        setView_01_01_01();
+        setLogic_MonthlyCalendar();
+      });
+
+      $j(".daily-schedule-item").off("click touchstart");  
+      $j(".daily-schedule-item").on("click touchstart", function (e) {
+        console.log("＊＊＊ Event: showDetailWithoutCreateEvent");
+        $j(".page-schedule").triggerHandler("showDetailWithoutCreateEvent");
+        setView_01_01_05();
+        setLogic_ListEvents();
+      });
+      
+    }
+
+
+    function setLogic_SelectCategoryScreen() {
+      console.log("setLogic_SelectCategoryScreen");
+
+      $j($j(".select-category").find(".btn-close")).off("click");
+      $j($j(".select-category").find(".btn-close")).on("click", function (e) {
+        $j(".protect-screen").fadeOut();
+        $j(".select-category").hide();
+      });
+
+      $j($j(".select-category").find(".select-category-link")).off("click");
+      $j($j(".select-category").find(".select-category-link")).on("click", function (e) {
+
+        $j(".currentEvent").parent().find(".dailyreport-item-body").removeClass("isEvent isNotEvent").addClass("isNotEvent");
+        $j(".currentEvent").parent().find(".event-item-value").find("input").val("");
+
+        $j(".currentEvent").find("h3").removeClass("category0 category1 category2 category3 category4 category5");
+        $j(".sortNo_" + $j(".currentEvent").attr("sortNo")).removeClass("category0 category1 category2 category3 category4 category5");
+
+        if($j(this).find("span.category1").length !== 0) {
+          $j(".currentEvent").find("h3").addClass("category1");
+          $j(".currentEvent").find(".evtCategory").val("category1");
+          $j(".sortNo_" + $j(".currentEvent").attr("sortNo")).addClass("category1");
+
+          if($j(this).find("span.icon1").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("拠点フォロー");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("【訪問先】\n【目的】\n【内容】\n【面談者】");          
+          }
+          if($j(this).find("span.icon2").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("代理店商談");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("【訪問先】\n【目的】\n【内容】\n【面談者】");          
+          }
+          if($j(this).find("span.icon3").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("イベント対応");
+            $j(".currentEvent").parent().find(".description").find("textarea").text(""); // 【訪問先】\n【準備/当日】\n【内容】
+            $j(".currentEvent").parent().find(".dailyreport-item-body").removeClass("isEvent isNotEvent").addClass("isEvent");
+          }
+          if($j(this).find("span.icon4").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("異業種連携");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("【訪問先】\n【連携先】\n【内容】");          
+          }
+          if($j(this).find("span.icon5").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("他キャリア視察");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("【対象auショップ】\n【他キャリショップ】\n【内容】");          
+          }
+          if($j(this).find("span.icon6").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("サンプリング");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("【訪問先】\n【場所】\n【目的】\n【内容】");
+          }
+          if($j(this).find("span.icon7").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("移動");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("");
+          }
+          if($j(this).find("span.icon8").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("接待・接受");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("【対象代理店・店舗】\n【場所】\n【内容】");          
+          }
+          if($j(this).find("span.icon9").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("店長会議");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("【内容】");
+          }
+          if($j(this).find("span.icon10").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+        }
+        if($j(this).find("span.category2").length !== 0) {
+          $j(".currentEvent").find("h3").addClass("category2");
+          $j(".currentEvent").find(".evtCategory").val("category2");
+          $j(".sortNo_" + $j(".currentEvent").attr("sortNo")).addClass("category2");
+
+          if($j(this).find("span.icon1").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("【old】店長会議");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("【内容】");
+          }
+          if($j(this).find("span.icon2").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("会議・ミーティング");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("【会議名】\n【内容】");
+          }
+          if($j(this).find("span.icon3").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("社内行事");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("【イベント名】\n【内容】");
+          }
+          if($j(this).find("span.icon4").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("資料作成・事務処理");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("【案件名】\n【内容】");
+          }
+          if($j(this).find("span.icon5").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("ヒアリング・アンケート");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("【案件名】\n【内容】");
+          }
+          if($j(this).find("span.icon6").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("架電");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("【内容】");
+          }
+          if($j(this).find("span.icon7").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("資格試験");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("【資格試験名】\n【対象スタッフ】\n【内容】");
+          }
+          if($j(this).find("span.icon8").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("店舗研修");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("【研修名】\n【内容】");
+          }
+          if($j(this).find("span.icon9").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon10").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+        }
+        if($j(this).find("span.category3").length !== 0) {
+          $j(".currentEvent").find("h3").addClass("category3");
+          $j(".currentEvent").find(".evtCategory").val("category3");
+          $j(".sortNo_" + $j(".currentEvent").attr("sortNo")).addClass("category3");
+
+          if($j(this).find("span.icon1").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("その他");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("");
+          }
+          if($j(this).find("span.icon2").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon3").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon4").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon5").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon6").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon7").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon8").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon9").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon10").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+        }
+
+        if($j(this).find("span.category4").length !== 0) {
+          $j(".currentEvent").find("h3").addClass("category4");
+          $j(".currentEvent").find(".evtCategory").val("category4");
+          $j(".sortNo_" + $j(".currentEvent").attr("sortNo")).addClass("category4");
+
+          if($j(this).find("span.icon1").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon2").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon3").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon4").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon5").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon6").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon7").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon8").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon9").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon10").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+        }
+
+        if($j(this).find("span.category5").length !== 0) {
+          $j(".currentEvent").find("h3").addClass("category5");
+          $j(".currentEvent").find(".evtCategory").val("category5");
+          $j(".sortNo_" + $j(".currentEvent").attr("sortNo")).addClass("category5");
+
+          if($j(this).find("span.icon1").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon2").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon3").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon4").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon5").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon6").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon7").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon8").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon9").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+          if($j(this).find("span.icon10").length !== 0) {
+            $j(".currentEvent").find("h3").find(".checkbox-label").text("XXXXXXXXXX");
+            $j(".currentEvent").parent().find(".description").find("textarea").text("XXXXXXXXXX");
+          }
+        }
+
+        $j(".currentEvent").find("h3").removeClass("icon1 icon2 icon3 icon4 icon5 icon6 icon7 icon8 icon9 icon10");
+        $j(".sortNo_" + $j(".currentEvent").attr("sortNo")).removeClass("icon1 icon2 icon3 icon4 icon5 icon6 icon7 icon8 icon9 icon10");
+
+        if($j(this).find("span.icon1").length !== 0) {
+          $j(".currentEvent").find("h3").addClass("icon1");
+          $j(".currentEvent").find(".evtIcon").val("icon1");
+          $j(".sortNo_" + $j(".currentEvent").attr("sortNo")).addClass("icon1");
+        }
+        if($j(this).find("span.icon2").length !== 0) {
+          $j(".currentEvent").find("h3").addClass("icon2");
+          $j(".currentEvent").find(".evtIcon").val("icon2");
+          $j(".sortNo_" + $j(".currentEvent").attr("sortNo")).addClass("icon2");
+        }
+        if($j(this).find("span.icon3").length !== 0) {
+          $j(".currentEvent").find("h3").addClass("icon3");
+          $j(".currentEvent").find(".evtIcon").val("icon3");
+          $j(".sortNo_" + $j(".currentEvent").attr("sortNo")).addClass("icon3");
+        }
+        if($j(this).find("span.icon4").length !== 0) {
+          $j(".currentEvent").find("h3").addClass("icon4");
+          $j(".currentEvent").find(".evtIcon").val("icon4");
+          $j(".sortNo_" + $j(".currentEvent").attr("sortNo")).addClass("icon4");
+        }
+        if($j(this).find("span.icon5").length !== 0) {
+          $j(".currentEvent").find("h3").addClass("icon5");
+          $j(".currentEvent").find(".evtIcon").val("icon5");
+          $j(".sortNo_" + $j(".currentEvent").attr("sortNo")).addClass("icon5");
+        }
+        if($j(this).find("span.icon6").length !== 0) {
+          $j(".currentEvent").find("h3").addClass("icon6");
+          $j(".currentEvent").find(".evtIcon").val("icon6");
+          $j(".sortNo_" + $j(".currentEvent").attr("sortNo")).addClass("icon6");
+        }
+        if($j(this).find("span.icon7").length !== 0) {
+          $j(".currentEvent").find("h3").addClass("icon7");
+          $j(".currentEvent").find(".evtIcon").val("icon7");
+          $j(".sortNo_" + $j(".currentEvent").attr("sortNo")).addClass("icon7");
+        }
+        if($j(this).find("span.icon8").length !== 0) {
+          $j(".currentEvent").find("h3").addClass("icon8");
+          $j(".currentEvent").find(".evtIcon").val("icon8");
+          $j(".sortNo_" + $j(".currentEvent").attr("sortNo")).addClass("icon8");
+        }
+        if($j(this).find("span.icon9").length !== 0) {
+          $j(".currentEvent").find("h3").addClass("icon9");
+          $j(".currentEvent").find(".evtIcon").val("icon9");
+          $j(".sortNo_" + $j(".currentEvent").attr("sortNo")).addClass("icon9");
+        }
+        if($j(this).find("span.icon10").length !== 0) {
+          $j(".currentEvent").find("h3").addClass("icon10");
+          $j(".currentEvent").find(".evtIcon").val("icon10");
+          $j(".sortNo_" + $j(".currentEvent").attr("sortNo")).addClass("icon10");
+        }
+
+        $j(".protect-screen").fadeOut();
+        $j(".select-category").hide();
+
+      });
+    }
+
+
+    /* カレンダーの日付をクリックした際の処理 */
+    function onClickCalenderItem(e) {
+      
+      var $target, $categories;
+      
+      $target = $j(e.currentTarget);
+      if (!($target.hasClass("blank"))) {
+        
+        var _date = parseInt($j($target.find("time")).text(), 10);
+        $j(".daily-schedule-header time").text($j(".monthly-calender-header time").text() + _date + "日");
+        $j(".page-schedule").triggerHandler("showDay", [_date]);
+        
+        $categories = $j($target.find(".icon-categories span"));
+        if ($categories.length > 0) {
+          // 日報登録がある場合
+          setView_01_01_06();
+        } else {
+          // 日報登録がない場合
+          setView_01_01_02();
+          setLogic_DailyScheduleItems();
+        }
+      }
+      
+    }
+
+    function hideAllSettingSendTo() {
+      $j(".setting-send-to.top-view").hide();
+      $j(".setting-send-to.save-as").hide();
+      $j(".setting-send-to.select-members-own-department").hide();
+      $j(".setting-send-to.other-department-list").hide();
+      $j(".setting-send-to.select-members-other-departments").hide();
+    }
+
+    $j(document).ready(function () {
+      
+      // ページ構成スクリプト（例）######################################
+      
+      // for slide animation ********************************
+      $j(".slide-container").CalenderSlider({
+        index: 0,
+        $header: $j(".document-header"),
+        $menu: $j(".document-navigation")
+      });
+      
+      // for daily schedule item location ********************************
+      $j(".daily-schedule-item").DailyScheduleItem({
+        $scheduleTimeindex: $j(".daily-schedule-timeindex"),
+        $scheduleBody: $j(".daily-schedule-body")
+      });
+      
+      $j(".modal-dialog").CustomDialog({
+        duration: 3000
+      });
+
+
+
+      // for daily schedule input ********************************
+      $j(".daily-schedule").DailyScheduleInput({
+        interval: 1000
+      });
+      $j(".daily-schedule").on("createEvent", function(e, beginTime, endTime) {        
+        console.log(beginTime + "-" + endTime);
+        jsCtrlShowDetailWithCreateEvent(beginTime, endTime);
+      });
+      
+      
+      // update
+      $j(window).on("load resize", function (e) {
+        
+        $j(".slide-container").CalenderSlider("update");
+        $j(".daily-schedule-item").DailyScheduleItem("update");
+          
+      });
+
+
+
+
+      // switch view ********************************
+      setView_01_01_01();
+      setLogic_MonthlyCalendar();
+      //setView_01_01_02();
+      //setView_01_01_04();
+      //setView_01_01_05();
+      //setView_01_01_06();
+      //setView_01_02_08();
+      //setView_01_03_02();
+      //setView_01_03_03();
+      //setView_01_03_05();
+      //setView_01_03_06();
+      //setView_01_03_07();
+
+      
+      
+      // for libraies, clockpicker ********************************
+      $j('.clockpicker-begin').clockpicker();
+      $j('.clockpicker-end').clockpicker();
+
+      $j(".page-schedule").on("showDetailWithCreateEvent", jsShowDetailWithCreateEvent);
+      $j(".page-schedule").on("showDetailWithoutCreateEvent", jsShowDetailWithoutCreateEvent);
+      $j(".page-schedule").on("showDay", jsShowDay);
+      $j(".page-schedule").on("showOtherDepartment", jsShowOtherDepartment);
+      
+      // for libraries, trancate ********************************
+      $j(".truncate").trunk8({
+        "fill": "..."
+      });
+      
+      
+    });
+
+  </script>
+</body>
+</html>
+
+
+</apex:form>
+</apex:page>

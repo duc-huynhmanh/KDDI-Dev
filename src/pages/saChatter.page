@@ -1,0 +1,604 @@
+<apex:page controller="saChatterCtrl" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" cache="false" action="{!redirectIfNecessaryMobile}" docType="html-5.0">
+
+<apex:form id="allForm">
+
+<html lang="ja">
+<head>
+
+  <meta charset="utf-8" />
+  <title>auポータル</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/sanitize.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/common.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/style-chat.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/iphone.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/flatpickr.min.css')}"/>
+
+  <!-- libraries -->
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/jquery-3.2.1.min.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/flatpickr.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/ja.js')}"/> 
+  
+  <!-- scripts -->
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_check_ua.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_fitting.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_sp.js')}"/> 
+
+
+  <script>
+    var $j = jQuery.noConflict();
+
+    // converts HTML to text using Javascript
+    function html2text(html) {
+      var tag = document.createElement('div');
+      tag.innerHTML = html;
+      return tag.innerText;
+    }
+
+
+    function jsAfterPostMessage() {
+        if ($j('.message-error').val().length > 0) {
+          alert($j('.message-error').val());
+          $j('.message-error').val("正しいデーターを入れてください。");
+        } else {
+          $j('.message-error').val("正しいデーターを入れてください。");
+          $j('.newPost').val('');
+          jsAddPostAfter();
+        }
+    }
+
+    function jsAfterDeletePostMessage() {
+        if ($j('.message-error').val().length > 0) {
+          alert($j('.message-error').val());
+          $j('.message-error').val("正しいデーターを入れてください。");
+        } else {
+          $j('.message-error').val("正しいデーターを入れてください。");
+          jsAddPostAfter();
+        }
+    }
+
+    function callAddNewAttachment() {
+        if (checkFileSizeChatter()) {
+          addNewAttachment();
+        }
+    }
+
+    function checkFileSizeChatter() {
+        var goodSize = true;
+        $j('.attachInputChatter').each(function()
+        {
+            if(this.files.length > 0 && typeof this.files[0] !== 'undefined')
+            {
+                var file = this.files[0],
+                    size = typeof ActiveXObject !== 'undefined' ?
+                        getIEFileSize(file)
+                        :
+                        file.fileSize || file.size;
+     
+                goodSize = 65 * 1024 * 1024 > size;
+                if(!goodSize) {
+                    alert('ファイルは大きすぎです。65Moまでのファイルを選択してください。');
+                }
+     
+                return goodSize;
+            }
+        });
+        return goodSize;
+    }
+
+  </script>
+
+  <style type="text/css">
+
+    /*
+     * protect-screen
+     ******************************************************/
+    @media screen {
+
+      .protect-screen-bis {
+        position: fixed;
+        left: 0;
+        top: 0;
+
+        width: 100%;
+        height: 100%;
+
+        background-color: rgba(0, 0, 0, 0.2);
+
+        z-index: 998;
+      }
+      .protect-screen-bis.hide {
+        display: none;
+      }
+    }
+
+    .avatar > img {
+      width: 110px;
+      height: 110px;
+    }
+
+    .postContentList {
+      line-height: 1.3rem;
+      max-height: 5rem;
+    }
+
+    .group-list-item {
+      color: black;
+    }
+
+    .attachInputChatter {
+      position: absolute;
+      top: -100px;
+    }
+
+  </style>
+</head>
+
+
+<body class="page-chat">
+  
+  <apex:inputHidden id="messageError" html-class="message-error" value="{!messageError}" />
+
+  <c:saMainTopComp typeOfScreen="{!typeOfScreen}" />
+
+  <div class="protect-screen-bis hide"></div>
+  
+  <!-- template-popup -->
+  <div class="modal-dialog hide"><p>ダイアログメッセージ</p><div class="btn-cancel"><a href="#">キャンセル</a></div><div class="btn-ok"><a href="#">OK</a></div></div>
+
+  <apex:actionRegion >
+    <div class="btn btn-delete modal btn-delete-post-confirm hide">
+      <apex:commandLink value="投稿を削除"
+                        styleClass="ui-color-1"
+                        action="{!dummyAction}"
+                        reRender="DUMMY" />
+    </div>
+  </apex:actionRegion>  
+
+  <div class="document-container">
+    <header class="document-header">
+      <div class="btn-menu"><a href="#">ナビゲーション</a></div>
+    </header>
+
+    <apex:actionRegion renderRegionOnly="false">
+
+      <div class="document-contents">
+        
+        
+        <!-- #View 03-01-01(typ.) -->
+        <section class="chat-section chat-section-groups hide">
+
+          <apex:inputHidden html-class="showGroupDetailParam1" value="{!showGroupDetailParam1}" />
+          <apex:inputHidden html-class="currentPostId" value="{!currentPostId}" />
+          <apex:actionFunction name="jsShowGroupDetail"
+                               action="{!showGroupDetail}"
+                               rerender="pnlGroupDetail, pnlGroupDetailName"
+                               oncomplete="setView_03_01_02_logic();" />
+          <apex:actionFunction name="jsShowGroupList"
+                               action="{!showGroupList}"
+                               rerender="pnlGroupList"
+                               oncomplete="setView_03_01_01();" />
+          <apex:actionFunction name="jsDeleteCurrentPost"
+                               action="{!deleteCurrentPost}"
+                               rerender="messageError"
+                               oncomplete="jsAfterDeletePostMessage();" />
+
+
+          <header class="chat-group-list-section-header">
+            <h1>チャット</h1>
+            <div class="sort-condition">
+              <select><option value="新着順">新着順</option></select>
+            </div>
+          </header>
+
+          <apex:outputPanel id="pnlGroupList">
+
+            <div class="section-body chat-group-list-section-body">
+            
+              <ul class="group-list">
+
+                <apex:repeat value="{!lsChatGroups}" var="grp">
+                  <li class="group-list-item" grpId="{!grp.Id}">
+
+                    <span class="badge" style="{!IF(mpMessagesUnread[grp.Id] == 0, 'display: none;', '')}">{!IF(mpMessagesUnread[grp.Id] > 99, '99+', mpMessagesUnread[grp.Id])}</span>
+                    <span class="avatar"><img src="{!grp.MediumPhotoUrl}" /></span>
+                    <h3 class="name">{!grp.Name}</h3>
+                    <apex:repeat value="{!grp.feeds}" var="lastPost">
+                      <time>
+                        <apex:outputText value="{0,date,yyyy/MM/dd HH:mm}">
+                          <apex:param value="{!lastPost.CreatedDate + offset}" />
+                        </apex:outputText>
+                      </time>
+
+                      <p class="text postContentList">
+                        <apex:outputText value="{!lastPost.Body}"
+                                         rendered="{!lastPost.Type = 'TextPost'}"
+                                         styleClass="removeHtmlFormatting"/>
+                        <apex:outputText value="ファイルを送信しました。"
+                                         rendered="{!lastPost.Type = 'ContentPost'}"/>
+                      </p>
+                    </apex:repeat>
+                  </li>
+
+                </apex:repeat>
+                
+              </ul>
+
+            </div>
+          </apex:outputPanel>
+
+          <footer class="chat-group-list-section-footer"></footer>
+        </section>
+     
+
+        <!-- #View 03-01-02(typ.) -->
+        <section class="chat-section chat-section-detail hide">
+          <header class="chat-timeline-section-header">
+            <h1><apex:outputText id="pnlGroupDetailName" value="{!strChatGroupName}" /></h1>
+            <div class="btn-back"><a href="#" class="ui-color-dark">戻る</a></div>
+          </header>
+
+          <apex:outputPanel id="pnlGroupDetail">
+            <div class="section-body chat-timeline-section-body">
+            
+              <ul class="timeline">
+
+                <apex:repeat value="{!lsChatGroupFeeds}" var="post">
+
+                  <li class="{!IF(post.InsertedById == myUser.Id, 'self', '')}">
+
+                    <span class="user">
+                      <span class="avatar">
+                        <img src="{!mpUsrs[post.InsertedById].SmallPhotoUrl}" />
+                      </span>
+                      <h3 class="name">{!mpUsrs[post.InsertedById].Name}</h3>
+                    </span>
+
+                    <p class="text">
+
+                      <span class="text-inner removeHtmlFormattingDetail"
+                            style="{!IF(post.Type != 'TextPost', 'display: none;', '')}"
+                            htmltext="{!post.body}"/>
+
+                      <span class="text-inner"
+                            style="{!IF(post.Type != 'ContentPost', 'display: none;', 'height: 240px;')}">
+
+                        <apex:outputPanel rendered="{!post.Type == 'ContentPost' && post.RelatedRecordId != NULL}">
+
+
+                        <!--
+                        // Movie
+                        'MOV' => 'Video (MOV)',
+                        'MP4' => 'Video (MP4)',
+
+                        // Image
+                        'BMP' => 'Image (BMP)',
+                        'GIF' => 'Image (GIF)',
+                        'JPG' => 'Image (JPG)',
+                        'JPEG' => 'Image (JPG)',
+                        'PNG' => 'Image (PNG)',
+
+                        // PDF
+                        'PDF' => 'PDF',
+
+                        // Excel
+                        'CSV' => 'Comma Separated Values (CSV)',
+                        'EXCEL' => 'Excel (XLS)',
+                        'EXCEL_X' => 'Excel 2007 (XLSX)',
+
+                        // Word
+                        'RTF' => 'Rich Text Format (RTF)',
+                        'TEXT' => 'Text',
+                        'WORD' => 'Word (DOC)',
+                        'WORD_X' => 'Word 2007 (DOCX)',
+
+                        // Powerpoint
+                        'POWER_POINT' => 'PowerPoint (PPT)',
+                        'POWER_POINT_X' => 'PowerPoint 2007 (PPTX)',
+                        'PPS' => 'PowerPoint 2007 (PPTX)',
+                        'PPSX' => 'PowerPoint 2007 (PPTX)',
+
+                        // Other (File)
+                        'EXE' => 'Executable (EXE)',
+                        'LINK' => 'External Link',
+                        'UNKNOWN' => 'Unknown',
+                        'VISIO' => 'Visio (VSD)',
+                        'XML' => 'XML',
+                        'ZIP' => 'Zip'
+                        -->
+
+                          <apex:outputPanel rendered="{!mpFiles[post.RelatedRecordId].FileType == 'MP4' || 
+                                                        mpFiles[post.RelatedRecordId].FileType == 'MOV'}">
+                            <video style="max-height:200px;max-width:400px;width: expression(this.width > 400 ? 400: true);"  controls="controls">
+                                  <source src="/sfc/servlet.shepherd/version/download/{!post.RelatedRecordId}"
+                                          type="video/mp4" />        
+                                  Your browser does not support the video tag.
+                            </video> 
+                          </apex:outputPanel>
+
+                          <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!post.RelatedRecordId}"
+                                           rendered="{!mpFiles[post.RelatedRecordId].FileType == 'PDF' ||
+                                                       mpFiles[post.RelatedRecordId].FileType == 'BMP' ||
+                                                       mpFiles[post.RelatedRecordId].FileType == 'JPEG' ||
+                                                       mpFiles[post.RelatedRecordId].FileType == 'PNG' ||
+                                                       mpFiles[post.RelatedRecordId].FileType == 'GIF' ||
+                                                       mpFiles[post.RelatedRecordId].FileType == 'JPG'}"
+                                           target="_blank">
+
+                            <apex:image style="max-height:200px;max-width:400px;width: expression(this.width > 400 ? 400: true);" 
+                                url="/sfc/servlet.shepherd/version/download/{!post.RelatedRecordId}"
+                                rendered="{!mpFiles[post.RelatedRecordId].FileType == 'BMP' ||
+                                            mpFiles[post.RelatedRecordId].FileType == 'JPEG' ||
+                                            mpFiles[post.RelatedRecordId].FileType == 'PNG' ||
+                                            mpFiles[post.RelatedRecordId].FileType == 'GIF' ||
+                                            mpFiles[post.RelatedRecordId].FileType == 'JPG'}"/>
+
+                            <apex:image style="max-height:200px;max-width:400px;width: expression(this.width > 400 ? 400: true);" 
+                                url="{!URLFOR($Resource.auResources,'icons/Pdf-icon.png')}"
+                                rendered="{!mpFiles[post.RelatedRecordId].FileType == 'PDF'}"/> 
+
+                          </apex:outputLink>
+
+                          <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!post.RelatedRecordId}"
+                                           rendered="{!mpFiles[post.RelatedRecordId].FileType != 'MP4' &&
+                                                       mpFiles[post.RelatedRecordId].FileType != 'MOV' &&
+                                                       mpFiles[post.RelatedRecordId].FileType != 'PDF' &&
+                                                       mpFiles[post.RelatedRecordId].FileType != 'BMP' &&
+                                                       mpFiles[post.RelatedRecordId].FileType != 'JPEG' &&
+                                                       mpFiles[post.RelatedRecordId].FileType != 'PNG' &&
+                                                       mpFiles[post.RelatedRecordId].FileType != 'GIF' &&
+                                                       mpFiles[post.RelatedRecordId].FileType != 'JPG'}">
+
+                            <apex:image style="max-height:200px;max-width:400px;width: expression(this.width > 400 ? 400: true);" 
+                                url="{!URLFOR($Resource.auResources,'icons/Excel-icon.png')}"
+                                rendered="{!mpFiles[post.RelatedRecordId].FileType == 'EXCEL' || 
+                                            mpFiles[post.RelatedRecordId].FileType == 'EXCEL_X' || 
+                                            mpFiles[post.RelatedRecordId].FileType == 'CSV'}"/>
+
+                            <apex:image style="max-height:200px;max-width:400px;width: expression(this.width > 400 ? 400: true);" 
+                                url="{!URLFOR($Resource.auResources,'icons/Word-icon.png')}"
+                                rendered="{!mpFiles[post.RelatedRecordId].FileType == 'WORD' || 
+                                            mpFiles[post.RelatedRecordId].FileType == 'WORD_X' || 
+                                            mpFiles[post.RelatedRecordId].FileType == 'RTF' || 
+                                            mpFiles[post.RelatedRecordId].FileType == 'TEXT'}"/>
+
+                            <apex:image style="max-height:200px;max-width:400px;width: expression(this.width > 400 ? 400: true);" 
+                                url="{!URLFOR($Resource.auResources,'icons/PowerPoint-icon.png')}"
+                                rendered="{!mpFiles[post.RelatedRecordId].FileType == 'POWER_POINT' || 
+                                            mpFiles[post.RelatedRecordId].FileType == 'POWER_POINT_X' || 
+                                            mpFiles[post.RelatedRecordId].FileType == 'PPS' || 
+                                            mpFiles[post.RelatedRecordId].FileType == 'PPSX'}"/>
+
+                            <apex:image style="max-height:200px;max-width:400px;width: expression(this.width > 400 ? 400: true);" 
+                                url="{!URLFOR($Resource.auResources,'icons/File-icon.png')}"
+                                rendered="{!mpFiles[post.RelatedRecordId].FileType != 'EXCEL' &&
+                                            mpFiles[post.RelatedRecordId].FileType != 'EXCEL_X' && 
+                                            mpFiles[post.RelatedRecordId].FileType != 'CSV' &&
+                                            mpFiles[post.RelatedRecordId].FileType != 'WORD' && 
+                                            mpFiles[post.RelatedRecordId].FileType != 'WORD_X' && 
+                                            mpFiles[post.RelatedRecordId].FileType != 'RTF' &&
+                                            mpFiles[post.RelatedRecordId].FileType != 'TEXT' && 
+                                            mpFiles[post.RelatedRecordId].FileType != 'POWER_POINT' && 
+                                            mpFiles[post.RelatedRecordId].FileType != 'POWER_POINT_X' && 
+                                            mpFiles[post.RelatedRecordId].FileType != 'PPS' &&
+                                            mpFiles[post.RelatedRecordId].FileType != 'PPSX'}"/>
+
+                          </apex:outputLink>
+
+                        </apex:outputPanel>
+
+
+                      </span>
+  
+                      <apex:outputPanel rendered="{!post.InsertedById == myUser.Id}">
+                        <span class="functions">
+                          <apex:commandLink value="削除"
+                                            styleClass="btn-delete-post"
+                                            html-postId="{!post.Id}"
+                                            action="{!dummyAction}"
+                                            reRender="DUMMY" />
+                        </span>
+                      </apex:outputPanel>
+
+                    </p>
+                    <time>
+                      <apex:outputText value="{0,date,yyyy/MM/dd HH:mm}">
+                        <apex:param value="{!post.CreatedDate + offset}" />
+                      </apex:outputText>                    
+                    </time>
+                  </li>
+
+                </apex:repeat>
+
+              </ul>
+
+            </div>
+          </apex:outputPanel>
+
+          <footer class="chat-timeline-section-footer">
+
+              <div class="btn btn-image">
+
+                <apex:commandLink value="添付"
+                                  styleClass="ui-color-1 btn-attachment"
+                                  action="{!dummyAction}"
+                                  reRender="DUMMY" />
+
+              </div>
+
+            <apex:inputTextarea styleClass="newPost"
+                                value="{!newPost}" />
+            <div class="btn btn-send not-disable">
+              <apex:commandLink value="送信"
+                                styleClass="ui-color-1"
+                                action="{!dummyAction}"
+                                reRender="DUMMY" />
+            </div>
+    
+            <apex:actionFunction name="jsAddPost"
+                                 action="{!addPost}"
+                                 rerender="messageError"
+                                 oncomplete="jsAfterPostMessage();" />
+            <apex:actionFunction name="jsAddPostAfter"
+                                 action="{!dummyAction}"
+                                 rerender="pnlGroupDetail, pnlGroupDetailName"
+                                 oncomplete="setView_03_01_02_logic();" />
+
+          </footer>
+        </section>
+
+
+
+     
+      </div>
+
+    </apex:actionRegion>
+
+    <footer class="document-footer">
+
+      <apex:inputFile disabled="false" 
+                      id="upload--file"
+                      styleclass="attachInputChatter"
+                      value="{!newAttachment.body}"
+                      filename="{!newAttachment.name}"
+                      contentType="{!newAttachment.contentType}" 
+                      filesize="{!newAttachmentSize}"
+                      onchange="callAddNewAttachment();" />
+
+      <apex:actionFunction name="addNewAttachment"
+                           action="{!addNewAttachment}"/>
+
+    </footer>
+  </div>
+
+  <script>
+
+    function setView_03_01_01() {
+
+      $j(".document-header").show();
+      $j('.chat-section-groups').show(); 
+      $j('.chat-section-detail').hide();
+      $j(".protect-screen-bis").addClass("hide");
+      $j(".btn-delete-post-confirm").hide();
+
+      $j(".group-list-item").off("click");  
+      $j(".group-list-item").on("click", function (e) {
+
+        $j('.showGroupDetailParam1').val($j(this).attr('grpId'));
+        jsShowGroupDetail();
+        setView_03_01_02();
+
+      });
+
+      removeHtmlFormatting();
+    }
+
+
+    function setView_03_01_02() {
+
+      $j(".document-header").hide();
+      $j('.chat-section-groups').hide(); 
+      $j('.chat-section-detail').show();
+      $j(".protect-screen-bis").addClass("hide");
+      $j(".btn-delete-post-confirm").hide();
+
+      $j(".btn-back").off("click");  
+      $j(".btn-back").on("click", function (e) {
+        jsShowGroupList();
+      });
+
+      $j(".btn-attachment").off("click");  
+      $j(".btn-attachment").on("click", function (e) {
+        $j(".attachInputChatter").trigger('click');
+      });
+
+      $j(".btn-send").off("click");  
+      $j(".btn-send").on("click", function (e) {
+
+        jsAddPost();
+
+      });
+
+
+
+      setView_03_01_02_logic();
+
+    }
+
+
+    function setView_03_01_02_logic() {
+
+      $j(".btn-delete-post").off("click");  
+      $j(".btn-delete-post").on("click", function (e) {
+        $j('.currentPostId').val($j(this).attr('postId'));
+        setView_03_01_04();
+      });
+
+      removeHtmlFormattingDetail();
+      window.scrollTo(0, document.body.scrollHeight);
+
+    }
+
+    function setView_03_01_04() {
+
+      $j(".document-header").hide();
+      $j('.chat-section-groups').hide(); 
+      $j('.chat-section-detail').show();
+      $j(".protect-screen-bis").removeClass("hide");
+      $j(".btn-delete-post-confirm").show();
+
+      $j(window).on("touchmove.noScroll", function (e) {
+        e.preventDefault();
+      });
+
+      $j(".protect-screen-bis").off("click");  
+      $j(".protect-screen-bis").on("click", function (e) {
+        $j(window).off("touchmove.noScroll");
+        setView_03_01_02();
+      });
+
+      $j(".btn-delete-post-confirm").off("click");  
+      $j(".btn-delete-post-confirm").on("click", function (e) {
+        jsDeleteCurrentPost();
+        $j(window).off("touchmove.noScroll");
+        setView_03_01_02();
+      });
+
+    }
+
+    function removeHtmlFormatting() {
+
+      $j(".removeHtmlFormatting").each(function(index) {
+        $j(this).text($j(this).text().replace("</p><p>", " ").replace("<p>", "").replace("</p>", ""));
+      });
+
+    }
+
+    function removeHtmlFormattingDetail() {
+      $j(".removeHtmlFormattingDetail").each(function(index) {
+        $j(this).html($j(this).attr("htmltext").replace("</p><p>", "<br/>").replace("<p>", "").replace("</p>", ""));
+      });
+    }
+
+    $j(document).ready(function () {
+      
+      // Check if a group is already selected (case after adding file)
+      if ($j('.showGroupDetailParam1').val().length > 0) {
+        jsShowGroupDetail();
+        setView_03_01_02();
+      } else {
+        setView_03_01_01();
+      }
+
+    });
+
+  </script>
+</body>
+
+
+</html>
+
+</apex:form>
+
+</apex:page>

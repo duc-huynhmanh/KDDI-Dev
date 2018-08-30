@@ -1,0 +1,2375 @@
+<apex:page controller="saDailyReportListCtrl" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" cache="false" action="{!redirectIfNecessaryMobile}" docType="html-5.0">
+
+<apex:form id="allForm">
+
+<html lang="ja">
+<head>
+  <meta charset="utf-8"/>
+  <title>auポータル</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/sanitize.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/common.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResSchedule,'/css_sp/style-search.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/iphone.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/flatpickr.min.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/style-calender.css')}"/>
+
+  <!-- libraries -->
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js/jquery-3.2.1.min.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'truncate/trunk8.js')}"/> 
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://npmcdn.com/flatpickr/dist/l10n/ja.js"></script>
+
+  <!-- scripts -->
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js_sp/jquery_custom-dialog.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js_sp/script_check_ua.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js_sp/script_fitting.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js_sp/script_search.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js_sp/script_sp.js')}"/> 
+  
+
+  <script>
+
+    var $j = jQuery.noConflict();
+
+    function jsTruncate() {
+      $j('.truncate').trunk8();
+    }
+
+    function jsChangeRadioCheckedDefault() {
+      $j('.isReplyCheckedDefault').prop('checked', true);
+      $j('.isReplyDisabledDefault').attr('disabled', true);
+    }
+
+	function jsDisplayMessage() {
+        if ($j('.messageInfo').val().length > 0) {
+          	alert($j('.messageInfo').val());
+          	$j('.messageInfo').val("");
+        }
+    }
+
+  </script>
+
+  <style type="text/css">
+/*
+    .search-result {
+      padding-bottom: 0;
+    }
+*/
+    ul li, ol li {
+      margin-left: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      display: inherit;
+    }
+
+    body a:hover {
+      text-decoration: none;
+    }
+
+    .report-entry-form-body {
+      padding-bottom: 0;
+    }
+
+    .event-list-item-title, .event-list-item-title-note {
+      white-space: nowrap;
+    }
+
+    input:disabled, textarea:disabled {
+      opacity: 1;
+    }
+
+
+    .isEvent .description {
+      display: none;
+    }
+
+    .isNotEvent .event-list {
+      display: none;
+    }
+
+    .search-conditions .begin-date, .search-conditions .end-date {
+      width: 199px;
+      font-size: 1.4rem;
+    }
+
+    .item-top > a {
+      font-size: 1.8rem !important;
+    }
+
+input[type="date"] {
+    vertical-align: top;
+}
+
+    .related-files {
+      margin: 10px 0;
+      margin-top: 10px;
+      margin-right: 0px;
+      margin-bottom: 10px;
+      margin-left: 0px;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    .button--delete-list {
+/*
+      width: 5.75rem;
+      height: 2.5rem;
+*/
+      background-color: #000;
+      color: #fff;
+/*
+      font-size: .833rem;
+      padding: .8rem;
+      line-height: 1;
+*/
+      background-image: none;
+      border-width: 0;
+      font-size: 2rem;
+      line-height: 2;
+
+    }
+
+
+    .export-csv {
+      display: inline-block;
+      width: 230px;
+      height: 60px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      text-align: center;
+      font-size: 15px;
+      font-size: 1.5rem;
+      line-height: 60px;
+      color: #ffffff;
+      background-color: #ed5500;
+    }
+
+    .export-csv:hover {
+      color: #ffffff;
+      background-color: #f17733;
+    }
+
+
+
+    .isLink {
+      cursor: pointer;
+      cursor: hand;      
+    }
+
+    .result-date-item .title,
+    .result-date-item .subject {
+      left: 0 !important;
+      margin: 0 1rem !important;
+      width: auto !important;
+      font-size: 2.5rem !important;
+    }
+
+    .search-list-header.admin select {
+      font-size: 3.5rem;
+      color: black;
+    }
+    .search-text input {
+      font-size: 3.5rem !important;
+      color: black;
+    }
+    .search-conditions .begin-date,
+    .search-conditions .end-date {
+      font-size: 3.5rem !important;
+      color: black;
+      width: 11rem;;
+    }
+    .search-conditions .btn-reset {
+      width: 70px;
+      font-size: 2.5rem !important;
+    }
+    .search-conditions .btn-search {
+      font-size: 2.5rem !important;
+    }
+    .report-entry-form header h2 {
+      font-size: 4.2rem !important;
+      font-weight: bold;
+    }
+
+    .btn-post {
+      margin-bottom: 1rem;
+    }
+  </style>
+
+</head>
+
+
+<body class="page-schedule">
+  
+  <c:saMainTopComp typeOfScreen="{!typeOfScreen}" />
+
+  <div class="protect-screen hide"></div>
+  
+  <apex:inputHidden id="messageInfo" html-class="messageInfo" value="{!messageInfo}"/>
+  
+  <!--value="{!messageInfo}"-->
+  
+  <apex:actionFunction name="jsRefreshInfoMessage" action="{!dummyAction}" rerender="report-detail-form,listComments,messageInfo"/>
+  
+  <!-- template-popup -->
+  <div class="modal-dialog hide"><p>ダイアログメッセージ</p><div class="btn-cancel"><a href="#">キャンセル</a></div><div class="btn-ok"><a href="#">OK</a></div></div>
+ 
+  <div class="document-container">
+    <header class="document-header">
+      <div class="btn-menu"><a href="#">ナビゲーション</a></div>
+    </header>
+
+    <apex:inputHidden html-class="currentInquiryReply" value="{!currentInquiryReplyId}" />
+
+    <apex:actionFunction name="jsShowInquiry"
+                         action="{!showCurrentInquiryDetail}"
+                         rerender="pnlCurrentInquiry"
+                         oncomplete="setView_DRL_02();"/>
+
+    <div class="document-contents">
+
+      <apex:actionRegion renderRegionOnly="false">
+        
+        <!-- #View DRL-01(typ.) -->
+        <!--<section class="search-list hide admin">-->
+        <section class="search-list hide">
+          <header class="search-list-header user">
+            <div>
+              <div class="search-text"><input type="text" value="" placeholder="検索" /></div>
+              <a href="#" class="btn-search ui-color-1">検索</a>
+            </div>
+          </header>
+          <header class="search-list-header admin">
+            <div>
+
+              <div class="search-text">
+                <apex:selectList value="{!scopeEvents}"
+                                 size="1">
+                  <apex:selectOption itemValue="private"
+                                     itemLabel="自分の活動"
+                                     html-class="private"/>
+                  <apex:selectOption itemValue="organization"
+                                     itemLabel="自組織の活動"
+                                     html-class="organization"/>
+                  <apex:actionSupport event="onchange"
+                                      action="{!getDailyReportSearch}"
+                                      reRender="pnlListEvents, pnlFiltersRoles"
+                                      oncomplete="setLogic_SearchListEvents();"/>
+                </apex:selectList>
+
+              </div>
+
+              <a href="#" class="btn-search-conditions ui-color-1 off">検索条件表示</a>
+
+
+
+              <div class="search-conditions">
+
+
+                <div class="search-text">
+                  <apex:inputText value="{!filterKeyword}"
+                                  html-placeholder="キーワード検索（３つまで）"/>
+                  
+                </div>
+
+
+                <apex:outputPanel id="pnlFiltersRoles">
+                  <apex:outputPanel rendered="{!displayFilterRoles}">
+
+                    <div class="field ">
+                      <label class="field-label"
+                             style="padding-bottom: 10px;">組織1</label>
+
+                      <apex:selectList value="{!filterRole5Option}"
+                                       styleclass="field-value search-field-product-name"
+                                       size="1"
+                                       html-data-field="Role5DeveloperName"
+                                       style="margin-bottom: 4px;"
+                                       onkeydown="if(event.keyCode==13){this.blur();}">
+                        <apex:selectOptions value="{!role5Options}" />
+                        <apex:actionSupport event="onchange"
+                                            action="{!inputRole5Option}"
+                                            reRender="sltListRole6, sltListRole7, sltListRole8" />
+                      </apex:selectList>
+
+                    </div>
+
+                    <div class="field ">
+                      <label class="field-label"
+                             style="padding-bottom: 10px;">組織2</label>
+
+                      <apex:selectList value="{!filterRole6Option}"
+                                       id="sltListRole6"
+                                       styleclass="field-value search-field-product-name"
+                                       size="1"
+                                       html-data-field="Role6DeveloperName"
+                                       style="margin-bottom: 4px;"
+                                       onkeydown="if(event.keyCode==13){this.blur();}">
+                        <apex:selectOptions value="{!role6Options}" />
+                        <apex:actionSupport event="onchange"
+                                            action="{!inputRole6Option}"
+                                            reRender="sltListRole7, sltListRole8" />
+                      </apex:selectList>
+
+                    </div>
+
+                    <div class="field ">
+                      <label class="field-label"
+                             style="padding-bottom: 10px;">組織3</label>
+
+                      <apex:selectList value="{!filterRole7Option}"
+                                       id="sltListRole7"
+                                       styleclass="field-value search-field-product-name"
+                                       size="1"
+                                       html-data-field="Role7DeveloperName"
+                                       style="margin-bottom: 4px;"
+                                       onkeydown="if(event.keyCode==13){this.blur();}">
+                        <apex:selectOptions value="{!role7Options}" />
+                      </apex:selectList>
+
+                    </div>
+
+                  </apex:outputPanel>
+                </apex:outputPanel>
+
+
+
+                <div class="date">
+                  <div style="display: inline-block">
+                    <apex:inputText value="{!filterDateStart}"
+                                    html-placeholder="開始日"
+                                    html-readonly="true"
+                                    styleclass="begin-date datepicker" />
+                    <a href="#"
+                       class="btn-reset ui-color-3"
+                       onclick="$j('.begin-date').val('');">解除</a>
+                  </div>
+
+                  <span class="divider"> - </span>
+                  <div style="display: inline-block">
+                    <apex:inputText value="{!filterDateEnd}"
+                                    html-placeholder="終了日"
+                                    html-readonly="true"
+                                    styleclass="end-date datepicker" />
+                    <a href="#"
+                       class="btn-reset ui-color-3"
+                       onclick="$j('.end-date').val('');">解除</a>
+                  </div>
+                </div>
+
+                <apex:commandLink value="検索"
+                                  styleclass="btn-search ui-color-1"
+                                  action="{!getDailyReportSearch}"
+                                  reRender="pnlListEvents"
+                                  oncomplete="setLogic_SearchListEvents();$j('.search-conditions').hide();"/>
+
+              </div>
+
+
+
+
+            </div>
+          </header>
+
+          <div class="search-result">
+
+            <apex:outputPanel id="pnlListEvents">
+              <ul>
+
+                <apex:repeat value="{!lsClsEvents}" var="varEvent" >
+                  <li class="result-date-item">
+                    <h3 class="result-date" style="{!IF(varEvent.isRupture, '', 'display: none;')}"><time>{!varEvent.dateStr}</time></h3>
+                    <ul>
+                      <li class="report-item send" inqId="{!varEvent.evt.Id}">
+                        <apex:outputPanel >
+                        <h4 class="title">{!varEvent.evtTitle}</h4>
+                        <p class="subject">{!varEvent.description}</p>
+                        </apex:outputPanel>
+                      </li>
+                    </ul>
+                  </li>
+                </apex:repeat>
+             
+              </ul>
+            </apex:outputPanel>            
+
+          </div>
+        </section>
+      </apex:actionRegion>
+
+
+      <!-- #View DRL-02 -->
+      <section class="report-entry-form daily-report-detail hide">
+        <div>
+          <header>
+<!--
+            <div class="btn-save ui-color-1"><a href="#">保存</a></div>
+-->
+            <div class="title"><h2>日報詳細</h2></div>
+            <a href="#" class="btn-close">閉じる</a>
+          </header>
+          <div class="report-entry-form-body">
+            <ul class="report-items">
+
+                  <li class="report-item edit">
+                    <apex:outputPanel id="pnlCurrentInquiry">                      
+
+
+            <!-- #DynamicItem -->
+            <div class="report-detail-form">
+                        
+              <h3 class="title">{!currentInquiryReply.saBusinessLocation__r.BusinessLocationName__c}</h3>
+
+              <apex:repeat value="{!currentInquiryReplyDetail}" var="varQuest" >
+                <p class="text">
+                  <apex:outputLabel rendered="{!mpQuestions[varQuest.saInquiryDetail__c].IsRequired__c}" style="color: red;">* </apex:outputLabel>
+                  {!mpQuestions[varQuest.saInquiryDetail__c].QuestionLabel__c}
+                </p>
+
+                <apex:outputPanel rendered="{!mpQuestions[varQuest.saInquiryDetail__c].AnswerType__c == 'TEXT'}">
+                  <ul>
+                    <li>
+                      <apex:inputTextarea value="{!varQuest.ReplyText__c}" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}"/>
+                    </li>
+                  </ul>  
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!mpQuestions[varQuest.saInquiryDetail__c].AnswerType__c == 'NUMBER'}">
+                  <ul>
+                    <li>
+                      <apex:inputText value="{!varQuest.ReplyNumberTechnical__c}" 
+                                      html-pattern="[0-9]*"
+                                      disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}"/>
+                    </li>
+                  </ul>  
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!mpQuestions[varQuest.saInquiryDetail__c].AnswerType__c == 'DECIMAL'}">
+                  <ul>
+                    <li>
+                      <apex:inputText value="{!varQuest.ReplyDecimalTechnical__c}" 
+                                      html-type="text"
+                                      disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}"/>
+                    </li>
+                  </ul>  
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!mpQuestions[varQuest.saInquiryDetail__c].AnswerType__c == 'CHECKBOX'}">
+                  <ul>
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 1, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox01__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" />
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply01Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 2, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox02__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply02Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 3, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox03__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply03Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 4, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox04__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply04Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 5, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox05__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply05Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 6, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox06__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply06Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 7, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox07__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply07Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 8, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox08__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply08Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 9, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox09__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply09Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 10, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox10__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply10Label__c}</span></span>
+                      </label>
+                    </li>
+  
+					<li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 11, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox11__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" />
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply11Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 12, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox12__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply12Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 13, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox13__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply13Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 14, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox14__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply14Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 15, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox15__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply15Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 16, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox16__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply16Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 17, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox17__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply17Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 18, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox18__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply18Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 19, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox19__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply19Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 20, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox20__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply20Label__c}</span></span>
+                      </label>
+                    </li>
+                    
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 21, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox21__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" />
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply21Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 22, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox22__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply22Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 23, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox23__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply23Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 24, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox24__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply24Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 25, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox25__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply25Label__c}</span></span>
+                      </label>
+                    </li>
+
+
+                  </ul>  
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!mpQuestions[varQuest.saInquiryDetail__c].AnswerType__c == 'RADIO_BUTTON'}">
+                  <apex:inputHidden html-class="ReplyRadioButton-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                                    value="{!varQuest.ReplyRadioButton__c}" />
+
+                  <ul>
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 1, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_01', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_01');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply01Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 2, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_02', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_02');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply02Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 3, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_03', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_03');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply03Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 4, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_04', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_04');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply04Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 5, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_05', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_05');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply05Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 6, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_06', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_06');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply06Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 7, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_07', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_07');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply07Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 8, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_08', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_08');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply08Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 9, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_09', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_09');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply09Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 10, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_10', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_10');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply10Label__c}</span></span>
+                      </label>
+                    </li>
+                    
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 11, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_11', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_11');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply11Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 12, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_12', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_12');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply12Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 13, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_13', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_13');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply13Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 14, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_14', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_14');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply14Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 15, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_15', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_15');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply15Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 16, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_16', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_16');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply16Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 17, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_17', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_17');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply17Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 18, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_18', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_18');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply18Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 19, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_19', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_19');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply19Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 20, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_20', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_20');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply20Label__c}</span></span>
+                      </label>
+                    </li>
+                    
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 21, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_21', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_21');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply21Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 22, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_22', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_22');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply22Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 23, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_23', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_23');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply23Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 24, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_24', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_24');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply24Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 25, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_25', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_25');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply25Label__c}</span></span>
+                      </label>
+                    </li>
+
+                  </ul>  
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!mpQuestions[varQuest.saInquiryDetail__c].AnswerType__c == 'DATE'}">
+                  <ul>
+                    <li>
+                      <apex:inputText value="{!varQuest.ReplyDateStartTechnical2__c}"
+                                      html-type="date"
+                                      html-defaultvalue="{!varQuest.ReplyDateStartTechnical__c}"
+                                      styleclass="dateInput"
+                                      style="vertical-align: middle;"
+                                      disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" />
+                    </li>
+                  </ul>  
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!mpQuestions[varQuest.saInquiryDetail__c].AnswerType__c == 'PERIOD'}">
+                  <ul>
+                    <li>
+                      <div class="date">
+                        <apex:inputText value="{!varQuest.ReplyDateStartTechnical2__c}"
+                                        html-type="date"
+                                        html-defaultvalue="{!varQuest.ReplyDateStartTechnical__c}"
+                                        styleclass="dateInput"
+                                        style="vertical-align: middle;"
+                                        disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" />
+                        <span class="divider">～</span>
+                        <apex:inputText value="{!varQuest.ReplyDateEndTechnical2__c}"
+                                        html-type="date"
+                                        html-defaultvalue="{!varQuest.ReplyDateEndTechnical__c}"
+                                        styleclass="dateInput"
+                                        style="vertical-align: middle;"
+                                        disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" />
+                      </div>
+                    </li>
+                  </ul>  
+                </apex:outputPanel>
+
+              </apex:repeat>
+
+              <apex:outputPanel id="listComments">
+
+                <div style="text-align: center;margin-top: 1rem;margin-bottom: 0.5rem;font-size: 4em;font-weight: bold;">
+                  <apex:outputLabel value="コメント" />
+                </div>
+
+                <!-- COMMENT 1 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 0}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 0 || currentInquiryReply.CommentAuthor__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment1}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 0}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment1}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 0}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment1}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment1}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 0 && currentInquiryReply.CommentAuthor__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+                <!-- COMMENT 2 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 1}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 1 || currentInquiryReply.CommentAuthor2__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment2}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 1}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment2}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 1}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment2}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment2}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 1 && currentInquiryReply.CommentAuthor2__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment2__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor2__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+
+
+                <!-- COMMENT 3 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 2}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 2 || currentInquiryReply.CommentAuthor3__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment3}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 2}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment3}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 2}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment3}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment3}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 2 && currentInquiryReply.CommentAuthor3__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment3__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor3__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+
+
+                <!-- COMMENT 4 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 3}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 3 || currentInquiryReply.CommentAuthor4__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment4}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 3}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment4}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 3}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment4}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment4}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 3 && currentInquiryReply.CommentAuthor4__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment4__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor4__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+
+
+                <!-- COMMENT 5 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 4}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 4 || currentInquiryReply.CommentAuthor5__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment5}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 4}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment5}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 4}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment5}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment5}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 4 && currentInquiryReply.CommentAuthor5__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment5__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor5__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+
+
+                <!-- COMMENT 6 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 5}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 5 || currentInquiryReply.CommentAuthor6__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment6}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 5}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment6}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 5}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment6}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment6}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 5 && currentInquiryReply.CommentAuthor6__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment6__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor6__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+
+
+                <!-- COMMENT 7 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 6}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 6 || currentInquiryReply.CommentAuthor7__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment7}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 6}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment7}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 6}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment7}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment7}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 6 && currentInquiryReply.CommentAuthor7__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment7__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor7__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+
+
+                <!-- COMMENT 8 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 7}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 7 || currentInquiryReply.CommentAuthor8__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment8}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 7}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment8}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 7}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment8}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment8}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 7 && currentInquiryReply.CommentAuthor8__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment8__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor8__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+
+
+                <!-- COMMENT 9 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 8}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 8 || currentInquiryReply.CommentAuthor9__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment9}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 8}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment9}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 8}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment9}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment9}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 8 && currentInquiryReply.CommentAuthor9__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment9__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor9__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+
+
+                <!-- COMMENT 10 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 9}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 9 || currentInquiryReply.CommentAuthor10__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment10}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 9}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment10}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 9}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment10}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment10}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 9 && currentInquiryReply.CommentAuthor10__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment10__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor10__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+
+
+                <!-- COMMENT 11 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 10}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 10 || currentInquiryReply.CommentAuthor11__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment11}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 10}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment11}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 10}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment11}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment11}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 10 && currentInquiryReply.CommentAuthor11__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment11__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor11__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+
+
+                <!-- COMMENT 12 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 11}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 11 || currentInquiryReply.CommentAuthor12__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment12}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 11}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment12}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 11}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment12}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment12}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 11 && currentInquiryReply.CommentAuthor12__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment12__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor12__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+
+                <!-- COMMENT 13 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 12}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 12 || currentInquiryReply.CommentAuthor13__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment13}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 12}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment13}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 12}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment13}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment13}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 12 && currentInquiryReply.CommentAuthor13__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment13__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor13__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+
+
+                <!-- COMMENT 14 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 13}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 13 || currentInquiryReply.CommentAuthor14__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment14}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 13}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment14}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 13}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment14}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment14}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 13 && currentInquiryReply.CommentAuthor14__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment14__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor14__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+
+
+                <!-- COMMENT 15 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 14}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 14 || currentInquiryReply.CommentAuthor15__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment15}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 14}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment15}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 14}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment15}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment15}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 14 && currentInquiryReply.CommentAuthor15__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment15__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor15__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+
+
+                <!-- COMMENT 16 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 15}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 15 || currentInquiryReply.CommentAuthor16__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment16}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 15}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment16}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 15}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment16}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment16}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 15 && currentInquiryReply.CommentAuthor16__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment16__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor16__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+
+
+                <!-- COMMENT 17 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 16}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 16 || currentInquiryReply.CommentAuthor17__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment17}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 16}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment17}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 16}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment17}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment17}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 16 && currentInquiryReply.CommentAuthor17__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment17__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor17__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+
+
+                <!-- COMMENT 18 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 17}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 17 || currentInquiryReply.CommentAuthor18__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment18}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 17}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment18}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 17}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment18}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment18}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 17 && currentInquiryReply.CommentAuthor18__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment18__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor18__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+
+
+                <!-- COMMENT 19 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 18}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 18 || currentInquiryReply.CommentAuthor19__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment19}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 18}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment19}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 18}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment19}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment19}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 18 && currentInquiryReply.CommentAuthor19__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment19__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor19__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>
+
+
+
+                <!-- COMMENT 20 -->
+                <apex:outputPanel rendered="{!nbCommentsEntered >= 19}" >
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered == 19 || currentInquiryReply.CommentAuthor20__c == myUser.Id}">
+
+                    <div class="post-comment">
+
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment20}" rows="3"/>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered == 19}">
+                        <div class="btn btn-post">
+                          <apex:commandLink value="投稿"
+                                            styleclass="ui-color-1"
+                                            action="{!upsertComment20}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+                        </div>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!nbCommentsEntered > 19}">
+                        <div class="btn btn-post">
+
+                          <apex:commandLink value="更新"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!upsertComment20}"
+                                            rerender="messageInfo"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                          <div style="max-width: 2%; display: inline-block;">&nbsp;</div>
+
+                          <apex:commandLink value="削除"
+                                            styleclass="ui-color-1"
+                                            style="width: 49%; display: inline-block;"
+                                            action="{!deleteComment20}"
+                                            rerender="messageInfo, listComments"
+                                            onComplete="jsDisplayMessage();jsRefreshInfoMessage();"/>
+
+                        </div>
+                      </apex:outputPanel>
+
+                    </div>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!nbCommentsEntered > 19 && currentInquiryReply.CommentAuthor20__c != myUser.Id}">
+
+                    <div>
+                      <p class="text">
+                        <apex:outputField value="{!currentInquiryReply.Comment20__c}" />
+                        <div style="text-align: right;">
+                          <apex:outputLabel style="font-style: italic;text-align: right;font-size: 2.8rem;">{!currentInquiryReply.CommentAuthor20__r.DisplayedUsernameFormula__c}</apex:outputLabel>                        
+                        </div>
+                      </p>
+                    </div>
+
+                  </apex:outputPanel>
+
+                </apex:outputPanel>    
+
+
+
+
+
+              </apex:outputPanel>
+
+
+
+
+            </div>
+
+
+
+
+                    </apex:outputPanel>
+
+                  </li>
+
+
+            </ul>
+          </div>
+
+<!--
+          <footer>
+            <div class="btn-send ui-color-1 disable"><a href="#">送信画面へ</a></div>
+          </footer>
+-->
+        </div>
+      </section>
+   
+    </div>
+    <footer class="document-footer"></footer>
+  </div>
+  <script>
+
+
+    function setView_DRL_01() {
+
+      $j(".document-header").show();
+      $j('.search-list').show();
+      $j('.daily-report-detail').hide();
+
+      setLogic_SearchListEvents();
+    }
+
+
+    function setLogic_SearchListEvents() {
+      console.log("setLogic_SearchListEvents");
+      
+      jsTruncate();
+      $j(".search-list").addClass("admin");
+      $j(".search-conditions").hide();
+
+
+      $j(".btn-search-conditions").off("click");
+      $j(".btn-search-conditions").on("click", onClickSearchConditions);
+
+      $j(".search-result .report-item").off("click");
+      $j(".search-result .report-item").on("click", function(e) {
+        var $this = $j(e.currentTarget);
+        $j(".selected").removeClass("selected");
+        $this.addClass("selected");
+        $j('.currentInquiryReply').val($this.attr('inqId'));
+        jsShowInquiry();
+      });
+      
+      $j(".search-list-header.admin .search-text select").off("change");
+      $j(".search-list-header.admin .search-text select").on("change", function (e) {
+        var $this = $j(e.currentTarget);
+//        if ($this.val() == "private") {
+//          $j(".search-conditions").addClass("private");
+//        } else if ($this.val() == "organization") {
+//          $j(".search-conditions").removeClass("private");
+//        }
+      });
+     
+
+    }
+
+    function onClickSearchConditions(e) {
+      
+//      var $this = $j(e.currentTarget);
+//      $this.toggleClass("off");
+
+      if($j(".search-conditions:visible").length) {
+        $j(".search-conditions").hide();
+      } else {
+        $j(".search-conditions").show();
+      }
+
+
+    }
+
+
+    function setView_DRL_02() {
+
+      $j('html,body').scrollTop(0);
+      
+      $j(".document-header").hide();
+      $j('.search-list').hide();
+      $j('.daily-report-detail').show();
+
+      setLogic_DRL_02();
+    }
+
+
+
+    function setLogic_DRL_02() {
+      console.log("setLogic_DRL_02");
+
+      jsChangeRadioCheckedDefault();
+
+      $j(".btn-close").off("click");
+      $j(".btn-close").on("click", function(e) {
+        setView_DRL_01();          
+      });
+
+    }
+
+    $j(document).ready(function () {
+
+      // for libraries, flatpickr ********************************
+
+      $j('.datepicker').flatpickr({
+        "locale": "ja",
+        /*"altInput": true,
+        "altFormat": "Y年m月d日",
+        "dateFormat": "Y-m-d"*/
+        "dateFormat": "Y年m月d日"
+      });
+
+//      $j('.datepicker-widget').flatpickr({
+  //      "locale": "ja",
+        /*"altInput": true,
+        "altFormat": "Y年m月d日",
+        "dateFormat": "Y-m-d"*/
+    //    "dateFormat": "Y年m月d日",
+        //wrap: true
+      //});
+      
+      $j('.clockpicker-begin').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i"
+      });
+      $j('.clockpicker-end').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i"
+      });
+      
+      // for libraries, trancate ********************************
+      $j(".truncate").trunk8({
+        "fill": "..."
+      });      
+      
+      setView_DRL_01();
+
+/*
+      // Check if an event is selected
+      if ($j('.currentEvent').val().length > 0) {
+        setView_02_02_02();
+        $j(".document-header").show();
+
+        $j(".btn-close").off("click");
+        $j(".btn-close").on("click", function(e) {
+          $j(".search-list").show();
+          $j(".report-entry-form").hide();          
+        });
+      }
+*/
+
+    });
+
+
+  </script>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
+
+
+</apex:form>
+</apex:page>

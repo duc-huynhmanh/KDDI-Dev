@@ -1,0 +1,1360 @@
+<apex:page cache="false" showHeader="false" standardStylesheets="true" applyHtmlTag="false" applyBodyTag="false" doctype="html-5.0" controller="kdKnowledgeListCtrl">
+
+<html class="no-js" lang="en-GB">
+
+<c:auMainHeaderComp />
+
+<head>
+
+  <apex:stylesheet value="{!URLFOR($Resource.jQueryUIFull, 'jquery-ui-1.12.1/jquery-ui.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.jQueryUIFull, 'jquery-ui-1.12.1/jquery-ui.min.css')}"/>
+
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/external/jquery/jquery.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.datepicker-ja.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryMin)}"/>
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.min.js')}"/> 
+
+  <style>
+    .col1{
+      width: 155px;
+      overflow-x: hidden;
+    }
+    .col2{
+      min-width: 100px;
+    }
+    .col3{
+      min-width: 60px;
+      max-width: 70px;
+      overflow-x: hidden;
+    }
+    .col4{
+      min-width: 100px;
+      max-width: 300px;
+      overflow-x: hidden;
+    }
+    .col5{
+      min-width: 60px;
+      max-width: 70px;
+      overflow-x: hidden;
+    }
+    .col6{
+      min-width: 80px;
+      max-width: 90px;
+      overflow-x: hidden;
+    }
+    .col7{
+      min-width: 50px;
+      max-width: 60px;
+      overflow-x: hidden;
+    }
+    .col8{
+      min-width: 50px;
+      max-width: 60px;
+      overflow-x: hidden;
+    }
+
+    .col2 p, .col4 p{
+      word-break: break-all;
+      word-wrap: break-word;
+      white-space: normal;
+    }
+
+    .content {
+      padding: 1em;
+    }
+
+    .selectDate {
+      width: 7rem;
+      margin-left: 1em;
+      height: 2.1rem;
+    }
+
+    .dataTables_scrollBody {
+/*      max-height: 50rem !IMPORTANT;*/
+    }
+    .theme {
+/*      height: 100vh !IMPORTANT;
+*/    }
+    .content.content--theme {
+/*      style="overflow-x: hidden;"
+*/    }
+
+    .button.button--update{
+      margin-right: 0.5rem;
+    }
+
+    .button.button--update.button--update--space{
+      margin-right: 5rem;
+    }
+
+    .no-arrow::before {
+      display: none;
+    }
+    .theme-desc-list-fullsize {
+      width: 100%;
+    }
+
+    .button--cancel {
+      cursor: pointer;
+      cursor: hand;
+    }
+
+    .popup-inner {
+      top: 45%;
+      max-height: 78%;
+    }
+
+    .attachInput {
+      height: 4rem;
+      width: 4rem;
+      position: absolute;
+      left: 0.5rem;
+      opacity: 0;
+      overflow: hidden;
+margin-top: -2rem;
+   }
+
+    .icon-attach {
+      height: 4rem;
+      width: 4rem;
+      position: absolute;
+      left: 0.5rem;
+margin-top: -2rem;
+      pointer-events: none;
+    }
+
+    .icon--knowledge-letter {
+      height: 2rem;
+      width: 2rem;
+    }
+
+    .js-slide-width {
+/*      height: 495px !important;
+  */
+    }
+
+    .theme-desc__head_side {
+      height: 4.5rem;
+      max-height: 4.5rem;
+    }
+
+    .theme-desc__upload {
+      width: 100%;
+    }
+
+    .knowledge-list--attachment {
+      height: 2.5rem;
+      padding-left: 1rem;
+      background-color: #eee;
+      border-bottom: 1px solid #fff;
+      line-height: 2.5;
+      overflow: hidden;
+    }
+
+    .knowledge-list--attachment .button--delete-list {
+      float: right;
+      color: #fff !important;
+    }
+
+    .isLink {
+      cursor: pointer;
+      cursor: hand;      
+    }
+
+    .linkPutInTop {
+      float: right;
+      margin-right: 1rem
+    }
+
+    .theme-infoxxx {
+      overflow-y: scroll !important;
+    }
+
+    .theme-desc {
+      width: 100%;
+    }
+
+    .theme-info{
+      height: 100% !important;
+      z-index: 4;
+    }
+
+
+/* NEW CODE FOR CX */
+
+    .theme-list tbody {
+      height: auto !important;
+    }
+
+    .theme-list tbody td {
+      vertical-align: inherit;
+    }
+
+    .input-title {
+      height: 2.3rem !important;
+    }
+
+    .table--theme-info .is-middle {
+      width: 15rem;
+      margin-right: 1rem;
+    }
+
+    .no-attach {
+      opacity: 0.15;
+    }
+
+    .knowledge-list--attachment {
+      height: auto;
+      overflow: auto;
+    }
+
+    .theme-info__head.is-cx span{
+      color: #fff;
+    }
+
+    .popup{
+      z-index: 5 !important;
+    }
+
+    .popup--like textarea,
+    .popup--copy textarea {
+      width: 100%;
+      height: 20rem;
+    }
+
+    .popup--like .popup-inner,
+    .popup--copy .popup-inner {
+        width: 50%;
+        background-color: transparent;
+    }
+
+    .close-label {
+      font-size: 1.6rem;
+      line-height: 1.8 !important;
+    }
+
+    .popup__button-container {
+      bottom: 13rem;
+    }
+
+    .ui-datepicker {
+      z-index: 5 !important;
+    }
+
+    .thspanwithoutarrow {
+      top: auto !important;
+    }
+
+
+    .shopsItem, .categoryItem {
+        display: inline-block;
+        width: 240px;
+        float: left;
+        text-align: left;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin: 4px;
+        height: 1.8em;
+    }
+
+
+
+    .search-status__select {
+      width: auto;
+      height: 2.1rem;
+    }
+
+    .filter-category, .filter-daterange {
+      padding-left: 0 !important;
+      height: 44px;
+    }
+
+    .linkstyle {
+      text-decoration: underline;
+    }
+    .linkstyle:hover {
+      color: blue;
+    }
+    .linkstyle a:hover {
+      color: blue;
+    }
+
+    .highlightRow {
+      background-color: Cornsilk;
+    }
+    .dataTables_empty{
+      display: none;
+    }
+
+    ul li, ol li {
+      margin-left: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      display: inherit;
+    }
+
+    body a:hover {
+      text-decoration: none;
+    }
+
+.btn, .button, .formulaButton, .btnWhatsNew {
+    font-family: HelveticaNeueRoman,HelveticaNeue-Roman,Meiryo,Hiragino Kaku Gothic ProN,Kozuka Gothic Pr6N,Arial,Helvetica Neue Roman,HelveticaNeue,Helvetica Neue,TeXGyreHerosRegular,Helvetica,Tahoma,Geneva,sans-serif;
+    background-image: none;
+    background-repeat: no-repeat;
+    background-position: initial;
+    border-right: none;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    font-size: inherit;
+    color: #000;
+/*
+    padding: inherit;
+    cursor: inherit;
+    font-weight: inherit;
+    display: inherit;
+
+    padding: 2px 3px;
+    border: 1px solid #b5b5b5;
+    border-bottom-color: #7f7f7f;
+    background: #e8e8e9 url(/img/alohaSkin/btn_sprite.png) repeat-x right top;
+    font-weight: bold;
+    font-size: .9em;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+*/
+
+}
+
+body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .menuButton .menuButtonButton {
+    color: #333;
+    margin: auto;
+
+    padding: 0;
+    border: none;
+    background: unset;
+    font-weight: normal;
+    font-size: inherit;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+  .button--remove {
+    background-color: #999;
+  }
+
+  a{
+    font-weight: 500 !important;
+  }
+  .table--theme-info input, .table--theme-info select, .table--theme-info textarea {
+    padding: 0 0 0 0.5rem !important;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  #btn-dropdown{
+    width: 196px;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    width: 196px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .dropdown-content a:hover {background-color: #f1f1f1}
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .dropdown:hover .dropbtn {
+    background-color: #3F51B5;
+  }
+
+  .padding-top-50{
+    padding-top: 50px;
+  }
+  .background-transparent {
+    background-color: transparent;
+  }
+  .background-white{
+    background-color: #fff;
+  }
+  .max-height-100{
+    max-height: 100% !important;
+  }
+  </style>
+
+  <script>
+
+    var $j = jQuery.noConflict();
+
+    $( function() {
+      $.datepicker.setDefaults($.datepicker.regional['ja']);
+      $( ".datepicker" ).datepicker({ dateFormat: 'yy/mm/dd' });
+    } );
+
+    function callChangeOrder(key) {
+        var obj = $j('.orderInput');
+        obj.val(key);
+        changeOrder();
+    }
+
+    function callKnowledgeUpdateId(key) {
+        var obj = $j('.kdKnowledgeUpdateIdInput');
+        obj.val(key);
+        refreshKnowledgeEdit();
+    }
+
+    function callAddKnowledgeNewAttachmentId(key) {
+        if (checkFileSize()) {
+          var obj = $j('.kdKnowledgeUpdateIdInput');
+          obj.val(key);
+          addKnowledgeNewAttachment();
+        }
+    }
+
+    function callKnowledgeDeleteAttachment(key) {
+        var r = confirm("添付したファイルを削除しますか？");
+        if (r == true) {
+            var obj = $j('.AttachmentIdInput');
+            obj.val(key);
+            //TODO: save then delete or immediatly deleting
+            jsKnowledgeAttachmentDelete();
+        } else {
+
+        } 
+    }
+
+    function callKnowledgePutInTopAttachment(key) {
+        var obj = $j('.AttachmentIdInput');
+        obj.val(key);
+        jsKnowledgeAttachmentPutInTop();
+    }
+
+    function callDoSaveNewKnowledgeTemporary() {
+      updateCategory('{!$Component.thisForm.mediumCategoryNew}');
+      alert('ファイルを添付する際は、遷移後の一覧画面よりクリップマークをクリックしてください。');
+      jsDoSaveNewKnowledgeTemporary();
+
+    }
+
+    function callDoSaveNewKnowledge() {
+      updateCategory('{!$Component.thisForm.mediumCategoryNew}');
+      alert('ファイルを添付する際は、遷移後の一覧画面よりクリップマークをクリックしてください。');
+      jsDoSaveNewKnowledge();
+
+    }
+
+    function updateCategory(cateId){
+      console.log('cateId: ' + cateId);
+      var cateObject = document.getElementById(cateId);
+      var cateOption = cateObject.getElementsByTagName('option')[1];
+      cateOption.selected = 'selected';
+    }
+
+    function callAddLike() {
+
+        var obj = $j('.LikeCommentInput');
+
+        if (obj.val().trim().length == 0) {
+          alert('コメントを入力してください。');
+        } else {
+          jsAddLike();
+        }
+
+    }
+
+    function callRemoveLike() {
+        jsRemoveLike();
+    }
+
+    function callAddCopy() {
+
+        var obj = $j('.CopyCommentInput');
+
+        if (obj.val().trim().length == 0) {
+          alert('コメントを入力してください。');
+        } else {
+          jsAddCopy();
+        }
+
+    }
+
+    function callRemoveCopy() {
+        jsRemoveCopy();
+    }
+
+    function checkFileSize() {
+        var goodSize = true;
+        $j('input[type=file]').each(function()
+        {
+            if(this.files.length > 0 && typeof this.files[0] !== 'undefined')
+            {
+                var file = this.files[0],
+                    size = typeof ActiveXObject !== 'undefined' ?
+                        getIEFileSize(file)
+                        :
+                        file.fileSize || file.size;
+     
+                goodSize = 65 * 1024 * 1024 > size;
+                if(!goodSize) {
+                    alert('ファイルは大きすぎです。65Moまでのファイルを選択してください。');
+                }
+     
+                return goodSize;
+            }
+        });
+        return goodSize;
+    }
+
+
+    window.onload = function onLoadJS() {
+      if({!!hasData}){
+        console.log("no data");
+        $row = $('<td valign="top" colspan="8">マッチングデータ無し</td>');
+        $j('.dataTables_scrollBody > table > tbody > tr').append($row);
+      }
+      
+      var x = document.getElementsByClassName("dataTables_scrollBody");
+      x[0].style.maxHeight="CALC(" + x[0].style.maxHeight + " + 4rem)";      
+
+      // Send an alert if there is an error message (Attachment failed?)
+      var obj = $j('.errorMessageInput');
+      if (obj.val().length > 0) {
+        alert(obj.val());
+        obj.val('');        
+      }
+    }
+
+  </script>
+
+</head>
+
+<body class="theme" >
+  <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+<apex:form id="thisForm">
+
+  <c:auMainTopComp typeOfScreen="{!typeOfScreen}" />
+
+  <apex:outputPanel >
+    <apex:inputText id="orderBy" styleClass="orderInput" value="{!orderBy}" style="display: none;" />
+    <apex:inputText styleClass="errorMessageInput" value="{!errorMessage}" style="display: none;" />
+    <apex:actionFunction name="changeOrder" action="{!changeOrder}" />
+
+    <apex:actionRegion id="area51c" renderRegionOnly="false">
+      <apex:inputText id="attachmentId" styleClass="AttachmentIdInput" value="{!attachmentId}" style="display: none;" />
+      <apex:actionFunction name="jsKnowledgeAttachmentDelete" action="{!kdKnowledgeAttachmentDelete}" rerender="editKnowledge14" />
+      <apex:actionFunction name="jsKnowledgeAttachmentPutInTop" action="{!kdKnowledgeAttachmentPutInTop}" rerender="editKnowledge14" />
+    </apex:actionRegion>
+
+    <apex:actionFunction name="addKnowledgeNewAttachment" action="{!addKnowledgeNewAttachment}" />
+    <apex:actionFunction name="jsDoSaveNewKnowledgeTemporary" action="{!doSaveNewKnowledgeTemporary}" />
+    <apex:actionFunction name="jsDoSaveNewKnowledge" action="{!doSaveNewKnowledge}" />
+  </apex:outputPanel>
+
+  <div class="container js-get-height" id="container">
+    <main class="main main--theme clear" id="main" role="main">
+      <div class="theme-info js-slide-width is-cx">
+        <div class="theme-info-inner">
+          <div class="theme-info__top is-cx">
+            <button class="button button--dropdown js-slide-info-close"></button>
+            <div class="theme-info__head clearfix is-cx">
+              <span class="close-label">閉じる</span>
+              <div class="theme-info__publification is-cx">
+                <apex:outputPanel id="editKnowledge4" >
+                  <apex:actionRegion renderRegionOnly="false">
+                    <apex:commandLink rendered="{!isApprover && kdKnowledgeUpdate.Status__c == statusSaved}" 
+                                      styleClass="button button--publification js-popup-trigger" 
+                                      html-data-popup=".popup--publification" 
+                                      reRender="DUMMY">
+                      <i class="icon icon--circle"></i>承認
+                    </apex:commandLink>
+
+                    <apex:commandLink rendered="{!(!isCreator || True)}"
+                                      styleClass="button button--update js-popup-trigger" 
+                                      html-data-popup=".popup--like" 
+                                      reRender="DUMMY"
+                                      style="margin-top: -5px;"
+                                      value="いいね" />
+
+                    <apex:commandLink rendered="{!(!isCreator || True)}"
+                                      styleClass="button button--update js-popup-trigger"
+                                      html-data-popup=".popup--copy"
+                                      reRender="DUMMY"
+                                      style="margin-top: -5px;"
+                                      value="マネした" />
+
+                  </apex:actionRegion>
+                </apex:outputPanel>
+              </div>
+
+              <apex:outputPanel id="editKnowledge15" styleclass="theme-info__edit is-cx">
+                <apex:commandLink rendered="{!kdKnowledgeUpdate.UserRecordAccess.HasEditAccess && 
+                                              (kdKnowledgeUpdate.Status__c == statusTemporarySaved)}" 
+                                  value="一時保存" 
+                                  styleClass="button button--update"
+                                  onclick="updateCategory('{!$Component.thisForm.mediumCategoryEdit}')"
+                                  action="{!doSaveUpdateKnowledge}" />
+
+                <apex:commandLink rendered="{!kdKnowledgeUpdate.UserRecordAccess.HasEditAccess && 
+                                              kdKnowledgeUpdate.Status__c != statusTemporarySaved}" 
+                                  value="更新" 
+                                  styleClass="button button--update button--update--space" 
+                                  onclick="updateCategory('{!$Component.thisForm.mediumCategoryEdit}')"
+                                  action="{!doSaveUpdateKnowledge}" />
+
+                <apex:commandLink rendered="{!kdKnowledgeUpdate.UserRecordAccess.HasEditAccess && 
+                                              (kdKnowledgeUpdate.Status__c == statusTemporarySaved)}" 
+                                  value="更新して登録"
+                                  styleClass="button button--update button--update--space" 
+                                  onclick="updateCategory('{!$Component.thisForm.mediumCategoryEdit}')"
+                                  action="{!doSaveUpdateKnowledgeWithChangeStatusToSaved}" />
+
+                <apex:commandLink rendered="{!kdKnowledgeUpdate.UserRecordAccess.HasEditAccess && 
+                                              isCreator}" 
+                                  value="削除" 
+                                  styleClass="button button--delete" 
+                                  style="color: white;"
+                                  onclick="return confirm('このデータを削除してよろしいですか？');" 
+                                  action="{!doSaveDeleteKnowledge}" />
+              </apex:outputPanel>
+            </div>
+          </div>
+          <div class="theme-detail clearfix">
+            <div class="theme-desc is-cx is-top" style="height: 100%">
+              <div class="theme-desc__inner" style="height: 100%">
+                <!--Edit Area-->
+                <apex:outputPanel id="editKnowledge1">
+                  <table class="table--theme-info" style="height: 100%">
+
+                      <tr>
+                        <th>タイトル</th>
+                        <td class="u-mt32">
+                          <apex:inputField style="width: 100%;" styleclass="input-title" value="{!kdKnowledgeUpdate.Title__c}" />
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>種類</th>
+                        <td class="">
+                          <apex:inputField styleclass="" value="{!kdKnowledgeUpdate.Type__c}" />
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>テーマ</th>
+                        <td class="">
+                          <apex:actionRegion >
+                            <apex:inputField styleclass="" value="{!kdKnowledgeUpdate.Thema__c}" onchange="ResetCate();"/>
+                            <apex:actionFunction name="ResetCate" reRender="mediumCategoryEdit"/>
+                            <div style="display: none">
+                              <apex:inputField id="mediumCategoryEdit" styleclass="hidden" value="{!kdKnowledgeUpdate.MediumCategory__c}" />
+                            </div>
+                          </apex:actionRegion>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>チャネル区分</th>
+                        <td class="">
+                          <apex:inputField styleclass="" value="{!kdKnowledgeUpdate.SubjectDivision__c}" />
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>対象代理店情報</th>
+                        <td class="">
+                          <apex:inputField style="width: 20rem;" 
+                                           value="{!kdKnowledgeUpdate.Agency__c}"
+                                           rendered="{!isCreator}" />
+
+                          <apex:outputField value="{!kdKnowledgeUpdate.Agency__c}"
+                                            rendered="{!!isCreator}"
+                                            />
+
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>内容</th>
+                        <td>
+                          <apex:inputField styleclass="textarea-container" value="{!kdKnowledgeUpdate.Description__c}" />
+                        </td>
+                      </tr>
+
+                    <tr>
+                      <th>添付</th>
+                      <td>
+                        <apex:outputPanel id="editKnowledge14">
+                            <apex:repeat value="{!lsKnowledgeUpdateAttachment}" var="att">
+                              <ul class="knowledge-list--attachment">
+                                <li>
+                                  <apex:outputLink value="{!URLFOR($Action.Attachment.Download, att.Id)}" target="_blank" styleclass="isLink linkstyle">表示</apex:outputLink>
+
+                                  &nbsp;&nbsp;&nbsp;{!att.Name}
+
+                                  <apex:outputPanel rendered="{!kdKnowledgeUpdate.UserRecordAccess.HasEditAccess}">
+                                    <a class="button button--delete-list linkstyle" onclick="callKnowledgeDeleteAttachment('{!att.ID}');">削除<i class="icon icon--close"></i></a> 
+
+                                    <a onclick="callKnowledgePutInTopAttachment('{!att.ID}');" class="isLink linkPutInTop linkstyle">先頭へ</a> 
+                                  </apex:outputPanel>
+
+                                </li>
+                              </ul>
+                            </apex:repeat>
+                        </apex:outputPanel>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <th>いいね</th>
+                      <td>
+
+                        <apex:outputPanel id="editKnowledge17">
+    
+                            <apex:outputText value="{!kdKnowledgeUpdate.kdKnowledgeDetail_Like__r.size}人がいいねを付けました。"/>
+
+                            <apex:repeat value="{!kdKnowledgeUpdate.kdKnowledgeDetail_Like__r}" var="kdLike">
+                              <ul class="knowledge-list--attachment">
+                                <li>
+                                  <apex:outputPanel styleclass="u-sub-colour">
+                                    <apex:outputField value="{!kdLike.User__r.DisplayedUsernameFormula__c}" />
+                                  </apex:outputPanel>
+                                  <br/>
+                                  <apex:outputField value="{!kdLike.CommentLike__c}" />
+
+                                </li>
+                              </ul>
+                            </apex:repeat>
+                        </apex:outputPanel>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <th>マネ</th>
+                      <td>
+                        <apex:outputPanel id="editKnowledge18">
+
+                            <apex:outputText value="{!kdKnowledgeUpdate.kdKnowledgeDetail_Copy__r.size}人がマネしました。"/>
+
+                            <apex:repeat value="{!kdKnowledgeUpdate.kdKnowledgeDetail_Copy__r}" var="kdCopy">
+                              <ul class="knowledge-list--attachment">
+                                <li>
+                                  <apex:outputPanel styleclass="u-sub-colour">
+                                    <apex:outputField value="{!kdCopy.User__r.DisplayedUsernameFormula__c}" />
+                                  </apex:outputPanel>
+                                  <br/>
+                                  <apex:outputField value="{!kdCopy.CommentCopy__c}" />
+
+                                </li>
+                              </ul>
+                            </apex:repeat>
+                        </apex:outputPanel>
+                      </td>
+                    </tr>
+                  </table>
+                </apex:outputPanel>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <article class="content content--theme" id="content">
+        <header class="content-header search-tools" >
+          <div class="content-header__top" style="margin-top: -0.5rem; margin-bottom: -0.5rem;">
+            <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--12-col">
+                <div class="search-filter clearfix search_criteria_form" >
+                  <apex:actionRegion id="area51f" renderRegionOnly="false">
+                    <div style="display: inline-block;">
+                      <fieldset class="filter-daterange">
+                        <label >最終更新日</label>
+                        <apex:input value="{!filterDateFromStr}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd" />
+                        <label style="margin-left: 0.5em;">></label>
+                        <apex:input value="{!filterDateToStr}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd" />
+                      </fieldset>
+                      
+                      <fieldset class="filter-category">
+                        <label>ステータス</label>
+                        <apex:selectList styleClass="search-status__select" value="{!filterStatus}" size="1" style="margin-left: 0.5rem">
+                          <apex:selectOptions value="{!ListStatus}" />
+                        </apex:selectList>
+                      </fieldset>
+
+                      <fieldset class="filter-category">
+                        <label>種類</label>
+                        <apex:selectList styleClass="search-status__select" value="{!filterType}" size="1" style="margin-left: 0.5rem">
+                          <apex:selectOptions value="{!ListType}" />
+                        </apex:selectList>
+                      </fieldset>
+
+                      <fieldset class="filter-category">
+                        <label>テーマ</label>
+                        <apex:selectList styleClass="search-status__select" value="{!filterThema}" size="1" style="margin-left: 0.5rem">
+                          <apex:selectOptions value="{!ListThema}" />
+                        </apex:selectList>
+                      </fieldset>
+
+                      <fieldset class="filter-category">
+                        <label>チャネル区分</label>
+                        <apex:selectList styleClass="search-status__select" value="{!filterSubjectDivision}" size="1" style="margin-left: 0.5rem">
+                          <apex:selectOptions value="{!ListSubjectDivision}" />
+                        </apex:selectList>
+                      </fieldset>
+
+                      <fieldset class="filter-category">
+                        <label>タイトル</label>
+                        <apex:inputText styleClass="search-status__select" value="{!filterTitle}" style="margin-left: 0.5rem; width:10rem;" />
+                      </fieldset>
+
+                      <fieldset class="filter-category">
+                        <label>作成者及び組織名称</label>
+                        <apex:inputText styleClass="search-status__select" value="{!filterCreatedBy}" style="margin-left: 0.5rem; width:10rem;" />
+                      </fieldset>
+
+                      <fieldset class="filter-category">
+                        <label>動画有りのみ</label>
+                        <apex:inputCheckbox styleClass="search-status__select" value="{!filterHasMovie}" style="margin-left: 0.5rem; vertical-align: middle;" />
+                      </fieldset>
+
+                      <fieldset class="filter-category">
+                        <label>新着</label>
+                        <apex:inputCheckbox styleClass="search-status__select" value="{!filterNew}" style="margin-left: 0.5rem; vertical-align: middle;" />
+                      </fieldset>
+
+                      <fieldset class="filter-category">
+                        <label>フリー検索</label>
+                        <apex:inputText styleClass="search-status__select" value="{!filterFreeText}" style="margin-left: 0.5rem; width:10rem;" />
+                      </fieldset>   
+                      <fieldset class="filter-button">
+                        <apex:commandLink value="絞り込む/実行" styleClass="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" action="{!doSearch}" />
+                      </fieldset>                                
+                    </div>
+                  </apex:actionRegion>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-header__bottom">
+            
+<!--
+            <div class=search-display> 表示順
+              <select class=search-display__sort>
+                <option>投稿日</option>
+              </select>
+              <a class="button button--asc"></a>
+              <a class="button button--desc"></a>
+            </div>
+-->
+          </div>
+        </header>
+        <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--2-col">
+                <apex:outputPanel >
+                  <div class="u-buttons-container search-buttons" style="padding-top: 0.5em"><a class="js-popup-trigger" data-popup=".popup--theme" style="float: left;margin-left: 0;"><i class="icon icon--pen"></i>新規投稿</a></div>
+                </apex:outputPanel>
+              </div>
+
+              <div class="mdl-cell mdl-cell--1-col">
+                  <apex:selectList styleclass="search-numbers__select" id="pageSize" value="{!pageSize}" size="1" disabled="{!recoRdscouNt < 5}" style="margin-top: 1rem; height: 2.5em;">
+                    <apex:actionSupport event="onchange" action="{!setSizeSaveCurrentPageSize}"/>
+                    <apex:selectOption itemValue="5" itemLabel="5 件表示"/>
+                    <apex:selectOption itemValue="10" itemLabel="10 件表示"/>
+                    <apex:selectOption itemValue="20" itemLabel="20 件表示"/>
+                    <apex:selectOption itemValue="50" itemLabel="50 件表示"/>
+                  </apex:selectList>
+              </div>
+              <div class="mdl-cell mdl-cell--5-col search-pagination">                
+                <apex:outputPanel id="pnlPagination">
+                  <apex:outputPanel rendered="{!!(recordScount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1)}">
+                    <div style="height: 53px;" />
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!recordScount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1}">
+
+                    <nav>
+
+                    <apex:panelGroup rendered="{!pageNum == 1}" style="display: inline-block; width: 27px;" />
+
+                      <ul class="pagination">
+                        <li>
+                          <apex:panelGroup rendered="{!pageNum > 1}" >
+                            <apex:outputLink value="javascript:void(0)">
+                              <apex:actionSupport event="onclick" action="{!goToPagePrev}" />
+                              <i class="material-icons">navigate_before</i>
+                            </apex:outputLink>
+                          </apex:panelGroup>
+                        </li>
+
+                        <!-- 1st button -->
+                        <li class="{!IF(pageNum == 1, 'active', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage1}" />
+                            <apex:outputText value="1" />
+                          </apex:outputLink>
+                        </li>
+
+
+                        <!-- 2nd button -->
+                        <li class="{!IF(pageNum == 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage2}" />
+                            <apex:outputText value="2" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4), 'hidden', '')}">
+                          <span>…</span>
+                        </li>
+
+
+                        <!-- 3rd button -->
+                        <li class="{!IF(pageNum == 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage3}" />
+                            <apex:outputText value="3" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPagePrev}" />
+                            <apex:outputText value="{!pageNum - 1}" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr5}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 5}" />
+                          </apex:outputLink>                          
+                        </li>
+
+
+                        <!-- 4th button -->
+                        <li class="{!IF(pageNum == 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage4}" />
+                            <apex:outputText value="4" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="active {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <a href="#">{!pageNum}</a>
+                        </li>
+
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr4}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 4}" />
+                          </apex:outputLink>                          
+                        </li>
+
+
+                        <!-- 5th button -->
+                        <li class="{!IF(pageNum == 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage5}" />
+                            <apex:outputText value="5" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageNext}" />
+                            <apex:outputText value="{!pageNum + 1}" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr3}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 3}" />
+                          </apex:outputLink>
+                        </li>
+
+
+
+                        <!-- 6th button -->
+                        <li class="{!IF(pageNum == 6, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage6}" />
+                            <apex:outputText value="6" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage2ndNext}" />
+                            <apex:outputText value="{!pageNum + 2}" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr2}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 2}" />
+                          </apex:outputLink>
+                        </li>
+
+
+                        <!-- 7th button -->
+                        <li class="{!IF(pageNum == 7, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage7}" />
+                            <apex:outputText value="7" />
+                          </apex:outputLink>                          
+                        </li>
+
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <span>…</span>
+                        </li>
+
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 1, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr1}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 1}" />
+                          </apex:outputLink>
+                        </li>
+
+
+                        <!-- 8th button -->
+                        <li class="{!IF(pageNum == 8, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 8 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage8}" />
+                            <apex:outputText value="8" />
+                          </apex:outputLink>                          
+                        </li>
+
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1), 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLast}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1)}" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li>
+                          <apex:panelGroup rendered="{!hasNext}" >
+                            <apex:outputLink value="javascript:void(0)">
+                              <apex:actionSupport event="onclick" action="{!goToPageNext}" />
+                              <i class="material-icons">navigate_next</i>
+                            </apex:outputLink>
+                          </apex:panelGroup>
+                        </li>
+                      </ul>
+                    </nav>
+
+                  </apex:outputPanel>
+                </apex:outputPanel>
+              </div>
+              <div class="mdl-cell mdl-cell--4-col search-numbers" style="position: absolute; right: 2rem;">
+                <apex:outputPanel id="pnlDataCount" style="display: inline-block; margin-top: 1rem; margin-right: 1rem;">
+                  <span class="search-numbers__total"><span>{!RecordsCountLabel}</span><small>件</small></span>
+                </apex:outputPanel>
+                <fieldset class="filter-button dropdown">
+                      <a id="btn-dropdown" class="dropbtn mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="javascript:void(0)">データエクスポート <i class="material-icons">arrow_drop_down</i></a>
+                      <div class="dropdown-content">
+                        <a href="/kdKnowledgeCSVFileExporting?type=1&where={!whereStrParam}&filter={!searchFilter}&orderby={!orderBy}">利用状況</a>
+                        <a href="/kdKnowledgeCSVFileExporting?type=2&where={!whereStrParam}&filter={!searchFilter}&orderby={!orderBy}">いいね・まねした</a>
+                      </div>
+                </fieldset>
+              </div>
+            </div>
+        <div class="theme-list" style="margin-top: -1rem;">
+        <apex:outputPanel id="pnlGrid">
+            <table class="mdl-data-table mdl-js-data-table table table--theme js-table-data is-long">
+              <thead>
+                <tr>
+                  <th class="col1 mdl-data-table__cell--non-numeric sort">
+                    <ul>
+                      <li class="{!IF(orderBy == 'LastModifiedDate__c ASC', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('LastModifiedDate__c ASC');">
+                          <i class="material-icons">arrow_drop_up</i>
+                        </a>
+                      </li>
+                      <li class="{!IF(orderBy == 'LastModifiedDate__c DESC', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('LastModifiedDate__c DESC');">
+                          <i class="material-icons">arrow_drop_down</i>
+                        </a>
+                      </li>
+                    </ul>
+                    <span>ステータス<br/>（明細表示こちら）</span>
+                  </th>
+
+                  <th class="col2 mdl-data-table__cell--non-numeric sort">
+                    <span class="thspanwithoutarrow">テーマ・タイトル</span>
+                  </th>
+                  <th class="col4 mdl-data-table__cell--non-numeric sort">
+                    <span class="thspanwithoutarrow">作成者</span>
+                  </th>
+                  <th class="col5 mdl-data-table__cell--non-numeric sort">
+                    <span class="thspanwithoutarrow">添付</span>
+                  </th>
+                  <th class="col3 mdl-data-table__cell--non-numeric sort">
+                    <span class="thspanwithoutarrow">動画</span>
+                  </th>
+                  <th class="col6 mdl-data-table__cell--non-numeric sort">
+                    <span class="thspanwithoutarrow">累計閲覧数</span>
+                  </th>
+                  <th class="col7 mdl-data-table__cell--non-numeric sort u-text-center" data-sort="thumb">
+                    <span class="thspanwithoutarrow"><i class="material-icons">thumb_up</i></span>
+                  </th>
+                  <th class="col8 mdl-data-table__cell--non-numeric sort u-text-center" data-sort="comment">
+                    <span class="thspanwithoutarrow"><i class="material-icons">comment</i></span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <apex:actionRegion id="area51a" renderRegionOnly="false">
+                    <apex:inputText styleClass="kdKnowledgeUpdateIdInput" value="{!kdKnowledgeUpdateId}" style="display: none;" />
+                    <apex:actionFunction name="refreshKnowledgeEdit" action="{!refreshKnowledgeEdit}" rerender="editKnowledge1, editKnowledge2, editKnowledge3, editKnowledge4, editKnowledge5a, editKnowledge5b, editKnowledge6, editKnowledge7, editKnowledge8, editKnowledge10, editKnowledge11, editKnowledge12, editKnowledge13, editKnowledge14, editKnowledge15, editKnowledge16, editKnowledge17, editKnowledge18, pnlPopupLike, pnlPopupCopy" />
+                </apex:actionRegion>
+
+                <apex:repeat value="{!Records}" var="rec" >
+                    <tr onclick="callKnowledgeUpdateId('{!rec.knowledge.Id}');" class="{!IF(rec.knowledge.CreatedBy__c == currentUser.Id, 'highlightRow', '')}">
+  
+                      <td class="js-slide-info-trigger base-info js-base-info col1" data-target=".theme-info">
+                        <p>
+                          <span class="u-sub-colour"><apex:outputText value="{0,date,yyyy.MM.dd}"> <apex:param value="{!rec.knowledge.LastModifiedDate__c}" /> </apex:outputText></span>
+                          <br/>
+
+                          <apex:outputField value="{!rec.knowledge.Status__c}"/>
+                        </p>
+                      </td>
+                      <!--テーマ-->
+                      <td class="col2">
+                        <p>{!rec.themaLabel} {!IF(len(rec.knowledge.Title__c) > 0 || rec.knowledge.Title__c != null, '・ ','')}{!rec.knowledge.Title__c}</p>  
+                      </td>    
+                      
+                      <!--作成者氏名-->
+                      <td class="col4">
+                        <p>{!rec.knowledge.CreatedByDisplayedName__c}</p>
+                      </td> 
+                      <!--サムネイル-->
+                      <td class="col5">
+                        <apex:inputFile disabled="{!!rec.knowledge.UserRecordAccess.HasEditAccess}" id="upload--file" styleclass="attachInput" value="{!kdKnowledgeNewAttachment.body}" filename="{!kdKnowledgeNewAttachment.name}" contentType="{!kdKnowledgeNewAttachment.contentType}" 
+                                        filesize="{!kdKnowledgeNewAttachmentSize}"
+                                        onchange="callAddKnowledgeNewAttachmentId('{!rec.knowledge.Id}');" />
+
+                        <apex:outputLabel for="upload--file">
+                          <img class="icon-attach {!IF(rec.knowledge.Attachments.Size == 0, 'no-attach', '')}" src="{!URLFOR($Resource.auStyling,'/images/icon-attach.png')}" />
+                        </apex:outputLabel>
+                      </td>
+                      <!--動画-->              
+                      <td class="col3">
+                        <p>
+                          <img class="icon-attach {!IF(rec.knowledge.hasMovie__c, '', 'hidden')}" src="{!URLFOR($Resource.auStyling,'/images/icon-video.png')}" />
+                        </p>
+                      </td>
+                      <!--累計閲覧数-->
+                      <td class="col6">
+                        <p>{!rec.knowledge.NbView__c}</p>
+                      </td> 
+                      <!--thumb_up-->
+                      <td class="col7">
+                        <p>{!rec.knowledge.NbLike__c}</p>
+                      </td>
+                      <!--comment-->
+                      <td class="col8">
+                        <p>{!rec.knowledge.NbCopy__c}</p>
+                      </td>
+
+                    </tr>
+                </apex:repeat>
+<!--
+<tr><td class="js-slide-info-trigger"/><td class="js-slide-info-trigger"/><td class="js-slide-info-trigger"/><td class="js-slide-info-trigger"/></tr>
+-->
+              </tbody>
+            </table>
+        </apex:outputPanel>
+
+      
+    </div>
+
+
+      </article>
+    </main>
+<div class="popup popup--theme">
+  <div class="popup-inner max-height-100 background-transparent">
+    <table class="table--theme-info background-white">
+      <tr>
+        <th>タイトル</th>
+        <td class="u-mt32">
+          <apex:inputField style="width: 100%;" styleclass="input-title" value="{!kdKnowledgeNew.Title__c}" />
+        </td>
+      </tr>
+      <tr>
+        <th>種類</th>
+        <td class="">
+          <apex:inputField styleclass="" value="{!kdKnowledgeNew.Type__c}" />
+        </td>
+      </tr>
+      <tr>
+        <th>テーマ</th>
+        <td class="">
+          <apex:inputField styleclass="" value="{!kdKnowledgeNew.Thema__c}" />
+          <div style="display: none">
+          <apex:inputField id="mediumCategoryNew" styleclass="hidden" value="{!kdKnowledgeNew.MediumCategory__c}" />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>チャネル区分</th>
+        <td class="">
+          <apex:inputField styleclass="" value="{!kdKnowledgeNew.SubjectDivision__c}" />
+        </td>
+      </tr>
+      <tr>
+        <th>対象代理店情報</th>
+        <td class="">
+          <apex:inputField style="width: 20rem;" value="{!kdKnowledgeNew.Agency__c}" />
+        </td>
+      </tr>
+      <tr>
+        <th>内容</th>
+        <td class="last-child">
+          <apex:inputField styleclass="textarea-container" value="{!kdKnowledgeNew.Description__c}" />
+        </td>
+      </tr>
+    </table>
+
+    <div class="padding-top-50 background-transparent u-text-center">
+    <a href="" class="button button--cancel js-popup-close">キャンセル</a>
+
+    <apex:actionRegion renderRegionOnly="false">   
+
+      <apex:commandLink value="一時保存" 
+                        styleClass="button button--post"
+                        onclick="callDoSaveNewKnowledgeTemporary();" reRender="DUMMY"
+                        /> 
+
+      <apex:commandLink value="投稿する" 
+                        styleClass="button button--post"
+                        onclick="callDoSaveNewKnowledge();" reRender="DUMMY"
+                        /> 
+  
+    </apex:actionRegion>
+
+    </div>
+  </div>
+
+  
+
+</div>
+
+<!-- POPUP LIKE -->
+<apex:actionRegion renderRegionOnly="false">
+  <apex:outputPanel id="pnlPopupLike">
+    <div class="popup popup--like">
+      <div class="popup-inner">
+        <div class="publification-form">
+          <p>
+            <apex:inputField id="editKnowledge5a"
+                             styleclass="LikeCommentInput" 
+                             html-placeholder="コメントをご記入ください！"
+                             value="{!kdKnowledgeUpdateDetailLike.CommentLike__c}" />
+            <apex:actionFunction name="jsAddLike" action="{!doAddLike}" reRender="editKnowledge17, pnlPopupLike"/>
+            <apex:actionFunction name="jsRemoveLike" action="{!doRemoveLike}" reRender="editKnowledge17, pnlPopupLike"/>
+          </p>
+        </div>
+      </div>
+      <div class="popup__button-container u-text-center">
+        <a href="" class="button button--cancel button--cancel--like js-popup-close">キャンセル</a>
+
+        <apex:commandLink value="いいねの取り消し" 
+                          styleClass="button button--post button--remove"
+                          rendered="{!kdKnowledgeUpdateDetailLike.Id != NULL}"
+                          onclick="callRemoveLike();"
+                          reRender="DUMMY"/>
+
+        <apex:commandLink value="いいね"
+                          styleClass="button button--post"
+                          onclick="callAddLike();"
+                          reRender="DUMMY"/>
+      </div>
+    </div>
+  </apex:outputPanel>
+</apex:actionRegion>
+
+<!-- POPUP COPY -->
+<apex:actionRegion renderRegionOnly="false">
+  <apex:outputPanel id="pnlPopupCopy">
+    <div class="popup popup--copy">
+      <div class="popup-inner">
+        <div class="publification-form">
+          <p>
+            <apex:inputField id="editKnowledge5b"
+                             styleclass="CopyCommentInput" 
+                             html-placeholder="コメントをご記入ください！"
+                             value="{!kdKnowledgeUpdateDetailCopy.CommentCopy__c}" />
+            <apex:actionFunction name="jsAddCopy" action="{!doAddCopy}" reRender="editKnowledge18, pnlPopupCopy"/>
+            <apex:actionFunction name="jsRemoveCopy" action="{!doRemoveCopy}" reRender="editKnowledge18, pnlPopupCopy"/>
+          </p>
+        </div>
+      </div>
+      <div class="popup__button-container u-text-center">
+        <a href="" class="button button--cancel button--cancel--copy js-popup-close">キャンセル</a>
+
+        <apex:commandLink value="マネの取り消し" 
+                          styleClass="button button--post button--remove"
+                          rendered="{!kdKnowledgeUpdateDetailCopy.Id != NULL}"
+                          onclick="callRemoveCopy();"
+                          reRender="DUMMY"/>
+
+        <apex:commandLink value="マネした"
+                          styleClass="button button--post"
+                          onclick="callAddCopy();"
+                          reRender="DUMMY"/>
+      </div>
+    </div>
+  </apex:outputPanel>
+</apex:actionRegion>
+
+
+
+
+
+  </div>
+
+          <script src="{!URLFOR($Resource.kdKnowledgeScript)}" type="text/javascript"></script>
+          
+          <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            
+            ga('create', 'UA-xxxxxx', 'auto');
+            ga('send', 'pageview');
+
+          </script> 
+
+</apex:form>
+
+</body>
+
+</html>
+
+
+</apex:page>

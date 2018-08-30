@@ -1,0 +1,752 @@
+<apex:page cache="false" showHeader="false" standardStylesheets="true" applyHtmlTag="false" applyBodyTag="false" doctype="html-5.0" controller="saHearingListForAdminCtl">
+  <html>
+    <head>
+      <meta http-equiv="Pragma" content="no-cache" />
+      <meta http-equiv="cache-control" content="no-cache" />
+      <meta http-equiv="expires" content="0" />
+      <!-- 
+      <meta name="viewport" content="width=device-width" />
+       -->
+      <title></title>
+
+      <apex:stylesheet value="{!URLFOR($Resource.KDDI_CustomizedMaterials, 'KDDI_CustomizedMaterials/bootstrap/css/bootstrap.min.css')}" />
+      <apex:stylesheet value="{!URLFOR($Resource.KDDI_CustomizedMaterials, 'KDDI_CustomizedMaterials/KDDI_CustomBaseStyle.css')}" />
+      <apex:stylesheet value="{!URLFOR($Resource.KDDI_CustomizedMaterials, 'KDDI_CustomizedMaterials/KDDI_ListPage.css')}" />
+      <apex:includeScript value="{!URLFOR($Resource.JQuery)}" />
+      <apex:includeScript value="{!URLFOR($Resource.KDDI_CustomizedMaterials, 'KDDI_CustomizedMaterials/bootstrap/js/bootstrap.min.js')}" />
+
+      <apex:stylesheet value="{!URLFOR($Resource.jQueryUIFull, 'jquery-ui-1.12.1/jquery-ui.min.css')}"/>
+      <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/external/jquery/jquery.js')}"/> 
+      <apex:includescript value="{!URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.datepicker-ja.js')}"/> 
+      <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.min.js')}"/> 
+
+      <style type="text/css">
+
+        .hidden {
+          display: none;
+        }
+        hr.horizontal-rule {
+          margin-top: 160px;
+        }
+
+        .field-value {
+          border: none !important;
+        }
+
+        .contents div[data-type="dropdown"] {
+          display: block;
+          position: relative;
+        }
+        .contents div[data-type="dropdown"]:after {
+          content: "";
+          display: block;
+          height: 0px;
+          clear: both;
+        }
+        .contents div[data-type="dropdown"] *[data-type="label"] {
+          display: block;
+          float: left;
+        }
+        .contents div[data-type="dropdown"] input[type="text"][data-type="input-field"] {
+          display: block;
+          float: left;
+          border-radius: 4px 0px 0px 4px;
+          border: 1px solid silver;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.15) inset;
+          transition: box-shadow 0.1s linear 0s;
+          height: 30px;
+        }
+        .contents div[data-type="dropdown"] input[type="text"][data-type="input-field"] + .productSearchButton {
+          float: left;
+          border-radius: 0px;
+        }
+        .contents div[data-type="dropdown"] input[type="text"][data-type="input-field"]:focus {
+          position: relative;
+        }
+        .contents div[data-type="dropdown"] button[data-type="button"] {
+          display: block;
+          float: left;
+          margin: 0px 0px 0px -1px;
+          border-radius: 0px 4px 4px 0px;
+          border: 1px solid silver;
+          height: 30px;
+          background-image: none;
+          font-weight: normal;
+          background-color: #fff;
+          padding: 0px;
+          text-align: center;
+          color: #7FCC9E;
+          width: 20px;
+          transition: box-shadow 0.2s linear 0s, background-color 0.2s linear 0s, border 0.2s linear 0s;
+        }
+        .contents div[data-type="dropdown"] button[data-type="button"]:hover {
+          box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
+          background-color: #f2f5f8;
+        }
+        .contents div[data-type="dropdown"] button[data-type="button"]:active {
+          box-shadow: 0px 1px 3px rgba(0,0,0,0.2) inset;
+          background-color: #f2f5f8;
+        }
+        .contents div[data-type="dropdown"] button[data-type="button"]:focus {
+          background-color: #f2f5f8;
+          border-color: #00ABFF;
+          box-shadow: 0px 1px 3px rgba(0,0,0,0.2) inset, 0 1px 5px rgba(0,171,255,0.25);
+          outline: none;
+        }
+        .contents div[data-type="dropdown"].open ul[data-type="list"] {
+          display: block;
+          user-select: none;
+          -moz-user-select: none;
+          -webkit-user-select: none;
+          -ms-user-select: none;  
+        }
+        .contents div[data-type="dropdown"] ul[data-type="list"] {
+          display: none;
+          position: absolute;
+          height: auto;
+          background-color: #fff;
+          border: 1px solid silver;
+          border-radius: 0px 0px 4px 4px;
+          z-index: 2; <!-- Changed from 1 by Polus (2015/06/09) because the buttons "+" were appearing inside the dropdown -->
+          top: 32px;
+          right: 0px;
+          box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
+          overflow: hidden;
+        }
+        .contents div.top[data-type="dropdown"] ul[data-type="list"] {
+          bottom: 100%;
+          top: auto;
+          border-radius: 4px 4px 0px 0px;
+        }
+        .contents div[data-type="dropdown"] ul.scroll[data-type="list"] {
+          max-height: 158px;
+          overflow-y: auto;
+          width: 155px;
+          margin-right: 2px;
+        }
+        .contents div[data-type="dropdown"] ul[data-type="list"] li hr {
+          margin: 0px;
+        }
+        .contents div[data-type="dropdown"] ul[data-type="list"] li[data-type="item"] {
+          padding: 0px;
+          min-width: 76px;
+          text-align: left;
+          cursor: pointer;
+          white-space: nowrap;
+        }
+        .contents div[data-type="dropdown"] ul[data-type="list"] li[data-type="item"]:hover {
+          background-color: #f2f5f8;
+        }
+
+        .contents div[data-type="dropdown"] ul[data-type="list"] li[data-type="item"]:hover hr {
+          margin: 4px;
+        }
+        
+        .contents div[data-type="dropdown"] ul[data-type="list"] li[data-type="item"].close-option {
+          text-align: center;
+          width: 100%;
+          margin: 0px;
+        }
+        .contents div[data-type="dropdown"] ul[data-type="list"] li[data-type="item"] a {
+          padding: 4px 16px;
+          display: block;
+          width: 100%;
+          text-decoration: none;
+        }
+        .contents div[data-type="dropdown"] ul[data-type="list"] li[data-type="item"] a:empty {
+          height: 24px;
+        }
+        .contents div[data-type="dropdown"] ul[data-type="list"] li[data-type="item"] a:focus {
+          background-color: #f2f5f8;
+          outline: none;
+        }
+        
+        .contents div[data-type="dropdown"] ul[data-type="list"] li[data-type="item"].close-option .closeButton {
+          text-decoration: none;
+          display: block;
+          height: 30px;
+          line-height: 30px;
+          width: 100%;
+        }
+        
+        .contents .contents-body .search-area .section-body .field .field-value.widthdrop {
+            width: 139px;
+        }
+
+        .mightOverflow {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          display: block;
+        }
+        .float-left{
+            float: left;
+        }
+        .bg-blue{
+            background-color: #1F2F58 !important;
+        }
+        .bg-grey {
+            background-color: #F5F5F5 !important;
+        }
+        .color-dark, .color-dark td{
+            color: #6E7386 !important;
+        }
+        .color-bright{
+            color: #E6E7EC !important;
+        }
+        .radio-area{
+            margin-bottom: 20px !important;
+        }
+        .selectDate {
+          width: 8em;
+        }
+        .float-right{
+          float: right !important;
+        }
+        .width-90 td{
+          width: 90px;
+        }
+        .margin-right-127{
+          margin-right: -127px !important;
+        }
+        .padding-4-4 a{
+          padding: 4px 4px !important;
+        }
+
+        .search-radiobuttons label {
+          margin: 0 30px 0 3px;
+        }
+        .width-6{
+          width: 6em;
+        }
+        .no-close .ui-dialog-titlebar-close {
+          display: none;
+        }
+      </style>
+      <script>
+        var $j = jQuery.noConflict();
+
+        $j(document).on('mouseenter', '.mightOverflow', function() {
+            var $this = $j(this);
+            if(this.offsetWidth < this.scrollWidth && !$this.attr('title')){
+                $this.attr('title', $this.text());
+            }          
+        });
+
+        function initDatepicker(){
+          $j.datepicker.setDefaults($j.datepicker.regional['ja']);
+          $j(".datepicker").datepicker({ dateFormat: 'yy/mm/dd' });
+        }
+
+        function validateDate(strDate){
+          if(!/^\d{4}\/\d{1,2}\/\d{1,2}$/.test(strDate))
+            return 'false';
+          // Parse the date parts to integers
+          var parts = strDate.split("/");
+          var day = parseInt(parts[2], 10);
+          var month = parseInt(parts[1], 10);
+          var year = parseInt(parts[0], 10);
+          //console.log(year + '/' + (month < 10 ? ('0' + month) : month) + '/' + (day < 10 ? ('0' + day) : day));
+      
+          // Check the ranges of month and year
+          if(year < 1000 || year > 3000 || month < 1 || month > 12)
+              return 'false';
+      
+          var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+      
+          // Adjust for leap years
+          if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+              monthLength[1] = 29;
+      
+          // Check the range of the day
+          if(day > 0 && day <= monthLength[month - 1]){
+            return (year + '/' + (month < 10 ? ('0' + month) : month) + '/' + (day < 10 ? ('0' + day) : day));
+          } else return 'false';
+        }
+
+        function openDialog(recId){
+          console.log('called openDialog');
+          $j("#dialog").dialog({
+            dialogClass: "no-close",
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            cache: false,
+            buttons: [ 
+              {
+                text: "ダウンロード",
+                "class": 'customButton',
+                click: function() {
+                  var strFrom = document.getElementById('ReportFrom').value;
+                  var strTo = document.getElementById('ReportTo').value;
+                  var from = '';
+                  if(strFrom.length > 0){
+                    from = validateDate(strFrom);
+                  }
+                  var to = '';
+                  if(strTo.length > 0){
+                    to = validateDate(strTo);
+                  }
+
+                  //console.log('from: ' + from);
+                  //console.log('to: ' + to);
+                  if(from == 'false' || to == 'false') {
+                    var errMess = document.getElementById('{!$Component.contents.errMessage}');
+                    errMess.value= '入力した指定期間は形式が合っていません。';
+                    displayMessageError();
+                    return false;
+                  }
+                  hideMessage(); 
+                  
+                  //window.location.href = '{!$Page.saDailyReportCSVFileExporting}?type=report&from=' + from + '&to=' + to + '&exportId=' + recId;
+                  //window.open('{!$Page.saDailyReportCSVFileExporting}?type=report&from=' + from + '&to=' + to + '&exportId=' + recId, '_self');
+                  $j("#iframe iframe").attr("src",'{!$Page.saDailyReportCSVFileExporting}?type=survey&from=' + from + '&to=' + to + '&exportId=' + recId);
+                  $j( this ).dialog( "close" );
+                  $j('#ReportFrom').datepicker('setDate', null);
+                  $j('#ReportTo').datepicker('setDate', null);
+                  //$j.datepicker._clearDate('#ReportFrom');
+                  //$j.datepicker._clearDate('#ReportTo');
+                  //document.getElementById('ReportFrom').value = '';
+                  //document.getElementById('ReportTo').value = '';
+                }
+              },
+              {
+                text: "キャンセル",
+                "class": 'customButton',
+                click: function() {
+                  $j( this ).dialog( "close" );
+                  $j('#ReportFrom').datepicker('setDate', null);
+                  $j('#ReportTo').datepicker('setDate', null);
+                  //$j.datepicker._clearDate('#ReportFrom');
+                  //$j.datepicker._clearDate('#ReportTo');
+                  //document.getElementById('ReportFrom').value = '';
+                  //document.getElementById('ReportTo').value = '';
+                }
+              }
+            ]});
+        }
+
+        $j( function() {
+          initDatepicker();
+        });
+        
+        //読み込み直後動作をしたいとき
+        $j(function(){
+          $j(".focustarget").first().focus();
+        });
+
+
+        function sortOrder(fieldname) {
+          $j(".orderTerget").val(fieldname);
+          switchingOrder();
+        }
+
+        /*function deleteRecord(recordId) {
+            var isOk = confirm("レコードを削除しても構いませんか。");
+            if (isOk == true) {
+                doDeleting();
+            }
+        }*/
+
+        function hideSearchCriteriaPanel() {
+            $j("#open_icon").show();
+            $j("#close_icon").hide();
+            $j("#search_criteria").slideUp(500);
+            $j(".fakeContainer").animate({height: $j("#search_criteria").height() + 250 + 'px'},500);
+        }
+        function showSearchCriteriaPanel() {
+            $j("#open_icon").hide();
+            $j("#close_icon").show();
+            $j("#search_criteria").slideDown(500);
+            $j(".fakeContainer").animate({height: '250px'},500);
+        }
+
+        function dorpdownAction(target) {
+            var $target = $j(target).closest('[data-type="dropdown"]');
+            if ($target.hasClass('open')) {
+                $target.removeClass('open');
+            } else {
+                $j('.open').removeClass('open');
+                $target.addClass('open');
+            }
+        }
+
+        function closeDropDownList(target) {
+            var $target = $j(target).closest('[data-type="dropdown"]');
+            if ($target.hasClass('open')) {
+                $target.removeClass('open');
+            }
+        }
+
+        function clearAction(e) {
+            var $target = $j(e.target).closest('[data-type="dropdown"]');
+            if (!$target.hasClass('open')) {
+                var $dropdown = $j('.open[data-type="dropdown"]');
+                $dropdown.removeClass('open');
+                //$dropdown.find('[data-type="button"]').trigger('focus');
+            }
+        }
+        
+        function setInputField(target) {
+            var $target = $j(target);
+            var $dropdown = $target.closest('[data-type="dropdown"]');
+            var $inputFieldLabel = $dropdown.find('[data-type="input-field-label"]');
+            
+            if ($target.attr('data-type') !== 'item') {
+                $target = $target.closest('[data-type="item"]');
+            }
+            $inputFieldLabel.val($target[0].getAttribute('data-label'));
+            $inputFieldLabel.trigger('focus');
+            if ($dropdown.hasClass('open')) {
+                $dropdown.removeClass('open');
+            }
+        }
+
+        function clearInputValue(id){
+            var $input = document.getElementById(id);
+            $input.value = '';
+        }
+
+        function displayError(){
+          var errMess = document.getElementById('{!$Component.contents.errMessage}');
+          errMess.value= 'ダウンロードファイルのサイズが大きすぎます。指定期間を短くし、再度ダウンロードしてください。';
+          displayMessageError();
+        }
+
+      </script>
+    </head>
+    <body>
+
+      <c:kddiHeaderComp />
+
+      <apex:form id="contents" styleClass="contents">
+        <c:waitSearchPanelComp text="検索中" />
+
+        <script type="text/script">
+          initDatepicker();
+        </script>
+        <apex:variable value="{!ssc.PageNumber}" var="pageNum" />
+        <apex:variable value="{!IF(!ISNULL(ssc), ssc.ResultSize, 0)}" var="resultSize" />
+        <apex:variable value="{!resultSize > 0 }" var="hasRecords" />
+        <apex:actionFunction name="switchingOrder" action="{!switchingOrder}" rerender="recordList"/>
+        <!--apex:actionFunction name="doDeleting" action="{!deleteRecord}" rerender="recordList"/-->
+        <div class="hidden">
+          <apex:inputText styleclass="orderTerget hidden" value="{!orderTarget}" />
+          <apex:inputText id="errMessage" styleclass="hidden" value="{!errMess}" />
+        </div>
+
+        <div class="contents-body">
+
+          <div class="section base-width">
+            <div class="screenname">
+              <span>{!IF(IsDailyReport, '日報', 'SANXヒアリング')}フォーム一覧</span>
+            </div>
+          </div>
+
+          <div class="section button-area base-width">
+            <div class="section-body clearfix">
+              <apex:outputLink value="{!$Page.saDailyReportEditorForAdmin}"
+                               styleClass="customButton">＋&nbsp;新規作成
+                <apex:param name="type"
+                            value="{!IF(IsDailyReport, 1, 2)}"/>
+              </apex:outputLink>
+            </div>
+          </div>
+
+
+
+
+          <div class="section search-area base-width">
+            <div class="section-header">
+              <img id="close_icon" src="{!URLFOR($Resource.Images, 'images/searchPageImage/btn_close.png')}" width="36px" onclick="hideSearchCriteriaPanel()" />
+              <img id="open_icon" src="{!URLFOR($Resource.Images, 'images/searchPageImage/btn_open.png')}" width="36px" onclick="showSearchCriteriaPanel()" style="display:none;"/>
+              <span>{!IF(IsDailyReport, '日報', 'SANXヒアリング')}フォームの検索</span>
+            </div>
+
+
+
+
+
+
+            <ul class="section-body clearfix" id="search_criteria">
+              <li class="field radio-area">
+                <apex:selectRadio value="{!targetRecords}"
+                                  styleClass="field-value search-radiobuttons">
+                  <apex:selectOptions value="{!targetRecordsOption}"/>
+                </apex:selectRadio>
+              </li>
+
+              <li class="field">
+
+                <apex:outputLabel value="支社"
+                                  for="filterShisha"
+                                  styleClass="field-label" />
+
+                <apex:selectList id="filterShisha"
+                                 styleClass="field-value"
+                                 style="width: auto;"
+                                 value="{!filterShisha}"
+                                 size="1">
+                  <apex:selectOptions value="{!ShishaOptions}" />
+                </apex:selectList>
+
+              </li>
+
+              <li class="field">
+                <apex:outputLabel value="作成者" 
+                                  for="filterCreatorName"
+                                  styleClass="field-label"/>
+                <apex:inputText value="{!filterCreatorName}"  
+                                id="filterCreatorName"
+                                styleClass="field-value"/>
+              </li>
+
+              <li class="field">
+                <apex:outputLabel value="フォーム名"
+                                  for="filterReportName"
+                                  styleClass="field-label"/>
+                <apex:inputText value="{!filterReportName}"
+                                id="filterReportName"
+                                styleClass="field-value"/>
+              </li>
+
+              <li class="field">
+                <apex:outputLabel value="運用日"
+                                  for="filterValidityDate"
+                                  styleClass="field-label"/>
+                <apex:input value="{!filterValidityDate}"
+                            id="filterValidityDate"
+                            styleclass="datepicker selectDate field-value"
+                            html-placeholder="yyyy/mm/dd" />
+              </li>
+
+              <li>
+                <hr class="horizontal-rule"/>
+              </li>
+
+              <li class="buttonArea">
+                <apex:commandLink action="{!searchItemClear}" rerender="contents" styleClass="customButton">クリア</apex:commandLink>
+                <apex:commandLink action="{!recordSearch}" rerender="contents" styleClass="customButton" onclick="showWaitPanel();">検索</apex:commandLink>
+              </li>
+
+            </ul>
+          </div>
+
+          <apex:outputPanel layout="block" styleClass="section base-width" rendered="{!resultSize >= 10000}">
+            <apex:outputText value="検索結果が 10,000件を超えました。10,000件まで表示します。" />
+          </apex:outputPanel>
+
+          <apex:outputPanel id="recordList" layout="block" styleClass="section list-area base-width">
+          <apex:pageMessages id="message"/>
+            <div class="section-header clearfix">
+              <div class="title">{!IF(IsDailyReport, '日報', 'SANXヒアリング')}フォーム一覧</div>
+
+              <apex:outputPanel layout="block" styleClass="pager-area clearfix" rendered="{!hasRecords}">
+                <apex:commandLink action="{!previousAndSaveCurrentPageNumber}" rerender="recordList" styleClass="customButton" rendered="{!ssc.HasPrevious}" >&laquo;</apex:commandLink>
+                <apex:outputPanel layout="block" styleClass="disabled-button" rendered="{!!ssc.HasPrevious}" >&laquo;</apex:outputPanel>
+                <div class="current-page-number">{!pageNum}</div>
+                <div class="separator">/</div>
+                <div class="max-page-number">{!FLOOR(((resultSize - 1) / ssc.PageSize) + 1)}</div>
+                <apex:commandLink action="{!nextAndSaveCurrentPageNumber}" rerender="recordList" styleClass="customButton" rendered="{!ssc.HasNext}" >&raquo;</apex:commandLink>
+                <apex:outputPanel layout="block" styleClass="disabled-button" rendered="{!!ssc.HasNext}" >&raquo;</apex:outputPanel>
+              </apex:outputPanel>
+            </div>
+
+            <div class="section-body">
+              <apex:outputPanel layout="block" rendered="{!hasRecords}">
+                <apex:actionFunction name="displayMessageError" action="{!displayMessageError}" reRender="message"/>
+                <apex:actionFunction name="hideMessage" action="{!hideMessageError}" reRender="message"/>
+                <div id="iframe" style="display: none">
+                  <apex:iframe src="" id="theIframe"/>
+                </div>
+                <div id="dialog" style="display: none" title="データエクスポートの日時指定してください。">
+                    <span class="ui-helper-hidden-accessible"><input type="text"/></span>
+                    <br/>
+                    <apex:outputLabel value="報告日時　"
+                                styleClass="field-label"/>
+                    <input type="text"
+                          id="ReportFrom"
+                          class="datepicker width-6"
+                          placeholder="yyyy/mm/dd" />
+                          &nbsp;&nbsp;&nbsp;〜&nbsp;&nbsp;&nbsp;
+                    <input type="text"
+                          id="ReportTo"
+                          class="datepicker width-6"
+                          placeholder="yyyy/mm/dd" />
+                </div>
+                <div class="recordList" >
+                  <table class="record-table" style="width:1042px;table-layout:fixed;" >
+                      <col span="1" style="width:48px;"/>
+                      <col span="1" style="width:170px;"/>
+                      <col span="1" style="width:250px;"/>
+                      <col span="1" style="width:140px;"/>
+                      <col span="1" style="width:80px;"/>
+
+                      <col span="1" style="width:100px;"/>
+                      <col span="1" style="width:140px;"/>
+                      <col span="1" style="width:100px;"/>
+                    <tr class="header-row">
+
+
+
+
+                      <!-- COLUMN Functional Buttons -->
+                      <th />
+
+                      <!-- COLUMN 1-->
+                      <th>
+                        <a href="javascript:void(0)" onclick="sortOrder('RegionalOfficeCode__c');">
+                          <apex:outputText value="支社" />
+                          <apex:outputText rendered="{!orderTarget == 'RegionalOfficeCode__c' && orderDesc == false}" value="△" />
+                          <apex:outputText rendered="{!orderTarget == 'RegionalOfficeCode__c' && orderDesc == true}" value="▽" />
+                        </a>
+                      </th>
+                      <th>
+                        <a href="javascript:void(0)" onclick="sortOrder('ReportName__c');">
+                          <apex:outputText value="{!IF(IsDailyReport, '日報', 'SANXヒアリング')}フォーム" />
+                          <apex:outputText rendered="{!orderTarget == 'ReportName__c' && orderDesc == false}" value="△" />
+                          <apex:outputText rendered="{!orderTarget == 'ReportName__c' && orderDesc == true}" value="▽" />
+                        </a>
+                      </th>
+                      <th>
+                        <a href="javascript:void(0)" onclick="sortOrder('ValidFromDatetime__c');">
+                          <apex:outputText value="運用開始日" />
+                          <apex:outputText rendered="{!orderTarget == 'ValidFromDatetime__c' && orderDesc == false}" value="△" />
+                          <apex:outputText rendered="{!orderTarget == 'ValidFromDatetime__c' && orderDesc == true}" value="▽" />
+                        </a>
+                      </th>
+                      <th style="text-align: center;">
+                        <a href="javascript:void(0)" onclick="sortOrder('IsValid__c');">
+                          <apex:outputText value="運用中" />
+                          <apex:outputText rendered="{!orderTarget == 'IsValid__c' && orderDesc == false}" value="△" />
+                          <apex:outputText rendered="{!orderTarget == 'IsValid__c' && orderDesc == true}" value="▽" />
+                        </a>
+                      </th>
+                      <th style="text-align: center;">
+                        <a href="javascript:void(0)" onclick="sortOrder('PushNotificationResendCountFormula__c');">
+                          <apex:outputText value="リマインド" />
+                          <br/>
+                          <apex:outputText value="回数" />
+                          <apex:outputText rendered="{!orderTarget == 'PushNotificationResendCountFormula__c' && orderDesc == false}" value="△" />
+                          <apex:outputText rendered="{!orderTarget == 'PushNotificationResendCountFormula__c' && orderDesc == true}" value="▽" />
+                        </a>
+                      </th>
+                      <th>
+                        <a href="javascript:void(0)" onclick="sortOrder('CreatedBy.Name');">
+                          <apex:outputText value="作成者" />
+                          <apex:outputText rendered="{!orderTarget == 'CreatedBy.Name' && orderDesc == false}" value="△" />
+                          <apex:outputText rendered="{!orderTarget == 'CreatedBy.Name' && orderDesc == true}" value="▽" />
+                        </a>
+                        <br/>
+                        <a href="javascript:void(0)" onclick="sortOrder('LastModifiedDate');">
+                          <apex:outputText value="最後更新日" />
+                          <apex:outputText rendered="{!orderTarget == 'LastModifiedDate' && orderDesc == false}" value="△" />
+                          <apex:outputText rendered="{!orderTarget == 'LastModifiedDate' && orderDesc == true}" value="▽" />
+                        </a>
+                      </th>
+                      <th style="text-align: center;">
+                        <apex:outputText value="回答" />
+                      </th>
+                    </tr>
+
+                    <apex:repeat value="{!Records}" var="rec" >
+                      <tr class="body-row">
+                        <!-- Functional Buttons -->
+                        <td class="action-col">
+                          <div class="dropdown">
+                            <button type="button" style="padding: 2px 10px;" class="customButton" data-toggle="dropdown" aria-expanded="false">
+                              <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+
+                              <li data-type="item" class="padding-4-4">
+                                <apex:outputLink value="{!$Page.saDailyReportEditorForAdmin}" >
+                                  <apex:param name="id" value="{!rec.id}" />
+                                  <apex:param name="isCopy" value="true" />
+                                  <apex:param name="type" value="{!IF(IsDailyReport, 1, 2)}" />
+                                  <apex:image value="{!URLFOR($Resource.saDailyReportListForAdmin, 'images/icon-copy-1.png')}" width="20" height="20"/>
+                                  <apex:outputText value=" フォームをコピーする"/>
+                                </apex:outputLink>
+                              </li>
+
+                              <li data-type="item" class="padding-4-4">
+                                <apex:outputLink value="javascript:void(0)" onclick="openDialog('{!rec.id}');">
+                                  <apex:image value="{!URLFOR($Resource.saDailyReportListForAdmin, 'images/icon-csv-5.svg')}" width="20" height="20"/>
+                                  <apex:outputText value=" 回答をダウンロードする"/>
+                                </apex:outputLink>
+                              </li>
+
+                            </ul>
+                          </div>
+                        </td>
+
+
+                        <!-- COLUMN 1 -->
+                        <td>
+                          <apex:outputText styleClass="field-body mightOverflow" value="{!mpShishaOptions[rec.RegionalOfficeCode__c]}" />
+                        </td>
+
+                        <!-- COLUMN 2 -->
+                        <td>
+                          <apex:outputLink styleClass="field-body mightOverflow" value="{!$Page.saDailyReportEditorForAdmin + '?id=' + rec.id}" >
+                            <apex:outputText value="{!rec.ReportName__c}" />
+                          </apex:outputLink>
+                        </td>
+
+                        <!-- COLUMN 3 -->
+                        <td>
+                          <apex:outputText styleClass="field-body mightOverflow" value="{0,date,yyyy/MM/dd HH:mm}"> <apex:param value="{!rec.ValidFromDatetime__c}" /> </apex:outputText>
+                        </td>
+
+                        <!-- COLUMN 4 -->
+                        <td>
+                            <apex:image styleClass="field-body mightOverflow" value="{!URLFOR($Resource.saDailyReportListForAdmin, 'images/icon-valid.png')}" width="20" height="20" alt="{!IF(IsDailyReport, '日報', 'SANXヒアリング')}が運用中" rendered="{!rec.IsValid__c}" style="margin: auto;"/>
+                        </td>
+
+                        <!-- COLUMN 5 -->
+                        <td align="center">
+                          <apex:outputText styleClass="field-body mightOverflow" value="{!rec.PushNotificationResendCountFormula__c}" />
+                        </td>
+
+                        <!-- COLUMN 6 -->
+                        <td>
+                          <apex:outputText styleClass="field-body mightOverflow" value="{!rec.CreatedBy.Name}" />
+                          <apex:outputText styleClass="field-body mightOverflow" value="{0,date,yyyy/MM/dd HH:mm}"> <apex:param value="{!rec.LastModifiedDate + offset}" /> </apex:outputText>
+                        </td>
+
+                        <!-- COLUMN 7 -->
+                        <td align="center">
+                          <apex:outputText styleClass="field-body mightOverflow" value="{!rec.CountReply__c} / {!rec.CountShared__c}" />
+                        </td>
+                      </tr>
+                    </apex:repeat>
+                  </table>
+                </div>
+              </apex:outputPanel>
+              <apex:outputPanel layout="block" rendered="{!!hasRecords}">
+                <apex:outputText value="{!IF(IsDailyReport, '日報', 'SANXヒアリング')}フォームが見つかりませんでした" />
+              </apex:outputPanel>
+            </div>
+            <div class="section-footer footer-pager clearfix">
+              <apex:outputPanel layout="block" styleClass="pager-area clearfix" rendered="{!hasRecords}">
+                <apex:commandLink action="{!previousAndSaveCurrentPageNumber}" rerender="recordList" styleClass="customButton" rendered="{!ssc.HasPrevious}" >&laquo;</apex:commandLink>
+                <apex:outputPanel layout="block" styleClass="disabled-button" rendered="{!!ssc.HasPrevious}" >&laquo;</apex:outputPanel>
+                <div class="current-page-number">{!pageNum}</div>
+                <div class="separator">/</div>
+                <div class="max-page-number">{!FLOOR(((resultSize - 1) / ssc.PageSize) + 1)}</div>
+                <apex:commandLink action="{!nextAndSaveCurrentPageNumber}" rerender="recordList" styleClass="customButton" rendered="{!ssc.HasNext}" >&raquo;</apex:commandLink>
+                <apex:outputPanel layout="block" styleClass="disabled-button" rendered="{!!ssc.HasNext}" >&raquo;</apex:outputPanel>
+              </apex:outputPanel>
+            </div>
+          </apex:outputPanel>
+        </div>
+
+        <div class="footer">
+          <c:kddiFooterComp />
+        </div>
+
+      </apex:form>
+    </body>
+  </html>
+</apex:page>

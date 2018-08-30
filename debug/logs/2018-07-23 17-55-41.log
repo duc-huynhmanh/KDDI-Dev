@@ -1,0 +1,926 @@
+38.0 APEX_CODE,FINEST;APEX_PROFILING,INFO;CALLOUT,INFO;DB,INFO;NBA,INFO;SYSTEM,DEBUG;VALIDATION,INFO;VISUALFORCE,INFO;WAVE,INFO;WORKFLOW,INFO
+17:55:41.0 (71267)|USER_INFO|[EXTERNAL]|0056F000006PtYl|gwadmin@gw.jp.kddi.gwdev01|日本標準時|GMT+09:00
+17:55:41.0 (109954)|EXECUTION_STARTED
+17:55:41.0 (115301)|CODE_UNIT_STARTED|[EXTERNAL]|066N0000000M59u|VF: /apex/saReport
+17:55:41.0 (266200)|VF_DESERIALIZE_VIEWSTATE_BEGIN|066N0000000M59u
+17:55:41.0 (4999351)|HEAP_ALLOCATE|[72]|Bytes:3
+17:55:41.0 (5035986)|HEAP_ALLOCATE|[77]|Bytes:152
+17:55:41.0 (5051261)|HEAP_ALLOCATE|[342]|Bytes:408
+17:55:41.0 (5063519)|HEAP_ALLOCATE|[355]|Bytes:408
+17:55:41.0 (5074658)|HEAP_ALLOCATE|[467]|Bytes:48
+17:55:41.0 (5102953)|HEAP_ALLOCATE|[139]|Bytes:6
+17:55:41.0 (6646100)|HEAP_ALLOCATE|[50]|Bytes:5
+17:55:41.0 (6678493)|HEAP_ALLOCATE|[56]|Bytes:5
+17:55:41.0 (6691189)|HEAP_ALLOCATE|[64]|Bytes:7
+17:55:41.0 (8868233)|VARIABLE_SCOPE_BEGIN|[30]|saReportCtrl.ERROR_CATEGORY_MISSING|String|false|true
+17:55:41.0 (8880442)|VARIABLE_SCOPE_BEGIN|[31]|saReportCtrl.ERROR_COMMENT_MISSING|String|false|true
+17:55:41.0 (8887350)|VARIABLE_SCOPE_BEGIN|[29]|saReportCtrl.ERROR_TITLE_MISSING|String|false|true
+17:55:41.0 (8895652)|VARIABLE_SCOPE_BEGIN|[32]|saReportCtrl.MESSAGE_ASK_FOR_VALIDATION|String|false|true
+17:55:41.0 (8904507)|VARIABLE_SCOPE_BEGIN|[33]|saReportCtrl.MESSAGE_PUBLISHED|String|false|true
+17:55:41.0 (8911589)|VARIABLE_SCOPE_BEGIN|[27]|saReportCtrl.SA_REPORT_STATE_NONE_LABEL|String|false|true
+17:55:41.0 (8918734)|VARIABLE_SCOPE_BEGIN|[26]|saReportCtrl.SA_REPORT_STATE_NONE_VALUE|String|false|true
+17:55:41.0 (8925122)|VARIABLE_SCOPE_BEGIN|[8]|saReportCtrl.SEARCH_COUNT_AVERAGE_LABEL|String|false|true
+17:55:41.0 (8932163)|VARIABLE_SCOPE_BEGIN|[11]|saReportCtrl.SEARCH_COUNT_AVERAGE_VALUE|String|false|true
+17:55:41.0 (8939630)|VARIABLE_SCOPE_BEGIN|[7]|saReportCtrl.SEARCH_COUNT_FEW_LABEL|String|false|true
+17:55:41.0 (8945769)|VARIABLE_SCOPE_BEGIN|[10]|saReportCtrl.SEARCH_COUNT_FEW_VALUE|String|false|true
+17:55:41.0 (8955517)|VARIABLE_SCOPE_BEGIN|[9]|saReportCtrl.SEARCH_COUNT_LOT_LABEL|String|false|true
+17:55:41.0 (8962648)|VARIABLE_SCOPE_BEGIN|[12]|saReportCtrl.SEARCH_COUNT_LOT_VALUE|String|false|true
+17:55:41.0 (8970225)|VARIABLE_SCOPE_BEGIN|[17]|saReportCtrl.SORTED_BY_FAVORITES_LABEL|String|false|true
+17:55:41.0 (8977051)|VARIABLE_SCOPE_BEGIN|[23]|saReportCtrl.SORTED_BY_FAVORITES_VALUE|String|false|true
+17:55:41.0 (8983514)|VARIABLE_SCOPE_BEGIN|[15]|saReportCtrl.SORTED_BY_NEWS_LABEL|String|false|true
+17:55:41.0 (8990335)|VARIABLE_SCOPE_BEGIN|[21]|saReportCtrl.SORTED_BY_NEWS_VALUE|String|false|true
+17:55:41.0 (8996826)|VARIABLE_SCOPE_BEGIN|[14]|saReportCtrl.SORTED_BY_NONE_LABEL|String|false|true
+17:55:41.0 (9004326)|VARIABLE_SCOPE_BEGIN|[20]|saReportCtrl.SORTED_BY_NONE_VALUE|String|false|true
+17:55:41.0 (9015191)|VARIABLE_SCOPE_BEGIN|[16]|saReportCtrl.SORTED_BY_NUMBER_OF_VIEWS_LABEL|String|false|true
+17:55:41.0 (9023134)|VARIABLE_SCOPE_BEGIN|[22]|saReportCtrl.SORTED_BY_NUMBER_OF_VIEWS_VALUE|String|false|true
+17:55:41.0 (9030624)|VARIABLE_SCOPE_BEGIN|[18]|saReportCtrl.SORTED_BY_RELEASE_DATES_LABEL|String|false|true
+17:55:41.0 (9037789)|VARIABLE_SCOPE_BEGIN|[24]|saReportCtrl.SORTED_BY_RELEASE_DATES_VALUE|String|false|true
+17:55:41.0 (10213294)|VARIABLE_SCOPE_BEGIN|[25]|auMainTopCompCtrl.TYPE_SCREEN_ACCOUNT_LIST|Integer|false|true
+17:55:41.0 (10224859)|VARIABLE_SCOPE_BEGIN|[26]|auMainTopCompCtrl.TYPE_SCREEN_ACTIVITY_LIST|Integer|false|true
+17:55:41.0 (10234732)|VARIABLE_SCOPE_BEGIN|[7]|auMainTopCompCtrl.TYPE_SCREEN_CX_SCREEN|Integer|false|true
+17:55:41.0 (10241035)|VARIABLE_SCOPE_BEGIN|[8]|auMainTopCompCtrl.TYPE_SCREEN_CX_TIMELINE|Integer|false|true
+17:55:41.0 (10248119)|VARIABLE_SCOPE_BEGIN|[9]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE|Integer|false|true
+17:55:41.0 (10254473)|VARIABLE_SCOPE_BEGIN|[10]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE_LIST|Integer|false|true
+17:55:41.0 (10260941)|VARIABLE_SCOPE_BEGIN|[27]|auMainTopCompCtrl.TYPE_SCREEN_FILE_LIST|Integer|false|true
+17:55:41.0 (10267098)|VARIABLE_SCOPE_BEGIN|[24]|auMainTopCompCtrl.TYPE_SCREEN_HONBU_DIRECT|Integer|false|true
+17:55:41.0 (10272614)|VARIABLE_SCOPE_BEGIN|[11]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_DASHBOARD|Integer|false|true
+17:55:41.0 (10278085)|VARIABLE_SCOPE_BEGIN|[12]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_LIST|Integer|false|true
+17:55:41.0 (10286131)|VARIABLE_SCOPE_BEGIN|[15]|auMainTopCompCtrl.TYPE_SCREEN_SA_CHATTER|Integer|false|true
+17:55:41.0 (10294010)|VARIABLE_SCOPE_BEGIN|[16]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORT|Integer|false|true
+17:55:41.0 (10300461)|VARIABLE_SCOPE_BEGIN|[22]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORTLIST|Integer|false|true
+17:55:41.0 (10307176)|VARIABLE_SCOPE_BEGIN|[18]|auMainTopCompCtrl.TYPE_SCREEN_SA_DOCUMENTS|Integer|false|true
+17:55:41.0 (10313738)|VARIABLE_SCOPE_BEGIN|[17]|auMainTopCompCtrl.TYPE_SCREEN_SA_ENQUETE|Integer|false|true
+17:55:41.0 (10319720)|VARIABLE_SCOPE_BEGIN|[20]|auMainTopCompCtrl.TYPE_SCREEN_SA_LINKS|Integer|false|true
+17:55:41.0 (10325409)|VARIABLE_SCOPE_BEGIN|[13]|auMainTopCompCtrl.TYPE_SCREEN_SA_MESSAGES|Integer|false|true
+17:55:41.0 (10331295)|VARIABLE_SCOPE_BEGIN|[19]|auMainTopCompCtrl.TYPE_SCREEN_SA_RANKING|Integer|false|true
+17:55:41.0 (10338372)|VARIABLE_SCOPE_BEGIN|[14]|auMainTopCompCtrl.TYPE_SCREEN_SA_REPORTS|Integer|false|true
+17:55:41.0 (10347252)|VARIABLE_SCOPE_BEGIN|[23]|auMainTopCompCtrl.TYPE_SCREEN_SA_TODO|Integer|false|true
+17:55:41.0 (10354741)|VARIABLE_SCOPE_BEGIN|[21]|auMainTopCompCtrl.TYPE_SCREEN_SA_USRSETTINGS|Integer|false|true
+17:55:41.0 (10361300)|VARIABLE_SCOPE_BEGIN|[4]|auMainTopCompCtrl.TYPE_SCREEN_STPD_EVENT|Integer|false|true
+17:55:41.0 (10368481)|VARIABLE_SCOPE_BEGIN|[6]|auMainTopCompCtrl.TYPE_SCREEN_STPD_SCREEN|Integer|false|true
+17:55:41.0 (10375580)|VARIABLE_SCOPE_BEGIN|[5]|auMainTopCompCtrl.TYPE_SCREEN_STPD_TIMELINE|Integer|false|true
+17:55:41.0 (10382234)|VARIABLE_SCOPE_BEGIN|[3]|auMainTopCompCtrl.TYPE_SCREEN_SWITCH|Integer|false|true
+17:55:41.0 (15288640)|VF_DESERIALIZE_VIEWSTATE_END
+17:55:41.0 (19104746)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (19139324)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1588
+17:55:41.0 (19153254)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:645
+17:55:41.0 (19162834)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:858
+17:55:41.0 (19169598)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:10
+17:55:41.0 (19193722)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.ERROR_CATEGORY_MISSING|"カテゴリが必須です。"
+17:55:41.0 (19199905)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:10
+17:55:41.0 (19206510)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.ERROR_COMMENT_MISSING|"コメントが必須です。"
+17:55:41.0 (19211968)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:10
+17:55:41.0 (19221375)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.ERROR_TITLE_MISSING|"タイトルが必須です。"
+17:55:41.0 (19226668)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:11
+17:55:41.0 (19233570)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.MESSAGE_ASK_FOR_VALIDATION|"承認申請を出しました。"
+17:55:41.0 (19238004)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:7
+17:55:41.0 (19244607)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.MESSAGE_PUBLISHED|"公開しました。"
+17:55:41.0 (19249207)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:55:41.0 (19255681)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SA_REPORT_STATE_NONE_LABEL|"未選択"
+17:55:41.0 (19259625)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:55:41.0 (19265847)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SA_REPORT_STATE_NONE_VALUE|" "
+17:55:41.0 (19272141)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:55:41.0 (19280903)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SEARCH_COUNT_AVERAGE_LABEL|"50件"
+17:55:41.0 (19286164)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:2
+17:55:41.0 (19292763)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SEARCH_COUNT_AVERAGE_VALUE|"50"
+17:55:41.0 (19297077)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:55:41.0 (19303953)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SEARCH_COUNT_FEW_LABEL|"20件"
+17:55:41.0 (19307967)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:2
+17:55:41.0 (19314034)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SEARCH_COUNT_FEW_VALUE|"20"
+17:55:41.0 (19317982)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:55:41.0 (19325921)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SEARCH_COUNT_LOT_LABEL|"100件"
+17:55:41.0 (19332084)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:55:41.0 (19339410)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SEARCH_COUNT_LOT_VALUE|"100"
+17:55:41.0 (19343765)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:55:41.0 (19350922)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_FAVORITES_LABEL|"いいね順"
+17:55:41.0 (19354947)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:55:41.0 (19361541)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_FAVORITES_VALUE|"いいね順"
+17:55:41.0 (19365976)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:55:41.0 (19373354)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_NEWS_LABEL|"NEW"
+17:55:41.0 (19378010)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:55:41.0 (19388699)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_NEWS_VALUE|"NEW"
+17:55:41.0 (19393543)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:55:41.0 (19400302)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_NONE_LABEL|" "
+17:55:41.0 (19404388)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:55:41.0 (19411373)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_NONE_VALUE|" "
+17:55:41.0 (19415585)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:55:41.0 (19424191)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_NUMBER_OF_VIEWS_LABEL|"閲覧数順"
+17:55:41.0 (19428838)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:55:41.0 (19439046)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_NUMBER_OF_VIEWS_VALUE|"閲覧数順"
+17:55:41.0 (19444866)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:55:41.0 (19452719)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_RELEASE_DATES_LABEL|"公開日時"
+17:55:41.0 (19457622)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:55:41.0 (19464430)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_RELEASE_DATES_VALUE|"公開日時"
+17:55:41.0 (19475893)|METHOD_ENTRY|[1]|01pN0000000aEUV|saReportCtrl.saReportCtrl()
+17:55:41.0 (19481997)|STATEMENT_EXECUTE|[1]
+17:55:41.0 (19486488)|STATEMENT_EXECUTE|[1]
+17:55:41.0 (19498333)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (19513533)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:5
+17:55:41.0 (19522755)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (19531047)|METHOD_EXIT|[1]|saReportCtrl
+17:55:41.0 (19638576)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (19918430)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (21992604)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (22100574)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (22190021)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (22266114)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (22792536)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (22880538)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (22954230)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (23556014)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (23816056)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (23826520)|VARIABLE_SCOPE_BEGIN|[36]|this|saReportCtrl|true|false
+17:55:41.0 (24069652)|VARIABLE_ASSIGNMENT|[36]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5ccc7446","selectedReportName":"SA_Report-00000109","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (24113251)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (24121406)|HEAP_ALLOCATE|[36]|Bytes:5
+17:55:41.0 (24128896)|STATEMENT_EXECUTE|[36]
+17:55:41.0 (24131097)|STATEMENT_EXECUTE|[36]
+17:55:41.0 (24203546)|VARIABLE_SCOPE_BEGIN|[7]|saConstantCmn.PUSH_NOTIFICATION_STATUS_NONE|String|false|true
+17:55:41.0 (24212536)|VARIABLE_SCOPE_BEGIN|[9]|saConstantCmn.PUSH_NOTIFICATION_STATUS_RESENDING|String|false|true
+17:55:41.0 (24219568)|VARIABLE_SCOPE_BEGIN|[8]|saConstantCmn.PUSH_NOTIFICATION_STATUS_SENDING|String|false|true
+17:55:41.0 (24226372)|VARIABLE_SCOPE_BEGIN|[10]|saConstantCmn.PUSH_NOTIFICATION_STATUS_SENT|String|false|true
+17:55:41.0 (24233087)|VARIABLE_SCOPE_BEGIN|[24]|saConstantCmn.SA_INQUIRY_TYPE_AU_HEARING|String|false|true
+17:55:41.0 (24241717)|VARIABLE_SCOPE_BEGIN|[22]|saConstantCmn.SA_INQUIRY_TYPE_DAILYREPORT|String|false|true
+17:55:41.0 (24248480)|VARIABLE_SCOPE_BEGIN|[23]|saConstantCmn.SA_INQUIRY_TYPE_HEARING|String|false|true
+17:55:41.0 (24255335)|VARIABLE_SCOPE_BEGIN|[15]|saConstantCmn.SA_MESSAGEDETAIL_TYPE_DONE|String|false|true
+17:55:41.0 (24262329)|VARIABLE_SCOPE_BEGIN|[14]|saConstantCmn.SA_MESSAGEDETAIL_TYPE_READ|String|false|true
+17:55:41.0 (24268593)|VARIABLE_SCOPE_BEGIN|[13]|saConstantCmn.SA_MESSAGEDETAIL_TYPE_SHARED|String|false|true
+17:55:41.0 (24274418)|VARIABLE_SCOPE_BEGIN|[18]|saConstantCmn.SA_MESSAGE_TYPE_MESSAGE|String|false|true
+17:55:41.0 (24279762)|VARIABLE_SCOPE_BEGIN|[19]|saConstantCmn.SA_MESSAGE_TYPE_TASK|String|false|true
+17:55:41.0 (24285510)|VARIABLE_SCOPE_BEGIN|[41]|saConstantCmn.SA_REPORT_DETAIL_TYPE_LIKE|String|false|true
+17:55:41.0 (24293844)|VARIABLE_SCOPE_BEGIN|[42]|saConstantCmn.SA_REPORT_DETAIL_TYPE_VERY_LIKE|String|false|true
+17:55:41.0 (24301965)|VARIABLE_SCOPE_BEGIN|[34]|saConstantCmn.SA_REPORT_REPLY_STATUS_REPLYSAVED|String|false|true
+17:55:41.0 (24309406)|VARIABLE_SCOPE_BEGIN|[35]|saConstantCmn.SA_REPORT_REPLY_STATUS_REPLYSENT|String|false|true
+17:55:41.0 (24315652)|VARIABLE_SCOPE_BEGIN|[33]|saConstantCmn.SA_REPORT_REPLY_STATUS_WAITINGREPLY|String|false|true
+17:55:41.0 (24322427)|VARIABLE_SCOPE_BEGIN|[39]|saConstantCmn.SA_REPORT_SOURCE_NEW|String|false|true
+17:55:41.0 (24329319)|VARIABLE_SCOPE_BEGIN|[38]|saConstantCmn.SA_REPORT_SOURCE_WEEKLY|String|false|true
+17:55:41.0 (24335150)|VARIABLE_SCOPE_BEGIN|[27]|saConstantCmn.SA_REPORT_STATE_DRAFT|String|false|true
+17:55:41.0 (24341509)|VARIABLE_SCOPE_BEGIN|[30]|saConstantCmn.SA_REPORT_STATE_PUBLISHED|String|false|true
+17:55:41.0 (24350238)|VARIABLE_SCOPE_BEGIN|[29]|saConstantCmn.SA_REPORT_STATE_REJECTED|String|false|true
+17:55:41.0 (24358080)|VARIABLE_SCOPE_BEGIN|[28]|saConstantCmn.SA_REPORT_STATE_WAITING_APPROVAL|String|false|true
+17:55:41.0 (24365918)|VARIABLE_SCOPE_BEGIN|[45]|saConstantCmn.SOURCE|String|false|true
+17:55:41.0 (24372940)|VARIABLE_SCOPE_BEGIN|[46]|saConstantCmn.SOURCE_PREVIEW|String|false|true
+17:55:41.0 (24382858)|HEAP_ALLOCATE|[36]|Bytes:4
+17:55:41.0 (24394677)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.PUSH_NOTIFICATION_STATUS_NONE|"NONE"
+17:55:41.0 (24400583)|HEAP_ALLOCATE|[36]|Bytes:9
+17:55:41.0 (24409369)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.PUSH_NOTIFICATION_STATUS_RESENDING|"RESENDING"
+17:55:41.0 (24414675)|HEAP_ALLOCATE|[36]|Bytes:7
+17:55:41.0 (24420866)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.PUSH_NOTIFICATION_STATUS_SENDING|"SENDING"
+17:55:41.0 (24425161)|HEAP_ALLOCATE|[36]|Bytes:4
+17:55:41.0 (24430764)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.PUSH_NOTIFICATION_STATUS_SENT|"SENT"
+17:55:41.0 (24434855)|HEAP_ALLOCATE|[36]|Bytes:10
+17:55:41.0 (24440672)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_INQUIRY_TYPE_AU_HEARING|"AU_HEARING"
+17:55:41.0 (24444491)|HEAP_ALLOCATE|[36]|Bytes:12
+17:55:41.0 (24450187)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_INQUIRY_TYPE_DAILYREPORT|"DAILY_REPORT"
+17:55:41.0 (24454074)|HEAP_ALLOCATE|[36]|Bytes:6
+17:55:41.0 (24462943)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_INQUIRY_TYPE_HEARING|"SURVEY"
+17:55:41.0 (24467888)|HEAP_ALLOCATE|[36]|Bytes:4
+17:55:41.0 (24473780)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_MESSAGEDETAIL_TYPE_DONE|"DONE"
+17:55:41.0 (24477871)|HEAP_ALLOCATE|[36]|Bytes:4
+17:55:41.0 (24484396)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_MESSAGEDETAIL_TYPE_READ|"READ"
+17:55:41.0 (24488481)|HEAP_ALLOCATE|[36]|Bytes:6
+17:55:41.0 (24494159)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_MESSAGEDETAIL_TYPE_SHARED|"SHARED"
+17:55:41.0 (24498377)|HEAP_ALLOCATE|[36]|Bytes:7
+17:55:41.0 (24504029)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_MESSAGE_TYPE_MESSAGE|"MESSAGE"
+17:55:41.0 (24508303)|HEAP_ALLOCATE|[36]|Bytes:4
+17:55:41.0 (24516322)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_MESSAGE_TYPE_TASK|"TASK"
+17:55:41.0 (24521071)|HEAP_ALLOCATE|[36]|Bytes:4
+17:55:41.0 (24527510)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_DETAIL_TYPE_LIKE|"LIKE"
+17:55:41.0 (24531568)|HEAP_ALLOCATE|[36]|Bytes:9
+17:55:41.0 (24537847)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_DETAIL_TYPE_VERY_LIKE|"VERY_LIKE"
+17:55:41.0 (24542109)|HEAP_ALLOCATE|[36]|Bytes:11
+17:55:41.0 (24548150)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_REPLY_STATUS_REPLYSAVED|"REPLY_SAVED"
+17:55:41.0 (24552349)|HEAP_ALLOCATE|[36]|Bytes:10
+17:55:41.0 (24559088)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_REPLY_STATUS_REPLYSENT|"REPLY_SENT"
+17:55:41.0 (24563364)|HEAP_ALLOCATE|[36]|Bytes:13
+17:55:41.0 (24571989)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_REPLY_STATUS_WAITINGREPLY|"WAITING_REPLY"
+17:55:41.0 (24577377)|HEAP_ALLOCATE|[36]|Bytes:3
+17:55:41.0 (24583657)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_SOURCE_NEW|"New"
+17:55:41.0 (24587788)|HEAP_ALLOCATE|[36]|Bytes:6
+17:55:41.0 (24594259)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_SOURCE_WEEKLY|"Weekly"
+17:55:41.0 (24598650)|HEAP_ALLOCATE|[36]|Bytes:5
+17:55:41.0 (24605010)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_STATE_DRAFT|"Draft"
+17:55:41.0 (24609022)|HEAP_ALLOCATE|[36]|Bytes:7
+17:55:41.0 (24615109)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_STATE_PUBLISHED|"Publish"
+17:55:41.0 (24619061)|HEAP_ALLOCATE|[36]|Bytes:6
+17:55:41.0 (24628473)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_STATE_REJECTED|"Remand"
+17:55:41.0 (24633014)|HEAP_ALLOCATE|[36]|Bytes:7
+17:55:41.0 (24639893)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_STATE_WAITING_APPROVAL|"Pending"
+17:55:41.0 (24644378)|HEAP_ALLOCATE|[36]|Bytes:3
+17:55:41.0 (24650755)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SOURCE|"src"
+17:55:41.0 (24654714)|HEAP_ALLOCATE|[36]|Bytes:7
+17:55:41.0 (24666256)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SOURCE_PREVIEW|"preview"
+17:55:41.0 (24692960)|METHOD_ENTRY|[4]|01pN0000000aH2z|saConstantCmn.saConstantCmn()
+17:55:41.0 (24698052)|STATEMENT_EXECUTE|[4]
+17:55:41.0 (24700953)|STATEMENT_EXECUTE|[4]
+17:55:41.0 (24707774)|HEAP_ALLOCATE|[36]|Bytes:5
+17:55:41.0 (24716219)|METHOD_EXIT|[4]|saConstantCmn
+17:55:41.0 (24723666)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (24880462)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (24922091)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (24929621)|VARIABLE_SCOPE_BEGIN|[37]|this|saReportCtrl|true|false
+17:55:41.0 (25134147)|VARIABLE_ASSIGNMENT|[37]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5ccc7446","selectedReportName":"SA_Report-00000109","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (25171316)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (25178388)|HEAP_ALLOCATE|[37]|Bytes:5
+17:55:41.0 (25184869)|STATEMENT_EXECUTE|[37]
+17:55:41.0 (25187129)|STATEMENT_EXECUTE|[37]
+17:55:41.0 (25191751)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (25329278)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (25366778)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (25391619)|VARIABLE_SCOPE_BEGIN|[39]|this|saReportCtrl|true|false
+17:55:41.0 (25612114)|VARIABLE_ASSIGNMENT|[39]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5ccc7446","selectedReportName":"SA_Report-00000109","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (25651087)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (25663721)|HEAP_ALLOCATE|[39]|Bytes:5
+17:55:41.0 (25669135)|STATEMENT_EXECUTE|[39]
+17:55:41.0 (25671145)|STATEMENT_EXECUTE|[39]
+17:55:41.0 (25676148)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (25914084)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (25953873)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (25960720)|VARIABLE_SCOPE_BEGIN|[38]|this|saReportCtrl|true|false
+17:55:41.0 (26163894)|VARIABLE_ASSIGNMENT|[38]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5ccc7446","selectedReportName":"SA_Report-00000109","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (26200414)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (26208410)|HEAP_ALLOCATE|[38]|Bytes:5
+17:55:41.0 (26214622)|STATEMENT_EXECUTE|[38]
+17:55:41.0 (26216368)|STATEMENT_EXECUTE|[38]
+17:55:41.0 (26221547)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (32583929)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (33311198)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (33375966)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (33422280)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (33465890)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (33507796)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (33548599)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (33592143)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (33634140)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (33715405)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (33759261)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (33801732)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (33841184)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (33882256)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (33978175)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (34022352)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (34062474)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (34130716)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (34211400)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (34261564)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (34310816)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (34353063)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (34401995)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (34448051)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (34497320)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (34559546)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (35907201)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (35985452)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (36029766)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (36074705)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (38798438)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (38849339)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (38890706)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (41568952)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (41623111)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (41675376)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (41863653)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (42029077)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (42073368)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (42110227)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (42322696)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (42355804)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (42371090)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.attachmentId|""|0x38be9fdd
+17:55:41.0 (42409628)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (42424155)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:18
+17:55:41.0 (42428213)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (42442645)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.selectedReportName|"SA_Report-00000109"|0x38be9fdd
+17:55:41.0 (42472712)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (42485343)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:5
+17:55:41.0 (42489270)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (42499701)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.selectedCategoryName|"Vストック"|0x38be9fdd
+17:55:41.0 (42527962)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (42539932)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (42548786)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.messageError|""|0x38be9fdd
+17:55:41.0 (42573459)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (42588190)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (42596934)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.messageSubmissionComplete|""|0x38be9fdd
+17:55:41.0 (42620314)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (42634332)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (42641878)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchCategory|""|0x38be9fdd
+17:55:41.0 (42670079)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (42681701)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (42691552)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchCount|""|0x38be9fdd
+17:55:41.0 (42715169)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (42726535)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (42733478)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchSort|""|0x38be9fdd
+17:55:41.0 (42759287)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (42770564)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (42779095)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.mySearchCount|""|0x38be9fdd
+17:55:41.0 (42804741)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (42816860)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (42825384)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.mySearchState|""|0x38be9fdd
+17:55:41.0 (42847854)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (42863511)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (42872647)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.pendingCount|""|0x38be9fdd
+17:55:41.0 (42896096)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (42907700)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (42919723)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.remandCategory|""|0x38be9fdd
+17:55:41.0 (42943341)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (42954420)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (42962332)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.remandProcess|""|0x38be9fdd
+17:55:41.0 (42999816)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (43077120)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (43094676)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (43102994)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchKeywords|""|0x38be9fdd
+17:55:41.0 (43126967)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (43139516)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (43148340)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchDateStart|""|0x38be9fdd
+17:55:41.0 (43171523)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (43183155)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (43190097)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchDateEnd|""|0x38be9fdd
+17:55:41.0 (43216476)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (43227353)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:55:41.0 (43230771)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (43237085)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchCategory|" "|0x38be9fdd
+17:55:41.0 (43262511)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (43273471)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:55:41.0 (43277375)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (43284229)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchRole1|" "|0x38be9fdd
+17:55:41.0 (43307410)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (43321260)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:55:41.0 (43324987)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (43331549)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchRole2|" "|0x38be9fdd
+17:55:41.0 (43354462)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (43366816)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:55:41.0 (43371728)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (43378566)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchRole3|" "|0x38be9fdd
+17:55:41.0 (43401306)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (43412004)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:55:41.0 (43415026)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (43423146)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchSort|" "|0x38be9fdd
+17:55:41.0 (43447998)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (43459181)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:2
+17:55:41.0 (43462440)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (43468204)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchCount|"20"|0x38be9fdd
+17:55:41.0 (43500989)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (44576511)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (44667984)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (44719681)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (44765563)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (44861549)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (44878472)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:55:41.0 (44883101)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (44895495)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.newCommentValue|"fff"|0x38be9fdd
+17:55:41.0 (44949389)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (44966655)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (44975164)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.createCategory|null|0x38be9fdd
+17:55:41.0 (45000013)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (45012808)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (45021967)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.createProcess|null|0x38be9fdd
+17:55:41.0 (45054340)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (45485922)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (45526614)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (45534319)|VARIABLE_SCOPE_BEGIN|[36]|this|saReportCtrl|true|false
+17:55:41.0 (45754882)|VARIABLE_ASSIGNMENT|[36]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchCount":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","mySearchState":"","newCommentValue":"fff","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5ccc7446","selectedReportName":"SA_Report-00000109","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (45793697)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (45802856)|HEAP_ALLOCATE|[36]|Bytes:5
+17:55:41.0 (45808471)|STATEMENT_EXECUTE|[36]
+17:55:41.0 (45810478)|STATEMENT_EXECUTE|[36]
+17:55:41.0 (45814898)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (45935846)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (45973910)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (45980084)|VARIABLE_SCOPE_BEGIN|[37]|this|saReportCtrl|true|false
+17:55:41.0 (46192891)|VARIABLE_ASSIGNMENT|[37]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchCount":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","mySearchState":"","newCommentValue":"fff","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5ccc7446","selectedReportName":"SA_Report-00000109","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (46231115)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (46238941)|HEAP_ALLOCATE|[37]|Bytes:5
+17:55:41.0 (46245195)|STATEMENT_EXECUTE|[37]
+17:55:41.0 (46246949)|STATEMENT_EXECUTE|[37]
+17:55:41.0 (46251018)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (46372146)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (46406938)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (46414941)|VARIABLE_SCOPE_BEGIN|[39]|this|saReportCtrl|true|false
+17:55:41.0 (46617574)|VARIABLE_ASSIGNMENT|[39]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchCount":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","mySearchState":"","newCommentValue":"fff","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5ccc7446","selectedReportName":"SA_Report-00000109","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (46664068)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (46670755)|HEAP_ALLOCATE|[39]|Bytes:5
+17:55:41.0 (46675401)|STATEMENT_EXECUTE|[39]
+17:55:41.0 (46677252)|STATEMENT_EXECUTE|[39]
+17:55:41.0 (46681895)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (46797333)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (46833149)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (46839625)|VARIABLE_SCOPE_BEGIN|[38]|this|saReportCtrl|true|false
+17:55:41.0 (47044380)|VARIABLE_ASSIGNMENT|[38]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchCount":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","mySearchState":"","newCommentValue":"fff","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5ccc7446","selectedReportName":"SA_Report-00000109","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (47084559)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (47091149)|HEAP_ALLOCATE|[38]|Bytes:5
+17:55:41.0 (47096261)|STATEMENT_EXECUTE|[38]
+17:55:41.0 (47097905)|STATEMENT_EXECUTE|[38]
+17:55:41.0 (47101239)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (49248763)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (49268369)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (49280520)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.mySearchState|null|0x38be9fdd
+17:55:41.0 (49314490)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (49327673)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (49335945)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.mySearchCount|null|0x38be9fdd
+17:55:41.0 (49372179)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (49806929)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (49843830)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (49850522)|VARIABLE_SCOPE_BEGIN|[36]|this|saReportCtrl|true|false
+17:55:41.0 (50060664)|VARIABLE_ASSIGNMENT|[36]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5ccc7446","selectedReportName":"SA_Report-00000109","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (50101653)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (50108723)|HEAP_ALLOCATE|[36]|Bytes:5
+17:55:41.0 (50113823)|STATEMENT_EXECUTE|[36]
+17:55:41.0 (50115636)|STATEMENT_EXECUTE|[36]
+17:55:41.0 (50119693)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (50232833)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (50270276)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (50276368)|VARIABLE_SCOPE_BEGIN|[37]|this|saReportCtrl|true|false
+17:55:41.0 (50478766)|VARIABLE_ASSIGNMENT|[37]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5ccc7446","selectedReportName":"SA_Report-00000109","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (50515067)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (50523530)|HEAP_ALLOCATE|[37]|Bytes:5
+17:55:41.0 (50528711)|STATEMENT_EXECUTE|[37]
+17:55:41.0 (50530403)|STATEMENT_EXECUTE|[37]
+17:55:41.0 (50534182)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (50646311)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (50684929)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (50692568)|VARIABLE_SCOPE_BEGIN|[38]|this|saReportCtrl|true|false
+17:55:41.0 (50896825)|VARIABLE_ASSIGNMENT|[38]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5ccc7446","selectedReportName":"SA_Report-00000109","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (50936539)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (50942975)|HEAP_ALLOCATE|[38]|Bytes:5
+17:55:41.0 (50947271)|STATEMENT_EXECUTE|[38]
+17:55:41.0 (50948924)|STATEMENT_EXECUTE|[38]
+17:55:41.0 (50952544)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (51063522)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (51099894)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (51105782)|VARIABLE_SCOPE_BEGIN|[39]|this|saReportCtrl|true|false
+17:55:41.0 (51307884)|VARIABLE_ASSIGNMENT|[39]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5ccc7446","selectedReportName":"SA_Report-00000109","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (51342501)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (51348701)|HEAP_ALLOCATE|[39]|Bytes:5
+17:55:41.0 (51353264)|STATEMENT_EXECUTE|[39]
+17:55:41.0 (51355354)|STATEMENT_EXECUTE|[39]
+17:55:41.0 (51359811)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (53541782)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (53560687)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (53572013)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.draftCategory|null|0x38be9fdd
+17:55:41.0 (53605042)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (53617536)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (53625072)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.draftProcess|null|0x38be9fdd
+17:55:41.0 (53683870)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (53835719)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (53851033)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (53863759)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.remandCategory|null|0x38be9fdd
+17:55:41.0 (53892706)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (53904120)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (53913029)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.remandProcess|null|0x38be9fdd
+17:55:41.0 (53962788)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (54078324)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (54095484)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (54105808)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.pendingCount|null|0x38be9fdd
+17:55:41.0 (54136225)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (54296491)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (54314450)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:18
+17:55:41.0 (54320603)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (54334931)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.selectedReportName|"SA_Report-00000074"|0x38be9fdd
+17:55:41.0 (54476621)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (54486897)|VARIABLE_SCOPE_BEGIN|[2110]|this|saReportCtrl|true|false
+17:55:41.0 (54697426)|VARIABLE_ASSIGNMENT|[2110]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5ccc7446","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (54739398)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (54746804)|HEAP_ALLOCATE|[2112]|Bytes:5
+17:55:41.0 (54752657)|STATEMENT_EXECUTE|[2110]
+17:55:41.0 (54754633)|STATEMENT_EXECUTE|[2112]
+17:55:41.0 (54758157)|HEAP_ALLOCATE|[2112]|Bytes:22
+17:55:41.0 (54808027)|USER_DEBUG|[2112]|DEBUG|Run: setSelectedReport
+17:55:41.0 (54822113)|STATEMENT_EXECUTE|[2114]
+17:55:41.0 (54868545)|METHOD_ENTRY|[2114]|01pN0000000aEUV|saReportCtrl.initSelectedReportDetails()
+17:55:41.0 (54886903)|VARIABLE_SCOPE_BEGIN|[2261]|this|saReportCtrl|true|false
+17:55:41.0 (55081695)|VARIABLE_ASSIGNMENT|[2261]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5ccc7446","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (55121753)|HEAP_ALLOCATE|[2263]|Bytes:5
+17:55:41.0 (55127306)|STATEMENT_EXECUTE|[2261]
+17:55:41.0 (55129356)|STATEMENT_EXECUTE|[2263]
+17:55:41.0 (55132731)|HEAP_ALLOCATE|[2263]|Bytes:30
+17:55:41.0 (55152048)|USER_DEBUG|[2263]|DEBUG|Run: initSelectedReportDetails
+17:55:41.0 (55160762)|STATEMENT_EXECUTE|[2266]
+17:55:41.0 (55163234)|HEAP_ALLOCATE|[2266]|Bytes:97
+17:55:41.0 (55216979)|HEAP_ALLOCATE|[2266]|Bytes:89
+17:55:41.0 (55229135)|SYSTEM_METHOD_ENTRY|[1]|UserInfo.UserInfo()
+17:55:41.0 (55233542)|STATEMENT_EXECUTE|[1]
+17:55:41.0 (55239708)|SYSTEM_METHOD_EXIT|[1]|UserInfo
+17:55:41.0 (55251258)|METHOD_ENTRY|[2266]||System.UserInfo.getUserId()
+17:55:41.0 (55288352)|METHOD_EXIT|[2266]||System.UserInfo.getUserId()
+17:55:41.0 (55294815)|HEAP_ALLOCATE|[2266]|Bytes:31
+17:55:41.0 (55498567)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5ccc7446","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (55538625)|HEAP_ALLOCATE|[2266]|Bytes:22
+17:55:41.0 (55557407)|HEAP_ALLOCATE|[2266]|Bytes:186
+17:55:41.0 (55563703)|VARIABLE_SCOPE_BEGIN|[2266]|hasSeenQuery|String|false|false
+17:55:41.0 (55577621)|VARIABLE_ASSIGNMENT|[2266]|hasSeenQuery|"Select CreatedBy__c, (166 more) ..."
+17:55:41.0 (55582153)|STATEMENT_EXECUTE|[2267]
+17:55:41.0 (55584637)|HEAP_ALLOCATE|[2267]|Bytes:17
+17:55:41.0 (55595362)|HEAP_ALLOCATE|[2267]|Bytes:203
+17:55:41.0 (55612630)|USER_DEBUG|[2267]|DEBUG|Has seen query : Select CreatedBy__c, ConcernedReport__r.Name, Type__c FROM saReportDetail__c WHERE CreatedBy__c='0056F000006PtYlQAK' And ConcernedReport__r.Name='SA_Report-00000074' And Type__c = 'READ'
+17:55:41.0 (55621856)|STATEMENT_EXECUTE|[2268]
+17:55:41.0 (56730316)|SOQL_EXECUTE_BEGIN|[2268]|Aggregations:0|Select CreatedBy__c, ConcernedReport__r.Name, Type__c FROM saReportDetail__c WHERE CreatedBy__c='0056F000006PtYlQAK' And ConcernedReport__r.Name='SA_Report-00000074' And Type__c = 'READ'
+17:55:41.0 (68160056)|SOQL_EXECUTE_END|[2268]|Rows:1
+17:55:41.0 (68182274)|HEAP_ALLOCATE|[2268]|Bytes:8
+17:55:41.0 (68203699)|HEAP_ALLOCATE|[2268]|Bytes:194
+17:55:41.0 (68238090)|HEAP_ALLOCATE|[2268]|Bytes:8
+17:55:41.0 (68258004)|VARIABLE_SCOPE_BEGIN|[2268]|currentUserHasSeenReport|List<saReportDetail__c>|true|false
+17:55:41.0 (68298936)|VARIABLE_ASSIGNMENT|[2268]|currentUserHasSeenReport|[{"CreatedBy__c":"0056F000006PtYlQAK","ConcernedReport__c":"a0HN0000008HF9CMAW","Type__c":"READ","Id":"a0GN000000CL6ltMAD","ConcernedReport__r":{"Name":"SA_Report-00000074","Id":"a0HN0000008HF9CMAW"}}]|0x76772f92
+17:55:41.0 (68308882)|STATEMENT_EXECUTE|[2269]
+17:55:41.0 (68313008)|HEAP_ALLOCATE|[2269]|Bytes:16
+17:55:41.0 (68418930)|HEAP_ALLOCATE|[2269]|Bytes:129
+17:55:41.0 (68437460)|HEAP_ALLOCATE|[2269]|Bytes:145
+17:55:41.0 (68449686)|USER_DEBUG|[2269]|DEBUG|List of Views : (saReportDetail__c:{CreatedBy__c=0056F000006PtYlQAK, ConcernedReport__c=a0HN0000008HF9CMAW, Type__c=READ, Id=a0GN000000CL6ltMAD})
+17:55:41.0 (68512413)|STATEMENT_EXECUTE|[2270]
+17:55:41.0 (68515728)|STATEMENT_EXECUTE|[2280]
+17:55:41.0 (68519538)|HEAP_ALLOCATE|[2280]|Bytes:20
+17:55:41.0 (68536352)|USER_DEBUG|[2280]|DEBUG|Init Selected Report
+17:55:41.0 (68543451)|STATEMENT_EXECUTE|[2284]
+17:55:41.0 (68546287)|HEAP_ALLOCATE|[2284]|Bytes:271
+17:55:41.0 (68770681)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5ccc7446","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (68811584)|HEAP_ALLOCATE|[2284]|Bytes:1
+17:55:41.0 (68823435)|HEAP_ALLOCATE|[2284]|Bytes:290
+17:55:41.0 (68828711)|VARIABLE_SCOPE_BEGIN|[2284]|queryStr|String|false|false
+17:55:41.0 (68842910)|VARIABLE_ASSIGNMENT|[2284]|queryStr|" SELECT Id, Name, Su (270 more) ..."
+17:55:41.0 (68849793)|STATEMENT_EXECUTE|[2285]
+17:55:41.0 (69340394)|SOQL_EXECUTE_BEGIN|[2285]|Aggregations:0| SELECT Id, Name, Subject__c, toLabel(Category__c), Process__c, Report_body__c, CreatedBy__r.DisplayedUsernameFormula__c, CreatedDate__c, AvailabilityDate__c, ApprovalRequestDatetime__c, State__C, IsNew__c, NbLike__c, NbView__c, NbCopy__c  FROM saReport__c WHERE Name = 'SA_Report-00000074'
+17:55:41.0 (117723379)|SOQL_EXECUTE_END|[2285]|Rows:1
+17:55:41.0 (117748225)|HEAP_ALLOCATE|[2285]|Bytes:8
+17:55:41.0 (117766294)|HEAP_ALLOCATE|[2285]|Bytes:454
+17:55:41.0 (117801625)|HEAP_ALLOCATE|[2285]|Bytes:8
+17:55:41.0 (117822072)|VARIABLE_SCOPE_BEGIN|[2285]|selectedReportList|List<saReport__c>|true|false
+17:55:41.0 (117898851)|VARIABLE_ASSIGNMENT|[2285]|selectedReportList|[{"Id":"a0HN0000008HF9CMAW","Name":"SA_Report-00000074","Subject__c":"fff","CreatedBy__c":"0056F000006PtYlQAK","CreatedDate__c":"2018-03-16T20:15:22.000Z","AvailabilityDate__c":"2018-03-16T20:15:22.000Z","ApprovalRequestDatetime__c":"2018-03-16T20:15:32.000Z","State__c":"Publish","IsNew__c":false,"NbLike__c":0,"NbView__c":1,"NbCopy__c":0,"CreatedBy__r":{"DisplayedUsernameFormula__c":"GW Admin","Id":"0056F000006PtYlQAK"}}]|0x3156a09
+17:55:41.0 (117916632)|STATEMENT_EXECUTE|[2287]
+17:55:41.0 (118004114)|HEAP_ALLOCATE|[2287]|Bytes:56
+17:55:41.0 (118241880)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5ccc7446","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (118311395)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0HN0000008HF9CMAW","Name":"SA_Report-00000074","Subject__c":"fff","CreatedBy__c":"0056F000006PtYlQAK","CreatedDate__c":"2018-03-16T20:15:22.000Z","AvailabilityDate__c":"2018-03-16T20:15:22.000Z","ApprovalRequestDatetime__c":"2018-03-16T20:15:32.000Z","State__c":"Publish","IsNew__c":false,"NbLike__c":0,"NbView__c":1,"NbCopy__c":0,"CreatedBy__r":{"DisplayedUsernameFormula__c":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x5f52c0a3
+17:55:41.0 (118364802)|VARIABLE_ASSIGNMENT|[72]|this.selectedReport|{"Id":"a0HN0000008HF9CMAW","Name":"SA_Report-00000074","Subject__c":"fff","CreatedBy__c":"0056F000006PtYlQAK","CreatedDate__c":"2018-03-16T20:15:22.000Z","AvailabilityDate__c":"2018-03-16T20:15:22.000Z","ApprovalRequestDatetime__c":"2018-03-16T20:15:32.000Z","State__c":"Publish","IsNew__c":false,"NbLike__c":0,"NbView__c":1,"NbCopy__c":0,"CreatedBy__r":{"DisplayedUsernameFormula__c":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x38be9fdd
+17:55:41.0 (118380150)|STATEMENT_EXECUTE|[2290]
+17:55:41.0 (118422849)|METHOD_ENTRY|[2290]|01pN0000000aEUV|saReportCtrl.getReportDetailPageViews()
+17:55:41.0 (118439963)|VARIABLE_SCOPE_BEGIN|[2308]|this|saReportCtrl|true|false
+17:55:41.0 (118637709)|VARIABLE_ASSIGNMENT|[2308]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5f52c0a3","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (118683172)|HEAP_ALLOCATE|[2310]|Bytes:5
+17:55:41.0 (118689611)|STATEMENT_EXECUTE|[2308]
+17:55:41.0 (118691671)|STATEMENT_EXECUTE|[2310]
+17:55:41.0 (118695698)|HEAP_ALLOCATE|[2310]|Bytes:29
+17:55:41.0 (118717900)|USER_DEBUG|[2310]|DEBUG|Run: getReportDetailPageViews
+17:55:41.0 (118726322)|STATEMENT_EXECUTE|[2313]
+17:55:41.0 (118729430)|HEAP_ALLOCATE|[2313]|Bytes:166
+17:55:41.0 (118936959)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5f52c0a3","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (118974913)|HEAP_ALLOCATE|[2313]|Bytes:86
+17:55:41.0 (118988380)|HEAP_ALLOCATE|[2313]|Bytes:270
+17:55:41.0 (118993842)|VARIABLE_SCOPE_BEGIN|[2313]|queryStr|String|false|false
+17:55:41.0 (119009978)|VARIABLE_ASSIGNMENT|[2313]|queryStr|" SELECT Name, Create (250 more) ..."
+17:55:41.0 (119017348)|STATEMENT_EXECUTE|[2314]
+17:55:41.0 (119020947)|HEAP_ALLOCATE|[2314]|Bytes:19
+17:55:41.0 (119030860)|HEAP_ALLOCATE|[2314]|Bytes:289
+17:55:41.0 (119054109)|USER_DEBUG|[2314]|DEBUG|Requete Get Good :  SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000074' And (Type__c='LIKE' OR Type__c='VERY_LIKE') ORDER BY CreatedDate__c Desc NULLS LAST 
+17:55:41.0 (119069598)|STATEMENT_EXECUTE|[2315]
+17:55:41.0 (119482768)|SOQL_EXECUTE_BEGIN|[2315]|Aggregations:0| SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000074' And (Type__c='LIKE' OR Type__c='VERY_LIKE') ORDER BY CreatedDate__c Desc NULLS LAST 
+17:55:41.0 (124208499)|SOQL_EXECUTE_END|[2315]|Rows:0
+17:55:41.0 (124232539)|HEAP_ALLOCATE|[2315]|Bytes:4
+17:55:41.0 (124247973)|HEAP_ALLOCATE|[2315]|Bytes:0
+17:55:41.0 (124277309)|HEAP_ALLOCATE|[2315]|Bytes:4
+17:55:41.0 (124505458)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x219890d6","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5f52c0a3","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (124545023)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|[]|0x414821af
+17:55:41.0 (124562887)|VARIABLE_ASSIGNMENT|[163]|this.reportGoodViews|[]|0x38be9fdd
+17:55:41.0 (124575200)|STATEMENT_EXECUTE|[2318]
+17:55:41.0 (124787129)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x414821af","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5f52c0a3","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (124828590)|HEAP_ALLOCATE|[2318]|Bytes:61
+17:55:41.0 (124840607)|HEAP_ALLOCATE|[2318]|Bytes:245
+17:55:41.0 (124851971)|VARIABLE_ASSIGNMENT|[2318]|queryStr|" SELECT Name, Create (225 more) ..."
+17:55:41.0 (124856813)|STATEMENT_EXECUTE|[2319]
+17:55:41.0 (124859468)|HEAP_ALLOCATE|[2319]|Bytes:18
+17:55:41.0 (124864915)|HEAP_ALLOCATE|[2319]|Bytes:263
+17:55:41.0 (124884919)|USER_DEBUG|[2319]|DEBUG|Requete Get Bad :  SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000074' And Type__c='COPY' ORDER BY CreatedDate__c Desc NULLS LAST 
+17:55:41.0 (124898200)|STATEMENT_EXECUTE|[2320]
+17:55:41.0 (125231768)|SOQL_EXECUTE_BEGIN|[2320]|Aggregations:0| SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000074' And Type__c='COPY' ORDER BY CreatedDate__c Desc NULLS LAST 
+17:55:41.0 (129609798)|SOQL_EXECUTE_END|[2320]|Rows:0
+17:55:41.0 (129632600)|HEAP_ALLOCATE|[2320]|Bytes:4
+17:55:41.0 (129646126)|HEAP_ALLOCATE|[2320]|Bytes:0
+17:55:41.0 (129677029)|HEAP_ALLOCATE|[2320]|Bytes:4
+17:55:41.0 (129905790)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x414821af","reportManagedViews":"0x6ba1afe0","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5f52c0a3","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (129948262)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|[]|0x436d9a6e
+17:55:41.0 (129963951)|VARIABLE_ASSIGNMENT|[164]|this.reportManagedViews|[]|0x38be9fdd
+17:55:41.0 (129985054)|METHOD_EXIT|[2290]|01pN0000000aEUV|saReportCtrl.getReportDetailPageViews()
+17:55:41.0 (129990693)|STATEMENT_EXECUTE|[2293]
+17:55:41.0 (130025769)|METHOD_ENTRY|[2293]|01pN0000000aEUV|saReportCtrl.getReportDetailPageComment()
+17:55:41.0 (130044219)|VARIABLE_SCOPE_BEGIN|[2329]|this|saReportCtrl|true|false
+17:55:41.0 (130240435)|VARIABLE_ASSIGNMENT|[2329]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x414821af","reportManagedViews":"0x436d9a6e","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5f52c0a3","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (130280168)|HEAP_ALLOCATE|[2331]|Bytes:5
+17:55:41.0 (130285978)|STATEMENT_EXECUTE|[2329]
+17:55:41.0 (130287885)|STATEMENT_EXECUTE|[2331]
+17:55:41.0 (130291153)|HEAP_ALLOCATE|[2331]|Bytes:31
+17:55:41.0 (130313692)|USER_DEBUG|[2331]|DEBUG|Run: getReportDetailPageComment
+17:55:41.0 (130322849)|STATEMENT_EXECUTE|[2334]
+17:55:41.0 (130521153)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x414821af","reportManagedViews":"0x436d9a6e","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5f52c0a3","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (130557766)|HEAP_ALLOCATE|[2334]|Bytes:66
+17:55:41.0 (130567929)|HEAP_ALLOCATE|[2334]|Bytes:250
+17:55:41.0 (130574547)|VARIABLE_SCOPE_BEGIN|[2334]|queryStr|String|false|false
+17:55:41.0 (130587290)|VARIABLE_ASSIGNMENT|[2334]|queryStr|" SELECT Name, Create (230 more) ..."
+17:55:41.0 (130591819)|STATEMENT_EXECUTE|[2335]
+17:55:41.0 (130933414)|SOQL_EXECUTE_BEGIN|[2335]|Aggregations:0| SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000074' And Type__c LIKE '%コメント%' ORDER BY CreatedDate__c Asc NULLS LAST
+17:55:41.0 (135466756)|SOQL_EXECUTE_END|[2335]|Rows:0
+17:55:41.0 (135489657)|HEAP_ALLOCATE|[2335]|Bytes:4
+17:55:41.0 (135504235)|HEAP_ALLOCATE|[2335]|Bytes:0
+17:55:41.0 (135530771)|HEAP_ALLOCATE|[2335]|Bytes:4
+17:55:41.0 (135763810)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x4b34904","reportGoodViews":"0x414821af","reportManagedViews":"0x436d9a6e","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5f52c0a3","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (135805022)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|[]|0x2e4ec6dc
+17:55:41.0 (135819662)|VARIABLE_ASSIGNMENT|[165]|this.reportComments|[]|0x38be9fdd
+17:55:41.0 (135832569)|STATEMENT_EXECUTE|[2337]
+17:55:41.0 (135837102)|HEAP_ALLOCATE|[2337]|Bytes:281
+17:55:41.0 (135862106)|HEAP_ALLOCATE|[2337]|Bytes:4
+17:55:41.0 (135877914)|HEAP_ALLOCATE|[2337]|Bytes:7
+17:55:41.0 (136090509)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x2e4ec6dc","reportGoodViews":"0x414821af","reportManagedViews":"0x436d9a6e","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5f52c0a3","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (136510530)|SOQL_EXECUTE_BEGIN|[2337]|Aggregations:0|SELECT Id, Name, Subject__c, Category__c, Process__c, Report_body__c, CreatedBy__c, CreatedBy__r.DisplayedUsernameFormula__c, CreatedDate__c, AvailabilityDate__c, ApprovalRequestDatetime__c, State__c, IsNew__c, NbLike__c, NbView__c, NbCopy__c FROM saReport__c WHERE Name = :tmpVar1
+17:55:41.0 (143600064)|SOQL_EXECUTE_END|[2337]|Rows:1
+17:55:41.0 (143621418)|HEAP_ALLOCATE|[2337]|Bytes:8
+17:55:41.0 (143639284)|HEAP_ALLOCATE|[2337]|Bytes:454
+17:55:41.0 (143669948)|HEAP_ALLOCATE|[2337]|Bytes:8
+17:55:41.0 (143695697)|HEAP_ALLOCATE|[2342]|Bytes:56
+17:55:41.0 (143914535)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x2e4ec6dc","reportGoodViews":"0x414821af","reportManagedViews":"0x436d9a6e","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x5f52c0a3","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (143995204)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0HN0000008HF9CMAW","Name":"SA_Report-00000074","Subject__c":"fff","CreatedBy__c":"0056F000006PtYlQAK","CreatedDate__c":"2018-03-16T20:15:22.000Z","AvailabilityDate__c":"2018-03-16T20:15:22.000Z","ApprovalRequestDatetime__c":"2018-03-16T20:15:32.000Z","State__c":"Publish","IsNew__c":false,"NbLike__c":0,"NbView__c":1,"NbCopy__c":0,"CreatedBy__r":{"DisplayedUsernameFormula__c":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x450f95cd
+17:55:41.0 (144046014)|VARIABLE_ASSIGNMENT|[72]|this.selectedReport|{"Id":"a0HN0000008HF9CMAW","Name":"SA_Report-00000074","Subject__c":"fff","CreatedBy__c":"0056F000006PtYlQAK","CreatedDate__c":"2018-03-16T20:15:22.000Z","AvailabilityDate__c":"2018-03-16T20:15:22.000Z","ApprovalRequestDatetime__c":"2018-03-16T20:15:32.000Z","State__c":"Publish","IsNew__c":false,"NbLike__c":0,"NbView__c":1,"NbCopy__c":0,"CreatedBy__r":{"DisplayedUsernameFormula__c":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x38be9fdd
+17:55:41.0 (144069209)|METHOD_EXIT|[2293]|01pN0000000aEUV|saReportCtrl.getReportDetailPageComment()
+17:55:41.0 (144076154)|STATEMENT_EXECUTE|[2296]
+17:55:41.0 (144300311)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"fff","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x2e4ec6dc","reportGoodViews":"0x414821af","reportManagedViews":"0x436d9a6e","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x450f95cd","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (144333593)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|""
+17:55:41.0 (144345962)|VARIABLE_ASSIGNMENT|[166]|this.newCommentValue|""|0x38be9fdd
+17:55:41.0 (144357947)|STATEMENT_EXECUTE|[2299]
+17:55:41.0 (144394079)|METHOD_ENTRY|[2299]|01pN0000000aEUV|saReportCtrl.initSelectedViewButton()
+17:55:41.0 (144409749)|VARIABLE_SCOPE_BEGIN|[2351]|this|saReportCtrl|true|false
+17:55:41.0 (144599713)|VARIABLE_ASSIGNMENT|[2351]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x2e4ec6dc","reportGoodViews":"0x414821af","reportManagedViews":"0x436d9a6e","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x450f95cd","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (144640578)|HEAP_ALLOCATE|[2353]|Bytes:5
+17:55:41.0 (144646284)|STATEMENT_EXECUTE|[2351]
+17:55:41.0 (144648369)|STATEMENT_EXECUTE|[2353]
+17:55:41.0 (144651274)|HEAP_ALLOCATE|[2353]|Bytes:27
+17:55:41.0 (144676482)|USER_DEBUG|[2353]|DEBUG|Run: initSelectedViewButton
+17:55:41.0 (144687869)|STATEMENT_EXECUTE|[2355]
+17:55:41.0 (144893186)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x2e4ec6dc","reportGoodViews":"0x414821af","reportManagedViews":"0x436d9a6e","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x450f95cd","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (144932686)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|false
+17:55:41.0 (144939354)|HEAP_ALLOCATE|[78]|Bytes:5
+17:55:41.0 (144947891)|VARIABLE_ASSIGNMENT|[78]|this.isGoodSelected|false|0x38be9fdd
+17:55:41.0 (144957230)|STATEMENT_EXECUTE|[2356]
+17:55:41.0 (145155965)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x2e4ec6dc","reportGoodViews":"0x414821af","reportManagedViews":"0x436d9a6e","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x450f95cd","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (145192535)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|false
+17:55:41.0 (145198878)|HEAP_ALLOCATE|[79]|Bytes:5
+17:55:41.0 (145206342)|VARIABLE_ASSIGNMENT|[79]|this.isVeryGoodSelected|false|0x38be9fdd
+17:55:41.0 (145215003)|STATEMENT_EXECUTE|[2357]
+17:55:41.0 (145412883)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x2e4ec6dc","reportGoodViews":"0x414821af","reportManagedViews":"0x436d9a6e","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x450f95cd","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (145446001)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|false
+17:55:41.0 (145452841)|HEAP_ALLOCATE|[80]|Bytes:5
+17:55:41.0 (145461937)|VARIABLE_ASSIGNMENT|[80]|this.isCopySelected|false|0x38be9fdd
+17:55:41.0 (145470350)|STATEMENT_EXECUTE|[2360]
+17:55:41.0 (145666361)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x2e4ec6dc","reportGoodViews":"0x414821af","reportManagedViews":"0x436d9a6e","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x450f95cd","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (145720549)|HEAP_ALLOCATE|[2360]|Bytes:20
+17:55:41.0 (145734996)|METHOD_ENTRY|[2360]||System.UserInfo.getUserId()
+17:55:41.0 (145753793)|METHOD_EXIT|[2360]||System.UserInfo.getUserId()
+17:55:41.0 (145758538)|HEAP_ALLOCATE|[2360]|Bytes:44
+17:55:41.0 (145768965)|HEAP_ALLOCATE|[2360]|Bytes:266
+17:55:41.0 (145774485)|VARIABLE_SCOPE_BEGIN|[2360]|queryStr|String|false|false
+17:55:41.0 (145789592)|VARIABLE_ASSIGNMENT|[2360]|queryStr|" SELECT Name, Create (246 more) ..."
+17:55:41.0 (145794657)|STATEMENT_EXECUTE|[2361]
+17:55:41.0 (145797743)|HEAP_ALLOCATE|[2361]|Bytes:25
+17:55:41.0 (145805259)|HEAP_ALLOCATE|[2361]|Bytes:291
+17:55:41.0 (145822719)|USER_DEBUG|[2361]|DEBUG|Requete Get Engagement :  SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000074' And CreatedBy__c='0056F000006PtYlQAK' And Type__c!='COMMENT' And Type__c!='READ'
+17:55:41.0 (145832592)|STATEMENT_EXECUTE|[2362]
+17:55:41.0 (146179833)|SOQL_EXECUTE_BEGIN|[2362]|Aggregations:0| SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000074' And CreatedBy__c='0056F000006PtYlQAK' And Type__c!='COMMENT' And Type__c!='READ'
+17:55:41.0 (151243812)|SOQL_EXECUTE_END|[2362]|Rows:0
+17:55:41.0 (151266543)|HEAP_ALLOCATE|[2362]|Bytes:4
+17:55:41.0 (151279727)|HEAP_ALLOCATE|[2362]|Bytes:0
+17:55:41.0 (151306321)|HEAP_ALLOCATE|[2362]|Bytes:4
+17:55:41.0 (151322764)|VARIABLE_SCOPE_BEGIN|[2362]|listOfViews|List<saReportDetail__c>|true|false
+17:55:41.0 (151338963)|VARIABLE_ASSIGNMENT|[2362]|listOfViews|[]|0x68b6ca94
+17:55:41.0 (151347530)|STATEMENT_EXECUTE|[2364]
+17:55:41.0 (151351907)|HEAP_ALLOCATE|[2364]|Bytes:19
+17:55:41.0 (151361013)|HEAP_ALLOCATE|[2364]|Bytes:285
+17:55:41.0 (151383954)|USER_DEBUG|[2364]|DEBUG|Get View request :  SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000074' And CreatedBy__c='0056F000006PtYlQAK' And Type__c!='COMMENT' And Type__c!='READ'
+17:55:41.0 (151396197)|STATEMENT_EXECUTE|[2365]
+17:55:41.0 (151400218)|HEAP_ALLOCATE|[2365]|Bytes:18
+17:55:41.0 (151448616)|HEAP_ALLOCATE|[2365]|Bytes:2
+17:55:41.0 (151463608)|HEAP_ALLOCATE|[2365]|Bytes:20
+17:55:41.0 (151472421)|USER_DEBUG|[2365]|DEBUG|Get View result : ()
+17:55:41.0 (151502970)|STATEMENT_EXECUTE|[2368]
+17:55:41.0 (151512747)|METHOD_EXIT|[2299]|01pN0000000aEUV|saReportCtrl.initSelectedViewButton()
+17:55:41.0 (151521163)|METHOD_EXIT|[2114]|01pN0000000aEUV|saReportCtrl.initSelectedReportDetails()
+17:55:41.0 (151526052)|STATEMENT_EXECUTE|[2116]
+17:55:41.0 (151531049)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (183438846)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (183488820)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:284
+17:55:41.0 (183513255)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:160
+17:55:41.0 (183532055)|METHOD_ENTRY|[1]|01pN0000000Mill|auMainTopCompCtrl.auMainTopCompCtrl()
+17:55:41.0 (183539413)|STATEMENT_EXECUTE|[1]
+17:55:41.0 (183543733)|STATEMENT_EXECUTE|[1]
+17:55:41.0 (183545264)|STATEMENT_EXECUTE|[3]
+17:55:41.0 (183550896)|HEAP_ALLOCATE|[3]|Bytes:4
+17:55:41.0 (183574528)|VARIABLE_ASSIGNMENT|[3]|auMainTopCompCtrl.TYPE_SCREEN_SWITCH|0
+17:55:41.0 (183580960)|STATEMENT_EXECUTE|[4]
+17:55:41.0 (183584106)|HEAP_ALLOCATE|[4]|Bytes:4
+17:55:41.0 (183593297)|VARIABLE_ASSIGNMENT|[4]|auMainTopCompCtrl.TYPE_SCREEN_STPD_EVENT|11
+17:55:41.0 (183597499)|STATEMENT_EXECUTE|[5]
+17:55:41.0 (183599509)|HEAP_ALLOCATE|[5]|Bytes:4
+17:55:41.0 (183606557)|VARIABLE_ASSIGNMENT|[5]|auMainTopCompCtrl.TYPE_SCREEN_STPD_TIMELINE|12
+17:55:41.0 (183610494)|STATEMENT_EXECUTE|[6]
+17:55:41.0 (183612418)|HEAP_ALLOCATE|[6]|Bytes:4
+17:55:41.0 (183618794)|VARIABLE_ASSIGNMENT|[6]|auMainTopCompCtrl.TYPE_SCREEN_STPD_SCREEN|13
+17:55:41.0 (183623094)|STATEMENT_EXECUTE|[7]
+17:55:41.0 (183625133)|HEAP_ALLOCATE|[7]|Bytes:4
+17:55:41.0 (183632817)|VARIABLE_ASSIGNMENT|[7]|auMainTopCompCtrl.TYPE_SCREEN_CX_SCREEN|21
+17:55:41.0 (183637583)|STATEMENT_EXECUTE|[8]
+17:55:41.0 (183639899)|HEAP_ALLOCATE|[8]|Bytes:4
+17:55:41.0 (183646089)|VARIABLE_ASSIGNMENT|[8]|auMainTopCompCtrl.TYPE_SCREEN_CX_TIMELINE|22
+17:55:41.0 (183650369)|STATEMENT_EXECUTE|[9]
+17:55:41.0 (183652354)|HEAP_ALLOCATE|[9]|Bytes:4
+17:55:41.0 (183661847)|VARIABLE_ASSIGNMENT|[9]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE|31
+17:55:41.0 (183666001)|STATEMENT_EXECUTE|[10]
+17:55:41.0 (183668168)|HEAP_ALLOCATE|[10]|Bytes:4
+17:55:41.0 (183674241)|VARIABLE_ASSIGNMENT|[10]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE_LIST|32
+17:55:41.0 (183678311)|STATEMENT_EXECUTE|[11]
+17:55:41.0 (183680545)|HEAP_ALLOCATE|[11]|Bytes:4
+17:55:41.0 (183689206)|VARIABLE_ASSIGNMENT|[11]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_DASHBOARD|41
+17:55:41.0 (183693502)|STATEMENT_EXECUTE|[12]
+17:55:41.0 (183695842)|HEAP_ALLOCATE|[12]|Bytes:4
+17:55:41.0 (183702291)|VARIABLE_ASSIGNMENT|[12]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_LIST|42
+17:55:41.0 (183706111)|STATEMENT_EXECUTE|[13]
+17:55:41.0 (183707983)|HEAP_ALLOCATE|[13]|Bytes:4
+17:55:41.0 (183713934)|VARIABLE_ASSIGNMENT|[13]|auMainTopCompCtrl.TYPE_SCREEN_SA_MESSAGES|51
+17:55:41.0 (183718089)|STATEMENT_EXECUTE|[14]
+17:55:41.0 (183719993)|HEAP_ALLOCATE|[14]|Bytes:4
+17:55:41.0 (183726366)|VARIABLE_ASSIGNMENT|[14]|auMainTopCompCtrl.TYPE_SCREEN_SA_REPORTS|52
+17:55:41.0 (183730088)|STATEMENT_EXECUTE|[15]
+17:55:41.0 (183731998)|HEAP_ALLOCATE|[15]|Bytes:4
+17:55:41.0 (183738415)|VARIABLE_ASSIGNMENT|[15]|auMainTopCompCtrl.TYPE_SCREEN_SA_CHATTER|53
+17:55:41.0 (183744416)|STATEMENT_EXECUTE|[16]
+17:55:41.0 (183746518)|HEAP_ALLOCATE|[16]|Bytes:4
+17:55:41.0 (183753160)|VARIABLE_ASSIGNMENT|[16]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORT|54
+17:55:41.0 (183757294)|STATEMENT_EXECUTE|[17]
+17:55:41.0 (183759437)|HEAP_ALLOCATE|[17]|Bytes:4
+17:55:41.0 (183765372)|VARIABLE_ASSIGNMENT|[17]|auMainTopCompCtrl.TYPE_SCREEN_SA_ENQUETE|55
+17:55:41.0 (183769326)|STATEMENT_EXECUTE|[18]
+17:55:41.0 (183771250)|HEAP_ALLOCATE|[18]|Bytes:4
+17:55:41.0 (183777729)|VARIABLE_ASSIGNMENT|[18]|auMainTopCompCtrl.TYPE_SCREEN_SA_DOCUMENTS|56
+17:55:41.0 (183781548)|STATEMENT_EXECUTE|[19]
+17:55:41.0 (183783865)|HEAP_ALLOCATE|[19]|Bytes:4
+17:55:41.0 (183799005)|VARIABLE_ASSIGNMENT|[19]|auMainTopCompCtrl.TYPE_SCREEN_SA_RANKING|57
+17:55:41.0 (183803067)|STATEMENT_EXECUTE|[20]
+17:55:41.0 (183805112)|HEAP_ALLOCATE|[20]|Bytes:4
+17:55:41.0 (183811867)|VARIABLE_ASSIGNMENT|[20]|auMainTopCompCtrl.TYPE_SCREEN_SA_LINKS|58
+17:55:41.0 (183815261)|STATEMENT_EXECUTE|[21]
+17:55:41.0 (183817080)|HEAP_ALLOCATE|[21]|Bytes:4
+17:55:41.0 (183823271)|VARIABLE_ASSIGNMENT|[21]|auMainTopCompCtrl.TYPE_SCREEN_SA_USRSETTINGS|59
+17:55:41.0 (183827273)|STATEMENT_EXECUTE|[22]
+17:55:41.0 (183829128)|HEAP_ALLOCATE|[22]|Bytes:4
+17:55:41.0 (183834747)|VARIABLE_ASSIGNMENT|[22]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORTLIST|60
+17:55:41.0 (183838631)|STATEMENT_EXECUTE|[23]
+17:55:41.0 (183840681)|HEAP_ALLOCATE|[23]|Bytes:4
+17:55:41.0 (183847477)|VARIABLE_ASSIGNMENT|[23]|auMainTopCompCtrl.TYPE_SCREEN_SA_TODO|61
+17:55:41.0 (183853285)|STATEMENT_EXECUTE|[24]
+17:55:41.0 (183856070)|HEAP_ALLOCATE|[24]|Bytes:4
+17:55:41.0 (183862409)|VARIABLE_ASSIGNMENT|[24]|auMainTopCompCtrl.TYPE_SCREEN_HONBU_DIRECT|71
+17:55:41.0 (183866574)|STATEMENT_EXECUTE|[25]
+17:55:41.0 (183868891)|HEAP_ALLOCATE|[25]|Bytes:4
+17:55:41.0 (183874256)|VARIABLE_ASSIGNMENT|[25]|auMainTopCompCtrl.TYPE_SCREEN_ACCOUNT_LIST|81
+17:55:41.0 (183877851)|STATEMENT_EXECUTE|[26]
+17:55:41.0 (183879789)|HEAP_ALLOCATE|[26]|Bytes:4
+17:55:41.0 (183884828)|VARIABLE_ASSIGNMENT|[26]|auMainTopCompCtrl.TYPE_SCREEN_ACTIVITY_LIST|82
+17:55:41.0 (183894095)|STATEMENT_EXECUTE|[27]
+17:55:41.0 (183896517)|HEAP_ALLOCATE|[27]|Bytes:4
+17:55:41.0 (183904058)|VARIABLE_ASSIGNMENT|[27]|auMainTopCompCtrl.TYPE_SCREEN_FILE_LIST|83
+17:55:41.0 (183915452)|METHOD_EXIT|[1]|auMainTopCompCtrl
+17:55:41.0 (183922584)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:55:41.0 (183932882)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iCountComments|null|0x4d41f41f
+17:55:41.0 (184002694)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (184018937)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:55:41.0 (184028339)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iCountLikes|null|0x4d41f41f
+17:55:41.0 (184132926)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (184191711)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (184202836)|VARIABLE_SCOPE_BEGIN|[172]|this|saReportCtrl|true|false
+17:55:41.0 (184474514)|VARIABLE_ASSIGNMENT|[172]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x2e4ec6dc","reportGoodViews":"0x414821af","reportManagedViews":"0x436d9a6e","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x450f95cd","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (184512536)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (184523413)|HEAP_ALLOCATE|[172]|Bytes:5
+17:55:41.0 (184529263)|STATEMENT_EXECUTE|[172]
+17:55:41.0 (184531063)|STATEMENT_EXECUTE|[172]
+17:55:41.0 (184538136)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (184602850)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (184620895)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+17:55:41.0 (184625446)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:55:41.0 (184635212)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iTypeOfScreen|52|0x4d41f41f
+17:55:41.0 (184778720)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (184818333)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:55:41.0 (184825591)|VARIABLE_SCOPE_BEGIN|[88]|this|auMainTopCompCtrl|true|false
+17:55:41.0 (184866206)|VARIABLE_ASSIGNMENT|[88]|this|{"currentUser":"0x3d9876f1","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x4d41f41f
+17:55:41.0 (184876089)|STATEMENT_EXECUTE|[88]
+17:55:41.0 (184878075)|STATEMENT_EXECUTE|[89]
+17:55:41.0 (184933632)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x3d9876f1","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x4d41f41f
+17:55:41.0 (184984667)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x3d9876f1","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x4d41f41f
+17:55:41.0 (185000974)|HEAP_ALLOCATE|[89]|Bytes:5
+17:55:41.0 (185087396)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (185122846)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:55:41.0 (185129682)|VARIABLE_SCOPE_BEGIN|[106]|this|auMainTopCompCtrl|true|false
+17:55:41.0 (185164532)|VARIABLE_ASSIGNMENT|[106]|this|{"currentUser":"0x3d9876f1","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x4d41f41f
+17:55:41.0 (185173012)|STATEMENT_EXECUTE|[106]
+17:55:41.0 (185174904)|STATEMENT_EXECUTE|[107]
+17:55:41.0 (185213207)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x3d9876f1","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x4d41f41f
+17:55:41.0 (185228079)|HEAP_ALLOCATE|[107]|Bytes:5
+17:55:41.0 (185296374)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (185330096)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:55:41.0 (185336747)|VARIABLE_SCOPE_BEGIN|[110]|this|auMainTopCompCtrl|true|false
+17:55:41.0 (185368224)|VARIABLE_ASSIGNMENT|[110]|this|{"currentUser":"0x3d9876f1","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x4d41f41f
+17:55:41.0 (185379779)|STATEMENT_EXECUTE|[110]
+17:55:41.0 (185381516)|STATEMENT_EXECUTE|[111]
+17:55:41.0 (185416614)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x3d9876f1","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x4d41f41f
+17:55:41.0 (185433726)|HEAP_ALLOCATE|[111]|Bytes:5
+17:55:41.0 (185497446)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (185526512)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:55:41.0 (185532730)|VARIABLE_SCOPE_BEGIN|[114]|this|auMainTopCompCtrl|true|false
+17:55:41.0 (185566436)|VARIABLE_ASSIGNMENT|[114]|this|{"currentUser":"0x3d9876f1","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x4d41f41f
+17:55:41.0 (185574697)|STATEMENT_EXECUTE|[114]
+17:55:41.0 (185576358)|STATEMENT_EXECUTE|[115]
+17:55:41.0 (185612622)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x3d9876f1","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x4d41f41f
+17:55:41.0 (185627775)|HEAP_ALLOCATE|[115]|Bytes:5
+17:55:41.0 (185838323)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (185902782)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (186312146)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (187762364)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (187884047)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (187954060)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (188018987)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (188187183)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (188292243)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (188377516)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (188734720)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (188775404)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (188783292)|VARIABLE_SCOPE_BEGIN|[36]|this|saReportCtrl|true|false
+17:55:41.0 (188991445)|VARIABLE_ASSIGNMENT|[36]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x2e4ec6dc","reportGoodViews":"0x414821af","reportManagedViews":"0x436d9a6e","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x450f95cd","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (189027999)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (189036628)|HEAP_ALLOCATE|[36]|Bytes:5
+17:55:41.0 (189043343)|STATEMENT_EXECUTE|[36]
+17:55:41.0 (189045221)|STATEMENT_EXECUTE|[36]
+17:55:41.0 (189050720)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (189174975)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (189212273)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (189219288)|VARIABLE_SCOPE_BEGIN|[37]|this|saReportCtrl|true|false
+17:55:41.0 (189416384)|VARIABLE_ASSIGNMENT|[37]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x2e4ec6dc","reportGoodViews":"0x414821af","reportManagedViews":"0x436d9a6e","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x450f95cd","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (189455794)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (189462333)|HEAP_ALLOCATE|[37]|Bytes:5
+17:55:41.0 (189467285)|STATEMENT_EXECUTE|[37]
+17:55:41.0 (189468997)|STATEMENT_EXECUTE|[37]
+17:55:41.0 (189473245)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (189588058)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (189629142)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (189635905)|VARIABLE_SCOPE_BEGIN|[39]|this|saReportCtrl|true|false
+17:55:41.0 (189841682)|VARIABLE_ASSIGNMENT|[39]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x2e4ec6dc","reportGoodViews":"0x414821af","reportManagedViews":"0x436d9a6e","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x450f95cd","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (189877192)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (189884756)|HEAP_ALLOCATE|[39]|Bytes:5
+17:55:41.0 (189891160)|STATEMENT_EXECUTE|[39]
+17:55:41.0 (189892824)|STATEMENT_EXECUTE|[39]
+17:55:41.0 (189897302)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (190055525)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (190093253)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (190099780)|VARIABLE_SCOPE_BEGIN|[38]|this|saReportCtrl|true|false
+17:55:41.0 (190300815)|VARIABLE_ASSIGNMENT|[38]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x2e4ec6dc","reportGoodViews":"0x414821af","reportManagedViews":"0x436d9a6e","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x450f95cd","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (190336864)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (190344025)|HEAP_ALLOCATE|[38]|Bytes:5
+17:55:41.0 (190349054)|STATEMENT_EXECUTE|[38]
+17:55:41.0 (190350780)|STATEMENT_EXECUTE|[38]
+17:55:41.0 (190354869)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (195905906)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (213355658)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (213406223)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:55:41.0 (213647583)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x2e87dd29","countDataOptions":"0x5ddf852d","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x4ea3de8e","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"Vストック","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x696f63b5","listOfSAReports":"0x25b3df0","lsAttachments":"0x1225d607","lsRolesFull":"0x33f2df83","mapOfCategory":"0x637530dd","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x389a35fe","remandBody":"","remandSubject":"","reportComments":"0x2e4ec6dc","reportGoodViews":"0x414821af","reportManagedViews":"0x436d9a6e","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x27d52af","roleLevel2DataOptions":"0x1c98d08d","roleLevel3DataOptions":"0x79e3fde8","searchCategoryLabel":"Vストック","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"Vストック","selectedProcess":"","selectedReport":"0x450f95cd","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x1f5b939b","stateDataOptions":"0x77db42f5"}|0x38be9fdd
+17:55:41.0 (213691761)|SYSTEM_MODE_ENTER|false
+17:55:41.0 (213701153)|HEAP_ALLOCATE|[177]|Bytes:5
+17:55:41.0 (213709004)|STATEMENT_EXECUTE|[176]
+17:55:41.0 (213711479)|STATEMENT_EXECUTE|[177]
+17:55:41.0 (213728461)|METHOD_ENTRY|[177]||System.UserInfo.getTimeZone()
+17:55:41.0 (214006392)|METHOD_EXIT|[177]||System.UserInfo.getTimeZone()
+17:55:41.0 (214015896)|VARIABLE_SCOPE_BEGIN|[177]|tz|System.TimeZone|true|false
+17:55:41.0 (214043513)|VARIABLE_ASSIGNMENT|[177]|tz|{"delegate":"0x41ddff1c"}|0x6b431a70
+17:55:41.0 (214050050)|STATEMENT_EXECUTE|[179]
+17:55:41.0 (214102368)|HEAP_ALLOCATE|[179]|Bytes:56
+17:55:41.0 (214125733)|METHOD_ENTRY|[179]||System.TimeZone.getOffset(Datetime)
+17:55:41.0 (214153712)|METHOD_EXIT|[179]||System.TimeZone.getOffset(Datetime)
+17:55:41.0 (214182271)|HEAP_ALLOCATE|[179]|Bytes:28
+17:55:41.0 (214190017)|HEAP_ALLOCATE|[179]|Bytes:28
+17:55:41.0 (214194462)|HEAP_ALLOCATE|[179]|Bytes:4
+17:55:41.0 (214204163)|HEAP_ALLOCATE|[179]|Bytes:28
+17:55:41.0 (214246158)|HEAP_ALLOCATE|[179]|Bytes:28
+17:55:41.0 (214322091)|HEAP_ALLOCATE|[179]|Bytes:28
+17:55:41.0 (214328255)|HEAP_ALLOCATE|[179]|Bytes:28
+17:55:41.0 (214345345)|HEAP_ALLOCATE|[179]|Bytes:12
+17:55:41.0 (214352952)|SYSTEM_MODE_EXIT|false
+17:55:41.0 (215724325)|SYSTEM_MODE_ENTER|true
+17:55:41.0 (221866911)|VF_SERIALIZE_VIEWSTATE_BEGIN|066N0000000M59u
+17:55:41.0 (234020021)|VF_SERIALIZE_VIEWSTATE_END
+17:55:41.250 (250441803)|CUMULATIVE_LIMIT_USAGE
+17:55:41.250 (250441803)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 7 out of 100
+  Number of query rows: 3 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+17:55:41.250 (250441803)|CUMULATIVE_LIMIT_USAGE_END
+
+17:55:41.0 (250482920)|CODE_UNIT_FINISHED|VF: /apex/saReport
+17:55:41.0 (251205479)|EXECUTION_FINISHED

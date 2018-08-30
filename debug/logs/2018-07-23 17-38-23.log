@@ -1,0 +1,923 @@
+38.0 APEX_CODE,FINEST;APEX_PROFILING,INFO;CALLOUT,INFO;DB,INFO;NBA,INFO;SYSTEM,DEBUG;VALIDATION,INFO;VISUALFORCE,INFO;WAVE,INFO;WORKFLOW,INFO
+17:38:22.0 (73658)|USER_INFO|[EXTERNAL]|0056F000006PtYl|gwadmin@gw.jp.kddi.gwdev01|日本標準時|GMT+09:00
+17:38:22.0 (107871)|EXECUTION_STARTED
+17:38:22.0 (112735)|CODE_UNIT_STARTED|[EXTERNAL]|066N0000000M59u|VF: /apex/saReport
+17:38:22.0 (597551)|VF_DESERIALIZE_VIEWSTATE_BEGIN|066N0000000M59u
+17:38:22.0 (5438130)|HEAP_ALLOCATE|[72]|Bytes:3
+17:38:22.0 (5469398)|HEAP_ALLOCATE|[77]|Bytes:152
+17:38:22.0 (5482135)|HEAP_ALLOCATE|[342]|Bytes:408
+17:38:22.0 (5494393)|HEAP_ALLOCATE|[355]|Bytes:408
+17:38:22.0 (5504888)|HEAP_ALLOCATE|[467]|Bytes:48
+17:38:22.0 (5529430)|HEAP_ALLOCATE|[139]|Bytes:6
+17:38:22.0 (6976154)|HEAP_ALLOCATE|[50]|Bytes:5
+17:38:22.0 (6999806)|HEAP_ALLOCATE|[56]|Bytes:5
+17:38:22.0 (7009921)|HEAP_ALLOCATE|[64]|Bytes:7
+17:38:22.0 (9071080)|VARIABLE_SCOPE_BEGIN|[30]|saReportCtrl.ERROR_CATEGORY_MISSING|String|false|true
+17:38:22.0 (9083914)|VARIABLE_SCOPE_BEGIN|[31]|saReportCtrl.ERROR_COMMENT_MISSING|String|false|true
+17:38:22.0 (9091569)|VARIABLE_SCOPE_BEGIN|[29]|saReportCtrl.ERROR_TITLE_MISSING|String|false|true
+17:38:22.0 (9098939)|VARIABLE_SCOPE_BEGIN|[32]|saReportCtrl.MESSAGE_ASK_FOR_VALIDATION|String|false|true
+17:38:22.0 (9105530)|VARIABLE_SCOPE_BEGIN|[33]|saReportCtrl.MESSAGE_PUBLISHED|String|false|true
+17:38:22.0 (9113274)|VARIABLE_SCOPE_BEGIN|[27]|saReportCtrl.SA_REPORT_STATE_NONE_LABEL|String|false|true
+17:38:22.0 (9121217)|VARIABLE_SCOPE_BEGIN|[26]|saReportCtrl.SA_REPORT_STATE_NONE_VALUE|String|false|true
+17:38:22.0 (9128250)|VARIABLE_SCOPE_BEGIN|[8]|saReportCtrl.SEARCH_COUNT_AVERAGE_LABEL|String|false|true
+17:38:22.0 (9141867)|VARIABLE_SCOPE_BEGIN|[11]|saReportCtrl.SEARCH_COUNT_AVERAGE_VALUE|String|false|true
+17:38:22.0 (9149799)|VARIABLE_SCOPE_BEGIN|[7]|saReportCtrl.SEARCH_COUNT_FEW_LABEL|String|false|true
+17:38:22.0 (9157404)|VARIABLE_SCOPE_BEGIN|[10]|saReportCtrl.SEARCH_COUNT_FEW_VALUE|String|false|true
+17:38:22.0 (9164572)|VARIABLE_SCOPE_BEGIN|[9]|saReportCtrl.SEARCH_COUNT_LOT_LABEL|String|false|true
+17:38:22.0 (9171770)|VARIABLE_SCOPE_BEGIN|[12]|saReportCtrl.SEARCH_COUNT_LOT_VALUE|String|false|true
+17:38:22.0 (9179425)|VARIABLE_SCOPE_BEGIN|[17]|saReportCtrl.SORTED_BY_FAVORITES_LABEL|String|false|true
+17:38:22.0 (9186620)|VARIABLE_SCOPE_BEGIN|[23]|saReportCtrl.SORTED_BY_FAVORITES_VALUE|String|false|true
+17:38:22.0 (9194375)|VARIABLE_SCOPE_BEGIN|[15]|saReportCtrl.SORTED_BY_NEWS_LABEL|String|false|true
+17:38:22.0 (9201979)|VARIABLE_SCOPE_BEGIN|[21]|saReportCtrl.SORTED_BY_NEWS_VALUE|String|false|true
+17:38:22.0 (9209353)|VARIABLE_SCOPE_BEGIN|[14]|saReportCtrl.SORTED_BY_NONE_LABEL|String|false|true
+17:38:22.0 (9217245)|VARIABLE_SCOPE_BEGIN|[20]|saReportCtrl.SORTED_BY_NONE_VALUE|String|false|true
+17:38:22.0 (9225350)|VARIABLE_SCOPE_BEGIN|[16]|saReportCtrl.SORTED_BY_NUMBER_OF_VIEWS_LABEL|String|false|true
+17:38:22.0 (9232992)|VARIABLE_SCOPE_BEGIN|[22]|saReportCtrl.SORTED_BY_NUMBER_OF_VIEWS_VALUE|String|false|true
+17:38:22.0 (9240498)|VARIABLE_SCOPE_BEGIN|[18]|saReportCtrl.SORTED_BY_RELEASE_DATES_LABEL|String|false|true
+17:38:22.0 (9248970)|VARIABLE_SCOPE_BEGIN|[24]|saReportCtrl.SORTED_BY_RELEASE_DATES_VALUE|String|false|true
+17:38:22.0 (10785464)|VARIABLE_SCOPE_BEGIN|[25]|auMainTopCompCtrl.TYPE_SCREEN_ACCOUNT_LIST|Integer|false|true
+17:38:22.0 (10798019)|VARIABLE_SCOPE_BEGIN|[26]|auMainTopCompCtrl.TYPE_SCREEN_ACTIVITY_LIST|Integer|false|true
+17:38:22.0 (10805352)|VARIABLE_SCOPE_BEGIN|[7]|auMainTopCompCtrl.TYPE_SCREEN_CX_SCREEN|Integer|false|true
+17:38:22.0 (10811971)|VARIABLE_SCOPE_BEGIN|[8]|auMainTopCompCtrl.TYPE_SCREEN_CX_TIMELINE|Integer|false|true
+17:38:22.0 (10818490)|VARIABLE_SCOPE_BEGIN|[9]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE|Integer|false|true
+17:38:22.0 (10825224)|VARIABLE_SCOPE_BEGIN|[10]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE_LIST|Integer|false|true
+17:38:22.0 (10831514)|VARIABLE_SCOPE_BEGIN|[27]|auMainTopCompCtrl.TYPE_SCREEN_FILE_LIST|Integer|false|true
+17:38:22.0 (10837560)|VARIABLE_SCOPE_BEGIN|[24]|auMainTopCompCtrl.TYPE_SCREEN_HONBU_DIRECT|Integer|false|true
+17:38:22.0 (10843813)|VARIABLE_SCOPE_BEGIN|[11]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_DASHBOARD|Integer|false|true
+17:38:22.0 (10850146)|VARIABLE_SCOPE_BEGIN|[12]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_LIST|Integer|false|true
+17:38:22.0 (10856217)|VARIABLE_SCOPE_BEGIN|[15]|auMainTopCompCtrl.TYPE_SCREEN_SA_CHATTER|Integer|false|true
+17:38:22.0 (10862538)|VARIABLE_SCOPE_BEGIN|[16]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORT|Integer|false|true
+17:38:22.0 (10868884)|VARIABLE_SCOPE_BEGIN|[22]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORTLIST|Integer|false|true
+17:38:22.0 (10875560)|VARIABLE_SCOPE_BEGIN|[18]|auMainTopCompCtrl.TYPE_SCREEN_SA_DOCUMENTS|Integer|false|true
+17:38:22.0 (10882035)|VARIABLE_SCOPE_BEGIN|[17]|auMainTopCompCtrl.TYPE_SCREEN_SA_ENQUETE|Integer|false|true
+17:38:22.0 (10888615)|VARIABLE_SCOPE_BEGIN|[20]|auMainTopCompCtrl.TYPE_SCREEN_SA_LINKS|Integer|false|true
+17:38:22.0 (10895068)|VARIABLE_SCOPE_BEGIN|[13]|auMainTopCompCtrl.TYPE_SCREEN_SA_MESSAGES|Integer|false|true
+17:38:22.0 (10901421)|VARIABLE_SCOPE_BEGIN|[19]|auMainTopCompCtrl.TYPE_SCREEN_SA_RANKING|Integer|false|true
+17:38:22.0 (10907756)|VARIABLE_SCOPE_BEGIN|[14]|auMainTopCompCtrl.TYPE_SCREEN_SA_REPORTS|Integer|false|true
+17:38:22.0 (10914270)|VARIABLE_SCOPE_BEGIN|[23]|auMainTopCompCtrl.TYPE_SCREEN_SA_TODO|Integer|false|true
+17:38:22.0 (10920986)|VARIABLE_SCOPE_BEGIN|[21]|auMainTopCompCtrl.TYPE_SCREEN_SA_USRSETTINGS|Integer|false|true
+17:38:22.0 (10928248)|VARIABLE_SCOPE_BEGIN|[4]|auMainTopCompCtrl.TYPE_SCREEN_STPD_EVENT|Integer|false|true
+17:38:22.0 (10934922)|VARIABLE_SCOPE_BEGIN|[6]|auMainTopCompCtrl.TYPE_SCREEN_STPD_SCREEN|Integer|false|true
+17:38:22.0 (10941929)|VARIABLE_SCOPE_BEGIN|[5]|auMainTopCompCtrl.TYPE_SCREEN_STPD_TIMELINE|Integer|false|true
+17:38:22.0 (10948762)|VARIABLE_SCOPE_BEGIN|[3]|auMainTopCompCtrl.TYPE_SCREEN_SWITCH|Integer|false|true
+17:38:22.0 (15477290)|VF_DESERIALIZE_VIEWSTATE_END
+17:38:22.0 (19400912)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (19435032)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1588
+17:38:22.0 (19453101)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:645
+17:38:22.0 (19460091)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:858
+17:38:22.0 (19466153)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:10
+17:38:22.0 (19515776)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.ERROR_CATEGORY_MISSING|"カテゴリが必須です。"
+17:38:22.0 (19522892)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:10
+17:38:22.0 (19530640)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.ERROR_COMMENT_MISSING|"コメントが必須です。"
+17:38:22.0 (19535981)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:10
+17:38:22.0 (19542389)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.ERROR_TITLE_MISSING|"タイトルが必須です。"
+17:38:22.0 (19546661)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:11
+17:38:22.0 (19553403)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.MESSAGE_ASK_FOR_VALIDATION|"承認申請を出しました。"
+17:38:22.0 (19557855)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:7
+17:38:22.0 (19564189)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.MESSAGE_PUBLISHED|"公開しました。"
+17:38:22.0 (19569128)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:38:22.0 (19575683)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SA_REPORT_STATE_NONE_LABEL|"未選択"
+17:38:22.0 (19580408)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:38:22.0 (19586787)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SA_REPORT_STATE_NONE_VALUE|" "
+17:38:22.0 (19591282)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:38:22.0 (19597907)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SEARCH_COUNT_AVERAGE_LABEL|"50件"
+17:38:22.0 (19602813)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:2
+17:38:22.0 (19609386)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SEARCH_COUNT_AVERAGE_VALUE|"50"
+17:38:22.0 (19614014)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:38:22.0 (19620335)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SEARCH_COUNT_FEW_LABEL|"20件"
+17:38:22.0 (19625004)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:2
+17:38:22.0 (19631410)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SEARCH_COUNT_FEW_VALUE|"20"
+17:38:22.0 (19636142)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:38:22.0 (19643597)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SEARCH_COUNT_LOT_LABEL|"100件"
+17:38:22.0 (19647829)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:38:22.0 (19654155)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SEARCH_COUNT_LOT_VALUE|"100"
+17:38:22.0 (19658239)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:38:22.0 (19665134)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_FAVORITES_LABEL|"いいね順"
+17:38:22.0 (19669590)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:38:22.0 (19676600)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_FAVORITES_VALUE|"いいね順"
+17:38:22.0 (19680741)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:38:22.0 (19687584)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_NEWS_LABEL|"NEW"
+17:38:22.0 (19692198)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:38:22.0 (19699087)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_NEWS_VALUE|"NEW"
+17:38:22.0 (19703474)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:38:22.0 (19710535)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_NONE_LABEL|" "
+17:38:22.0 (19714513)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:38:22.0 (19721130)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_NONE_VALUE|" "
+17:38:22.0 (19725679)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:38:22.0 (19735008)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_NUMBER_OF_VIEWS_LABEL|"閲覧数順"
+17:38:22.0 (19739178)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:38:22.0 (19746070)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_NUMBER_OF_VIEWS_VALUE|"閲覧数順"
+17:38:22.0 (19751016)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:38:22.0 (19758282)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_RELEASE_DATES_LABEL|"公開日時"
+17:38:22.0 (19762935)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:38:22.0 (19770409)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_RELEASE_DATES_VALUE|"公開日時"
+17:38:22.0 (19782862)|METHOD_ENTRY|[1]|01pN0000000aEUV|saReportCtrl.saReportCtrl()
+17:38:22.0 (19788975)|STATEMENT_EXECUTE|[1]
+17:38:22.0 (19793359)|STATEMENT_EXECUTE|[1]
+17:38:22.0 (19800656)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (19810154)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:5
+17:38:22.0 (19817829)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (19825844)|METHOD_EXIT|[1]|saReportCtrl
+17:38:22.0 (19923466)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (20182909)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (23413598)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (23513959)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (23593162)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (23662134)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (23870698)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (23945055)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (24022811)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (25454009)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (25651940)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (25663257)|VARIABLE_SCOPE_BEGIN|[36]|this|saReportCtrl|true|false
+17:38:22.0 (25997518)|VARIABLE_ASSIGNMENT|[36]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x527499ad","selectedReportName":"","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (26034021)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (26042065)|HEAP_ALLOCATE|[36]|Bytes:5
+17:38:22.0 (26048041)|STATEMENT_EXECUTE|[36]
+17:38:22.0 (26049878)|STATEMENT_EXECUTE|[36]
+17:38:22.0 (26610272)|VARIABLE_SCOPE_BEGIN|[7]|saConstantCmn.PUSH_NOTIFICATION_STATUS_NONE|String|false|true
+17:38:22.0 (26622167)|VARIABLE_SCOPE_BEGIN|[9]|saConstantCmn.PUSH_NOTIFICATION_STATUS_RESENDING|String|false|true
+17:38:22.0 (26629600)|VARIABLE_SCOPE_BEGIN|[8]|saConstantCmn.PUSH_NOTIFICATION_STATUS_SENDING|String|false|true
+17:38:22.0 (26636017)|VARIABLE_SCOPE_BEGIN|[10]|saConstantCmn.PUSH_NOTIFICATION_STATUS_SENT|String|false|true
+17:38:22.0 (26642483)|VARIABLE_SCOPE_BEGIN|[24]|saConstantCmn.SA_INQUIRY_TYPE_AU_HEARING|String|false|true
+17:38:22.0 (26649316)|VARIABLE_SCOPE_BEGIN|[22]|saConstantCmn.SA_INQUIRY_TYPE_DAILYREPORT|String|false|true
+17:38:22.0 (26655195)|VARIABLE_SCOPE_BEGIN|[23]|saConstantCmn.SA_INQUIRY_TYPE_HEARING|String|false|true
+17:38:22.0 (26661676)|VARIABLE_SCOPE_BEGIN|[15]|saConstantCmn.SA_MESSAGEDETAIL_TYPE_DONE|String|false|true
+17:38:22.0 (26668038)|VARIABLE_SCOPE_BEGIN|[14]|saConstantCmn.SA_MESSAGEDETAIL_TYPE_READ|String|false|true
+17:38:22.0 (26674124)|VARIABLE_SCOPE_BEGIN|[13]|saConstantCmn.SA_MESSAGEDETAIL_TYPE_SHARED|String|false|true
+17:38:22.0 (26680287)|VARIABLE_SCOPE_BEGIN|[18]|saConstantCmn.SA_MESSAGE_TYPE_MESSAGE|String|false|true
+17:38:22.0 (26686052)|VARIABLE_SCOPE_BEGIN|[19]|saConstantCmn.SA_MESSAGE_TYPE_TASK|String|false|true
+17:38:22.0 (26692014)|VARIABLE_SCOPE_BEGIN|[41]|saConstantCmn.SA_REPORT_DETAIL_TYPE_LIKE|String|false|true
+17:38:22.0 (26698106)|VARIABLE_SCOPE_BEGIN|[42]|saConstantCmn.SA_REPORT_DETAIL_TYPE_VERY_LIKE|String|false|true
+17:38:22.0 (26704298)|VARIABLE_SCOPE_BEGIN|[34]|saConstantCmn.SA_REPORT_REPLY_STATUS_REPLYSAVED|String|false|true
+17:38:22.0 (26710559)|VARIABLE_SCOPE_BEGIN|[35]|saConstantCmn.SA_REPORT_REPLY_STATUS_REPLYSENT|String|false|true
+17:38:22.0 (26723520)|VARIABLE_SCOPE_BEGIN|[33]|saConstantCmn.SA_REPORT_REPLY_STATUS_WAITINGREPLY|String|false|true
+17:38:22.0 (26731932)|VARIABLE_SCOPE_BEGIN|[39]|saConstantCmn.SA_REPORT_SOURCE_NEW|String|false|true
+17:38:22.0 (26739588)|VARIABLE_SCOPE_BEGIN|[38]|saConstantCmn.SA_REPORT_SOURCE_WEEKLY|String|false|true
+17:38:22.0 (26747355)|VARIABLE_SCOPE_BEGIN|[27]|saConstantCmn.SA_REPORT_STATE_DRAFT|String|false|true
+17:38:22.0 (26754977)|VARIABLE_SCOPE_BEGIN|[30]|saConstantCmn.SA_REPORT_STATE_PUBLISHED|String|false|true
+17:38:22.0 (26762277)|VARIABLE_SCOPE_BEGIN|[29]|saConstantCmn.SA_REPORT_STATE_REJECTED|String|false|true
+17:38:22.0 (26769741)|VARIABLE_SCOPE_BEGIN|[28]|saConstantCmn.SA_REPORT_STATE_WAITING_APPROVAL|String|false|true
+17:38:22.0 (26776520)|VARIABLE_SCOPE_BEGIN|[45]|saConstantCmn.SOURCE|String|false|true
+17:38:22.0 (26783443)|VARIABLE_SCOPE_BEGIN|[46]|saConstantCmn.SOURCE_PREVIEW|String|false|true
+17:38:22.0 (26793117)|HEAP_ALLOCATE|[36]|Bytes:4
+17:38:22.0 (26806773)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.PUSH_NOTIFICATION_STATUS_NONE|"NONE"
+17:38:22.0 (26811956)|HEAP_ALLOCATE|[36]|Bytes:9
+17:38:22.0 (26819057)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.PUSH_NOTIFICATION_STATUS_RESENDING|"RESENDING"
+17:38:22.0 (26823793)|HEAP_ALLOCATE|[36]|Bytes:7
+17:38:22.0 (26829682)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.PUSH_NOTIFICATION_STATUS_SENDING|"SENDING"
+17:38:22.0 (26833540)|HEAP_ALLOCATE|[36]|Bytes:4
+17:38:22.0 (26838950)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.PUSH_NOTIFICATION_STATUS_SENT|"SENT"
+17:38:22.0 (26842794)|HEAP_ALLOCATE|[36]|Bytes:10
+17:38:22.0 (26848579)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_INQUIRY_TYPE_AU_HEARING|"AU_HEARING"
+17:38:22.0 (26852637)|HEAP_ALLOCATE|[36]|Bytes:12
+17:38:22.0 (26858382)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_INQUIRY_TYPE_DAILYREPORT|"DAILY_REPORT"
+17:38:22.0 (26862090)|HEAP_ALLOCATE|[36]|Bytes:6
+17:38:22.0 (26867953)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_INQUIRY_TYPE_HEARING|"SURVEY"
+17:38:22.0 (26872005)|HEAP_ALLOCATE|[36]|Bytes:4
+17:38:22.0 (26878303)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_MESSAGEDETAIL_TYPE_DONE|"DONE"
+17:38:22.0 (26882486)|HEAP_ALLOCATE|[36]|Bytes:4
+17:38:22.0 (26888436)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_MESSAGEDETAIL_TYPE_READ|"READ"
+17:38:22.0 (26892453)|HEAP_ALLOCATE|[36]|Bytes:6
+17:38:22.0 (26898153)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_MESSAGEDETAIL_TYPE_SHARED|"SHARED"
+17:38:22.0 (26902419)|HEAP_ALLOCATE|[36]|Bytes:7
+17:38:22.0 (26908432)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_MESSAGE_TYPE_MESSAGE|"MESSAGE"
+17:38:22.0 (26912332)|HEAP_ALLOCATE|[36]|Bytes:4
+17:38:22.0 (26918040)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_MESSAGE_TYPE_TASK|"TASK"
+17:38:22.0 (26921846)|HEAP_ALLOCATE|[36]|Bytes:4
+17:38:22.0 (26927432)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_DETAIL_TYPE_LIKE|"LIKE"
+17:38:22.0 (26931178)|HEAP_ALLOCATE|[36]|Bytes:9
+17:38:22.0 (26937059)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_DETAIL_TYPE_VERY_LIKE|"VERY_LIKE"
+17:38:22.0 (26940911)|HEAP_ALLOCATE|[36]|Bytes:11
+17:38:22.0 (26947233)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_REPLY_STATUS_REPLYSAVED|"REPLY_SAVED"
+17:38:22.0 (26951308)|HEAP_ALLOCATE|[36]|Bytes:10
+17:38:22.0 (26957466)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_REPLY_STATUS_REPLYSENT|"REPLY_SENT"
+17:38:22.0 (26961253)|HEAP_ALLOCATE|[36]|Bytes:13
+17:38:22.0 (26968047)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_REPLY_STATUS_WAITINGREPLY|"WAITING_REPLY"
+17:38:22.0 (26971844)|HEAP_ALLOCATE|[36]|Bytes:3
+17:38:22.0 (26977746)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_SOURCE_NEW|"New"
+17:38:22.0 (26981482)|HEAP_ALLOCATE|[36]|Bytes:6
+17:38:22.0 (26987687)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_SOURCE_WEEKLY|"Weekly"
+17:38:22.0 (26991878)|HEAP_ALLOCATE|[36]|Bytes:5
+17:38:22.0 (26998242)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_STATE_DRAFT|"Draft"
+17:38:22.0 (27002324)|HEAP_ALLOCATE|[36]|Bytes:7
+17:38:22.0 (27009234)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_STATE_PUBLISHED|"Publish"
+17:38:22.0 (27013392)|HEAP_ALLOCATE|[36]|Bytes:6
+17:38:22.0 (27019672)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_STATE_REJECTED|"Remand"
+17:38:22.0 (27023941)|HEAP_ALLOCATE|[36]|Bytes:7
+17:38:22.0 (27030970)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_STATE_WAITING_APPROVAL|"Pending"
+17:38:22.0 (27034969)|HEAP_ALLOCATE|[36]|Bytes:3
+17:38:22.0 (27041080)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SOURCE|"src"
+17:38:22.0 (27045277)|HEAP_ALLOCATE|[36]|Bytes:7
+17:38:22.0 (27052242)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SOURCE_PREVIEW|"preview"
+17:38:22.0 (27087887)|METHOD_ENTRY|[4]|01pN0000000aH2z|saConstantCmn.saConstantCmn()
+17:38:22.0 (27093832)|STATEMENT_EXECUTE|[4]
+17:38:22.0 (27097279)|STATEMENT_EXECUTE|[4]
+17:38:22.0 (27104706)|HEAP_ALLOCATE|[36]|Bytes:5
+17:38:22.0 (27113019)|METHOD_EXIT|[4]|saConstantCmn
+17:38:22.0 (27120180)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (27268668)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (27310027)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (27317485)|VARIABLE_SCOPE_BEGIN|[37]|this|saReportCtrl|true|false
+17:38:22.0 (27511971)|VARIABLE_ASSIGNMENT|[37]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x527499ad","selectedReportName":"","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (27543324)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (27549907)|HEAP_ALLOCATE|[37]|Bytes:5
+17:38:22.0 (27554875)|STATEMENT_EXECUTE|[37]
+17:38:22.0 (27556596)|STATEMENT_EXECUTE|[37]
+17:38:22.0 (27560950)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (27689476)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (27727818)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (27734868)|VARIABLE_SCOPE_BEGIN|[39]|this|saReportCtrl|true|false
+17:38:22.0 (27925780)|VARIABLE_ASSIGNMENT|[39]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x527499ad","selectedReportName":"","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (27956412)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (27962566)|HEAP_ALLOCATE|[39]|Bytes:5
+17:38:22.0 (27967286)|STATEMENT_EXECUTE|[39]
+17:38:22.0 (27968954)|STATEMENT_EXECUTE|[39]
+17:38:22.0 (27973069)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (28186115)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (28225215)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (28232681)|VARIABLE_SCOPE_BEGIN|[38]|this|saReportCtrl|true|false
+17:38:22.0 (28423247)|VARIABLE_ASSIGNMENT|[38]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x527499ad","selectedReportName":"","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (28454118)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (28460286)|HEAP_ALLOCATE|[38]|Bytes:5
+17:38:22.0 (28465079)|STATEMENT_EXECUTE|[38]
+17:38:22.0 (28466837)|STATEMENT_EXECUTE|[38]
+17:38:22.0 (28471291)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (33979752)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (34638255)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (34696574)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (34736093)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (34772950)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (34809395)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (34846283)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (34882912)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (34918300)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (34953169)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (34989077)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (35025698)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (35061962)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (35111407)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (35193997)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (35232032)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (35268041)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (35328850)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (35401265)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (35446206)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (35489600)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (35529562)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (35572303)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (35610378)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (35653315)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (35708529)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (36948888)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (36993224)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (37030194)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (39424792)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (39470276)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (39506146)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (41837612)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (41878746)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (41916476)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (42074949)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (42124748)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (42264372)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (42300222)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (42333626)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (42570909)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (42598090)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (42612419)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.attachmentId|""|0x696c62c9
+17:38:22.0 (42647290)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (42660325)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (42672894)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.selectedReportName|""|0x696c62c9
+17:38:22.0 (42697735)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (42709165)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (42718568)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.selectedCategoryName|""|0x696c62c9
+17:38:22.0 (42741118)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (42752069)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (42760224)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.messageError|""|0x696c62c9
+17:38:22.0 (42782080)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (42792963)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (42800853)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.messageSubmissionComplete|""|0x696c62c9
+17:38:22.0 (42822749)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (42833138)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (42839937)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchCategory|""|0x696c62c9
+17:38:22.0 (42860702)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (42871253)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (42877990)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchCount|""|0x696c62c9
+17:38:22.0 (42898957)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (42909335)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (42915689)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchSort|""|0x696c62c9
+17:38:22.0 (42936540)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (42947001)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (42955006)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.mySearchCount|""|0x696c62c9
+17:38:22.0 (42975610)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (42985773)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (42993437)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.mySearchState|""|0x696c62c9
+17:38:22.0 (43014667)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (43025749)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (43033648)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.pendingCount|""|0x696c62c9
+17:38:22.0 (43055518)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (43066166)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (43080250)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.remandCategory|""|0x696c62c9
+17:38:22.0 (43102573)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (43113291)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (43121418)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.remandProcess|""|0x696c62c9
+17:38:22.0 (43153389)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (43221899)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (43234633)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (43244148)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchKeywords|""|0x696c62c9
+17:38:22.0 (43267497)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (43278621)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (43285042)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchDateStart|""|0x696c62c9
+17:38:22.0 (43305362)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (43315706)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (43321919)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchDateEnd|""|0x696c62c9
+17:38:22.0 (43343467)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (43353435)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:38:22.0 (43356840)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (43363381)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchCategory|" "|0x696c62c9
+17:38:22.0 (43384872)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (43394912)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:38:22.0 (43398632)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (43404382)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchRole1|" "|0x696c62c9
+17:38:22.0 (43425406)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (43435794)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:38:22.0 (43439295)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (43445554)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchRole2|" "|0x696c62c9
+17:38:22.0 (43472539)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (43483189)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:38:22.0 (43486775)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (43492552)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchRole3|" "|0x696c62c9
+17:38:22.0 (43513402)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (43523500)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:38:22.0 (43526536)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (43532609)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchSort|" "|0x696c62c9
+17:38:22.0 (43553726)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (43563714)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:2
+17:38:22.0 (43567571)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (43576635)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchCount|"20"|0x696c62c9
+17:38:22.0 (43622225)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (44997711)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (45134143)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (45185296)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (45237582)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (45456182)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (45473997)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (45485519)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.createCategory|null|0x696c62c9
+17:38:22.0 (45512354)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (45524045)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (45531619)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.createProcess|null|0x696c62c9
+17:38:22.0 (45563307)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (45961077)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (45998546)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (46005395)|VARIABLE_SCOPE_BEGIN|[36]|this|saReportCtrl|true|false
+17:38:22.0 (46214842)|VARIABLE_ASSIGNMENT|[36]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchCount":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","mySearchState":"","newCommentValue":"","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x527499ad","selectedReportName":"","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (46249763)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (46257754)|HEAP_ALLOCATE|[36]|Bytes:5
+17:38:22.0 (46262834)|STATEMENT_EXECUTE|[36]
+17:38:22.0 (46264716)|STATEMENT_EXECUTE|[36]
+17:38:22.0 (46269155)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (46379361)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (46413710)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (46419877)|VARIABLE_SCOPE_BEGIN|[37]|this|saReportCtrl|true|false
+17:38:22.0 (46612370)|VARIABLE_ASSIGNMENT|[37]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchCount":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","mySearchState":"","newCommentValue":"","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x527499ad","selectedReportName":"","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (46644689)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (46651356)|HEAP_ALLOCATE|[37]|Bytes:5
+17:38:22.0 (46656261)|STATEMENT_EXECUTE|[37]
+17:38:22.0 (46658065)|STATEMENT_EXECUTE|[37]
+17:38:22.0 (46661681)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (46764929)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (46798608)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (46804561)|VARIABLE_SCOPE_BEGIN|[39]|this|saReportCtrl|true|false
+17:38:22.0 (46994152)|VARIABLE_ASSIGNMENT|[39]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchCount":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","mySearchState":"","newCommentValue":"","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x527499ad","selectedReportName":"","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (47024908)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (47031930)|HEAP_ALLOCATE|[39]|Bytes:5
+17:38:22.0 (47036386)|STATEMENT_EXECUTE|[39]
+17:38:22.0 (47038038)|STATEMENT_EXECUTE|[39]
+17:38:22.0 (47041546)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (47160321)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (47193299)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (47199867)|VARIABLE_SCOPE_BEGIN|[38]|this|saReportCtrl|true|false
+17:38:22.0 (47389855)|VARIABLE_ASSIGNMENT|[38]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchCount":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","mySearchState":"","newCommentValue":"","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x527499ad","selectedReportName":"","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (47421171)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (47427831)|HEAP_ALLOCATE|[38]|Bytes:5
+17:38:22.0 (47432732)|STATEMENT_EXECUTE|[38]
+17:38:22.0 (47434337)|STATEMENT_EXECUTE|[38]
+17:38:22.0 (47437809)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (49358222)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (49377323)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (49390133)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.mySearchState|null|0x696c62c9
+17:38:22.0 (49419131)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (49431585)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (49440496)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.mySearchCount|null|0x696c62c9
+17:38:22.0 (49470613)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (49867406)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (49903690)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (49910075)|VARIABLE_SCOPE_BEGIN|[36]|this|saReportCtrl|true|false
+17:38:22.0 (50109258)|VARIABLE_ASSIGNMENT|[36]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x527499ad","selectedReportName":"","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (50142683)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (50150066)|HEAP_ALLOCATE|[36]|Bytes:5
+17:38:22.0 (50155033)|STATEMENT_EXECUTE|[36]
+17:38:22.0 (50156921)|STATEMENT_EXECUTE|[36]
+17:38:22.0 (50161053)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (50263390)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (50296331)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (50302063)|VARIABLE_SCOPE_BEGIN|[37]|this|saReportCtrl|true|false
+17:38:22.0 (50490960)|VARIABLE_ASSIGNMENT|[37]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x527499ad","selectedReportName":"","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (50521668)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (50528639)|HEAP_ALLOCATE|[37]|Bytes:5
+17:38:22.0 (50533621)|STATEMENT_EXECUTE|[37]
+17:38:22.0 (50535254)|STATEMENT_EXECUTE|[37]
+17:38:22.0 (50539097)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (50636705)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (50668865)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (50674615)|VARIABLE_SCOPE_BEGIN|[38]|this|saReportCtrl|true|false
+17:38:22.0 (50862755)|VARIABLE_ASSIGNMENT|[38]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x527499ad","selectedReportName":"","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (50892813)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (50898710)|HEAP_ALLOCATE|[38]|Bytes:5
+17:38:22.0 (50903324)|STATEMENT_EXECUTE|[38]
+17:38:22.0 (50904907)|STATEMENT_EXECUTE|[38]
+17:38:22.0 (50908441)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (51007319)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (51039167)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (51045134)|VARIABLE_SCOPE_BEGIN|[39]|this|saReportCtrl|true|false
+17:38:22.0 (51234639)|VARIABLE_ASSIGNMENT|[39]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x527499ad","selectedReportName":"","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (51266032)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (51272602)|HEAP_ALLOCATE|[39]|Bytes:5
+17:38:22.0 (51277029)|STATEMENT_EXECUTE|[39]
+17:38:22.0 (51278634)|STATEMENT_EXECUTE|[39]
+17:38:22.0 (51282131)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (53156755)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (53174976)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (53186378)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.draftCategory|null|0x696c62c9
+17:38:22.0 (53214208)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (53225571)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (53233317)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.draftProcess|null|0x696c62c9
+17:38:22.0 (53281473)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (53404116)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (53420279)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (53432604)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.newCommentValue|""|0x696c62c9
+17:38:22.0 (53469792)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (53481578)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (53491114)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.remandCategory|null|0x696c62c9
+17:38:22.0 (53517582)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (53529330)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (53538513)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.remandProcess|null|0x696c62c9
+17:38:22.0 (53585597)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (53697344)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (53711773)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (53722680)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.pendingCount|null|0x696c62c9
+17:38:22.0 (53754698)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (53886055)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (53901723)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:18
+17:38:22.0 (53906293)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (53919926)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.selectedReportName|"SA_Report-00000074"|0x696c62c9
+17:38:22.0 (54066499)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (54087596)|VARIABLE_SCOPE_BEGIN|[2110]|this|saReportCtrl|true|false
+17:38:22.0 (54283269)|VARIABLE_ASSIGNMENT|[2110]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x527499ad","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (54315150)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (54322585)|HEAP_ALLOCATE|[2112]|Bytes:5
+17:38:22.0 (54328439)|STATEMENT_EXECUTE|[2110]
+17:38:22.0 (54330410)|STATEMENT_EXECUTE|[2112]
+17:38:22.0 (54333472)|HEAP_ALLOCATE|[2112]|Bytes:22
+17:38:22.0 (54379169)|USER_DEBUG|[2112]|DEBUG|Run: setSelectedReport
+17:38:22.0 (54391310)|STATEMENT_EXECUTE|[2114]
+17:38:22.0 (54435341)|METHOD_ENTRY|[2114]|01pN0000000aEUV|saReportCtrl.initSelectedReportDetails()
+17:38:22.0 (54463951)|VARIABLE_SCOPE_BEGIN|[2261]|this|saReportCtrl|true|false
+17:38:22.0 (54657219)|VARIABLE_ASSIGNMENT|[2261]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x527499ad","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (54688453)|HEAP_ALLOCATE|[2263]|Bytes:5
+17:38:22.0 (54694371)|STATEMENT_EXECUTE|[2261]
+17:38:22.0 (54696312)|STATEMENT_EXECUTE|[2263]
+17:38:22.0 (54699257)|HEAP_ALLOCATE|[2263]|Bytes:30
+17:38:22.0 (54716614)|USER_DEBUG|[2263]|DEBUG|Run: initSelectedReportDetails
+17:38:22.0 (54724913)|STATEMENT_EXECUTE|[2266]
+17:38:22.0 (54727631)|HEAP_ALLOCATE|[2266]|Bytes:97
+17:38:22.0 (54768311)|HEAP_ALLOCATE|[2266]|Bytes:89
+17:38:22.0 (54779137)|SYSTEM_METHOD_ENTRY|[1]|UserInfo.UserInfo()
+17:38:22.0 (54783049)|STATEMENT_EXECUTE|[1]
+17:38:22.0 (54788040)|SYSTEM_METHOD_EXIT|[1]|UserInfo
+17:38:22.0 (54798869)|METHOD_ENTRY|[2266]||System.UserInfo.getUserId()
+17:38:22.0 (54832942)|METHOD_EXIT|[2266]||System.UserInfo.getUserId()
+17:38:22.0 (54839343)|HEAP_ALLOCATE|[2266]|Bytes:31
+17:38:22.0 (55032624)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x527499ad","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (55068502)|HEAP_ALLOCATE|[2266]|Bytes:22
+17:38:22.0 (55101636)|HEAP_ALLOCATE|[2266]|Bytes:186
+17:38:22.0 (55107804)|VARIABLE_SCOPE_BEGIN|[2266]|hasSeenQuery|String|false|false
+17:38:22.0 (55121741)|VARIABLE_ASSIGNMENT|[2266]|hasSeenQuery|"Select CreatedBy__c, (166 more) ..."
+17:38:22.0 (55126279)|STATEMENT_EXECUTE|[2267]
+17:38:22.0 (55128805)|HEAP_ALLOCATE|[2267]|Bytes:17
+17:38:22.0 (55137305)|HEAP_ALLOCATE|[2267]|Bytes:203
+17:38:22.0 (55153615)|USER_DEBUG|[2267]|DEBUG|Has seen query : Select CreatedBy__c, ConcernedReport__r.Name, Type__c FROM saReportDetail__c WHERE CreatedBy__c='0056F000006PtYlQAK' And ConcernedReport__r.Name='SA_Report-00000074' And Type__c = 'READ'
+17:38:22.0 (55162253)|STATEMENT_EXECUTE|[2268]
+17:38:22.0 (55653643)|SOQL_EXECUTE_BEGIN|[2268]|Aggregations:0|Select CreatedBy__c, ConcernedReport__r.Name, Type__c FROM saReportDetail__c WHERE CreatedBy__c='0056F000006PtYlQAK' And ConcernedReport__r.Name='SA_Report-00000074' And Type__c = 'READ'
+17:38:22.0 (76595239)|SOQL_EXECUTE_END|[2268]|Rows:1
+17:38:22.0 (76620658)|HEAP_ALLOCATE|[2268]|Bytes:8
+17:38:22.0 (76643512)|HEAP_ALLOCATE|[2268]|Bytes:194
+17:38:22.0 (76683138)|HEAP_ALLOCATE|[2268]|Bytes:8
+17:38:22.0 (76703853)|VARIABLE_SCOPE_BEGIN|[2268]|currentUserHasSeenReport|List<saReportDetail__c>|true|false
+17:38:22.0 (76743651)|VARIABLE_ASSIGNMENT|[2268]|currentUserHasSeenReport|[{"CreatedBy__c":"0056F000006PtYlQAK","ConcernedReport__c":"a0HN0000008HF9CMAW","Type__c":"READ","Id":"a0GN000000CL6ltMAD","ConcernedReport__r":{"Name":"SA_Report-00000074","Id":"a0HN0000008HF9CMAW"}}]|0x38712a43
+17:38:22.0 (76752958)|STATEMENT_EXECUTE|[2269]
+17:38:22.0 (76757639)|HEAP_ALLOCATE|[2269]|Bytes:16
+17:38:22.0 (76861794)|HEAP_ALLOCATE|[2269]|Bytes:129
+17:38:22.0 (76882181)|HEAP_ALLOCATE|[2269]|Bytes:145
+17:38:22.0 (76894779)|USER_DEBUG|[2269]|DEBUG|List of Views : (saReportDetail__c:{CreatedBy__c=0056F000006PtYlQAK, ConcernedReport__c=a0HN0000008HF9CMAW, Type__c=READ, Id=a0GN000000CL6ltMAD})
+17:38:22.0 (76964416)|STATEMENT_EXECUTE|[2270]
+17:38:22.0 (76966662)|STATEMENT_EXECUTE|[2280]
+17:38:22.0 (76969987)|HEAP_ALLOCATE|[2280]|Bytes:20
+17:38:22.0 (76986111)|USER_DEBUG|[2280]|DEBUG|Init Selected Report
+17:38:22.0 (76993463)|STATEMENT_EXECUTE|[2284]
+17:38:22.0 (76996276)|HEAP_ALLOCATE|[2284]|Bytes:271
+17:38:22.0 (77214180)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x527499ad","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (77247597)|HEAP_ALLOCATE|[2284]|Bytes:1
+17:38:22.0 (77260305)|HEAP_ALLOCATE|[2284]|Bytes:290
+17:38:22.0 (77265402)|VARIABLE_SCOPE_BEGIN|[2284]|queryStr|String|false|false
+17:38:22.0 (77278775)|VARIABLE_ASSIGNMENT|[2284]|queryStr|" SELECT Id, Name, Su (270 more) ..."
+17:38:22.0 (77283454)|STATEMENT_EXECUTE|[2285]
+17:38:22.0 (79027411)|SOQL_EXECUTE_BEGIN|[2285]|Aggregations:0| SELECT Id, Name, Subject__c, toLabel(Category__c), Process__c, Report_body__c, CreatedBy__r.DisplayedUsernameFormula__c, CreatedDate__c, AvailabilityDate__c, ApprovalRequestDatetime__c, State__C, IsNew__c, NbLike__c, NbView__c, NbCopy__c  FROM saReport__c WHERE Name = 'SA_Report-00000074'
+17:38:22.0 (88814861)|SOQL_EXECUTE_END|[2285]|Rows:1
+17:38:22.0 (88835860)|HEAP_ALLOCATE|[2285]|Bytes:8
+17:38:22.0 (88852496)|HEAP_ALLOCATE|[2285]|Bytes:454
+17:38:22.0 (88879338)|HEAP_ALLOCATE|[2285]|Bytes:8
+17:38:22.0 (88895140)|VARIABLE_SCOPE_BEGIN|[2285]|selectedReportList|List<saReport__c>|true|false
+17:38:22.0 (88962173)|VARIABLE_ASSIGNMENT|[2285]|selectedReportList|[{"Id":"a0HN0000008HF9CMAW","Name":"SA_Report-00000074","Subject__c":"fff","CreatedBy__c":"0056F000006PtYlQAK","CreatedDate__c":"2018-03-16T20:15:22.000Z","AvailabilityDate__c":"2018-03-16T20:15:22.000Z","ApprovalRequestDatetime__c":"2018-03-16T20:15:32.000Z","State__c":"Publish","IsNew__c":false,"NbLike__c":0,"NbView__c":1,"NbCopy__c":0,"CreatedBy__r":{"DisplayedUsernameFormula__c":"GW Admin","Id":"0056F000006PtYlQAK"}}]|0x45a69f0e
+17:38:22.0 (88973600)|STATEMENT_EXECUTE|[2287]
+17:38:22.0 (89040898)|HEAP_ALLOCATE|[2287]|Bytes:56
+17:38:22.0 (89264500)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x527499ad","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (89339579)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0HN0000008HF9CMAW","Name":"SA_Report-00000074","Subject__c":"fff","CreatedBy__c":"0056F000006PtYlQAK","CreatedDate__c":"2018-03-16T20:15:22.000Z","AvailabilityDate__c":"2018-03-16T20:15:22.000Z","ApprovalRequestDatetime__c":"2018-03-16T20:15:32.000Z","State__c":"Publish","IsNew__c":false,"NbLike__c":0,"NbView__c":1,"NbCopy__c":0,"CreatedBy__r":{"DisplayedUsernameFormula__c":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x3f357bb
+17:38:22.0 (89390915)|VARIABLE_ASSIGNMENT|[72]|this.selectedReport|{"Id":"a0HN0000008HF9CMAW","Name":"SA_Report-00000074","Subject__c":"fff","CreatedBy__c":"0056F000006PtYlQAK","CreatedDate__c":"2018-03-16T20:15:22.000Z","AvailabilityDate__c":"2018-03-16T20:15:22.000Z","ApprovalRequestDatetime__c":"2018-03-16T20:15:32.000Z","State__c":"Publish","IsNew__c":false,"NbLike__c":0,"NbView__c":1,"NbCopy__c":0,"CreatedBy__r":{"DisplayedUsernameFormula__c":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x696c62c9
+17:38:22.0 (89406831)|STATEMENT_EXECUTE|[2290]
+17:38:22.0 (89447941)|METHOD_ENTRY|[2290]|01pN0000000aEUV|saReportCtrl.getReportDetailPageViews()
+17:38:22.0 (89473912)|VARIABLE_SCOPE_BEGIN|[2308]|this|saReportCtrl|true|false
+17:38:22.0 (89656261)|VARIABLE_ASSIGNMENT|[2308]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x3f357bb","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (89693894)|HEAP_ALLOCATE|[2310]|Bytes:5
+17:38:22.0 (89699796)|STATEMENT_EXECUTE|[2308]
+17:38:22.0 (89701751)|STATEMENT_EXECUTE|[2310]
+17:38:22.0 (89705071)|HEAP_ALLOCATE|[2310]|Bytes:29
+17:38:22.0 (89725383)|USER_DEBUG|[2310]|DEBUG|Run: getReportDetailPageViews
+17:38:22.0 (89734421)|STATEMENT_EXECUTE|[2313]
+17:38:22.0 (89737168)|HEAP_ALLOCATE|[2313]|Bytes:166
+17:38:22.0 (89932602)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x3f357bb","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (89964959)|HEAP_ALLOCATE|[2313]|Bytes:86
+17:38:22.0 (89975984)|HEAP_ALLOCATE|[2313]|Bytes:270
+17:38:22.0 (89981436)|VARIABLE_SCOPE_BEGIN|[2313]|queryStr|String|false|false
+17:38:22.0 (89993010)|VARIABLE_ASSIGNMENT|[2313]|queryStr|" SELECT Name, Create (250 more) ..."
+17:38:22.0 (89997593)|STATEMENT_EXECUTE|[2314]
+17:38:22.0 (89999690)|HEAP_ALLOCATE|[2314]|Bytes:19
+17:38:22.0 (90006040)|HEAP_ALLOCATE|[2314]|Bytes:289
+17:38:22.0 (90022174)|USER_DEBUG|[2314]|DEBUG|Requete Get Good :  SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000074' And (Type__c='LIKE' OR Type__c='VERY_LIKE') ORDER BY CreatedDate__c Desc NULLS LAST 
+17:38:22.0 (90031352)|STATEMENT_EXECUTE|[2315]
+17:38:22.0 (90391679)|SOQL_EXECUTE_BEGIN|[2315]|Aggregations:0| SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000074' And (Type__c='LIKE' OR Type__c='VERY_LIKE') ORDER BY CreatedDate__c Desc NULLS LAST 
+17:38:22.0 (94593174)|SOQL_EXECUTE_END|[2315]|Rows:0
+17:38:22.0 (94616099)|HEAP_ALLOCATE|[2315]|Bytes:4
+17:38:22.0 (94629183)|HEAP_ALLOCATE|[2315]|Bytes:0
+17:38:22.0 (94654836)|HEAP_ALLOCATE|[2315]|Bytes:4
+17:38:22.0 (94874324)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x4b8a2900","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x3f357bb","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (94908108)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|[]|0x44bf43d2
+17:38:22.0 (94924766)|VARIABLE_ASSIGNMENT|[163]|this.reportGoodViews|[]|0x696c62c9
+17:38:22.0 (94935410)|STATEMENT_EXECUTE|[2318]
+17:38:22.0 (95128043)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x3f357bb","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (95160796)|HEAP_ALLOCATE|[2318]|Bytes:61
+17:38:22.0 (95170030)|HEAP_ALLOCATE|[2318]|Bytes:245
+17:38:22.0 (95180255)|VARIABLE_ASSIGNMENT|[2318]|queryStr|" SELECT Name, Create (225 more) ..."
+17:38:22.0 (95185340)|STATEMENT_EXECUTE|[2319]
+17:38:22.0 (95187855)|HEAP_ALLOCATE|[2319]|Bytes:18
+17:38:22.0 (95193414)|HEAP_ALLOCATE|[2319]|Bytes:263
+17:38:22.0 (95212048)|USER_DEBUG|[2319]|DEBUG|Requete Get Bad :  SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000074' And Type__c='COPY' ORDER BY CreatedDate__c Desc NULLS LAST 
+17:38:22.0 (95222111)|STATEMENT_EXECUTE|[2320]
+17:38:22.0 (95520266)|SOQL_EXECUTE_BEGIN|[2320]|Aggregations:0| SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000074' And Type__c='COPY' ORDER BY CreatedDate__c Desc NULLS LAST 
+17:38:22.0 (99477888)|SOQL_EXECUTE_END|[2320]|Rows:0
+17:38:22.0 (99500455)|HEAP_ALLOCATE|[2320]|Bytes:4
+17:38:22.0 (99512967)|HEAP_ALLOCATE|[2320]|Bytes:0
+17:38:22.0 (99537482)|HEAP_ALLOCATE|[2320]|Bytes:4
+17:38:22.0 (99757409)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x1553c824","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x3f357bb","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (99804835)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|[]|0x411d9a7c
+17:38:22.0 (99822291)|VARIABLE_ASSIGNMENT|[164]|this.reportManagedViews|[]|0x696c62c9
+17:38:22.0 (99840095)|METHOD_EXIT|[2290]|01pN0000000aEUV|saReportCtrl.getReportDetailPageViews()
+17:38:22.0 (99846544)|STATEMENT_EXECUTE|[2293]
+17:38:22.0 (99882368)|METHOD_ENTRY|[2293]|01pN0000000aEUV|saReportCtrl.getReportDetailPageComment()
+17:38:22.0 (99919564)|VARIABLE_SCOPE_BEGIN|[2329]|this|saReportCtrl|true|false
+17:38:22.0 (100117800)|VARIABLE_ASSIGNMENT|[2329]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x411d9a7c","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x3f357bb","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (100153574)|HEAP_ALLOCATE|[2331]|Bytes:5
+17:38:22.0 (100159966)|STATEMENT_EXECUTE|[2329]
+17:38:22.0 (100161872)|STATEMENT_EXECUTE|[2331]
+17:38:22.0 (100165249)|HEAP_ALLOCATE|[2331]|Bytes:31
+17:38:22.0 (100186332)|USER_DEBUG|[2331]|DEBUG|Run: getReportDetailPageComment
+17:38:22.0 (100195329)|STATEMENT_EXECUTE|[2334]
+17:38:22.0 (100389244)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x411d9a7c","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x3f357bb","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (100421382)|HEAP_ALLOCATE|[2334]|Bytes:66
+17:38:22.0 (100430229)|HEAP_ALLOCATE|[2334]|Bytes:250
+17:38:22.0 (100435627)|VARIABLE_SCOPE_BEGIN|[2334]|queryStr|String|false|false
+17:38:22.0 (100447382)|VARIABLE_ASSIGNMENT|[2334]|queryStr|" SELECT Name, Create (230 more) ..."
+17:38:22.0 (100452557)|STATEMENT_EXECUTE|[2335]
+17:38:22.0 (100753622)|SOQL_EXECUTE_BEGIN|[2335]|Aggregations:0| SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000074' And Type__c LIKE '%コメント%' ORDER BY CreatedDate__c Asc NULLS LAST
+17:38:22.0 (104807105)|SOQL_EXECUTE_END|[2335]|Rows:0
+17:38:22.0 (104829409)|HEAP_ALLOCATE|[2335]|Bytes:4
+17:38:22.0 (104842504)|HEAP_ALLOCATE|[2335]|Bytes:0
+17:38:22.0 (104872776)|HEAP_ALLOCATE|[2335]|Bytes:4
+17:38:22.0 (105094974)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x35d8994e","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x411d9a7c","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x3f357bb","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (105128471)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|[]|0x6c5bc6f7
+17:38:22.0 (105144994)|VARIABLE_ASSIGNMENT|[165]|this.reportComments|[]|0x696c62c9
+17:38:22.0 (105155994)|STATEMENT_EXECUTE|[2337]
+17:38:22.0 (105160163)|HEAP_ALLOCATE|[2337]|Bytes:281
+17:38:22.0 (105183705)|HEAP_ALLOCATE|[2337]|Bytes:4
+17:38:22.0 (105198409)|HEAP_ALLOCATE|[2337]|Bytes:7
+17:38:22.0 (105398954)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x6c5bc6f7","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x411d9a7c","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x3f357bb","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (105772094)|SOQL_EXECUTE_BEGIN|[2337]|Aggregations:0|SELECT Id, Name, Subject__c, Category__c, Process__c, Report_body__c, CreatedBy__c, CreatedBy__r.DisplayedUsernameFormula__c, CreatedDate__c, AvailabilityDate__c, ApprovalRequestDatetime__c, State__c, IsNew__c, NbLike__c, NbView__c, NbCopy__c FROM saReport__c WHERE Name = :tmpVar1
+17:38:22.0 (112228256)|SOQL_EXECUTE_END|[2337]|Rows:1
+17:38:22.0 (112248652)|HEAP_ALLOCATE|[2337]|Bytes:8
+17:38:22.0 (112264983)|HEAP_ALLOCATE|[2337]|Bytes:454
+17:38:22.0 (112290082)|HEAP_ALLOCATE|[2337]|Bytes:8
+17:38:22.0 (112310973)|HEAP_ALLOCATE|[2342]|Bytes:56
+17:38:22.0 (112526530)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x6c5bc6f7","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x411d9a7c","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x3f357bb","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (112596490)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0HN0000008HF9CMAW","Name":"SA_Report-00000074","Subject__c":"fff","CreatedBy__c":"0056F000006PtYlQAK","CreatedDate__c":"2018-03-16T20:15:22.000Z","AvailabilityDate__c":"2018-03-16T20:15:22.000Z","ApprovalRequestDatetime__c":"2018-03-16T20:15:32.000Z","State__c":"Publish","IsNew__c":false,"NbLike__c":0,"NbView__c":1,"NbCopy__c":0,"CreatedBy__r":{"DisplayedUsernameFormula__c":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x4456b6ad
+17:38:22.0 (112642390)|VARIABLE_ASSIGNMENT|[72]|this.selectedReport|{"Id":"a0HN0000008HF9CMAW","Name":"SA_Report-00000074","Subject__c":"fff","CreatedBy__c":"0056F000006PtYlQAK","CreatedDate__c":"2018-03-16T20:15:22.000Z","AvailabilityDate__c":"2018-03-16T20:15:22.000Z","ApprovalRequestDatetime__c":"2018-03-16T20:15:32.000Z","State__c":"Publish","IsNew__c":false,"NbLike__c":0,"NbView__c":1,"NbCopy__c":0,"CreatedBy__r":{"DisplayedUsernameFormula__c":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x696c62c9
+17:38:22.0 (112662794)|METHOD_EXIT|[2293]|01pN0000000aEUV|saReportCtrl.getReportDetailPageComment()
+17:38:22.0 (112669150)|STATEMENT_EXECUTE|[2296]
+17:38:22.0 (112889946)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x6c5bc6f7","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x411d9a7c","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x4456b6ad","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (112920324)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|""
+17:38:22.0 (112933727)|VARIABLE_ASSIGNMENT|[166]|this.newCommentValue|""|0x696c62c9
+17:38:22.0 (112942996)|STATEMENT_EXECUTE|[2299]
+17:38:22.0 (112968756)|METHOD_ENTRY|[2299]|01pN0000000aEUV|saReportCtrl.initSelectedViewButton()
+17:38:22.0 (112988346)|VARIABLE_SCOPE_BEGIN|[2351]|this|saReportCtrl|true|false
+17:38:22.0 (113179286)|VARIABLE_ASSIGNMENT|[2351]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x6c5bc6f7","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x411d9a7c","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x4456b6ad","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (113214705)|HEAP_ALLOCATE|[2353]|Bytes:5
+17:38:22.0 (113220858)|STATEMENT_EXECUTE|[2351]
+17:38:22.0 (113222899)|STATEMENT_EXECUTE|[2353]
+17:38:22.0 (113225557)|HEAP_ALLOCATE|[2353]|Bytes:27
+17:38:22.0 (113246163)|USER_DEBUG|[2353]|DEBUG|Run: initSelectedViewButton
+17:38:22.0 (113255003)|STATEMENT_EXECUTE|[2355]
+17:38:22.0 (113470878)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x6c5bc6f7","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x411d9a7c","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x4456b6ad","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (113502739)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|false
+17:38:22.0 (113510216)|HEAP_ALLOCATE|[78]|Bytes:5
+17:38:22.0 (113520060)|VARIABLE_ASSIGNMENT|[78]|this.isGoodSelected|false|0x696c62c9
+17:38:22.0 (113529178)|STATEMENT_EXECUTE|[2356]
+17:38:22.0 (113724885)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x6c5bc6f7","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x411d9a7c","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x4456b6ad","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (113754826)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|false
+17:38:22.0 (113760475)|HEAP_ALLOCATE|[79]|Bytes:5
+17:38:22.0 (113768996)|VARIABLE_ASSIGNMENT|[79]|this.isVeryGoodSelected|false|0x696c62c9
+17:38:22.0 (113777464)|STATEMENT_EXECUTE|[2357]
+17:38:22.0 (113968995)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x6c5bc6f7","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x411d9a7c","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x4456b6ad","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (113998697)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|false
+17:38:22.0 (114004523)|HEAP_ALLOCATE|[80]|Bytes:5
+17:38:22.0 (114012833)|VARIABLE_ASSIGNMENT|[80]|this.isCopySelected|false|0x696c62c9
+17:38:22.0 (114020771)|STATEMENT_EXECUTE|[2360]
+17:38:22.0 (114202558)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x6c5bc6f7","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x411d9a7c","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x4456b6ad","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (114234758)|HEAP_ALLOCATE|[2360]|Bytes:20
+17:38:22.0 (114246994)|METHOD_ENTRY|[2360]||System.UserInfo.getUserId()
+17:38:22.0 (114265567)|METHOD_EXIT|[2360]||System.UserInfo.getUserId()
+17:38:22.0 (114269929)|HEAP_ALLOCATE|[2360]|Bytes:44
+17:38:22.0 (114280694)|HEAP_ALLOCATE|[2360]|Bytes:266
+17:38:22.0 (114286347)|VARIABLE_SCOPE_BEGIN|[2360]|queryStr|String|false|false
+17:38:22.0 (114298431)|VARIABLE_ASSIGNMENT|[2360]|queryStr|" SELECT Name, Create (246 more) ..."
+17:38:22.0 (114303423)|STATEMENT_EXECUTE|[2361]
+17:38:22.0 (114305857)|HEAP_ALLOCATE|[2361]|Bytes:25
+17:38:22.0 (114312205)|HEAP_ALLOCATE|[2361]|Bytes:291
+17:38:22.0 (114333627)|USER_DEBUG|[2361]|DEBUG|Requete Get Engagement :  SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000074' And CreatedBy__c='0056F000006PtYlQAK' And Type__c!='COMMENT' And Type__c!='READ'
+17:38:22.0 (114343661)|STATEMENT_EXECUTE|[2362]
+17:38:22.0 (114660989)|SOQL_EXECUTE_BEGIN|[2362]|Aggregations:0| SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000074' And CreatedBy__c='0056F000006PtYlQAK' And Type__c!='COMMENT' And Type__c!='READ'
+17:38:22.0 (119387566)|SOQL_EXECUTE_END|[2362]|Rows:0
+17:38:22.0 (119410625)|HEAP_ALLOCATE|[2362]|Bytes:4
+17:38:22.0 (119423693)|HEAP_ALLOCATE|[2362]|Bytes:0
+17:38:22.0 (119448467)|HEAP_ALLOCATE|[2362]|Bytes:4
+17:38:22.0 (119463572)|VARIABLE_SCOPE_BEGIN|[2362]|listOfViews|List<saReportDetail__c>|true|false
+17:38:22.0 (119479292)|VARIABLE_ASSIGNMENT|[2362]|listOfViews|[]|0x2da5d4e7
+17:38:22.0 (119485731)|STATEMENT_EXECUTE|[2364]
+17:38:22.0 (119489749)|HEAP_ALLOCATE|[2364]|Bytes:19
+17:38:22.0 (119499275)|HEAP_ALLOCATE|[2364]|Bytes:285
+17:38:22.0 (119521817)|USER_DEBUG|[2364]|DEBUG|Get View request :  SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000074' And CreatedBy__c='0056F000006PtYlQAK' And Type__c!='COMMENT' And Type__c!='READ'
+17:38:22.0 (119532187)|STATEMENT_EXECUTE|[2365]
+17:38:22.0 (119535032)|HEAP_ALLOCATE|[2365]|Bytes:18
+17:38:22.0 (119574159)|HEAP_ALLOCATE|[2365]|Bytes:2
+17:38:22.0 (119586428)|HEAP_ALLOCATE|[2365]|Bytes:20
+17:38:22.0 (119594698)|USER_DEBUG|[2365]|DEBUG|Get View result : ()
+17:38:22.0 (119621883)|STATEMENT_EXECUTE|[2368]
+17:38:22.0 (119629684)|METHOD_EXIT|[2299]|01pN0000000aEUV|saReportCtrl.initSelectedViewButton()
+17:38:22.0 (119637866)|METHOD_EXIT|[2114]|01pN0000000aEUV|saReportCtrl.initSelectedReportDetails()
+17:38:22.0 (119642447)|STATEMENT_EXECUTE|[2116]
+17:38:22.0 (119647355)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (149186581)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (149232537)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:284
+17:38:22.0 (149253265)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:160
+17:38:22.0 (149270163)|METHOD_ENTRY|[1]|01pN0000000Mill|auMainTopCompCtrl.auMainTopCompCtrl()
+17:38:22.0 (149275381)|STATEMENT_EXECUTE|[1]
+17:38:22.0 (149279470)|STATEMENT_EXECUTE|[1]
+17:38:22.0 (149281113)|STATEMENT_EXECUTE|[3]
+17:38:22.0 (149287074)|HEAP_ALLOCATE|[3]|Bytes:4
+17:38:22.0 (149304803)|VARIABLE_ASSIGNMENT|[3]|auMainTopCompCtrl.TYPE_SCREEN_SWITCH|0
+17:38:22.0 (149309718)|STATEMENT_EXECUTE|[4]
+17:38:22.0 (149313035)|HEAP_ALLOCATE|[4]|Bytes:4
+17:38:22.0 (149326529)|VARIABLE_ASSIGNMENT|[4]|auMainTopCompCtrl.TYPE_SCREEN_STPD_EVENT|11
+17:38:22.0 (149331010)|STATEMENT_EXECUTE|[5]
+17:38:22.0 (149333100)|HEAP_ALLOCATE|[5]|Bytes:4
+17:38:22.0 (149340322)|VARIABLE_ASSIGNMENT|[5]|auMainTopCompCtrl.TYPE_SCREEN_STPD_TIMELINE|12
+17:38:22.0 (149344248)|STATEMENT_EXECUTE|[6]
+17:38:22.0 (149346054)|HEAP_ALLOCATE|[6]|Bytes:4
+17:38:22.0 (149357354)|VARIABLE_ASSIGNMENT|[6]|auMainTopCompCtrl.TYPE_SCREEN_STPD_SCREEN|13
+17:38:22.0 (149361927)|STATEMENT_EXECUTE|[7]
+17:38:22.0 (149364282)|HEAP_ALLOCATE|[7]|Bytes:4
+17:38:22.0 (149370066)|VARIABLE_ASSIGNMENT|[7]|auMainTopCompCtrl.TYPE_SCREEN_CX_SCREEN|21
+17:38:22.0 (149373919)|STATEMENT_EXECUTE|[8]
+17:38:22.0 (149375963)|HEAP_ALLOCATE|[8]|Bytes:4
+17:38:22.0 (149381784)|VARIABLE_ASSIGNMENT|[8]|auMainTopCompCtrl.TYPE_SCREEN_CX_TIMELINE|22
+17:38:22.0 (149385988)|STATEMENT_EXECUTE|[9]
+17:38:22.0 (149387964)|HEAP_ALLOCATE|[9]|Bytes:4
+17:38:22.0 (149393398)|VARIABLE_ASSIGNMENT|[9]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE|31
+17:38:22.0 (149397271)|STATEMENT_EXECUTE|[10]
+17:38:22.0 (149399309)|HEAP_ALLOCATE|[10]|Bytes:4
+17:38:22.0 (149405009)|VARIABLE_ASSIGNMENT|[10]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE_LIST|32
+17:38:22.0 (149408726)|STATEMENT_EXECUTE|[11]
+17:38:22.0 (149410967)|HEAP_ALLOCATE|[11]|Bytes:4
+17:38:22.0 (149416522)|VARIABLE_ASSIGNMENT|[11]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_DASHBOARD|41
+17:38:22.0 (149419883)|STATEMENT_EXECUTE|[12]
+17:38:22.0 (149422099)|HEAP_ALLOCATE|[12]|Bytes:4
+17:38:22.0 (149427846)|VARIABLE_ASSIGNMENT|[12]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_LIST|42
+17:38:22.0 (149431584)|STATEMENT_EXECUTE|[13]
+17:38:22.0 (149433577)|HEAP_ALLOCATE|[13]|Bytes:4
+17:38:22.0 (149439457)|VARIABLE_ASSIGNMENT|[13]|auMainTopCompCtrl.TYPE_SCREEN_SA_MESSAGES|51
+17:38:22.0 (149443143)|STATEMENT_EXECUTE|[14]
+17:38:22.0 (149445096)|HEAP_ALLOCATE|[14]|Bytes:4
+17:38:22.0 (149450960)|VARIABLE_ASSIGNMENT|[14]|auMainTopCompCtrl.TYPE_SCREEN_SA_REPORTS|52
+17:38:22.0 (149454640)|STATEMENT_EXECUTE|[15]
+17:38:22.0 (149456571)|HEAP_ALLOCATE|[15]|Bytes:4
+17:38:22.0 (149462768)|VARIABLE_ASSIGNMENT|[15]|auMainTopCompCtrl.TYPE_SCREEN_SA_CHATTER|53
+17:38:22.0 (149466346)|STATEMENT_EXECUTE|[16]
+17:38:22.0 (149468277)|HEAP_ALLOCATE|[16]|Bytes:4
+17:38:22.0 (149474457)|VARIABLE_ASSIGNMENT|[16]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORT|54
+17:38:22.0 (149478383)|STATEMENT_EXECUTE|[17]
+17:38:22.0 (149480477)|HEAP_ALLOCATE|[17]|Bytes:4
+17:38:22.0 (149486447)|VARIABLE_ASSIGNMENT|[17]|auMainTopCompCtrl.TYPE_SCREEN_SA_ENQUETE|55
+17:38:22.0 (149490364)|STATEMENT_EXECUTE|[18]
+17:38:22.0 (149492364)|HEAP_ALLOCATE|[18]|Bytes:4
+17:38:22.0 (149497979)|VARIABLE_ASSIGNMENT|[18]|auMainTopCompCtrl.TYPE_SCREEN_SA_DOCUMENTS|56
+17:38:22.0 (149501726)|STATEMENT_EXECUTE|[19]
+17:38:22.0 (149504029)|HEAP_ALLOCATE|[19]|Bytes:4
+17:38:22.0 (149516944)|VARIABLE_ASSIGNMENT|[19]|auMainTopCompCtrl.TYPE_SCREEN_SA_RANKING|57
+17:38:22.0 (149520886)|STATEMENT_EXECUTE|[20]
+17:38:22.0 (149522729)|HEAP_ALLOCATE|[20]|Bytes:4
+17:38:22.0 (149528931)|VARIABLE_ASSIGNMENT|[20]|auMainTopCompCtrl.TYPE_SCREEN_SA_LINKS|58
+17:38:22.0 (149532655)|STATEMENT_EXECUTE|[21]
+17:38:22.0 (149534644)|HEAP_ALLOCATE|[21]|Bytes:4
+17:38:22.0 (149541195)|VARIABLE_ASSIGNMENT|[21]|auMainTopCompCtrl.TYPE_SCREEN_SA_USRSETTINGS|59
+17:38:22.0 (149545100)|STATEMENT_EXECUTE|[22]
+17:38:22.0 (149546947)|HEAP_ALLOCATE|[22]|Bytes:4
+17:38:22.0 (149552711)|VARIABLE_ASSIGNMENT|[22]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORTLIST|60
+17:38:22.0 (149556612)|STATEMENT_EXECUTE|[23]
+17:38:22.0 (149559027)|HEAP_ALLOCATE|[23]|Bytes:4
+17:38:22.0 (149565114)|VARIABLE_ASSIGNMENT|[23]|auMainTopCompCtrl.TYPE_SCREEN_SA_TODO|61
+17:38:22.0 (149569016)|STATEMENT_EXECUTE|[24]
+17:38:22.0 (149571241)|HEAP_ALLOCATE|[24]|Bytes:4
+17:38:22.0 (149576815)|VARIABLE_ASSIGNMENT|[24]|auMainTopCompCtrl.TYPE_SCREEN_HONBU_DIRECT|71
+17:38:22.0 (149580783)|STATEMENT_EXECUTE|[25]
+17:38:22.0 (149582869)|HEAP_ALLOCATE|[25]|Bytes:4
+17:38:22.0 (149587961)|VARIABLE_ASSIGNMENT|[25]|auMainTopCompCtrl.TYPE_SCREEN_ACCOUNT_LIST|81
+17:38:22.0 (149591564)|STATEMENT_EXECUTE|[26]
+17:38:22.0 (149593467)|HEAP_ALLOCATE|[26]|Bytes:4
+17:38:22.0 (149598361)|VARIABLE_ASSIGNMENT|[26]|auMainTopCompCtrl.TYPE_SCREEN_ACTIVITY_LIST|82
+17:38:22.0 (149602178)|STATEMENT_EXECUTE|[27]
+17:38:22.0 (149604250)|HEAP_ALLOCATE|[27]|Bytes:4
+17:38:22.0 (149610064)|VARIABLE_ASSIGNMENT|[27]|auMainTopCompCtrl.TYPE_SCREEN_FILE_LIST|83
+17:38:22.0 (149618912)|METHOD_EXIT|[1]|auMainTopCompCtrl
+17:38:22.0 (149624692)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:38:22.0 (149632808)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iCountComments|null|0x2fc48de0
+17:38:22.0 (149689245)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (149703863)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:38:22.0 (149711628)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iCountLikes|null|0x2fc48de0
+17:38:22.0 (149802067)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (149856710)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (149865077)|VARIABLE_SCOPE_BEGIN|[172]|this|saReportCtrl|true|false
+17:38:22.0 (150062567)|VARIABLE_ASSIGNMENT|[172]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x6c5bc6f7","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x411d9a7c","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x4456b6ad","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (150096060)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (150104043)|HEAP_ALLOCATE|[172]|Bytes:5
+17:38:22.0 (150109125)|STATEMENT_EXECUTE|[172]
+17:38:22.0 (150110989)|STATEMENT_EXECUTE|[172]
+17:38:22.0 (150117432)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (150174379)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (150191456)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+17:38:22.0 (150195701)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:38:22.0 (150204390)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iTypeOfScreen|52|0x2fc48de0
+17:38:22.0 (150332134)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (150370518)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:38:22.0 (150377902)|VARIABLE_SCOPE_BEGIN|[88]|this|auMainTopCompCtrl|true|false
+17:38:22.0 (150422512)|VARIABLE_ASSIGNMENT|[88]|this|{"currentUser":"0x2bc016a2","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x2fc48de0
+17:38:22.0 (150432742)|STATEMENT_EXECUTE|[88]
+17:38:22.0 (150434700)|STATEMENT_EXECUTE|[89]
+17:38:22.0 (150482638)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x2bc016a2","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x2fc48de0
+17:38:22.0 (150529079)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x2bc016a2","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x2fc48de0
+17:38:22.0 (150544100)|HEAP_ALLOCATE|[89]|Bytes:5
+17:38:22.0 (150623931)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (150657650)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:38:22.0 (150664170)|VARIABLE_SCOPE_BEGIN|[106]|this|auMainTopCompCtrl|true|false
+17:38:22.0 (150696192)|VARIABLE_ASSIGNMENT|[106]|this|{"currentUser":"0x2bc016a2","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x2fc48de0
+17:38:22.0 (150704784)|STATEMENT_EXECUTE|[106]
+17:38:22.0 (150706477)|STATEMENT_EXECUTE|[107]
+17:38:22.0 (150740347)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x2bc016a2","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x2fc48de0
+17:38:22.0 (150755002)|HEAP_ALLOCATE|[107]|Bytes:5
+17:38:22.0 (150816698)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (150847962)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:38:22.0 (150854304)|VARIABLE_SCOPE_BEGIN|[110]|this|auMainTopCompCtrl|true|false
+17:38:22.0 (150884956)|VARIABLE_ASSIGNMENT|[110]|this|{"currentUser":"0x2bc016a2","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x2fc48de0
+17:38:22.0 (150892926)|STATEMENT_EXECUTE|[110]
+17:38:22.0 (150894698)|STATEMENT_EXECUTE|[111]
+17:38:22.0 (150927520)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x2bc016a2","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x2fc48de0
+17:38:22.0 (150940985)|HEAP_ALLOCATE|[111]|Bytes:5
+17:38:22.0 (150997519)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (151027401)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:38:22.0 (151034130)|VARIABLE_SCOPE_BEGIN|[114]|this|auMainTopCompCtrl|true|false
+17:38:22.0 (151064380)|VARIABLE_ASSIGNMENT|[114]|this|{"currentUser":"0x2bc016a2","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x2fc48de0
+17:38:22.0 (151073451)|STATEMENT_EXECUTE|[114]
+17:38:22.0 (151075262)|STATEMENT_EXECUTE|[115]
+17:38:22.0 (151106820)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x2bc016a2","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x2fc48de0
+17:38:22.0 (151120399)|HEAP_ALLOCATE|[115]|Bytes:5
+17:38:22.0 (151297953)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (151362103)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (151723900)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (152989212)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (153093738)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (153155147)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (153211543)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (153363908)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (153446390)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (153519184)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (153827970)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (153864877)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (153871918)|VARIABLE_SCOPE_BEGIN|[36]|this|saReportCtrl|true|false
+17:38:22.0 (154072992)|VARIABLE_ASSIGNMENT|[36]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x6c5bc6f7","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x411d9a7c","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x4456b6ad","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (154107932)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (154115450)|HEAP_ALLOCATE|[36]|Bytes:5
+17:38:22.0 (154121570)|STATEMENT_EXECUTE|[36]
+17:38:22.0 (154123518)|STATEMENT_EXECUTE|[36]
+17:38:22.0 (154128629)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (154243747)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (154278330)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (154285069)|VARIABLE_SCOPE_BEGIN|[37]|this|saReportCtrl|true|false
+17:38:22.0 (154478300)|VARIABLE_ASSIGNMENT|[37]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x6c5bc6f7","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x411d9a7c","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x4456b6ad","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (154510326)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (154517101)|HEAP_ALLOCATE|[37]|Bytes:5
+17:38:22.0 (154522261)|STATEMENT_EXECUTE|[37]
+17:38:22.0 (154523995)|STATEMENT_EXECUTE|[37]
+17:38:22.0 (154528182)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (154645055)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (154679029)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (154685048)|VARIABLE_SCOPE_BEGIN|[39]|this|saReportCtrl|true|false
+17:38:22.0 (154873937)|VARIABLE_ASSIGNMENT|[39]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x6c5bc6f7","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x411d9a7c","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x4456b6ad","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (154904061)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (154910471)|HEAP_ALLOCATE|[39]|Bytes:5
+17:38:22.0 (154920082)|STATEMENT_EXECUTE|[39]
+17:38:22.0 (154921882)|STATEMENT_EXECUTE|[39]
+17:38:22.0 (154926424)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (155070117)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (155103942)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (155110147)|VARIABLE_SCOPE_BEGIN|[38]|this|saReportCtrl|true|false
+17:38:22.0 (155295232)|VARIABLE_ASSIGNMENT|[38]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x6c5bc6f7","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x411d9a7c","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x4456b6ad","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (155330067)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (155336434)|HEAP_ALLOCATE|[38]|Bytes:5
+17:38:22.0 (155341524)|STATEMENT_EXECUTE|[38]
+17:38:22.0 (155343178)|STATEMENT_EXECUTE|[38]
+17:38:22.0 (155347004)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (160283963)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (175316358)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (175365762)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:38:22.0 (175564557)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0xc507f3f","countDataOptions":"0x4380d31e","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x6b7ca6e4","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"","latestBasicSearchCount":"","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x1da66f07","listOfSAReports":"0x4fc4761e","lsAttachments":"0x40e2515e","lsRolesFull":"0x5bf727f","mapOfCategory":"0xb7aafaa","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x67625c5d","remandBody":"","remandSubject":"","reportComments":"0x6c5bc6f7","reportGoodViews":"0x44bf43d2","reportManagedViews":"0x411d9a7c","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x60a6fe67","roleLevel2DataOptions":"0x11c509d4","roleLevel3DataOptions":"0xb9de0c5","searchCategoryLabel":"","searchCountLabel":"","searchStateLabel":"","selectedCategoryName":"","selectedProcess":"","selectedReport":"0x4456b6ad","selectedReportName":"SA_Report-00000074","selectedView":"","sortDataOptions":"0x40b7a","stateDataOptions":"0x570698db"}|0x696c62c9
+17:38:22.0 (175598705)|SYSTEM_MODE_ENTER|false
+17:38:22.0 (175606317)|HEAP_ALLOCATE|[177]|Bytes:5
+17:38:22.0 (175612238)|STATEMENT_EXECUTE|[176]
+17:38:22.0 (175614118)|STATEMENT_EXECUTE|[177]
+17:38:22.0 (175629362)|METHOD_ENTRY|[177]||System.UserInfo.getTimeZone()
+17:38:22.0 (175891438)|METHOD_EXIT|[177]||System.UserInfo.getTimeZone()
+17:38:22.0 (175899172)|VARIABLE_SCOPE_BEGIN|[177]|tz|System.TimeZone|true|false
+17:38:22.0 (175951749)|VARIABLE_ASSIGNMENT|[177]|tz|{"delegate":"0x41ddff1c"}|0x5f0b5c10
+17:38:22.0 (175958785)|STATEMENT_EXECUTE|[179]
+17:38:22.0 (176003510)|HEAP_ALLOCATE|[179]|Bytes:56
+17:38:22.0 (176025553)|METHOD_ENTRY|[179]||System.TimeZone.getOffset(Datetime)
+17:38:22.0 (176051633)|METHOD_EXIT|[179]||System.TimeZone.getOffset(Datetime)
+17:38:22.0 (176077812)|HEAP_ALLOCATE|[179]|Bytes:28
+17:38:22.0 (176085674)|HEAP_ALLOCATE|[179]|Bytes:28
+17:38:22.0 (176090736)|HEAP_ALLOCATE|[179]|Bytes:4
+17:38:22.0 (176100148)|HEAP_ALLOCATE|[179]|Bytes:28
+17:38:22.0 (176139001)|HEAP_ALLOCATE|[179]|Bytes:28
+17:38:22.0 (176210128)|HEAP_ALLOCATE|[179]|Bytes:28
+17:38:22.0 (176214694)|HEAP_ALLOCATE|[179]|Bytes:28
+17:38:22.0 (176229818)|HEAP_ALLOCATE|[179]|Bytes:12
+17:38:22.0 (176236663)|SYSTEM_MODE_EXIT|false
+17:38:22.0 (177863150)|SYSTEM_MODE_ENTER|true
+17:38:22.0 (183039043)|VF_SERIALIZE_VIEWSTATE_BEGIN|066N0000000M59u
+17:38:22.0 (194625003)|VF_SERIALIZE_VIEWSTATE_END
+17:38:22.210 (210964116)|CUMULATIVE_LIMIT_USAGE
+17:38:22.210 (210964116)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 7 out of 100
+  Number of query rows: 3 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+17:38:22.210 (210964116)|CUMULATIVE_LIMIT_USAGE_END
+
+17:38:22.0 (211001893)|CODE_UNIT_FINISHED|VF: /apex/saReport
+17:38:22.0 (211711931)|EXECUTION_FINISHED

@@ -1,0 +1,710 @@
+<apex:page standardStylesheets="false" applyHtmlTag="false" showHeader="false" cache="false" renderAs="pdf" controller="auSTPDPrintCtrl">
+  <head>
+    <style type="text/css">
+        @page {
+            size: A3 landscape;
+            margin: 30px;
+        }
+            /* テーブルヘッダー1 */
+            .tr-cssHeader1 {
+                background-color: #ffc299;
+                height: 40px;
+                font-size:9pt;
+                border-bottom-style:none; 
+                padding-left:1px;
+                padding-top:1px;
+            }
+
+            /* テーブルヘッダー2 */
+            .tr-cssHeader2 {
+                height: 20px;
+                font-size:9pt;
+                border-style:none; 
+            }
+
+            /* テーブルヘッダー3 */
+            .tr-cssHeader3 {
+                background-color: #FFDAB9;
+                height: 20px;
+                font-size:9pt;
+                border: 1px solid black;
+                border-left-style:none;
+                border-right-style:none;
+            }
+            
+            /* テーブルエリア */
+            .td-cssTableArea {
+                width:450px;
+                height:480px;
+                border:1px solid #FF4500;
+            }
+            
+            /* テーブルデータ */
+            .td-cssData {
+                font-size:7pt;
+                border: 1px solid black;
+            }
+            
+            /* テーブルデータ */
+            .td-cssData10 {
+                font-size:9pt;
+                border: 1px solid black;
+                padding-left:5px;
+            }
+            
+            /* テーブルデータ */
+            .td-cssData20 {
+                font-size:9pt;
+                border: 1px solid black;
+                border-right-style:none;
+                padding-left:5px;
+            }
+            
+            /* テーブルデータ */
+            .td-cssData21 {
+                height:10px;
+                font-size:9pt;
+                border: 1px solid black;
+                border-left-style:none;
+                border-bottom-style:none;
+                padding-left:5px;
+            }
+
+
+            .td-cssData23 {
+                height:10px;
+                font-size:9pt;
+                border: 1px solid black;
+                border-right-style:none;
+                border-top-style:none;
+                padding-left:5px;
+            }
+
+            .td-cssData24 {
+                font-size:9pt;
+                border: 1px solid black;
+                border-right-style:none;
+                border-top-style:none;
+                padding-left:0;
+            }
+
+            .td-cssData25 {
+                border: 1px solid black;
+                border-right-style:none;
+                border-bottom-style:none;
+            }
+            
+            /* テーブルデータ */
+            .td-cssData22 {
+                height:105px;
+                font-size:9pt;
+                border: 1px solid black;
+                border-left-style:none;
+                border-top-style:none;
+                border-right-style:none;
+                padding-left:15px;
+                padding-right:0px;
+            }
+            
+            /* テーブルデータ */
+            .td-cssData40 {
+                font-size:9pt;
+                border: 1px solid black;
+                padding-left:5px;
+            }
+            
+            /* テーブルデータ */
+            .td-cssData41 {
+                height:10px;
+                font-size:9pt;
+                border: 1px solid black;
+                border-left-style:none;
+                border-bottom-style:none;
+                padding-left:5px;
+            }
+            
+            /* テーブルデータ */
+            .td-cssData42 {
+                height:105px;
+                font-size:9pt;
+                border: 1px solid black;
+                border-left-style:none;
+                border-top-style:none;
+                border-right-style:none;
+                padding-left:5px;
+            }
+            
+            /* テーブルデータ */
+            .td-cssData43 {
+                height:105px;
+                font-size:9pt;
+                border: 1px solid black;
+                border-left-style:none;
+                border-top-style:none;
+                border-right-style:none;
+                padding-left:15px;
+            }
+            
+            /* すべての線を非表示。 */
+            .td-cssAllLineNone {
+                border-style:none; 
+            }
+             
+            /* すべての線を表示。（カラー） */
+            .td-cssAllLineColor { 
+                border: 1px solid #FF4500;
+            }
+            
+            /* 上部の線のみ非表示。（カラー） */
+            .td-cssTopLineNoneColor { 
+                border: 1px solid #FF4500; 
+                border-top-style:none; 
+            }
+
+            /* 下部の線のみ非表示。（カラー） */
+            .td-cssBottomLineNoneColor { 
+                border: 1px solid #FF4500; 
+                border-bottom-style:none; 
+            }
+            /* 左側の線のみ非表示。（カラー） */
+            .td-cssLeftLineNoneColor { 
+                border: 1px solid #FF4500;
+                border-left-style:none; 
+            }
+
+            /* 右側の線のみ非表示。（カラー） */
+            .td-cssRightLineNoneColor { 
+                border: 1px solid #FF4500;
+                border-right-style:none; 
+            }
+
+            /* すべての線を表示。（黒） */
+            .td-cssAllLineBlack { 
+                border: 1px solid black;
+            }
+            
+            /* 上部の線のみ非表示。（黒） */
+            .td-cssTopLineNoneBlack { 
+                border: 1px solid black; 
+                border-top-style:none; 
+            }
+
+            /* 下部の線のみ非表示。（黒） */
+            .td-cssBottomLineNoneBlack { 
+                border: 1px solid black; 
+                border-bottom-style:none; 
+            } 
+
+            /* 左側の線のみ非表示。（黒） */
+            .td-cssLeftLineNoneBlack { 
+                border: 1px solid black; 
+                border-left-style:none; 
+            }
+
+            /* 右側の線のみ非表示。（黒） */
+            .td-cssRightLineNoneBlack { 
+                border: 1px solid black; 
+                border-right-style:none; 
+            }
+
+            body {
+                font-family: 'Arial Unicode MS';
+                width:95%;
+                height:95%;
+                overflow-y: scroll;
+            }
+            
+            /* 隣り合うセルの線を結合 */
+            table { 
+                border-collapse: collapse;
+            }
+        </style>
+  </head>
+  <body>
+   <table border="0" cellpadding="0" cellspacing="0" height="30" style="width:100%;margin-left:0px;margin-right:0px;table-layout:fixed;">
+       <tr>
+            <td rowspan="2" style="font-size:18pt;font-weight:bold" width="150" valign="middle">STPD シート</td>
+            <td class="td-cssBottomLineNoneColor" style="font-size:9pt;color:white;background-color:#006699;border-right:#006699" width="150" align="center" valign="middle">&nbsp;目指すお店の姿</td>
+            <td class="td-cssAllLineColor" style="font-size:9.5pt;border-left: white" rowspan="2" width="418" align="center" valign="middle"><div style="overflow: hidden; max-height: 34px;"><apex:outputLabel escape="false" value="{!slogan}" /></div></td>
+            <td style="font-size:9pt;" rowspan="2" width="105">&nbsp;</td>
+            <td style="font-size:18pt;" rowspan="2" width="180" align="left" valign="bottom"><b>No.</b><span style="color:#006699">&nbsp;_______</span></td>
+            <td class="td-cssAllLineBlack" style="font-size:8pt;" rowspan="2" width="100" align="center" valign="middle">ショップ名</td>
+            <td class="td-cssAllLineBlack" style="font-size:9pt;" rowspan="2" width="120"><div style="overflow: hidden; max-height: 32px;"><apex:outputLabel escape="false" value="{!shopName}" /></div></td>
+            <td class="td-cssBottomLineNoneBlack" style="font-size:8pt;" width="100" align="center" valign="middle">テーマ</td>
+            <td class="td-cssAllLineBlack" style="font-size:9pt;" rowspan="2" width="50">&nbsp;</td>
+            <td style="font-size:9pt;" rowspan="2" width="20">&nbsp;</td>
+            <td class="td-cssAllLineBlack" style="font-size:8pt;" rowspan="2" width="100" align="center" valign="middle">関係者外秘</td>
+        </tr>
+        <tr>
+            <td class="td-cssTopLineNoneColor" style="font-size:9pt;color:white;background-color:#006699;border-right:#006699" align="center" valign="middle">&nbsp;(スローガン)</td>
+            <td class="td-cssTopLineNoneBlack" style="font-size:9pt;" align="center" valign="middle">完了チェック</td>
+        </tr>
+
+    </table>
+    <table border="0" cellpadding="0" cellspacing="0" style="font-size:7pt;margin-left:10px;">
+        <tr>
+            <td>※１テーマで１枚記入します。同時進行する場合は、そのテーマの数だけ記入します。</td>
+        </tr>
+    </table>
+    <table border="0" cellpadding="0" cellspacing="0" style="height:100%;width:100%;margin-left:10px;margin-right:50px;">
+      <tbody>
+        <tr>
+          <td class="td-cssTableArea" style="width:45%">
+            <table border="0" cellpadding="0" cellspacing="0" style="height:100%;width:100%;font-size:9pt;table-layout:fixed;">
+              <colgroup>
+                  <col width="3%"/>
+                  <col width="47%"/>
+                  <col width="47%"/>
+                  <col width="3%"/>
+              </colgroup>
+              <tbody>
+                <tr>
+                  <td colspan="4" class="tr-cssHeader1" align="left" valign="middle">
+                    <table border="0" cellpadding="0" cellspacing="0" style="height:100%;width:100%;font-size:12pt;">
+                      <tr>
+                          <td width="20px">
+                            <apex:image url="{!URLFOR($Resource.auPrintShapes,'image/image1.png')}" />
+                          </td>
+                          <td align="left" valign="middle">
+                            &nbsp;&nbsp;&nbsp;&nbsp;<b>取り組むテーマを決めよう！</b>（記入日　　年　　月　　日)
+                          </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr class="tr-cssHeader2">
+                  <td colspan="4">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="tr-cssHeader3" colspan="4" style="text-align: center;">お店全体で取り組みたいテーマ、お店の現状、なりたい状態</td>
+                </tr>
+                <tr style="height: 10px">
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr style="height:20px;">
+                  <td style="width:3%;">&nbsp;</td>
+                  <td style="width:94%;font-size:7.5pt" colspan="2" class="td-cssData">テーマ：★気づきメモから、お店全体で取り組もうと選んだものを記入します　（最初は、お店だけで出来ることを選びましょう！）</td>
+                  <td style="width:3%;">&nbsp;</td>
+                </tr>
+                <tr style="height:80px;">
+                  <td style="width:3%;">&nbsp;</td>
+                  <td style="width:94%;" colspan="2" class="td-cssData10">
+                      <!-- <apex:outputText value="{!auSTPD.Thema__c}"/> -->
+                      <apex:repeat value="{!seeAList}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>
+                  </td>
+                  <td style="width:3%;">&nbsp;</td>
+                </tr>
+                <tr style="height:10px;">
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr style="height:20px;">
+                  <td style="width:3%;"></td>
+                  <td style="width:94%;font-size:7.5pt" colspan="2" class="td-cssData">お店の現状：★気づきメモやWebアンケートのお客さまの声などを材料にして、お店の現状を記入します</td>
+                  <td style="width:3%;"></td>
+                </tr>
+                <tr style="height:80px;">
+                  <td style="width:3%;"></td>
+                  <td style="width:94%;" colspan="2" class="td-cssData10">
+                      <!-- <apex:outputText value="{!auSTPD.Memo__c}"/> -->
+                      <apex:repeat value="{!seeBList}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>
+                  </td>
+                  <td style="width:3%;"></td>
+                </tr>
+                <tr style="height:10px;">
+                  <td style="width:3%;">&nbsp;</td>
+                  <td class="tr-cssHeader2" colspan="2" style="width:47%;">
+                    <table border="0" cellpadding="0" cellspacing="0" style="height:100%;width:100%;">
+                        <tr>
+                            <td style="width:12%;padding-top:1px;" align="right" valign="middle" >
+                                <apex:image url="{!URLFOR($Resource.auPrintShapes,'image/image5.png')}" width="13px"/>
+                            </td>
+                            <td align="left" valign="middle">今のお店の状態に対して</td>
+                          </tr>
+                    </table>
+                  </td>
+                  <td style="width:3%;">&nbsp;</td>
+                </tr>
+                <tr style="height:20px;">
+                  <td style="width:3%;"></td>
+                  <td style="width:94%;font-size:7.5pt" colspan="2" class="td-cssData">なりたい状態：★お店の現状を踏まえて、お客さま目線で考えたときどうなりたいかを記入します</td>
+                  <td style="width:3%;"></td>
+                </tr>
+                <tr style="height:80px;">
+                  <td style="width:3%;"></td>
+                  <td style="width:94%;" colspan="2" class="td-cssData10">
+                      <!-- <apex:outputText value="{!auSTPD.Objective__c}"/> -->
+                      <apex:repeat value="{!seeCList}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>
+                  </td>
+                  <td style="width:3%"></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+          <td style="width:2.5%;">
+            <table border="0" cellpadding="0" cellspacing="0" style="height:100%;width:100%;font-size:9pt;">
+              <tbody>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+          <td style="width:45%;" class="td-cssTableArea">
+            <table border="0" cellpadding="0" cellspacing="0" style="height:100%;width:100%;font-size:9pt;table-layout:fixed;">
+              <colgroup>
+                  <col width="90%"/>
+                  <col width="10%"/>
+              </colgroup>
+              <tbody>
+                <tr>
+                    <td colspan="2" class="tr-cssHeader1" align="left" valign="middle">
+                        <table border="0" cellpadding="0" cellspacing="0" style="height:100%;width:100%;font-size:12pt;">
+                          <tr>
+                              <td width="20px">
+                                <apex:image url="{!URLFOR($Resource.auPrintShapes,'image/image2.png')}" />
+                              </td>
+                              <td align="left" valign="middle">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>できていない原因を考えよう!</b>（記入日　　年　　月　　日)
+                              </td>
+                          </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="tr-cssHeader2">
+                  <td>&nbsp;</td>
+                </tr>
+                <tr class="tr-cssHeader3">
+                  <td class="td-cssLeftLineNoneBlack" width="90%" align="center" valign="middle">原因&nbsp;（改善マップを参考にして考える）</td>
+                  <td class="td-cssRightLineNoneBlack" align="center" valign="middle">原因の番号</td>
+                </tr>
+                <tr>
+                  <td class="td-cssData21" align="left" valign="middle">1</td>
+                  <td class="td-cssData25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="td-cssData22" align="left" valign="middle">
+                      <!-- <apex:outputText value="{!auSTPDItemThinkA.T_Theme__c}"/> -->
+                      <apex:repeat value="{!thinkAList}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>
+                  </td>
+                  <td class="td-cssData24" align="center">
+                      <apex:repeat value="{!thinkCauseAList}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>                    
+                  </td>
+                </tr>
+                <tr>
+                  <td class="td-cssData21">2</td>
+                  <td class="td-cssData25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="td-cssData22" align="left" valign="middle">
+                      <!-- <apex:outputText value="{!auSTPDItemThinkB.T_Theme__c}"/> -->
+                      <apex:repeat value="{!thinkBList}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>
+                  </td>
+                  <td class="td-cssData24" align="center">
+                      <apex:repeat value="{!thinkCauseBList}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>                    
+                  </td>
+                </tr>
+                <tr>
+                  <td class="td-cssData21" align="left" valign="middle">3</td>
+                  <td class="td-cssData25">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td class="td-cssData22" align="left" valign="middle">
+                      <!-- <apex:outputText value="{!auSTPDItemThinkC.T_Theme__c}"/> -->
+                      <apex:repeat value="{!thinkCList}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>
+                  </td>
+                  <td class="td-cssData24" align="center">
+                      <apex:repeat value="{!thinkCauseCList}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>                    
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="font-size:7pt" valign="top">
+                    &nbsp;&nbsp;&nbsp;&nbsp;※原因は、「なぜ？」、「なぜ？」となぜを繰り返して深堀りをします
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr height="2">
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td-cssTableArea" style="width:45%;">
+            <table border="0" cellpadding="0" cellspacing="0" style="height:100%;width:100%;font-size:9pt;table-layout:fixed;">
+              <colgroup>
+                  <col width="35%"/>
+                  <col width="65%"/>
+              </colgroup>
+              <tbody>
+                <tr>
+                  <td colspan="2" class="tr-cssHeader1" align="left" valign="middle">
+                    <table border="0" cellpadding="0" cellspacing="0" style="height:100%;width:100%;font-size:12pt;">
+                      <tr>
+                          <td width="20px">
+                            <apex:image url="{!URLFOR($Resource.auPrintShapes,'image/image3.png')}" />
+                          </td>
+                          <td align="left" valign="middle">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>解決策を考えよう！</b>（記入日　　年　　月　　日)
+                          </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr class="tr-cssHeader2">
+                  <td colspan="2">&nbsp;</td>
+                </tr>
+                <tr class="tr-cssHeader3">
+                  <td class="td-cssLeftLineNoneBlack" width="40%" align="center" valign="middle">解決策</td>
+                  <td class="td-cssRightLineNoneBlack" align="center" valign="middle">実行計画（何を、誰が、いつまでに、どのようにを明確に！）</td>
+                </tr>
+
+                <tr>
+                  <td class="td-cssData21">1</td>
+                  <td class="td-cssData21" align="left" valign="top" style="border-right:none">
+                    ※スタッフ全員にどうやって周知･徹底するのかも記入する
+                  </td>
+                </tr>
+                
+                <tr>
+                  <td class="td-cssData22" align="left" valign="middle">
+                      <!-- <apex:outputText value="{!auSTPDItemPlanA.P_Solution__c}"/> -->
+                      <apex:repeat value="{!planA2List}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat></td>
+
+                     <td class="td-cssData23" align="left" valign="middle"> 
+                      <apex:repeat value="{!planA1List}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>
+                  </td>
+                </tr>
+                
+                <tr>
+                  <td class="td-cssData21">2</td>
+                  <td class="td-cssData21" style="border-right:none">
+                    ※スタッフ全員にどうやって周知･徹底するのかも記入する
+                  </td>
+                </tr>
+                
+                <tr>
+                  <td class="td-cssData22" align="left" valign="middle">
+                      <!-- <apex:outputText value="{!auSTPDItemPlanB.P_Solution__c}"/> -->
+                      <apex:repeat value="{!planB2List}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat></td>
+                      <td class="td-cssData23" align="left" valign="middle">
+                      <!-- <apex:outputText value="{!auSTPDItemPlanB.P_ExecutionPlan__c}"/> -->
+                      <apex:repeat value="{!planB1List}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>
+                  </td>    
+                </tr>
+                
+                <tr>
+                  <td class = "td-cssData21">3</td>
+                  <td class="td-cssData21" align="left" valign="top" style="border-right:none">
+                    ※スタッフ全員にどうやって周知･徹底するのかも記入する
+                  </td>
+                </tr>
+
+                <tr>
+                <td class="td-cssData22" align="left" valign="middle">
+                      <!-- <apex:outputText value="{!auSTPDItemPlanC.P_Solution__c}"/> -->
+                      <apex:repeat value="{!planC2List}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>      
+                  </td>
+                  <td class="td-cssData23" align="left" valign="middle">
+                      <!-- <apex:outputText value="{!auSTPDItemPlanB.P_ExecutionPlan__c}"/> -->
+                      <apex:repeat value="{!planC1List}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>
+                  </td>
+                  
+                </tr>
+
+                <tr>
+                  <td colspan="2" style="font-size:7pt" valign="top">
+                    &nbsp;&nbsp;&nbsp;&nbsp;※進捗状況をどのタイミングで誰がチェックするか、の観点を入れておくと有効です
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+          <td style="width:2.5%;">
+            <table border="0" cellpadding="0" cellspacing="0" style="height:100%;width:100%;font-size:9pt;">
+              <tbody>
+                <tr height="40px">
+                  <td>&nbsp;</td>
+                </tr>
+                <tr height="20px">
+                  <td>&nbsp;</td>
+                </tr>
+                <tr height="20px">
+                  <td >&nbsp;</td>
+                </tr>
+                <tr>
+                  <td align="center" valign="middle" height="110px">
+                    <apex:image url="{!URLFOR($Resource.auPrintShapes,'image/image6.png')}" />
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" valign="middle" height="110px">
+                    <apex:image url="{!URLFOR($Resource.auPrintShapes,'image/image6.png')}" />
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" valign="middle" height="110px">
+                    <apex:image url="{!URLFOR($Resource.auPrintShapes,'image/image6.png')}" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+          <td class="td-cssTableArea" style="width:45%;">
+            <table border="0" cellpadding="0" cellspacing="0" style="height:100%;width:100%;font-size:9pt;table-layout:fixed;">
+              <colgroup>
+                  <col width="60%"/>
+                  <col width="13%"/>
+                  <col width="27%"/>
+              </colgroup>
+              <tbody>
+                <tr>
+                  <td class="tr-cssHeader1" colspan="3" align="left" valign="middle">
+                    <table border="0" cellpadding="0" cellspacing="0" style="height:100%;width:100%;font-size:12pt;">
+                      <tr>
+                          <td width="20px">
+                            <apex:image url="{!URLFOR($Resource.auPrintShapes,'image/image4.png')}" />
+                          </td>
+                          <td align="left" valign="middle">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>やったことを振り返ろう!</b>（記入日　　年　　月　　日)
+                          </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr class="tr-cssHeader2">
+                  <td>&nbsp;</td>
+                  <td align="center" valign="middle">チェックを入れる</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr class="tr-cssHeader3">
+                  <td class="td-cssLeftLineNoneBlack" width="70%" align="center" valign="middle">やってみた結果</td>
+                  <td class="td-cssAllLineBlack" width="5%" align="center" valign="middle">今後</td>
+                  <td class="td-cssRightLineNoneBlack" width="25%" align="center" valign="middle">今後の課題</td>
+                </tr>
+                <tr>
+                  <td class="td-cssData41">1</td>
+                  <td class="td-cssData40" rowspan="2" align="left">
+                    <p>{!IF(auSTPDItemDoSeeA.D_Steady__c,'■','□')}&nbsp;定常化</p>
+                    <p>{!IF(auSTPDItemDoSeeA.D_ContinuedImprovement__c,'■','□')}&nbsp;継続改善</p>
+                    <p>{!IF(auSTPDItemDoSeeA.D_Finished__c,'■','□')}&nbsp;終了</p>
+                  </td>
+                  <td class="td-cssData42" rowspan="2" align="left" valign="middle">
+                      <!-- <apex:outputText value="{!auSTPDItemDoSeeA.D_NextIssue__c}"/> -->
+                      <apex:repeat value="{!doSeeA1List}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="td-cssData43" align="left" valign="middle">
+                      <!-- <apex:outputText value="{!auSTPDItemDoSeeA.D_Result__c}"/> -->
+                      <apex:repeat value="{!doSeeA2List}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="td-cssData41">2</td>
+                  <td class="td-cssData40" rowspan="2" align="left">
+                    <p>{!IF(auSTPDItemDoSeeB.D_Steady__c,'■','□')}&nbsp;定常化</p>
+                    <p>{!IF(auSTPDItemDoSeeB.D_ContinuedImprovement__c,'■','□')}&nbsp;継続改善</p>
+                    <p>{!IF(auSTPDItemDoSeeB.D_Finished__c,'■','□')}&nbsp;終了</p>
+                  </td>
+                  <td class="td-cssData42" rowspan="2" align="left" valign="middle"> 
+                      <!-- <apex:outputText value="{!auSTPDItemDoSeeB.D_NextIssue__c}"/> -->
+                      <apex:repeat value="{!doSeeB1List}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="td-cssData43" align="left" valign="middle">
+                      <!-- <apex:outputText value="{!auSTPDItemDoSeeB.D_Result__c}"/> -->
+                      <apex:repeat value="{!doSeeB2List}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="td-cssData41">3</td>
+                  <td class="td-cssData40" rowspan="2">
+                    <p>{!IF(auSTPDItemDoSeeC.D_Steady__c,'■','□')}&nbsp;定常化</p>
+                    <p>{!IF(auSTPDItemDoSeeC.D_ContinuedImprovement__c,'■','□')}&nbsp;継続改善</p>
+                    <p>{!IF(auSTPDItemDoSeeC.D_Finished__c,'■','□')}&nbsp;終了</p>
+                  </td>
+                  <td class="td-cssData42" rowspan="2"> 
+                      <!-- <apex:outputText value="{!auSTPDItemDoSeeC.D_NextIssue__c}"/> -->
+                      <apex:repeat value="{!doSeeC1List}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="td-cssData43" align="left" valign="middle">
+                      <!-- <apex:outputText value="{!auSTPDItemDoSeeC.D_Result__c}"/> -->
+                      <apex:repeat value="{!doSeeC2List}" var="string">
+                          <apex:outputText value="{!string}"/><br/>
+                      </apex:repeat>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3" style="font-size:7pt;border-color:white">
+                   定常化･･･今の活動をこのまま実施し定常化する&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;継続改善･･･今の活動をブラッシュアップしながら継続的に取り組む<br/>
+                   終了･･･活動をやめる
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</apex:page>

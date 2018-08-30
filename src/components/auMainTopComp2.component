@@ -1,0 +1,321 @@
+<apex:component controller="auMainTopCompCtrl" allowDML="true" >
+  <apex:attribute type="Integer" name="nbLikes" assignTo="{!iCountLikes}" description="Number of Likes"/>
+  <apex:attribute type="Integer" name="nbComments" assignTo="{!iCountComments}" description="Number of Comments"/>
+  <apex:attribute type="Integer" name="typeOfScreen" assignTo="{!iTypeOfScreen}" description="Type of Screen"/>
+
+
+  <style>
+    nav.document-navigation {
+      position: relative;
+    }
+
+    .header-options {
+      float: right;
+      padding: 1.125rem 2rem;
+      font-size: 14px;
+    }
+
+    .header-action {
+      display: inline-block;
+      margin-right: 2rem;
+      vertical-align: middle;
+      line-height: 0;
+    }
+
+    .header-info {
+      display: inline-block;
+      margin-right: 2rem;
+      vertical-align: middle;
+      line-height: 0;
+    }
+
+    .header-info__image {
+      position: relative;
+      display: inline-block;
+      width: 36px; //2.833rem;
+      height: 36px; //2.833rem;
+      margin-right: 1rem;
+      margin-top: 2px;
+      border: 1px solid #ccc;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .header-info__image img {
+      position: absolute;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 73%;
+    }
+
+    .header-info__location {
+      display: inline-block;
+      vertical-align: top;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 0.3;
+    }
+
+    .header-buttons {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .button {
+      display: inline-block;
+      vertical-align: middle;
+      background-size: 100%;
+      background-position: 50%;
+      background-repeat: no-repeat;
+    }
+    
+    .button--logout {
+      width:141px;
+      height: 30px !important;
+      line-height: 1.9 !important;
+      background-color: #ed5500 !important;
+      color: #fff !important;
+    }
+
+    .mdl-button--raised {
+      background: rgba(158,158,158,.2);
+      box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    }
+
+    .mdl-button:hover {
+      background-color: rgba(158,158,158,.2);
+      color: #333;
+      color: rgba(51,51,51,.8);
+    }
+
+    .mdl-button {
+      background: 0 0;
+      border: none;
+      border-radius: 2px;
+      color: #000;
+      position: relative;
+      height: 36px;
+      margin: 0;
+      min-width: 64px;
+      padding: 0 16px;
+      display: inline-block;
+      font-family: "Roboto","Helvetica","Arial",sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      overflow: hidden;
+      will-change: box-shadow;
+      transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);
+      outline: none;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      line-height: 36px;
+      vertical-align: middle;
+    }
+
+
+    .menu--active {
+      background-color: #ed5500;
+      opacity: 1 !important;
+    }
+
+    .attachInputPic {
+      height: 2rem;
+      width: 2rem;
+      position: absolute;
+      right: 2rem;
+      opacity: 0;
+      overflow: hidden;
+   }
+
+   .header-title {
+     color: #ed5500;
+     float: left;
+     font-size: x-large;
+     margin-top: 0.8rem;
+     margin-left: 1rem;
+   }
+
+    .sidebar {
+      position: fixed;
+      top: 61px;
+      left: 0;
+      width: 81px;
+      height: -webkit-calc(100% - 61px);
+      height: calc(100% - 61px);
+      text-align: center;
+      z-index: 2;
+    }
+
+    .sidebar__item-name {
+      display: inline-block;
+      width: 80%;
+      padding: .25rem 0;
+      margin: 0;
+      margin-top: 1.125rem;
+      margin-bottom: 1.125rem;
+      background-color: #fff;
+      font-size: 1.125rem;
+      color: #ed5500;
+    }
+
+    .navigation__item>a:hover {
+      background-color: #ed5500;
+      opacity: 1;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    }
+
+    nav.document-navigation h2 {
+        height: auto;
+    }
+
+  </style>
+
+  <script>
+
+    var $j = jQuery.noConflict();
+
+    function callAddNewPicture() {
+        if (checkFileSize()) {
+          addNewPicture();          
+        }
+    }
+
+    function checkFileSize() {
+        var goodSize = true;
+
+        $j('input[type=file]').each(function()
+        {
+            if(this.files.length > 0 && typeof this.files[0] !== 'undefined')
+            {
+                var file = this.files[0],
+                    size = typeof ActiveXObject !== 'undefined' ?
+                        getIEFileSize(file)
+                        :
+                        file.fileSize || file.size;
+     
+                goodSize = 65 * 1024 * 1024 > size;
+                if(!goodSize) {
+                    alert('ファイルは大きすぎです。65Moまでのファイルを選択してください。');
+                }
+     
+                return goodSize;
+            }
+        });
+
+        return goodSize;
+    }
+
+  </script>
+
+
+  <apex:actionFunction name="addNewPicture" action="{!addNewPicture}" />
+
+    <header class="document-header">
+      <div class="logo">
+        <h1>
+          <a href="/home">auポータルトップ</a>
+        </h1>
+      </div>
+
+      <div class="left" style="border: 0;" />
+      <div class="right">
+
+
+        <div class="header-options">
+          <div class="header-action">
+            <ul>
+              <apex:outputPanel rendered="{!CountLikes != NULL}">
+                <li><i class="material-icons">thumb_up</i><span class="mdl-badge {!IF(CountLikes == 0, 'badge-grey', '')}" data-badge="{!CountLikes}"></span></li>
+              </apex:outputPanel>
+              <apex:outputPanel rendered="{!CountComments != NULL}">
+                <li><i class="material-icons">comment</i><span class="mdl-badge {!IF(CountComments == 0, 'badge-grey', '')}" data-badge="{!CountComments}"></span></li>
+              </apex:outputPanel>
+            </ul>
+          </div>
+          <div class="header-info">
+            <apex:outputPanel id="userPic">
+
+            <apex:outputLabel for="upload--picture">
+              <div class="header-info__image"><img src="{!currentUser.SmallPhotoUrl}" alt="USER" /></div>
+            </apex:outputLabel>
+
+            </apex:outputPanel>
+            <div class="header-info__location">
+              <p class="header-info__city">
+                {!currentUser.Account.RegionalOfficeId__r.RegionalOfficeName__c}
+                <apex:outputLabel rendered="{!currentUser.Account.RegionalOfficeId__r.RegionalOfficeName__c != NULL && currentUser.Account.BranchId__r.BranchName__c != NULL}">
+                ・
+                </apex:outputLabel>
+                {!currentUser.Account.BranchId__r.BranchName__c}</p>
+              <p>
+                <apex:outputLabel rendered="{!currentUser.Account.Name != NULL}">
+                  {!currentUser.Account.Name}
+                </apex:outputLabel>
+                <apex:outputLabel rendered="{!currentUser.Account.Name == NULL}">
+                  {!currentUser.Name}
+                </apex:outputLabel>
+              </p>
+            </div>
+          </div>
+
+          <div class="header-buttons">
+            <a class="button button--logout mdl-button mdl-js-button mdl-button--raised" href="{!$Site.Prefix}/secur/logout.jsp">ログアウト</a>
+
+            <!-- SETTINGS BUTTON -->
+<!--
+            <apex:inputFile id="upload--picture" 
+                            styleclass="attachInputPic" 
+                            value="{!newPictureBody}" 
+                            filename="{!newPictureName}" 
+                            filesize="{!newPictureSize}" 
+                            onchange="callAddNewPicture();" />
+-->
+          </div>
+
+        </div>
+
+      </div>
+<!--
+      <div class="left"><img src="images/placeholder-header1.png" style="position: absolute; right: 0; top: 0;"/></div>
+      <div class="right"><img src="images/placeholder-header2.png" style="position: absolute; left: 0; top: 0;"/><img src="images/placeholder-header3.png" style="position: absolute; right: 0; top: 0;"/></div>
+-->
+    </header>
+
+
+  <apex:outputPanel rendered="{!IsShowAsideSchedule}">
+    <aside class="sidebar" role="sidebar">
+
+      <nav class="document-navigation">
+
+        <h2><p class="sidebar__item-name">S-バリ</p></h2>
+
+        <ul>
+
+          <!-- HOME -->
+          <li class="item-calender {!IF(IsSchedule, 'current', '')}"><a href="/calendar">カレンダー</a></li>
+
+          <!-- List -->
+          <li class="item-list {!IF(IsScheduleList, 'current', '')}"><a href="/activities">活動一覧</a></li>
+
+          <!-- Report -->
+          <li class="item-sfa" style="{!IF(urlReportsSFA != NULL, '', 'display: none;')}">
+            <a href="{!urlReportsSFA}" target="_blank">SFA</a>
+          </li>
+
+          <!-- BACK -->
+          <li class="item-top"><a href="/home">auポータル<br/>トップ</a></li>
+
+        </ul>
+      </nav>
+    </aside>
+  </apex:outputPanel>
+
+</apex:component>

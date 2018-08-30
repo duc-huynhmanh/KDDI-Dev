@@ -1,0 +1,334 @@
+<apex:component controller="auSwitchScreenBtmCompCtrl">
+
+<head>
+  <meta charset="utf-8"/>
+  <!-- links -->
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
+</head>
+
+  <style>
+
+	/* 全体 */
+	.background-all{
+	  background-image : url({!URLFOR($Resource.auStyling, 'images/au-bg.png')}) ;
+	  background-repeat : repeat ;
+	}
+	.o-sep{background: #eb551d; height:4px;}
+	.o-sep-2{background: #f5e6d8; height:1px; margin-bottom: 15px;}
+
+	/* タイトルエリア */
+	.link-title-con{padding: 15px;}
+	.link-title-note{font-size: 12px;}
+	.link-title{color: #eb551d; font-size:20px; margin-right:40px;}
+
+
+	/* メインメニューエリア */
+	.menu-01{float: left; margin-right: 15px; font-size: 14px; color:#eb551d;  margin-bottom: 5px;
+	}
+	.menu-01 img {margin-right: 0px; margin-bottom: 10px;}
+	.main-menu{margin-bottom: 30px; padding: 15px;}
+	.main-menu a{color:#eb551d;}
+	.main-menu a:hover{text-decoration:none;}
+	.note{background: #919494; color: white; padding: 0px 8px; float: right;}
+
+	/* （４つのカテゴリ） */
+	.link-category{color:#eb551d; margin-bottom: 15px; margin-top: 15px;}
+	.title-mark{border: solid 2px #eb551d; padding: 5px 10px; border-radius: 100px;}
+	.menu-contents img{margin-right: 10px; font-size: 14px;}
+	.menu-contents{font-size: 1.05rem; color: #4c4c4c; margin-bottom: 5px;}
+	.menu-contents a {color: #4c4c4c;}
+	.menu-contents a:hover{text-decoration:none;}
+
+	/* （最後のグレーのバー） */
+	.bar_last{height:20px; background-color: #4c4c4c; margin-top: 60px;}
+
+  .container a:hover {
+    color: #0056b3 !important;
+  }
+
+  </style>  
+
+  <div class="background-all">
+    <div class="o-sep"></div>
+
+    <div class="container">
+      <div class="row">
+        <div class="link-title-con">
+          <div><span class="link-title">リンク集</span><span class="link-title-note">※ 各システムのID/PWの入力が必要です。</span></div>
+        </div>
+        </div>
+        </div><!--container閉じる-->
+
+        <div class="o-sep-2"></div>
+
+        <apex:outputPanel rendered="{!!isCommunityUser}">
+
+          <div class="container">
+            <div class="row main-menu">
+              
+              <apex:outputPanel rendered="{!urlSFDCHome != NULL}">
+                <div class="menu-01">
+                  <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_c.svg')}"
+                              style="vertical-align: -webkit-baseline-middle;"
+                              width="25px"/>
+                  <a href="{!urlSFDCHome}"
+                     style="vertical-align: baseline;">S-バリ(トライアル)</a>
+                  <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_PC_o.svg')}"
+                              style="vertical-align: -webkit-baseline-middle;"
+                              width="25px"/>
+                </div>
+              </apex:outputPanel>
+
+              <div class="menu-01 note"
+                   style="padding-top: 0.5rem; margin-top: -0.5rem;">
+                <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_PC_w.svg')}"
+                            style="vertical-align: -webkit-baseline-middle;"
+                            width="25px"/>マーク : KIDS PCからのみ閲覧可
+              </div>
+            </div>
+          </div><!--container閉じる-->
+        </apex:outputPanel>
+
+<apex:outputPanel rendered="{!!isCommunityUser}">
+  <div class="container" style="text-align: left;">
+    <div class="row" style="padding-left: 0;padding-right: 0;">
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="link-category">
+          <span class="title-mark">実績</span>
+        </div>
+        
+        <div class="menu-contents">
+          <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_b.svg')}"
+                      width="20px"/>
+          <a href="http://sales-spm-app.kddi.com/analytics"
+             target="_blank">
+            セルナビ{!IF(urlSingleSignOn != NULL, ' (SSO)', '')}
+            <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_PC_g.svg')}" 
+                        width="25px"/>
+          </a>
+        </div>
+        
+        <div class="menu-contents">
+          <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_b.svg')}" width="20px"/>
+          <a href="http://samurai.kddi.com/Login"
+             target="_blank">
+            SAMURAI{!IF(urlSingleSignOn != NULL, ' (SSO)', '')}
+            <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_PC_g.svg')}" width="25px"/>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="link-category">
+          <span class="title-mark">業務</span>
+        </div>
+        
+        <div class="menu-contents">
+          <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_b.svg')}"
+                      width="20px"/>
+          <a href="http://paspnapv4.au-pascal.kddi.com:50000/webman/kidsWebmanualLogin.html"
+             target="_blank">
+            ａｕ業務マニュアル
+            <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_PC_g.svg')}"
+                        width="25px"/>
+          </a>
+        </div>
+        
+        <div class="menu-contents">
+          <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_b.svg')}" 
+                      width="20px"/>
+          <a href="http://pcskmapv2.au-pascal.kddi.com:50001/kms/srk_open_login.html"
+             target="_blank">
+            情報ネット
+            <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_PC_g.svg')}"
+                        width="25px"/>
+          </a>
+        </div>
+        
+        <div class="menu-contents">
+          <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_b.svg')}"
+                      width="20px"/>
+          <a href="http://wings51s.kddi.com/WINGS/ENTRANCE/#"
+             target="_blank">
+            WINGS{!IF(urlSingleSignOn != NULL, ' (SSO)', '')}
+            <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_PC_g.svg')}"
+                        width="25px"/>
+          </a>
+        </div>
+
+        <div class="menu-contents">
+          <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_b.svg')}"
+                      width="20px"/>
+          <a href="{!urlInternalCxSTPDManual}"
+             target="_blank">
+            CXナレッジ/CX-STPD操作マニュアル
+          </a>
+        </div>
+
+        <div class="menu-contents">
+          <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_b.svg')}"
+                      width="20px"/>
+          <a href="{!urlInternalAuChannelManual}"
+             target="_blank">
+            auチャンネル操作マニュアル
+          </a>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="link-category">
+          <span class="title-mark">学習</span>
+        </div>
+        
+        <div class="menu-contents">
+          <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_b.svg')}" 
+                      width="20px"/>
+          <a href="https://kddi.learningware.jp/kddi/"
+             target="_blank">
+            au Learning Stadium
+          </a>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="link-category">
+          <span class="title-mark">賞賛</span>
+        </div>
+        
+        <div class="menu-contents">
+          <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_b.svg')}" 
+                      width="20px"/>
+          <a href="https://ics.benefit-one.co.jp/ICKDDI"
+             target="_blank">
+            CX サンクスプログラム　PC
+          </a>
+        </div>
+        
+        <div class="menu-contents">
+          <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_b.svg')}"
+                      width="20px"/>
+          <a href="https://ics.benefit-one.co.jp/icsmp/ickddi/"
+             target="_blank">
+            CX サンクスプログラム　スマホ
+          </a>
+        </div>
+      </div>
+
+<!--
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="link-category">
+          <span class="title-mark">SANX</span>
+        </div>
+        
+        <div class="menu-contents">
+          <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_b.svg')}" 
+                      width="20px"/>
+          <a href="/saHome"
+             target="_blank">
+            SANX
+          </a>
+        </div>
+        
+        <div class="menu-contents">
+          <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_b.svg')}" 
+                      width="20px"/>
+          <a href="{!$Setup.auCommunityCustomSettings__c.SANXSettingsScreen__c}"
+             target="_blank">
+            SANX管理画面
+          </a>
+        </div>
+        
+        <div class="menu-contents">
+          <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_b.svg')}" 
+                      width="20px"/>
+          <a href="/_ui/core/chatter/ui/ChatterPage"
+             target="_blank">
+            SANXグループ設定
+          </a>
+        </div>        
+      </div>
+-->
+
+    </div><!--row閉じる-->
+  </div><!--container閉じる-->
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!isCommunityUser}">
+  <div class="container" style="text-align: left;">
+    <div class="row" style="padding-left: 0;padding-right: 0;">
+
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="link-category">
+          <span class="title-mark">業務</span>
+        </div>
+        
+        <div class="menu-contents">
+          <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_b.svg')}"
+                      width="20px"/>
+          <a href="{!urlExternalCxSTPDManual}"
+             target="_blank">
+            CXナレッジ/CX-STPD操作マニュアル
+          </a>
+        </div>
+
+        <div class="menu-contents">
+          <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_b.svg')}"
+                      width="20px"/>
+          <a href="{!urlExternalAuChannelManual}"
+             target="_blank">
+            auチャンネル操作マニュアル
+          </a>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="link-category"><span class="title-mark">学習</span></div>
+        <div class="menu-contents">
+          <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_b.svg')}"
+                      width="20px"/>
+          <a href="https://kddi.learningware.jp/kddi/"
+             target="_blank">
+            au Learning Stadium
+          </a>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="link-category">
+          <span class="title-mark">賞賛</span>
+        </div>
+        
+        <div class="menu-contents">
+          <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_b.svg')}" 
+                      width="20px"/>
+          <a href="https://ics.benefit-one.co.jp/ICKDDI"
+             target="_blank">
+            CX サンクスプログラム　PC
+          </a>
+        </div>
+        
+        <div class="menu-contents">
+          <apex:image url="{!URLFOR($Resource.auStyling, 'images/au_CT_b.svg')}"
+                      width="20px"/>
+          <a href="https://ics.benefit-one.co.jp/icsmp/ickddi/"
+             target="_blank">
+            CX サンクスプログラム　スマホ
+          </a>
+        </div>
+      </div>
+
+    </div><!--row閉じる-->
+  </div><!--container閉じる-->
+</apex:outputPanel>
+
+<div class="bar_last"></div>
+</div>
+
+</apex:component>

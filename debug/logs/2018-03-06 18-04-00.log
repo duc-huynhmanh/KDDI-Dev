@@ -1,0 +1,490 @@
+36.0 APEX_CODE,FINEST;APEX_PROFILING,INFO;CALLOUT,INFO;DB,INFO;SYSTEM,DEBUG;VALIDATION,INFO;VISUALFORCE,INFO;WAVE,INFO;WORKFLOW,INFO
+18:03:59.0 (65278)|USER_INFO|[EXTERNAL]|005N00000057RPN|duc.huynhmanh+kddi-gwdev01@globalway.co.jp|日本標準時|GMT+09:00
+18:03:59.0 (103776)|EXECUTION_STARTED
+18:03:59.0 (109890)|CODE_UNIT_STARTED|[EXTERNAL]|066N0000000M524|VF: /apex/auDailyReportListForAdmin
+18:03:59.0 (281719)|VF_DESERIALIZE_VIEWSTATE_BEGIN|066N0000000M524
+18:03:59.0 (3604319)|HEAP_ALLOCATE|[72]|Bytes:3
+18:03:59.0 (3651952)|HEAP_ALLOCATE|[77]|Bytes:152
+18:03:59.0 (3669426)|HEAP_ALLOCATE|[342]|Bytes:408
+18:03:59.0 (3681552)|HEAP_ALLOCATE|[355]|Bytes:408
+18:03:59.0 (3692120)|HEAP_ALLOCATE|[467]|Bytes:48
+18:03:59.0 (3719888)|HEAP_ALLOCATE|[139]|Bytes:6
+18:03:59.0 (3810736)|HEAP_ALLOCATE|[50]|Bytes:5
+18:03:59.0 (3833809)|HEAP_ALLOCATE|[56]|Bytes:5
+18:03:59.0 (3840846)|HEAP_ALLOCATE|[64]|Bytes:7
+18:03:59.0 (5213100)|VARIABLE_SCOPE_BEGIN|[50]|auDailyReportListForAdminCtl.BASE_QUERY_STRING|String|false|true
+18:03:59.0 (5226938)|VARIABLE_SCOPE_BEGIN|[49]|auDailyReportListForAdminCtl.COOKIE_EXPIRATION_DATE|Integer|false|true
+18:03:59.0 (5234872)|VARIABLE_SCOPE_BEGIN|[46]|auDailyReportListForAdminCtl.COOKIE_PATH|String|false|true
+18:03:59.0 (5241486)|VARIABLE_SCOPE_BEGIN|[43]|auDailyReportListForAdminCtl.FILTER_DATE_FROM|String|false|true
+18:03:59.0 (5247539)|VARIABLE_SCOPE_BEGIN|[44]|auDailyReportListForAdminCtl.FILTER_DATE_TO|String|false|true
+18:03:59.0 (5253752)|VARIABLE_SCOPE_BEGIN|[38]|auDailyReportListForAdminCtl.FILTER_FIELD_1|String|false|true
+18:03:59.0 (5259110)|VARIABLE_SCOPE_BEGIN|[39]|auDailyReportListForAdminCtl.FILTER_FIELD_2|String|false|true
+18:03:59.0 (5264946)|VARIABLE_SCOPE_BEGIN|[40]|auDailyReportListForAdminCtl.FILTER_FIELD_3|String|false|true
+18:03:59.0 (5269631)|VARIABLE_SCOPE_BEGIN|[41]|auDailyReportListForAdminCtl.FILTER_FIELD_4|String|false|true
+18:03:59.0 (5274839)|VARIABLE_SCOPE_BEGIN|[42]|auDailyReportListForAdminCtl.FILTER_FIELD_5|String|false|true
+18:03:59.0 (5279882)|VARIABLE_SCOPE_BEGIN|[45]|auDailyReportListForAdminCtl.FILTER_TARGETRECORDS|String|false|true
+18:03:59.0 (5285443)|VARIABLE_SCOPE_BEGIN|[55]|auDailyReportListForAdminCtl.QUERY_LIMIT|String|false|true
+18:03:59.0 (5292385)|VARIABLE_SCOPE_BEGIN|[56]|auDailyReportListForAdminCtl.QUERY_LIMIT_MAX|String|false|true
+18:03:59.0 (5299158)|VARIABLE_SCOPE_BEGIN|[54]|auDailyReportListForAdminCtl.SELECTOPTION_ALL|String|false|true
+18:03:59.0 (5308861)|VARIABLE_SCOPE_BEGIN|[53]|auDailyReportListForAdminCtl.SELECTOPTION_LASTMODIFIED|String|false|true
+18:03:59.0 (5323403)|VARIABLE_SCOPE_BEGIN|[59]|auDailyReportListForAdminCtl.targetRecordsOption|List<System.SelectOption>|true|true
+18:03:59.0 (8454119)|VF_DESERIALIZE_VIEWSTATE_END
+18:03:59.0 (12363000)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (12408529)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:316
+18:03:59.0 (12424683)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:124
+18:03:59.0 (12430118)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:26
+18:03:59.0 (12436538)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:31
+18:03:59.0 (12462367)|VARIABLE_ASSIGNMENT|[EXTERNAL]|auDailyReportListForAdminCtl.COOKIE_PATH|"/apex/auDailyReportL (11 more) ..."
+18:03:59.0 (12469188)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:12
+18:03:59.0 (12480014)|VARIABLE_ASSIGNMENT|[EXTERNAL]|auDailyReportListForAdminCtl.FILTER_DATE_FROM|"ValidFrom__c"
+18:03:59.0 (12486782)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:10
+18:03:59.0 (12495268)|VARIABLE_ASSIGNMENT|[EXTERNAL]|auDailyReportListForAdminCtl.FILTER_DATE_TO|"ValidTo__c"
+18:03:59.0 (12500120)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:9
+18:03:59.0 (12506367)|VARIABLE_ASSIGNMENT|[EXTERNAL]|auDailyReportListForAdminCtl.FILTER_FIELD_1|"Branch__c"
+18:03:59.0 (12512552)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:7
+18:03:59.0 (12520460)|VARIABLE_ASSIGNMENT|[EXTERNAL]|auDailyReportListForAdminCtl.FILTER_FIELD_2|"Shop__c"
+18:03:59.0 (12527112)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:14
+18:03:59.0 (12535935)|VARIABLE_ASSIGNMENT|[EXTERNAL]|auDailyReportListForAdminCtl.FILTER_FIELD_3|"CreatedBy.Name"
+18:03:59.0 (12542734)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:13
+18:03:59.0 (12554254)|VARIABLE_ASSIGNMENT|[EXTERNAL]|auDailyReportListForAdminCtl.FILTER_FIELD_4|"ReportName__c"
+18:03:59.0 (12558800)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+18:03:59.0 (12563855)|VARIABLE_ASSIGNMENT|[EXTERNAL]|auDailyReportListForAdminCtl.FILTER_FIELD_5|"FreeWord"
+18:03:59.0 (12567554)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:13
+18:03:59.0 (12573312)|VARIABLE_ASSIGNMENT|[EXTERNAL]|auDailyReportListForAdminCtl.FILTER_TARGETRECORDS|"TargetRecords"
+18:03:59.0 (12576826)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:03:59.0 (12582569)|VARIABLE_ASSIGNMENT|[EXTERNAL]|auDailyReportListForAdminCtl.QUERY_LIMIT|"1000"
+18:03:59.0 (12586063)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:5
+18:03:59.0 (12591174)|VARIABLE_ASSIGNMENT|[EXTERNAL]|auDailyReportListForAdminCtl.QUERY_LIMIT_MAX|"10000"
+18:03:59.0 (12594823)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+18:03:59.0 (12600017)|VARIABLE_ASSIGNMENT|[EXTERNAL]|auDailyReportListForAdminCtl.SELECTOPTION_ALL|"2"
+18:03:59.0 (12603795)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+18:03:59.0 (12609075)|VARIABLE_ASSIGNMENT|[EXTERNAL]|auDailyReportListForAdminCtl.SELECTOPTION_LASTMODIFIED|"1"
+18:03:59.0 (12648975)|METHOD_ENTRY|[1]|01pN0000000aEDx|auDailyReportListForAdminCtl.auDailyReportListForAdminCtl()
+18:03:59.0 (12655814)|STATEMENT_EXECUTE|[1]
+18:03:59.0 (12660731)|STATEMENT_EXECUTE|[1]
+18:03:59.0 (12673471)|SYSTEM_MODE_ENTER|false
+18:03:59.0 (12688093)|HEAP_ALLOCATE|[49]|Bytes:5
+18:03:59.0 (12692701)|STATEMENT_EXECUTE|[49]
+18:03:59.0 (12698130)|HEAP_ALLOCATE|[49]|Bytes:4
+18:03:59.0 (12706930)|VARIABLE_ASSIGNMENT|[49]|auDailyReportListForAdminCtl.COOKIE_EXPIRATION_DATE|-1
+18:03:59.0 (12711367)|STATEMENT_EXECUTE|[50]
+18:03:59.0 (12714558)|HEAP_ALLOCATE|[50]|Bytes:184
+18:03:59.0 (12723885)|VARIABLE_ASSIGNMENT|[50]|auDailyReportListForAdminCtl.BASE_QUERY_STRING|"SELECT Branch__c, Sh (164 more) ..."
+18:03:59.0 (12727967)|STATEMENT_EXECUTE|[60]
+18:03:59.0 (12729622)|STATEMENT_EXECUTE|[61]
+18:03:59.0 (12747834)|HEAP_ALLOCATE|[61]|Bytes:4
+18:03:59.0 (12829483)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:03:59.0 (12842800)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|[]|0x688a9aa
+18:03:59.0 (12857294)|VARIABLE_ASSIGNMENT|[59]|auDailyReportListForAdminCtl.targetRecordsOption|[]|0x688a9aa
+18:03:59.0 (12867271)|STATEMENT_EXECUTE|[62]
+18:03:59.0 (12893162)|HEAP_ALLOCATE|[62]|Bytes:9
+18:03:59.0 (12929384)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:03:59.0 (12936946)|STATEMENT_EXECUTE|[63]
+18:03:59.0 (12949766)|HEAP_ALLOCATE|[63]|Bytes:8
+18:03:59.0 (12962527)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:03:59.0 (12972136)|SYSTEM_MODE_EXIT|false
+18:03:59.0 (12982778)|METHOD_EXIT|[1]|auDailyReportListForAdminCtl
+18:03:59.13 (13650139)|SYSTEM_MODE_ENTER|true
+18:03:59.13 (13697789)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:38
+18:03:59.13 (13705712)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:7
+18:03:59.13 (13712411)|SYSTEM_METHOD_ENTRY|[1]|PageMessagesComponentController.PageMessagesComponentController()
+18:03:59.13 (13716368)|STATEMENT_EXECUTE|[1]
+18:03:59.14 (14351196)|SYSTEM_MODE_ENTER|true
+18:03:59.14 (14395322)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+18:03:59.14 (14403071)|VARIABLE_SCOPE_BEGIN|[88]|this|ApexPage.PageMessagesComponentController|true|false
+18:03:59.14 (14432105)|VARIABLE_ASSIGNMENT|[88]|this|{}|0x70d9a674
+18:03:59.14 (14438605)|VARIABLE_SCOPE_BEGIN|[88]|escape|Boolean|false|false
+18:03:59.14 (14445708)|VARIABLE_ASSIGNMENT|[88]|escape|null
+18:03:59.0 (14726781)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (14912623)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (15049476)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (15206664)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:84
+18:03:59.0 (15214513)|VARIABLE_SCOPE_BEGIN|[352]|this|auDailyReportListForAdminCtl|true|false
+18:03:59.0 (15452332)|VARIABLE_ASSIGNMENT|[352]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"2","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (15478194)|SYSTEM_MODE_ENTER|false
+18:03:59.0 (15485684)|HEAP_ALLOCATE|[353]|Bytes:5
+18:03:59.0 (15490803)|STATEMENT_EXECUTE|[352]
+18:03:59.0 (15492784)|STATEMENT_EXECUTE|[353]
+18:03:59.0 (15511079)|VARIABLE_SCOPE_BEGIN|[353]|recs|List<saInquiry__c>|true|false
+18:03:59.0 (15521795)|VARIABLE_ASSIGNMENT|[353]|recs|null|
+18:03:59.0 (15674799)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"2","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (15693647)|STATEMENT_EXECUTE|[354]
+18:03:59.0 (15695485)|STATEMENT_EXECUTE|[355]
+18:03:59.0 (15816347)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"2","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (15887481)|HEAP_ALLOCATE|[355]|Bytes:144
+18:03:59.0 (15919058)|HEAP_ALLOCATE|[355]|Bytes:144
+18:03:59.0 (15937922)|VARIABLE_ASSIGNMENT|[355]|recs|"List of size 35 too large to display"|0x10d439b9
+18:03:59.0 (15944908)|STATEMENT_EXECUTE|[357]
+18:03:59.0 (15946313)|STATEMENT_EXECUTE|[360]
+18:03:59.0 (15949422)|SYSTEM_MODE_EXIT|false
+18:03:59.0 (18662222)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (18726013)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (18824797)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (18870718)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (18909189)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (18946271)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (18983603)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (19021077)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (19060621)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (21570667)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (21598952)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:16
+18:03:59.0 (21604352)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:84
+18:03:59.0 (21616831)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.orderTarget|"LastModifiedDate"|0x55d80cf1
+18:03:59.0 (21657579)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (21671693)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+18:03:59.0 (21676242)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:84
+18:03:59.0 (21684506)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.targetRecords|"1"|0x55d80cf1
+18:03:59.0 (21713409)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (21725891)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:84
+18:03:59.0 (21734025)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.targetField1|""|0x55d80cf1
+18:03:59.0 (21755107)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (21766031)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+18:03:59.0 (21769196)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:84
+18:03:59.0 (21775730)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.targetField2|"1"|0x55d80cf1
+18:03:59.0 (21796038)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (21806512)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:84
+18:03:59.0 (21813418)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.targetField3|""|0x55d80cf1
+18:03:59.0 (21833060)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (21843510)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:84
+18:03:59.0 (21850425)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.targetField4|""|0x55d80cf1
+18:03:59.0 (21870215)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (21881092)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:84
+18:03:59.0 (21886954)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.fieldDateFrom|""|0x55d80cf1
+18:03:59.0 (21906427)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (21916830)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:84
+18:03:59.0 (21922647)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.fieldDateTo|""|0x55d80cf1
+18:03:59.0 (21941658)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (21952218)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:84
+18:03:59.0 (21958921)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.targetField5|""|0x55d80cf1
+18:03:59.22 (22059784)|SYSTEM_MODE_ENTER|true
+18:03:59.22 (22095961)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+18:03:59.22 (22102384)|VARIABLE_SCOPE_BEGIN|[88]|this|ApexPage.PageMessagesComponentController|true|false
+18:03:59.22 (22121726)|VARIABLE_ASSIGNMENT|[88]|this|{}|0x70d9a674
+18:03:59.22 (22128180)|VARIABLE_SCOPE_BEGIN|[88]|escape|Boolean|false|false
+18:03:59.22 (22135253)|VARIABLE_ASSIGNMENT|[88]|escape|null
+18:03:59.0 (22191557)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (22320477)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (22450975)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (24685283)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:84
+18:03:59.0 (24694540)|VARIABLE_SCOPE_BEGIN|[276]|this|auDailyReportListForAdminCtl|true|false
+18:03:59.0 (24845911)|VARIABLE_ASSIGNMENT|[276]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (24868420)|SYSTEM_MODE_ENTER|false
+18:03:59.0 (24876421)|HEAP_ALLOCATE|[277]|Bytes:5
+18:03:59.0 (24881777)|STATEMENT_EXECUTE|[276]
+18:03:59.0 (24883465)|STATEMENT_EXECUTE|[277]
+18:03:59.0 (24887603)|VARIABLE_SCOPE_BEGIN|[277]|queryStr|String|false|false
+18:03:59.0 (24899125)|VARIABLE_ASSIGNMENT|[277]|queryStr|"SELECT Branch__c, Sh (164 more) ..."
+18:03:59.0 (24903779)|STATEMENT_EXECUTE|[278]
+18:03:59.0 (24907050)|HEAP_ALLOCATE|[278]|Bytes:4
+18:03:59.0 (24917472)|VARIABLE_ASSIGNMENT|[278]|this.initSearchFlg|"true"|0x55d80cf1
+18:03:59.0 (24922235)|STATEMENT_EXECUTE|[281]
+18:03:59.0 (24934168)|METHOD_ENTRY|[281]|01pN0000000aEDx|auDailyReportListForAdminCtl.getContditions()
+18:03:59.0 (24949406)|VARIABLE_SCOPE_BEGIN|[222]|this|auDailyReportListForAdminCtl|true|false
+18:03:59.0 (25070427)|VARIABLE_ASSIGNMENT|[222]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (25092106)|HEAP_ALLOCATE|[223]|Bytes:5
+18:03:59.0 (25096646)|STATEMENT_EXECUTE|[222]
+18:03:59.0 (25098591)|STATEMENT_EXECUTE|[223]
+18:03:59.0 (25103311)|HEAP_ALLOCATE|[223]|Bytes:5
+18:03:59.0 (25110202)|VARIABLE_ASSIGNMENT|[223]|this.errFlg|false|0x55d80cf1
+18:03:59.0 (25114865)|STATEMENT_EXECUTE|[224]
+18:03:59.0 (25127882)|HEAP_ALLOCATE|[224]|Bytes:4
+18:03:59.0 (25151415)|VARIABLE_SCOPE_BEGIN|[224]|conditions|List<String>|true|false
+18:03:59.0 (25174404)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:03:59.0 (25183534)|VARIABLE_ASSIGNMENT|[224]|conditions|[]|0xe8ab179
+18:03:59.0 (25316066)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (25368548)|STATEMENT_EXECUTE|[225]
+18:03:59.0 (25490067)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (25517901)|STATEMENT_EXECUTE|[228]
+18:03:59.0 (25519638)|STATEMENT_EXECUTE|[229]
+18:03:59.0 (25640198)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (25661440)|METHOD_ENTRY|[229]|01pN0000000aEDx|auDailyReportListForAdminCtl.appendLikeText(String, String)
+18:03:59.0 (25668163)|VARIABLE_SCOPE_BEGIN|[153]|this|auDailyReportListForAdminCtl|true|false
+18:03:59.0 (25775067)|VARIABLE_ASSIGNMENT|[153]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (25786521)|VARIABLE_SCOPE_BEGIN|[153]|fieldName|String|false|false
+18:03:59.0 (25794434)|VARIABLE_ASSIGNMENT|[153]|fieldName|"Shop__c"
+18:03:59.0 (25798433)|VARIABLE_SCOPE_BEGIN|[153]|value|String|false|false
+18:03:59.0 (25805149)|VARIABLE_ASSIGNMENT|[153]|value|"1"
+18:03:59.0 (25819525)|HEAP_ALLOCATE|[154]|Bytes:5
+18:03:59.0 (25824226)|STATEMENT_EXECUTE|[153]
+18:03:59.0 (25825912)|STATEMENT_EXECUTE|[154]
+18:03:59.0 (25828236)|HEAP_ALLOCATE|[154]|Bytes:1
+18:03:59.0 (25838490)|METHOD_ENTRY|[154]|01pN0000000aEDx|auDailyReportListForAdminCtl.escapeNull(String)
+18:03:59.0 (25852068)|VARIABLE_SCOPE_BEGIN|[149]|value|String|false|false
+18:03:59.0 (25860456)|VARIABLE_ASSIGNMENT|[149]|value|"Shop__c"
+18:03:59.0 (25869252)|HEAP_ALLOCATE|[150]|Bytes:5
+18:03:59.0 (25873507)|STATEMENT_EXECUTE|[149]
+18:03:59.0 (25874901)|STATEMENT_EXECUTE|[150]
+18:03:59.0 (25907568)|METHOD_EXIT|[154]|01pN0000000aEDx|auDailyReportListForAdminCtl.escapeNull(String)
+18:03:59.0 (25913870)|HEAP_ALLOCATE|[154]|Bytes:8
+18:03:59.0 (25919021)|METHOD_ENTRY|[154]|01pN0000000aEDx|auDailyReportListForAdminCtl.escapeNull(String)
+18:03:59.0 (25923927)|VARIABLE_SCOPE_BEGIN|[149]|value|String|false|false
+18:03:59.0 (25931274)|VARIABLE_ASSIGNMENT|[149]|value|"1"
+18:03:59.0 (25939769)|HEAP_ALLOCATE|[150]|Bytes:5
+18:03:59.0 (25943191)|STATEMENT_EXECUTE|[149]
+18:03:59.0 (25944461)|STATEMENT_EXECUTE|[150]
+18:03:59.0 (25958382)|METHOD_EXIT|[154]|01pN0000000aEDx|auDailyReportListForAdminCtl.escapeNull(String)
+18:03:59.0 (25976506)|HEAP_ALLOCATE|[154]|Bytes:1
+18:03:59.0 (25984196)|HEAP_ALLOCATE|[154]|Bytes:3
+18:03:59.0 (25994597)|HEAP_ALLOCATE|[154]|Bytes:20
+18:03:59.0 (26000832)|METHOD_EXIT|[229]|01pN0000000aEDx|auDailyReportListForAdminCtl.appendLikeText(String, String)
+18:03:59.0 (26015387)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:03:59.0 (26148323)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (26177870)|STATEMENT_EXECUTE|[231]
+18:03:59.0 (26295308)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (26321934)|STATEMENT_EXECUTE|[234]
+18:03:59.0 (26435697)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (26461774)|STATEMENT_EXECUTE|[237]
+18:03:59.0 (26463625)|STATEMENT_EXECUTE|[240]
+18:03:59.0 (26465054)|STATEMENT_EXECUTE|[240]
+18:03:59.0 (26590442)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (26618356)|STATEMENT_EXECUTE|[241]
+18:03:59.0 (26733385)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (26759384)|STATEMENT_EXECUTE|[247]
+18:03:59.0 (26761765)|STATEMENT_EXECUTE|[258]
+18:03:59.0 (26770218)|METHOD_ENTRY|[258]|01pN0000000aEDx|auDailyReportListForAdminCtl.joinWhereConditions(List<String>)
+18:03:59.0 (26780675)|VARIABLE_SCOPE_BEGIN|[196]|this|auDailyReportListForAdminCtl|true|false
+18:03:59.0 (26890108)|VARIABLE_ASSIGNMENT|[196]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (26901279)|VARIABLE_SCOPE_BEGIN|[196]|conditions|List<String>|true|false
+18:03:59.0 (26912039)|VARIABLE_ASSIGNMENT|[196]|conditions|[" Shop__c LIKE '%1%' "]|0xe8ab179
+18:03:59.0 (26927782)|HEAP_ALLOCATE|[197]|Bytes:5
+18:03:59.0 (26932540)|STATEMENT_EXECUTE|[196]
+18:03:59.0 (26934008)|STATEMENT_EXECUTE|[197]
+18:03:59.0 (26936692)|VARIABLE_SCOPE_BEGIN|[197]|ret|String|false|false
+18:03:59.0 (26945236)|VARIABLE_ASSIGNMENT|[197]|ret|null
+18:03:59.0 (26948899)|STATEMENT_EXECUTE|[198]
+18:03:59.0 (26951401)|HEAP_ALLOCATE|[198]|Bytes:35
+18:03:59.0 (26986845)|HEAP_ALLOCATE|[198]|Bytes:22
+18:03:59.0 (27001062)|HEAP_ALLOCATE|[198]|Bytes:57
+18:03:59.0 (27024790)|USER_DEBUG|[198]|DEBUG|joinWhereConditions -> conditions: ( Shop__c LIKE '%1%' )
+18:03:59.0 (27033378)|STATEMENT_EXECUTE|[199]
+18:03:59.0 (27064831)|HEAP_ALLOCATE|[202]|Bytes:5
+18:03:59.0 (27077238)|HEAP_ALLOCATE|[202]|Bytes:20
+18:03:59.0 (27084808)|VARIABLE_SCOPE_BEGIN|[202]|condition|String|false|false
+18:03:59.0 (27094444)|VARIABLE_ASSIGNMENT|[202]|condition|" Shop__c LIKE '%1%' "
+18:03:59.0 (27098775)|STATEMENT_EXECUTE|[202]
+18:03:59.0 (27100560)|STATEMENT_EXECUTE|[205]
+18:03:59.0 (27101741)|STATEMENT_EXECUTE|[206]
+18:03:59.0 (27103990)|HEAP_ALLOCATE|[206]|Bytes:7
+18:03:59.0 (27109956)|HEAP_ALLOCATE|[206]|Bytes:27
+18:03:59.0 (27116708)|VARIABLE_ASSIGNMENT|[206]|ret|" WHERE  Shop__c LIKE (7 more) ..."
+18:03:59.0 (27125533)|HEAP_ALLOCATE|[202]|Bytes:5
+18:03:59.0 (27132910)|VARIABLE_ASSIGNMENT|[202]|condition|null
+18:03:59.0 (27137168)|STATEMENT_EXECUTE|[211]
+18:03:59.0 (27138460)|STATEMENT_EXECUTE|[212]
+18:03:59.0 (27140287)|HEAP_ALLOCATE|[212]|Bytes:29
+18:03:59.0 (27144634)|HEAP_ALLOCATE|[212]|Bytes:56
+18:03:59.0 (27150456)|VARIABLE_ASSIGNMENT|[212]|ret|" WHERE  Shop__c LIKE (36 more) ..."
+18:03:59.0 (27154967)|STATEMENT_EXECUTE|[214]
+18:03:59.0 (27161599)|METHOD_EXIT|[258]|01pN0000000aEDx|auDailyReportListForAdminCtl.joinWhereConditions(List<String>)
+18:03:59.0 (27168951)|METHOD_EXIT|[281]|01pN0000000aEDx|auDailyReportListForAdminCtl.getContditions()
+18:03:59.0 (27173838)|VARIABLE_SCOPE_BEGIN|[281]|conditionStr|String|false|false
+18:03:59.0 (27182628)|VARIABLE_ASSIGNMENT|[281]|conditionStr|" WHERE  Shop__c LIKE (36 more) ..."
+18:03:59.0 (27186834)|STATEMENT_EXECUTE|[282]
+18:03:59.0 (27188751)|HEAP_ALLOCATE|[282]|Bytes:30
+18:03:59.0 (27193914)|HEAP_ALLOCATE|[282]|Bytes:86
+18:03:59.0 (27209508)|USER_DEBUG|[282]|DEBUG|recordSearch -> conditionStr:  WHERE  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'
+18:03:59.0 (27217303)|STATEMENT_EXECUTE|[285]
+18:03:59.0 (27224130)|METHOD_ENTRY|[285]|01pN0000000aEDx|auDailyReportListForAdminCtl.getOrderBy()
+18:03:59.0 (27233366)|VARIABLE_SCOPE_BEGIN|[331]|this|auDailyReportListForAdminCtl|true|false
+18:03:59.0 (27356666)|VARIABLE_ASSIGNMENT|[331]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (27377564)|HEAP_ALLOCATE|[332]|Bytes:5
+18:03:59.0 (27381657)|STATEMENT_EXECUTE|[331]
+18:03:59.0 (27383242)|STATEMENT_EXECUTE|[332]
+18:03:59.0 (27385527)|HEAP_ALLOCATE|[332]|Bytes:10
+18:03:59.0 (27510130)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (27530462)|HEAP_ALLOCATE|[332]|Bytes:26
+18:03:59.0 (27535186)|VARIABLE_SCOPE_BEGIN|[332]|orderByStr|String|false|false
+18:03:59.0 (27548847)|VARIABLE_ASSIGNMENT|[332]|orderByStr|" ORDER BY LastModifi (6 more) ..."
+18:03:59.0 (27553262)|STATEMENT_EXECUTE|[333]
+18:03:59.0 (27556212)|VARIABLE_SCOPE_BEGIN|[333]|descStr|String|false|false
+18:03:59.0 (27563707)|VARIABLE_ASSIGNMENT|[333]|descStr|""
+18:03:59.0 (27685096)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (27701306)|STATEMENT_EXECUTE|[336]
+18:03:59.0 (27702864)|STATEMENT_EXECUTE|[337]
+18:03:59.0 (27705725)|HEAP_ALLOCATE|[337]|Bytes:17
+18:03:59.0 (27712689)|VARIABLE_ASSIGNMENT|[337]|descStr|" Desc nulls last "
+18:03:59.0 (27717715)|STATEMENT_EXECUTE|[339]
+18:03:59.0 (27721084)|HEAP_ALLOCATE|[339]|Bytes:43
+18:03:59.0 (27727147)|VARIABLE_ASSIGNMENT|[339]|orderByStr|" ORDER BY LastModifi (23 more) ..."
+18:03:59.0 (27731317)|STATEMENT_EXECUTE|[340]
+18:03:59.0 (27736591)|METHOD_EXIT|[285]|01pN0000000aEDx|auDailyReportListForAdminCtl.getOrderBy()
+18:03:59.0 (27742029)|VARIABLE_SCOPE_BEGIN|[285]|orderBy|String|false|false
+18:03:59.0 (27750196)|VARIABLE_ASSIGNMENT|[285]|orderBy|" ORDER BY LastModifi (23 more) ..."
+18:03:59.0 (27754679)|STATEMENT_EXECUTE|[288]
+18:03:59.0 (27757741)|VARIABLE_SCOPE_BEGIN|[288]|range|String|false|false
+18:03:59.0 (27765340)|VARIABLE_ASSIGNMENT|[288]|range|"10000"
+18:03:59.0 (27889883)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (27925731)|STATEMENT_EXECUTE|[290]
+18:03:59.0 (27927303)|STATEMENT_EXECUTE|[291]
+18:03:59.0 (27931934)|VARIABLE_ASSIGNMENT|[291]|range|"1000"
+18:03:59.0 (27936321)|STATEMENT_EXECUTE|[293]
+18:03:59.0 (27939363)|HEAP_ALLOCATE|[293]|Bytes:7
+18:03:59.0 (27945463)|HEAP_ALLOCATE|[293]|Bytes:11
+18:03:59.0 (27949053)|VARIABLE_SCOPE_BEGIN|[293]|limitStr|String|false|false
+18:03:59.0 (27956462)|VARIABLE_ASSIGNMENT|[293]|limitStr|" LIMIT 1000"
+18:03:59.0 (27959689)|STATEMENT_EXECUTE|[296]
+18:03:59.0 (27966869)|HEAP_ALLOCATE|[296]|Bytes:110
+18:03:59.0 (27972575)|HEAP_ALLOCATE|[296]|Bytes:294
+18:03:59.0 (27978569)|VARIABLE_ASSIGNMENT|[296]|queryStr|"SELECT Branch__c, Sh (274 more) ..."
+18:03:59.0 (27984360)|STATEMENT_EXECUTE|[300]
+18:03:59.0 (27985677)|STATEMENT_EXECUTE|[301]
+18:03:59.0 (27992969)|METHOD_ENTRY|[301]|01pN0000000aEDx|auDailyReportListForAdminCtl.createSsc(String)
+18:03:59.0 (28004424)|VARIABLE_SCOPE_BEGIN|[344]|this|auDailyReportListForAdminCtl|true|false
+18:03:59.0 (28120767)|VARIABLE_ASSIGNMENT|[344]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (28132918)|VARIABLE_SCOPE_BEGIN|[344]|queryStr|String|false|false
+18:03:59.0 (28142487)|VARIABLE_ASSIGNMENT|[344]|queryStr|"SELECT Branch__c, Sh (274 more) ..."
+18:03:59.0 (28155975)|HEAP_ALLOCATE|[345]|Bytes:5
+18:03:59.0 (28160028)|STATEMENT_EXECUTE|[344]
+18:03:59.0 (28161513)|STATEMENT_EXECUTE|[345]
+18:03:59.0 (28163613)|HEAP_ALLOCATE|[345]|Bytes:23
+18:03:59.0 (28169021)|HEAP_ALLOCATE|[345]|Bytes:317
+18:03:59.0 (28185430)|USER_DEBUG|[345]|DEBUG|createSsc -> queryStr: SELECT Branch__c, Shop__c, ReportName__c, CreatedDate, LastModifiedDate, Type__c, Status__c, CreatedBy.Name, LastModifiedBy.Name, ValidFrom__c, ValidTo__c, IsValid__c FROM saInquiry__c WHERE  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT' ORDER BY LastModifiedDate Desc nulls last  LIMIT 1000
+18:03:59.0 (28195672)|STATEMENT_EXECUTE|[346]
+18:03:59.0 (29370882)|SOQL_EXECUTE_BEGIN|[346]|Aggregations:0|SELECT Branch__c, Shop__c, ReportName__c, CreatedDate, LastModifiedDate, Type__c, Status__c, CreatedBy.Name, LastModifiedBy.Name, ValidFrom__c, ValidTo__c, IsValid__c FROM saInquiry__c 
+18:03:59.0 (75634034)|SOQL_EXECUTE_END|[346]|Rows:134
+18:03:59.0 (75709370)|HEAP_ALLOCATE|[346]|Bytes:20
+18:03:59.0 (75882408)|VARIABLE_SCOPE_BEGIN|[346]|localSsc|ApexPages.StandardSetController|true|false
+18:03:59.0 (75975628)|VARIABLE_ASSIGNMENT|[346]|localSsc|"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@728e21f9"|0x728e21f9
+18:03:59.0 (75986187)|STATEMENT_EXECUTE|[347]
+18:03:59.0 (94245650)|STATEMENT_EXECUTE|[348]
+18:03:59.0 (94332364)|STATEMENT_EXECUTE|[349]
+18:03:59.0 (94348300)|METHOD_EXIT|[301]|01pN0000000aEDx|auDailyReportListForAdminCtl.createSsc(String)
+18:03:59.0 (94577365)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Branch__c LIKE '%2%'  AND  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@2d83d07b","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (94640961)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@728e21f9"|0x728e21f9
+18:03:59.0 (94701866)|VARIABLE_ASSIGNMENT|[12]|this.ssc|"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@728e21f9"|0x55d80cf1
+18:03:59.0 (94716389)|STATEMENT_EXECUTE|[302]
+18:03:59.0 (94725404)|VARIABLE_ASSIGNMENT|[302]|this.conditionStr|" WHERE  Shop__c LIKE (36 more) ..."|0x55d80cf1
+18:03:59.0 (94730501)|STATEMENT_EXECUTE|[303]
+18:03:59.0 (94740082)|HEAP_ALLOCATE|[303]|Bytes:14
+18:03:59.0 (94754200)|HEAP_ALLOCATE|[303]|Bytes:70
+18:03:59.0 (94789312)|USER_DEBUG|[303]|DEBUG|conditionStrは： WHERE  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'
+18:03:59.0 (94797568)|STATEMENT_EXECUTE|[304]
+18:03:59.0 (94805557)|VARIABLE_ASSIGNMENT|[304]|this.limitStr|" LIMIT 1000"|0x55d80cf1
+18:03:59.0 (94810334)|STATEMENT_EXECUTE|[306]
+18:03:59.0 (94824716)|METHOD_ENTRY|[306]|01pN0000000aEDx|auDailyReportListForAdminCtl.saveInputValues()
+18:03:59.0 (94837962)|VARIABLE_SCOPE_BEGIN|[80]|this|auDailyReportListForAdminCtl|true|false
+18:03:59.0 (94963815)|VARIABLE_ASSIGNMENT|[80]|this|{"conditionStr":" WHERE  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@728e21f9","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (94995608)|HEAP_ALLOCATE|[81]|Bytes:5
+18:03:59.0 (95001278)|STATEMENT_EXECUTE|[80]
+18:03:59.0 (95003541)|STATEMENT_EXECUTE|[81]
+18:03:59.0 (95033045)|HEAP_ALLOCATE|[81]|Bytes:4
+18:03:59.0 (95069598)|VARIABLE_SCOPE_BEGIN|[81]|cookies|List<System.Cookie>|true|false
+18:03:59.0 (95108465)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:03:59.0 (95120354)|VARIABLE_ASSIGNMENT|[81]|cookies|[]|0x46522f91
+18:03:59.0 (95126064)|STATEMENT_EXECUTE|[82]
+18:03:59.0 (95270399)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@728e21f9","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (95339542)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:03:59.0 (95347813)|STATEMENT_EXECUTE|[83]
+18:03:59.0 (95475749)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@728e21f9","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (95513533)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:03:59.0 (95520051)|STATEMENT_EXECUTE|[84]
+18:03:59.0 (95651666)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@728e21f9","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (95688449)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:03:59.0 (95694535)|STATEMENT_EXECUTE|[85]
+18:03:59.0 (95817800)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@728e21f9","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (95852319)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:03:59.0 (95858486)|STATEMENT_EXECUTE|[86]
+18:03:59.0 (95979835)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@728e21f9","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (96013878)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:03:59.0 (96020605)|STATEMENT_EXECUTE|[87]
+18:03:59.0 (96142246)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@728e21f9","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (96177022)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:03:59.0 (96182870)|STATEMENT_EXECUTE|[89]
+18:03:59.0 (96186448)|VARIABLE_SCOPE_BEGIN|[89]|fromDateStr|String|false|false
+18:03:59.0 (96195350)|VARIABLE_ASSIGNMENT|[89]|fromDateStr|null
+18:03:59.0 (96315980)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@728e21f9","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (96332560)|STATEMENT_EXECUTE|[90]
+18:03:59.0 (96334582)|STATEMENT_EXECUTE|[91]
+18:03:59.0 (96448680)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@728e21f9","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (96465332)|HEAP_ALLOCATE|[91]|Bytes:1
+18:03:59.0 (96470206)|HEAP_ALLOCATE|[91]|Bytes:1
+18:03:59.0 (96528076)|VARIABLE_ASSIGNMENT|[91]|fromDateStr|""
+18:03:59.0 (96534351)|STATEMENT_EXECUTE|[93]
+18:03:59.0 (96581928)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:03:59.0 (96589311)|STATEMENT_EXECUTE|[95]
+18:03:59.0 (96592160)|VARIABLE_SCOPE_BEGIN|[95]|toDateStr|String|false|false
+18:03:59.0 (96600383)|VARIABLE_ASSIGNMENT|[95]|toDateStr|null
+18:03:59.0 (96733073)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@728e21f9","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (96748856)|STATEMENT_EXECUTE|[96]
+18:03:59.0 (96750473)|STATEMENT_EXECUTE|[97]
+18:03:59.0 (96870021)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@728e21f9","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (96907540)|VARIABLE_ASSIGNMENT|[97]|toDateStr|""
+18:03:59.0 (96913757)|STATEMENT_EXECUTE|[99]
+18:03:59.0 (96962831)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:03:59.0 (96973950)|STATEMENT_EXECUTE|[100]
+18:03:59.0 (97013119)|HEAP_ALLOCATE|[100]|Bytes:567
+18:03:59.0 (97137394)|METHOD_EXIT|[306]|01pN0000000aEDx|auDailyReportListForAdminCtl.saveInputValues()
+18:03:59.0 (97145870)|SYSTEM_MODE_EXIT|false
+18:03:59.0 (110898481)|SYSTEM_MODE_ENTER|true
+18:03:59.111 (111335600)|SYSTEM_MODE_ENTER|true
+18:03:59.111 (111404207)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+18:03:59.111 (111417467)|VARIABLE_SCOPE_BEGIN|[88]|this|ApexPage.PageMessagesComponentController|true|false
+18:03:59.111 (111456361)|VARIABLE_ASSIGNMENT|[88]|this|{}|0x70d9a674
+18:03:59.111 (111463794)|VARIABLE_SCOPE_BEGIN|[88]|escape|Boolean|false|false
+18:03:59.111 (111472547)|VARIABLE_ASSIGNMENT|[88]|escape|null
+18:03:59.111 (111558087)|SYSTEM_MODE_ENTER|true
+18:03:59.111 (111585379)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+18:03:59.111 (111591788)|VARIABLE_SCOPE_BEGIN|[2]|this|ApexPage.PageMessagesComponentController|true|false
+18:03:59.111 (111609047)|VARIABLE_ASSIGNMENT|[2]|this|{}|0x70d9a674
+18:03:59.0 (112139799)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (112336234)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (112441865)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (112466309)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:84
+18:03:59.0 (112473047)|VARIABLE_SCOPE_BEGIN|[352]|this|auDailyReportListForAdminCtl|true|false
+18:03:59.0 (112702156)|VARIABLE_ASSIGNMENT|[352]|this|{"conditionStr":" WHERE  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@728e21f9","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (112726849)|SYSTEM_MODE_ENTER|false
+18:03:59.0 (112734459)|HEAP_ALLOCATE|[353]|Bytes:5
+18:03:59.0 (112740616)|STATEMENT_EXECUTE|[352]
+18:03:59.0 (112742957)|STATEMENT_EXECUTE|[353]
+18:03:59.0 (112747390)|VARIABLE_SCOPE_BEGIN|[353]|recs|List<saInquiry__c>|true|false
+18:03:59.0 (112756374)|VARIABLE_ASSIGNMENT|[353]|recs|null|
+18:03:59.0 (112890317)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@728e21f9","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (112908898)|STATEMENT_EXECUTE|[354]
+18:03:59.0 (112910679)|STATEMENT_EXECUTE|[355]
+18:03:59.0 (113024902)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE  Shop__c LIKE '%1%'  AND Type__c = 'DAILY_REPORT'","errFlg":false,"fieldDateFrom":"","fieldDateTo":"","initSearchFlg":"true","limitStr":" LIMIT 1000","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@728e21f9","targetField1":"","targetField2":"1","targetField3":"","targetField4":"","targetField5":"","targetRecords":"1"}|0x55d80cf1
+18:03:59.0 (113069490)|HEAP_ALLOCATE|[355]|Bytes:204
+18:03:59.0 (113099100)|HEAP_ALLOCATE|[355]|Bytes:204
+18:03:59.0 (113119049)|VARIABLE_ASSIGNMENT|[355]|recs|"List of size 50 too large to display"|0x2d41b3d9
+18:03:59.0 (113126315)|STATEMENT_EXECUTE|[357]
+18:03:59.0 (113127941)|STATEMENT_EXECUTE|[360]
+18:03:59.0 (113132365)|SYSTEM_MODE_EXIT|false
+18:03:59.0 (121046317)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (121197183)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (121400549)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (121493205)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (121570910)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (121649274)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (121739375)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (121862251)|SYSTEM_MODE_ENTER|true
+18:03:59.0 (121983120)|SYSTEM_MODE_ENTER|true
+18:03:59.122 (122515772)|SYSTEM_MODE_ENTER|true
+18:03:59.122 (122574080)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+18:03:59.122 (122584117)|VARIABLE_SCOPE_BEGIN|[88]|this|ApexPage.PageMessagesComponentController|true|false
+18:03:59.122 (122611931)|VARIABLE_ASSIGNMENT|[88]|this|{}|0x70d9a674
+18:03:59.122 (122622721)|VARIABLE_SCOPE_BEGIN|[88]|escape|Boolean|false|false
+18:03:59.122 (122630439)|VARIABLE_ASSIGNMENT|[88]|escape|null
+18:03:59.122 (122738064)|SYSTEM_MODE_ENTER|true
+18:03:59.122 (122765819)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+18:03:59.122 (122772772)|VARIABLE_SCOPE_BEGIN|[2]|this|ApexPage.PageMessagesComponentController|true|false
+18:03:59.122 (122789942)|VARIABLE_ASSIGNMENT|[2]|this|{}|0x70d9a674
+18:03:59.0 (207155397)|VF_SERIALIZE_VIEWSTATE_BEGIN|066N0000000M524
+18:03:59.0 (212040748)|VF_SERIALIZE_VIEWSTATE_END
+18:03:59.218 (218631932)|CUMULATIVE_LIMIT_USAGE
+18:03:59.218 (218631932)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 1 out of 100
+  Number of query rows: 50 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+18:03:59.218 (218631932)|CUMULATIVE_LIMIT_USAGE_END
+
+18:03:59.0 (218670176)|CODE_UNIT_FINISHED|VF: /apex/auDailyReportListForAdmin
+18:03:59.0 (219440262)|EXECUTION_FINISHED

@@ -1,0 +1,335 @@
+<apex:component controller="auMainTopCompCtrl" allowDML="true" >
+  <apex:attribute type="Integer" name="nbLikes" assignTo="{!iCountLikes}" description="Number of Likes"/>
+  <apex:attribute type="Integer" name="nbComments" assignTo="{!iCountComments}" description="Number of Comments"/>
+  <apex:attribute type="Integer" name="typeOfScreen" assignTo="{!iTypeOfScreen}" description="Type of Screen"/>
+
+  <apex:stylesheet value="{!URLFOR($Resource.jQueryUIFull, 'jquery-ui-1.12.1/jquery-ui.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.jQueryUIFull, 'jquery-ui-1.12.1/jquery-ui.min.css')}"/>
+
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/external/jquery/jquery.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.datepicker-ja.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryMin)}"/>
+
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.min.js')}"/> 
+
+
+  <style>
+    .badge-grey:after{
+        background-color: grey !important;
+    }
+
+    .button--logout {
+      width:11rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .menu--active {
+      background-color: #ed5500;
+      opacity: 1 !important;
+    }
+
+    .attachInputPic {
+      height: 2rem;
+      width: 2rem;
+      position: absolute;
+      right: 2rem;
+      opacity: 0;
+      overflow: hidden;
+   }
+
+   .header-title {
+     color: #ed5500;
+     float: left;
+     font-size: x-large;
+     margin-top: 0.8rem;
+     margin-left: 1rem;
+   }
+
+   .sidebar.STPD {
+      background-color: black;
+   }
+
+  .navigation__item.STPD>a{opacity:1;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";}
+
+  </style>
+
+  <script>
+
+    var $j = jQuery.noConflict();
+
+    function callAddNewPicture() {
+        if (checkFileSize()) {
+          addNewPicture();          
+        }
+    }
+
+    function checkFileSize() {
+        var goodSize = true;
+
+        $j('input[type=file]').each(function()
+        {
+            if(this.files.length > 0 && typeof this.files[0] !== 'undefined')
+            {
+                var file = this.files[0],
+                    size = typeof ActiveXObject !== 'undefined' ?
+                        getIEFileSize(file)
+                        :
+                        file.fileSize || file.size;
+     
+                goodSize = 65 * 1024 * 1024 > size;
+                if(!goodSize) {
+                    alert('ファイルは大きすぎです。65Moまでのファイルを選択してください。');
+                }
+     
+                return goodSize;
+            }
+        });
+
+        return goodSize;
+    }
+
+  </script>
+
+
+  <apex:actionFunction name="addNewPicture" action="{!addNewPicture}" />
+
+  <!-- TOP MENU BAR -->
+  <header class="header clear">
+
+    <h1 class="header__logo">
+      <a href="/home">
+        <img src="{!URLFOR($Resource.auStyling,'/images/sub-logo.jpg')}" alt="AU" />
+      </a>
+    </h1>
+
+    <!-- USER INFO -->
+    <div class="header-options">
+      <div class="header-action">
+        <ul>
+          <apex:outputPanel rendered="{!CountLikes != NULL}">
+            <li><i class="material-icons">thumb_up</i><span class="mdl-badge {!IF(CountLikes == 0, 'badge-grey', '')}" data-badge="{!CountLikes}"></span></li>
+          </apex:outputPanel>
+          <apex:outputPanel rendered="{!CountComments != NULL}">
+            <li><i class="material-icons">comment</i><span class="mdl-badge {!IF(CountComments == 0, 'badge-grey', '')}" data-badge="{!CountComments}"></span></li>
+          </apex:outputPanel>
+        </ul>
+      </div>
+      <div class="header-info">
+        <apex:outputPanel id="userPic">
+
+        <apex:outputLabel for="upload--picture">
+          <div class="header-info__image"><img src="{!currentUser.SmallPhotoUrl}" alt="USER" /></div>
+        </apex:outputLabel>
+
+        </apex:outputPanel>
+        <div class="header-info__location">
+          <p class="header-info__city">
+            {!currentUser.Account.RegionalOfficeId__r.RegionalOfficeName__c}
+            <apex:outputLabel rendered="{!currentUser.Account.RegionalOfficeId__r.RegionalOfficeName__c != NULL && currentUser.Account.BranchId__r.BranchName__c != NULL}">
+            ・
+            </apex:outputLabel>
+            {!currentUser.Account.BranchId__r.BranchName__c}</p>
+          <p>
+            <apex:outputLabel rendered="{!currentUser.Account.Name != NULL}">
+              {!currentUser.Account.Name}
+            </apex:outputLabel>
+            <apex:outputLabel rendered="{!currentUser.Account.Name == NULL}">
+              {!currentUser.Name}
+            </apex:outputLabel>
+          </p>
+        </div>
+      </div>
+
+      <div class="header-buttons">
+        <a class="button button--logout mdl-button mdl-js-button mdl-button--raised" href="{!$Site.Prefix}/secur/logout.jsp">ログアウト</a>
+
+        <!-- SETTINGS BUTTON -->
+        <apex:inputFile id="upload--picture" 
+                        styleclass="attachInputPic" 
+                        value="{!newPictureBody}" 
+                        filename="{!newPictureName}" 
+                        filesize="{!newPictureSize}" 
+                        onchange="callAddNewPicture();" />
+
+
+<!--
+        <apex:outputLabel for="upload--picture">
+          <a class="button button--setting">
+            <i class="icon icon--setting"></i>
+          </a>
+        </apex:outputLabel>
+-->
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- LEFT MENU BAR -->
+  <apex:outputPanel rendered="{!IsShowAsideSTPD}">
+    <aside class="sidebar {!IF(sidebarTitle == '1', 'STPD', '')}" role="sidebar">
+
+      <p class="sidebar__item-name">{!IF(sidebarTitle == '1', 'CX-', 'CX')}<br/>{!IF(sidebarTitle == '1', 'STPD', 'ナレッジ')}</p>
+
+      <nav class="navigation">
+        <ul>
+
+          <!-- HOME -->
+          <li class="navigation__item {!IF(sidebarTitle == '1', 'STPD', '')}">
+            <a href="/timelineSTPD" class="{!IF(isSTPDTimeline, 'menu--active', '')}">
+              <i class="icon icon--home"></i>
+              <span>CX-STPD<br/>ホーム</span>
+            </a>
+          </li>
+
+          <!-- THEMA (STPD) -->
+          <li class="navigation__item {!IF(sidebarTitle == '1', 'STPD', '')}">
+            <a href="/stpd" class="{!IF(isSTPDScreen, 'menu--active', '')}">
+              <i class="icon icon--list"></i>
+              <span>CX-STPD<br/>一覧</span>
+            </a>
+          </li>
+
+          <!-- EVENTS -->
+          <li class="navigation__item {!IF(sidebarTitle == '1', 'STPD', '')}">
+            <a href="/events" class="{!IF(isSTPDEvent, 'menu--active', '')}">
+              <i class="icon icon--event"></i>
+              <span>イベント</span>
+            </a>
+          </li>
+
+          <!-- BACK -->
+          <li class="navigation__item {!IF(sidebarTitle == '1', 'STPD', '')}">
+            <a href="/home">
+              <i class="icon icon--back"></i>
+              <span>auポータル<br/>トップ</span>
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+    </aside>
+  </apex:outputPanel>
+
+  <apex:outputPanel rendered="{!IsShowAsideCX}">
+    <aside class="sidebar" role="sidebar">
+
+      <p class="sidebar__item-name">{!IF(sidebarTitle == '1', 'CX-', 'CX')}<br/>{!IF(sidebarTitle == '1', 'STPD', 'ナレッジ')}</p>
+
+      <nav class="navigation">
+        <ul>
+
+          <!-- HOME -->
+          <li class="navigation__item">
+            <a href="/timelineCX" class="{!IF(isCXTimeline, 'menu--active', '')}">
+              <i class="icon icon--home"></i>
+              <span>CXナレッジ<br/>ホーム</span>
+            </a>
+          </li>
+
+          <!-- THEMA (CX) -->
+          <li class="navigation__item">
+            <a href="/CX" class="{!IF(isCXScreen, 'menu--active', '')}">
+              <i class="icon icon--list"></i>
+              <span>CXナレッジ<br/>一覧</span>
+            </a>
+          </li>
+
+          <!-- BACK -->
+          <li class="navigation__item {!IF(sidebarTitle == '1', 'STPD', '')}">
+            <a href="/home">
+              <i class="icon icon--back"></i>
+              <span>auポータル<br/>トップ</span>
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+    </aside>
+  </apex:outputPanel>
+
+  <apex:outputPanel rendered="{!IsShowAsideKddiKnowledge}">
+    <aside class="sidebar" role="sidebar">
+
+      <p class="sidebar__item-name">ナレッジ</p>
+
+      <nav class="navigation">
+        <ul>
+
+          <!-- HOME -->
+          <li class="navigation__item">
+            <a href="/apex/kdKnowledgeHomePage" class="{!IF(isKddiKnowledgeDashboard, 'menu--active', '')}">
+              <i class="icon icon--home"></i>
+              <span>ナレッジ<br/>ホーム</span>
+            </a>
+          </li>
+
+          <!-- LIST KNOWLEDGE -->
+          <li class="navigation__item">
+            <a href="/apex/kdKnowledgeListPage" class="{!IF(isKddiKnowledgeList, 'menu--active', '')}">
+              <i class="icon icon--list"></i>
+              <span>ナレッジ<br/>一覧</span>
+            </a>
+          </li>
+
+          <!-- BACK -->
+          <li class="navigation__item {!IF(sidebarTitle == '1', 'STPD', '')}">
+            <a href="/home">
+              <i class="icon icon--back"></i>
+              <span>auポータル<br/>トップ</span>
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+    </aside>
+  </apex:outputPanel>
+
+  <apex:outputPanel rendered="{!IsShowAsideAccount}">
+    <aside class="sidebar" role="sidebar">
+
+      <p class="sidebar__item-name">CCP＋</p>
+
+      <nav class="navigation">
+        <ul>
+
+          <!-- LIST ACCOUNT -->
+          <li class="navigation__item">
+            <a href="/apex/kdAccountWithActivitiesList" class="{!IF(isAccountList, 'menu--active', '')}">
+              <i class="icon icon--list"></i>
+              <span>取引先<br/>一覧</span>
+            </a>
+          </li>
+          <!-- LIST Activity -->
+          <li class="navigation__item">
+            <a href="#" class="{!IF(isActivityList, 'menu--active', 'hidden')}">
+              <i class="icon icon--list"></i>
+              <span>活動<br/>一覧</span>
+            </a>
+          </li>
+          <!-- LIST FILE -->
+          <li class="navigation__item">
+            <a href="/apex/kdActivityFileList" class="{!IF(isFileList, 'menu--active', '')}">
+              <i class="icon icon--list"></i>
+              <span>ライブラリ</span>
+            </a>
+          </li>
+
+          <!-- BACK -->
+          <li class="navigation__item {!IF(sidebarTitle == '1', 'STPD', '')}">
+            <a href="/home">
+              <i class="icon icon--back"></i>
+              <span>auポータル<br/>トップ</span>
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+    </aside>
+  </apex:outputPanel>
+
+</apex:component>

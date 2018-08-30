@@ -1,0 +1,1815 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="true" applyHtmlTag="false" applyBodyTag="false" doctype="html-5.0" controller="auAddUserCtrl">
+	<apex:outputPanel layout="none" id="contentPage">
+		<html>
+      
+			<apex:includeScript value="{!URLFOR($Resource.JQuery)}" />
+		    <apex:includeScript value="{!URLFOR($Resource.jQueryUI2, 'JQueryUI/jquery-ui.min.js')}" />
+		    <apex:includeScript value="{!URLFOR($Resource.KDDI_CustomizedMaterials, 'KDDI_CustomizedMaterials/bootstrap/js/bootstrap.min.js')}" />
+			<apex:includeScript value="{!URLFOR($Resource.KDDI_CustomizedMaterials, 'KDDI_CustomizedMaterials/PagerHelper.js')}" />
+		
+			<style>
+			
+				.section-header{
+					margin-bottom: 1em;
+				}
+				label.field-label {
+    				float: left;
+    				min-width: 100px;
+				}
+				.contents .contents-body .quotation-area .section-body .quotation-information .quotation-detail-informations .quotation-detail-list .quotation-detail-item .detail-reply-row .field input {
+		        	visibility: collapse !important;
+		        }
+		        .contents .field input.field-value.reference-field-hidden {
+		       		height: 0px;
+		    		width: 0px;
+		      		padding: 0px !important;
+		     		border: none;
+		      		visibility: collapse !important;
+		        }
+				.modal-dialog .modal-content {
+					border: 2px solid #5e82b2;
+				}
+				.modal-dialog.modal-alert .modal-content {
+				border: 2px solid #e34b4b; 
+			 		}
+				#detailProductItemView .modal-dialog {width: 100%; margin-top: 1em;}
+			 	#multiDeleteView .modal-dialog {width: 100%;}
+				.modal-dialog .modal-content .modal-header {
+			 		background: #5e82b2;
+					background: -moz-linear-gradient(top,#5e82b2 0%, #5575a1 100%);
+					background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5e82b2), color-stop(100%,#5575a1));
+					background: -webkit-linear-gradient(top,#5e82b2 0%,#5575a1 100%);
+					background: -o-linear-gradient(top,#5e82b2 0%,#5575a1 100%);
+					background: -ms-linear-gradient(top,#5e82b2 0%,#5575a1 100%);
+					background: linear-gradient(to bottom,#5e82b2 0%,#5575a1 100%);
+					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5e82b2', endColorstr='#5575a1',GradientType=0 );
+					text-shadow: -1px -1px #415b7c, 1px 1px #415b7c;
+					font-size: 16px;
+					font-weight: bold;
+					color: #fff;
+					border-bottom: none;
+					padding: 0.5em;
+				}
+				.modal-dialog.modal-alert .modal-content .modal-header {
+					background: #e34b4b; /* Old browsers */
+					background: -moz-linear-gradient(top,#e34b4b 0%, #993737 100%); /* FF3.6+ */
+					background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e34b4b), color-stop(100%,#993737)); /* Chrome,Safari4+ */
+					background: -webkit-linear-gradient(top,#e34b4b 0%,#993737 100%); /* Chrome10+,Safari5.1+ */
+					background: -o-linear-gradient(top,#e34b4b 0%,#993737 100%); /* Opera 11.10+ */
+					background: -ms-linear-gradient(top,#e34b4b 0%,#993737 100%); /* IE10+ */
+					background: linear-gradient(to bottom,#e34b4b 0%,#993737 100%); /* W3C */
+					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e34b4b', endColorstr='#993737',GradientType=0 ); /* IE6-9 */
+				}
+				.modal-dialog .modal-body {
+				}
+				.modal-body .search-area {
+					padding-top: 0px;
+					background-color: #becde0;
+					border: none;
+					padding: 8px;
+					margin-bottom: 16px;
+					position: relative;
+				}
+				.modal-dialog .modal-content .modal-body .search-area .toggle-button {
+					width: 80px;
+					height: 20px;
+					border-radius: 0 0 6px 6px;
+					border: 1px solid #7e9bc1;
+					background-color: #ffffff;
+					text-align: center;
+					cursor: pointer;
+					line-height: 20px;
+					position: absolute;
+					top: 100%;
+					padding: 0px;
+				}
+				.modal-body .search-area .toggle-button:before {
+					content: '▼';
+				}
+				.modal-body .search-area .collapse.in + .toggle-button:before {
+					content: '▲';
+				}
+				.modal-body .search-area .section-body .search-field {
+					display: table;
+					float: left;
+				}
+				.modal-body .search-area .section-body .search-field .field {
+					display: table-row;
+					float: left;
+					width: 100%;
+					margin-bottom: 0.5em;
+				}
+				
+				.modal-dialog .modal-body .errors {
+					display: none;
+				}
+				.modal-dialog .modal-body .select-area {
+					width: 100%;
+				}
+				.modal-dialog .modal-body .select-area>* {
+					float: left;
+				}
+				.modal-dialog .modal-body .select-area:after {
+					content: ".";
+					display: block;
+					height: 0px;
+					overflow: hidden;
+					clear: both;
+				}
+				.modal-dialog .modal-content .modal-body .select-area .item-list {
+					width: 100%;
+					height: 342px;
+					overflow: auto;
+				}
+				.setting-row {
+					width: 100%;
+				}
+				fieldset.setting-row {
+					margin-top: 20px;
+				}
+				fieldset.setting-row legend {
+					color: inherit;
+					font-weight: normal;
+					padding: 4px 8px;
+				}
+				.contents .modal-body .options-area .output-controls fieldset.setting-row .field .field-label {
+					line-height: 30px;
+					padding: 0px 8px;
+				}
+				
+				.contents .modal-body .options-area .output-controls fieldset.setting-row .field .field-label,
+				.contents .modal-body .options-area .output-controls fieldset.setting-row .field .field-value {
+					height: 30px;
+					vertical-align: middle;
+				}
+				.setting-row .word-text .field-value,
+				.setting-row .word-text .field-label {
+					font-size: 13px;
+					text-align: left;
+					width: 452px;
+					margin-left: 8px; 
+				}
+				.setting-row .word-select-list .field-value,
+				.setting-row .word-select-list .field-label {
+					font-size: 13px;
+					width: 116px;
+					text-align: left;
+				}
+				.modal-dialog .modal-content .modal-body .select-area .table {
+					display: table;
+					width: 100%;
+				}
+				.modal-dialog .modal-content .modal-body .select-area .table .item {
+					display: table-row;
+					padding: 4px;
+					border-radius: 2px;
+					border: 1px solid #cccccc;
+					margin-top: -1px;
+					user-select: none;
+					-moz-user-select: none;
+					-webkit-user-select: none;
+					-ms-user-select: none;
+					cursor: pointer;
+					overflow: hidden;
+					background-color: #fff;
+				}
+				
+				.modal-dialog .modal-content .modal-body .select-area .table .item:first-child {
+					margin-top: 0px;
+				}
+				.modal-dialog .modal-content .modal-body .select-area .table .item:hover .field {
+					border-top: 1px solid #00ABFF;
+					border-color: #00ABFF;
+					box-shadow: 0 1px 5px rgba(0,171,255,0.25);
+					background-color: #fff;
+					position: relative;
+				}
+				.modal-dialog .modal-content .modal-body .select-area .table .item:first-child:hover .field:first-child {
+					border-left-color: #666;
+				}
+				.modal-dialog .modal-content .modal-body .select-area .table .item:hover .field:first-child {
+					border-left-color: #00ABFF;
+				}
+				.modal-dialog .modal-content .modal-body .select-area .table .item:hover .field:last-child {
+					border-right-color: #00ABFF;
+				}
+				.modal-dialog .modal-content .modal-body .select-area .table .item:last-child:hover .field {
+					border-bottom-color: #00ABFF;
+				}
+				.modal-dialog .modal-content .modal-body .select-area .table .item .field.head {
+					border-color: #666;
+					box-shadow: none;
+					background-color: #becde0;
+					position: static;
+					cursor: default;
+				}
+				.modal-dialog .modal-content .modal-body .select-area .item-list .table .item.selected .field {
+					background-color: #00ABFF;
+					color: #fff;
+				}
+				.modal-dialog .modal-content .modal-body .select-area .item-list .table .item.selected .field:first-child {
+					border-left-color: #00ABFF;
+				}
+				.modal-dialog .modal-content .modal-body .select-area .table .item.selected:hover .field {
+					background-color: #00ABFF;
+					color: #fff;
+				}
+				.modal-dialog .modal-content .modal-body .select-area .table .item .field {
+					display: table-cell;
+					margin: 0;
+					float:none;
+					border: 1px solid #eee;
+					border-left: none;
+					border-top: none;
+				}
+				.modal-dialog .modal-content .modal-body .select-area .table .item:first-child .field {border-top: 1px solid #666;}
+				.modal-dialog .modal-content .modal-body .select-area .table .item:last-child .field {border-bottom: 1px solid #666;}
+				.modal-dialog .modal-content .modal-body .select-area .table .item .field:first-child {border-left: 1px solid #666;}
+				.modal-dialog .modal-content .modal-body .select-area .table .item .field:last-child {border-right-color: #666;}
+				
+				.modal-dialog .modal-content .modal-body .select-area .table .item .field .field-label {
+					font-size: 12px;
+					padding: 0 8px;
+					width: 80px;
+					margin: 3px 0px;
+					color: #999999;
+				}
+				.modal-dialog .modal-content .modal-body .select-area .table .item .field .field-value {
+					font-size: 12px;
+					margin-left: 4px;
+					overflow: hidden;
+					padding: 2px 8px;
+					vertical-align: middle;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					height: auto !important;
+					line-height: normal;
+					width: 100%;
+				}
+				.modal-dialog .modal-content .modal-body .select-area .table .item .field .field-value.number {
+					text-align: right;
+				}
+				
+				[data-tab-target] .tab-panel {
+					border: 1px solid #7e9bc1;
+				}
+				#detailProductItemView .section .detail-product-action-area {
+					padding: 4px;
+				}
+				#detailProductItemView .section .detail-product-action-area:first-child {
+				}
+				#detailProductItemView .section .detail-product-action-area .title {
+					width: auto;
+					line-height: 40px;
+				}
+				#detailProductItemView .section .detail-product-action-area hr {
+					float: left
+				}
+				#detailProductItemView .select-area .item-list,
+				#detailProductItemView .select-area .selected-list {
+					height: 348px;
+				}
+				#detailProductItemView .select-area .selected-list {
+					float: right;
+				}
+				#detailProductItemView .section .detail-product-action-area,
+				#detailProductItemView .select-area .item-list,
+				#detailProductItemView .select-area .selected-list {
+					width: 47%;
+					overflow: auto;
+				}
+				#detailProductItemView .select-area .selected-list {
+					border: 3px dashed #eee;
+					border-radius: 4px;
+					margin-left: 0px;
+					float: right;
+					overflow-y: auto;
+					overflow-x: overlay;
+				}
+				#detailProductItemView .select-area .selected-list .drop-target:empty {
+					display: block;
+					line-height: 326px;
+					margin: 0px;
+					width: 400px;
+					text-align: center;
+					color: #aaa;
+					//background-color: #fff;
+					font-size: 120%;
+				}
+				#detailProductItemView .select-area .selected-list.drop-hover .drop-target:empty {
+					color: #fff;
+				}
+				#detailProductItemView .select-area .selected-list .drop-target:empty:after {
+					content: "ドラッグ ＆ ドロップ で選択可能です。";
+					display: inline-block;
+					*display: inline;
+					*zoom: 1;
+					width: 100%;
+				}
+				#detailProductItemView .select-area .selected-list.drop-active {
+					background-color: #eee;
+					border-color: #fff;
+				}
+				#detailProductItemView .select-area .selected-list.drop-hover {
+					background-color: #becde0;
+					border-color: #fff;
+				}
+				#detailProductItemView #productItemTabPanel .select-area .selected-list .item {
+					position: relative;
+					top: 0px;
+					box-shadow: 0px -1px 3px -1px rgba(0,0,0,0.4);
+					transition: height 0.2s linear 0s;
+				}
+				#detailProductItemView .item-drag {
+					width: 402px;
+				}
+				.modal-dialog .modal-content .modal-footer {
+					overflow: hidden;
+				}
+				.modal-body .customButton {
+					width: 100%;
+				}
+				.modal-dialog .modal-content .modal-footer .button-area {
+					overflow: hidden;
+					float: left;
+				}
+				.modal-dialog .modal-content .modal-footer .button-area.right {
+					float: right;
+				}
+				.modal-dialog .modal-content .modal-footer .button-area .customButton {
+					float: left;
+					width: 120px;
+					margin-left: 8px;
+				}
+				.modal-dialog .modal-content .modal-footer .button-area .customButton:first-child {
+					margin-left: 0px;
+				}
+				.modal-dialog .modal-content .modal-body .section .title,
+				.modal-dialog .modal-content .modal-body .section .header {
+					width: 100%;
+					float: left;
+				}
+				
+				.modal-dialog .modal-content .modal-body .title {
+					font-size: 15px;
+					margin: 12px 0px;
+				}
+				.modal-dialog .modal-content .modal-body .options-area .output-settings .field .field-label,
+				.modal-dialog .modal-content .modal-body .options-area .output-settings .field .field-value,
+				.modal-dialog .modal-content .modal-body .options-area .output-controls .field .field-label,
+				.modal-dialog .modal-content .modal-body .options-area .output-controls .field .field-value {
+					font-size: 13px;
+					padding: 4px 8px 4px 8px;
+				}
+				.modal-dialog .modal-content .modal-body .options-area .output-settings .field .field-value {
+					width: 80px;
+				}
+				.modal-dialog .modal-content .modal-body .options-area .output-controls .field .field-label {
+					width: 112px;
+				}
+				.modal-dialog .modal-content .item-loading {
+					background-color: #ffffff;
+					position: absolute;
+					opacity: 0.7;
+					filter: alpha(opacity=70);
+					left: 0;
+					top: 0;
+					height: 100%;
+					width: 100%;
+					z-index: 100;
+				}
+				.customButton.doCancel {
+					width: 100px;
+					float: left;
+				}
+				.customButton.doDelete {
+					float: left;
+					width: 120px;
+					color: #7F2D2D;
+					border-color: #FF6B6B;
+					margin-left: 12px;
+					margin-right: 12px;
+					text-shadow: none;
+				}
+				.customButton.doDelete:focus,
+				.customButton.doDelete:hover {
+					background-color: #E34B4B;
+					color: #fff;
+					border-color: #E21F1F;
+				}
+				.customButton.doDelete:active {
+					box-shadow: 0px 1px 3px rgba(0,0,0,0.70) inset;
+				}
+				.customButton.doSave {
+					width: 120px;
+					float: right;
+				}
+				.customButton.doOutput {
+					width: 120px;
+					color: #3D6951;
+					border-color: #16874A;
+					text-shadow: none;
+					margin-left: 8px;
+					float: right;
+				}
+				.customButton.doOutput:hover {
+					background-color: #4CB47C;
+					color: #fff;
+					border-color: #16874A;
+				}
+				.customButton.doOutput:active {
+					background-color: #309F64;
+				}
+				.customButton.doPreview {
+					float: right;
+					width: 120px;
+					margin-left: 8px;
+				}
+				.alert {
+					top: 10px;
+					display: none;
+					position: fixed;
+					text-align: center;
+					width: 100%;
+					opacity: 0;
+					transition: top 0.4s ease-out 0s, opacity 0.4s ease-out 0s;
+					z-index: 2000;
+				}
+				.alert p {
+					display: inline-block;
+					*display: inline;
+					*zoom: 1;
+					white-space: nowrap;
+					border: 1px solid #FFF100;
+					background-color: #FFFBC6;
+					border-radius: 2px;
+					box-shadow: 0px 2px 3px 1px rgba(0,0,0,0.4);
+					padding: 2px 30px;
+				}
+				.field .radio-item {
+					float: left;
+				}
+				.field-value.master-accountCode {
+					width: 72px;
+				}
+				.field-value.master-contactName,
+				.field-value.master-contactPhone,
+				.field-value.master-contactBelong,
+				.field-value.master-contactPost {
+					width: 108px;
+				}
+				.field-value.master-accountName {
+					width: 158px;
+				}
+				.field-value.master-accountAddress {
+					width: 320px;
+				}
+				.field-value.master-quoteId {
+					display: none;
+				}
+				
+				.contents .field .field-value-readonly {
+					min-height: 30px;
+					height: auto !important;
+					margin-top: 2rem;
+				}
+				.quotation-detail-replyTitle-readonly {
+					height: auto !important;
+				}
+				
+				.search-field {
+					float: left;
+				}
+
+				.contents .pager-area .customButton, .contents .pager-area .disabled-button {
+    				width: 36px;
+    				text-align: center;
+				}
+				.contents .pager-area .customButton, .contents .pager-area .disabled-button, .contents .pager-area .current-page-number, .contents .pager-area .separator, .contents .pager-area .max-page-number {
+					display: block;
+				    float: left;
+				    padding: 0px;
+				    height: 36px;
+				    line-height: 36px;
+				}
+				.contents .disabled-button {
+					border: 1px solid #CCCCCC;
+				    border-radius: 4px;
+				    color: #CCCCCC;
+				    padding: 4px 16px;
+				    margin: 0 auto;
+				    background-color: #ffffff;
+				    cursor: default;
+				    text-align: center;
+				    user-select: none;
+				    -moz-user-select: none;
+				    -webkit-user-select: none;
+				    -ms-user-select: none;	
+				} 
+				.contents .customButton {
+				    text-shadow: 1px 1px #ffffff;
+				    background: none;
+				    background-color: #ffffff;
+				    display: block;
+				    /* padding: 4px 16px; */
+				    border: 1px solid #7e9bc1;
+				    color: #2f4159;
+				    cursor: pointer;
+				    border-radius: 4px;
+				    text-decoration: none;
+				    text-align: center;
+				    box-shadow: none;
+				    transition: box-shadow 0.1s linear 0s, background-color 0.1s linear 0s, border-color 0.1s linear 0s;
+				    height: 30px;
+				    user-select: none;
+				    -moz-user-select: none;
+				    -webkit-user-select: none;
+				    -ms-user-select: none;
+				    font-weight: normal;
+				}
+				
+				element.style {
+				}
+				.contents .pager-area .current-page-number, .contents .pager-area .max-page-number {
+				    width: 48px;
+				}
+				.contents .pager-area .current-page-number {
+				    text-align: right;
+				}
+				.contents .pager-area .customButton, .contents .pager-area .disabled-button, .contents .pager-area .current-page-number, .contents .pager-area .separator, .contents .pager-area .max-page-number {
+					display: block;
+				    float: left;
+				    padding: 0px;
+				    height: 36px;
+				    line-height: 36px;
+				} 
+				.user-list-title {
+              		float: left;
+              	}
+              	.user-list {
+              		float: right;
+              	}
+              	.contents hr {
+              		height: 0;
+				    -webkit-box-sizing: content-box;
+				    -moz-box-sizing: content-box;
+				    box-sizing: content-box;
+				    margin-top: 10px;
+				    margin-bottom: 10px;
+				    border: 0;
+				    border-top: 1px solid #eee;
+				    width: 100%;
+              	}
+              	.contents .pager-area {
+				    float: right;
+				    margin-right: 1em;
+				}
+				.contents .pager-area .separator {
+				    padding: 0 8px;
+				}
+				.customAddButton {
+					width: 100px;
+					width: 10em;
+					margin-top: 0.3em;
+    				margin-bottom: 0.3em;
+				}
+				
+				.honbu-description {
+				    border: 2px solid #5e82b2;
+				    border-radius: 4px;
+				    margin-left: auto;
+				    background-color: #becde0;
+				    width: 1060px;
+				    margin-right: auto;
+				    margin-top: 1.5em;
+				    height: 120px;
+				}
+				.addUser-content {
+					border-radius: 4px;
+				    margin-left: auto;
+				    width: 1060px;
+				    margin-right: auto;
+				}
+				.align-right {
+
+				}
+				.align-left {
+				    min-width: 530px;
+				    float:left;
+				}
+				
+				.ajax-status-start {
+			        width: 100%;
+			        height: 100%;
+			        background-color: transparent;
+			        position: absolute;
+			        top: 0px;
+			        left: 0px;
+			        z-index: 1;
+			        text-align: center;
+			        font-size: 20px;
+			        color: #666;
+			    }
+			    .ajax-status-start-page {
+			        width: 100%;
+			        height: 100%;
+			        background-color: transparent;
+			        position: fixed;
+			        top: 0px;
+			        left: 0px;
+			        z-index: 10000;
+			        text-align: center;
+			        font-size: 20px;
+			        color: #666;
+			    }
+			    .ajax-status-start .ajax-status-start-inner {
+			        position: absolute;
+			        top: 0px;
+			        left: 0px;
+			        right: 0px;
+			        height: 100%;
+			        margin: auto;
+			    }
+			    .ajax-loading:before {
+			        content: "";
+			        background-repeat: no-repeat;
+			        background-image: url("{!URLFOR($Resource.KDDI_CustomizedMaterials, 'KDDI_CustomizedMaterials/images/ajax-2.gif')}");
+			        background-position: center center;
+			        display: block;
+			        position: absolute;
+			        top: 0px;
+			        left: 0px;
+			        right: 0px;
+			        bottom: 0px;
+			        height: 100%;
+			        width: 100%;
+			        z-index: 2;
+			    }
+			    .ajax-loading:after {
+			        content: "";
+			        width: 100%;
+			        height: 100%;
+			        position: absolute;
+			        top: 0px;
+			        left: 0px;
+			        z-index: 1;
+			        background-image: url("{!URLFOR($Resource.KDDI_CustomizedMaterials, 'KDDI_CustomizedMaterials/images/alpha-bg.png')}");
+			    }
+			</style>
+		    
+			<script>
+		
+		    	//Declaration de $j
+		    	var $j = jQuery.noConflict();
+		    	
+		    	//Autres variables
+		    	//var safety = false;
+		    	var isMouseDown = false;
+		        var isRemoveMode = true;
+		        var makeSafetyCheck = true;
+        		var makeSafetyCheck2 = true;
+		        
+		    	
+		    	/*------------------------------------------------------------*/
+		    	$j(function(){
+		
+		            $j(".branchNoInput").attr("maxlength", 2);
+		
+		            var windwTransitions = (function(e){
+		                if (makeSafetyCheck2 && (makeSafetyCheck || document.activeElement.type === 'text')) {
+		                    var currentFocus = document.querySelector(':focus');
+		                    if (currentFocus && typeof currentFocus !== 'undefined') {
+		                        currentFocus.blur();
+		                    }
+		                    //if (safety) {
+		                    //    e.returnValue = '内容に変更がありました。保存せずにページから離れますか？';
+		                    //} else {
+		                    //    safety = true;
+		                    //}
+		                }
+		            });
+		            if (window.addEventListener) {
+		                window.addEventListener('beforeunload', windwTransitions);
+		            } else if (window.attachEvent) {
+		                window.attachEvent('onbeforeunload', windwTransitions);
+		            } else {
+		                alert("画面遷移時に警告を出せません。ご注意ください。");
+		            }
+		            var $window = $j(window);
+		            $window.on('click',clearAction);
+		            $window.on('scroll',function(e){
+		                var beforeTop = window.beforeTop;
+		                var currentTop = $window.scrollTop();
+		                if (!beforeTop) {
+		                    beforeTop = 0;
+		                }
+		                if (beforeTop < currentTop && currentTop > 48) {
+		                    $j('.navi-area').addClass('fixed-top');
+		                } else if ((beforeTop > currentTop && currentTop <= 48) || currentTop == 0) {
+		                    $j('.navi-area').removeClass('fixed-top');
+		                }
+		                window.beforeTop = currentTop; 
+		            });
+		            
+		            $window.on('keydown',function(e){
+		                var $dropdown = $j('.open[data-type="dropdown"]');
+		                if (/(38|40|27)/.test(e.which) && $dropdown.length) {
+		                    e.preventDefault();
+		                    e.stopPropagation();
+		                    
+		                    if (e.which == 27) {
+		                        $dropdown.removeClass('open');
+		                        $dropdown.find('[data-type="button"]').trigger('focus');
+		                    }
+		                    
+		                    var $items = $dropdown.find('[data-type="list"] [data-type="item"]');
+		                    var $target = $j(e.target);
+		                    if ($target.attr('data-type') !== 'item') {
+		                        $target = $target.closest('[data-type="item"]');
+		                    }
+		
+		                    var target = null;
+		                    if ($target.length) {
+		                      target = $target[0];
+		                    }
+		                    var index = 0;
+		                    if (target) {
+		                        index = $items.index(target);
+		                        if (e.which == 38 && index > 0) {
+		                            index--;
+		                        }
+		                        if (e.which == 40 && index < $items.length - 1) {
+		                            index++;
+		                        }
+		                    }
+		                    $items.eq(index).find('a,input').trigger('focus');
+		                }
+		            });
+		            
+		            contentInit();
+		        });
+
+		    	function contentInit() {
+		    		console.log('Run : contentInit');
+		            initWithCalcurate();
+		            $j('#selected-list').droppable(droppableOption);
+		            $j('#detailProductItemView').on('hidden.bs.modal', function () {
+		                $j('#detailProductItemView .selected-list .drop-target').empty();
+		                detailProductItemManage.setTargetNode(null);
+		            });
+		        }
+		        
+		        //Gather the conditions given for the users research.
+		    	function queryCondition($targetNode) {
+		    		console.log('Run : queryCondition');
+		
+		            $j('.lastSearchUserRole5Filter').val('');
+		            $j('.lastSearchUserRole6Filter').val('');
+		            $j('.lastSearchUserRole7Filter').val('');
+		            $j('.lastSearchUserRole8Filter').val('');
+		            $j('.lastSearchUserChannelFilter').val('');
+
+		            $j('.lastBusinessLocationName').val('');
+		            $j('.lastSearchBusinessLocationFilter').val('');
+		            $j('.lastSearchUserName').val('');
+		            $j('.lastSearchUserNumber').val('');
+		            $j('.lastSearchDepartment').val('');
+		            $j('.lastSearchUserCode').val('');
+		            $j('.lastSearchEducationalStaff').val(false);
+		            
+		            var $searchFields = $targetNode.find('input.field-value[data-field], select.field-value[data-field]');
+		            
+		            var conditions = {};
+		            
+		            var remotePageType='{!pageType}';
+		            
+		            conditions['remotePageType']=remotePageType;
+
+		            for (var i = 0; i < $searchFields.length; i++) {
+		                var field = $searchFields[i];
+		                var fieldName = field.getAttribute('data-field');
+		                var fieldValue = field.value;
+						
+		                if (fieldName && fieldName.length != 0) {
+		
+		                    conditions[fieldName] = fieldValue;
+		                    if (fieldName == 'Role5DeveloperName') {
+		                      $j('.lastSearchUserRole5Filter').val(fieldValue);
+		                    }
+		                    if (fieldName == 'Role6DeveloperName') {
+		                      $j('.lastSearchUserRole6Filter').val(fieldValue);
+		                    }
+		                    if (fieldName == 'Role7DeveloperName') {
+		                      $j('.lastSearchUserRole7Filter').val(fieldValue);
+		                    }
+		                    if (fieldName == 'Role8DeveloperName') {
+		                      $j('.lastSearchUserRole8Filter').val(fieldValue);
+		                    }
+		                    
+		                    if (fieldName == 'businessLocationName') {
+		                      $j('.lastBusinessLocationName').val(fieldValue);
+		                    }
+		                    
+		                    if (fieldName == 'userName') {
+		                      $j('.lastSearchUserName').val(fieldValue);
+		                    }
+		                    if (fieldName == 'userNumber') {
+		                      $j('.lastSearchUserNumber').val(fieldValue);
+		                    }
+		                    if (fieldName == 'department') {
+		                      $j('.lastSearchDepartment').val(fieldValue);
+		                    }
+		                    if (fieldName == 'userCode') {
+		                      $j('.lastSearchUserCode').val(fieldValue);
+		                    }
+		                    if (fieldName == 'educationalStaff') {
+		                      $j('.lastSearchEducationalStaff').val(fieldValue);
+		                    }
+		                    
+		                    if (fieldName == 'channelName') {
+		                      $j('.lastSearchUserChannelFilter').val(fieldValue);
+		                    }
+		                    if (fieldName == 'BusinessLocationByOptionName') {
+		                      $j('.lastSearchBusinessLocationFilter').val(fieldValue);
+		                    }
+		                    
+		                }
+		            }
+		            return conditions;
+		        }
+		    	
+		    	/*------------------------------------------------------------*/
+		    	
+		    	function userSearch() {
+		    		console.log('Run : userSearch');
+		    	
+		            var conditions = queryCondition($j('#userSearchArea'));
+		            detailUserQuery(conditions);
+		        }
+		        
+		        function initDetailProductItemManage($targetNode) {
+		        	console.log('Run : initDetailProductItemManage');
+		        
+		            detailProductItemManage.setTargetNode($targetNode);
+		        }
+		
+				var productConfig = {
+		            fields: [
+		                {sobjectField:['UserRole','Name'], label: '組織', className: 'master-userRoleName', targetFormClassName: 'RoleName'},
+		                {sobjectField:['UserRole','DeveloperName'], label: '組織', className: 'master-userRoleCode', targetFormClassName: 'RoleCode', hidden: true},
+		                {sobjectField:['Name'], label: '社員名', className: 'master-userName', targetFormClassName: 'name'},
+		                {sobjectField:['Id'], label: 'Id', className: 'master-userId', targetFormClassName: 'Id', hidden: true}
+		            ]
+		        };
+		        
+		        var detailProductItemManage = new PagerHelper();
+		        detailProductItemManage.setPageSize(13);
+		        detailProductItemManage.setConfig(productConfig);
+		        function detailUserQuery(conditions) {
+		        	console.log('Run : detailUserQuery');
+		        
+		            $j('#detailProductItemView .modal-content').addClass('ajax-loading');
+		            auAddUserCtrl.getUserList(conditions, function(result){
+		                if (result) {
+		                    var manage = detailProductItemManage;
+		                    manage.setRecords(result);
+		                    var $modal = $j('#detailProductItemView');
+		                    var $items = render(manage.getRecords(), $modal.find('#productItemTabPanel .item-list'), manage.getConfig());
+		                    $items.draggable(draggableOption);
+		                    var errorText = '';
+		                    if (manage.size() >= 10000) {
+		                        errorText = '検索結果が多いため10000件まで表示します。';
+		                        showAlert(errorText, false);
+		                    }
+		                    pagerInfo(detailProductItemManage, $j('#productItemTabPanel'));
+		                    if($modal.find('#productItemTabPanel .auto-close-check').prop('checked')) {
+		                        $j('#userSearchArea').collapse('hide');
+		                    }
+		                } else {
+		                    showAlert('情報を取得できませんでした。再度検索してみてください。', false);
+		                }
+		                $j('#detailProductItemView .modal-content').removeClass('ajax-loading');
+		            });
+		        }
+		        
+		        function nextRecordsAddDraggable() {
+		        	console.log('Run : nextRecordsAddDraggable');
+		            var $modal = $j('#detailProductItemView');
+		            var $items = render(detailProductItemManage.next(), $modal.find('#productItemTabPanel .item-list'), detailProductItemManage.getConfig());
+		            $items.draggable(draggableOption);
+		            pagerInfo(detailProductItemManage, $j('#productItemTabPanel'));
+		        } 
+		        function prevRecordsAddDraggable() {
+		        	console.log('Run : prevRecordsAddDraggable');
+		            var $modal = $j('#detailProductItemView');
+		            var $items = render(detailProductItemManage.prev(), $modal.find('#productItemTabPanel .item-list'), detailProductItemManage.getConfig());
+		            $items.draggable(draggableOption);
+		            pagerInfo(detailProductItemManage, $j('#productItemTabPanel'));
+		        }
+		        function chooseItemDetailProduct() {
+		        	console.log('Run : chooseItemDetailProduct');
+		            var items = [];
+		            var config = detailProductItemManage.getConfig();
+		            var fields = config.fields;
+		            var $modal = $j('#detailProductItemView');
+		            var $selectedItems = $modal.find('#productItemTabPanel .item.selected');
+		
+		            if ($selectedItems.length) {
+		                for (var i = 0; i < $selectedItems.length; i++) {
+		                    var $selectedItem = $j($selectedItems[i]);
+		                    var values = [];
+		                    for (var j = 0; j < fields.length; j++) {
+		                        var field = fields[j];
+		                        if (field.targetFormClassName) {
+		                            var value = $selectedItem.find('.' + field.className).text();
+		                            values.push('"' + field.sobjectField.join('.') + '":"' + value + '"');
+		                        }
+		                    }
+		                    items.push('{' + values.join(',') + '}');
+		                }
+		                var jsonText = '{' + 
+		                                    '"sortNo":"0",' +
+		                                    '"items":[' + items.join(',') +']' +
+		                                '}';
+		                console.log('jsonText : '+jsonText); 
+		                addNewUsers(jsonText);
+		            } else {
+		                showAlert('追加するユーザーを選択してください。', false);
+		            }
+		        }        
+		        function userSearchAndChooseItemDetailProduct() {
+		        	console.log('Run : userSearchAndChooseItemDetailProduct');
+		            addAllCorrespondingUsers();
+		        }
+		        
+		        /* Safety check - Usefull? */
+		        function safetyLockCheck(targetNode) {
+		        	console.log('Run : safetyLockCheck');
+		            var value = targetNode.getAttribute('data-compare-value');
+		            var type = targetNode.getAttribute('type');
+		            var currentValue = null;
+		            if (type === 'checkbox' || type === 'radio') {
+		                currentValue = targetNode.checked;
+		            } else {
+		                currentValue = targetNode.value;
+		            }
+		            if (value !== currentValue) {
+		                lockSafety();
+		            }
+		        }
+		        function unlockSafety() {
+		        	console.log('Run : unlockSafety');
+		            safety = false;
+		        }
+		        function lockSafety() {
+		        	console.log('Run : lockSafety');
+		            safety = true;
+		        }       
+		 		
+		 		var divNode = document.createElement('div');
+		 		function render(records, renderTarget, renderConfigure, eventFunction) {
+		 			//console.log('Run : render');
+		            var records = records;
+		            var body = renderTarget;
+		            body.empty();
+		            var $table = $j(divNode.cloneNode());
+		            $table.addClass('table');
+		            var $headerRow = $j(divNode.cloneNode());
+		            $headerRow.addClass('item');
+		            $table.append($headerRow);
+		            var config = renderConfigure;
+		            var fieldSettings = config.fields;  
+		            //For each Record (Users in my case)         
+		            for (var i = 0; i < records.length; i++) {
+		                var currentTarget = records[i];
+		                var $item = $j(divNode.cloneNode());
+		                $item.addClass('item');
+		                for (key in eventFunction) {
+		                    $item.on(key, eventFunction[key]);
+		                }
+		                if (fieldSettings) {
+		                    for (var j = 0; j < fieldSettings.length; j++) {
+		                        var fieldConfigure = fieldSettings[j];
+		                        if (fieldConfigure.sobjectField) {
+		                            var fieldValue = getFieldValue(currentTarget,fieldConfigure.sobjectField);
+		                            if (i === 0) {
+		                                var $headItem = createField(fieldConfigure.label);
+		                                $headItem.addClass('head');
+		                                if (fieldConfigure.hidden) {
+		                                    $headItem.css({display: 'none'});
+		                                }
+		                                $headerRow.append($headItem);
+		                            }
+		                            $headerRow.append($headItem);
+		                            if (fieldConfigure.resultFunc && typeof fieldConfigure.resultFunc === "function") {
+		                                fieldValue = fieldConfigure.resultFunc(fieldValue);
+		                            }
+		                            $field = createField(fieldValue, fieldConfigure.className);
+		                            $item.append($field)
+		                            if (fieldConfigure.hidden) {
+		                                $field.css({display: 'none'});
+		                            }
+		                        }
+		                    }
+		                    $table.append($item);
+		                }
+		            }
+		            body.append($table);
+		            return body.find('.item');
+		        }
+		        
+		        function getFieldValue(targetSobject, fieldNameArray) {
+		        	//console.log('Run : getFieldValue');
+		            var target = targetSobject;
+		            for (var i = 0; i < fieldNameArray.length; i++) {
+		                var fieldName = fieldNameArray[i];
+		                if (fieldName && typeof target[fieldName] !== "undefined") {
+		                    target = target[fieldName];
+		                    if (typeof target == "string") {
+		                      target = convert(target);
+		                    }
+		                } else {
+		                    target = '';
+		                    break;
+		                }
+		            }
+		            return target;
+		        }
+		        
+		        var convert = function(convert){
+		        	console.log('Run : render');
+		            return $j("<span />", { html: convert }).text();
+		        };
+		        
+		        function createField(value, fieldClass) {
+		        	//console.log('Run : createField');
+		            var field = $j(divNode.cloneNode());
+		            field.addClass('field');
+		            var fieldValue = $j(divNode.cloneNode());
+		            fieldClass = ' ' + (fieldClass ? fieldClass : '');
+		            fieldValue.addClass('field-value' + fieldClass);
+		
+		            fieldValue.text(value);
+		            field.append(fieldValue);
+		            return field;
+		        }
+		        
+		        function pagerInfo(manage, targetNode) {
+		        	console.log('Run : pagerInfo');
+		            var manager = manage;
+		            var $pagerArea = $j(targetNode).find('.pager-area');
+		            var currentPageNum = manager.getPageNumber();
+		            $pagerArea.find('.current-page-number').text(currentPageNum);
+		            if (currentPageNum > 1) {
+		                $pagerArea.find('.prev.customButton').show();
+		                $pagerArea.find('.prev.disabled-button').hide();
+		            } else {
+		                $pagerArea.find('.prev.customButton').hide();
+		                $pagerArea.find('.prev.disabled-button').show();
+		            }
+		            var maxPageNum = manager.maxPageNumber();
+		            $pagerArea.find('.max-page-number').text(maxPageNum);
+		            if (maxPageNum > currentPageNum) {
+		                $pagerArea.find('.next.customButton').show();
+		                $pagerArea.find('.next.disabled-button').hide();
+		            } else {
+		                $pagerArea.find('.next.customButton').hide();
+		                $pagerArea.find('.next.disabled-button').show();
+		            }
+		        }
+		        
+		        
+		        
+		        /* --------------------- Drag And Drop Methods -------------------------- */
+		        var draggableOption = {
+		            helper: 'clone',
+		            opacity: 0.7,
+		            zIndex: 102,
+		            scroll: false,
+		            start: function(e, ui) {
+		            	console.log('Drag1');
+		                ui.helper.addClass('item-drag');
+		            }
+		        };
+		        var selectedDraggableOption = {
+		            helper: 'clone',
+		            opacity: 0.7,
+		            zIndex: 102,
+		            cursorAt: {left: 5, top: 5},
+		            start: function(e, ui) {
+		            	console.log('Drag2');
+		                ui.helper.addClass('item-drag');
+		                $j(ui.helper.context).css({'background-color':'#eee'});
+		            },
+		            stop: function(e, ui) {	
+		            	console.log('Drag3');
+		                var $draggable = $j(ui.helper.context);
+		                if($draggable.hasClass('remove-target') && $draggable.hasClass('selected')) {
+		                    $draggable.remove();
+		                } else {
+		                    $draggable.css({'background-color':''});
+		                }
+		            }
+		        }
+		        var droppableOption = {
+		            greedy: true,
+		            accept: '.item',
+		            tolerance: 'intersect',
+		            activeClass: 'drop-active', 
+		            hoverClass: 'drop-hover', 
+		            drop: function(e, ui){
+		            	console.log('Drop1');
+		                if (!ui.draggable.hasClass('selected')) {
+		                    $selectedItem = ui.draggable.removeAttr('style').clone();
+		                    $selectedItem.addClass('selected');
+		                    $selectedItem.draggable(selectedDraggableOption);
+		                    $j(e.target).find('.drop-target').append($selectedItem); 
+		                }
+		            },
+		            out: function(e, ui){
+		            	console.log('Drop2');
+		                if (ui.draggable.hasClass('selected')) {
+		                    ui.draggable.addClass('remove-target');
+		                }
+		            },
+		            over: function(e, ui) {
+		            	console.log('Drop3');
+		                if (ui.draggable.hasClass('selected')) {
+		                    ui.draggable.removeClass('remove-target');
+		                }
+		            }
+		        }
+		        
+		        function dragAction(targetRow) {
+		        	console.log('Run : dragAction');
+		            setSortable();
+		            var $sortableArea = $j('.quotation-detail-list');
+		            var target = $j(targetRow).closest('.quotation-detail-item')[0];
+		            var $details = $j('.quotation-detail-item');
+		            var wrapdiv = document.createElement('div');
+		            $j(wrapdiv).addClass('quotation-detail-childWrap-item');
+		            $sortableArea.empty();
+		            var block = wrapdiv.cloneNode();
+		            
+		            var targetDetailType = target.getAttribute('data-type');
+		            for (var i = 0; i < $details.length; i++) {
+		                var detail = $details[i];
+		                var currentDetailDepth = parseInt(detail.getAttribute('data-depth'), 10);
+		                if (block.childNodes.length > 0) {
+		                    $sortableArea.append(block);
+		                }
+		                block = wrapdiv.cloneNode();
+		                block.appendChild(detail);
+		            }
+		            if (block.childNodes.length > 0) {
+		                $sortableArea.append(block);
+		            }
+		            var sortableTarget = ' .quotation-detail-childWrap-item';
+		            $sortableArea.sortable('option', 'items', sortableTarget);
+		            $sortableArea.sortable('refresh');
+		            $j(document).on("mouseup",childWrapEraser);
+		           // alert('Drop'.false);
+		        }
+		        
+		        var sortableOption = {
+		                axis:'y',
+		                opacity: 0.7,
+		                placeholder: 'drag-placeholder',
+		                cursor: 'row-resize',
+		                handle: '.sortableAction',
+		                start: function(e,ui){isExecuteSortable = true;},
+		                activate: createPlaceholderBody,
+		                stop: changeSortNo
+		        };
+		        var isExecuteSortable = false;
+		        
+		        function childWrapEraser() {
+		        	console.log('Run : childWrapEraser');
+		            if (!isExecuteSortable) {
+		                var details = $j('.quotation-detail-item');
+		                $j('.quotation-detail-childWrap-item').remove();
+		                $j('.quotation-detail-list').append(details);
+		            }
+		            isExecuteSortable = false;
+		            $j(document).off("mouseup",childWrapEraser);                       
+		        }
+		        
+		        function dropdownAction(target) {
+		        	console.log('Run : dropdownAction');
+		        	alert('Drop'.false);
+		            var $target = $j(target).closest('[data-type="dropdown"]');
+		            if ($target.hasClass('open')) {
+		                $target.removeClass('open');
+		            } else {
+		                $j('.open').removeClass('open');
+		                $target.addClass('open');
+		            }
+		            
+		        }
+		        
+		        /* -------------- Error Related Method --------------- */
+		        var alertAnime = null;
+		        function showAlert(target, isredcolor) {
+		        	console.log('Run : showAlert');
+		            var alert = document.getElementById('alert');
+		            if (isredcolor) {
+		              alert.style.color = "red";
+		            } else {
+		              alert.style.color = "black";
+		            }
+		            if (alertAnime) {
+		                clearTimeout(alertAnime);
+		                alert.style.top = '0px';
+		                alert.style.opacity = '0';
+		                alert.style.transition = 'none';
+		            }
+		            if (target instanceof $j) {
+		                $j(alert).find('.description').append(target);
+		            } else if (target instanceof $j || typeof target === 'string') {
+		                $j(alert).find('.description').text(target);
+		            }
+		            alert.style.display = 'block';
+		            alertAnime = setTimeout(function(){
+		                alert.style.top = '20px';
+		                alert.style.opacity = '1';
+		                alert.style.transition = '';
+		            }, 100);
+		            alertAnime = setTimeout(hideAleart, 3200);
+		        }
+		        function hideAleart() {
+		        	console.log('Run : hideAleart');
+		            var alert = document.getElementById('alert');
+		            alert.style.top = '';
+		            alert.style.opacity = '';
+		            alertAnime = setTimeout(function(){
+		                alert.style.display = '';
+		                alertAnime = null;
+		                $j(alert).find('.description').empty();
+		            }, 500);
+		        }
+		        
+		        var errorAreaId = '#{!$Component.form.apexMessage}';
+		        function getErrorArea() {
+		        	console.log('Run : getErrorArea');
+		            return $j(errorAreaId.replace(/(:)/ig,'\\\$1'));
+		        }
+		        
+		        function showResult(text) {
+		        	console.log('Run : showResult');
+		            var $error = getErrorArea();
+		            var $children = $error.children();
+		            if ($children.length > 0) {
+		                $children = $children.clone();
+		                $children.css({'text-align': 'left'});
+		                showAlert($children, false);
+		            } else {
+		                showAlert(text, false);
+		            }
+		        }
+		        
+		        function createPlaceholderBody(e, ui) {
+		        	console.log('Run : createPlaceholderBody');
+		            var body = ui.item.find('.quotation-detail-item');
+		            var placeHolder = $j('.drag-placeholder');
+		            var bodyItem = document.createElement('div');
+		            for (var i = 0; i < body.length; i++) {
+		                var item = bodyItem.cloneNode();
+		                placeHolder.append(item);
+		            }
+		        }
+		
+		        function changeSortNo(e, ui) {
+		        	console.log('Run : changeSortNo');
+		            var details = $j('.quotation-detail-item');
+		            var sortableArea = $j('.quotation-detail-list');
+		            sortableArea.empty();
+		            
+		            RowManage.init();
+		            for (var i = 0; i < details.length; i++) {
+		                var detail = details[i];
+		                setSortNo(detail, i);
+		                sortableArea.append(detail);
+		                RowManage.push(detail);
+		            }
+		        }
+		        
+		        function setSortNo(target, sortNo) {
+		        	console.log('Run : setSortNo');
+		            var $target = $j(target)
+		            target.setAttribute('data-sortNo', sortNo);
+		            $target.find('.quotation-detail-sortNo').val(sortNo);
+		        }
+		        
+		        var ItemWrap = function(target, parent) {
+		            this.target = target;
+		            this.$target = $j(target);
+		            if (target) {
+		                this.type = target.getAttribute('data-type');
+		            }
+		            this.parent = parent;
+		            var layerNum = 0;
+		            if (parent) {
+		                layerNum = parent.layer + 1;
+		            }
+		            this.layer = layerNum;
+		            this.children = new Array();
+		        };
+		        ItemWrap.prototype = {
+		            calc: function() {
+		                return resultAmount;
+		            }
+		        }
+		        
+		        function initWithCalcurate() {
+		        	console.log('Run : initWithCalcurate');
+		            RowManage.create();
+		        }
+		
+		        
+		        var RowManage = function(){};
+		        RowManage.prototype = {
+		            init : function (){
+		                this.root = new ItemWrap();
+		                this.list = new Array();
+		                this.totalAmount = 0;
+		                this.totalTaxAmount = 0;
+		                this.commissionAmount = 0;
+		            },
+		            push: function(row) {
+		                var rootItem = this.root;
+		                var lastChildItem = rootItem;
+		
+		                while (lastChildItem.children.length > 0) {
+		                    var length = lastChildItem.children.length;
+		                    lastChildItem = lastChildItem.children[length - 1];
+		                }
+		                var currentTarget = lastChildItem;
+		                if (currentTarget.target) {
+		                    var targetDepth = parseInt(row.getAttribute('data-depth'), 10);
+		                    var currentTargetDepth = parseInt(currentTarget.target.getAttribute('data-depth'), 10);
+		    
+		                    if (targetDepth == currentTargetDepth) {
+		                        currentTarget = currentTarget.parent;
+		                    } else if (targetDepth < currentTargetDepth) {
+		                        while (currentTarget.target) {
+		                            currentTargetDepth = parseInt(currentTarget.target.getAttribute('data-depth'), 10);
+		                            if (targetDepth == currentTargetDepth) {
+		                                currentTarget = currentTarget.parent;
+		                                break;
+		                            }
+		                            currentTarget = currentTarget.parent;
+		                        }
+		                    }
+		                }
+		                var item = new ItemWrap(row, currentTarget);
+		                currentTarget.children.push(item);
+		                this.list.push(item);
+		            },
+		            create: function() {
+		                var details = $j('.quotation-detail-item');
+		                this.init();
+		                for (var i = 0; i < details.length; i++) {
+		                    this.push(details[i]);
+		                }
+		            }
+		        }
+		        RowManage = new RowManage();
+		        
+		        function clearAction(e) {
+		            var $target = $j(e.target).closest('[data-type="dropdown"]');
+		            if (!$target.hasClass('open')) {
+		                var $dropdown = $j('.open[data-type="dropdown"]');
+		                $dropdown.removeClass('open');
+		                //$dropdown.find('[data-type="button"]').trigger('focus');
+		            }
+		        }
+ 
+		    </script>
+
+	<body >
+      <apex:actionStatus layout="block" onstop="contentInit();" id="ajaxPageStatus" startStyleClass="ajax-status-start-page">
+        <apex:facet name="start">
+          <div class="ajax-status-start-inner ajax-loading"></div>
+        </apex:facet>
+      </apex:actionStatus>
+      <apex:outputPanel layout="block" styleClass="contents" id="contents" >
+
+		<div class="page-header">
+          <c:kddiHeaderComp />
+        </div>
+        
+        <div class="contents-body" >
+		<apex:form >
+		
+		<apex:actionFunction name="validateAndRedirect" action="{!validateAndRedirect}"/>
+		<apex:actionFunction name="addNewUsers"  action="{!addNewUsers}" rerender="">
+			<apex:param name="jsonText" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction name="addAllCorrespondingUsers"  action="{!addAllCorrespondingUsers}"/>
+		
+		<apex:inputHidden html-class="pageType" value="{!pageType}" />
+		<apex:inputHidden html-class="lastSearchUserRole5Filter" value="{!lastSearchUserRole5Filter}" />
+		<apex:inputHidden html-class="lastSearchUserRole6Filter" value="{!lastSearchUserRole6Filter}" />
+		<apex:inputHidden html-class="lastSearchUserRole7Filter" value="{!lastSearchUserRole7Filter}" />
+		<apex:inputHidden html-class="lastSearchUserRole8Filter" value="{!lastSearchUserRole8Filter}" />
+		<apex:inputHidden html-class="lastSearchUserChannelFilter" value="{!lastSearchUserChannelFilter}" />
+		<apex:inputHidden html-class="lastSearchBusinessLocationFilter" value="{!lastSearchBusinessLocationFilter}" />
+								        	
+		<apex:inputHidden html-class="lastBusinessLocationName" value="{!lastBusinessLocationName}" />
+		                        			
+		<apex:inputHidden html-class="lastSearchUserName" value="{!lastSearchUserName}" />
+		<apex:inputHidden html-class="lastSearchUserNumber" value="{!lastSearchUserNumber}" />
+		<apex:inputHidden html-class="lastSearchDepartment" value="{!lastSearchDepartment}" />
+		<apex:inputHidden html-class="lastSearchUserCode" value="{!lastSearchUserCode}" />
+		<apex:inputHidden html-class="lastSearchEducationalStaff" value="{!lastSearchEducationalStaff}" />
+				
+		<!-- <apex:inputHidden html-class="lastSearchUserClassification" value="{!lastSearchUserClassification}" />
+		<apex:inputHidden html-class="lastSearchUserCertification" value="{!lastSearchUserCertification}" /> -->
+			
+		<!-- div id="alert" class="alert">
+        	<p class="description" ></p>
+        </div -->
+								        					        	
+		<div id="honbu-description" class="honbu-description" style="margin-left: auto; margin-right: auto;">
+
+          	<div class="honbu-description-fields" style="margin: 1em;">
+
+				<div style="margin-bottom: 1em;">
+					<label class="honbu-description-field-label" style="margin-bottom: 5em; font-size: 1.5em;">{!honbuDirect.Name}</label>
+				</div>
+
+				<div class="align-left">
+					<div class="honbu-description-field" style="width: 100%; margin-bottom: 0.5em;">
+	                    <label class="honbu-description-field-label" style="float: left; min-width: 200px;">タイトル: </label> 
+	                    <label class="honbu-description-field-value">{!honbuDirect.Title__c}</label>
+	             	</div>
+					
+					<div class="honbu-description-field" style="width: 100%; margin-bottom: 0.5em;">
+	                    <label class="honbu-description-field-label" style="float: left; min-width: 200px;">カテゴリ: </label> 
+	                    <label class="honbu-description-field-value" >{!honbuDirect.Category__c}</label>
+	             	</div>
+	
+					<div class="honbu-description-field" style="width: 100%; margin-bottom: 0.5em;">
+	                    <label class="honbu-description-field-label" style="float: left; min-width: 200px;">発信日時: </label>    
+	                    <label class="honbu-description-field-value" >{!formatedTransmissionDate}</label>
+	             	</div>
+				</div>
+				
+				<div class="align-right">
+					<div class="honbu-description-field" style="width: 100%; margin-bottom: 0.5em;">
+	                    <label class="honbu-description-field-label" style="float: left; min-width: 200px;">実施開始日: </label>  
+	                    <label class="honbu-description-field-value" >{!formatedImplementationStartDate}</label>
+	             	</div>
+		
+					<div class="honbu-description-field" style="width: 100%; margin-bottom: 0.5em;">
+	                    <label class="honbu-description-field-label" style="float: left; min-width: 200px;">実施終了日: </label>   
+	                    <label class="honbu-description-field-value" >{!formatedImplementationEndDate}</label>
+	             	</div>
+             	</div>
+
+          	</div>
+          	
+        </div>
+		
+		<div class="modal fade" id="detailProductItemView" data-tab-target="productItemSearch" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="detailProductItem" aria-hidden="true" style="outline: none;">
+			<div class="modal-dialog">
+				
+				<div class="modal-content addUser-content" style="margin-right: 1.5em; margin-left: auto; margin-right: auto; border-radius: 4px;">
+					<div class="modal-header">
+					   	<div id="detailProductItem" class="screen-name">ユーザーの選択</div>
+	       			</div>
+	       			
+	             	<div class="modal-body section">
+	
+	            		<div id="productItemTabPanel" class="tab-panel" data-tab-panel="productItemSearch">
+	                    	<div class="section search-area">
+	                    		
+	                     		<div class="section-header" >
+	                          		<span>検索条件：</span>
+	                        	</div>
+	                        	
+		                        <div id="userSearchArea" class="section-body collapse in clearfix" style="background-color: #becde0;">
+
+			                   		<!-- <div class="field" style="width: 100%;">
+			                      	<input id="idHideAfterSearch" 
+			                        	type="checkbox"
+			                         	class="field-value auto-close-check collapse"
+			                           	style="width: auto;"
+			                           	checked="checked"
+			                           	onkeydown="if(event.keyCode==13){this.blur();}" />
+			                     	<label for="idHideAfterSearch" class="field-label collapse" style="width: auto;" >検索完了時に自動的に閉じる</label>
+			                      	</div> -->
+											 
+			                      	<div class="search-field" style="margin-bottom: 1.5em;">
+			
+										<!-- Name of the employee -->	
+										<apex:outputPanel rendered="{!pageType=pageSAType || pageType=pageKDDIType || pageType=pageShopType}">
+											<div class="field">
+				                            	<label class="field-label">{!IF(pageType=pageShopType,'代理店/店舗名','氏名')}</label>
+				                            	<input type="text"
+				                                	class="field-value search-field-product-code search-field"
+				                                 	data-field="userName"
+				                                   	placeholder="{!IF(pageType=pageShopType,'代理店/店舗名','氏名')}"
+				                                   	onkeydown="if(event.keyCode==13){this.blur();}" />
+				                          	</div>
+			                        	</apex:outputPanel>
+			
+										<!-- Employee's number -->	
+										<apex:outputPanel rendered="{!pageType=pageKDDIType}">
+											<div class="field">
+		                              			<label class="field-label" >社員番号</label>
+		                              			<input type="text"
+		                                     		class="field-value search-field-product-code"
+		                                    	 	data-field="userNumber"
+		                                     		placeholder="社員番号"
+		                                     		onkeydown="if(event.keyCode==13){this.blur();}" />
+		                            		</div>
+		                            	</apex:outputPanel>
+	                            		
+	                            		<!-- Department -->	
+										<apex:outputPanel rendered="{!pageType=pageKDDIType}">
+											<div class="field">
+		                              			<label class="field-label" >部署名</label>
+		                              			<input type="text"
+		                                     		class="field-value search-field-product-code"
+		                                    	 	data-field="department"
+		                                     		placeholder="部署名"
+		                                     		onkeydown="if(event.keyCode==13){this.blur();}" />
+		                            		</div>
+		                            	</apex:outputPanel>
+		                            	
+	                            		<!-- Code -->
+	                            		<apex:outputPanel rendered="{!pageType=pageShopType}">
+		                            		<div class="field">
+		                              			<label class="field-label" >コード検索</label>
+		                              			<input type="text"
+		                                     		class="field-value search-field-product-code"
+		                                    	 	data-field="userCode"
+		                                     		placeholder="コード検索"
+		                                     		onkeydown="if(event.keyCode==13){this.blur();}" />
+		                            		</div>
+	                            		</apex:outputPanel>
+				                           
+				                        <apex:outputPanel rendered="{!pageType=pageShopType}">
+		                            		<div class="field">
+		                              			<label class="field-label">チャンネル</label>
+		
+		                              			<apex:selectList value="{!filterChannelOption}"
+		                                               styleclass="field-value search-field-product-name"
+		                                               size="1"
+		                                               html-data-field="channelName"
+		                                               onkeydown="if(event.keyCode==13){this.blur();}">
+		                                			<apex:selectOptions value="{!channelOptions}" />
+		                              			</apex:selectList>
+		
+		                            		</div>
+	                            		</apex:outputPanel>
+				                           
+				                        <!--  Probably not useful -->    		
+	                            		<!-- div class="field">
+	                              			<label class="field-label" >社員区別</label>
+	                              			<apex:repeat value="{!SAClassificationOptions}" var="classif">
+	                                			<input type="checkbox"
+	                                       			id="classif-{!classif.value}"
+	                                       			data-field="classif-{!classif.value}"
+	                                       			class="field-value search-field-product-code"
+	                                       			checked="true"
+	                                       			onkeydown="if(event.keyCode==13){this.blur();}" />
+	                                			<label for="classif-{!classif.value}" style="margin-left: 6px;margin-right: 20px;vertical-align: middle;">{!classif.label}</label>
+	                              			</apex:repeat>
+	                            		</div>
+	
+	                            		<div class="field">
+	                              			<label class="field-label" >資格</label>
+	                              			<apex:repeat value="{!SACertificationOptions}" var="certif">
+	                                			<input type="checkbox"
+	                                       			id="certif-{!certif.value}"
+	                                       			data-field="certif-{!certif.value}"
+	                                       			class="field-value search-field-product-code"
+	                                       			checked="true"
+	                                       			onkeydown="if(event.keyCode==13){this.blur();}" />
+	                                			<label for="certif-{!certif.value}" style="margin-left: 6px;margin-right: 20px;vertical-align: middle;">{!certif.label}</label>
+	                              			</apex:repeat>
+	                            		</div -->
+	
+										<apex:outputPanel rendered="{!pageType=pageSAType || pageType=pageKDDIType || pageType=pageShopType}">
+		                            		<div class="field ">
+		                              			<label class="field-label">組織1</label>
+		
+		                              			<apex:selectList value="{!filterRole5Option}"
+		                                               styleclass="field-value search-field-product-name"
+		                                               size="1"
+		                                               html-data-field="Role5DeveloperName"
+		                                               onkeydown="if(event.keyCode==13){this.blur();}">
+		                                			<apex:selectOptions value="{!role5Options}" />
+		                                			<apex:actionSupport event="onchange"
+		                                                    action="{!inputRole5Option}"
+		                                                    reRender="sltListRole6, sltListRole7, sltListRole8" />
+		                              			</apex:selectList>
+		
+		                            		</div>
+	                            		</apex:outputPanel>
+	
+										<apex:outputPanel rendered="{!pageType=pageSAType || pageType=pageKDDIType || pageType=pageShopType}">
+		                            		<div class="field ">
+		                              			<label class="field-label">組織2</label>
+		
+		                              			<apex:selectList value="{!filterRole6Option}"
+		                                               id="sltListRole6"
+		                                               styleclass="field-value search-field-product-name"
+		                                               size="1"
+		                                               html-data-field="Role6DeveloperName"
+		                                               onkeydown="if(event.keyCode==13){this.blur();}">
+		                                			<apex:selectOptions value="{!role6Options}" />
+		                                			<apex:actionSupport event="onchange"
+		                                                    action="{!inputRole6Option}"
+		                                                    reRender="sltListRole7, sltListRole8" />
+		                              			</apex:selectList>
+		
+		                            		</div>
+										</apex:outputPanel>
+										
+										<apex:outputPanel rendered="{!pageType=pageSAType || pageType=pageKDDIType || pageType=pageShopType}">
+		                            		<div class="field ">
+		                              			<label class="field-label">組織3</label>
+		
+		                              			<apex:selectList value="{!filterRole7Option}"
+		                                               id="sltListRole7"
+		                                               styleclass="field-value search-field-product-name"
+		                                               size="1"
+		                                               html-data-field="Role7DeveloperName"
+		                                               onkeydown="if(event.keyCode==13){this.blur();}">
+		                                			<apex:selectOptions value="{!role7Options}" />
+		                                			<apex:actionSupport event="onchange"
+		                                                    action="{!inputRole7Option}"
+		                                                    reRender="sltListRole8" />
+		                              			</apex:selectList>
+		
+		                           			</div>
+		                           		</apex:outputPanel>
+	
+										<apex:outputPanel rendered="{!pageType=pageSAType || pageType=pageKDDIType || pageType=pageShopType}">
+		                            		<div class="field ">
+		                              			<label class="field-label">組織4</label>
+		
+		                              			<apex:selectList value="{!filterRole8Option}"
+		                                               id="sltListRole8"
+		                                               styleclass="field-value search-field-product-name"
+		                                               size="1"
+		                                               html-data-field="Role8DeveloperName"
+		                                               onkeydown="if(event.keyCode==13){this.blur();}">
+		                                			<apex:selectOptions value="{!role8Options}" />
+		                              			</apex:selectList>
+		
+		                            		</div>
+	                            		</apex:outputPanel>
+	
+										<apex:outputPanel rendered="{!pageType=pageSAType}">
+		                            		<div class="field">
+		                              			<label class="field-label">拠点名</label>
+		                              			<input type="text"
+		                                     		class="field-value search-field-product-code"
+		                                    	 	data-field="BusinessLocationName"
+		                                     		placeholder="拠点名"
+		                                     		onkeydown="if(event.keyCode==13){this.blur();}" />
+		                            		</div>
+	                            		</apex:outputPanel>
+	
+										<apex:outputPanel rendered="{!pageType=pageSAType}">
+											<div class="field">
+		                              			<label class="field-label">教育用スタッフ</label>
+		                              			<input type="text"
+		                                     		class="field-value search-field-product-code"
+		                                    	 	data-field="educationalStaff"
+		                                     		placeholder="教育用スタッフ"
+		                                     		onkeydown="if(event.keyCode==13){this.blur();}" />
+		                            		</div>
+	                            		</apex:outputPanel>
+	
+										<!-- <apex:outputPanel rendered="{!pageType=pageShopType}">
+		                            		<div class="field">
+		                              			<label class="field-label">拠点</label>
+		
+		                              			<apex:selectList value="{!filterBusinessLocationOption}"
+		                                               id="sltListBusinessLocation"
+		                                               styleclass="field-value search-field-product-name"
+		                                               size="1"
+		                                               html-data-field="BusinessLocationByOptionName"
+		                                               onkeydown="if(event.keyCode==13){this.blur();}">
+		                                			<apex:selectOptions value="{!businessLocationOptions}" />
+		                              			</apex:selectList>
+		
+		                            		</div>
+										</apex:outputPanel> -->
+										
+	                          		</div>		                          	
+										
+		                          	<div class="field" style="margin-top: 1em; width: 100%">
+		                            	<button type="button" onclick="userSearch();" class="customButton" style="width: 200px; margin-left: auto; margin-right: auto;">検索</button>
+		                          	</div>
+									
+	                        	</div>
+	                        	
+	                        	<!-- 
+	                        	<button type="button" class="toggle-button customButton" data-toggle="collapse" data-target="#userSearchArea" aria-expanded="false" aria-controls="userSearchArea" ></button>
+	                      		-->
+	                      		
+	                      	</div>
+	                      	
+	                      	<div class="section">
+	                      	
+	                      		<div data-tab-panel="productItemSearch" style="text-align: center; border-top: 2px solid #5e82b2; border-bottom: 2px solid #5e82b2; margin-bottom: 1em;">
+			                   		<button type="button"
+			                              class="customButton customAddButton"
+			                              style="display: inline-block;width: 100px;" 
+			                              onclick="chooseItemDetailProduct();">選択</button>
+			
+			                      	<button type="button"
+			                              class="customButton customAddButton"
+			                              style="display: inline-block;width: 100px;" 
+			                              onclick="userSearchAndChooseItemDetailProduct();">全部を選択</button>
+			 					
+									<button type="button" 
+										class="customButton customAddButton"
+										style="display: inline-block;width: 100px;"
+										onclick="validateAndRedirect();">キャンセル</button>
+			            		</div>
+	                      	
+	                        	<div class="select-header clearfix">
+	                          		<div class="detail-product-action-area clearfix user-list-title">
+	                            		<div class="title">
+	                              			<span>ユーザー一覧：</span>
+	                            		</div>
+	                            		<div class="pager-area clearfix">
+	                              			<a href="javascript: void(0);" class="prev customButton" onclick="prevRecordsAddDraggable();return false;" style="display: none;">&laquo;</a>
+	                              			<div class="prev disabled-button" >&laquo;</div>
+	                              			<div class="current-page-number"></div>
+	                              			<div class="separator">/</div>
+	                              			<div class="max-page-number"></div>
+	                              			<a href="javascript: void(0);" class="next customButton" onclick="nextRecordsAddDraggable();return false;" style="display: none;">&raquo;</a>
+	                              			<div class="next disabled-button">&raquo;</div>
+	                            		</div>
+	                            		<hr />
+	                          		</div>
+	                          		<div class="detail-product-action-area clearfix user-list">
+	                            		<div class="title">
+	                              			<span>選択済みユーザー一覧</span>
+	                            		</div>
+	                            		<hr />
+	                          		</div>
+	                        	</div>
+	                        	<div class="select-area clearfix">
+	                          		<div class="item-list"></div>
+	                          		<div  id="selected-list" class="selected-list" >
+	                            		<div class="drop-target table" ></div>
+	                          		</div>
+	                        	</div>
+	                      	</div>
+	                    </div>
+	             	</div>
+	
+	             	<div class="modal-footer">
+	                	<div data-tab-panel="productItemSearch" style="text-align: center;">
+	                   		<button type="button"
+	                              class="customButton customAddButton"
+	                              style="display: inline-block;width: 100px;" 
+	                              onclick="chooseItemDetailProduct();">選択</button>
+	
+	                      	<button type="button"
+	                              class="customButton customAddButton"
+	                              style="display: inline-block;width: 100px;" 
+	                              onclick="userSearchAndChooseItemDetailProduct();">全部を選択</button>
+	 					
+							<button type="button" 
+								class="customButton customAddButton"
+								style="display: inline-block;width: 100px;"
+								onclick="validateAndRedirect();">キャンセル</button>
+
+	            		</div>
+	            	</div>
+	       		</div>
+	    	</div>
+	  	</div>
+	
+						</apex:form>
+        			</div>
+      			</apex:outputPanel>
+    		</body>
+  		</html>
+	</apex:outputPanel>
+	<!-- script>
+	function setInputField(target) {
+        	//alert('Drop'.false);
+        
+            var $target = $j(target);
+            var $dropdown = $target.closest('[data-type="dropdown"]');
+            var $inputField = $dropdown.find('[data-type="input-field"]');
+            if ($target.attr('data-type') !== 'item') {
+                $target = $target.closest('[data-type="item"]');
+            }
+            $inputField.val($target[0].getAttribute('data-value'));
+            $inputField.trigger('focus');
+            dropdownAction(target);
+        }
+        </script -->
+</apex:page>

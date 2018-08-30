@@ -1,0 +1,269 @@
+<apex:page controller="auLoginCtrl" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" cache="false" action="{!redirectIfNecessaryMobile}" docType="html-5.0">
+
+<apex:form id="allForm">
+
+<html lang="ja">
+<head>
+
+  <meta charset="utf-8" />
+  <title>auポータル</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/sanitize.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/common.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/style-login.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/iphone.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/flatpickr.min.css')}"/>
+
+  <apex:stylesheet value="{!URLFOR($Resource.auStyling,'/css/au-portal-login-style.css')}"/>
+
+  <!-- libraries -->
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/jquery-3.2.1.min.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/flatpickr.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/ja.js')}"/> 
+  
+  <!-- scripts -->
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_check_ua.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_fitting.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_sp.js')}"/> 
+
+  <script>
+    var $j = jQuery.noConflict();
+
+
+    $j(document).ready(function(){
+           
+    });
+    
+    function summitForm() {
+        var loginUsername = document.getElementById('loginUsername');
+        var loginPassword = document.getElementById('loginPassword'); 
+        $j('.loginUsername').val(loginUsername.value);
+        $j('.loginPassword').val(loginPassword.value);
+        login();
+    }
+
+    function enter(key){
+        if (event.keyCode == 13){
+            summitForm();
+        }
+    }
+
+    function jsAfterLogin() {
+        if ($j('.message-error').val().length > 0) {
+          alert($j('.message-error').val());
+        }
+    }
+
+
+
+  </script>
+
+  <style type="text/css">
+
+    input[type="password"] {
+      -webkit-appearance: none;
+      background-color: #ffffff;
+      border: 1px solid #aaaaaa;
+    }
+
+    input[type="password"] {
+      height: 60px;
+      line-height: 60px;
+      padding-left: 10px;
+      padding-right: 10px;
+      font-size: 3.5rem;
+      border-radius: 5px;
+    }
+
+  </style>
+</head>
+
+
+<body class="page-login">
+  
+  <apex:inputHidden id="messageError" html-class="message-error" value="{!errorMessage}" />
+
+  <apex:inputHidden value="{!loginUsername}" html-class="loginUsername"/>
+  <apex:inputHidden value="{!loginPassword}" html-class="loginPassword"/>
+  <apex:actionFunction action="{!login}" 
+                       name="login"
+                       reRender="messageError, loginPanel"
+                       oncomplete="jsAfterLogin();"/>
+
+  <div class="document-container">
+    <header class="document-header"></header>
+
+    <div class="document-contents">
+
+
+      <!-- #View 00-01-00(typ.) -->
+      <section class="login-section">
+        <apex:outputPanel id="loginPanel" >
+
+          <h1>au</h1>
+          <h2>ようこそ。auポータルサイトへ。</h2>
+          <div class="controls">
+
+            <input class="id {!IF(errorLoginUsername,'error','')}"
+                   type="text"
+                   id='loginUsername'
+                   placeholder="{!$Label.auLogin_MSG_03}"
+                   value="{!loginUsername}"/>
+
+            <input class="password {!IF(errorLoginPassword,'error','')}" 
+                   type="password" 
+                   id='loginPassword'
+                   placeholder="{!$Label.auLogin_MSG_04}"
+                   value="{!loginPassword}"
+                   onKeyPress="enter(window.event.keyCode)"/>
+
+            <label class="remember">
+              <apex:inputCheckbox value="{!isSetToCookie}"
+                                  styleclass="checkbox" />
+              <span class="checkbox-label">
+                <span class="base-name">ログインIDを記憶する。</span>
+              </span>
+            </label>
+
+            <div class="btn btn-login">
+              <a class="ui-color-1"
+                 href="#"
+                 onclick="summitForm();">ログイン</a>
+            </div>
+            <div class="forget"><a href="/forgot-password">パスワードを忘れた場合はこちら</a></div>
+
+            <br/>
+            <br/>
+
+
+            <apex:outputPanel rendered="{!urlSingleSignOn != NULL}">
+
+            <div class="btn btn-login">
+              <a class="ui-color-1"
+                 href="{!urlSingleSignOn}">
+
+                <div class="kddi-user-login-con" style="width: 100%;margin-left: 5%;">
+                    <img src="{!URLFOR($Resource.auStyling,'/images/au-portal-login.svg')}" 
+                         style="height: 50px;float: left;vertical-align: middle;    padding-right: 10px;margin-top: 4px;"/>
+                    <p class="text" style="margin-left: 1rem;font-size: 12px;">KDDI営業社員はこちらからログイン</p>
+                </div>
+
+              </a>
+            </div>
+
+<!--
+                <a href="{!urlSingleSignOn}">
+                    <div class="kddi-user-login" style="width: 100%;height: 70px;">
+                        <div class="kddi-user-login-con" style="width: 95%;margin: auto;">
+                            <img src="{!URLFOR($Resource.auStyling,'/images/au-portal-login.svg')}" height="50px;"/>
+                            <p class="text" style="margin-left: 1rem;">KDDI営業社員は<br/>こちらからログイン</p>
+                        </div>
+                    </div>
+                </a>
+-->
+            </apex:outputPanel>
+
+          </div>
+
+        </apex:outputPanel>
+
+      </section>
+   
+   
+    </div>
+    <footer class="document-footer"></footer>
+  </div>
+  <script>
+
+
+  </script>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+
+
+<script type="text/javascript">        
+
+</script>
+<body>
+<apex:form id="thisForm">
+    <apex:inputHidden value="{!isSetToCookie}" id="isSetToCookie"/>
+    <apex:inputHidden value="{!loginUsername}" id="loginUsername"/>
+    <apex:inputHidden value="{!loginPassword}" id="loginPassword"/>
+    <apex:actionFunction action="{!login}" name="login" reRender="loginPanel"/>
+</apex:form>
+<div class="page-login">
+    <div class="sepalate-logo">
+    </div>
+    <apex:outputPanel layout="none" id="loginPanel" >
+    <div class="sepalate-form">
+        <div class="bg-wrap" id="bg-wrap">
+            <div class="vCentering centering-wrap">
+                <p class="greeting ttl color-orange bold">
+                    {!$Label.auLogin_MSG_TITLE_01}<br />
+                    {!$Label.auLogin_MSG_TITLE_02}
+                </p>
+                <apex:outputPanel rendered="{!errorMessage!=null}">
+                <ul class="validate-list">
+                    <li id="alert1" class="active color-orange">
+                    <apex:outputLabel value="{!errorMessage}" escape="false"/>
+                    </li>
+                </ul>
+                </apex:outputPanel>
+                <div class="input-block">
+                    <input class="top-r" type="text" id='loginUsername' placeholder="{!$Label.auLogin_MSG_03}" />
+                    <input class="bottom-r" type="password" id='loginPassword' placeholder="{!$Label.auLogin_MSG_04}" onKeyPress="enter(window.event.keyCode)"/>
+                </div>
+                <div class="option-box">
+                    <div class="nomal active">
+                        <div class="checkbox-wrap float-l">
+                            <label class="">
+                                <input type="checkbox" id="isSetToCookie" onclick="setToCookie();"/><span>{!$Label.auLogin_MSG_05}</span>                            
+                            </label>
+                        </div>
+                        <a class="button orange float-r" href="#" onclick="summitForm();">{!$Label.auLogin_MSG_06}</a>
+                    </div>
+                    <div class="error">
+                        <a class="button orange float-r" href="">{!$Label.auLogin_MSG_07}</a>
+                    </div>
+                </div>
+                <ul class="link-list red-burret">
+                    <li>
+                        <a href="/forgot-password">{!$Label.auLogin_MSG_08}</a>
+                    </li>
+                </ul>         
+                <br/>
+                <br/>
+
+
+            </div>
+        </div>
+    </div>
+    </apex:outputPanel>
+</div>
+
+
+</body>
+-->
+
+</html>
+
+</apex:form>
+
+</apex:page>

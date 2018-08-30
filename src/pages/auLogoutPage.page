@@ -1,0 +1,46 @@
+<apex:page id="Page" controller="auLoginCtrl" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" docType="xhtml-1.0-transitional">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="jp">
+<link rel="SHORTCUT ICON" href="{!URLFOR($Resource.auStyling,'/images/favicon.ico')}" /><!-- IE用 -->
+<link rel="ICON" href="{!URLFOR($Resource.auStyling,'/images/favicon.ico')}" /><!-- firefox用 -->
+<c:auHeaderComp />
+<style type="text/css">
+    a:link {
+     text-decoration: none;
+    }
+    a:visited {
+     text-decoration: none;
+    }
+    a:hover {
+     text-decoration: none;
+    }
+    a:active {
+     text-decoration: none;
+    }
+</style>
+<body>
+<c:auLogoComp />
+<div class="page-login">
+    <div class="panel abs centering">
+        <h2 class="title">{!$Label.auLogout_MSG_01}</h2>
+        <div class="button-box mb45">
+                <a class="button gray" href="/login">{!$Label.auLogout_MSG_02}</a>
+        </div>
+        <ul class="link-list red-burret">
+            <li>
+                <a href="/forgot-password">{!$Label.auLogout_MSG_03}</a>
+            </li>
+<!--
+            <li>
+                <a href="https://mainmenu.rms.rakuten.co.jp/" target="_blank">{!$Label.RPS_Logout_MSG_04}</a>
+            </li>
+            <li>
+                <a href="/faq">{!$Label.RPS_Logout_MSG_05}</a>
+            </li>
+-->            
+        </ul>
+    </div>
+</div>
+<c:auFooterComp />
+</body>
+</html>
+</apex:page>

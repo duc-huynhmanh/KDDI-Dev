@@ -1,0 +1,658 @@
+<apex:page controller="saTasksCtrl" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" cache="false" action="{!redirectIfNecessaryMobile}" docType="html-5.0">
+
+<apex:form id="allForm">
+
+<html lang="ja">
+<head>
+
+  <meta charset="utf-8" />
+  <title>auポータル</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/sanitize.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/common.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/style-message.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/iphone.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/flatpickr.min.css')}"/>
+
+  <!-- libraries -->
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/jquery-3.2.1.min.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/flatpickr.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/ja.js')}"/> 
+  
+  <!-- scripts -->
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_check_ua.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_fitting.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_sp.js')}"/> 
+
+  <script>
+    var $j = jQuery.noConflict();
+
+    // converts HTML to text using Javascript
+    function html2text(html) {
+      var tag = document.createElement('div');
+      tag.innerHTML = html;
+      return tag.innerText;
+    }
+
+
+    function jsAfterConfirmCurrentPost() {
+        if ($j('.message-error').val().length > 0) {
+          alert($j('.message-error').val());
+          $j('.message-error').val("正しいデーターを入れてください。");
+        } else {
+          alert('返信しました。');
+
+          $j('.message-error').val("正しいデーターを入れてください。");
+          $j('.unread-class').hide();
+          $j(".btn-attach").removeClass('disable');
+        }
+    }
+
+    function callAddCxKnowledgeNewAttachmentId(key) {
+        if (checkFileSize()) {
+          addCxKnowledgeNewAttachment();
+        }
+    }
+
+    function callCxKnowledgeDeleteAttachment(key) {
+        var obj = $j('.AttachmentIdInput');
+        obj.val(key);
+        jsCxKnowledgeAttachmentDelete();
+    }
+
+    function callCxKnowledgePutInTopAttachment(key) {
+        var obj = $j('.AttachmentIdInput');
+        obj.val(key);
+        jsCxKnowledgeAttachmentPutInTop();
+    }
+
+
+    function checkFileSize() {
+        var goodSize = true;
+        $j('input[type=file]').each(function()
+        {          
+            if(this.files.length > 0 && typeof this.files[0] !== 'undefined')
+            {
+                var file = this.files[0],
+                    size = typeof ActiveXObject !== 'undefined' ?
+                        getIEFileSize(file)
+                        :
+                        file.fileSize || file.size;
+     
+                goodSize = 65 * 1024 * 1024 > size;
+                if(!goodSize) {
+                    alert('ファイルは大きすぎです。65Moまでのファイルを選択してください。');
+                }
+     
+                return goodSize;
+            }
+        });
+        return goodSize;
+    }
+
+  </script>
+
+  <style type="text/css">
+
+    /*
+     * protect-screen
+     ******************************************************/
+    @media screen {
+
+      .protect-screen-bis {
+        position: fixed;
+        left: 0;
+        top: 0;
+
+        width: 100%;
+        height: 100%;
+
+        background-color: rgba(0, 0, 0, 0.2);
+
+        z-index: 998;
+      }
+      .protect-screen-bis.hide {
+        display: none;
+      }
+    }
+
+    .avatar > img {
+      width: 110px;
+      height: 110px;
+    }
+
+    .postContentList {
+      line-height: 1.3rem;
+      max-height: 5rem;
+    }
+
+    .group-list-item {
+      color: black;
+    }
+
+    .message-detail-section-footer .btn-attach > a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        line-height: 100px;
+        border-radius: 0;
+        font-size: 3.2rem;
+        font-weight: normal;
+    }
+    .message-detail-section-footer .btn-attach {
+        width: 100%;
+        height: 100px;
+    }
+    .disable .ui-color-3:link, .disable .ui-color-3:visited, .disable .ui-color-3 > a:link, .disable .ui-color-3 > a:visited {
+        color: #ffffff;
+        background-color: #aaaaaa;
+        cursor: default;
+    }
+    .message-detail-section-body {
+      padding-bottom: 200px;
+    }
+
+    .attachInput {
+      display: none;
+    }
+
+    .task-list-attachment {
+      font-size: 3.2rem;
+      padding-left: 1rem;
+      background-color: #eee;
+      border-bottom: 1px solid #fff;
+      overflow: hidden;
+    }
+
+    .task-list-attachment .button--delete-list {
+      float: right;
+    }
+
+    .isLink {
+      cursor: pointer;
+      cursor: hand;      
+    }
+
+    .linkPutInTop {
+      float: right;
+      margin-right: 1rem
+    }
+
+    .linkstyle {
+      text-decoration: underline;
+    }
+    .linkstyle:hover {
+      color: blue;
+    }
+    .linkstyle a:hover {
+      color: blue;
+    }
+
+    .button--delete-list {
+      width: 5.75rem;
+      text-align: center;
+      background-color: #000;
+      color: #fff;
+      line-height: 4.5rem;
+      margin-top: -1rem;
+    }
+    .button--delete-list-same {
+      line-height: 4.5rem;
+      margin-top: -1rem;
+    }
+
+    .button--delete-list.linkstyle:hover {
+      color: red;
+    }
+    .button--delete-list.linkstyle a:hover {
+      color: red;
+    }
+
+    .message-detail li {
+      padding: 0.5em 0 0 0;
+    }
+    
+    .badge-div {
+    	padding-right: 40px;
+    	padding-top: 5px;
+    }
+    
+    .message-section .badge {
+    	float: right;
+    }
+
+  </style>
+</head>
+
+
+<body class="page-message">
+  
+
+    <apex:inputHidden id="messageError" html-class="message-error" value="{!messageError}" />
+    <apex:inputHidden id="messageQuestion" html-class="message-question" value="{!messageQuestion}" />
+    <apex:inputHidden html-class="isTabMsgRead" value="{!isTabMsgRead}" />
+
+    <apex:actionRegion id="rgnAttachUpdate" renderRegionOnly="false">
+      <apex:inputText id="attachmentId" styleClass="AttachmentIdInput" value="{!currentMessage.attachmentId}" style="display: none;" />
+      <apex:actionFunction name="jsCxKnowledgeAttachmentDelete" action="{!currentMessage.attachmentDelete}" rerender="pnlMessageDetail" />
+      <apex:actionFunction name="jsCxKnowledgeAttachmentPutInTop" action="{!currentMessage.attachmentPutInTop}" rerender="pnlMessageDetail" />
+    </apex:actionRegion>
+
+  <apex:actionRegion id="area51c" renderRegionOnly="false">
+
+    <apex:inputHidden html-class="idMessage" value="{!idMessage}" />
+    <apex:inputHidden id="idCurrentMessage" html-class="currentMessageId" value="{!currentMessageId}" />
+
+    <apex:actionFunction name="jsShowMessagesReadList"
+                         action="{!showMessagesReadList}"
+                         rerender="pnlMessageSectionList"
+                         oncomplete="setView_01_01_01_logic();" />
+
+    <apex:actionFunction name="jsShowMessagesUnreadList"
+                         action="{!showMessagesUnreadList}"
+                         rerender="pnlMessageSectionList"
+                         oncomplete="setView_01_01_01_logic();" />
+
+    <apex:actionFunction name="jsShowMessageDetail"
+                         action="{!showMessageDetail}"
+                         rerender="pnlMessageName, pnlMessageDetail, pnlMessageDetailFooter"
+                         oncomplete="setView_01_01_02();" />
+
+</apex:actionRegion>
+
+  <apex:actionFunction name="addCxKnowledgeNewAttachment" action="{!addCxKnowledgeNewAttachment}" />
+
+  <c:saMainTopComp typeOfScreen="{!typeOfScreen}" />
+
+
+
+  <div class="protect-screen-bis hide"></div>
+  
+  <!-- template-popup -->
+  <div class="modal-dialog hide"><p>ダイアログメッセージ</p><div class="btn-cancel"><a href="#">キャンセル</a></div><div class="btn-ok"><a href="#">OK</a></div></div>
+
+  <div class="document-container">
+    <header class="document-header">
+      <div class="btn-menu"><a href="#">ナビゲーション</a></div>
+    </header>
+
+    <div class="document-contents">
+
+
+
+      <!-- #View 01-01-01(typ.) -->
+      <section class="message-section message-section-list hide">
+        <header class="message-list-section-header">
+          <h1>To Do</h1>
+          <ul>
+            <li><h2><a href="#" class="message-section-unread">未実施</a></h2></li>
+            <li><h2><a href="#" class="message-section-read">実施済み</a></h2></li>
+          </ul>
+        </header>
+
+        <apex:outputPanel id="pnlMessageSectionList" >
+          <div class="section-body message-list-section-body">
+
+            <!-- #DynamicItem -->
+            <ul class="message-list">
+              <apex:repeat value="{!lsMsg}" var="msg">
+                <li class="group-list-item" msgId="{!msg.msg.Id}" replyId="{!msg.msgDetail.Id}">
+                  <span class="badge {!msg.ClsNm}" style="{!IF(msg.ClsNm == '', 'display: none;', '')}">{!msg.dateLabel}</span>
+                  <a href="#">
+                    <span class="title">{!msg.msg.Title__c}</span>
+                    <span class="date">
+                      <time>
+                        <apex:outputText value="{0,date,yyyy/MM/dd　HH:mm}">
+                          <apex:param value="{!msg.msg.DeadlineDatetime__c + offset}" /> 
+                        </apex:outputText>
+                      </time>
+                    </span>
+                  </a>
+                </li>
+              </apex:repeat>
+            </ul>
+
+          </div>
+        </apex:outputPanel>
+
+        <footer class="message-list-section-footer"></footer>
+      </section>
+
+      <!-- #View 01-01-02(typ.) -->
+      <section class="message-section message-section-detail hide">
+
+        <header class="message-detail-section-header">
+          <h1><apex:outputText id="pnlMessageName" value="{!currentMessage.msg.Title__c}" /></h1>
+          <div class="btn-back"><a href="#" class="ui-color-dark">戻る</a></div>
+        </header>
+
+        <div class="section-body message-detail-section-body">
+          <apex:outputPanel id="pnlMessageDetail">
+
+            <!-- #DynamicItem -->
+            <div class="badge-div">
+              <span>
+                <span class="badge unread-class {!currentMessage.clsNm}" style="{!IF(currentMessage.ClsNm == '', 'display: none;', '')}">{!currentMessage.dateLabel}</span>
+              </span>
+            </div>
+            <div class="message-detail">
+              <span class="date"> 
+                <time>
+                  <apex:outputLabel value="{!$ObjectType.saMessage__c.fields.PublishedDatetime__c.Label} : " />
+                  <apex:outputText value="{0,date,yyyy/MM/dd  HH:mm}">
+                    <apex:param value="{!currentMessage.msg.PublishedDatetime__c + offset}" /> 
+                  </apex:outputText>
+                </time>                        
+              </span>
+              <span class="date"> 
+                <time>
+                  <apex:outputLabel value="{!$ObjectType.saMessage__c.fields.DeadlineDatetime__c.Label} : " />
+                  <apex:outputText value="{0,date,yyyy/MM/dd  HH:mm}">
+                    <apex:param value="{!currentMessage.msg.DeadlineDatetime__c + offset}" /> 
+                  </apex:outputText>
+                </time>                        
+              </span>
+              <apex:outputPanel layout="none" rendered="{!currentMessage.msg.IssuerLabel__c != NULL}">
+                <p class="text">
+                  <apex:outputLabel value="{!$ObjectType.saMessage__c.fields.IssuerLabel__c.Label} : " />
+                  <apex:outputField value="{!currentMessage.msg.IssuerLabel__c}"/>
+                </p>
+              </apex:outputPanel>
+              <p class="text">
+                <apex:outputField value="{!currentMessage.msg.Description__c}"/>
+              </p>
+            </div>
+
+                      <apex:repeat value="{!currentMessage.msg.Attachments}" var="att" >
+
+                        <apex:outputPanel rendered="{!att.ContentType == 'video/mp4' || 
+                                                      att.ContentType == 'video/mpeg' ||
+                                                      att.ContentType == 'video/quicktime' ||
+                                                      att.ContentType == 'video/x-m4v' ||
+                                                      att.ContentType == 'video/x-ms-asf' ||
+                                                      att.ContentType == 'video/x-msvideo'}">
+                          <video style="max-width: 15rem;max-height: 15rem;margin-left: 1rem;margin-top: 1rem;"  controls="controls">
+                                <source src="/servlet/servlet.FileDownload?file={!att.Id}"
+                                        type="video/mp4" />        
+                                Your browser does not support the video tag.
+                          </video> 
+                        </apex:outputPanel>
+
+                        <apex:outputLink value="/servlet/servlet.FileDownload?file={!att.Id}"
+                                         rendered="{!att.ContentType == 'image/jpeg' ||
+                                                     att.ContentType == 'image/png' ||
+                                                     att.ContentType == 'image/gif' ||
+                                                     att.ContentType == 'image/jpg'}"
+                                         target="_blank">
+
+                          <apex:image style="max-width: 15rem;max-height: 15rem;margin-left: 1rem;margin-top: 1rem;" 
+                                      url="/servlet/servlet.FileDownload?file={!att.Id}"/>
+
+                        </apex:outputLink>
+
+                        <apex:outputLink value="/servlet/servlet.FileDownload?file={!att.Id}"
+                                         rendered="{!att.ContentType == 'application/pdf'}"
+                                         target="_blank">
+
+                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;" 
+                                      url="{!URLFOR($Resource.auResources,'icons/Pdf-icon.png')}"/> 
+
+                          <apex:outputLabel value="{!att.Name}" />
+                          <br/>
+
+                        </apex:outputLink>
+
+                        <apex:outputLink value="/servlet/servlet.FileDownload?file={!att.Id}"
+                                         rendered="{!att.ContentType != 'video/mp4' &&
+                                                     att.ContentType != 'video/mpeg' &&
+                                                     att.ContentType != 'video/quicktime' &&
+                                                     att.ContentType != 'video/x-m4v' &&
+                                                     att.ContentType != 'video/x-ms-asf' &&
+                                                     att.ContentType != 'video/x-msvideo' &&
+                                                     att.ContentType != 'application/pdf' &&
+                                                     att.ContentType != 'image/jpeg' &&
+                                                     att.ContentType != 'image/png' &&
+                                                     att.ContentType != 'image/gif' &&
+                                                     att.ContentType != 'image/jpg'}">
+
+                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;" 
+                              url="{!URLFOR($Resource.auResources,'icons/Excel-icon.png')}"
+                              rendered="{!att.ContentType == 'application/vnd.ms-excel' || 
+                                          att.ContentType == 'application/vnd.ms-excel.sheet.macroEnabled.12' ||
+                                          att.ContentType == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+                                          att.ContentType == 'text/csv'}"/>
+
+                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;" 
+                              url="{!URLFOR($Resource.auResources,'icons/Word-icon.png')}"
+                              rendered="{!att.ContentType == 'application/msword' ||
+                                          att.ContentType == 'application/vnd.ms-word.document.macroEnabled.12' ||
+                                          att.ContentType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}"/>
+
+                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;" 
+                              url="{!URLFOR($Resource.auResources,'icons/PowerPoint-icon.png')}"
+                              rendered="{!att.ContentType == 'application/vnd.google-apps.presentation' ||
+                                          att.ContentType == 'application/vnd.ms-powerpoint' ||
+                                          att.ContentType == 'application/vnd.ms-powerpoint.presentation.macroEnabled.12' ||
+                                          att.ContentType == 'application/vnd.openxmlformats-officedocument.presentationml.presentation'}"/>
+
+                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;" 
+                              url="{!URLFOR($Resource.auResources,'icons/File-icon.png')}"
+                              rendered="{!att.ContentType != 'image/jpeg' && 
+                                          att.ContentType != 'image/png' &&
+                                          att.ContentType != 'image/gif' &&
+                                          att.ContentType != 'image/jpg' &&
+                                          att.ContentType != 'application/vnd.ms-excel' &&
+                                          att.ContentType != 'application/vnd.ms-excel.sheet.macroEnabled.12' &&
+                                          att.ContentType != 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' &&
+                                          att.ContentType != 'text/csv' &&
+                                          att.ContentType != 'application/msword' &&
+                                          att.ContentType != 'application/vnd.ms-word.document.macroEnabled.12' &&
+                                          att.ContentType != 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' &&
+                                          att.ContentType != 'application/vnd.google-apps.presentation' &&
+                                          att.ContentType != 'application/vnd.ms-powerpoint' &&
+                                          att.ContentType != 'application/vnd.ms-powerpoint.presentation.macroEnabled.12' &&
+                                          att.ContentType != 'application/vnd.openxmlformats-officedocument.presentationml.presentation' &&
+                                          att.ContentType != 'application/pdf'}"/>
+
+                          <apex:outputLabel value="{!att.Name}" />
+                          <br/>
+
+                        </apex:outputLink>
+
+                      </apex:repeat>
+
+
+            <!-- REPLY DATA -->
+            <div class="message-detail">
+              <p class="text">
+                <span style="font-weight: bold;">回答</span>
+              </p>
+              <p class="text">
+
+                <apex:actionRegion id="regionReplyComment">
+                  <apex:inputField value="{!currentMessage.msgDetail.ReplyComment__c}"
+                                   style="width: 100%;"/>
+                  <apex:actionFunction name="jsConfirmCurrentPost"
+                                       action="{!confirmCurrentPost}"
+                                       rerender="messageError, idCurrentMessage, pnlMessageDetail, btnConfirm"
+                                       oncomplete="jsAfterConfirmCurrentPost();" />
+                </apex:actionRegion>
+
+              </p>
+
+              <p class="text">
+                <apex:repeat value="{!currentMessage.detailAttachment}" var="att" >
+                  <ul class="task-list-attachment">
+                    <li>
+                      <table style="width: 100%;"><tr><td style="width: 4.7rem; vertical-align: top;">
+                      <apex:outputLink value="{!URLFOR($Action.Attachment.Download, att.Id)}" target="_blank" styleclass="isLink linkstyle">表示</apex:outputLink>
+                    </td><td style="vertical-align: top; word-break: break-all;">
+                    {!att.Name}
+                    </td><td style="width: 14rem; vertical-align: top;">  
+                      <apex:outputPanel >
+                        <a class="button button--delete-list linkstyle" onclick="callCxKnowledgeDeleteAttachment('{!att.ID}');">削除<i class="icon icon--close"></i></a> 
+
+                        <a onclick="callCxKnowledgePutInTopAttachment('{!att.ID}');" class="isLink linkPutInTop linkstyle button--delete-list-same">先頭へ</a> 
+                      </apex:outputPanel>
+                    </td></tr></table>
+                    </li>
+                  </ul>
+                </apex:repeat>
+              </p>
+
+            </div>
+
+
+
+
+          </apex:outputPanel>
+
+<apex:inputFile id="upload--file"
+                styleclass="attachInput"
+                value="{!cxKnowledgeNewAttachment.body}"
+                filename="{!cxKnowledgeNewAttachment.name}"
+                contentType="{!cxKnowledgeNewAttachment.contentType}" 
+                filesize="{!cxKnowledgeNewAttachmentSize}"
+                onchange="callAddCxKnowledgeNewAttachmentId();" />
+
+
+        </div>
+
+        <footer class="message-detail-section-footer">
+          <apex:actionRegion id="area51b" renderRegionOnly="false">
+            <apex:outputPanel id="pnlMessageDetailFooter">
+              <div class="btn btn-attach {!IF(currentMessage.ClsNm == '', '', 'disable')}">
+                  <apex:commandLink value="添付"
+                                    styleClass="ui-color-3"
+                                    action="{!dummyAction}"
+                                    reRender="DUMMY" />
+              </div>
+              <div class="btn btn-confirm">
+                <apex:commandLink id="btnConfirm"
+                                  value="{!IF(currentMessage.ClsNm == '', '更新', '実施した')}"
+                                  styleClass="ui-color-1"
+                                  action="{!dummyAction}"
+                                  reRender="DUMMY" />
+              </div>
+            </apex:outputPanel> 
+          </apex:actionRegion>
+        </footer>
+
+
+      </section>
+   
+   
+    </div>
+    <footer class="document-footer"></footer>
+  </div>
+
+
+  <script>
+
+    function setView_01_01_01() {
+
+      $j(".document-header").show();
+      $j('.message-section-list').show();
+      $j('.message-section-detail').hide();
+
+      setView_01_01_01_logic();
+
+    }
+
+    function setView_01_01_01_logic() {
+
+      $j(".message-section-read").off("click");  
+      $j(".message-section-read").on("click", function (e) {
+
+        if(!$j(".message-section-read").hasClass("current")) {
+          $j(".message-section-read").addClass("current");
+          $j(".message-section-unread").removeClass("current");
+          jsShowMessagesReadList();
+        }
+
+      });
+
+
+      $j(".message-section-unread").off("click");  
+      $j(".message-section-unread").on("click", function (e) {
+
+        if(!$j(".message-section-unread").hasClass("current")) {
+          $j(".message-section-unread").addClass("current");
+          $j(".message-section-read").removeClass("current");
+          jsShowMessagesUnreadList();
+        }
+
+      });
+
+      $j(".group-list-item").off("click");  
+      $j(".group-list-item").on("click", function (e) {
+
+        $j('.idMessage').val($j(this).attr('msgId'));
+        $j('.currentMessageId').val($j(this).attr('replyId'));
+        jsShowMessageDetail();
+
+      });
+
+    }
+
+
+    function setView_01_01_02() {
+
+      $j(".document-header").hide();
+      $j('.message-section-list').hide();
+      $j('.message-section-detail').show();
+
+      setView_01_01_02_logic();
+
+    }
+
+    function setView_01_01_02_logic() {
+
+      $j(".btn-back").off("click");
+      $j(".btn-back").on("click", function (e) {
+        setView_01_01_01();
+      });
+
+      $j(".btn-confirm").off("click");  
+      $j(".btn-confirm").on("click", function (e) {
+        if (!$j(".btn-confirm").hasClass('disable')) {
+          jsConfirmCurrentPost();
+        }
+      });
+
+      $j(".btn-attach").off("click");  
+      $j(".btn-attach").on("click", function (e) {
+        if (!$j(".btn-attach").hasClass('disable')) {
+          $j(".attachInput").click();
+        }
+      });
+
+    }
+
+
+    $j(document).ready(function () {
+
+      if ($j('.idMessage').val() == '') {
+        setView_01_01_01();
+        $j('.message-section-unread').addClass('current');
+      } else {
+        setView_01_01_02();
+        if ($j('.isTabMsgRead').val() == 'true') {
+          $j(".message-section-read").addClass("current");
+          $j(".message-section-unread").removeClass("current");
+        } else {
+          $j(".message-section-read").removeClass("current");
+          $j(".message-section-unread").addClass("current");
+        } 
+      }
+
+    });
+
+  </script>
+</body>
+</html>
+
+</apex:form>
+
+</apex:page>

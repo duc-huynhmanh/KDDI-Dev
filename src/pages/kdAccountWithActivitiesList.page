@@ -1,0 +1,991 @@
+<apex:page cache="false" showHeader="false" standardStylesheets="true" applyHtmlTag="false" applyBodyTag="false" doctype="html-5.0" controller="kdAccountWithActivitiesListCtrl">
+
+<html class="no-js" lang="en-GB">
+
+<c:auMainHeaderComp />
+<c:waitSearchPanelComp text="ロード中" isModalMode="true"/>
+<head>
+
+  <apex:stylesheet value="{!URLFOR($Resource.jQueryUIFull, 'jquery-ui-1.12.1/jquery-ui.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.jQueryUIFull, 'jquery-ui-1.12.1/jquery-ui.min.css')}"/>
+
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/external/jquery/jquery.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.datepicker-ja.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryMin)}"/>
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.min.js')}"/> 
+
+  <style>
+    .col1{
+      min-width: 125px !important;
+      width: 125px !important;
+      max-width: 125px !important;
+      overflow-x: hidden;
+    }
+    .col2{
+      min-width: 120px !important;
+      max-width: 180px !important;
+      overflow-x: hidden;
+    }
+    .col3{
+      min-width: 125px !important;
+      width: 125px !important;
+      max-width: 125px !important;
+      overflow-x: hidden;
+    }
+    .col4{
+      min-width: 120px !important;
+      max-width: 180px !important;
+      overflow-x: hidden;
+    }
+    .col5{
+      min-width: 110px !important;
+      max-width: 150px !important;
+      overflow-x: hidden;
+    }
+    .col6{
+      min-width: 110px !important;
+      max-width: 150px !important;
+      overflow-x: hidden;
+    }
+    .col7{
+      min-width: 110px !important;
+      max-width: 140px !important;
+      overflow-x: hidden;
+    }
+    .col8{
+      min-width: 105px !important;
+      width: 105px !important;
+      max-width: 105px !important;
+      overflow-x: hidden;
+      text-align: center !important;
+      padding: 0 !important;
+    }
+    .col9{
+      min-width: 105px !important;
+      width: 105px !important;
+      max-width: 105px !important;
+      overflow-x: hidden;
+      text-align: center !important;
+      padding: 0 !important;
+    }
+
+    .col1 p, .col2 p, .col3 p, .col4 p, .col5 p, .col6 p, .col7 p, .col8 p, .col9 p{
+      word-break: break-all;
+      word-wrap: break-word;
+      white-space: normal;
+    }
+
+    .content {
+      padding: 1em;
+    }
+
+    .selectDate {
+      width: 7rem;
+      margin-left: 1em;
+      height: 2.1rem;
+    }
+
+    .dataTables_scrollBody {
+/*      max-height: 50rem !IMPORTANT;*/
+    }
+    .theme {
+/*      height: 100vh !IMPORTANT;
+*/    }
+    .content.content--theme {
+/*      style="overflow-x: hidden;"
+*/    }
+
+    .button.button--update{
+      margin-right: 0.5rem;
+    }
+
+    .button.button--update.button--update--space{
+      margin-right: 5rem;
+    }
+
+    .no-arrow::before {
+      display: none;
+    }
+    .theme-desc-list-fullsize {
+      width: 100%;
+    }
+
+    .button--cancel {
+      cursor: pointer;
+      cursor: hand;
+    }
+
+    .popup-inner {
+      top: 45%;
+      max-height: 78%;
+    }
+
+    .attachInput {
+      display: none;
+      position: absolute;
+      left: 0.5rem;
+      opacity: 0;
+      overflow: hidden;
+      margin-top: -2rem;
+   }
+
+    .icon-attach {
+      height: 4rem;
+      width: 4rem;
+      /*position: absolute;
+      left: 0.5rem;
+      margin-top: -2rem;*/
+    }
+
+    .icon-upload{
+      height: 2rem;
+      width: 2rem;
+      /*position: absolute;
+      left: 0.5rem;
+      margin-top: -1rem;*/
+    }
+
+    .icon--knowledge-letter {
+      height: 2rem;
+      width: 2rem;
+    }
+
+    .js-slide-width {
+/*      height: 495px !important;
+  */
+    }
+
+    .theme-desc__head_side {
+      height: 4.5rem;
+      max-height: 4.5rem;
+    }
+
+    .theme-desc__upload {
+      width: 100%;
+    }
+
+    .knowledge-list--attachment {
+      height: 2.5rem;
+      padding-left: 1rem;
+      background-color: #eee;
+      border-bottom: 1px solid #fff;
+      line-height: 2.5;
+      overflow: hidden;
+    }
+
+    .knowledge-list--attachment .button--delete-list {
+      float: right;
+      color: #fff !important;
+    }
+
+    .isLink {
+      cursor: pointer;
+      cursor: hand;      
+    }
+
+    .linkPutInTop {
+      float: right;
+      margin-right: 1rem
+    }
+
+    .theme-infoxxx {
+      overflow-y: scroll !important;
+    }
+
+    .theme-desc {
+      width: 100%;
+    }
+
+    .theme-info{
+      height: 100% !important;
+      z-index: 4;
+    }
+
+
+/* NEW CODE FOR CX */
+
+    .theme-list tbody {
+      height: auto !important;
+    }
+
+    .theme-list tbody td {
+      vertical-align: inherit;
+    }
+
+    .input-title {
+      height: 2.3rem !important;
+    }
+
+    .table--theme-info .is-middle {
+      width: 15rem;
+      margin-right: 1rem;
+    }
+
+    .no-attach {
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .knowledge-list--attachment {
+      height: auto;
+      overflow: auto;
+    }
+
+    .theme-info__head.is-cx span{
+      color: #fff;
+    }
+
+    .popup{
+      z-index: 5 !important;
+    }
+
+    .popup--like textarea,
+    .popup--copy textarea {
+      width: 100%;
+      height: 20rem;
+    }
+
+    .popup--like .popup-inner,
+    .popup--copy .popup-inner {
+        width: 50%;
+        background-color: transparent;
+    }
+
+    .close-label {
+      font-size: 1.6rem;
+      line-height: 1.8 !important;
+    }
+
+    .popup__button-container {
+      bottom: 13rem;
+    }
+
+    .ui-datepicker {
+      z-index: 5 !important;
+    }
+
+    .thspanwithoutarrow {
+      top: auto !important;
+    }
+
+
+    .shopsItem, .categoryItem {
+        display: inline-block;
+        width: 240px;
+        float: left;
+        text-align: left;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin: 4px;
+        height: 1.8em;
+    }
+
+    .mdl-grid {
+      padding-bottom: 22px;
+    }
+
+    .search-textfield, .search-checkboxfield {
+      margin-left: 0.5rem; 
+      width:10rem;
+      height: 2.1rem;
+    }
+
+    .filter-item {
+      padding-left: 0 !important;
+      height: 44px;
+    }
+
+    .linkstyle {
+      text-decoration: underline;
+    }
+    .linkstyle:hover {
+      color: blue;
+    }
+    .linkstyle a:hover {
+      color: blue;
+    }
+
+    .highlightRow {
+      background-color: Cornsilk;
+    }
+    .dataTables_empty{
+      display: none;
+    }
+
+    ul li, ol li {
+      margin-left: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      display: inherit;
+    }
+
+    body a:hover {
+      text-decoration: none;
+    }
+
+.btn, .button, .formulaButton, .btnWhatsNew {
+    font-family: HelveticaNeueRoman,HelveticaNeue-Roman,Meiryo,Hiragino Kaku Gothic ProN,Kozuka Gothic Pr6N,Arial,Helvetica Neue Roman,HelveticaNeue,Helvetica Neue,TeXGyreHerosRegular,Helvetica,Tahoma,Geneva,sans-serif;
+    background-image: none;
+    background-repeat: no-repeat;
+    background-position: initial;
+    border-right: none;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    font-size: inherit;
+    color: #000;
+}
+
+body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .menuButton .menuButtonButton {
+    color: #333;
+    margin: auto;
+    padding: 0;
+    border: none;
+    background: unset;
+    font-weight: normal;
+    font-size: inherit;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+  .button--remove {
+    background-color: #999;
+  }
+
+  a{
+    font-weight: 500 !important;
+  }
+  .table--theme-info input, .table--theme-info select, .table--theme-info textarea {
+    padding: 0 0 0 0.5rem !important;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  #btn-dropdown{
+    width: 196px;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    width: 196px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .dropdown-content a:hover {background-color: #f1f1f1}
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .dropdown:hover .dropbtn {
+    background-color: #3F51B5;
+  }
+
+  .padding-top-50{
+    padding-top: 50px;
+  }
+  .background-transparent {
+    background-color: transparent;
+  }
+  .background-white{
+    background-color: #fff;
+  }
+  .max-height-100{
+    max-height: 100% !important;
+  }
+  .hide-yscroll{
+    overflow-y: hidden;
+  }
+
+  .mdl-data-table td:first-of-type{
+    padding: 1rem !important;
+  }
+
+  .mdl-data-table td{
+    padding: 1rem !important;
+  }
+  .margin-right10{
+    margin-right: 10px;
+  }
+  .mdl-data-table__cell--non-numeric ul li.active a{
+    pointer-events: none;
+  }
+
+  </style>
+
+  <script>
+
+    var $j = jQuery.noConflict();
+
+    $( function() {
+      $.datepicker.setDefaults($.datepicker.regional['ja']);
+      $( ".datepicker" ).datepicker({ dateFormat: 'yy/mm/dd' });
+    } );
+
+    function callChangeOrder(key) {
+        var obj = $j('.orderInput');
+        obj.val(key);
+        showWaitPanel();
+        changeOrder();
+    }
+
+    function callAddAccountNewAttachmentId(key) {
+        if (checkFileSize()) {
+          var obj = $j('.accountUpdateIdInput');
+          obj.val(key);
+          addAccountNewAttachment();
+        }
+    }
+    function clearSearchCondition(){
+      $j('.filter-item input[type=text]').each(function(){
+        this.value = '';
+      });
+      $j('.filter-item input[type=checkbox]').prop('checked', false);
+    }
+
+    function checkFileSize() {
+        var goodSize = true;
+        $j('input[type=file]').each(function()
+        {
+            if(this.files.length > 0 && typeof this.files[0] !== 'undefined')
+            {
+                var file = this.files[0],
+                    size = typeof ActiveXObject !== 'undefined' ?
+                        getIEFileSize(file)
+                        :
+                        file.fileSize || file.size;
+     
+                goodSize = 65 * 1024 * 1024 > size;
+                if(!goodSize) {
+                    alert('ファイルは大きすぎです。65Moまでのファイルを選択してください。');
+                }
+     
+                return goodSize;
+            }
+        });
+        return goodSize;
+    }
+
+
+    window.onload = function onLoadJS() {
+      if({!!hasData}){
+        console.log("no data");
+        $row = $('<td valign="top" colspan="9">マッチングデータ無し</td>');
+        $j('.dataTables_scrollBody > table > tbody > tr').append($row);
+      }
+      /*for(i = 1; i<10; i++){
+        var w = $j('.dataTables_scrollHeadInner .col' + i).outerWidth();  
+        console.log('td ' + i + ': ' + w);
+        $j('.dataTables_scrollBody .col' + i).outerWidth(w);
+      }*/
+
+      var x = document.getElementsByClassName("dataTables_scrollBody");
+      x[0].style.maxHeight="CALC(" + x[0].style.maxHeight + " + 4rem)"; 
+
+
+      $j('.dataTables_scrollHead table').parent().replaceWith(function(){
+        return $j('table', this);
+      });
+
+      $j(".dataTables_scrollBody table").width($j(".dataTables_scrollHead table").width());
+
+      /*$j('.dataTables_scrollBody table thead.col1').outerWidth($j('.dataTables_scrollHead table thead.col1').css(outerWidth));
+      $j('.dataTables_scrollBody table thead.col2').outerWidth($j('.dataTables_scrollHead table thead.col2').css(outerWidth));
+      $j('.dataTables_scrollBody table thead.col3').outerWidth($j('.dataTables_scrollHead table thead.col3').css(outerWidth));
+      $j('.dataTables_scrollBody table thead.col4').outerWidth($j('.dataTables_scrollHead table thead.col4').css(outerWidth));
+      $j('.dataTables_scrollBody table thead.col5').outerWidth($j('.dataTables_scrollHead table thead.col5').css(outerWidth));
+      $j('.dataTables_scrollBody table thead.col6').outerWidth($j('.dataTables_scrollHead table thead.col6').css(outerWidth));
+      $j('.dataTables_scrollBody table thead.col7').outerWidth($j('.dataTables_scrollHead table thead.col7').css(outerWidth));
+      $j('.dataTables_scrollBody table thead.col8').outerWidth($j('.dataTables_scrollHead table thead.col8').css(outerWidth));
+      $j('.dataTables_scrollBody table thead.col9').outerWidth($j('.dataTables_scrollHead table thead.col9').css(outerWidth));*/
+
+      $j('.pagination a').click(function(){
+        showWaitPanel();
+      });
+
+      $j('.search-numbers__select').change(function(){
+        showWaitPanel();
+      });
+
+      // Send an alert if there is an error message (Attachment failed?)
+      var obj = $j('.errorMessageInput');
+      if (obj.val().length > 0) {
+        alert(obj.val());
+        obj.val('');        
+      }
+    }
+
+  </script>
+
+</head>
+
+<body class="theme" >
+  <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+<apex:form id="thisForm">
+
+  <c:auMainTopComp typeOfScreen="{!typeOfScreen}" />
+
+  <apex:outputPanel >
+    <apex:inputText id="orderBy" styleClass="orderInput" value="{!orderBy}" style="display: none;" />
+    <apex:inputText styleClass="errorMessageInput" value="{!errorMessage}" style="display: none;" />
+    <apex:actionFunction name="changeOrder" action="{!changeOrder}" />
+    <apex:actionFunction name="addAccountNewAttachment" action="{!addAccountNewAttachment}" />
+  </apex:outputPanel>
+
+  <div class="container js-get-height" id="container">
+    <main class="main main--theme clear" id="main" role="main">
+      <article class="content content--theme" id="content">
+        <!--Search criteria area-->
+        <header class="content-header search-tools" >
+          <div class="content-header__top" style="margin-top: -0.5rem; margin-bottom: -0.5rem;">
+            <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--12-col">
+                <div class="search-filter clearfix search_criteria_form" >
+                  <apex:actionRegion id="area51f" renderRegionOnly="false">
+                    <div style="display: inline-block;">
+
+                      <fieldset class="filter-item">
+                        <label >代理店コード</label>
+                        <apex:inputText value="{!filterPartnerCode}" styleclass="search-textfield" />
+                      </fieldset>
+
+                      <fieldset class="filter-item">
+                        <label >代理店名</label>
+                        <apex:inputText value="{!filterPartnerName}" styleclass="search-textfield" />
+                      </fieldset>
+
+                      <fieldset class="filter-item">
+                        <label >出店者コード</label>
+                        <apex:inputText value="{!filterMngCorpCode}" styleclass="search-textfield" />
+                      </fieldset>
+
+                      <fieldset class="filter-item">
+                        <label >運営法人名</label>
+                        <apex:inputText value="{!filterMngCorpName}" styleclass="search-textfield" />
+                      </fieldset>
+
+                      <fieldset class="filter-item">
+                        <label >営業担当支社</label>
+                        <apex:inputText value="{!filterRegionalOffice}" styleclass="search-textfield" />
+                      </fieldset>
+
+                      <fieldset class="filter-item">
+                        <label >営業担当支店</label>
+                        <apex:inputText value="{!filterBranch}" styleclass="search-textfield" />
+                      </fieldset>
+
+                      <fieldset class="filter-item">
+                        <label >営業担当者名</label>
+                        <apex:inputText value="{!filterSalesman}" styleclass="search-textfield" />
+                      </fieldset>
+
+                      <fieldset class="filter-item">
+                        <label>CCP＋カルテ有り</label>
+                        <apex:inputCheckbox styleClass="search-checkboxfield" value="{!filterCcpFlag}" style="vertical-align: middle; width: 3rem !important" />
+                      </fieldset>
+                       
+                      <fieldset class="filter-button">
+                        <apex:commandLink styleClass="margin-right10 mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="クリアする" onclick="clearSearchCondition();" reRender="area51f"/>
+                        <apex:commandLink value="絞り込む/実行" styleClass="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="showWaitPanel();" action="{!doSearch}"/>
+                      </fieldset>                                
+                    </div>
+                  </apex:actionRegion>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-header__bottom">
+          </div>
+        </header>
+        <div class="mdl-grid" id="dataDisplayArea">
+            <apex:actionRegion >
+              <div class="mdl-cell mdl-cell--1-col">
+                  <apex:selectList styleclass="search-numbers__select" id="pageSize" value="{!pageSize}" size="1" disabled="{!recordsCount < 5}" style="margin-top: 1rem; height: 2.5em;">
+                    <apex:actionSupport event="onchange" action="{!setSizeSaveCurrentPageSize}"/>
+                    <apex:selectOption itemValue="5" itemLabel="5 件表示"/>
+                    <apex:selectOption itemValue="10" itemLabel="10 件表示"/>
+                    <apex:selectOption itemValue="20" itemLabel="20 件表示"/>
+                    <apex:selectOption itemValue="50" itemLabel="50 件表示"/>
+                  </apex:selectList>
+              </div>
+              <div class="mdl-cell mdl-cell--5-col search-pagination">
+                <apex:outputPanel id="pnlPagination">
+                  <apex:outputPanel rendered="{!!(recOrdscount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1)}">
+                    <div style="height: 53px;" />
+                  </apex:outputPanel>
+                  <apex:outputPanel rendered="{!recOrdscount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1}">
+                    <nav>
+                    <apex:panelGroup rendered="{!pageNum == 1}" style="display: inline-block; width: 27px;" />
+                      <ul class="pagination">
+                        <li>
+                          <apex:panelGroup rendered="{!pageNum > 1}" >
+                            <apex:outputLink value="javascript:void(0)">
+                              <apex:actionSupport event="onclick" action="{!goToPagePrev}" />
+                              <i class="material-icons">navigate_before</i>
+                            </apex:outputLink>
+                          </apex:panelGroup>
+                        </li>
+                        <!-- 1st button -->
+                        <li class="{!IF(pageNum == 1, 'active', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage1}"/>
+                            <apex:outputText value="1" />
+                          </apex:outputLink>
+                        </li>
+                        <!-- 2nd button -->
+                        <li class="{!IF(pageNum == 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage2}"/>
+                            <apex:outputText value="2" />
+                          </apex:outputLink>
+                        </li>
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4), 'hidden', '')}">
+                          <span>…</span>
+                        </li>
+                        <!-- 3rd button -->
+                        <li class="{!IF(pageNum == 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage3}" />
+                            <apex:outputText value="3" />
+                          </apex:outputLink>
+                        </li>
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPagePrev}" />
+                            <apex:outputText value="{!pageNum - 1}" />
+                          </apex:outputLink>
+                        </li>
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr5}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 5}" />
+                          </apex:outputLink>                          
+                        </li>
+                        <!-- 4th button -->
+                        <li class="{!IF(pageNum == 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage4}" />
+                            <apex:outputText value="4" />
+                          </apex:outputLink>
+                        </li>
+                        <li class="active {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <a href="#">{!pageNum}</a>
+                        </li>
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr4}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 4}" />
+                          </apex:outputLink>                          
+                        </li>
+                        <!-- 5th button -->
+                        <li class="{!IF(pageNum == 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage5}" />
+                            <apex:outputText value="5" />
+                          </apex:outputLink>
+                        </li>
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageNext}" />
+                            <apex:outputText value="{!pageNum + 1}" />
+                          </apex:outputLink>
+                        </li>
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr3}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 3}" />
+                          </apex:outputLink>
+                        </li>
+                        <!-- 6th button -->
+                        <li class="{!IF(pageNum == 6, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage6}" />
+                            <apex:outputText value="6" />
+                          </apex:outputLink>
+                        </li>
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage2ndNext}" />
+                            <apex:outputText value="{!pageNum + 2}" />
+                          </apex:outputLink>
+                        </li>
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr2}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 2}" />
+                          </apex:outputLink>
+                        </li>
+                        <!-- 7th button -->
+                        <li class="{!IF(pageNum == 7, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage7}"/>
+                            <apex:outputText value="7" />
+                          </apex:outputLink>                          
+                        </li>
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <span>…</span>
+                        </li>
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 1, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr1}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 1}" />
+                          </apex:outputLink>
+                        </li>
+                        <!-- 8th button -->
+                        <li class="{!IF(pageNum == 8, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 8 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage8}" />
+                            <apex:outputText value="8" />
+                          </apex:outputLink>                          
+                        </li>
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1), 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLast}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1)}" />
+                          </apex:outputLink>
+                        </li>
+                        <li>
+                          <apex:panelGroup rendered="{!hasNext}" >
+                            <apex:outputLink value="javascript:void(0)">
+                              <apex:actionSupport event="onclick" action="{!goToPageNext}" />
+                              <i class="material-icons">navigate_next</i>
+                            </apex:outputLink>
+                          </apex:panelGroup>
+                        </li>
+                      </ul>
+                    </nav>
+                  </apex:outputPanel>
+                </apex:outputPanel>
+              </div>
+              <div class="mdl-cell mdl-cell--4-col search-numbers" style="position: absolute; right: 2rem;">
+                <apex:outputPanel id="pnlDataCount" style="display: inline-block; margin-top: 1rem; margin-right: 1rem;">
+                  <span class="search-numbers__total"><span>{!RecordsCountLabel}</span><small>件</small></span>
+                </apex:outputPanel>
+              </div>
+          </apex:actionRegion>
+        </div>
+        <div class="theme-list mdl-cell--12-col" style="margin-top: -1rem;">
+        <apex:outputPanel id="pnlGrid">
+            <table class="mdl-data-table mdl-js-data-table table table--theme js-table-data is-long" style="overflow: auto;">
+              <thead>
+                <tr>
+                  <!--代理店コード-->
+                  <th class="col1 mdl-data-table__cell--non-numeric sort">
+                    <ul>
+                      <li class="{!IF(orderBy == 'partnerCode', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('partnerCode');">
+                          <i class="material-icons">arrow_drop_up</i>
+                        </a>
+                      </li>
+                      <li class="{!IF(orderBy == 'partnerCode desc', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('partnerCode desc');">
+                          <i class="material-icons">arrow_drop_down</i>
+                        </a>
+                      </li>
+                    </ul>
+                    <span>代理店コード</span>
+                  </th>
+                  <!--代理店名-->
+                  <th class="col2 mdl-data-table__cell--non-numeric sort">
+                    <ul>
+                      <li class="{!IF(orderBy == 'partnerName', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('partnerName');">
+                          <i class="material-icons">arrow_drop_up</i>
+                        </a>
+                      </li>
+                      <li class="{!IF(orderBy == 'partnerName desc', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('partnerName desc');">
+                          <i class="material-icons">arrow_drop_down</i>
+                        </a>
+                      </li>
+                    </ul>
+                    <span>代理店名</span>
+                  </th>
+                  <!--運営法人コード-->
+                  <th class="col3 mdl-data-table__cell--non-numeric sort">
+                    <ul>
+                      <li class="{!IF(orderBy == 'corpCode', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('corpCode');">
+                          <i class="material-icons">arrow_drop_up</i>
+                        </a>
+                      </li>
+                      <li class="{!IF(orderBy == 'corpCode desc', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('corpCode desc');">
+                          <i class="material-icons">arrow_drop_down</i>
+                        </a>
+                      </li>
+                    </ul>
+                    <span>出店者コード</span>
+                  </th>
+                  <!--運営法人名-->
+                  <th class="col4 mdl-data-table__cell--non-numeric sort">
+                    <ul>
+                      <li class="{!IF(orderBy == 'corpName', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('corpName');">
+                          <i class="material-icons">arrow_drop_up</i>
+                        </a>
+                      </li>
+                      <li class="{!IF(orderBy == 'corpName desc', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('corpName desc');">
+                          <i class="material-icons">arrow_drop_down</i>
+                        </a>
+                      </li>
+                    </ul>
+                    <span>運営法人名</span>
+                  </th>
+                  <!--営業担当支社-->
+                  <th class="col5 mdl-data-table__cell--non-numeric sort">
+                    <ul>
+                      <li class="{!IF(orderBy == 'RegionalOfficeId__r.Name ASC', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('RegionalOfficeId__r.Name ASC');">
+                          <i class="material-icons">arrow_drop_up</i>
+                        </a>
+                      </li>
+                      <li class="{!IF(orderBy == 'RegionalOfficeId__r.Name DESC', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('RegionalOfficeId__r.Name DESC');">
+                          <i class="material-icons">arrow_drop_down</i>
+                        </a>
+                      </li>
+                    </ul>
+                    <span>営業担当支社</span>
+                  </th>
+                  <!--営業担当支店-->
+                  <th class="col6 mdl-data-table__cell--non-numeric sort">
+                    <ul>
+                      <li class="{!IF(orderBy == 'BranchId__r.Name ASC', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('BranchId__r.Name ASC');">
+                          <i class="material-icons">arrow_drop_up</i>
+                        </a>
+                      </li>
+                      <li class="{!IF(orderBy == 'BranchId__r.Name DESC', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('BranchId__r.Name DESC');">
+                          <i class="material-icons">arrow_drop_down</i>
+                        </a>
+                      </li>
+                    </ul>
+                    <span>営業担当支店</span>
+                  </th>
+                  <!--営業担当者名-->
+                  <th class="col7 mdl-data-table__cell--non-numeric sort">
+                    <ul>
+                      <li class="{!IF(orderBy == 'KDDISalesUserId__r.DisplayedUsernameFormula__c ASC', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('KDDISalesUserId__r.DisplayedUsernameFormula__c ASC');">
+                          <i class="material-icons">arrow_drop_up</i>
+                        </a>
+                      </li>
+                      <li class="{!IF(orderBy == 'KDDISalesUserId__r.DisplayedUsernameFormula__c DESC', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('KDDISalesUserId__r.DisplayedUsernameFormula__c DESC');">
+                          <i class="material-icons">arrow_drop_down</i>
+                        </a>
+                      </li>
+                    </ul>
+                    <span>営業担当者名</span>
+                  </th>
+                  <!--CCPフラグ-->
+                  <th class="col8 mdl-data-table__cell--non-numeric sort">
+                    <div class="thspanwithoutarrow">CCP＋カルテ</div>
+                  </th>
+                  <!--Upload Attachment-->
+                  <th class="col9 mdl-data-table__cell--non-numeric sort">
+                    <div class="thspanwithoutarrow">CCP＋カルテ<br/>アップロード</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <apex:inputText styleClass="accountUpdateIdInput" value="{!accountUpdateId}" style="display: none;" />
+                <apex:repeat value="{!Records}" var="rec" >
+                    <tr>
+                      <!--代理店コード-->
+                      <td class="col1" data-target=".theme-info">
+                        <p>
+                          <a href="/kdActivityList?Id={!rec.accId}" onclick="showWaitPanel();" class="isLink linkstyle">
+                            {!rec.partnerCode}
+                          </a>
+                        </p>
+                      </td>
+                      <!--代理店名-->
+                      <td class="col2">
+                        <p>{!rec.partnerName}</p>
+                      </td>
+                      <!--運営法人コード-->
+                      <td class="col3">
+                        <p>{!rec.corpCode}</p>
+                      </td>
+                      <!--運営法人名-->
+                      <td class="col4">
+                        <p>{!rec.corpName}</p>
+                      </td>
+                      <!--営業担当支社-->
+                      <td class="col5">
+                        <p>{!rec.regional}</p>
+                      </td>
+                      <!--営業担当支店-->
+                      <td class="col6">
+                        <p>{!rec.branch}</p>
+                      </td>
+                      <!--営業担当者名-->
+                      <td class="col7">
+                        <p>{!rec.salesman}</p>
+                      </td>
+                      <!--CCPフラグ-->
+                      <td class="col8 hide-yscroll" style="text-align: center; padding: 0.2rem 0 0.2rem 0 !important;">
+                        <apex:outputLabel rendered="{!rec.attachmentId == NULL}">
+                            <img class="icon-attach no-attach" src="{!URLFOR($Resource.auStyling,'/images/icon-attach.png')}" />
+                        </apex:outputLabel>
+                        <apex:outputLabel rendered="{!rec.attachmentId != NULL}">
+                            <img class="icon-attach isLink" src="{!URLFOR($Resource.auStyling,'/images/icon-attach.png')}" alt="Click to Download" onclick="window.open('{!URLFOR($Action.Attachment.Download, rec.attachmentId)}','_blank');"/>
+                        </apex:outputLabel>
+                      </td>
+                      <!--Upload Attachment-->
+                      <td class="col9 hide-yscroll" style="text-align: center; padding: 0.2rem 0 0.2rem 0 !important;">
+                        <apex:inputFile disabled="{!!rec.hasAccess}" id="upload--file" styleclass="attachInput" value="{!accountNewAttachment.body}" filename="{!accountNewAttachment.name}" contentType="{!accountNewAttachment.contentType}" 
+                                        filesize="{!accountNewAttachmentSize}"
+                                        onchange="callAddAccountNewAttachmentId('{!rec.accId}');"/>
+                        <apex:outputLabel for="upload--file">
+                            <img class="icon-upload isLink" src="{!URLFOR($Resource.auStyling,'/images/icons/icon-file.png')}" />
+                        </apex:outputLabel>
+                      </td>
+                    </tr>
+                </apex:repeat>
+              </tbody>
+            </table>
+        </apex:outputPanel>
+        </div>
+      </article>
+    </main>
+    </div>
+
+    <script src="{!URLFOR($Resource.kdKnowledgeScript)}" type="text/javascript"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-xxxxxx', 'auto');
+      ga('send', 'pageview');
+    </script> 
+</apex:form>
+</body>
+</html>
+</apex:page>

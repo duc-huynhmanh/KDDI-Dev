@@ -1,0 +1,871 @@
+<apex:page controller="auScheduleListCtrl" showHeader="false" sidebar="false" standardStylesheets="true" applyHtmlTag="false" applyBodyTag="false" cache="false" action="{!redirectIfNecessaryDesktop}" docType="html-5.0">
+
+<apex:form id="allForm">
+
+<html lang="ja">
+<head>
+  <meta charset="utf-8"/>
+  <title>auポータル</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  
+  <apex:stylesheet value="{!URLFOR($Resource.auResSchedule,'/css/sanitize.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResSchedule,'/css/common.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResSchedule,'/clockpicker/jquery-clockpicker.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResSchedule,'/css/style-search.css')}"/>
+  
+  <!-- libraries -->
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js/jquery-3.2.1.min.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'clockpicker/jquery-clockpicker.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'truncate/trunk8.js')}"/> 
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://npmcdn.com/flatpickr/dist/l10n/ja.js"></script>
+
+  <!-- scripts -->
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js/jquery_custom-dialog.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js/script_check_ua-ipad.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js/script_fitting.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResSchedule,'js/script_search.js')}"/> 
+  
+  <!-- 
+  【ルートレベルに抜き出した呼び出し口として】
+  アニメーションとインタラクションロジックについては、ルートレベルを汚染しないように作っておりますが、使い勝手を考慮し以下の回避手段を用意しました。
+  
+  script_exports.js に抜き出した呼び出し口をコールするためのメソッドを必要に応じて用意してください。
+  現状でリクエストのあった、script_calender_init() をご用意してあります。
+  script_calender_init() 等は、body onload="script_calender_init()" にて呼び出した場合は、
+  タイミングの都合により、先の処理が正しく呼び出せないことがあるようなので、このページ末にあるように、
+  ロード済後に呼び出してください。
+  
+  現状で抜き出しているメソッドは以下を用意してあります。
+  
+  ・横スライドアニメーションの制御
+  script_fitting.js/
+  auportal.exports.slideAtIndex(index) // 0（スライドの初期位置） <= index <= 1（左に１段スライドする）
+  
+  ・各ビューに対するカットインできる
+  script_calender.js/
+  auportal.exports.setView_01_01_01() // 01_01_01 相当画面にアニメーション遷移する
+  auportal.exports.setView_01_01_02() // 01_01_02 相当画面にアニメーション遷移する
+  auportal.exports.setView_01_01_03() // 01_01_03 相当画面にアニメーション遷移する
+  auportal.exports.setView_01_01_05() // 01_01_05 相当画面にアニメーション遷移する
+  auportal.exports.setView_01_01_06() // 01_01_06 相当画面にアニメーション遷移する
+  -->
+
+  <script>
+
+    var $j = jQuery.noConflict();
+
+    function jsTruncate() {
+      $j('.truncate').trunk8();
+    }
+
+    function callAddNewAttachmentId(key) {
+        if (checkFileSize()) {
+          var obj = $j('.currentEventAttach');
+          obj.val(key);
+          addNewAttachment();
+        }
+    }
+
+    function callPutInTopAttachment(key) {
+        var obj = $j('.AttachmentIdInput');
+        obj.val(key);
+        jsAttachmentPutInTop();
+    }
+
+    function callDeleteAttachment(key) {
+        var obj = $j('.AttachmentIdInput');
+        obj.val(key);
+        jsAttachmentDelete();
+    }
+
+    function checkFileSize() {
+        var goodSize = true;
+        $j('input[type=file]').each(function()
+        {
+            if(this.files.length > 0 && typeof this.files[0] !== 'undefined')
+            {
+                var file = this.files[0],
+                    size = typeof ActiveXObject !== 'undefined' ?
+                        getIEFileSize(file)
+                        :
+                        file.fileSize || file.size;
+     
+                goodSize = 65 * 1024 * 1024 > size;
+                if(!goodSize) {
+                    alert('ファイルは大きすぎです。65Moまでのファイルを選択してください。');
+                }
+     
+                return goodSize;
+            }
+        });
+        return goodSize;
+    }
+
+  </script>
+
+  <style type="text/css">
+    .search-result {
+      padding-bottom: 0;
+    }
+
+    ul li, ol li {
+      margin-left: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      display: inherit;
+    }
+
+    body a:hover {
+      text-decoration: none;
+    }
+
+    .shop-name select {
+      height: 25px;
+      box-sizing: border-box;
+      padding: 0 5px;
+      border: 1px solid #b3b3b3;
+      border-radius: 3px;
+      -webkit-appearance: none;
+      font-size: 12px;
+      font-size: 1.2rem;      
+      vertical-align: middle;
+      margin-top: 2px;
+    }
+    .report-item-body .related-shops .shop-name input {
+      width: 100%;
+      vertical-align: middle;
+    }    
+
+    .related-files {
+      margin: 10px 0;
+      margin-top: 10px;
+      margin-right: 0px;
+      margin-bottom: 10px;
+      margin-left: 0px;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    .attachInput {
+      height: 1rem;
+      width: 1rem;
+      position: absolute;
+      left: 0.5rem;
+      opacity: 0;
+      overflow: hidden;
+   }
+
+   .attachInputLabel {
+    font-size: 15px;
+    margin-bottom: 10px;
+   }
+
+    .button--delete-list {
+/*
+      width: 5.75rem;
+      height: 2.5rem;
+*/
+      background-color: #000;
+      color: #fff;
+/*
+      font-size: .833rem;
+      padding: .8rem;
+      line-height: 1;
+*/
+      background-image: none;
+      border-width: 0;
+      font-size: 1rem;
+      line-height: 2;
+
+    }
+
+    .list--attachment {
+      font-size: 1rem;
+      line-height: 2;
+    }
+
+/*
+    .col-2 {
+      overflow-y: scroll !important;
+    }
+ 
+    .report-entry-form-body {
+      overflow-y: scroll !important;
+    }
+   */
+
+    .isEvent .description {
+      display: none;
+    }
+
+    .isNotEvent .event-list {
+      display: none;
+    }
+
+
+  .report-entry-form {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+  }
+
+    .report-entry-form-body {
+      overflow: auto;
+    }
+
+    .report-item-body .event-list-item {
+      margin-bottom: 10px;
+    }
+    
+    .report-item-body .event-list-item-title {
+        height: 30px;
+        padding: 0 20px;
+        box-sizing: border-box;
+        line-height: 30px;
+        background-color: #F9CCB2;
+        color: #ED5700;
+
+        /*
+        background-color: #c5e6e3;
+        color: #00665c;
+        */
+        font-size: 14px;
+        font-size: 1.4rem;
+        font-weight: bold;
+    }
+
+    .report-item-body .event-item-heading {
+        margin: 10px 0;
+        padding: 0 20px;
+        font-size: 12px;
+        font-size: 1.2rem;
+        font-weight: normal;
+    }
+
+    .report-item-body .event-item-value {
+      display: block;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+    
+    .report-item-body .event-item-value input {
+      width: 100%;
+      height: 25px;
+      box-sizing: border-box;
+      padding: 0 5px;
+      border: 1px solid #b3b3b3;
+      border-radius: 3px;
+      -webkit-appearance: none;
+      font-size: 12px;
+      font-size: 1.2rem;
+    }
+
+    .report-item-body .event-list-item-title-note {
+      display: block;
+      height: 20px;
+      padding: 0 20px;
+      box-sizing: border-box;
+      line-height: 15px;
+      background-color: #F9CCB2;
+      /*
+      background-color: #c5e6e3;
+      */
+      color: #000000;
+      font-size: 11px;
+      font-size: 1.1rem;
+      font-weight: normal;
+    }
+
+    .report-item-body .event-list-note {
+      margin: 5px 0;
+      padding: 0 20px;
+      font-size: 12px;
+      font-size: 1.2rem;
+    }
+
+    .report-item-body .event-list {
+      margin-top: 10px;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #e4e4e4;
+    }
+
+    .report-items {
+      padding-bottom: 0;
+    }
+
+    .locator p {
+      font-size: 1.8rem;
+    }
+
+    .export-csv-container {
+      display: inline-block;
+      float: right;
+    }
+
+
+    .export-csv {
+      display: inline-block;
+      width: 130px;
+      height: 25px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      text-align: center;
+      font-size: 15px;
+      font-size: 1.5rem;
+      line-height: 25px;
+      color: #ffffff;
+      background-color: #ed5500;
+    }
+
+    .export-csv:hover {
+      color: #ffffff;
+      background-color: #f17733;
+    }
+  
+    .search-list-header {
+      padding-right: 20px;
+    }
+
+
+    .list--attachment {
+      height: 2.5rem;
+      padding-left: 1rem;
+      background-color: #eee;
+      border-bottom: 1px solid #fff;
+      line-height: 2.5;
+      overflow: hidden;
+    }
+
+    .list--attachment .button--delete-list {
+      float: right;
+    }
+
+    .isLink {
+      cursor: pointer;
+      cursor: hand;      
+    }
+
+    .linkPutInTop {
+      float: right;
+      margin-right: 1rem
+    }
+
+  </style>
+</head>
+
+<body class="page-schedule">
+
+  <div class="protect-screen hide"></div>
+  
+  <!-- template-popup -->
+  <div class="modal-dialog hide"><p>ダイアログメッセージ</p><div class="btn-cancel"><a href="#">キャンセル</a></div><div class="btn-ok"><a href="#">OK</a></div></div>
+  <!-- 01-01-04(typ.) -->
+  <section class="select-category modal-win hide">
+    <header><a href="#" class="btn-close">閉じる</a></header>
+    <div class="select-category-body">
+      <div class="col-category1">
+        <h5>社外</h5>
+        <ul>
+          <li><a href="#"><span class="category1 icon icon1"></span><span class="label">拠点フォロー</span></a></li>
+          <li><a href="#"><span class="category1 icon icon2"></span><span class="label">代理店商談</span></a></li>
+          <li><a href="#"><span class="category1 icon icon3"></span><span class="label">イベント対応</span></a></li>
+          <li><a href="#"><span class="category1 icon icon4"></span><span class="label">異業種連携</span></a></li>
+          <li><a href="#"><span class="category1 icon icon5"></span><span class="label">他キャリア視察</span></a></li>
+          <li><a href="#"><span class="category1 icon icon6"></span><span class="label">サンプリング</span></a></li>
+          <li><a href="#"><span class="category1 icon icon7"></span><span class="label">移動</span></a></li>
+          <li><a href="#"><span class="category1 icon icon8"></span><span class="label">接待・接受</span></a></li>
+          <li><a href="#"><span class="category1 icon icon9"></span><span class="label">店長会議</span></a></li>
+        </ul>
+      </div>
+      <div class="col-category2">
+        <h5>社内</h5>
+        <ul>
+          <li><a href="#"><span class="category2 icon icon1"></span><span class="label">【old】店長会議</span></a></li>
+          <li><a href="#"><span class="category2 icon icon2"></span><span class="label21">会議</span><span class="label22">ミーティング</span></a></li>
+          <li><a href="#"><span class="category2 icon icon3"></span><span class="label">社内イベント</span></a></li>
+          <li><a href="#"><span class="category2 icon icon4"></span><span class="label21">資料制作</span><span class="label22">事務処理</span></a></li>
+          <li><a href="#"><span class="category2 icon icon5"></span><span class="label21">ヒアリング</span><span class="label22">アンケート</span></a></li>
+          <li><a href="#"><span class="category2 icon icon6"></span><span class="label">架電</span></a></li>
+          <li><a href="#"><span class="category2 icon icon7"></span><span class="label">資格試験</span></a></li>
+          <li><a href="#"><span class="category2 icon icon8"></span><span class="label">研修</span></a></li>
+        </ul>
+      </div>
+      <div class="col-category3">
+        <h5>その他</h5>
+        <ul>
+          <li><a href="#"><span class="category3 icon icon1"></span><span class="label">その他</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- template-body -->
+  <div class="document-container">
+
+    <c:auMainTopComp2 typeOfScreen="{!typeOfScreen}" />
+
+    <div class="document-contents">
+
+      <div class="slide-container">
+        <div class="col-1 left">
+
+          <apex:actionFunction name="addNewAttachment"
+                               action="{!addNewAttachment}"/>
+          <apex:inputHidden html-class="currentEventAttach" value="{!currentEventIdAttach}" />
+
+          <apex:actionRegion renderRegionOnly="false">
+
+            <apex:actionFunction name="jsAttachmentPutInTop" action="{!attachmentPutInTop}" rerender="pnlCurrentEvent" />
+            <apex:actionFunction name="jsAttachmentDelete" action="{!attachmentDelete}" rerender="pnlCurrentEvent" />
+            <apex:inputHidden html-class="AttachmentIdInput" value="{!attachmentId}" />
+
+            <apex:inputHidden html-class="currentEvent" value="{!currentEventId}" />
+
+           
+            <!-- #View 01-02-01(typ.) -->
+            <section class="search-list hide admin">
+              <header class="search-list-header user">
+                <div class="todoform">
+                  <div class="search-text"><input type="text" value="" placeholder="検索"></input></div><a href="#" class="btn-search ui-color-1">検索</a>
+                </div>
+              </header>
+              <header class="search-list-header admin">
+                <div class="todoform">
+                  <div class="search-text">
+                    <apex:selectList value="{!scopeEvents}"
+                                     size="1">
+                      <apex:selectOption itemValue="private"
+                                         itemLabel="自分の活動"
+                                         html-class="private"/>
+                      <apex:selectOption itemValue="organization"
+                                         itemLabel="自組織の活動"
+                                         html-class="organization"/>
+                      <apex:actionSupport event="onchange"
+                                          action="{!getEventSearch}"
+                                          reRender="pnlListEvents, pnlExportCSV"
+                                          oncomplete="setLogic_SearchListEvents();"/>
+                    </apex:selectList>
+
+                    <apex:outputPanel id="pnlExportCSV">
+                      <div class="export-csv-container">
+                        <apex:commandLink onclick="window.open('{!redirectExportCsvURL}');"
+                                            value="CSV 出力"
+                                            style="font-size: 15px; height: auto;"
+                                            styleclass="export-csv"/>   
+                      </div>
+                    </apex:outputPanel>
+
+                  </div>
+                  <a href="#" class="btn-search-conditions ui-color-1 ">検索条件表示</a>
+
+                  <div class="search-conditions">
+                    <div class="search-text">
+                      <apex:inputText value="{!filterKeyword}"
+                                      html-placeholder="キーワード検索（３つまで）"/>
+                      
+                    </div>
+                    <div class="date">
+                      <apex:inputText value="{!filterDateStart}"
+                                      html-placeholder="開始日"
+                                      html-readonly="true"
+                                      styleclass="begin-date datepicker" />
+                      <a href="#"
+                         class="btn-reset ui-color-3"
+                         onclick="$j('.begin-date').val('');">解除</a>
+                      <span class="divider"> - </span>
+                      <apex:inputText value="{!filterDateEnd}"
+                                      html-placeholder="終了日"
+                                      html-readonly="true"
+                                      styleclass="end-date datepicker" />
+                      <a href="#"
+                         class="btn-reset ui-color-3"
+                         onclick="$j('.end-date').val('');">解除</a>
+                    </div>
+
+                    <apex:commandLink value="検索"
+                                      styleclass="btn-search ui-color-1"
+                                      action="{!getEventSearch}"
+                                      reRender="pnlListEvents, pnlExportCSV"
+                                      oncomplete="setLogic_SearchListEvents();$j('.search-conditions').hide();"/>
+
+                  </div>
+                  
+                </div>
+              </header>
+              
+              <div class="search-result">
+                <apex:outputPanel id="pnlListEvents">
+                  <ul>
+
+                    <apex:repeat value="{!lsClsEvents}" var="varEvent" >
+                      <li class="result-date-item">
+                        <h3 class="result-date" style="{!IF(varEvent.isRupture, '', 'display: none;')}"><time>{!varEvent.dateStr}</time></h3>
+                        <ul>
+                          <li class="report-item send evt-{!varEvent.evt.Id}">
+                            <apex:commandLink onclick="$j('.currentEvent').val({!varEvent.sortNo});"
+                                              action="{!showCurrentEvent}" 
+                                              rerender="pnlCurrentEvent">
+                              <apex:outputPanel >
+                              <span class="category-tag {!varEvent.categoryClsNm} {!varEvent.iconClsNm}{!varEvent.iconClsNm}"></span>
+                              <time class="begin-time">{!varEvent.startTime}</time> - <time class="end-time">{!varEvent.endTime}</time>
+                              <h4 class="title">{!IF(scopeEvents == 'private', '', varEvent.evt.OwnerDepartment__c + ' ' + varEvent.evt.Owner.Name + ' ')}{!varEvent.CategoryNm}</h4>
+                              <p class="subject">{!IF(!varEvent.evt.IsPrivate, '', '(非公開) ')}{!varEvent.evtTitle}</p>
+                              <span class="icon-send" style="{!IF(varEvent.evt.ActivityReportSent__c, '', 'display: none;')}">送信済</span>
+                              </apex:outputPanel>
+                            </apex:commandLink>
+                          </li>
+                        </ul>
+                      </li>
+                    </apex:repeat>
+                 
+                  </ul>
+                </apex:outputPanel>            
+              </div>
+
+  <!--            
+              <div class="float-functions"><a href="#" class="btn-create ui-color-1">新規作成</a></div>
+  -->
+            </section>
+          </apex:actionRegion>
+        </div>
+        <div class="col-2 right">
+          <!-- #View 01-02-01(typ.) -->
+          <section class="search-description hide">
+            <div class="locator"><p>リストを選択すると詳細が表示されます。<!--<br></br>または＋ボタンから日報の新規作成ができます。--></p></div>
+          </section>
+
+          <!-- #View 01-02-03(typ.) -->
+          <section class="report-entry-form hide">
+            <div class="todoform">
+              <header>
+<!--
+                <div class="btn-save ui-color-1"><a href="#">保存</a></div>
+-->
+                <div class="title"><h2>日報詳細</h2></div>
+              </header>
+              <div class="report-entry-form-body">
+                <ul class="report-items">
+                  
+                  <li class="report-item edit">
+                    <apex:outputPanel id="pnlCurrentEvent">                      
+                      <div class="report-item-header">
+                        <h3 class="{!currentEvent.categoryClsNm} icon {!currentEvent.iconClsNm} {!currentEvent.iconClsNm}{!currentEvent.iconClsNm}">{!currentEvent.categoryNm}</h3>
+  <!--
+                        <div class="btn-select-category"><a href="#">カテゴリー選択</a></div>
+                        <div class="btn-delete"><a href="#">削除</a></div>
+  -->
+                      </div>
+                      <div class="report-item-body {!IF(currentEvent.evt.Category__c == 'イベント対応', 'isEvent', 'isNotEvent')}">
+
+                        <div class="date"><input type="text" value="{!currentEvent.dateStr}" placeholder="日付" readonly="true" class="dummy-datepicker"></input></div>
+
+                         <div class="time">
+                            <apex:inputText value="{!currentEvent.startTime}"
+                                            html-placeholder="開始時間"
+                                            disabled="true" />
+                            &nbsp;-&nbsp;
+                            <apex:inputText value="{!currentEvent.endTime}"
+                                            html-placeholder="終了時間"
+                                            disabled="true" />
+                          </div>
+
+                          <div class="subject">
+                            <apex:inputText value="{!currentEvent.evtTitle}"
+                                            html-placeholder="件名"
+                                            disabled="true" />
+                          </div>
+
+                          <div class="description">
+                            <apex:inputTextarea value="{!currentEvent.description}"
+                                                disabled="true" />
+                          </div>
+
+                          <ul class="event-list">
+                            <li class="event-list-item">
+                              <h4 class="event-list-item-title">＜au＞</h4>
+                              <ul>
+                                <li>
+                                  <h5 class="event-item-heading">新規合計（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputText value="{!currentEvent.displayedAuNewMNP}" 
+                                                    disabled="true" />
+                                  </span>
+                                </li>
+                                <li>
+                                  <h5 class="event-item-heading">新規ハンドセット（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputText value="{!currentEvent.displayedAuNewTablet}"
+                                                    disabled="true" />
+                                  </span>
+                                </li>
+                                <li>
+                                  <h5 class="event-item-heading">新規MNP（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputText value="{!currentEvent.displayedAuNewRooter}"
+                                                    disabled="true" />
+                                  </span>
+                                </li>
+                                <li>
+                                  <h5 class="event-item-heading">機変（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputText value="{!currentEvent.displayedAuModelChange}"
+                                                    disabled="true" />
+                                  </span>
+                                </li>
+                                <li>
+                                  <h5 class="event-item-heading">総販（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputText value="{!currentEvent.displayedAuTotal}"
+                                                    disabled="true" />
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            
+                            <li class="event-list-item">
+                              <h4 class="event-list-item-title">＜BBC＞</h4>
+                              <ul>
+                                <li>
+                                  <h5 class="event-item-heading">BBC:ひかり（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputText value="{!currentEvent.displayedBBCHikari}"
+                                                    disabled="true" />
+                                  </span>
+                                </li>
+                                <li>
+                                  <h5 class="event-item-heading">BBC:ケーブルトス（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputText value="{!currentEvent.displayedBBCCableTosu}"
+                                                    disabled="true" />
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            
+                            <li class="event-list-item">
+                              <h4 class="event-list-item-title">＜UQモバイル成約実績＝新規加入＋sim単体販売実績＞</h4>
+                              <span class="event-list-item-title-note">※UQモバイル取扱店のみご報告をお願いします。</span>
+                              <ul>
+                                <li>
+                                  <h5 class="event-item-heading">UQモバイル：auスタッフ直取（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputText value="{!currentEvent.displayedUQ_2}"
+                                                    disabled="true" />
+                                  </span>
+                                </li>
+
+                                <li>
+                                  <h5 class="event-item-heading">UQモバイル：UQ振り成約実績（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputText value="{!currentEvent.displayedUQ_3}"
+                                                    disabled="true" />
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            
+                             <li class="event-list-item">
+                              <h4 class="event-list-item-title">＜ライフデザイン関連商材＞</h4>
+                              <span class="event-list-item-title-note">※WALLET Market商材については、取扱い店のみご報告をお願いします。</span>
+                              <ul>
+                                <li>
+                                  <h5 class="event-item-heading">auでんき（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputText value="{!currentEvent.displayedauDenki}"
+                                                    disabled="true" />
+                                  </span>
+                                </li>
+                                <li>
+                                  <h5 class="event-item-heading">WALLET Market（円）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputText value="{!currentEvent.displayedWALLET_Market}"
+                                                    disabled="true" />
+                                  </span>
+                                </li>
+                                <li>
+                                  <h5 class="event-item-heading">ウォーターサーバー（件）</h5>
+                                  <span class="event-item-value">
+                                    <apex:inputText value="{!currentEvent.displayedWaterServer}"
+                                                    disabled="true" />
+                                  </span>
+                                </li>
+
+                              </ul>
+                            </li>
+                            
+<!--
+                            <li class="event-list-note">
+                              支店・部内共有のために、上記以外の項目を追加したい場合はコンシューマ事業本部企画部へにご連絡ください。
+                            </li>
+-->
+                          </ul>
+
+
+                          <div class="related-shops">
+                            <h4 class="title">代理店/店舗</h4>
+                            <span class="shop-name">
+
+                              <apex:inputText value="{!currentEvent.evt.What.Name}"
+                                              html-placeholder="代理店/店舗"
+                                              disabled="true" />
+
+
+                            </span>
+                          </div>
+
+                          <div class="related-files">
+
+                            <apex:inputFile disabled="false" 
+                                            id="upload--file"
+                                            styleclass="attachInput"
+                                            value="{!newAttachment.body}"
+                                            filename="{!newAttachment.name}"
+                                            contentType="{!newAttachment.contentType}" 
+                                            filesize="{!newAttachmentSize}"
+                                            onchange="callAddNewAttachmentId('{!currentEvent.evt.Id}');" />
+
+                            <apex:outputLabel for="upload--file"
+                                              styleclass="attachInputLabel export-csv"
+                                              value="添付する"/>
+
+
+                            <apex:repeat value="{!lsAttachment}" var="att">
+                              <ul class="list--attachment">
+                                <li>
+                                  <apex:outputLink value="{!URLFOR($Action.Attachment.Download, att.Id)}" target="_blank" styleclass="isLink linkstyle">表示</apex:outputLink>
+
+                                  &nbsp;&nbsp;&nbsp;{!att.Name}
+
+                                  <apex:outputPanel rendered="{!scopeEvents == 'private'}">
+                                    <a class="button button--delete-list linkstyle" onclick="callDeleteAttachment('{!att.ID}');">削除<i class="icon icon--close"></i></a> 
+
+                                    <a onclick="callPutInTopAttachment('{!att.ID}');" class="isLink linkPutInTop linkstyle">先頭へ</a> 
+                                  </apex:outputPanel>
+
+                                </li>
+                              </ul>
+                            </apex:repeat>
+
+
+                          </div>
+                        
+                      </div>
+                    </apex:outputPanel>
+                  </li>
+                  
+                </ul>
+              </div>
+<!--
+              <footer>
+                <div class="btn-send ui-color-1 disable"><a href="#">送信画面へ</a></div>
+              </footer>
+-->              
+            </div>
+          </section>
+          
+        </div>
+        <div class="col-3 right"></div>
+        
+      </div>
+            
+    </div>
+    <footer class="document-footer"></footer>
+  </div>
+  <script>
+
+
+    function setLogic_SearchListEvents() {
+      console.log("setLogic_SearchListEvents");
+      
+      jsTruncate();
+
+      $j(".btn-search-conditions").off("click");
+      $j(".btn-search-conditions").on("click", onClickSearchConditions);
+
+      $j(".search-list .btn-create").off("click");
+      $j(".search-list .btn-create").on("click", onClickCreate);
+        
+      $j(".search-result .report-item a").off("click");
+      $j(".search-result .report-item a").on("click", function(e) {
+        var $this = $j(e.currentTarget);
+        $j(".selected").removeClass("selected");
+        $this.parent().addClass("selected");
+        setView_01_02_03();
+        $j(".search-list").show().addClass("admin");
+
+      });
+      
+      $j(".search-list-header.admin .search-text select").off("change");
+      $j(".search-list-header.admin .search-text select").on("change", function (e) {
+        var $this = $j(e.currentTarget);
+//        if ($this.val() == "private") {
+//          $j(".search-conditions").addClass("private");
+//        } else if ($this.val() == "organization") {
+//          $j(".search-conditions").removeClass("private");
+//        }
+      });
+     
+
+    }
+
+    function onClickSearchConditions(e) {
+      
+//      var $this = $j(e.currentTarget);
+//      $this.toggleClass("off");
+
+      if($j(".search-conditions:visible").length) {
+        $j(".search-conditions").hide();
+      } else {
+        $j(".search-conditions").show();
+      }
+
+
+    }
+
+    function onClickCreate(e) {
+      
+      setView_01_02_04();
+      
+    }
+
+    $j(document).ready(function () {
+      // for libraies, clockpicker
+      $j('.clockpicker-begin').clockpicker();
+      $j('.clockpicker-end').clockpicker();
+      
+      $j('.datepicker').flatpickr({
+        "locale": "ja",
+        /*"altInput": true,
+        "altFormat": "Y年m月d日",
+        "dateFormat": "Y-m-d"*/
+        "dateFormat": "Y年m月d日"
+      });
+      
+      
+      setView_01_02_02();
+      setLogic_SearchListEvents();
+
+      // Check if an event is selected
+      if ($j('.currentEvent').val().length > 0) {
+        setView_01_02_03();
+        $j(".search-list").show().addClass("admin");
+
+        // Select the Event
+        $j(".evt-" + $j('.currentEventAttach').val()).addClass("selected");
+      }
+      //script_search_admin_init();
+    });
+  </script>
+</body>
+</html>
+
+
+</apex:form>
+</apex:page>

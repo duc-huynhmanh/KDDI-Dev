@@ -1,0 +1,851 @@
+<apex:page controller="auHonbuDirectCtrl" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" cache="false" action="{!redirectIfNecessaryMobile}" docType="html-5.0">
+
+<apex:form id="allForm">
+
+<html lang="ja">
+<head>
+
+  <meta charset="utf-8" />
+  <title>auポータル</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/sanitize.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/common.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/style-direct.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/iphone.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/flatpickr.min.css')}"/>
+
+  <!-- libraries -->
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/jquery-3.2.1.min.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/flatpickr.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/ja.js')}"/> 
+  
+  <!-- scripts -->
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_check_ua.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_fitting.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_sp.js')}"/> 
+
+  <script>
+    var $j = jQuery.noConflict();
+    var timer;
+
+    function resizeIframe(obj) {
+      obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+    }
+
+  </script>
+
+  <style type="text/css">
+
+    /*
+     * protect-screen
+     ******************************************************/
+    @media screen {
+
+      .protect-screen-bis {
+        position: fixed;
+        left: 0;
+        top: 0;
+
+        width: 100%;
+        height: 100%;
+
+        background-color: rgba(0, 0, 0, 0.2);
+
+        z-index: 998;
+      }
+      .protect-screen-bis.hide {
+        display: none;
+      }
+    }
+
+    .avatar > img {
+      width: 110px;
+      height: 110px;
+    }
+
+    .postContentList {
+      line-height: 1.3rem;
+      max-height: 5rem;
+    }
+
+    .group-list-item {
+      color: black;
+    }
+
+    .direct-home-section-body .search-conditions-form .period-date label {
+      font-size: 2.8rem;
+      width: 5.5rem;
+    }
+    .direct-home-section-body .search-conditions-form .period-date .divider {
+      width: 25px;
+      margin-left: -5px;
+    }
+    .base-name {
+      font-size: 3.2rem;
+    }
+    .direct-home-section-body {
+      position: relative;
+      top: -28px;
+      width: 100%;
+    }
+    .direct-home-section-body .search-conditions-form {
+      padding: 20px 20px 0 20px;
+    }
+    .direct-home-section-body .search-conditions-form .list-item {
+      padding-bottom: 33px;
+    }
+
+
+    .direct-home-section-body .detail-links li {
+      height: auto;
+    }
+    .direct-home-section-body .detail-links .title {
+      height: auto;
+      line-height: inherit;
+      overflow: auto;
+    }
+
+	.issuer {
+		color: #000000;
+		text-shadow: none;
+		font-size: 2.2rem;
+    	font-weight: normal;
+	}
+	
+	.detail-description h3{
+		padding: 0 20px;
+    	height: 60px;
+    	line-height: 60px;
+    	color: #4b4b4b;
+    	background: #ebebeb;
+    	border-bottom: 1px solid #b3b3b3;
+    	font-size: 2.2rem;
+    	font-weight: bold;   	    
+	}
+	
+	.description {
+		color: #000000;
+		text-shadow: none;
+		font-size: 2.2rem;
+    	font-weight: normal;
+    	padding-left: 20px;
+    	padding-top: 10px;
+    	word-wrap: break-word;
+    	word-break: break-all;
+    	padding-right: 20px;
+    	white-space: pre-line;
+    	border-bottom: 1px solid #b3b3b3;
+    	padding-bottom: 10px;
+	}
+	
+	.direct-home-section-body .detail-info {
+    	padding-bottom: 20px;
+	}
+	
+	
+
+	.direct-home-section-body .detail-documents {
+	    border-bottom: 1px solid #b3b3b3;
+	}
+	
+  </style>
+}
+</head>
+
+
+<body class="page-documents">
+  
+  <apex:inputHidden id="messageError" html-class="message-error" value="{!messageError}" />
+  <apex:inputHidden id="messageQuestion" html-class="message-question" value="{!messageQuestion}" />
+  <apex:inputHidden html-class="currentHonbuDirectId"
+                    value="{!currentHonbuDirectId}" />
+
+  <apex:actionFunction name="jsSearchData"
+                       action="{!searchData}"
+                       rerender="pnlHonbuDirectList"
+                       oncomplete="setView_01_01_02();" />
+
+  <apex:actionFunction name="jsShowCurrentHonbuDirectSearch"
+                       action="{!showCurrentHonbuDirect}"
+                       rerender="pnlCurrentHonbuDirect, pnlCurrentHonbuDirectHeader"
+                       oncomplete="setView_01_01_04('search');" />
+
+  <apex:actionFunction name="jsShowCurrentHonbuDirectHome"
+                       action="{!showCurrentHonbuDirect}"
+                       rerender="pnlCurrentHonbuDirect, pnlCurrentHonbuDirectHeader"
+                       oncomplete="setView_01_01_04('home');" />
+
+  <c:saMainTopComp typeOfScreen="{!typeOfScreen}" />
+
+  <div class="protect-screen-bis hide"></div>
+  
+  <!-- template-popup -->
+  <div class="modal-dialog hide"><p>ダイアログメッセージ</p><div class="btn-cancel"><a href="#">キャンセル</a></div><div class="btn-ok"><a href="#">OK</a></div></div>
+
+  <div class="document-container">
+    <header class="document-header">
+      <div class="btn-menu"><a href="#">ナビゲーション</a></div>
+    </header>
+
+    <div class="document-contents">
+
+
+      
+      <!-- #View 01-01-01(typ.) -->
+      <section class="direct-home-section direct-home-section-home hide">
+        <header class="direct-home-section-header">
+          <h1>auチャンネル</h1>
+          <div class="btn-back"><a href="#" class="ui-color-dark">戻る</a></div>
+        </header>
+
+        <div class="section-body direct-home-section-body">
+
+          <ul class="images hide">
+
+            <apex:repeat value="{!lsHonbuDirectTopPage}"
+                         var="hd" >
+              <li class="{!IF(hd.idx == 1, 'current', '')} topPageImg"
+                  style="background-image: url('/sfc/servlet.shepherd/version/download/{!hd.thumbnailAttachment.ver.Id}');"
+                  hdId="{!hd.auHonbuDirect.Id}"
+                  idx="{!hd.idx}">
+                <!-- h3>{!hd.auHonbuDirect.Title__c}</h3 -->
+              </li>
+            </apex:repeat>        
+
+          </ul>
+
+          <ul class="pagenation hide">
+
+            <apex:repeat value="{!lsHonbuDirectTopPage}"
+                         var="hd" >
+              <li class="{!IF(hd.idx == 1, 'current', '')} topPagePagination"
+                  hdId="{!hd.auHonbuDirect.Id}"
+                  idx="{!hd.idx}">
+                <a href="#">{!hd.idx}</a>
+              </li>
+
+            </apex:repeat>        
+
+          </ul>
+
+          <div class="search-conditions-form">
+            <label class="list-item">
+              <apex:inputText value="{!filterFreeWord}"
+                              html-placeholder="キーワード検索"
+                              styleclass="keyword"/>
+            </label>
+            <label class="list-item">
+              <apex:selectList styleClass="category filterCategory"
+                               value="{!filterCategory}"
+                               size="1">
+                <apex:selectOptions value="{!lsCategoryOptions}" />
+              </apex:selectList>
+            </label>
+            <div class="period-date list-item">
+              <label>実施期間</label>
+              <apex:inputText value="{!filterDateFrom}"
+                              html-type="date"
+                              styleclass="inputDate"
+                              style="vertical-align: middle;" />
+              <span class="divider">～</span>
+              <apex:inputText value="{!filterDateTo}"
+                              html-type="date"
+                              styleclass="inputDate"
+                              style="vertical-align: middle;" />
+            </div>
+            <div class="checkboxes list-item">
+
+              <label>
+                <apex:inputCheckbox value="{!isNewOnly}"
+                                    styleclass="checkbox"/>
+                <span class="checkbox-label">
+                  <span class="base-name">新着</span>
+                </span>
+              </label>
+              
+              <label>
+                <apex:inputCheckbox value="{!isNotRepliedOnly}"
+                                    styleclass="checkbox"/>
+                <span class="checkbox-label">
+                  <span class="base-name">未確認</span>
+                </span>
+              </label>
+
+              <label>
+                <apex:inputCheckbox value="{!isFavoriteOnly}"
+                                    styleclass="checkbox"/>
+                <span class="checkbox-label">
+                  <span class="base-name">お気に入り</span>
+                </span>
+              </label>
+
+            </div>
+
+            <div class="btn btn-clear"><a href="#" class="ui-color-1">クリア</a></div><div class="btn btn-search"><a href="#" class="ui-color-1">この条件で探す</a></div>
+          </div>
+       
+        </div>
+
+        <footer class="direct-home-section-footer"></footer>
+      </section>
+
+
+
+      <!-- #View 01-01-02(typ.) -->
+      <section class="direct-home-section direct-home-section-list hide">
+        <header class="direct-home-section-header">
+          <h1>auチャンネル</h1>
+          <div class="btn-back"><a href="#" class="ui-color-dark">戻る</a></div>
+          <div class="btn-search"><a href="#">検索</a></div>
+        </header>
+
+        <div class="section-body direct-home-section-body">
+
+          <apex:outputPanel id="pnlHonbuDirectList">
+
+            <ul class="search-conditions">
+              <li style="{!IF(filterFreeWord == NULL, 'display: none;', '')}">
+                <span class="label">キーワード</span>
+                <span class="value">{!filterFreeWord}</span>
+              </li>
+              <li style="{!IF(filterCategory == NULL, 'display: none;', '')}">
+                <span class="label">カテゴリ</span>
+                <span class="value">{!mpCategoryOptions[filterCategory]}</span>
+              </li>
+              <li style="{!IF(filterDateFrom == NULL && filterDateTo == NULL, 'display: none;', '')}">
+                <span class="label">期間</span>
+                <span class="value">{!filterDateFromDisplayed} ～ {!filterDateToDisplayed}</span>
+              </li>
+              <li style="{!IF(!isNewOnly && !isNotRepliedOnly && !isFavoriteOnly, 'display: none;', '')}">
+                <span class="label">タグ</span>
+                <span class="value">{!IF(isNewOnly, '新着　', '')}{!IF(isNotRepliedOnly, '未回答　', '')}{!IF(isFavoriteOnly, 'お気に入り　', '')}</span>
+              </li>
+            </ul>
+
+            <div class="search-info">
+              <div class="result-count">
+                <span class="label">検索結果</span>
+                <span class="value">{!lsHonbuDirect.size}</span>
+                <span class="unit">件</span>
+              </div>
+              <!--
+                <div class="sort">
+                  <select>
+                    <option value="日付順">日付順</option>
+                  </select>
+                </div>
+              -->
+            </div>
+           
+            <ul class="search-result-list">
+
+              <apex:repeat value="{!lsHonbuDirect}" var="hd" >
+
+                <li class="search-result-list-item" hdId="{!hd.auHonbuDirect.Id}">
+                  <a href="#">
+
+                    <apex:image rendered="{!hd.thumbnailAttachment != NULL}"
+                                url="/sfc/servlet.shepherd/version/download/{!hd.thumbnailAttachment.ver.Id}"
+                                styleclass="thumbnail"
+                                style="max-width: 248px;"/>
+
+                    <h3 class="title">{!hd.auHonbuDirect.Title__c}</h3>
+                    <div class="publish-date">
+                      <span class="label">発信日時</span>
+                      <span class="value">
+                        <apex:outputText value="{0,date,yyyy/MM/dd HH:mm}">
+                            <apex:param value="{!hd.auHonbuDirect.TransmissionDate__c+offset}"/>
+                        </apex:outputText>
+                      </span>
+                    </div>
+                    <div class="period">
+                      <span class="label">実施期間</span>
+                      <span class="value">
+                        <apex:outputText value="{0,date,yyyy/MM/dd}">
+                            <apex:param value="{!hd.auHonbuDirect.ImplementationStartDate__c}"/>
+                        </apex:outputText>
+                        ～
+                        <apex:outputText value="{0,date,yyyy/MM/dd}">
+                            <apex:param value="{!hd.auHonbuDirect.ImplementationEndDate__c}"/>
+                        </apex:outputText>
+                      </span>
+                    </div>
+                    <div class="icons">
+                      <span class="icon-file" style="{!IF(hd.hasDoc, '', 'display: none;')}"></span>
+                      <span class="icon-pop" style="{!IF(hd.hasPop, '', 'display: none;')}"></span>
+                      <span class="icon-movie" style="{!IF(hd.hasVideo, '', 'display: none;')}"></span>
+                      <span class="icon-link" style="{!IF(hd.hasLink, '', 'display: none;')}"></span>
+                    </div>
+                  </a>
+                </li>
+
+              </apex:repeat>
+
+            </ul>
+          </apex:outputPanel>
+        </div>
+
+        <footer class="direct-home-section-footer"></footer>
+      </section>
+   
+
+
+
+      <!-- #View 01-01-04(typ.) -->
+      <section class="direct-home-section direct-home-section-detail hide">
+        <header class="direct-home-section-header">
+          <!-- h1>施策</h1 -->
+          <div class="btn-back"><a href="#" class="ui-color-dark">戻る</a></div>
+          <apex:outputPanel id="pnlCurrentHonbuDirectHeader">
+            <div class="btn-favorite {!IF(currentHonbuDirect.isFavorite, '', 'disable')}">
+              <apex:commandLink rendered="{!!currentHonbuDirect.isFavorite}"
+                                value="お気に入り"
+                                styleClass="ui-color-1"
+                                action="{!currentHonbuDirect.addToFavorite}"
+                                reRender="pnlCurrentHonbuDirectHeader" />
+
+              <apex:commandLink rendered="{!currentHonbuDirect.isFavorite}"
+                                value="お気に入り"
+                                styleClass="ui-color-1"
+                                action="{!currentHonbuDirect.removeFromFavorite}"
+                                reRender="pnlCurrentHonbuDirectHeader" />
+            </div>
+          </apex:outputPanel>
+        </header>
+
+        <div class="section-body direct-home-section-body">
+          <apex:outputPanel id="pnlCurrentHonbuDirect">
+            <div class="direct-detail">
+              <div class="detail-info">
+                <h3 class="title">
+                  <span class="label">{!currentHonbuDirect.auHonbuDirect.Title__c}</span>
+                  <!--
+                  <span class="value">XXXXXXXXXXXXXXXXX</span>
+                  -->
+                </h3>
+                <div class="name">
+                  <!-- span class="name">{!currentHonbuDirect.auHonbuDirect.CreatedBy.DisplayedUsernameFormula__c}</span -->
+                  <span class="name">{!currentHonbuDirect.auHonbuDirect.IssuerLabel__c}</span>
+                  <!--
+                  <span class="organization">プロダクト・ディベロップメントグループ</span>
+                  -->
+                </div>
+                <div class="category">
+                  <span class="label">カテゴリ</span>
+                  <span class="value">{!currentHonbuDirect.auHonbuDirect.Category__c}</span>
+                </div>
+                <!-- div class="issuer">
+                  <span class="label">発信元</span>
+                  <span class="value">{!currentHonbuDirect.auHonbuDirect.IssuerLabel__c}</span>
+              </div -->
+                <div class="post-date">
+                  <span class="label">発信日時</span>
+                  <span class="value">
+                    <apex:outputText value="{0,date,yyyy/MM/dd HH:mm}">
+                        <apex:param value="{!currentHonbuDirect.auHonbuDirect.TransmissionDate__c+offset}"/>
+                    </apex:outputText>
+                  </span>
+                </div>
+                <div class="period">
+                  <span class="label">実施</span>
+                  <span class="value">
+                    <apex:outputText value="{0,date,yyyy/MM/dd}">
+                        <apex:param value="{!currentHonbuDirect.auHonbuDirect.ImplementationStartDate__c}"/>
+                    </apex:outputText>
+                    ～
+                    <apex:outputText value="{0,date,yyyy/MM/dd}">
+                        <apex:param value="{!currentHonbuDirect.auHonbuDirect.ImplementationEndDate__c}"/>
+                    </apex:outputText>
+                  </span>
+                </div>
+              </div>
+                
+              <ul class="detail-documents">
+
+                <apex:repeat value="{!currentHonbuDirect.lsAttachMain}"
+                             var="pic" >
+
+                  <li>
+
+                    <!-- ToDo: allow PDF inline -->
+
+                    <apex:outputPanel rendered="{!pic.ver.FileType == 'MP4' ||
+                                                  pic.ver.FileType == 'MOV'}">
+
+                      <video style="width: 674px;" controls="controls">
+                            <source src="/sfc/servlet.shepherd/version/download/{!pic.ver.Id}"
+                                    type="video/mp4" />        
+                            Your browser does not support the video tag.
+                      </video> 
+
+                    </apex:outputPanel>
+
+                    <apex:outputPanel rendered="{!pic.ver.FileType == 'BMP' ||
+                                                  pic.ver.FileType == 'JPEG' ||
+                                                  pic.ver.FileType == 'PNG' ||
+                                                  pic.ver.FileType == 'GIF' ||
+                                                  pic.ver.FileType == 'JPG'}">
+
+                      <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!pic.ver.Id}"
+                                       target="_blank">
+
+                        <apex:image url="/sfc/servlet.shepherd/version/download/{!pic.ver.Id}"
+                                    style="max-width: 674px;"/>
+
+                      </apex:outputLink>
+                    
+                    </apex:outputPanel>
+
+                  </li>
+
+                </apex:repeat>
+
+
+
+
+
+              </ul>
+
+              <h4 style="{!IF(currentHonbuDirect.lsAttachPop.size == 0 && currentHonbuDirect.lsAttachOther.size == 0, 'display: none;', '')}">関連資料</h4>
+              <ul class="detail-files">
+
+                <apex:repeat value="{!currentHonbuDirect.lsAttachPop}"
+                             var="att" >
+
+                  <li class="{!att.iconClsNm}">
+
+                    <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!att.ver.Id}"
+                                     target="_blank">
+
+                      <apex:outputText value="{!att.ver.Title}.{!att.ver.FileExtension}" />
+
+                    </apex:outputLink>
+
+                    <span class="{!IF(att.isPop, 'icon-pop', '')}" />
+
+                  </li>
+
+                </apex:repeat>
+
+                <apex:repeat value="{!currentHonbuDirect.lsAttachOther}"
+                             var="att" >
+
+                  <li class="att.iconClsNm">
+
+                    <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!att.ver.Id}"
+                                     target="_blank">
+
+                      <apex:outputText value="{!att.ver.Title}.{!att.ver.FileExtension}" />
+
+                    </apex:outputLink>
+
+                    <span class="{!IF(att.isPop, 'icon-pop', '')}" />
+
+                  </li>
+
+                </apex:repeat>
+
+              </ul>
+
+			  <apex:outputPanel rendered="{!currentHonbuDirect.auHonbuDirect.Description__c != NULL}">
+	              <div class="detail-description">
+	                <h3 class="title">
+	                  <span class="label">内容説明</span>
+	                </h3>
+	                <div class="description">
+	                	<apex:outputText escape="false" value="{!currentHonbuDirect.auHonbuDirect.Description__c}"/>
+	                </div>
+	              </div>
+              </apex:outputPanel>
+
+              <h4 style="{!IF(currentHonbuDirect.hasLink, '', 'display: none;')}">関連リンク</h4>
+              <ul class="detail-links">
+                <li style="{!IF(currentHonbuDirect.auHonbuDirect.LinkURL1__c != NULL, '', 'display: none;')}">
+                  <a href="{!currentHonbuDirect.auHonbuDirect.LinkURL1__c}"
+                     target="_blank">
+                    <span class="title">{!currentHonbuDirect.auHonbuDirect.LinkDescription1__c}</span>
+                    <span class="url">{!currentHonbuDirect.auHonbuDirect.LinkURL1__c}</span>
+                  </a>
+                </li>
+                <li style="{!IF(currentHonbuDirect.auHonbuDirect.LinkURL2__c != NULL, '', 'display: none;')}">
+                  <a href="{!currentHonbuDirect.auHonbuDirect.LinkURL2__c}"
+                     target="_blank">
+                    <span class="title">{!currentHonbuDirect.auHonbuDirect.LinkDescription2__c}</span>
+                    <span class="url">{!currentHonbuDirect.auHonbuDirect.LinkURL2__c}</span>
+                  </a>
+                </li>
+                <li style="{!IF(currentHonbuDirect.auHonbuDirect.LinkURL3__c != NULL, '', 'display: none;')}">
+                  <a href="{!currentHonbuDirect.auHonbuDirect.LinkURL3__c}"
+                     target="_blank">
+                    <span class="title">{!currentHonbuDirect.auHonbuDirect.LinkDescription3__c}</span>
+                    <span class="url">{!currentHonbuDirect.auHonbuDirect.LinkURL3__c}</span>
+                  </a>
+                </li>
+                <li style="{!IF(currentHonbuDirect.auHonbuDirect.LinkURL4__c != NULL, '', 'display: none;')}">
+                  <a href="{!currentHonbuDirect.auHonbuDirect.LinkURL4__c}"
+                     target="_blank">
+                    <span class="title">{!currentHonbuDirect.auHonbuDirect.LinkDescription4__c}</span>
+                    <span class="url">{!currentHonbuDirect.auHonbuDirect.LinkURL4__c}</span>
+                  </a>
+                </li>
+                <li style="{!IF(currentHonbuDirect.auHonbuDirect.LinkURL5__c != NULL, '', 'display: none;')}">
+                  <a href="{!currentHonbuDirect.auHonbuDirect.LinkURL5__c}"
+                     target="_blank">
+                    <span class="title">{!currentHonbuDirect.auHonbuDirect.LinkDescription5__c}</span>
+                    <span class="url">{!currentHonbuDirect.auHonbuDirect.LinkURL5__c}</span>
+                  </a>
+                </li>
+                <li style="{!IF(currentHonbuDirect.auHonbuDirect.LinkURL6__c != NULL, '', 'display: none;')}">
+                  <a href="{!currentHonbuDirect.auHonbuDirect.LinkURL6__c}"
+                     target="_blank">
+                    <span class="title">{!currentHonbuDirect.auHonbuDirect.LinkDescription6__c}</span>
+                    <span class="url">{!currentHonbuDirect.auHonbuDirect.LinkURL6__c}</span>
+                  </a>
+                </li>
+                <li style="{!IF(currentHonbuDirect.auHonbuDirect.LinkURL7__c != NULL, '', 'display: none;')}">
+                  <a href="{!currentHonbuDirect.auHonbuDirect.LinkURL7__c}"
+                     target="_blank">
+                    <span class="title">{!currentHonbuDirect.auHonbuDirect.LinkDescription7__c}</span>
+                    <span class="url">{!currentHonbuDirect.auHonbuDirect.LinkURL7__c}</span>
+                  </a>
+                </li>
+                <li style="{!IF(currentHonbuDirect.auHonbuDirect.LinkURL8__c != NULL, '', 'display: none;')}">
+                  <a href="{!currentHonbuDirect.auHonbuDirect.LinkURL8__c}"
+                     target="_blank">
+                    <span class="title">{!currentHonbuDirect.auHonbuDirect.LinkDescription8__c}</span>
+                    <span class="url">{!currentHonbuDirect.auHonbuDirect.LinkURL8__c}</span>
+                  </a>
+                </li>
+                <li style="{!IF(currentHonbuDirect.auHonbuDirect.LinkURL9__c != NULL, '', 'display: none;')}">
+                  <a href="{!currentHonbuDirect.auHonbuDirect.LinkURL9__c}"
+                     target="_blank">
+                    <span class="title">{!currentHonbuDirect.auHonbuDirect.LinkDescription9__c}</span>
+                    <span class="url">{!currentHonbuDirect.auHonbuDirect.LinkURL9__c}</span>
+                  </a>
+                </li>
+                <li style="{!IF(currentHonbuDirect.auHonbuDirect.LinkURL10__c != NULL, '', 'display: none;')}">
+                  <a href="{!currentHonbuDirect.auHonbuDirect.LinkURL10__c}"
+                     target="_blank">
+                    <span class="title">{!currentHonbuDirect.auHonbuDirect.LinkDescription10__c}</span>
+                    <span class="url">{!currentHonbuDirect.auHonbuDirect.LinkURL10__c}</span>
+                  </a>
+                </li>
+              </ul>
+
+              <apex:outputPanel id="pnlCurrentHonbuDirectRead">
+                <div class="btn btn-confirm {!IF(currentHonbuDirect.isRead, 'disable', '')}">
+
+                  <apex:commandLink value="{!IF(currentHonbuDirect.isRead, '確認済み', '確認')}"
+                                    styleClass="ui-color-1"
+                                    action="{!currentHonbuDirect.addToRead}"
+                                    reRender="pnlCurrentHonbuDirectRead" />
+
+                </div>
+              </apex:outputPanel>
+            </div>
+          </apex:outputPanel>
+        </div>
+
+        <footer class="direct-home-section-footer">
+<!--
+          <div class="btn btn-talk disable">
+            <apex:commandLink value="みんなでトーク"
+                              styleClass="ui-color-1"
+                              action="{!dummyAction}"
+                              reRender="DUMMY" />
+
+          </div>
+-->
+        </footer>
+      </section>
+   
+
+
+   
+    </div>
+    <footer class="document-footer"></footer>
+  </div>
+  <script>
+
+    function changeTopPageImage() {
+
+      var nextIdx = 1 + parseInt($j('.topPagePagination.current').attr('idx'));
+      if ($j('[idx=' + nextIdx + ']').length == 0) {
+        nextIdx = 1;
+      }
+
+      if ($j('[idx=' + nextIdx + ']').length > 0) {
+
+        $j('.topPagePagination').removeClass('current');
+        $j('.topPageImg').removeClass('current');
+
+        $j('[idx=' + nextIdx + ']').addClass('current');
+
+      }
+
+      timer = setTimeout(changeTopPageImage, 4000);
+    }
+
+    function setView_01_01_01() {
+
+      $j(".document-header").show();
+      $j('.direct-home-section-home').show();
+      $j('.images').show();
+      $j('.pagenation').show();
+      $j('.direct-home-section-list').hide();
+      $j('.direct-home-section-detail').hide();
+
+      setView_01_01_01_logic();
+    }
+
+    function setView_01_01_01_logic() {
+
+      $j(".btn-back").off("click");  
+
+      $j(".topPageImg").off("click");  
+      $j(".topPageImg").on("click", function (e) {
+        $j('.currentHonbuDirectId').val($j(this).attr('hdId'));
+        jsShowCurrentHonbuDirectHome();
+      });
+
+      $j(".topPagePagination").off("click");  
+      $j(".topPagePagination").on("click", function (e) {
+
+        clearTimeout(timer);
+
+        $j('.topPagePagination').removeClass('current');
+        $j('.topPageImg').removeClass('current');
+
+        $j('[hdId=' + $j(this).attr('hdId') + ']').addClass('current');
+
+        timer = setTimeout(changeTopPageImage, 4000);
+
+      });
+
+      $j(".btn-clear").off("click");  
+      $j(".btn-clear").on("click", function (e) {
+        
+        $j(".keyword").val('');
+        $j(".filterCategory").val('');
+        $j(".inputDate").val('');
+        $j(".checkbox").prop('checked', false);
+
+      });
+
+      $j(".btn-search").off("click");  
+      $j(".btn-search").on("click", function (e) {
+        jsSearchData();
+      });
+
+      timer = setTimeout(changeTopPageImage, 4000);
+
+    }
+
+    function setView_01_01_02() {
+
+      $j(".document-header").hide();
+      $j('.direct-home-section-home').hide();
+      $j('.images').hide();
+      $j('.pagenation').hide();
+      $j('.direct-home-section-list').show();
+      $j('.direct-home-section-detail').hide();
+
+      setView_01_01_02_logic();
+    }
+
+    function setView_01_01_02_logic() {
+
+      clearTimeout(timer);
+
+      $j(".btn-back").off("click");  
+      $j(".btn-back").on("click", function (e) {
+        setView_01_01_01();
+      });
+
+      $j(".btn-search").off("click");  
+      $j(".btn-search").on("click", function (e) {
+        setView_01_01_03();
+      });
+
+      $j(".search-result-list-item").off("click");  
+      $j(".search-result-list-item").on("click", function (e) {
+
+        $j('.currentHonbuDirectId').val($j(this).attr('hdId'));
+        jsShowCurrentHonbuDirectSearch();
+
+      });
+
+
+
+    }
+
+    function setView_01_01_03() {
+
+      $j(".document-header").hide();
+      $j('.direct-home-section-home').show();
+      $j('.images').hide();
+      $j('.pagenation').hide();
+      $j('.direct-home-section-list').hide();
+      $j('.direct-home-section-detail').hide();
+
+      setView_01_01_03_logic();
+    }
+
+    function setView_01_01_03_logic() {
+
+      clearTimeout(timer);
+      
+      $j(".btn-back").off("click");  
+      $j(".btn-back").on("click", function (e) {
+        setView_01_01_02();
+      });
+
+      $j(".btn-search").off("click");  
+      $j(".btn-search").on("click", function (e) {
+        jsSearchData();
+      });
+
+    }
+
+    function setView_01_01_04(origin) {
+
+      $j(".document-header").hide();
+      $j('.direct-home-section-home').hide();
+      $j('.images').hide();
+      $j('.pagenation').hide();
+      $j('.direct-home-section-list').hide();
+      $j('.direct-home-section-detail').show();
+
+      setView_01_01_04_logic(origin);
+    }
+
+    function setView_01_01_04_logic(origin) {
+
+      clearTimeout(timer);
+
+      $j(".btn-back").off("click");  
+      $j(".btn-back").on("click", function (e) {
+        if (origin == "home") {
+          setView_01_01_01();
+        } else {
+          setView_01_01_02();
+        }
+      });
+
+    }
+
+    $j(document).ready(function () {
+
+      setView_01_01_01();
+      $j('.inputDate').attr('type', 'date');
+
+    });
+
+  </script>
+</body>
+</html>
+
+</apex:form>
+
+</apex:page>

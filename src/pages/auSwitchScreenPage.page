@@ -1,0 +1,335 @@
+<apex:page controller="auSwitchScreenCtrl" cache="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" doctype="html-5.0" readOnly="false" action="{!redirectIfNecessary}">
+
+<c:auMainHeaderComp />
+
+<style>
+	.button--switch {
+		line-height: inherit;
+	}
+	.switchtitle {
+		font-size: 2rem;
+	}
+	.button-switch-container-2rows {
+		padding-top: 3.8rem;
+	}
+	.button-switch-container-1row {
+		line-height: 12.5rem;
+	}
+
+	.button--switch--container {
+		width: 14.5rem;
+		height: 15rem;
+		display: inline-flex;
+		padding: 0 1rem;
+		margin-bottom: 2rem;
+	}
+	.button--switch--image {
+		width: 12.5rem;
+		height: 12.5rem;
+	    padding-top: 1.25rem;
+		background-color: white;
+	}
+	.button--switch--image:hover {
+		background-color: #EDA276;
+	}
+	.button--switch--title {
+		width: 12.5rem;
+		height: 2.5rem;
+		background-color: #ed5500;;
+		color: white;
+    	font-size: 1.5rem;
+	    font-weight: bold;
+	    padding-top: 0.1rem;
+	}
+	.container2 {
+		position: relative;
+		top: 0;
+	}
+	.mdl-button:hover {
+		color: #333;
+    	color: rgba(51,51,51,.8);
+    	text-decoration: none;
+	}
+	.button--switch--container a:hover {
+    	text-decoration: none;
+	}
+
+	.button--switch--container {
+		vertical-align: top;
+	}
+  .dropdown-content-2 {
+    position: absolute;
+	}
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    margin-top: 15rem;
+    background-color: #f9f9f9;
+    width: 12.5rem;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .dropdown-content a:hover {background-color: #f1f1f1}
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .dropdown:hover .dropbtn {
+    background-color: #3F51B5;
+  }
+
+  .switches {
+  	max-width: 85rem;
+  	margin-left: auto;
+  	margin-right: auto;
+  }
+</style>
+
+
+<body class="switch" style="height: 100vh;">
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<apex:form >
+	<c:auMainTopComp typeOfScreen="{!typeOfScreen}" />
+</apex:form>
+
+<div class="container2 js-get-height" id="container" style="height: calc(100vh - 5rem);">
+	<main class="main main--switch clear" id="main" role="main">
+	  <article class="content u-flex" id="content" style="overflow-y: hidden; padding: 0;">
+		<div class="" style="overflow-y: scroll; width: 100%;">
+
+<div >
+
+<br/>
+<br/>
+
+<apex:image url="{!URLFOR($Resource.auStyling, 'images/au_portal.png')}"
+			style="width:12rem;"/>
+
+<div class="switches">
+
+  <!-- S-バリ -->
+  <apex:outputPanel rendered="{!HasAccessCalendar}">
+		<div class="button--switch--container">
+			<a href="/calendar">
+				<div class="button--switch--image">
+					<i class="icon icon--work--report"></i>
+			    </div>
+			    <div class="button--switch--title">S-バリ
+			    </div>
+			</a>
+		</div>
+	</apex:outputPanel>
+
+  <!-- CCP+ -->
+  <apex:outputPanel rendered="{!HasAccessCCP}">
+		<div class="button--switch--container">
+			<a href="/kdAccountWithActivitiesList">
+				<div class="button--switch--image">
+					<i class="icon icon--ccp"></i>
+			    </div>
+			    <div class="button--switch--title">CCP+
+			    </div>
+			</a>
+		</div>
+	</apex:outputPanel>
+
+  <apex:outputPanel rendered="{!HasAccessKdKnowledge}">
+		<div class="button--switch--container">
+
+			<a href="/kdKnowledgeHomePage">
+				<div class="button--switch--image">
+					<i class="icon icon--kddi--knowledge"></i>
+			    </div>
+			    <div class="button--switch--title">営業ナレッジ
+			    </div>
+			</a>
+		</div>
+	</apex:outputPanel>
+
+  <apex:outputPanel rendered="{!HasAccessToDo}">
+		<div class="button--switch--container dropdown">
+
+      <div class="dropdown-content">
+        <a href="/saTasks">To Do</a>
+        <a href="{!$Setup.auCommunityCustomSettings__c.URLToDoSettingsScreen__c}">管理画面</a>
+      </div>
+
+	    <div class="dropdown-content-2">
+			<a href="javascript:void(0)">
+				<div class="button--switch--image">
+					<i class="icon icon--todo"></i>
+			    </div>
+			    <div class="button--switch--title">To Do
+			    </div>
+			</a>
+			</div>
+
+		</div>
+	</apex:outputPanel>
+
+  <apex:outputPanel rendered="{!HasAccessAuChannelWithAdmin}">
+		<div class="button--switch--container dropdown">
+
+      <div class="dropdown-content">
+        <a href="/auHonbuDirect">auチャンネル</a>
+        <a href="{!$Setup.auCommunityCustomSettings__c.URLauChannelSettingsScreen__c}">管理画面</a>
+      </div>
+
+	    <div class="dropdown-content-2">
+			<a href="javascript:void(0)">
+				<div class="button--switch--image">
+					<i class="icon icon--au--channel"></i>
+			    </div>
+			    <div class="button--switch--title">auチャンネル
+			    </div>
+			</a>
+			</div>
+
+		</div>
+	</apex:outputPanel>
+
+  <apex:outputPanel rendered="{!HasAccessHearing}">
+		<div class="button--switch--container dropdown">
+
+      <div class="dropdown-content">
+        <a href="/saHearing">ヒアリング</a>
+        <a href="{!$Setup.auCommunityCustomSettings__c.URLHearingSettingsScreen__c}">管理画面</a>
+      </div>
+
+	    <div class="dropdown-content-2">
+			<a href="javascript:void(0)">
+				<div class="button--switch--image">
+					<i class="icon icon--hearing"></i>
+			    </div>
+			    <div class="button--switch--title">ヒアリング
+			    </div>
+			</a>
+			</div>
+
+		</div>
+	</apex:outputPanel>
+
+  <apex:outputPanel rendered="{!HasAccessSanx}">
+		<div class="button--switch--container dropdown">
+
+      <div class="dropdown-content">
+        <a href="/saHome">SANX</a>
+        <a href="{!$Setup.auCommunityCustomSettings__c.SANXSettingsScreen__c}">SANX管理画面</a>
+        <a href="/_ui/core/chatter/ui/ChatterPage">SANXグループ設定</a>
+      </div>
+
+	    <div class="dropdown-content-2">
+			<a href="javascript:void(0)">
+				<div class="button--switch--image">
+					<i class="icon icon--sanx"></i>
+			    </div>
+			    <div class="button--switch--title">SANX
+			    </div>
+			</a>
+			</div>
+
+		</div>
+	</apex:outputPanel>
+
+	<apex:outputPanel rendered="{!HasAccessCxKnowledge}">
+		<div class="button--switch--container">
+			<a href="/timelineCX">
+				<div class="button--switch--image">
+					<i class="icon icon--cx--knowledge"></i>
+			    </div>
+			    <div class="button--switch--title">CX ナレッジ
+			    </div>
+			</a>
+		</div>
+	</apex:outputPanel>
+
+	<apex:outputPanel rendered="{!HasAccessStpd}">
+		<div class="button--switch--container">
+			<a href="/timelineSTPD">
+				<div class="button--switch--image">
+					<i class="icon icon--cx--stpd"></i>
+			    </div>
+			    <div class="button--switch--title">CX-STPD
+			    </div>
+			</a>
+		</div>
+	</apex:outputPanel>
+
+  	<apex:outputPanel rendered="{!HasAccessAuChannelWithoutAdmin}">
+
+		<div class="button--switch--container">
+			<a href="/auHonbuDirect">
+				<div class="button--switch--image">
+					<i class="icon icon--au--channel"></i>
+			    </div>
+			    <div class="button--switch--title">auチャンネル
+			    </div>
+			</a>
+		</div>
+
+	</apex:outputPanel>
+
+
+
+
+  <br/>
+  ※対象デバイス：PC / Orange Tab(LTE接続)
+<!--
+    <apex:outputPanel rendered="{!urlSFDCHome != NULL}">
+		<div class="button--switch--container">
+			<a href="{!urlSFDCHome}">
+				<div class="button--switch--image">
+					<i class="icon icon--work--report"></i>
+			    </div>
+			    <div class="button--switch--title">S-バリ
+			    </div>
+			</a>
+		</div>
+	</apex:outputPanel>
+-->
+<!--
+		<div class="button button--switch--image button-switch-container-2rows">
+			<a href="/timelineSTPD"><div class="button-switch-container">CX-<br/>STPD</div></a>
+	    </div>
+
+		<a class="button button--switch button-switch-container-2rows"
+		   href="/timelineCX"><div class="button-switch-container">CX<br/>ナレッジ</div></a>
+
+        <apex:outputPanel rendered="{!urlSFDCHome != NULL}">
+			<a class="button button--switch button-switch-container-1row" 
+			   href="{!urlSFDCHome}"><div class="button-switch-container">青画面へ</div></a>
+    	</apex:outputPanel>
+-->
+</div>
+</div>
+
+<apex:form rendered="{!!isKDDIKnowledgeOnly}">
+	<c:auSwitchScreenBtmComp />
+</apex:form>
+
+</div>
+</article>
+
+</main></div>
+
+
+</body>
+
+
+
+</apex:page>

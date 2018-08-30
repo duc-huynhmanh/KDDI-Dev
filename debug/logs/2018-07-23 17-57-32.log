@@ -1,0 +1,935 @@
+38.0 APEX_CODE,FINEST;APEX_PROFILING,INFO;CALLOUT,INFO;DB,INFO;NBA,INFO;SYSTEM,DEBUG;VALIDATION,INFO;VISUALFORCE,INFO;WAVE,INFO;WORKFLOW,INFO
+17:57:30.0 (68786)|USER_INFO|[EXTERNAL]|0056F000006PtYl|gwadmin@gw.jp.kddi.gwdev01|日本標準時|GMT+09:00
+17:57:30.0 (105645)|EXECUTION_STARTED
+17:57:30.0 (110366)|CODE_UNIT_STARTED|[EXTERNAL]|066N0000000M59u|VF: /apex/saReport
+17:57:30.0 (242793)|VF_DESERIALIZE_VIEWSTATE_BEGIN|066N0000000M59u
+17:57:30.0 (4938219)|HEAP_ALLOCATE|[72]|Bytes:3
+17:57:30.0 (4980578)|HEAP_ALLOCATE|[77]|Bytes:152
+17:57:30.0 (4997875)|HEAP_ALLOCATE|[342]|Bytes:408
+17:57:30.0 (5012926)|HEAP_ALLOCATE|[355]|Bytes:408
+17:57:30.0 (5025158)|HEAP_ALLOCATE|[467]|Bytes:48
+17:57:30.0 (5051821)|HEAP_ALLOCATE|[139]|Bytes:6
+17:57:30.0 (6398056)|HEAP_ALLOCATE|[50]|Bytes:5
+17:57:30.0 (6428508)|HEAP_ALLOCATE|[56]|Bytes:5
+17:57:30.0 (6439072)|HEAP_ALLOCATE|[64]|Bytes:7
+17:57:30.0 (8505276)|VARIABLE_SCOPE_BEGIN|[30]|saReportCtrl.ERROR_CATEGORY_MISSING|String|false|true
+17:57:30.0 (8517554)|VARIABLE_SCOPE_BEGIN|[31]|saReportCtrl.ERROR_COMMENT_MISSING|String|false|true
+17:57:30.0 (8525139)|VARIABLE_SCOPE_BEGIN|[29]|saReportCtrl.ERROR_TITLE_MISSING|String|false|true
+17:57:30.0 (8532348)|VARIABLE_SCOPE_BEGIN|[32]|saReportCtrl.MESSAGE_ASK_FOR_VALIDATION|String|false|true
+17:57:30.0 (8539192)|VARIABLE_SCOPE_BEGIN|[33]|saReportCtrl.MESSAGE_PUBLISHED|String|false|true
+17:57:30.0 (8545506)|VARIABLE_SCOPE_BEGIN|[27]|saReportCtrl.SA_REPORT_STATE_NONE_LABEL|String|false|true
+17:57:30.0 (8553156)|VARIABLE_SCOPE_BEGIN|[26]|saReportCtrl.SA_REPORT_STATE_NONE_VALUE|String|false|true
+17:57:30.0 (8559723)|VARIABLE_SCOPE_BEGIN|[8]|saReportCtrl.SEARCH_COUNT_AVERAGE_LABEL|String|false|true
+17:57:30.0 (8565649)|VARIABLE_SCOPE_BEGIN|[11]|saReportCtrl.SEARCH_COUNT_AVERAGE_VALUE|String|false|true
+17:57:30.0 (8572001)|VARIABLE_SCOPE_BEGIN|[7]|saReportCtrl.SEARCH_COUNT_FEW_LABEL|String|false|true
+17:57:30.0 (8578081)|VARIABLE_SCOPE_BEGIN|[10]|saReportCtrl.SEARCH_COUNT_FEW_VALUE|String|false|true
+17:57:30.0 (8584079)|VARIABLE_SCOPE_BEGIN|[9]|saReportCtrl.SEARCH_COUNT_LOT_LABEL|String|false|true
+17:57:30.0 (8590202)|VARIABLE_SCOPE_BEGIN|[12]|saReportCtrl.SEARCH_COUNT_LOT_VALUE|String|false|true
+17:57:30.0 (8596779)|VARIABLE_SCOPE_BEGIN|[17]|saReportCtrl.SORTED_BY_FAVORITES_LABEL|String|false|true
+17:57:30.0 (8603247)|VARIABLE_SCOPE_BEGIN|[23]|saReportCtrl.SORTED_BY_FAVORITES_VALUE|String|false|true
+17:57:30.0 (8609377)|VARIABLE_SCOPE_BEGIN|[15]|saReportCtrl.SORTED_BY_NEWS_LABEL|String|false|true
+17:57:30.0 (8616241)|VARIABLE_SCOPE_BEGIN|[21]|saReportCtrl.SORTED_BY_NEWS_VALUE|String|false|true
+17:57:30.0 (8622933)|VARIABLE_SCOPE_BEGIN|[14]|saReportCtrl.SORTED_BY_NONE_LABEL|String|false|true
+17:57:30.0 (8631244)|VARIABLE_SCOPE_BEGIN|[20]|saReportCtrl.SORTED_BY_NONE_VALUE|String|false|true
+17:57:30.0 (8638010)|VARIABLE_SCOPE_BEGIN|[16]|saReportCtrl.SORTED_BY_NUMBER_OF_VIEWS_LABEL|String|false|true
+17:57:30.0 (8644581)|VARIABLE_SCOPE_BEGIN|[22]|saReportCtrl.SORTED_BY_NUMBER_OF_VIEWS_VALUE|String|false|true
+17:57:30.0 (8651080)|VARIABLE_SCOPE_BEGIN|[18]|saReportCtrl.SORTED_BY_RELEASE_DATES_LABEL|String|false|true
+17:57:30.0 (8657713)|VARIABLE_SCOPE_BEGIN|[24]|saReportCtrl.SORTED_BY_RELEASE_DATES_VALUE|String|false|true
+17:57:30.0 (10080721)|VARIABLE_SCOPE_BEGIN|[25]|auMainTopCompCtrl.TYPE_SCREEN_ACCOUNT_LIST|Integer|false|true
+17:57:30.0 (10092471)|VARIABLE_SCOPE_BEGIN|[26]|auMainTopCompCtrl.TYPE_SCREEN_ACTIVITY_LIST|Integer|false|true
+17:57:30.0 (10099622)|VARIABLE_SCOPE_BEGIN|[7]|auMainTopCompCtrl.TYPE_SCREEN_CX_SCREEN|Integer|false|true
+17:57:30.0 (10106337)|VARIABLE_SCOPE_BEGIN|[8]|auMainTopCompCtrl.TYPE_SCREEN_CX_TIMELINE|Integer|false|true
+17:57:30.0 (10112942)|VARIABLE_SCOPE_BEGIN|[9]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE|Integer|false|true
+17:57:30.0 (10119614)|VARIABLE_SCOPE_BEGIN|[10]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE_LIST|Integer|false|true
+17:57:30.0 (10126054)|VARIABLE_SCOPE_BEGIN|[27]|auMainTopCompCtrl.TYPE_SCREEN_FILE_LIST|Integer|false|true
+17:57:30.0 (10132262)|VARIABLE_SCOPE_BEGIN|[24]|auMainTopCompCtrl.TYPE_SCREEN_HONBU_DIRECT|Integer|false|true
+17:57:30.0 (10143844)|VARIABLE_SCOPE_BEGIN|[11]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_DASHBOARD|Integer|false|true
+17:57:30.0 (10150731)|VARIABLE_SCOPE_BEGIN|[12]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_LIST|Integer|false|true
+17:57:30.0 (10157299)|VARIABLE_SCOPE_BEGIN|[15]|auMainTopCompCtrl.TYPE_SCREEN_SA_CHATTER|Integer|false|true
+17:57:30.0 (10163865)|VARIABLE_SCOPE_BEGIN|[16]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORT|Integer|false|true
+17:57:30.0 (10171709)|VARIABLE_SCOPE_BEGIN|[22]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORTLIST|Integer|false|true
+17:57:30.0 (10177477)|VARIABLE_SCOPE_BEGIN|[18]|auMainTopCompCtrl.TYPE_SCREEN_SA_DOCUMENTS|Integer|false|true
+17:57:30.0 (10183230)|VARIABLE_SCOPE_BEGIN|[17]|auMainTopCompCtrl.TYPE_SCREEN_SA_ENQUETE|Integer|false|true
+17:57:30.0 (10189055)|VARIABLE_SCOPE_BEGIN|[20]|auMainTopCompCtrl.TYPE_SCREEN_SA_LINKS|Integer|false|true
+17:57:30.0 (10194863)|VARIABLE_SCOPE_BEGIN|[13]|auMainTopCompCtrl.TYPE_SCREEN_SA_MESSAGES|Integer|false|true
+17:57:30.0 (10200586)|VARIABLE_SCOPE_BEGIN|[19]|auMainTopCompCtrl.TYPE_SCREEN_SA_RANKING|Integer|false|true
+17:57:30.0 (10206757)|VARIABLE_SCOPE_BEGIN|[14]|auMainTopCompCtrl.TYPE_SCREEN_SA_REPORTS|Integer|false|true
+17:57:30.0 (10212676)|VARIABLE_SCOPE_BEGIN|[23]|auMainTopCompCtrl.TYPE_SCREEN_SA_TODO|Integer|false|true
+17:57:30.0 (10218562)|VARIABLE_SCOPE_BEGIN|[21]|auMainTopCompCtrl.TYPE_SCREEN_SA_USRSETTINGS|Integer|false|true
+17:57:30.0 (10224451)|VARIABLE_SCOPE_BEGIN|[4]|auMainTopCompCtrl.TYPE_SCREEN_STPD_EVENT|Integer|false|true
+17:57:30.0 (10230472)|VARIABLE_SCOPE_BEGIN|[6]|auMainTopCompCtrl.TYPE_SCREEN_STPD_SCREEN|Integer|false|true
+17:57:30.0 (10236495)|VARIABLE_SCOPE_BEGIN|[5]|auMainTopCompCtrl.TYPE_SCREEN_STPD_TIMELINE|Integer|false|true
+17:57:30.0 (10242925)|VARIABLE_SCOPE_BEGIN|[3]|auMainTopCompCtrl.TYPE_SCREEN_SWITCH|Integer|false|true
+17:57:30.0 (14706005)|VF_DESERIALIZE_VIEWSTATE_END
+17:57:30.0 (18251746)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (18284935)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1588
+17:57:30.0 (18298639)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:645
+17:57:30.0 (18305940)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:858
+17:57:30.0 (18311589)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:10
+17:57:30.0 (18335215)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.ERROR_CATEGORY_MISSING|"カテゴリが必須です。"
+17:57:30.0 (18341345)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:10
+17:57:30.0 (18347650)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.ERROR_COMMENT_MISSING|"コメントが必須です。"
+17:57:30.0 (18353118)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:10
+17:57:30.0 (18359747)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.ERROR_TITLE_MISSING|"タイトルが必須です。"
+17:57:30.0 (18364549)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:11
+17:57:30.0 (18371442)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.MESSAGE_ASK_FOR_VALIDATION|"承認申請を出しました。"
+17:57:30.0 (18376684)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:7
+17:57:30.0 (18382888)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.MESSAGE_PUBLISHED|"公開しました。"
+17:57:30.0 (18387031)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:57:30.0 (18393641)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SA_REPORT_STATE_NONE_LABEL|"未選択"
+17:57:30.0 (18397934)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:57:30.0 (18403673)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SA_REPORT_STATE_NONE_VALUE|" "
+17:57:30.0 (18407337)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:57:30.0 (18413195)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SEARCH_COUNT_AVERAGE_LABEL|"50件"
+17:57:30.0 (18417977)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:2
+17:57:30.0 (18424839)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SEARCH_COUNT_AVERAGE_VALUE|"50"
+17:57:30.0 (18429542)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:57:30.0 (18436363)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SEARCH_COUNT_FEW_LABEL|"20件"
+17:57:30.0 (18440765)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:2
+17:57:30.0 (18446750)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SEARCH_COUNT_FEW_VALUE|"20"
+17:57:30.0 (18451005)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:57:30.0 (18457197)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SEARCH_COUNT_LOT_LABEL|"100件"
+17:57:30.0 (18461941)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:57:30.0 (18468310)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SEARCH_COUNT_LOT_VALUE|"100"
+17:57:30.0 (18473154)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:57:30.0 (18480206)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_FAVORITES_LABEL|"いいね順"
+17:57:30.0 (18483928)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:57:30.0 (18490667)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_FAVORITES_VALUE|"いいね順"
+17:57:30.0 (18494993)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:57:30.0 (18501766)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_NEWS_LABEL|"NEW"
+17:57:30.0 (18505668)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:3
+17:57:30.0 (18512263)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_NEWS_VALUE|"NEW"
+17:57:30.0 (18516210)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:57:30.0 (18522825)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_NONE_LABEL|" "
+17:57:30.0 (18527020)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:57:30.0 (18533773)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_NONE_VALUE|" "
+17:57:30.0 (18537371)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:57:30.0 (18546207)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_NUMBER_OF_VIEWS_LABEL|"閲覧数順"
+17:57:30.0 (18551207)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:57:30.0 (18558642)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_NUMBER_OF_VIEWS_VALUE|"閲覧数順"
+17:57:30.0 (18562556)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:57:30.0 (18569880)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_RELEASE_DATES_LABEL|"公開日時"
+17:57:30.0 (18573883)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+17:57:30.0 (18580337)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saReportCtrl.SORTED_BY_RELEASE_DATES_VALUE|"公開日時"
+17:57:30.0 (18592313)|METHOD_ENTRY|[1]|01pN0000000aEUV|saReportCtrl.saReportCtrl()
+17:57:30.0 (18599117)|STATEMENT_EXECUTE|[1]
+17:57:30.0 (18606694)|STATEMENT_EXECUTE|[1]
+17:57:30.0 (18616661)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (18630432)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:5
+17:57:30.0 (18639575)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (18647272)|METHOD_EXIT|[1]|saReportCtrl
+17:57:30.0 (18747452)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (18981909)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (20431441)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (20532266)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (20608714)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (20675305)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (20881308)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (20954818)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (21016213)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (21472022)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (21691351)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (21702472)|VARIABLE_SCOPE_BEGIN|[36]|this|saReportCtrl|true|false
+17:57:30.0 (21936832)|VARIABLE_ASSIGNMENT|[36]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x2c628524","selectedReportName":"","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (21983859)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (21991975)|HEAP_ALLOCATE|[36]|Bytes:5
+17:57:30.0 (21997870)|STATEMENT_EXECUTE|[36]
+17:57:30.0 (21999855)|STATEMENT_EXECUTE|[36]
+17:57:30.0 (22568949)|VARIABLE_SCOPE_BEGIN|[7]|saConstantCmn.PUSH_NOTIFICATION_STATUS_NONE|String|false|true
+17:57:30.0 (22580538)|VARIABLE_SCOPE_BEGIN|[9]|saConstantCmn.PUSH_NOTIFICATION_STATUS_RESENDING|String|false|true
+17:57:30.0 (22588065)|VARIABLE_SCOPE_BEGIN|[8]|saConstantCmn.PUSH_NOTIFICATION_STATUS_SENDING|String|false|true
+17:57:30.0 (22595122)|VARIABLE_SCOPE_BEGIN|[10]|saConstantCmn.PUSH_NOTIFICATION_STATUS_SENT|String|false|true
+17:57:30.0 (22602603)|VARIABLE_SCOPE_BEGIN|[24]|saConstantCmn.SA_INQUIRY_TYPE_AU_HEARING|String|false|true
+17:57:30.0 (22609316)|VARIABLE_SCOPE_BEGIN|[22]|saConstantCmn.SA_INQUIRY_TYPE_DAILYREPORT|String|false|true
+17:57:30.0 (22615725)|VARIABLE_SCOPE_BEGIN|[23]|saConstantCmn.SA_INQUIRY_TYPE_HEARING|String|false|true
+17:57:30.0 (22622635)|VARIABLE_SCOPE_BEGIN|[15]|saConstantCmn.SA_MESSAGEDETAIL_TYPE_DONE|String|false|true
+17:57:30.0 (22628273)|VARIABLE_SCOPE_BEGIN|[14]|saConstantCmn.SA_MESSAGEDETAIL_TYPE_READ|String|false|true
+17:57:30.0 (22634002)|VARIABLE_SCOPE_BEGIN|[13]|saConstantCmn.SA_MESSAGEDETAIL_TYPE_SHARED|String|false|true
+17:57:30.0 (22640571)|VARIABLE_SCOPE_BEGIN|[18]|saConstantCmn.SA_MESSAGE_TYPE_MESSAGE|String|false|true
+17:57:30.0 (22646702)|VARIABLE_SCOPE_BEGIN|[19]|saConstantCmn.SA_MESSAGE_TYPE_TASK|String|false|true
+17:57:30.0 (22653376)|VARIABLE_SCOPE_BEGIN|[41]|saConstantCmn.SA_REPORT_DETAIL_TYPE_LIKE|String|false|true
+17:57:30.0 (22659081)|VARIABLE_SCOPE_BEGIN|[42]|saConstantCmn.SA_REPORT_DETAIL_TYPE_VERY_LIKE|String|false|true
+17:57:30.0 (22665060)|VARIABLE_SCOPE_BEGIN|[34]|saConstantCmn.SA_REPORT_REPLY_STATUS_REPLYSAVED|String|false|true
+17:57:30.0 (22671101)|VARIABLE_SCOPE_BEGIN|[35]|saConstantCmn.SA_REPORT_REPLY_STATUS_REPLYSENT|String|false|true
+17:57:30.0 (22677093)|VARIABLE_SCOPE_BEGIN|[33]|saConstantCmn.SA_REPORT_REPLY_STATUS_WAITINGREPLY|String|false|true
+17:57:30.0 (22683081)|VARIABLE_SCOPE_BEGIN|[39]|saConstantCmn.SA_REPORT_SOURCE_NEW|String|false|true
+17:57:30.0 (22689730)|VARIABLE_SCOPE_BEGIN|[38]|saConstantCmn.SA_REPORT_SOURCE_WEEKLY|String|false|true
+17:57:30.0 (22695651)|VARIABLE_SCOPE_BEGIN|[27]|saConstantCmn.SA_REPORT_STATE_DRAFT|String|false|true
+17:57:30.0 (22701888)|VARIABLE_SCOPE_BEGIN|[30]|saConstantCmn.SA_REPORT_STATE_PUBLISHED|String|false|true
+17:57:30.0 (22708006)|VARIABLE_SCOPE_BEGIN|[29]|saConstantCmn.SA_REPORT_STATE_REJECTED|String|false|true
+17:57:30.0 (22715288)|VARIABLE_SCOPE_BEGIN|[28]|saConstantCmn.SA_REPORT_STATE_WAITING_APPROVAL|String|false|true
+17:57:30.0 (22722022)|VARIABLE_SCOPE_BEGIN|[45]|saConstantCmn.SOURCE|String|false|true
+17:57:30.0 (22728601)|VARIABLE_SCOPE_BEGIN|[46]|saConstantCmn.SOURCE_PREVIEW|String|false|true
+17:57:30.0 (22739216)|HEAP_ALLOCATE|[36]|Bytes:4
+17:57:30.0 (22751962)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.PUSH_NOTIFICATION_STATUS_NONE|"NONE"
+17:57:30.0 (22758026)|HEAP_ALLOCATE|[36]|Bytes:9
+17:57:30.0 (22764171)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.PUSH_NOTIFICATION_STATUS_RESENDING|"RESENDING"
+17:57:30.0 (22769443)|HEAP_ALLOCATE|[36]|Bytes:7
+17:57:30.0 (22775339)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.PUSH_NOTIFICATION_STATUS_SENDING|"SENDING"
+17:57:30.0 (22780032)|HEAP_ALLOCATE|[36]|Bytes:4
+17:57:30.0 (22785912)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.PUSH_NOTIFICATION_STATUS_SENT|"SENT"
+17:57:30.0 (22790514)|HEAP_ALLOCATE|[36]|Bytes:10
+17:57:30.0 (22797047)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_INQUIRY_TYPE_AU_HEARING|"AU_HEARING"
+17:57:30.0 (22801046)|HEAP_ALLOCATE|[36]|Bytes:12
+17:57:30.0 (22807134)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_INQUIRY_TYPE_DAILYREPORT|"DAILY_REPORT"
+17:57:30.0 (22811095)|HEAP_ALLOCATE|[36]|Bytes:6
+17:57:30.0 (22816550)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_INQUIRY_TYPE_HEARING|"SURVEY"
+17:57:30.0 (22820451)|HEAP_ALLOCATE|[36]|Bytes:4
+17:57:30.0 (22826001)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_MESSAGEDETAIL_TYPE_DONE|"DONE"
+17:57:30.0 (22830388)|HEAP_ALLOCATE|[36]|Bytes:4
+17:57:30.0 (22836392)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_MESSAGEDETAIL_TYPE_READ|"READ"
+17:57:30.0 (22840170)|HEAP_ALLOCATE|[36]|Bytes:6
+17:57:30.0 (22845939)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_MESSAGEDETAIL_TYPE_SHARED|"SHARED"
+17:57:30.0 (22850072)|HEAP_ALLOCATE|[36]|Bytes:7
+17:57:30.0 (22855557)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_MESSAGE_TYPE_MESSAGE|"MESSAGE"
+17:57:30.0 (22859826)|HEAP_ALLOCATE|[36]|Bytes:4
+17:57:30.0 (22865466)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_MESSAGE_TYPE_TASK|"TASK"
+17:57:30.0 (22869749)|HEAP_ALLOCATE|[36]|Bytes:4
+17:57:30.0 (22876017)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_DETAIL_TYPE_LIKE|"LIKE"
+17:57:30.0 (22879815)|HEAP_ALLOCATE|[36]|Bytes:9
+17:57:30.0 (22886531)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_DETAIL_TYPE_VERY_LIKE|"VERY_LIKE"
+17:57:30.0 (22893316)|HEAP_ALLOCATE|[36]|Bytes:11
+17:57:30.0 (22899915)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_REPLY_STATUS_REPLYSAVED|"REPLY_SAVED"
+17:57:30.0 (22904418)|HEAP_ALLOCATE|[36]|Bytes:10
+17:57:30.0 (22911334)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_REPLY_STATUS_REPLYSENT|"REPLY_SENT"
+17:57:30.0 (22915886)|HEAP_ALLOCATE|[36]|Bytes:13
+17:57:30.0 (22922159)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_REPLY_STATUS_WAITINGREPLY|"WAITING_REPLY"
+17:57:30.0 (22926457)|HEAP_ALLOCATE|[36]|Bytes:3
+17:57:30.0 (22932709)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_SOURCE_NEW|"New"
+17:57:30.0 (22936395)|HEAP_ALLOCATE|[36]|Bytes:6
+17:57:30.0 (22942420)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_SOURCE_WEEKLY|"Weekly"
+17:57:30.0 (22946750)|HEAP_ALLOCATE|[36]|Bytes:5
+17:57:30.0 (22954149)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_STATE_DRAFT|"Draft"
+17:57:30.0 (22958431)|HEAP_ALLOCATE|[36]|Bytes:7
+17:57:30.0 (22964542)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_STATE_PUBLISHED|"Publish"
+17:57:30.0 (22968856)|HEAP_ALLOCATE|[36]|Bytes:6
+17:57:30.0 (22975644)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_STATE_REJECTED|"Remand"
+17:57:30.0 (22979820)|HEAP_ALLOCATE|[36]|Bytes:7
+17:57:30.0 (22986482)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SA_REPORT_STATE_WAITING_APPROVAL|"Pending"
+17:57:30.0 (22991318)|HEAP_ALLOCATE|[36]|Bytes:3
+17:57:30.0 (22997710)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SOURCE|"src"
+17:57:30.0 (23001689)|HEAP_ALLOCATE|[36]|Bytes:7
+17:57:30.0 (23008962)|VARIABLE_ASSIGNMENT|[36]|saConstantCmn.SOURCE_PREVIEW|"preview"
+17:57:30.0 (23041526)|METHOD_ENTRY|[4]|01pN0000000aH2z|saConstantCmn.saConstantCmn()
+17:57:30.0 (23047792)|STATEMENT_EXECUTE|[4]
+17:57:30.0 (23051138)|STATEMENT_EXECUTE|[4]
+17:57:30.0 (23059310)|HEAP_ALLOCATE|[36]|Bytes:5
+17:57:30.0 (23068107)|METHOD_EXIT|[4]|saConstantCmn
+17:57:30.0 (23075272)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (23239881)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (23280189)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (23287957)|VARIABLE_SCOPE_BEGIN|[37]|this|saReportCtrl|true|false
+17:57:30.0 (23491393)|VARIABLE_ASSIGNMENT|[37]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x2c628524","selectedReportName":"","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (23531211)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (23538719)|HEAP_ALLOCATE|[37]|Bytes:5
+17:57:30.0 (23544114)|STATEMENT_EXECUTE|[37]
+17:57:30.0 (23545948)|STATEMENT_EXECUTE|[37]
+17:57:30.0 (23551366)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (23688579)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (23724586)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (23732084)|VARIABLE_SCOPE_BEGIN|[39]|this|saReportCtrl|true|false
+17:57:30.0 (23930973)|VARIABLE_ASSIGNMENT|[39]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x2c628524","selectedReportName":"","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (23970486)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (23977733)|HEAP_ALLOCATE|[39]|Bytes:5
+17:57:30.0 (23983255)|STATEMENT_EXECUTE|[39]
+17:57:30.0 (23984994)|STATEMENT_EXECUTE|[39]
+17:57:30.0 (23989572)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (24210379)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (24246592)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (24253814)|VARIABLE_SCOPE_BEGIN|[38]|this|saReportCtrl|true|false
+17:57:30.0 (24451310)|VARIABLE_ASSIGNMENT|[38]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x2c628524","selectedReportName":"","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (24489560)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (24497350)|HEAP_ALLOCATE|[38]|Bytes:5
+17:57:30.0 (24502240)|STATEMENT_EXECUTE|[38]
+17:57:30.0 (24504085)|STATEMENT_EXECUTE|[38]
+17:57:30.0 (24508903)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (28346220)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (28960588)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29018274)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29060262)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29098190)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29140332)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29178860)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29215478)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29250653)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29285959)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29321594)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29357131)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29392290)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29427151)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29511458)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29548795)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29585274)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29645251)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29717318)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29763371)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29807282)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29848245)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29893316)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29932899)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (29976559)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (30031841)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (30946918)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (30992052)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (31028181)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (32746660)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (32792153)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (32830187)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (34532461)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (34577613)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (34617284)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (34787468)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (34923645)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (34961833)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (34996528)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (35223240)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (35252834)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (35267709)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.attachmentId|""|0x44a6f58f
+17:57:30.0 (35302779)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (35316729)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:18
+17:57:30.0 (35322128)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (35333672)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.selectedReportName|"SA_Report-00000160"|0x44a6f58f
+17:57:30.0 (35358044)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (35370442)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:6
+17:57:30.0 (35374633)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (35383443)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.selectedCategoryName|"新料金プラン"|0x44a6f58f
+17:57:30.0 (35406472)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (35418640)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (35427489)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.messageError|""|0x44a6f58f
+17:57:30.0 (35449294)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (35460945)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (35469365)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.messageSubmissionComplete|""|0x44a6f58f
+17:57:30.0 (35491533)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (35503373)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (35510725)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchCategory|""|0x44a6f58f
+17:57:30.0 (35532311)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (35543368)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (35550432)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchCount|""|0x44a6f58f
+17:57:30.0 (35571109)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (35582549)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (35589535)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchSort|""|0x44a6f58f
+17:57:30.0 (35611496)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (35622612)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (35631283)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.mySearchCount|""|0x44a6f58f
+17:57:30.0 (35656336)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (35669446)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (35677586)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.mySearchState|""|0x44a6f58f
+17:57:30.0 (35700985)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (35712562)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (35722104)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.pendingCount|""|0x44a6f58f
+17:57:30.0 (35744930)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (35756852)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (35765258)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.remandCategory|""|0x44a6f58f
+17:57:30.0 (35787442)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (35799011)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (35807353)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.remandProcess|""|0x44a6f58f
+17:57:30.0 (35841176)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (35918121)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (35932114)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (35940639)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchKeywords|""|0x44a6f58f
+17:57:30.0 (35964836)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (35976760)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (35983490)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchDateStart|""|0x44a6f58f
+17:57:30.0 (36004230)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (36015982)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (36023285)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchDateEnd|""|0x44a6f58f
+17:57:30.0 (36045610)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (36056439)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:57:30.0 (36060760)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (36067090)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchCategory|" "|0x44a6f58f
+17:57:30.0 (36088702)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (36099880)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:57:30.0 (36103842)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (36109461)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchRole1|" "|0x44a6f58f
+17:57:30.0 (36130648)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (36147928)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:57:30.0 (36152212)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (36158482)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchRole2|" "|0x44a6f58f
+17:57:30.0 (36180609)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (36191756)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:57:30.0 (36195940)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (36202540)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchRole3|" "|0x44a6f58f
+17:57:30.0 (36224458)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (36235423)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+17:57:30.0 (36239555)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (36244965)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchSort|" "|0x44a6f58f
+17:57:30.0 (36265886)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (36276786)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:2
+17:57:30.0 (36280732)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (36287018)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.basicSearchCount|"20"|0x44a6f58f
+17:57:30.0 (36316333)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (37024461)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (37105460)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (37155317)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (37195700)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (37302350)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (37319791)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (37330128)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.createCategory|null|0x44a6f58f
+17:57:30.0 (37355392)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (37367798)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (37374987)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.createProcess|null|0x44a6f58f
+17:57:30.0 (37405601)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (37703940)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (37759761)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (37767578)|VARIABLE_SCOPE_BEGIN|[36]|this|saReportCtrl|true|false
+17:57:30.0 (37976257)|VARIABLE_ASSIGNMENT|[36]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchCount":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","mySearchState":"","newCommentValue":"","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x2c628524","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (38016396)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (38024566)|HEAP_ALLOCATE|[36]|Bytes:5
+17:57:30.0 (38030222)|STATEMENT_EXECUTE|[36]
+17:57:30.0 (38032133)|STATEMENT_EXECUTE|[36]
+17:57:30.0 (38036775)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (38157903)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (38193098)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (38200318)|VARIABLE_SCOPE_BEGIN|[37]|this|saReportCtrl|true|false
+17:57:30.0 (38403707)|VARIABLE_ASSIGNMENT|[37]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchCount":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","mySearchState":"","newCommentValue":"","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x2c628524","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (38443644)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (38450928)|HEAP_ALLOCATE|[37]|Bytes:5
+17:57:30.0 (38456408)|STATEMENT_EXECUTE|[37]
+17:57:30.0 (38458374)|STATEMENT_EXECUTE|[37]
+17:57:30.0 (38462616)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (38572435)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (38605035)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (38611510)|VARIABLE_SCOPE_BEGIN|[39]|this|saReportCtrl|true|false
+17:57:30.0 (38815500)|VARIABLE_ASSIGNMENT|[39]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchCount":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","mySearchState":"","newCommentValue":"","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x2c628524","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (38854666)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (38861314)|HEAP_ALLOCATE|[39]|Bytes:5
+17:57:30.0 (38866469)|STATEMENT_EXECUTE|[39]
+17:57:30.0 (38868179)|STATEMENT_EXECUTE|[39]
+17:57:30.0 (38872252)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (38981595)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (39013403)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (39020792)|VARIABLE_SCOPE_BEGIN|[38]|this|saReportCtrl|true|false
+17:57:30.0 (39236891)|VARIABLE_ASSIGNMENT|[38]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchCount":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","mySearchState":"","newCommentValue":"","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x2c628524","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (39276054)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (39283181)|HEAP_ALLOCATE|[38]|Bytes:5
+17:57:30.0 (39288203)|STATEMENT_EXECUTE|[38]
+17:57:30.0 (39289970)|STATEMENT_EXECUTE|[38]
+17:57:30.0 (39293807)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (40617958)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (40637524)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (40650808)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.mySearchState|null|0x44a6f58f
+17:57:30.0 (40680790)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (40693859)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (40703047)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.mySearchCount|null|0x44a6f58f
+17:57:30.0 (40734838)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (41035376)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (41071822)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (41079021)|VARIABLE_SCOPE_BEGIN|[36]|this|saReportCtrl|true|false
+17:57:30.0 (41286370)|VARIABLE_ASSIGNMENT|[36]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x2c628524","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (41325801)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (41333477)|HEAP_ALLOCATE|[36]|Bytes:5
+17:57:30.0 (41338866)|STATEMENT_EXECUTE|[36]
+17:57:30.0 (41340938)|STATEMENT_EXECUTE|[36]
+17:57:30.0 (41345354)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (41456015)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (41490137)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (41496592)|VARIABLE_SCOPE_BEGIN|[37]|this|saReportCtrl|true|false
+17:57:30.0 (41699546)|VARIABLE_ASSIGNMENT|[37]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x2c628524","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (41738052)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (41745026)|HEAP_ALLOCATE|[37]|Bytes:5
+17:57:30.0 (41749927)|STATEMENT_EXECUTE|[37]
+17:57:30.0 (41751625)|STATEMENT_EXECUTE|[37]
+17:57:30.0 (41755718)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (41860152)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (41893000)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (41899326)|VARIABLE_SCOPE_BEGIN|[38]|this|saReportCtrl|true|false
+17:57:30.0 (42100610)|VARIABLE_ASSIGNMENT|[38]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x2c628524","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (42144222)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (42151489)|HEAP_ALLOCATE|[38]|Bytes:5
+17:57:30.0 (42156523)|STATEMENT_EXECUTE|[38]
+17:57:30.0 (42158300)|STATEMENT_EXECUTE|[38]
+17:57:30.0 (42162428)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (42267356)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (42299427)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (42306010)|VARIABLE_SCOPE_BEGIN|[39]|this|saReportCtrl|true|false
+17:57:30.0 (42506794)|VARIABLE_ASSIGNMENT|[39]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingCount":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandCategory":"","remandProcess":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x2c628524","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (42544903)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (42551563)|HEAP_ALLOCATE|[39]|Bytes:5
+17:57:30.0 (42556130)|STATEMENT_EXECUTE|[39]
+17:57:30.0 (42557840)|STATEMENT_EXECUTE|[39]
+17:57:30.0 (42561666)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (43852070)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (43871597)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (43883290)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.draftCategory|null|0x44a6f58f
+17:57:30.0 (43912869)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (43925440)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (43933403)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.draftProcess|null|0x44a6f58f
+17:57:30.0 (43984124)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (44125849)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (44148296)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (44160222)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.remandCategory|null|0x44a6f58f
+17:57:30.0 (44185614)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (44197344)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (44206079)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.remandProcess|null|0x44a6f58f
+17:57:30.0 (44256542)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (44351752)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (44367382)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (44377901)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.pendingCount|null|0x44a6f58f
+17:57:30.0 (44411662)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (44603146)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (44612537)|VARIABLE_SCOPE_BEGIN|[2110]|this|saReportCtrl|true|false
+17:57:30.0 (44819429)|VARIABLE_ASSIGNMENT|[2110]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x2c628524","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (44860184)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (44868104)|HEAP_ALLOCATE|[2112]|Bytes:5
+17:57:30.0 (44873615)|STATEMENT_EXECUTE|[2110]
+17:57:30.0 (44875592)|STATEMENT_EXECUTE|[2112]
+17:57:30.0 (44879836)|HEAP_ALLOCATE|[2112]|Bytes:22
+17:57:30.0 (44931767)|USER_DEBUG|[2112]|DEBUG|Run: setSelectedReport
+17:57:30.0 (44945094)|STATEMENT_EXECUTE|[2114]
+17:57:30.0 (44992776)|METHOD_ENTRY|[2114]|01pN0000000aEUV|saReportCtrl.initSelectedReportDetails()
+17:57:30.0 (45022832)|VARIABLE_SCOPE_BEGIN|[2261]|this|saReportCtrl|true|false
+17:57:30.0 (45228617)|VARIABLE_ASSIGNMENT|[2261]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x2c628524","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (45268183)|HEAP_ALLOCATE|[2263]|Bytes:5
+17:57:30.0 (45274116)|STATEMENT_EXECUTE|[2261]
+17:57:30.0 (45276378)|STATEMENT_EXECUTE|[2263]
+17:57:30.0 (45279787)|HEAP_ALLOCATE|[2263]|Bytes:30
+17:57:30.0 (45298927)|USER_DEBUG|[2263]|DEBUG|Run: initSelectedReportDetails
+17:57:30.0 (45308582)|STATEMENT_EXECUTE|[2266]
+17:57:30.0 (45311415)|HEAP_ALLOCATE|[2266]|Bytes:97
+17:57:30.0 (45360425)|HEAP_ALLOCATE|[2266]|Bytes:89
+17:57:30.0 (45371509)|SYSTEM_METHOD_ENTRY|[1]|UserInfo.UserInfo()
+17:57:30.0 (45376016)|STATEMENT_EXECUTE|[1]
+17:57:30.0 (45382239)|SYSTEM_METHOD_EXIT|[1]|UserInfo
+17:57:30.0 (45393741)|METHOD_ENTRY|[2266]||System.UserInfo.getUserId()
+17:57:30.0 (45427179)|METHOD_EXIT|[2266]||System.UserInfo.getUserId()
+17:57:30.0 (45433419)|HEAP_ALLOCATE|[2266]|Bytes:31
+17:57:30.0 (45642947)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x2c628524","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (45685926)|HEAP_ALLOCATE|[2266]|Bytes:22
+17:57:30.0 (45706964)|HEAP_ALLOCATE|[2266]|Bytes:186
+17:57:30.0 (45713615)|VARIABLE_SCOPE_BEGIN|[2266]|hasSeenQuery|String|false|false
+17:57:30.0 (45727860)|VARIABLE_ASSIGNMENT|[2266]|hasSeenQuery|"Select CreatedBy__c, (166 more) ..."
+17:57:30.0 (45732782)|STATEMENT_EXECUTE|[2267]
+17:57:30.0 (45735383)|HEAP_ALLOCATE|[2267]|Bytes:17
+17:57:30.0 (45744088)|HEAP_ALLOCATE|[2267]|Bytes:203
+17:57:30.0 (45761848)|USER_DEBUG|[2267]|DEBUG|Has seen query : Select CreatedBy__c, ConcernedReport__r.Name, Type__c FROM saReportDetail__c WHERE CreatedBy__c='0056F000006PtYlQAK' And ConcernedReport__r.Name='SA_Report-00000160' And Type__c = 'READ'
+17:57:30.0 (45772175)|STATEMENT_EXECUTE|[2268]
+17:57:30.0 (46877571)|SOQL_EXECUTE_BEGIN|[2268]|Aggregations:0|Select CreatedBy__c, ConcernedReport__r.Name, Type__c FROM saReportDetail__c WHERE CreatedBy__c='0056F000006PtYlQAK' And ConcernedReport__r.Name='SA_Report-00000160' And Type__c = 'READ'
+17:57:30.0 (57057927)|SOQL_EXECUTE_END|[2268]|Rows:1
+17:57:30.0 (57081791)|HEAP_ALLOCATE|[2268]|Bytes:8
+17:57:30.0 (57105503)|HEAP_ALLOCATE|[2268]|Bytes:194
+17:57:30.0 (57154426)|HEAP_ALLOCATE|[2268]|Bytes:8
+17:57:30.0 (57175270)|VARIABLE_SCOPE_BEGIN|[2268]|currentUserHasSeenReport|List<saReportDetail__c>|true|false
+17:57:30.0 (57211142)|VARIABLE_ASSIGNMENT|[2268]|currentUserHasSeenReport|[{"CreatedBy__c":"0056F000006PtYlQAK","ConcernedReport__c":"a0HN0000008VOY2MAO","Type__c":"READ","Id":"a0GN000000CvbHOMAZ","ConcernedReport__r":{"Name":"SA_Report-00000160","Id":"a0HN0000008VOY2MAO"}}]|0x441440cb
+17:57:30.0 (57220196)|STATEMENT_EXECUTE|[2269]
+17:57:30.0 (57224613)|HEAP_ALLOCATE|[2269]|Bytes:16
+17:57:30.0 (57320625)|HEAP_ALLOCATE|[2269]|Bytes:129
+17:57:30.0 (57339391)|HEAP_ALLOCATE|[2269]|Bytes:145
+17:57:30.0 (57351845)|USER_DEBUG|[2269]|DEBUG|List of Views : (saReportDetail__c:{CreatedBy__c=0056F000006PtYlQAK, ConcernedReport__c=a0HN0000008VOY2MAO, Type__c=READ, Id=a0GN000000CvbHOMAZ})
+17:57:30.0 (57432622)|STATEMENT_EXECUTE|[2270]
+17:57:30.0 (57435225)|STATEMENT_EXECUTE|[2280]
+17:57:30.0 (57438365)|HEAP_ALLOCATE|[2280]|Bytes:20
+17:57:30.0 (57455198)|USER_DEBUG|[2280]|DEBUG|Init Selected Report
+17:57:30.0 (57463587)|STATEMENT_EXECUTE|[2284]
+17:57:30.0 (57466659)|HEAP_ALLOCATE|[2284]|Bytes:271
+17:57:30.0 (57689522)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x2c628524","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (57730760)|HEAP_ALLOCATE|[2284]|Bytes:1
+17:57:30.0 (57743537)|HEAP_ALLOCATE|[2284]|Bytes:290
+17:57:30.0 (57749309)|VARIABLE_SCOPE_BEGIN|[2284]|queryStr|String|false|false
+17:57:30.0 (57762270)|VARIABLE_ASSIGNMENT|[2284]|queryStr|" SELECT Id, Name, Su (270 more) ..."
+17:57:30.0 (57772418)|STATEMENT_EXECUTE|[2285]
+17:57:30.0 (58243734)|SOQL_EXECUTE_BEGIN|[2285]|Aggregations:0| SELECT Id, Name, Subject__c, toLabel(Category__c), Process__c, Report_body__c, CreatedBy__r.DisplayedUsernameFormula__c, CreatedDate__c, AvailabilityDate__c, ApprovalRequestDatetime__c, State__C, IsNew__c, NbLike__c, NbView__c, NbCopy__c  FROM saReport__c WHERE Name = 'SA_Report-00000160'
+17:57:30.0 (68096186)|SOQL_EXECUTE_END|[2285]|Rows:1
+17:57:30.0 (68118598)|HEAP_ALLOCATE|[2285]|Bytes:8
+17:57:30.0 (68142517)|HEAP_ALLOCATE|[2285]|Bytes:638
+17:57:30.0 (68171817)|HEAP_ALLOCATE|[2285]|Bytes:8
+17:57:30.0 (68190279)|VARIABLE_SCOPE_BEGIN|[2285]|selectedReportList|List<saReport__c>|true|false
+17:57:30.0 (68263634)|VARIABLE_ASSIGNMENT|[2285]|selectedReportList|[{"Id":"a0HN0000008VOY2MAO","Name":"SA_Report-00000160","Subject__c":"Report for DML Testi (2 more) ...","Category__c":"新料金プラン","Process__c":"声掛け","Report_body__c":"1.課題/実践に至った経緯/背景 \n\n2 (86 more) ...","CreatedBy__c":"005N00000057PfOIAU","CreatedDate__c":"2018-06-06T23:51:53.000Z","AvailabilityDate__c":"2018-06-06T23:51:54.000Z","ApprovalRequestDatetime__c":"2018-06-19T07:55:22.000Z","State__c":"Publish","IsNew__c":false,"NbLike__c":0,"NbView__c":3,"NbCopy__c":0,"CreatedBy__r":{"DisplayedUsernameFormula__c":"Remy Thomas","Id":"005N00000057PfOIAU"}}]|0x507a84b7
+17:57:30.0 (68279489)|STATEMENT_EXECUTE|[2287]
+17:57:30.0 (68352094)|HEAP_ALLOCATE|[2287]|Bytes:68
+17:57:30.0 (68590955)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x2c628524","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (68667071)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0HN0000008VOY2MAO","Name":"SA_Report-00000160","Subject__c":"Report for DML Testi (2 more) ...","Category__c":"新料金プラン","Process__c":"声掛け","Report_body__c":"1.課題/実践に至った経緯/背景 \n\n2 (86 more) ...","CreatedBy__c":"005N00000057PfOIAU","CreatedDate__c":"2018-06-06T23:51:53.000Z","AvailabilityDate__c":"2018-06-06T23:51:54.000Z","ApprovalRequestDatetime__c":"2018-06-19T07:55:22.000Z","State__c":"Publish","IsNew__c":false,"NbLike__c":0,"NbView__c":3,"NbCopy__c":0,"CreatedBy__r":{"DisplayedUsernameFormula__c":"Remy Thomas","Id":"005N00000057PfOIAU"}}|0x78d00e4f
+17:57:30.0 (68727901)|VARIABLE_ASSIGNMENT|[72]|this.selectedReport|{"Id":"a0HN0000008VOY2MAO","Name":"SA_Report-00000160","Subject__c":"Report for DML Testi (2 more) ...","Category__c":"新料金プラン","Process__c":"声掛け","Report_body__c":"1.課題/実践に至った経緯/背景 \n\n2 (86 more) ...","CreatedBy__c":"005N00000057PfOIAU","CreatedDate__c":"2018-06-06T23:51:53.000Z","AvailabilityDate__c":"2018-06-06T23:51:54.000Z","ApprovalRequestDatetime__c":"2018-06-19T07:55:22.000Z","State__c":"Publish","IsNew__c":false,"NbLike__c":0,"NbView__c":3,"NbCopy__c":0,"CreatedBy__r":{"DisplayedUsernameFormula__c":"Remy Thomas","Id":"005N00000057PfOIAU"}}|0x44a6f58f
+17:57:30.0 (68747136)|STATEMENT_EXECUTE|[2290]
+17:57:30.0 (68783189)|METHOD_ENTRY|[2290]|01pN0000000aEUV|saReportCtrl.getReportDetailPageViews()
+17:57:30.0 (68808801)|VARIABLE_SCOPE_BEGIN|[2308]|this|saReportCtrl|true|false
+17:57:30.0 (69003776)|VARIABLE_ASSIGNMENT|[2308]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x78d00e4f","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (69048667)|HEAP_ALLOCATE|[2310]|Bytes:5
+17:57:30.0 (69054588)|STATEMENT_EXECUTE|[2308]
+17:57:30.0 (69056392)|STATEMENT_EXECUTE|[2310]
+17:57:30.0 (69060213)|HEAP_ALLOCATE|[2310]|Bytes:29
+17:57:30.0 (69081428)|USER_DEBUG|[2310]|DEBUG|Run: getReportDetailPageViews
+17:57:30.0 (69091693)|STATEMENT_EXECUTE|[2313]
+17:57:30.0 (69094741)|HEAP_ALLOCATE|[2313]|Bytes:166
+17:57:30.0 (69303661)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x78d00e4f","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (69343950)|HEAP_ALLOCATE|[2313]|Bytes:86
+17:57:30.0 (69356149)|HEAP_ALLOCATE|[2313]|Bytes:270
+17:57:30.0 (69362052)|VARIABLE_SCOPE_BEGIN|[2313]|queryStr|String|false|false
+17:57:30.0 (69374391)|VARIABLE_ASSIGNMENT|[2313]|queryStr|" SELECT Name, Create (250 more) ..."
+17:57:30.0 (69379537)|STATEMENT_EXECUTE|[2314]
+17:57:30.0 (69382073)|HEAP_ALLOCATE|[2314]|Bytes:19
+17:57:30.0 (69387837)|HEAP_ALLOCATE|[2314]|Bytes:289
+17:57:30.0 (69404152)|USER_DEBUG|[2314]|DEBUG|Requete Get Good :  SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000160' And (Type__c='LIKE' OR Type__c='VERY_LIKE') ORDER BY CreatedDate__c Desc NULLS LAST 
+17:57:30.0 (69414543)|STATEMENT_EXECUTE|[2315]
+17:57:30.0 (69792435)|SOQL_EXECUTE_BEGIN|[2315]|Aggregations:0| SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000160' And (Type__c='LIKE' OR Type__c='VERY_LIKE') ORDER BY CreatedDate__c Desc NULLS LAST 
+17:57:30.0 (74485103)|SOQL_EXECUTE_END|[2315]|Rows:0
+17:57:30.0 (74509815)|HEAP_ALLOCATE|[2315]|Bytes:4
+17:57:30.0 (74524348)|HEAP_ALLOCATE|[2315]|Bytes:0
+17:57:30.0 (74550169)|HEAP_ALLOCATE|[2315]|Bytes:4
+17:57:30.0 (74780219)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x31ca7109","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x78d00e4f","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (74819348)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|[]|0x347ee5eb
+17:57:30.0 (74835325)|VARIABLE_ASSIGNMENT|[163]|this.reportGoodViews|[]|0x44a6f58f
+17:57:30.0 (74846288)|STATEMENT_EXECUTE|[2318]
+17:57:30.0 (75048735)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x78d00e4f","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (75088580)|HEAP_ALLOCATE|[2318]|Bytes:61
+17:57:30.0 (75098732)|HEAP_ALLOCATE|[2318]|Bytes:245
+17:57:30.0 (75109140)|VARIABLE_ASSIGNMENT|[2318]|queryStr|" SELECT Name, Create (225 more) ..."
+17:57:30.0 (75114869)|STATEMENT_EXECUTE|[2319]
+17:57:30.0 (75117248)|HEAP_ALLOCATE|[2319]|Bytes:18
+17:57:30.0 (75122891)|HEAP_ALLOCATE|[2319]|Bytes:263
+17:57:30.0 (75148632)|USER_DEBUG|[2319]|DEBUG|Requete Get Bad :  SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000160' And Type__c='COPY' ORDER BY CreatedDate__c Desc NULLS LAST 
+17:57:30.0 (75159398)|STATEMENT_EXECUTE|[2320]
+17:57:30.0 (75468271)|SOQL_EXECUTE_BEGIN|[2320]|Aggregations:0| SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000160' And Type__c='COPY' ORDER BY CreatedDate__c Desc NULLS LAST 
+17:57:30.0 (79747116)|SOQL_EXECUTE_END|[2320]|Rows:0
+17:57:30.0 (79770591)|HEAP_ALLOCATE|[2320]|Bytes:4
+17:57:30.0 (79784495)|HEAP_ALLOCATE|[2320]|Bytes:0
+17:57:30.0 (79831335)|HEAP_ALLOCATE|[2320]|Bytes:4
+17:57:30.0 (80068956)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x4ce33a80","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x78d00e4f","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (80108996)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|[]|0x7ebf3912
+17:57:30.0 (80125211)|VARIABLE_ASSIGNMENT|[164]|this.reportManagedViews|[]|0x44a6f58f
+17:57:30.0 (80149262)|METHOD_EXIT|[2290]|01pN0000000aEUV|saReportCtrl.getReportDetailPageViews()
+17:57:30.0 (80156343)|STATEMENT_EXECUTE|[2293]
+17:57:30.0 (80183716)|METHOD_ENTRY|[2293]|01pN0000000aEUV|saReportCtrl.getReportDetailPageComment()
+17:57:30.0 (80211011)|VARIABLE_SCOPE_BEGIN|[2329]|this|saReportCtrl|true|false
+17:57:30.0 (80406933)|VARIABLE_ASSIGNMENT|[2329]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x7ebf3912","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x78d00e4f","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (80447221)|HEAP_ALLOCATE|[2331]|Bytes:5
+17:57:30.0 (80453740)|STATEMENT_EXECUTE|[2329]
+17:57:30.0 (80455742)|STATEMENT_EXECUTE|[2331]
+17:57:30.0 (80458894)|HEAP_ALLOCATE|[2331]|Bytes:31
+17:57:30.0 (80480015)|USER_DEBUG|[2331]|DEBUG|Run: getReportDetailPageComment
+17:57:30.0 (80489536)|STATEMENT_EXECUTE|[2334]
+17:57:30.0 (80685934)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x7ebf3912","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x78d00e4f","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (80724108)|HEAP_ALLOCATE|[2334]|Bytes:66
+17:57:30.0 (80733825)|HEAP_ALLOCATE|[2334]|Bytes:250
+17:57:30.0 (80739159)|VARIABLE_SCOPE_BEGIN|[2334]|queryStr|String|false|false
+17:57:30.0 (80751595)|VARIABLE_ASSIGNMENT|[2334]|queryStr|" SELECT Name, Create (230 more) ..."
+17:57:30.0 (80755855)|STATEMENT_EXECUTE|[2335]
+17:57:30.0 (81079676)|SOQL_EXECUTE_BEGIN|[2335]|Aggregations:0| SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000160' And Type__c LIKE '%コメント%' ORDER BY CreatedDate__c Asc NULLS LAST
+17:57:30.0 (85354879)|SOQL_EXECUTE_END|[2335]|Rows:0
+17:57:30.0 (85378068)|HEAP_ALLOCATE|[2335]|Bytes:4
+17:57:30.0 (85392211)|HEAP_ALLOCATE|[2335]|Bytes:0
+17:57:30.0 (85416994)|HEAP_ALLOCATE|[2335]|Bytes:4
+17:57:30.0 (85647385)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1f3a0b01","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x7ebf3912","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x78d00e4f","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (85687237)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|[]|0x1e51243
+17:57:30.0 (85703486)|VARIABLE_ASSIGNMENT|[165]|this.reportComments|[]|0x44a6f58f
+17:57:30.0 (85715272)|STATEMENT_EXECUTE|[2337]
+17:57:30.0 (85719874)|HEAP_ALLOCATE|[2337]|Bytes:281
+17:57:30.0 (85744276)|HEAP_ALLOCATE|[2337]|Bytes:4
+17:57:30.0 (85758163)|HEAP_ALLOCATE|[2337]|Bytes:7
+17:57:30.0 (85964011)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1e51243","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x7ebf3912","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x78d00e4f","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (86376918)|SOQL_EXECUTE_BEGIN|[2337]|Aggregations:0|SELECT Id, Name, Subject__c, Category__c, Process__c, Report_body__c, CreatedBy__c, CreatedBy__r.DisplayedUsernameFormula__c, CreatedDate__c, AvailabilityDate__c, ApprovalRequestDatetime__c, State__c, IsNew__c, NbLike__c, NbView__c, NbCopy__c FROM saReport__c WHERE Name = :tmpVar1
+17:57:30.0 (93417887)|SOQL_EXECUTE_END|[2337]|Rows:1
+17:57:30.0 (93440445)|HEAP_ALLOCATE|[2337]|Bytes:8
+17:57:30.0 (93459005)|HEAP_ALLOCATE|[2337]|Bytes:638
+17:57:30.0 (93487586)|HEAP_ALLOCATE|[2337]|Bytes:8
+17:57:30.0 (93515050)|HEAP_ALLOCATE|[2342]|Bytes:68
+17:57:30.0 (93738972)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1e51243","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x7ebf3912","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x78d00e4f","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (93828487)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0HN0000008VOY2MAO","Name":"SA_Report-00000160","Subject__c":"Report for DML Testi (2 more) ...","Category__c":"新料金プラン","Process__c":"声掛け","Report_body__c":"1.課題/実践に至った経緯/背景 \n\n2 (86 more) ...","CreatedBy__c":"005N00000057PfOIAU","CreatedDate__c":"2018-06-06T23:51:53.000Z","AvailabilityDate__c":"2018-06-06T23:51:54.000Z","ApprovalRequestDatetime__c":"2018-06-19T07:55:22.000Z","State__c":"Publish","IsNew__c":false,"NbLike__c":0,"NbView__c":3,"NbCopy__c":0,"CreatedBy__r":{"DisplayedUsernameFormula__c":"Remy Thomas","Id":"005N00000057PfOIAU"}}|0x7da56afe
+17:57:30.0 (93884703)|VARIABLE_ASSIGNMENT|[72]|this.selectedReport|{"Id":"a0HN0000008VOY2MAO","Name":"SA_Report-00000160","Subject__c":"Report for DML Testi (2 more) ...","Category__c":"新料金プラン","Process__c":"声掛け","Report_body__c":"1.課題/実践に至った経緯/背景 \n\n2 (86 more) ...","CreatedBy__c":"005N00000057PfOIAU","CreatedDate__c":"2018-06-06T23:51:53.000Z","AvailabilityDate__c":"2018-06-06T23:51:54.000Z","ApprovalRequestDatetime__c":"2018-06-19T07:55:22.000Z","State__c":"Publish","IsNew__c":false,"NbLike__c":0,"NbView__c":3,"NbCopy__c":0,"CreatedBy__r":{"DisplayedUsernameFormula__c":"Remy Thomas","Id":"005N00000057PfOIAU"}}|0x44a6f58f
+17:57:30.0 (93913262)|METHOD_EXIT|[2293]|01pN0000000aEUV|saReportCtrl.getReportDetailPageComment()
+17:57:30.0 (93920269)|STATEMENT_EXECUTE|[2296]
+17:57:30.0 (94167763)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1e51243","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x7ebf3912","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x7da56afe","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (94204993)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|""
+17:57:30.0 (94218535)|VARIABLE_ASSIGNMENT|[166]|this.newCommentValue|""|0x44a6f58f
+17:57:30.0 (94229048)|STATEMENT_EXECUTE|[2299]
+17:57:30.0 (94264976)|METHOD_ENTRY|[2299]|01pN0000000aEUV|saReportCtrl.initSelectedViewButton()
+17:57:30.0 (94286458)|VARIABLE_SCOPE_BEGIN|[2351]|this|saReportCtrl|true|false
+17:57:30.0 (94485942)|VARIABLE_ASSIGNMENT|[2351]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1e51243","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x7ebf3912","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x7da56afe","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (94529831)|HEAP_ALLOCATE|[2353]|Bytes:5
+17:57:30.0 (94536735)|STATEMENT_EXECUTE|[2351]
+17:57:30.0 (94538684)|STATEMENT_EXECUTE|[2353]
+17:57:30.0 (94541768)|HEAP_ALLOCATE|[2353]|Bytes:27
+17:57:30.0 (94568609)|USER_DEBUG|[2353]|DEBUG|Run: initSelectedViewButton
+17:57:30.0 (94578615)|STATEMENT_EXECUTE|[2355]
+17:57:30.0 (94793224)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1e51243","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x7ebf3912","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x7da56afe","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (94829232)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|false
+17:57:30.0 (94837476)|HEAP_ALLOCATE|[78]|Bytes:5
+17:57:30.0 (94847368)|VARIABLE_ASSIGNMENT|[78]|this.isGoodSelected|false|0x44a6f58f
+17:57:30.0 (94857879)|STATEMENT_EXECUTE|[2356]
+17:57:30.0 (95067060)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1e51243","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x7ebf3912","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x7da56afe","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (95102013)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|false
+17:57:30.0 (95109499)|HEAP_ALLOCATE|[79]|Bytes:5
+17:57:30.0 (95118447)|VARIABLE_ASSIGNMENT|[79]|this.isVeryGoodSelected|false|0x44a6f58f
+17:57:30.0 (95127934)|STATEMENT_EXECUTE|[2357]
+17:57:30.0 (95340158)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1e51243","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x7ebf3912","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x7da56afe","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (95376272)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|false
+17:57:30.0 (95382582)|HEAP_ALLOCATE|[80]|Bytes:5
+17:57:30.0 (95391695)|VARIABLE_ASSIGNMENT|[80]|this.isCopySelected|false|0x44a6f58f
+17:57:30.0 (95401043)|STATEMENT_EXECUTE|[2360]
+17:57:30.0 (95591305)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1e51243","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x7ebf3912","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x7da56afe","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (95628670)|HEAP_ALLOCATE|[2360]|Bytes:20
+17:57:30.0 (95640205)|METHOD_ENTRY|[2360]||System.UserInfo.getUserId()
+17:57:30.0 (95659655)|METHOD_EXIT|[2360]||System.UserInfo.getUserId()
+17:57:30.0 (95664233)|HEAP_ALLOCATE|[2360]|Bytes:44
+17:57:30.0 (95677073)|HEAP_ALLOCATE|[2360]|Bytes:266
+17:57:30.0 (95683160)|VARIABLE_SCOPE_BEGIN|[2360]|queryStr|String|false|false
+17:57:30.0 (95695910)|VARIABLE_ASSIGNMENT|[2360]|queryStr|" SELECT Name, Create (246 more) ..."
+17:57:30.0 (95701426)|STATEMENT_EXECUTE|[2361]
+17:57:30.0 (95703819)|HEAP_ALLOCATE|[2361]|Bytes:25
+17:57:30.0 (95711086)|HEAP_ALLOCATE|[2361]|Bytes:291
+17:57:30.0 (95729422)|USER_DEBUG|[2361]|DEBUG|Requete Get Engagement :  SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000160' And CreatedBy__c='0056F000006PtYlQAK' And Type__c!='COMMENT' And Type__c!='READ'
+17:57:30.0 (95740645)|STATEMENT_EXECUTE|[2362]
+17:57:30.0 (96104196)|SOQL_EXECUTE_BEGIN|[2362]|Aggregations:0| SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000160' And CreatedBy__c='0056F000006PtYlQAK' And Type__c!='COMMENT' And Type__c!='READ'
+17:57:30.0 (101033311)|SOQL_EXECUTE_END|[2362]|Rows:0
+17:57:30.0 (101057211)|HEAP_ALLOCATE|[2362]|Bytes:4
+17:57:30.0 (101071871)|HEAP_ALLOCATE|[2362]|Bytes:0
+17:57:30.0 (101098788)|HEAP_ALLOCATE|[2362]|Bytes:4
+17:57:30.0 (101115159)|VARIABLE_SCOPE_BEGIN|[2362]|listOfViews|List<saReportDetail__c>|true|false
+17:57:30.0 (101131789)|VARIABLE_ASSIGNMENT|[2362]|listOfViews|[]|0x7973ba86
+17:57:30.0 (101143286)|STATEMENT_EXECUTE|[2364]
+17:57:30.0 (101147247)|HEAP_ALLOCATE|[2364]|Bytes:19
+17:57:30.0 (101157207)|HEAP_ALLOCATE|[2364]|Bytes:285
+17:57:30.0 (101179564)|USER_DEBUG|[2364]|DEBUG|Get View request :  SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name='SA_Report-00000160' And CreatedBy__c='0056F000006PtYlQAK' And Type__c!='COMMENT' And Type__c!='READ'
+17:57:30.0 (101191412)|STATEMENT_EXECUTE|[2365]
+17:57:30.0 (101194770)|HEAP_ALLOCATE|[2365]|Bytes:18
+17:57:30.0 (101236458)|HEAP_ALLOCATE|[2365]|Bytes:2
+17:57:30.0 (101250133)|HEAP_ALLOCATE|[2365]|Bytes:20
+17:57:30.0 (101258641)|USER_DEBUG|[2365]|DEBUG|Get View result : ()
+17:57:30.0 (101289450)|STATEMENT_EXECUTE|[2368]
+17:57:30.0 (101297860)|METHOD_EXIT|[2299]|01pN0000000aEUV|saReportCtrl.initSelectedViewButton()
+17:57:30.0 (101307183)|METHOD_EXIT|[2114]|01pN0000000aEUV|saReportCtrl.initSelectedReportDetails()
+17:57:30.0 (101312140)|STATEMENT_EXECUTE|[2116]
+17:57:30.0 (101317205)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (130093291)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (130149239)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:284
+17:57:30.0 (130169217)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:160
+17:57:30.0 (130186092)|METHOD_ENTRY|[1]|01pN0000000Mill|auMainTopCompCtrl.auMainTopCompCtrl()
+17:57:30.0 (130192967)|STATEMENT_EXECUTE|[1]
+17:57:30.0 (130199422)|STATEMENT_EXECUTE|[1]
+17:57:30.0 (130200971)|STATEMENT_EXECUTE|[3]
+17:57:30.0 (130207749)|HEAP_ALLOCATE|[3]|Bytes:4
+17:57:30.0 (130227441)|VARIABLE_ASSIGNMENT|[3]|auMainTopCompCtrl.TYPE_SCREEN_SWITCH|0
+17:57:30.0 (130232938)|STATEMENT_EXECUTE|[4]
+17:57:30.0 (130236078)|HEAP_ALLOCATE|[4]|Bytes:4
+17:57:30.0 (130244060)|VARIABLE_ASSIGNMENT|[4]|auMainTopCompCtrl.TYPE_SCREEN_STPD_EVENT|11
+17:57:30.0 (130248599)|STATEMENT_EXECUTE|[5]
+17:57:30.0 (130250897)|HEAP_ALLOCATE|[5]|Bytes:4
+17:57:30.0 (130257532)|VARIABLE_ASSIGNMENT|[5]|auMainTopCompCtrl.TYPE_SCREEN_STPD_TIMELINE|12
+17:57:30.0 (130261654)|STATEMENT_EXECUTE|[6]
+17:57:30.0 (130263759)|HEAP_ALLOCATE|[6]|Bytes:4
+17:57:30.0 (130271349)|VARIABLE_ASSIGNMENT|[6]|auMainTopCompCtrl.TYPE_SCREEN_STPD_SCREEN|13
+17:57:30.0 (130275515)|STATEMENT_EXECUTE|[7]
+17:57:30.0 (130277887)|HEAP_ALLOCATE|[7]|Bytes:4
+17:57:30.0 (130283966)|VARIABLE_ASSIGNMENT|[7]|auMainTopCompCtrl.TYPE_SCREEN_CX_SCREEN|21
+17:57:30.0 (130287936)|STATEMENT_EXECUTE|[8]
+17:57:30.0 (130289935)|HEAP_ALLOCATE|[8]|Bytes:4
+17:57:30.0 (130295322)|VARIABLE_ASSIGNMENT|[8]|auMainTopCompCtrl.TYPE_SCREEN_CX_TIMELINE|22
+17:57:30.0 (130298983)|STATEMENT_EXECUTE|[9]
+17:57:30.0 (130301431)|HEAP_ALLOCATE|[9]|Bytes:4
+17:57:30.0 (130306635)|VARIABLE_ASSIGNMENT|[9]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE|31
+17:57:30.0 (130310178)|STATEMENT_EXECUTE|[10]
+17:57:30.0 (130312466)|HEAP_ALLOCATE|[10]|Bytes:4
+17:57:30.0 (130317973)|VARIABLE_ASSIGNMENT|[10]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE_LIST|32
+17:57:30.0 (130321826)|STATEMENT_EXECUTE|[11]
+17:57:30.0 (130323996)|HEAP_ALLOCATE|[11]|Bytes:4
+17:57:30.0 (130330405)|VARIABLE_ASSIGNMENT|[11]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_DASHBOARD|41
+17:57:30.0 (130334389)|STATEMENT_EXECUTE|[12]
+17:57:30.0 (130336409)|HEAP_ALLOCATE|[12]|Bytes:4
+17:57:30.0 (130342382)|VARIABLE_ASSIGNMENT|[12]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_LIST|42
+17:57:30.0 (130346155)|STATEMENT_EXECUTE|[13]
+17:57:30.0 (130348170)|HEAP_ALLOCATE|[13]|Bytes:4
+17:57:30.0 (130355036)|VARIABLE_ASSIGNMENT|[13]|auMainTopCompCtrl.TYPE_SCREEN_SA_MESSAGES|51
+17:57:30.0 (130358807)|STATEMENT_EXECUTE|[14]
+17:57:30.0 (130360795)|HEAP_ALLOCATE|[14]|Bytes:4
+17:57:30.0 (130367054)|VARIABLE_ASSIGNMENT|[14]|auMainTopCompCtrl.TYPE_SCREEN_SA_REPORTS|52
+17:57:30.0 (130371269)|STATEMENT_EXECUTE|[15]
+17:57:30.0 (130373487)|HEAP_ALLOCATE|[15]|Bytes:4
+17:57:30.0 (130380182)|VARIABLE_ASSIGNMENT|[15]|auMainTopCompCtrl.TYPE_SCREEN_SA_CHATTER|53
+17:57:30.0 (130384230)|STATEMENT_EXECUTE|[16]
+17:57:30.0 (130386262)|HEAP_ALLOCATE|[16]|Bytes:4
+17:57:30.0 (130392088)|VARIABLE_ASSIGNMENT|[16]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORT|54
+17:57:30.0 (130395905)|STATEMENT_EXECUTE|[17]
+17:57:30.0 (130397974)|HEAP_ALLOCATE|[17]|Bytes:4
+17:57:30.0 (130404538)|VARIABLE_ASSIGNMENT|[17]|auMainTopCompCtrl.TYPE_SCREEN_SA_ENQUETE|55
+17:57:30.0 (130409042)|STATEMENT_EXECUTE|[18]
+17:57:30.0 (130411252)|HEAP_ALLOCATE|[18]|Bytes:4
+17:57:30.0 (130417087)|VARIABLE_ASSIGNMENT|[18]|auMainTopCompCtrl.TYPE_SCREEN_SA_DOCUMENTS|56
+17:57:30.0 (130420905)|STATEMENT_EXECUTE|[19]
+17:57:30.0 (130423072)|HEAP_ALLOCATE|[19]|Bytes:4
+17:57:30.0 (130439578)|VARIABLE_ASSIGNMENT|[19]|auMainTopCompCtrl.TYPE_SCREEN_SA_RANKING|57
+17:57:30.0 (130444349)|STATEMENT_EXECUTE|[20]
+17:57:30.0 (130446388)|HEAP_ALLOCATE|[20]|Bytes:4
+17:57:30.0 (130452647)|VARIABLE_ASSIGNMENT|[20]|auMainTopCompCtrl.TYPE_SCREEN_SA_LINKS|58
+17:57:30.0 (130456390)|STATEMENT_EXECUTE|[21]
+17:57:30.0 (130458346)|HEAP_ALLOCATE|[21]|Bytes:4
+17:57:30.0 (130464158)|VARIABLE_ASSIGNMENT|[21]|auMainTopCompCtrl.TYPE_SCREEN_SA_USRSETTINGS|59
+17:57:30.0 (130468131)|STATEMENT_EXECUTE|[22]
+17:57:30.0 (130470216)|HEAP_ALLOCATE|[22]|Bytes:4
+17:57:30.0 (130475944)|VARIABLE_ASSIGNMENT|[22]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORTLIST|60
+17:57:30.0 (130479424)|STATEMENT_EXECUTE|[23]
+17:57:30.0 (130481758)|HEAP_ALLOCATE|[23]|Bytes:4
+17:57:30.0 (130487759)|VARIABLE_ASSIGNMENT|[23]|auMainTopCompCtrl.TYPE_SCREEN_SA_TODO|61
+17:57:30.0 (130491827)|STATEMENT_EXECUTE|[24]
+17:57:30.0 (130493988)|HEAP_ALLOCATE|[24]|Bytes:4
+17:57:30.0 (130499199)|VARIABLE_ASSIGNMENT|[24]|auMainTopCompCtrl.TYPE_SCREEN_HONBU_DIRECT|71
+17:57:30.0 (130502916)|STATEMENT_EXECUTE|[25]
+17:57:30.0 (130504932)|HEAP_ALLOCATE|[25]|Bytes:4
+17:57:30.0 (130509986)|VARIABLE_ASSIGNMENT|[25]|auMainTopCompCtrl.TYPE_SCREEN_ACCOUNT_LIST|81
+17:57:30.0 (130513615)|STATEMENT_EXECUTE|[26]
+17:57:30.0 (130515536)|HEAP_ALLOCATE|[26]|Bytes:4
+17:57:30.0 (130520539)|VARIABLE_ASSIGNMENT|[26]|auMainTopCompCtrl.TYPE_SCREEN_ACTIVITY_LIST|82
+17:57:30.0 (130524546)|STATEMENT_EXECUTE|[27]
+17:57:30.0 (130526769)|HEAP_ALLOCATE|[27]|Bytes:4
+17:57:30.0 (130532540)|VARIABLE_ASSIGNMENT|[27]|auMainTopCompCtrl.TYPE_SCREEN_FILE_LIST|83
+17:57:30.0 (130542168)|METHOD_EXIT|[1]|auMainTopCompCtrl
+17:57:30.0 (130549588)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:57:30.0 (130558477)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iCountComments|null|0x18808ec8
+17:57:30.0 (130627053)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (130642987)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:57:30.0 (130651179)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iCountLikes|null|0x18808ec8
+17:57:30.0 (130730197)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (130783938)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (130793476)|VARIABLE_SCOPE_BEGIN|[172]|this|saReportCtrl|true|false
+17:57:30.0 (131043926)|VARIABLE_ASSIGNMENT|[172]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1e51243","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x7ebf3912","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x7da56afe","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (131086589)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (131098891)|HEAP_ALLOCATE|[172]|Bytes:5
+17:57:30.0 (131104518)|STATEMENT_EXECUTE|[172]
+17:57:30.0 (131106441)|STATEMENT_EXECUTE|[172]
+17:57:30.0 (131114176)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (131177528)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (131196317)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+17:57:30.0 (131201032)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:57:30.0 (131210398)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iTypeOfScreen|52|0x18808ec8
+17:57:30.0 (131331132)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (131368932)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:57:30.0 (131376576)|VARIABLE_SCOPE_BEGIN|[88]|this|auMainTopCompCtrl|true|false
+17:57:30.0 (131417281)|VARIABLE_ASSIGNMENT|[88]|this|{"currentUser":"0x6544804e","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x18808ec8
+17:57:30.0 (131428432)|STATEMENT_EXECUTE|[88]
+17:57:30.0 (131430437)|STATEMENT_EXECUTE|[89]
+17:57:30.0 (131482810)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x6544804e","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x18808ec8
+17:57:30.0 (131534396)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x6544804e","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x18808ec8
+17:57:30.0 (131553259)|HEAP_ALLOCATE|[89]|Bytes:5
+17:57:30.0 (131638128)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (131671365)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:57:30.0 (131678303)|VARIABLE_SCOPE_BEGIN|[106]|this|auMainTopCompCtrl|true|false
+17:57:30.0 (131711613)|VARIABLE_ASSIGNMENT|[106]|this|{"currentUser":"0x6544804e","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x18808ec8
+17:57:30.0 (131721302)|STATEMENT_EXECUTE|[106]
+17:57:30.0 (131723258)|STATEMENT_EXECUTE|[107]
+17:57:30.0 (131759299)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x6544804e","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x18808ec8
+17:57:30.0 (131775580)|HEAP_ALLOCATE|[107]|Bytes:5
+17:57:30.0 (131839928)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (131869465)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:57:30.0 (131876465)|VARIABLE_SCOPE_BEGIN|[110]|this|auMainTopCompCtrl|true|false
+17:57:30.0 (131910009)|VARIABLE_ASSIGNMENT|[110]|this|{"currentUser":"0x6544804e","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x18808ec8
+17:57:30.0 (131919599)|STATEMENT_EXECUTE|[110]
+17:57:30.0 (131921458)|STATEMENT_EXECUTE|[111]
+17:57:30.0 (131956738)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x6544804e","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x18808ec8
+17:57:30.0 (131972805)|HEAP_ALLOCATE|[111]|Bytes:5
+17:57:30.0 (132032454)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (132061389)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+17:57:30.0 (132068247)|VARIABLE_SCOPE_BEGIN|[114]|this|auMainTopCompCtrl|true|false
+17:57:30.0 (132101024)|VARIABLE_ASSIGNMENT|[114]|this|{"currentUser":"0x6544804e","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x18808ec8
+17:57:30.0 (132110653)|STATEMENT_EXECUTE|[114]
+17:57:30.0 (132112782)|STATEMENT_EXECUTE|[115]
+17:57:30.0 (132152591)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x6544804e","isSAUser":false,"iTypeOfScreen":52,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x18808ec8
+17:57:30.0 (132168432)|HEAP_ALLOCATE|[115]|Bytes:5
+17:57:30.0 (132353861)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (132413685)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (132795936)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (133784930)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (133900648)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (133966116)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (134025495)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (134189672)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (134277258)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (134352832)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (134681051)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (134721393)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (134729229)|VARIABLE_SCOPE_BEGIN|[36]|this|saReportCtrl|true|false
+17:57:30.0 (134932603)|VARIABLE_ASSIGNMENT|[36]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1e51243","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x7ebf3912","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x7da56afe","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (134974691)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (134983293)|HEAP_ALLOCATE|[36]|Bytes:5
+17:57:30.0 (134989006)|STATEMENT_EXECUTE|[36]
+17:57:30.0 (134991006)|STATEMENT_EXECUTE|[36]
+17:57:30.0 (134996228)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (135116871)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (135157813)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (135165403)|VARIABLE_SCOPE_BEGIN|[37]|this|saReportCtrl|true|false
+17:57:30.0 (135365772)|VARIABLE_ASSIGNMENT|[37]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1e51243","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x7ebf3912","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x7da56afe","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (135404542)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (135412312)|HEAP_ALLOCATE|[37]|Bytes:5
+17:57:30.0 (135417544)|STATEMENT_EXECUTE|[37]
+17:57:30.0 (135419361)|STATEMENT_EXECUTE|[37]
+17:57:30.0 (135424367)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (135539698)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (135573353)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (135580396)|VARIABLE_SCOPE_BEGIN|[39]|this|saReportCtrl|true|false
+17:57:30.0 (135780631)|VARIABLE_ASSIGNMENT|[39]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1e51243","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x7ebf3912","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x7da56afe","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (135818485)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (135825478)|HEAP_ALLOCATE|[39]|Bytes:5
+17:57:30.0 (135831141)|STATEMENT_EXECUTE|[39]
+17:57:30.0 (135833089)|STATEMENT_EXECUTE|[39]
+17:57:30.0 (135837214)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (135988993)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (136022306)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (136030101)|VARIABLE_SCOPE_BEGIN|[38]|this|saReportCtrl|true|false
+17:57:30.0 (136235838)|VARIABLE_ASSIGNMENT|[38]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1e51243","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x7ebf3912","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x7da56afe","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (136274465)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (136281818)|HEAP_ALLOCATE|[38]|Bytes:5
+17:57:30.0 (136286988)|STATEMENT_EXECUTE|[38]
+17:57:30.0 (136288925)|STATEMENT_EXECUTE|[38]
+17:57:30.0 (136292932)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (139852802)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (146245199)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (146287911)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (146494951)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1e51243","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x7ebf3912","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x7da56afe","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (146536130)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (146544491)|HEAP_ALLOCATE|[46]|Bytes:5
+17:57:30.0 (146549738)|STATEMENT_EXECUTE|[46]
+17:57:30.0 (146551703)|STATEMENT_EXECUTE|[46]
+17:57:30.0 (146626849)|HEAP_ALLOCATE|[46]|Bytes:64
+17:57:30.0 (146639010)|SYSTEM_METHOD_ENTRY|[1]|Url.Url()
+17:57:30.0 (146643255)|STATEMENT_EXECUTE|[1]
+17:57:30.0 (146649254)|SYSTEM_METHOD_EXIT|[1]|Url
+17:57:30.0 (146661041)|METHOD_ENTRY|[46]||System.Url.getSalesforceBaseUrl()
+17:57:30.0 (146840439)|METHOD_EXIT|[46]||System.Url.getSalesforceBaseUrl()
+17:57:30.0 (146859020)|METHOD_ENTRY|[46]||System.Url.toExternalForm()
+17:57:30.0 (146906487)|METHOD_EXIT|[46]||System.Url.toExternalForm()
+17:57:30.0 (146913274)|HEAP_ALLOCATE|[46]|Bytes:16
+17:57:30.0 (146927030)|HEAP_ALLOCATE|[46]|Bytes:60
+17:57:30.0 (146934418)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (147932058)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (147973463)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:376
+17:57:30.0 (148187787)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","basicSearchCategory":" ","basicSearchCount":"20","basicSearchDateEnd":"","basicSearchDateStart":"","basicSearchKeywords":"","basicSearchRole1":" ","basicSearchRole2":" ","basicSearchRole3":" ","basicSearchSort":" ","categoryDataOptions":"0x5e7353c","countDataOptions":"0x6b371415","createBody":"","createdReportId":"","createSubject":"","currentUser":"0x1d647ce9","draftBody":"","draftSubject":"","isApprover":false,"isCopySelected":false,"isGoodSelected":false,"isVeryGoodSelected":false,"latestBasicSearchCategory":"新料金プラン","latestBasicSearchCount":"20","latestBasicSearchDateEnd":"","latestBasicSearchDateStart":"","latestBasicSearchKeywords":"","latestBasicSearchRole1":"","latestBasicSearchRole2":"","latestBasicSearchRole3":"","latestBasicSearchSort":"公開日時","latestMySearchCount":"","latestMySearchDateEnd":"","latestMySearchDateStart":"","latestMySearchKeywords":"","latestMySearchState":"","latestPendingCount":"","latestPendingDateEnd":"","latestPendingDateStart":"","latestPendingKeywords":"","latestSelectedProcess":"","listOfCategory":"0x3ddbca00","listOfSAReports":"0x66d25086","lsAttachments":"0x5aa0d7b5","lsRolesFull":"0x9e4e748","mapOfCategory":"0x37d951a9","messageError":"","messageSubmissionComplete":"","mySearchDateEnd":"","mySearchDateStart":"","mySearchKeywords":"","newCommentValue":"","pendingDateEnd":"","pendingDateStart":"","pendingKeywords":"","processDataOptions":"0x43fb71b4","remandBody":"","remandSubject":"","reportComments":"0x1e51243","reportGoodViews":"0x347ee5eb","reportManagedViews":"0x7ebf3912","reportRendered":false,"reportState":"","roleLevel1DataOptions":"0x548d9479","roleLevel2DataOptions":"0x1b20ffea","roleLevel3DataOptions":"0x790097be","searchCategoryLabel":"新料金プラン","searchCountLabel":"20件","searchStateLabel":"","selectedCategoryName":"新料金プラン","selectedProcess":"","selectedReport":"0x7da56afe","selectedReportName":"SA_Report-00000160","selectedView":"","sortDataOptions":"0x1474e28d","stateDataOptions":"0x8378046"}|0x44a6f58f
+17:57:30.0 (148227540)|SYSTEM_MODE_ENTER|false
+17:57:30.0 (148235922)|HEAP_ALLOCATE|[177]|Bytes:5
+17:57:30.0 (148241495)|STATEMENT_EXECUTE|[176]
+17:57:30.0 (148243417)|STATEMENT_EXECUTE|[177]
+17:57:30.0 (148256978)|METHOD_ENTRY|[177]||System.UserInfo.getTimeZone()
+17:57:30.0 (148447217)|METHOD_EXIT|[177]||System.UserInfo.getTimeZone()
+17:57:30.0 (148455582)|VARIABLE_SCOPE_BEGIN|[177]|tz|System.TimeZone|true|false
+17:57:30.0 (148479515)|VARIABLE_ASSIGNMENT|[177]|tz|{"delegate":"0x396e568e"}|0x468d10cb
+17:57:30.0 (148487046)|STATEMENT_EXECUTE|[179]
+17:57:30.0 (148533063)|HEAP_ALLOCATE|[179]|Bytes:56
+17:57:30.0 (148555638)|METHOD_ENTRY|[179]||System.TimeZone.getOffset(Datetime)
+17:57:30.0 (148582091)|METHOD_EXIT|[179]||System.TimeZone.getOffset(Datetime)
+17:57:30.0 (148606805)|HEAP_ALLOCATE|[179]|Bytes:28
+17:57:30.0 (148615651)|HEAP_ALLOCATE|[179]|Bytes:28
+17:57:30.0 (148620486)|HEAP_ALLOCATE|[179]|Bytes:4
+17:57:30.0 (148629613)|HEAP_ALLOCATE|[179]|Bytes:28
+17:57:30.0 (148666284)|HEAP_ALLOCATE|[179]|Bytes:28
+17:57:30.0 (148734868)|HEAP_ALLOCATE|[179]|Bytes:28
+17:57:30.0 (148739432)|HEAP_ALLOCATE|[179]|Bytes:28
+17:57:30.0 (148755512)|HEAP_ALLOCATE|[179]|Bytes:12
+17:57:30.0 (148762759)|SYSTEM_MODE_EXIT|false
+17:57:30.0 (150960230)|SYSTEM_MODE_ENTER|true
+17:57:30.0 (164471064)|VF_SERIALIZE_VIEWSTATE_BEGIN|066N0000000M59u
+17:57:30.0 (176616103)|VF_SERIALIZE_VIEWSTATE_END
+17:57:30.193 (193895706)|CUMULATIVE_LIMIT_USAGE
+17:57:30.193 (193895706)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 7 out of 100
+  Number of query rows: 3 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+17:57:30.193 (193895706)|CUMULATIVE_LIMIT_USAGE_END
+
+17:57:30.0 (193933342)|CODE_UNIT_FINISHED|VF: /apex/saReport
+17:57:30.0 (194629801)|EXECUTION_FINISHED

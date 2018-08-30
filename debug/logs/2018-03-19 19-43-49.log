@@ -1,0 +1,70 @@
+42.0 APEX_CODE,FINEST;APEX_PROFILING,INFO;CALLOUT,INFO;DB,INFO;SYSTEM,DEBUG;VALIDATION,INFO;VISUALFORCE,INFO;WAVE,INFO;WORKFLOW,INFO
+Execute Anonymous: System.SetPassword('005N0000003aw8S', 'duchm123');
+Execute Anonymous: 
+Execute Anonymous: /*List<saInquiry__c> listInq = new List<saInquiry__c>();
+Execute Anonymous: for (Integer i = 1; i< 20; i++){
+Execute Anonymous:     saInquiry__c inq = new saInquiry__c(); 
+Execute Anonymous:     inq.Type__c = 'DAILY_REPORT';
+Execute Anonymous:     if(math.mod(i, 4) == 0) {
+Execute Anonymous:         inq.Status__c = 'TemporarySaved';
+Execute Anonymous:         inq.ValidFrom__c = Date.today().addDays(1);
+Execute Anonymous:         inq.ValidTo__c = Date.today().addDays(2);    
+Execute Anonymous:     } else {
+Execute Anonymous:         inq.Status__c = 'Saved';
+Execute Anonymous:         inq.ValidFrom__c = Date.today().addDays(-10);
+Execute Anonymous:         inq.ValidTo__c = Date.today().addDays(2);
+Execute Anonymous:     }
+Execute Anonymous:     inq.RegionalOffice__c = 'a06N000000BHIDM';
+Execute Anonymous:     if(math.mod(i, 5) == 0){
+Execute Anonymous:         inq.Branch__c = 'a06N000000BHIDN';
+Execute Anonymous:     } else if(math.mod(i, 5) == 1){
+Execute Anonymous:         inq.Branch__c = 'a06N000000BHIDL';
+Execute Anonymous:     } else if(math.mod(i, 5) == 2){
+Execute Anonymous:         inq.Branch__c = 'a06N000000BHIDO';
+Execute Anonymous:     } else if(math.mod(i, 5) == 3){
+Execute Anonymous:         inq.Branch__c = 'a06N000000BHIDI';
+Execute Anonymous:     } else {
+Execute Anonymous:         inq.Branch__c = 'a06N000000BHIDP';
+Execute Anonymous:     }
+Execute Anonymous:     listInq.add(inq);
+Execute Anonymous: }
+Execute Anonymous: insert listInq;*/
+19:43:48.0 (980164)|USER_INFO|[EXTERNAL]|005N00000057RPN|duc.huynhmanh+kddi-gwdev01@globalway.co.jp|日本標準時|GMT+09:00
+19:43:48.0 (1001372)|EXECUTION_STARTED
+19:43:48.0 (1005389)|CODE_UNIT_STARTED|[EXTERNAL]|execute_anonymous_apex
+19:43:48.0 (1201074)|HEAP_ALLOCATE|[72]|Bytes:3
+19:43:48.0 (1242114)|HEAP_ALLOCATE|[77]|Bytes:152
+19:43:48.0 (1258752)|HEAP_ALLOCATE|[342]|Bytes:408
+19:43:48.0 (1270182)|HEAP_ALLOCATE|[355]|Bytes:408
+19:43:48.0 (1280866)|HEAP_ALLOCATE|[467]|Bytes:48
+19:43:48.0 (1307270)|HEAP_ALLOCATE|[139]|Bytes:6
+19:43:48.0 (1328975)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+19:43:48.0 (1414070)|STATEMENT_EXECUTE|[1]
+19:43:48.0 (1417029)|STATEMENT_EXECUTE|[1]
+19:43:48.0 (1420028)|HEAP_ALLOCATE|[1]|Bytes:15
+19:43:48.0 (1437611)|HEAP_ALLOCATE|[1]|Bytes:4
+19:43:48.0 (1441595)|HEAP_ALLOCATE|[1]|Bytes:8
+19:43:48.0 (1470988)|HEAP_ALLOCATE|[50]|Bytes:5
+19:43:48.0 (1491938)|HEAP_ALLOCATE|[56]|Bytes:5
+19:43:48.0 (1499264)|HEAP_ALLOCATE|[64]|Bytes:7
+19:43:48.0 (1565980)|DML_BEGIN|[1]|Op:setPassword|Type:User|Rows:1
+19:43:48.0 (138032842)|DML_END|[1]
+19:43:48.139 (139200761)|CUMULATIVE_LIMIT_USAGE
+19:43:48.139 (139200761)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 0 out of 100
+  Number of query rows: 0 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 1 out of 150
+  Number of DML rows: 1 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+19:43:48.139 (139200761)|CUMULATIVE_LIMIT_USAGE_END
+
+19:43:48.0 (139242330)|CODE_UNIT_FINISHED|execute_anonymous_apex
+19:43:48.0 (154859821)|EXECUTION_FINISHED

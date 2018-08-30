@@ -1,0 +1,265 @@
+<apex:page cache="false" showHeader="false" standardStylesheets="true" applyHtmlTag="false" applyBodyTag="false" doctype="html-5.0" controller="kdActivityFileListCtrl">
+
+<html class="no-js" lang="en-GB">
+
+<c:auMainHeaderComp />
+
+<head>
+
+  <apex:stylesheet value="{!URLFOR($Resource.jQueryUIFull, 'jquery-ui-1.12.1/jquery-ui.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.jQueryUIFull, 'jquery-ui-1.12.1/jquery-ui.min.css')}"/>
+
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/external/jquery/jquery.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.datepicker-ja.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryMin)}"/>
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.min.js')}"/> 
+  <style>
+  .content {
+      padding: 1em;
+  }
+
+  ul li, ol li {
+      margin-left: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      display: inherit;
+    }
+
+    body a:hover {
+      text-decoration: none;
+    }
+
+  .btn, .button, .formulaButton, .btnWhatsNew {
+    font-family: HelveticaNeueRoman,HelveticaNeue-Roman,Meiryo,Hiragino Kaku Gothic ProN,Kozuka Gothic Pr6N,Arial,Helvetica Neue Roman,HelveticaNeue,Helvetica Neue,TeXGyreHerosRegular,Helvetica,Tahoma,Geneva,sans-serif;
+    background-image: none;
+    background-repeat: no-repeat;
+    background-position: initial;
+    border-right: none;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    font-size: inherit;
+    color: #000;
+  } 
+
+  body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .menuButton .menuButtonButton {
+    color: #333;
+    margin: auto;
+    padding: 0;
+    border: none;
+    background: unset;
+    font-weight: normal;
+    font-size: inherit;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+  }
+
+  .file-item{
+    margin-bottom: 15px;
+    height: 90px;
+    border: solid 1px #555555;
+  }
+  .file-title{
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  .left{
+    float: left;
+    width: 85%;
+    margin-left: 15px;
+  }
+  .right{
+    float: left;
+    width: 85%;
+  }
+  .document-list{
+    -moz-column-count: 2;
+    -moz-column-gap: 20px;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 20px;
+    column-count: 2;
+    column-gap: 20px;
+  }
+  .file-index-0, .file-index-1, .file-index-2, .file-index-3, .file-index-4, .file-index-5, .file-index-6, .file-index-7{
+    width: 8%;
+    display: inline-block;
+    float: left;
+    text-align: center;
+    height: 100%;
+    line-height: 90px;
+    border-right: 1px solid #555555;
+    font-size: 2em;
+    font-weight: bold;
+    color: #222;
+  }
+  .file-index-0{
+    background-color: #4286f4;
+  }
+  .file-index-1{
+    background-color: #a075ef;
+  }
+  .file-index-2{
+    background-color: #7fef75;
+  }
+  .file-index-3{
+    background-color: #cef464;
+  }
+  .file-index-4{
+    background-color: #eace41;
+  }
+  .file-index-5{
+    background-color: #ea9335;
+  }
+  .file-index-6{
+    background-color: #e5462d;
+  }
+  .file-index-7{
+    background-color: #9e1c36;
+  }
+  .file-content{
+    width: 92%;
+    padding: 5px 0 0 5px;
+    display: inline-block;
+  }
+  </style>
+</head>
+
+<body class="theme" >
+<apex:form id="thisForm">
+  <c:auMainTopComp typeOfScreen="{!typeOfScreen}" />
+  <div class="container js-get-height" id="container">
+    <main class="main main--theme clear" id="main" role="main">
+      <article class="content content--theme" id="content">
+      <section class="documents-section documents-section-detail hide">
+        <header class="document-list-section-header">
+          
+        </header>
+
+        <div class="section-body document-list-section-body">
+          <apex:outputPanel id="pnlCategoryDetail">
+            <!-- #DynamicItem -->
+            <ul class="document-list theme-list">
+              <apex:repeat value="{!lsContentVersion}" var="cv">
+                <li class="file-item {!IF(cv.index < 4, 'left', 'right')}" >
+                  
+                  <apex:outputPanel styleClass="file-index-{!cv.index}">
+                  <apex:outputText value="{!cv.index + 1}"/>
+                  </apex:outputPanel>
+                  <div class="file-content">
+                  <apex:outputText styleClass="file-title" rendered="{!cv.index == 0}" value="大手商社担当の役割と行動(1806版)"/>
+                  <apex:outputText styleClass="file-title" rendered="{!cv.index == 1}" value="統括担当の役割と行動（1806版）"/>
+                  <apex:outputText styleClass="file-title" rendered="{!cv.index == 2}" value="運営法人担当の役割と行動(1806版)"/>
+                  <apex:outputText styleClass="file-title" rendered="{!cv.index == 3}" value="統括担当の基礎知識（1806版）"/>
+                  <apex:outputText styleClass="file-title" rendered="{!cv.index == 4}" value="「CCP+」概要"/>
+                  <apex:outputText styleClass="file-title" rendered="{!cv.index == 5}" value="経営ボードに求められる機能チェックシート"/>
+                  <apex:outputText styleClass="file-title" rendered="{!cv.index == 6}" value="統括代理店カルテ（フォーマット）"/>
+                  <apex:outputText styleClass="file-title" rendered="{!cv.index == 7}" value="運営法人カルテ（フォーマット）"/>
+                  <br/>
+                  <apex:outputPanel rendered="{!cv.file != null}">
+                  <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!cv.file.Id}"
+                                   rendered="{!cv.file.FileType == 'MP4' ||
+                                               cv.file.FileType == 'MOV'}"
+                                   target="_blank">
+                    <span class="thumbnail" style="background-image: url({!URLFOR($Resource.auResPortalSA,'images_sp/file/movie.png')});"></span>
+                    <span class="name">{!cv.file.Title}</span>
+                  </apex:outputLink>
+                  <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!cv.file.Id}"
+                                   rendered="{!cv.file.FileType == 'BMP' ||
+                                               cv.file.FileType == 'JPEG' ||
+                                               cv.file.FileType == 'PNG' ||
+                                               cv.file.FileType == 'GIF' ||
+                                               cv.file.FileType == 'JPG'}"
+                                   target="_blank">
+
+                    <span class="thumbnail" style="background-image: url(/sfc/servlet.shepherd/version/download/{!cv.file.Id});"></span>
+                    <span class="name">{!cv.file.Title}</span>
+                  </apex:outputLink>
+                  <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!cv.file.Id}"
+                                   rendered="{!cv.file.FileType == 'PDF'}"
+                                   target="_blank">
+
+                    <span class="thumbnail" style="background-image: url({!URLFOR($Resource.auResPortalSA,'images_sp/file/pdf.png')});"></span>
+                    <span class="name">{!cv.file.Title}</span>
+                  </apex:outputLink>
+                  <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!cv.file.Id}"
+                                   rendered="{!cv.file.FileType == 'EXCEL' ||
+                                               cv.file.FileType == 'EXCEL_X' ||
+                                               cv.file.FileType == 'CSV'}"
+                                   target="_blank">
+
+                    <span class="thumbnail" style="background-image: url({!URLFOR($Resource.auResPortalSA,'images_sp/file/xls.png')});"></span>
+                    <span class="name">{!cv.file.Title}</span>
+                  </apex:outputLink>
+                  <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!cv.file.Id}"
+                                   rendered="{!cv.file.FileType == 'WORD' ||
+                                               cv.file.FileType == 'WORD_X' ||
+                                               cv.file.FileType == 'RTF' ||
+                                               cv.file.FileType == 'TEXT'}"
+                                   target="_blank">
+
+                    <span class="thumbnail" style="background-image: url({!URLFOR($Resource.auResPortalSA,'images_sp/file/doc.png')});"></span>
+                    <span class="name">{!cv.file.Title}</span>
+                  </apex:outputLink>
+                  <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!cv.file.Id}"
+                                   rendered="{!cv.file.FileType == 'POWER_POINT' ||
+                                               cv.file.FileType == 'POWER_POINT_X' ||
+                                               cv.file.FileType == 'PPS' ||
+                                               cv.file.FileType == 'PPSX'}"
+                                   target="_blank">
+
+                    <span class="thumbnail" style="background-image: url({!URLFOR($Resource.auResPortalSA,'images_sp/file/ppt.png')});"></span>
+                    <span class="name">{!cv.file.Title}</span>
+                  </apex:outputLink>
+                  <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!cv.file.Id}"
+                                   rendered="{!cv.file.FileType != 'MP4' &&
+                                               cv.file.FileType != 'MOV' &&
+                                               cv.file.FileType != 'PDF' &&
+                                               cv.file.FileType != 'BMP' &&
+                                               cv.file.FileType != 'JPEG' &&
+                                               cv.file.FileType != 'PNG' &&
+                                               cv.file.FileType != 'GIF' &&
+                                               cv.file.FileType != 'JPG' &&
+                                               cv.file.FileType != 'EXCEL' &&
+                                               cv.file.FileType != 'EXCEL_X' && 
+                                               cv.file.FileType != 'CSV' &&
+                                               cv.file.FileType != 'WORD' && 
+                                               cv.file.FileType != 'WORD_X' && 
+                                               cv.file.FileType != 'RTF' &&
+                                               cv.file.FileType != 'TEXT' && 
+                                               cv.file.FileType != 'POWER_POINT' && 
+                                               cv.file.FileType != 'POWER_POINT_X' && 
+                                               cv.file.FileType != 'PPS' &&
+                                               cv.file.FileType != 'PPSX'}"
+                                   target="_blank">
+
+                    <span class="thumbnail" style="background-image: url({!URLFOR($Resource.auResPortalSA,'images_sp/file/file.png')});"></span>
+                    <span class="name">{!cv.file.Title}</span>
+                  </apex:outputLink>
+                </apex:outputPanel>
+                </div>
+                </li>
+              </apex:repeat>
+            </ul>
+          </apex:outputPanel>
+        </div>
+        <footer class="document-list-section-footer"></footer>
+      </section>
+    </article>
+    </main>
+  </div>
+
+  <script src="{!URLFOR($Resource.kdKnowledgeScript)}" type="text/javascript"></script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-xxxxxx', 'auto');
+    ga('send', 'pageview');
+  </script> 
+</apex:form>
+</body>
+</html>
+</apex:page>

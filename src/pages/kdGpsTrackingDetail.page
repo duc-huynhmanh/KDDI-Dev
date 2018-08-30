@@ -1,0 +1,753 @@
+<apex:page showHeader="false" standardStylesheets="true" applyHtmlTag="false" applyBodyTag="false" doctype="html-5.0" controller="kdGpsTrackingDetailCtrl">
+ <apex:outputPanel layout="none" id="contentPage">
+  <html>
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>sa ポータル-</title>
+      <apex:stylesheet value="{!URLFOR($Resource.jQueryUI2, 'JQueryUI/jquery-ui.min.css')}" />
+      <apex:stylesheet value="{!URLFOR($Resource.KDDI_CustomizedMaterials, 'KDDI_CustomizedMaterials/bootstrap/css/bootstrap.css')}" />
+      <apex:stylesheet value="{!URLFOR($Resource.KDDI_CustomizedMaterials, 'KDDI_CustomizedMaterials/KDDI_CustomBaseStyle.css')}" />
+
+      <style>
+        .contents .page-header {
+          z-index: 2;
+          position :relative;
+        }
+
+       .markerDisplayed.mainData {
+        background-color: lightskyblue;
+       }
+       .markerDisplayed {
+        background-color: seashell;
+       }
+
+      .contents .contents-body .section {
+          margin-bottom: 10px;
+      }
+      
+
+
+
+
+
+
+
+      /**********************/
+      /*** CALENDAR STYLE ***/
+      /**********************/
+
+      .datepicker-calendar-container {
+        margin: -6rem 0 0;        
+      }
+
+      .datepicker-calendar {
+        background: #dfffdaa1;
+        width: 50%;
+        max-width: 400px;
+        padding: 20px 15px 15px;
+        margin-left: auto;
+        margin-right: 0;
+        display: block;
+      }
+
+      .day-label {
+          color: #8A8A8A;
+          padding: 5px 0;
+          width: 13.3%;
+          display: inline-block;
+          text-align: center;
+      }
+      .datecontainer {
+          width: 13.3%;
+          display: inline-block;
+          text-align: center;
+          padding: 4px 0;
+      }
+
+      .datenumber {
+          max-width: 35px;
+          max-height: 35px;
+          line-height: 35px;
+          margin: 0 auto;
+          color: #8A8A8A;
+          position: relative;
+          text-align: center;
+          cursor: pointer;
+          z-index: 1;
+          transition: all .25s cubic-bezier(0.7,-0.12, 0.2, 1.12);
+      }
+      .no-hover .datenumber,
+      .no-hover .datenumber:hover,
+      .no-hover .datenumber:before,
+      .no-hover .datenumber:hover::before {
+          cursor: default;
+          color: #8A8A8A;
+          background: transparent;
+          opacity: 0.5;
+      }
+      .no-hover .datenumber.day-selected {
+          color: white;
+      }
+      .datenumber:hover {
+          color: white;
+      }
+      .datenumber:before {
+          content: '';
+          display: block;
+          position: absolute;
+          height: 35px;
+          width: 35px;
+          border-radius: 100px;
+          z-index: -1;
+          background: transparent;
+          -webkit-transform: scale(0.75);
+          -moz-transform: scale(0.75);
+          -ms-transform: scale(0.75);
+          -o-transform: scale(0.75);
+          transform: scale(0.75);
+          transition: all .25s cubic-bezier(0.7,-0.12, 0.2, 1.12);
+          transition-property: background, transform, color, border;
+      }
+      .datenumber:hover::before {
+          background: #FFAB91;
+          -webkit-transform: scale(1);
+          -moz-transform: scale(1);
+          -ms-transform: scale(1);
+          -o-transform: scale(1);
+          transform: scale(1);
+      }
+      .day-selected {
+          color: white;
+      }
+      .datenumber.day-selected:before {
+          background: #FF6E40;
+          -webkit-transform: scale(1);
+          -moz-transform: scale(1);
+          -ms-transform: scale(1);
+          -o-transform: scale(1);
+          transform: scale(1);
+          -webkit-animation: select-date .25s forwards;
+          -moz-animation: select-date .25s forwards;
+          animation: select-date .25s forwards;
+      }
+
+
+
+
+
+      .app-container {
+        border-radius: 4px;
+        overflow: hidden;
+        width: 720px;
+        height: auto;
+        max-width: 100%;
+        position: absolute;
+        top: 120px;
+        left: 0;
+        right: 0;
+        margin: auto;
+      }
+      .buttons-container {
+        position: absolute;
+        bottom: 15px;
+        right: 0;
+        height: 40px;
+        font-family: "Roboto", sans-serif;
+      }
+      .cancel-button,
+      .save-button {
+        float: left;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 15px;
+        border-radius: 2px;
+        margin-right: 15px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .cancel-button {
+        background: white;
+        color: #0DAD83;
+      }
+      .save-button {
+        background: #0DAD83;
+        color: white;
+      }
+
+      /* Datepicker Stuff */
+      .datepicker {
+        position: relative;
+        width: 100%;
+        display: block;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+        font-family: "Roboto", sans-serif;
+        overflow: hidden;
+        transition: background 0.15s ease;
+      }
+      .datepicker-header {
+        width: 100%;
+        color: white;
+        overflow: hidden;
+      }
+      .datepicker-title {
+        width: 50%;
+        float: left;
+        height: 60px;
+        line-height: 60px;
+        padding: 0 15px;
+        text-align: left;
+        font-size: 20px;
+      }
+      .calendar-header {
+          color: black;
+          font-weight: bolder;
+          text-align: center;
+          font-size: 18px;
+          padding: 10px 0;
+          position: relative;
+      }
+      .current-month-container {
+          display: inline-block;
+          height: 30px;
+          position: relative;
+      }
+      .goback,
+      .goforward {
+          height: 30px;
+          width: 30px;
+          border-radius: 30px;
+          display: inline-block;
+          cursor: pointer;
+          position: relative;
+          top: -4px;
+      }
+      .goback path,
+      .goforward path {
+        transition: stroke 0.15s ease;
+      }
+      .goback {
+          float: left;
+          margin-left: 3.8%;
+      }
+      .goforward {
+          float: right;
+          margin-right: 3.8%;
+      }
+      .calendar-day-header {
+          width: 100%;
+          position: relative;
+      }
+
+      @-webkit-keyframes select-date {
+          0% { background: #FFAB91; }
+          100% { background: #FF6E40; }
+      }
+      @keyframes select-date {
+          0% { background: #FFAB91; }
+          100% { background: #FF6E40; }
+      }
+
+
+
+
+
+      </style>
+      <apex:includeScript value="{!URLFOR($Resource.JQuery)}" />
+      <apex:includeScript value="{!URLFOR($Resource.jQueryUI2, 'JQueryUI/jquery-ui.min.js')}" />
+      <apex:includeScript value="{!URLFOR($Resource.KDDI_CustomizedMaterials, 'KDDI_CustomizedMaterials/bootstrap/js/bootstrap.min.js')}" />
+      <apex:includeScript value="{!URLFOR($Resource.KDDI_CustomizedMaterials, 'KDDI_CustomizedMaterials/PagerHelper.js')}" />
+
+      <script>
+        var $j = jQuery.noConflict();
+
+        /*------------------------------------------------------------*/        
+        
+
+
+        
+        
+    </script>
+    </head>
+    <body >
+      <apex:actionStatus layout="block" id="ajaxPageStatus" startStyleClass="ajax-status-start-page">
+        <apex:facet name="start">
+          <div class="ajax-status-start-inner ajax-loading"></div>
+        </apex:facet>
+      </apex:actionStatus>
+
+      <apex:outputPanel layout="block" styleClass="contents" id="contents" >
+        <div class="page-header">
+          <c:kddiHeaderComp />
+        </div>
+        <div class="contents-body">
+          <apex:form id="form">
+
+            <apex:inputHidden html-class="idGpsMainData" value="{!idm.idGpsMainData}" />
+
+            <apex:actionFunction name="jsRefreshMap"
+                                 action="{!idm.refreshDisplayedData}"
+                                 rerender="mapGps, rowData, apexMessage"
+                                 oncomplete="setView_01_01_01();" />
+
+            <div class="section base-width">
+              <div class="screenname">
+                <h1 class="small">GPSトラッキング</h1>
+                <div class="big" >
+                  <apex:outputText rendered="{!isNew}" >
+                    <span>新規フォーム作成</span>
+                  </apex:outputText>
+                  <apex:outputText rendered="{!!isNew}" value="{!idm.parentRec.Name}" />
+                </div>
+              </div>
+            </div>
+
+            <apex:outputPanel layout="none" rendered="{!!isValid}">
+              <div class="section base-width" >
+                <apex:messages layout="table" />
+                <apex:outputText >
+                  <apex:outputLink value="{!$Page.kdGpsTrackingSearch}">コチラ</apex:outputLink>
+                  <apex:outputText value="から再度操作を行ってください。" />
+                </apex:outputText>
+              </div>
+            </apex:outputPanel>
+
+
+
+
+
+            <apex:outputPanel layout="none" id="listview" rendered="{!isValid}">
+
+              <div class="section button-area base-width" >
+                <div class="section-body clearfix">
+                  <apex:outputLink value="{!$Page.kdGpsTrackingSearch}" >&laquo;&nbsp;ユーザー選択画面に戻る</apex:outputLink>
+                </div>
+              </div>
+              <div class="section base-width error-area" >
+                <apex:pageMessages id="apexMessage" />
+              </div>
+
+              <div class="section base-width calendar-area" >
+
+                <div class="datepicker-calendar-container">
+                <div class="datepicker-calendar">
+                  <div class="calendar-header">
+                    
+                    <div class="goback" ng-click="moveBack()" ng-if="pickdate">
+                      <svg width="30" height="30">
+                        <path fill="none" stroke="#0DAD83" stroke-width="3" d="M19,6 l-9,9 l9,9"></path>
+                      </svg>
+                    </div>
+                    
+                    <div class="current-month-container">2018年 8月</div>
+                    
+                    <div class="goforward" ng-click="moveForward()" ng-if="pickdate">
+                      <svg width="30" height="30">
+                        <path fill="none" stroke="#0DAD83" stroke-width="3" d="M11,6 l9,9 l-9,9"></path>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="calendar-day-header">
+                    <span class="day-label">月</span>
+                    <span class="day-label">火</span>
+                    <span class="day-label">水</span>
+                    <span class="day-label">木</span>
+                    <span class="day-label">金</span>
+                    <span class="day-label">土</span>
+                    <span class="day-label">日</span>
+                  </div>
+
+                  <div class="calendar-grid">
+
+                    <div class="datecontainer no-hover" >
+                      <div class="datenumber" ng-click="selectDate(day)">
+                        &nbsp;
+                      </div>
+                    </div>
+
+                    <div class="datecontainer no-hover" >
+                      <div class="datenumber" ng-click="selectDate(day)">
+                        1
+                      </div>
+                    </div>
+
+                    <div class="datecontainer" >
+                      <div class="datenumber" ng-click="selectDate(day)">
+                        2
+                      </div>
+                    </div>
+
+                    <div class="datecontainer" >
+                      <div class="datenumber" ng-click="selectDate(day)">
+                        3
+                      </div>
+                    </div>
+
+                    <div class="datecontainer" >
+                      <div class="datenumber day-selected" ng-click="selectDate(day)">
+                        4
+                      </div>
+                    </div>
+
+                    <div class="datecontainer" >
+                      <div class="datenumber" ng-click="selectDate(day)">
+                        5
+                      </div>
+                    </div>
+
+                    <div class="datecontainer" >
+                      <div class="datenumber" ng-click="selectDate(day)">
+                        6
+                      </div>
+                    </div>
+
+                    <div class="datecontainer" >
+                      <div class="datenumber" ng-click="selectDate(day)">
+                        7
+                      </div>
+                    </div>
+
+                    <div class="datecontainer" >
+                      <div class="datenumber" ng-click="selectDate(day)">
+                        8
+                      </div>
+                    </div>
+
+                    <div class="datecontainer" >
+                      <div class="datenumber" ng-click="selectDate(day)">
+                        9
+                      </div>
+                    </div>
+
+                    <div class="datecontainer" >
+                      <div class="datenumber" ng-click="selectDate(day)">
+                        10
+                      </div>
+                    </div>
+
+          <!--
+
+https://codepen.io/jaromvogel/pen/aNPRwG
+
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer no-hover" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="" style="margin-left: 42.8571%;">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        1
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer no-hover" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        2
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer no-hover" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        3
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer no-hover" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        4
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer no-hover" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        5
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer no-hover" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        6
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer no-hover" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        7
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer no-hover" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        8
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer no-hover" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        9
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope no-hover" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        10
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope no-hover" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        11
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope no-hover" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        12
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope no-hover" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        13
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope no-hover" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        14
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope no-hover" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        15
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding day-selected" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        16
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">55</div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        18
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        19
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        20
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        21
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        22
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        23
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        24
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        25
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        26
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        27
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        28
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        29
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        30
+                      </div>
+                    </div>
+                    <div ng-class="{'no-hover': !day.showday}" ng-repeat="day in month" class="datecontainer ng-scope" ng-style="{'margin-left': calcOffset(day, $index)}" track="" by="" $index="">
+                      <div class="datenumber ng-binding" ng-class="{'day-selected': day.selected }" ng-click="selectDate(day)">
+                        31
+                      </div>
+                    </div>
+          -->          
+                  </div>
+                </div>
+
+              </div>
+              </div>
+
+
+
+
+              <div class="section base-width map-area" >
+
+                <apex:map width="100%" height="600px" 
+                          id="mapGps"
+                          mapType="roadmap"
+                          zoomLevel="{!IF(idm.gpsMainDataSet, 13, 2)}"
+                          center="{latitude: {!idm.gpsMainData.latitude}, longitude: {!idm.gpsMainData.longitude}}">
+
+                  <apex:repeat value="{!idm.lsGpsDataMain}" var="gps" >
+
+                    <apex:mapMarker title="{!gps.timeFormatted}" 
+                                    position="{latitude: {!gps.latitude}, longitude: {!gps.longitude}}"
+                                    icon="{!URLFOR($Resource.kdMapStyle, 'icons/marker_blue.png')}">
+                        <apex:mapInfoWindow >
+                            <apex:outputPanel layout="block" style="font-weight: bold;">
+                                <apex:outputText value="{!gps.timeFormatted}" />
+                            </apex:outputPanel>
+                        </apex:mapInfoWindow>
+                    </apex:mapMarker>
+
+                  </apex:repeat>
+
+                  <apex:repeat value="{!idm.lsGpsDataNotMain}" var="gps" >
+
+                    <apex:mapMarker title="{!gps.timeFormatted}" 
+                                    position="{latitude: {!gps.latitude}, longitude: {!gps.longitude}}">
+                        <apex:mapInfoWindow >
+                            <apex:outputPanel layout="block" style="font-weight: bold;">
+                                <apex:outputText value="{!gps.timeFormatted}" />
+                            </apex:outputPanel>
+                        </apex:mapInfoWindow>
+                    </apex:mapMarker>
+
+                  </apex:repeat>
+
+                 </apex:map>
+
+              </div>
+
+
+              <div class="section base-width recordlist-area" >
+
+                <apex:outputPanel id="rowData">
+
+                  <table class="record-table" style="width:1042px;table-layout:fixed;" >
+                      <col span="1" style="width:140px;"/>
+                      <col span="1" style="width:100px;"/>
+                      <col span="1" style="width:100px;"/>
+                      <col span="1" style="width:500px;"/>
+
+                    <tr class="header-row">
+
+                      <!-- COLUMN Functional Buttons -->
+  <!--                      <th /> -->
+
+                      <!-- COLUMN 1-->
+                      <th>
+                        <apex:outputText value="日付" />
+                      </th>
+                      <th>
+                        <apex:outputText value="緯度" />
+                      </th>
+                      <th>
+                        <apex:outputText value="経度" />
+                      </th>
+                      <th>
+                        <apex:outputText value="住所" />
+                      </th>
+                    </tr>
+
+                    <apex:repeat value="{!idm.lsGpsData}" var="gps" >
+
+                      <tr class="body-row {!IF(gps.isMain, 'mainData', '')} {!IF(gps.isMarkerDisplayed, 'markerDisplayed', '')} btnDisplayOnMap" gpsId="{!gps.idSfdc}">
+
+                        <!-- COLUMN 1 -->
+                        <td>
+                          <apex:outputText value="{!gps.timeFormatted}" />
+                        </td>
+
+                        <!-- COLUMN 1 -->
+                        <td>
+                          <apex:outputText value="{!gps.latitudeFormatted}" />
+                        </td>
+
+                        <!-- COLUMN 1 -->
+                        <td>
+                          <apex:outputText value="{!gps.longitudeFormatted}" />
+                        </td>
+
+                        <!-- COLUMN 1 -->
+                        <td>
+                          <apex:outputText value="" />
+                        </td>
+
+                      </tr>
+                    </apex:repeat>
+                  </table>
+                </apex:outputPanel>
+              </div>  
+
+
+
+
+
+
+            </apex:outputPanel>
+
+            <div class="footer">
+              <c:kddiFooterComp />
+            </div>
+
+
+
+
+          </apex:form>
+
+          <hr style="margin-bottom: 20px; width: 96%; border-color: #ddd;"/>
+
+        </div>
+      </apex:outputPanel>
+
+  <script>
+
+    function setView_01_01_01() {
+
+      setView_01_01_01_logic();
+
+    }
+
+    function setView_01_01_01_logic() {
+
+      $j(".btnDisplayOnMap").off("click");  
+      $j(".btnDisplayOnMap").on("click", function (e) {
+
+        $j('.idGpsMainData').val($j(this).attr('gpsId'));
+        jsRefreshMap();
+
+      });
+
+    }
+
+
+    $j(document).ready(function () {
+
+        setView_01_01_01();
+
+    });
+
+  </script>
+
+    </body>
+  </html>
+</apex:outputPanel>
+
+</apex:page>

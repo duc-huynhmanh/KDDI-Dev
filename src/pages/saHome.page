@@ -1,0 +1,318 @@
+<apex:page controller="saHomeCtrl" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" cache="false" action="{!redirectIfNecessaryMobile}" docType="html-5.0">
+
+<apex:form id="allForm">
+
+<html lang="ja">
+<head>
+
+  <meta charset="utf-8" />
+  <title>auポータル</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/sanitize.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/common.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/style-home.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/iphone.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/flatpickr.min.css')}"/>
+
+  <!-- libraries -->
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/jquery-3.2.1.min.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/flatpickr.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/ja.js')}"/> 
+  
+  <!-- scripts -->
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_check_ua.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_fitting.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_sp.js')}"/> 
+
+  <script>
+    var $j = jQuery.noConflict();
+    var reportId = '';
+
+    // converts HTML to text using Javascript
+    function html2text(html) {
+      var tag = document.createElement('div');
+      tag.innerHTML = html;
+      return tag.innerText;
+    }
+
+
+    function jsAfterShowInquiry() {
+        if ($j('.message-error').val().length > 0) {
+          alert($j('.message-error').val());
+          $j('.message-error').val("正しいデーターを入れてください。");
+        } else {
+          $j('.message-error').val("正しいデーターを入れてください。");
+
+          if ($j('.message-question').val().length > 0) {
+            if (confirm($j('.message-question').val())) {
+              /* Confirmation OK -> Continue */
+              setView_04_01_03();
+            }
+          } else {
+            /* No question needed -> Continue */
+            setView_04_01_03();
+          }
+
+        }
+    }
+
+    function jsAfterSaveInquiry() {
+        if ($j('.message-error').val().length > 0) {
+          alert($j('.message-error').val());
+          $j('.message-error').val("正しいデーターを入れてください。");
+        } else {
+          $j('.message-error').val("正しいデーターを入れてください。");
+          alert('保存しました。');
+        }
+    }
+
+    function jsAfterSendInquiryConfirm() {
+        if ($j('.message-error').val().length > 0) {
+          alert($j('.message-error').val());
+          $j('.message-error').val("正しいデーターを入れてください。");
+        } else {
+          $j('.message-error').val("正しいデーターを入れてください。");
+
+          if ($j('.message-question').val().length > 0) {
+            if (confirm($j('.message-question').val())) {
+              /* Confirmation OK -> Continue */
+              jsSendInquiry();
+            }
+          } else {
+            /* No question needed -> Continue */
+            jsSendInquiry();
+          }
+
+        }
+    }
+
+
+
+
+  </script>
+
+  <style type="text/css">
+
+    /*
+     * protect-screen
+     ******************************************************/
+    @media screen {
+
+      .protect-screen-bis {
+        position: fixed;
+        left: 0;
+        top: 0;
+
+        width: 100%;
+        height: 100%;
+
+        background-color: rgba(0, 0, 0, 0.2);
+
+        z-index: 998;
+      }
+      .protect-screen-bis.hide {
+        display: none;
+      }
+    }
+
+    .avatar > img {
+      width: 110px;
+      height: 110px;
+    }
+
+    .postContentList {
+      line-height: 1.3rem;
+      max-height: 5rem;
+    }
+
+    .group-list-item {
+      color: black;
+    }
+    
+    .datetimeranking {
+	    font-size: 8px !important;
+	    display: block;
+	    position: absolute;
+	    top: 5px;
+	    left: 400px;
+	}
+    
+    li.clickeffect {
+    	display: inherit;
+	}
+	
+	/* Css to trunk the text and add the '...' */
+	.truncated-text {
+		left: 20px !important;
+	    overflow: hidden;
+	    position: relative;
+	    font-size: 2rem !important;
+	    line-height: 1.8rem !important;
+	    /*max-height: 140px;*/
+	    max-height: 3.6rem !important;
+	    text-align: justify !important;
+	    padding-right: 75px !important;
+	    padding-left: 2em;
+	}
+	
+	.truncated-text:before {
+		content: '...';
+	    position: absolute;
+	    right: 50px;
+	    bottom: 0;
+	}
+	
+	.truncated-text:after {
+	    content: '';
+	    position: absolute;
+	    right: 50px;
+	    width: 1em;
+	    height: 100%;
+	    margin-top: 0.2em;
+	    background: white;
+	}
+
+  </style>
+</head>
+
+
+<body class="page-home">
+  
+  <apex:inputHidden id="messageError" html-class="message-error" value="{!messageError}" />
+  <apex:inputHidden id="messageQuestion" html-class="message-question" value="{!messageQuestion}" />
+  <apex:inputHidden html-class="idRanking" value="{!idRanking}" />
+
+  <apex:actionFunction name="jsShowRankingDetail"
+                       action="{!showRankingDetail}"
+                       rerender="pnlRankingName, pnlRankingDetail"
+                       oncomplete="setView_07_01_02();" />
+
+
+  <c:saMainTopComp typeOfScreen="{!typeOfScreen}" />
+
+  <div class="protect-screen-bis hide"></div>
+  
+  <!-- template-popup -->
+  <div class="modal-dialog hide"><p>ダイアログメッセージ</p><div class="btn-cancel"><a href="#">キャンセル</a></div><div class="btn-ok"><a href="#">OK</a></div></div>
+
+  <div class="document-container">
+    <header class="document-header">
+      <div class="btn-menu"><a href="#">ナビゲーション</a></div>
+    </header>
+
+    <div class="document-contents">
+
+
+      <!-- #View 00-01-01(typ.) -->
+      <section class="home-section hide">
+        <header class="home-section-header">
+          <h1>SANX</h1>
+        </header>
+
+        <div class="section-body home-section-body">
+
+          <!-- #DynamicItem -->
+          <div class="home-pickup-area home-ranking">
+            <h3>Weekly アクセスランキング</h3>        
+            
+            <ol class="home-ranking-list">
+            	<apex:repeat value="{!lsMostSeenReports}" var="popularReport">
+            		<li class="clickeffect">
+            			<apex:commandLink action="{!redirectToConcernedReport}">
+            					<apex:param name="reportId" value="{!popularReport.Id}"/>
+								<span class="title" style="font-size:15px;position:absolute !important;top:20px;left:20px;">{!popularReport.Subject__c}</span>
+								<span class="category" style="font-size:10px;position:absolute;top:80px;left:20px;">{!popularReport.Category__c}</span>
+								<span class="text truncated-text">{!popularReport.Report_body__c}</span>
+								<apex:outputText style="font-size:8px;position:absolute;top:-70px;left:450px;" value="{0,date,yyyy/MM/dd}">
+									<apex:param value="{!popularReport.CreatedDate__c+offset}"/>
+								</apex:outputText>
+						</apex:commandLink>
+			     	</li>
+	            </apex:repeat>
+            </ol>
+
+          <div class="btn btn-more">
+          	<apex:commandLink value="もっと見る" styleClass="ui-color-1" action="{!goToReportPages}">
+          		<apex:param name="source" value="{!saReportSourceWeekly}"/>
+          	</apex:commandLink>
+          </div>
+          </div>
+          <div class="home-pickup-area home-reports">
+            <h3>新着レポート</h3>
+            
+            <ol class="home-reports-list">
+	            <apex:repeat value="{!lsMostRecentReports}" var="recentReport">
+	            	<li class="clickeffect">
+	            		<apex:commandLink action="{!redirectToConcernedReport}">
+            				<apex:param name="reportId" value="{!recentReport.Id}"/>
+            				<span class="title" style="font-size:15px;position:absolute !important;top:20px;left:20px;">{!recentReport.Subject__c}</span>
+							<span class="category" style="font-size:10px;position:absolute;top:80px;left:20px;">{!recentReport.Category__c}</span>
+							<span class="text truncated-text">{!recentReport.Report_body__c}</span>
+							<apex:outputText style="font-size:8px;position:absolute;top:-70px;left:450px;" value="{0,date,yyyy/MM/dd}">
+								<apex:param value="{!recentReport.CreatedDate__c+offset}"/>
+							</apex:outputText>
+	            		</apex:commandLink>
+	            	</li>
+	            </apex:repeat>
+            </ol>
+
+            <div class="btn btn-more">
+            	<apex:commandLink value="もっと見る" styleClass="ui-color-1" action="{!goToReportPages}">
+          			<apex:param name="source" value="{!saReportSourceNew}"/>
+          		</apex:commandLink>
+            </div>
+          </div>
+          
+          <nav class="home-navigation">
+            <ul>
+              <li class="nav-messages"><a href="/saMessages">通知メッセージ</a></li>
+              <li class="nav-reports"><a href="/saReport">レポート</a></li>
+              <li class="nav-chat"><a href="/saChatter">チャット</a></li>
+              <li class="nav-daily-reports"><a href="/saDailyReport">日報</a></li>
+              <li class="nav-enquete"><a href="/saHearing">ヒアリング</a></li>
+              <li class="nav-documents"><a href="/saDocuments">資料集</a></li>
+              <li class="nav-ranking"><a href="/saRanking">ランキング</a></li>
+              <li class="nav-links"><a href="/saLinks">リンク集</a></li>
+            </ul>
+          </nav>
+
+        </div>
+
+        <footer class="home-section-footer"></footer>
+      </section>
+
+   
+    </div>
+    <footer class="document-footer"></footer>
+  </div>
+  <script>
+
+    function setView_00_01_01() {
+
+      $j(".document-header").hide();
+      $j('.home-section').show();
+
+      setView_00_01_01_logic();
+    }
+
+    function setView_00_01_01_logic() {
+
+    }
+
+    $j(document).ready(function () {
+
+      setView_00_01_01();
+
+    });
+
+	function redirectToReport(){
+		alert('You have clicked');
+	}
+  </script>
+</body>
+</html>
+
+</apex:form>
+
+</apex:page>

@@ -1,0 +1,37 @@
+<apex:component id="auHeaderComp">
+<head>
+    <style type="text/css">
+      .button.red {
+        background-color: #bf0000;
+        color: #fff; }
+    </style>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta id="viewport" name="viewport" content="width=1080px"/>
+    <!-- keywords-description -->
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <title>auポータル</title>
+
+    <apex:stylesheet value="{!URLFOR($Resource.auStyling,'/css/style.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.auStyling,'/css/au-portal-login-style.css')}"/>
+
+    <script src="{!URLFOR($Resource.auStyling,'/js/jquery-2.2.0.min.js')}"/>
+    <!--[if (gte IE 6)&(lte IE 8)]>
+    <script src="{!URLFOR($Resource.auStyling,'/js/html5.js')}"/>
+    <script src="{!URLFOR($Resource.auStyling,'/js/jquery-1.12.0.min.js')}"/>
+    <script src="{!URLFOR($Resource.auStyling,'/js/selectivizr-min.js')}"/>
+    <![endif]-->
+    <script src="{!URLFOR($Resource.auStyling,'/js/index.js')}"/>
+    <script src="{!URLFOR($Resource.auStyling,'/js/jquery.smoothScroll.js')}"></script>    
+    <script>
+    jQuery(function($) {
+        $('a[href^="#"]').SmoothScroll({
+            duration : 250,    // スピード
+            easing : 'swing' // 動き方
+        });
+    });
+</script>
+
+</head>
+</apex:component>

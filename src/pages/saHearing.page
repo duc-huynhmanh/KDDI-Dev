@@ -1,0 +1,1267 @@
+<apex:page controller="saHearingCtrl" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" cache="false" action="{!redirectIfNecessaryMobile}" docType="html-5.0">
+
+<apex:form id="allForm">
+
+<html lang="ja">
+<head>
+
+  <meta charset="utf-8" />
+  <title>auポータル</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/sanitize.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/common.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/style-enquete.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/style-calender.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/iphone.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/flatpickr.min.css')}"/>
+
+  <!-- libraries -->
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/jquery-3.2.1.min.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/flatpickr.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/ja.js')}"/> 
+  
+  <!-- scripts -->
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_check_ua.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_fitting.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_sp.js')}"/> 
+
+  <script>
+    var $j = jQuery.noConflict();
+
+
+    function buttonsEnabled(enabled) {
+
+        if (enabled === false) {
+
+            $j(".btn-save").off("click");
+            $j(".btn-send").off("click");
+
+        } else {
+
+            $j(".btn-save").off("click");
+            $j(".btn-save").on("click", function (e) {
+                buttonsEnabled(false);
+                jsSaveInquiry();
+            });
+
+            $j(".btn-send").off("click");
+            $j(".btn-send").on("click", function (e) {
+                buttonsEnabled(false);
+                jsSendInquiryConfirm();
+            });
+
+        } 
+    }
+
+    function jsAfterShowInquiry() {
+        if ($j('.message-error').val().length > 0) {
+          alert($j('.message-error').val());
+          $j('.message-error').val("正しいデーターを入れてください。");
+        } else {
+          $j('.message-error').val("正しいデーターを入れてください。");
+
+          if ($j('.message-question').val().length > 0) {
+            if (confirm($j('.message-question').val())) {
+              /* Confirmation OK -> Continue */
+              setView_05_01_02(true);
+            }
+          } else {
+            /* No question needed -> Continue */
+            setView_05_01_02(true);
+          }
+
+        }
+    }
+
+    function jsAfterSaveInquiry() {
+        if ($j('.message-error').val().length > 0) {
+          alert($j('.message-error').val());
+          $j('.message-error').val("正しいデーターを入れてください。");
+        } else {
+          $j('.message-error').val("正しいデーターを入れてください。");
+          alert('保存しました。');
+        }
+    }
+
+    Number.prototype.padLeft = function(base,chr){
+        var  len = (String(base || 10).length - String(this).length)+1;
+        return len > 0? new Array(len).join(chr || '0')+this : this;
+    }
+
+    function jsAfterSendInquiry() {
+        if ($j('.message-error').val().length > 0) {
+          alert($j('.message-error').val());
+          $j('.message-error').val("正しいデーターを入れてください。");
+        } else {
+          $j('.message-error').val("正しいデーターを入れてください。");
+          $j('.badge-detail').hide();
+          $j('.answer-date-detail').show();
+
+          var d = new Date,
+          dformat = [d.getFullYear(),
+                     (d.getMonth()+1).padLeft(),
+                     d.getDate().padLeft()].join('/') + '　' +
+                    [d.getHours().padLeft(),
+                     d.getMinutes().padLeft()].join(':');
+
+          $j('.answer-date-detail-text').text(dformat);
+
+          alert('確定保存しました。');
+        }
+    }
+
+    function jsAfterSendInquiryConfirm() {
+        if ($j('.message-error').val().length > 0) {
+          alert($j('.message-error').val());
+          $j('.message-error').val("正しいデーターを入れてください。");
+
+          setTimeout(function() {buttonsEnabled(true);}, 500);
+        } else {
+          $j('.message-error').val("正しいデーターを入れてください。");
+
+          if ($j('.message-question').val().length > 0) {
+            if (confirm($j('.message-question').val())) {
+              /* Confirmation OK -> Continue */
+              jsSendInquiry();
+            } else {
+              setTimeout(function() {buttonsEnabled(true);}, 500);
+            }
+          } else {
+            /* No question needed -> Continue */
+            jsSendInquiry();
+          }
+
+        }
+    }
+
+
+    function jsChangeRadioValue(sortno, value) {
+      $j('.ReplyRadioButton-' + sortno).val(value);
+    }
+
+    function jsChangeRadioCheckedDefault() {
+      $j('.isReplyCheckedDefault').prop('checked', true);
+      $j('.isReplyDisabledDefault').attr('disabled', true);
+    }
+
+
+
+
+  </script>
+
+  <style type="text/css">
+
+    /*
+     * protect-screen
+     ******************************************************/
+    @media screen {
+
+      .protect-screen-bis {
+        position: fixed;
+        left: 0;
+        top: 0;
+
+        width: 100%;
+        height: 100%;
+
+        background-color: rgba(0, 0, 0, 0.2);
+
+        z-index: 998;
+      }
+      .protect-screen-bis.hide {
+        display: none;
+      }
+
+      .enquete-list.answered li > a {
+        padding-right: 20px;
+      }
+    }
+
+    .avatar > img {
+      width: 110px;
+      height: 110px;
+    }
+
+    .postContentList {
+      line-height: 1.3rem;
+      max-height: 5rem;
+    }
+
+    .group-list-item {
+      color: black;
+    }
+
+    .attachInputChatter {
+      position: absolute;
+      top: -100px;
+    }
+
+
+/*
+input[type="number"] {
+    -webkit-appearance: none;
+    background-color: #ffffff;
+    border: 1px solid #aaaaaa;
+}
+
+input[type="number"] {
+    height: 60px;
+    line-height: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 2.2rem;
+    font-size: 3.2rem * 0.6875;
+    border-radius: 5px;
+}
+*/
+
+	.disableColor1{
+    	color: #ffffff;
+    	background-color: #aaaaaa;
+	}
+	.disableColor2{
+    	color: #ffffff;
+    	background-color: #bbbbbb;
+	}
+  
+.enquete-list.answered li .answer-date {
+    line-height: 30px;
+ }
+
+  </style>
+</head>
+
+
+<body class="page-enquete">
+  
+  <apex:inputHidden id="messageError" html-class="message-error" value="{!messageError}" />
+  <apex:inputHidden id="messageQuestion" html-class="message-question" value="{!messageQuestion}" />
+  <apex:inputHidden html-class="idBusinessLocation" value="{!idBusinessLocation}" />
+  <apex:inputHidden html-class="idHearingReply" value="{!idHearingReply}" />
+  <apex:inputHidden id="isPreview" html-class="isPreview" value="{!isPreview}" />
+
+  <apex:actionFunction name="jsShowInquiryReplied"
+                       action="{!showInquiryReplied}"
+                       rerender="pnlHearingSectionList"
+                       oncomplete="setView_05_01_01_logic();" />
+
+  <apex:actionFunction name="jsShowInquiryNotReplied"
+                       action="{!showInquiryNotReplied}"
+                       rerender="pnlHearingSectionList"
+                       oncomplete="setView_05_01_01_logic();" />
+
+  <apex:actionFunction name="jsBackToMainLogic"
+  					   action="{!controllerBackFromPreview}"
+  					   oncomplete="setView_05_01_01();"/>
+
+  <apex:actionFunction name="jsShowInquiry"
+                       action="{!showInquiry}"
+                       rerender="messageError, messageQuestion, pnlInquiryDetailDay, pnlInquiryDetail, pnlInquiryDetailFooter"
+                       oncomplete="jsChangeRadioCheckedDefault();setView_05_01_02_logic(true);jsAfterShowInquiry();"/>
+
+  <apex:actionFunction name="jsSaveInquiry"
+                       action="{!saveInquiry}"
+                       rerender="messageError, messageQuestion, pnlCalendar, pnlInquiryDetailDay, pnlInquiryDetail, pnlInquiryDetailFooter, pnlHearingSectionList"
+                       oncomplete="jsChangeRadioCheckedDefault();setView_05_01_02_logic(false);jsAfterSaveInquiry();setTimeout(function() {buttonsEnabled(true);}, 500);"/>
+
+  <apex:actionFunction name="jsSendInquiry"
+                       action="{!sendInquiry}"
+                       rerender="messageError, messageQuestion, pnlCalendar, pnlInquiryDetailDay, pnlInquiryDetail, pnlInquiryDetailFooter, pnlHearingSectionList"
+                       oncomplete="jsChangeRadioCheckedDefault();setView_05_01_02_logic(false);jsAfterSendInquiry();setTimeout(function() {buttonsEnabled(true);}, 500);"/>
+
+  <apex:actionFunction name="jsSendInquiryConfirm"
+                       action="{!sendInquiryConfirm}"
+                       rerender="messageError, messageQuestion"
+                       oncomplete="jsAfterSendInquiryConfirm();"/>
+
+
+  <c:saMainTopComp typeOfScreen="{!typeOfScreen}" />
+
+  <div class="protect-screen-bis hide"></div>
+  
+  <!-- template-popup -->
+  <div class="modal-dialog hide"><p>ダイアログメッセージ</p><div class="btn-cancel"><a href="#">キャンセル</a></div><div class="btn-ok"><a href="#">OK</a></div></div>
+
+  <div class="document-container">
+    <header class="document-header">
+      <div class="btn-menu"><a href="#">ナビゲーション</a></div>
+    </header>
+
+    <div class="document-contents">
+
+
+      <!-- #View 05-01-01(typ.) -->
+      <section class="enquete-section enquete-section-top hide">
+        <header class="enquete-list-section-header">
+          <h1>ヒアリング一覧</h1>
+          <ul>
+            <li><h2><a href="#" class="enquete-section-unread">未回答一覧</a></h2></li>
+            <li><h2><a href="#" class="enquete-section-read">既回答一覧</a></h2></li>
+          </ul>
+        </header>
+
+        <apex:outputPanel id="pnlHearingSectionList" >
+          <div class="section-body enquete-list-section-body">
+
+            <!-- #DynamicItem -->
+            <ul class="enquete-list {!IF(isAnswered, 'answered', '')}">
+              <apex:repeat value="{!lsInquiry}" var="inq">
+                <li class="inquiry-item" inquiry="{!inq.inq.Id}" BusinessLocation="{!IF(isWithoutBusinessLocation, BUSINESS_LOCATION_DUMMY, inq.inq.saBusinessLocation__c)}">
+                  <a href="#">
+                    <span class="title">{!IF(inq.inq.saInquiry__r.Type__c==TypeSanxHearing, '[SA] ', '')}{!inq.inq.saInquiry__r.ReportName__c}</span>
+                    <span class="answer-date" style="{!IF(inq.inq.ReplyDatetime__c == NULL, 'display: none;', '')}">
+                      <time>
+                        <apex:outputText value="{0,date,yyyy/MM/dd　HH:mm}">
+                          <apex:param value="{!inq.inq.ReplyDatetime__c + offset}" /> 
+                        </apex:outputText>
+                      </time>
+                    </span>
+                  </a>
+                  <span class="badge {!inq.clsNm}"><time>{!inq.dateLabel}</time></span>
+                </li>
+
+              </apex:repeat>
+            </ul>
+
+          </div>
+        </apex:outputPanel>
+
+        <footer class="enquete-list-section-footer"></footer>
+      </section>
+
+
+
+      <!-- #View 05-01-05(typ.) -->
+      <section class="enquete-section enquete-section-list hide">
+        <header class="select-base-section-header">
+          <h1>競合店の動向について</h1>
+          <h2>拠点を選択</h2>
+          <div class="btn-back"><a href="#" class="ui-color-dark">戻る</a></div>
+        </header>
+
+        <div class="section-body select-base-section-body">
+
+          <ul class="base-list">
+
+            <apex:repeat value="{!lsBusinessLocation}" var="varBL" >
+              <li>
+                <label>
+                  <input type="radio"
+                         class="radio {!IF(varBL.IsChecked, 'isCheckedDefault', '')}"
+                         name="radiobuttonsBL"
+                         value="{!varBL.saBusinessLocation.Id}"/>
+                  <span class="radio-label">
+                    <span class="base-name">{!varBL.saBusinessLocation.Code__c} {!varBL.saBusinessLocation.BusinessLocationName__c}</span>
+                  </span>
+                </label>
+              </li>
+            </apex:repeat>
+          </ul>
+          
+        </div>
+
+        <footer class="select-base-section-footer">
+          <div class="btn btn-create"><a href="#" class="ui-color-1">作成開始</a></div>
+        </footer>
+      </section>
+
+
+
+
+
+
+
+      <!-- #View 05-01-02(typ.) -->
+      <section class="enquete-section {!IF(isAnswered, 'answered', '')} enquete-section-detail hide">
+        <header class="enquete-detail-form-section-header">
+          <h1>
+            <time>
+              <apex:outputLabel id="pnlInquiryDetailDay" value="{!currentHearingTitle}" />
+            </time>
+          </h1>
+          <div class="btn-back"><a href="#" class="ui-color-dark">戻る</a></div>
+        </header>
+
+        <div class="section-body enquete-form-section-body">
+
+          <apex:outputPanel id="pnlInquiryDetail">
+
+            <!-- #DynamicItem -->
+            <div class="enquete-form">
+              <span class="answer-date-detail answer-date"
+                    style="{!IF(isAnswered, '', 'display: none;')}">
+                <time class="answer-date-detail-text">
+                  <apex:outputText value="{0,date,yyyy/MM/dd　HH:mm}">
+                    <apex:param value="{!currentInquiryReply.ReplyDatetime__c + offset}" /> 
+                  </apex:outputText>
+                </time>
+              </span>
+              <span class="badge-detail badge {!currentClsInquiryReply.clsNm}"
+                    style="{!IF(isAnswered, 'display: none;', '')}">
+                <time>{!currentClsInquiryReply.dateLabel}</time>
+              </span>
+
+              <apex:outputPanel layout="none" rendered="{!currentClsInquiryReply.inq.saInquiry__r.IssuerLabel__c != NULL}">
+                <p class="text">
+                  <apex:outputLabel value="{!$ObjectType.saInquiry__c.fields.IssuerLabel__c.Label} : " />
+                  <apex:outputField value="{!currentClsInquiryReply.inq.saInquiry__r.IssuerLabel__c}"/>
+  
+                </p>
+              </apex:outputPanel>
+
+              <h3 class="title">{!BusinessLocationName}</h3>
+
+              <apex:repeat value="{!currentInquiryReplyDetail}" var="varQuest" >
+                <p class="text">
+                  <apex:outputLabel rendered="{!mpQuestions[varQuest.saInquiryDetail__c].IsRequired__c}" style="color: red;">* </apex:outputLabel>
+                  {!mpQuestions[varQuest.saInquiryDetail__c].QuestionLabel__c}
+                </p>
+
+                <apex:outputPanel rendered="{!mpQuestions[varQuest.saInquiryDetail__c].AnswerType__c == 'TEXT'}">
+                  <ul>
+                    <li>
+                      <apex:inputTextarea value="{!varQuest.ReplyText__c}" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}"/>
+                    </li>
+                  </ul>  
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!mpQuestions[varQuest.saInquiryDetail__c].AnswerType__c == 'NUMBER'}">
+                  <ul>
+                    <li>
+                      <apex:inputText value="{!varQuest.ReplyNumberTechnical__c}" 
+                                      html-pattern="[0-9]*"
+                                      disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}"/>
+                    </li>
+                  </ul>  
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!mpQuestions[varQuest.saInquiryDetail__c].AnswerType__c == 'DECIMAL'}">
+                  <ul>
+                    <li>
+                      <apex:inputText value="{!varQuest.ReplyDecimalTechnical__c}" 
+                                      html-type="text"
+                                      disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}"/>
+                    </li>
+                  </ul>  
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!mpQuestions[varQuest.saInquiryDetail__c].AnswerType__c == 'CHECKBOX'}">
+                  <ul>
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 1, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox01__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" />
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply01Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 2, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox02__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply02Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 3, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox03__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply03Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 4, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox04__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply04Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 5, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox05__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply05Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 6, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox06__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply06Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 7, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox07__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply07Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 8, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox08__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply08Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 9, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox09__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply09Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 10, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox10__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply10Label__c}</span></span>
+                      </label>
+                    </li>
+  
+					<li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 11, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox11__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" />
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply11Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 12, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox12__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply12Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 13, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox13__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply13Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 14, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox14__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply14Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 15, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox15__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply15Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 16, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox16__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply16Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 17, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox17__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply17Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 18, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox18__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply18Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 19, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox19__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply19Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 20, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox20__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply20Label__c}</span></span>
+                      </label>
+                    </li>
+                    
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 21, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox21__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" />
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply21Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 22, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox22__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply22Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 23, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox23__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply23Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 24, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox24__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply24Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 25, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <apex:inputCheckbox value="{!varQuest.ReplyCheckbox25__c}" styleclass="checkbox" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" /> 
+                        <span class="checkbox-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply25Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    
+                  </ul>  
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!mpQuestions[varQuest.saInquiryDetail__c].AnswerType__c == 'RADIO_BUTTON'}">
+                  <apex:inputHidden html-class="ReplyRadioButton-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                                    value="{!varQuest.ReplyRadioButton__c}" />
+
+                  <ul>
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 1, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_01', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_01');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply01Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 2, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_02', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_02');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply02Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 3, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_03', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_03');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply03Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 4, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_04', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_04');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply04Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 5, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_05', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_05');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply05Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 6, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_06', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_06');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply06Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 7, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_07', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_07');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply07Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 8, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_08', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_08');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply08Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 9, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_09', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_09');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply09Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 10, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_10', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_10');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply10Label__c}</span></span>
+                      </label>
+                    </li>
+                    
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 11, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_11', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_11');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply11Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 12, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_12', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_12');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply12Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 13, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_13', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_13');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply13Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 14, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_14', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_14');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply14Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 15, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_15', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_15');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply15Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 16, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_16', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_16');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply16Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 17, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_17', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_17');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply17Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 18, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_18', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_18');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply18Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 19, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_19', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_19');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply19Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 20, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_20', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_20');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply20Label__c}</span></span>
+                      </label>
+                    </li>
+                    
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 21, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_21', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_21');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply21Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 22, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_22', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_22');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply22Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 23, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_23', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_23');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply23Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 24, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_24', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_24');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply24Label__c}</span></span>
+                      </label>
+                    </li>
+
+                    <li style="{!IF(mpQuestions[varQuest.saInquiryDetail__c].NumberPossibleReplies__c >= 25, '', 'display: none;')}" class="{!IF(mpQuestions[varQuest.saInquiryDetail__c].IsShortReply__c, 'col-2', '')}">
+                      <label>
+                        <input type="radio" 
+                               class="radio {!IF(varQuest.ReplyRadioButton__c == 'REPLY_25', 'isReplyCheckedDefault', '')} {!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'isReplyDisabledDefault', '')}"
+                               name="radiobuttons-{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}"
+                               value=""
+                               onclick="jsChangeRadioValue('{!mpQuestions[varQuest.saInquiryDetail__c].SortNo__c}', 'REPLY_25');" />
+                        <span class="radio-label"><span class="base-name">{!mpQuestions[varQuest.saInquiryDetail__c].Reply25Label__c}</span></span>
+                      </label>
+                    </li>
+
+                  </ul>  
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!mpQuestions[varQuest.saInquiryDetail__c].AnswerType__c == 'DATE'}">
+                  <ul>
+                    <li>
+                      <apex:inputText value="{!varQuest.ReplyDateStartTechnical2__c}"
+                                      html-type="date"
+                                      html-defaultvalue="{!varQuest.ReplyDateStartTechnical__c}"
+                                      styleclass="dateInput"
+                                      style="vertical-align: middle;"
+                                      disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" />
+                    </li>
+                  </ul>  
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!mpQuestions[varQuest.saInquiryDetail__c].AnswerType__c == 'PERIOD'}">
+                  <ul>
+                    <li>
+                      <div class="date">
+                        <apex:inputText value="{!varQuest.ReplyDateStartTechnical2__c}"
+                                        html-type="date"
+                                        html-defaultvalue="{!varQuest.ReplyDateStartTechnical__c}"
+                                        styleclass="dateInput"
+                                        style="vertical-align: middle;"
+                                        disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" />
+                        <span class="divider">～</span>
+                        <apex:inputText value="{!varQuest.ReplyDateEndTechnical2__c}"
+                                        html-type="date"
+                                        html-defaultvalue="{!varQuest.ReplyDateEndTechnical__c}"
+                                        styleclass="dateInput"
+                                        style="vertical-align: middle;"
+                                        disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}" />
+                      </div>
+                    </li>
+                  </ul>  
+                </apex:outputPanel>
+
+              </apex:repeat>
+
+<!--
+              <ul>
+                <li><div class="date"><input type="text" value="2018年2月10日" class="begin datetimepicker" /><span class="divider">～</span><input type="text" value="2018年2月10日" class="end datetimepicker" /></div></li>
+              </ul>
+-->
+
+
+                      <apex:repeat value="{!currentInquiryAttachments}" var="att" >
+
+                        <apex:outputPanel rendered="{!att.ContentType == 'video/mp4' || 
+                                                      att.ContentType == 'video/mpeg' ||
+                                                      att.ContentType == 'video/quicktime' ||
+                                                      att.ContentType == 'video/x-m4v' ||
+                                                      att.ContentType == 'video/x-ms-asf' ||
+                                                      att.ContentType == 'video/x-msvideo'}">
+                          <video style="max-width: 15rem;max-height: 15rem;margin-left: 1rem;margin-top: 1rem;"  controls="controls">
+                                <source src="/servlet/servlet.FileDownload?file={!att.Id}"
+                                        type="video/mp4" />        
+                                Your browser does not support the video tag.
+                          </video> 
+                        </apex:outputPanel>
+
+                        <apex:outputLink value="/servlet/servlet.FileDownload?file={!att.Id}"
+                                         rendered="{!att.ContentType == 'image/jpeg' ||
+                                                     att.ContentType == 'image/png' ||
+                                                     att.ContentType == 'image/gif' ||
+                                                     att.ContentType == 'image/jpg'}"
+                                         target="_blank">
+
+                          <apex:image style="max-width: 15rem;max-height: 15rem;margin-left: 1rem;margin-top: 1rem;" 
+                                      url="/servlet/servlet.FileDownload?file={!att.Id}"/>
+
+                        </apex:outputLink>
+
+                        <apex:outputLink value="/servlet/servlet.FileDownload?file={!att.Id}"
+                                         rendered="{!att.ContentType == 'application/pdf'}"
+                                         target="_blank">
+
+                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;" 
+                                      url="{!URLFOR($Resource.auResources,'icons/Pdf-icon.png')}"/> 
+
+                          <apex:outputLabel value="{!att.Name}" />
+                          <br/>
+
+                        </apex:outputLink>
+
+                        <apex:outputLink value="/servlet/servlet.FileDownload?file={!att.Id}"
+                                         rendered="{!att.ContentType != 'video/mp4' &&
+                                                     att.ContentType != 'video/mpeg' &&
+                                                     att.ContentType != 'video/quicktime' &&
+                                                     att.ContentType != 'video/x-m4v' &&
+                                                     att.ContentType != 'video/x-ms-asf' &&
+                                                     att.ContentType != 'video/x-msvideo' &&
+                                                     att.ContentType != 'application/pdf' &&
+                                                     att.ContentType != 'image/jpeg' &&
+                                                     att.ContentType != 'image/png' &&
+                                                     att.ContentType != 'image/gif' &&
+                                                     att.ContentType != 'image/jpg'}">
+
+                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;" 
+                              url="{!URLFOR($Resource.auResources,'icons/Excel-icon.png')}"
+                              rendered="{!att.ContentType == 'application/vnd.ms-excel' || 
+                                          att.ContentType == 'application/vnd.ms-excel.sheet.macroEnabled.12' ||
+                                          att.ContentType == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+                                          att.ContentType == 'text/csv'}"/>
+
+                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;" 
+                              url="{!URLFOR($Resource.auResources,'icons/Word-icon.png')}"
+                              rendered="{!att.ContentType == 'application/msword' ||
+                                          att.ContentType == 'application/vnd.ms-word.document.macroEnabled.12' ||
+                                          att.ContentType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}"/>
+
+                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;" 
+                              url="{!URLFOR($Resource.auResources,'icons/PowerPoint-icon.png')}"
+                              rendered="{!att.ContentType == 'application/vnd.google-apps.presentation' ||
+                                          att.ContentType == 'application/vnd.ms-powerpoint' ||
+                                          att.ContentType == 'application/vnd.ms-powerpoint.presentation.macroEnabled.12' ||
+                                          att.ContentType == 'application/vnd.openxmlformats-officedocument.presentationml.presentation'}"/>
+
+                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;" 
+                              url="{!URLFOR($Resource.auResources,'icons/File-icon.png')}"
+                              rendered="{!att.ContentType != 'image/jpeg' && 
+                                          att.ContentType != 'image/png' &&
+                                          att.ContentType != 'image/gif' &&
+                                          att.ContentType != 'image/jpg' &&
+                                          att.ContentType != 'application/vnd.ms-excel' &&
+                                          att.ContentType != 'application/vnd.ms-excel.sheet.macroEnabled.12' &&
+                                          att.ContentType != 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' &&
+                                          att.ContentType != 'text/csv' &&
+                                          att.ContentType != 'application/msword' &&
+                                          att.ContentType != 'application/vnd.ms-word.document.macroEnabled.12' &&
+                                          att.ContentType != 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' &&
+                                          att.ContentType != 'application/vnd.google-apps.presentation' &&
+                                          att.ContentType != 'application/vnd.ms-powerpoint' &&
+                                          att.ContentType != 'application/vnd.ms-powerpoint.presentation.macroEnabled.12' &&
+                                          att.ContentType != 'application/vnd.openxmlformats-officedocument.presentationml.presentation' &&
+                                          att.ContentType != 'application/pdf'}"/>
+
+                          <apex:outputLabel value="{!att.Name}" />
+                          <br/>
+
+                        </apex:outputLink>
+
+                      </apex:repeat>
+
+            </div>
+
+          </apex:outputPanel>
+          
+        </div>
+
+        <footer class="enquete-form-section-footer">
+          <apex:outputPanel id="pnlInquiryDetailFooter">
+            <!-- TODO : Button to create report automatically -->     
+            <div class="btn btn-save"
+                 style="{!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'display: none;', '')}">
+              <apex:commandLink value="一時保存"
+                                styleclass="ui-color-3"
+                                action="{!dummyAction}"
+                                rerender="dummy" 
+                                rendered="{!!isPreview}"/>
+         	  <apex:commandLink value="一時保存"
+                                styleclass="disableColor1"
+                                action="{!dummyAction}"
+                                rerender="dummy" 
+                                rendered="{!isPreview}"/>
+            </div>
+            <div class="btn btn-send"
+                 style="{!IF(currentInquiryReply.Status__c == 'REPLY_SENT', 'display: none;', '')}">
+              <apex:commandLink value="確定保存"
+                                styleclass="ui-color-1"
+                                action="{!dummyAction}"
+                                rerender="dummy" 
+                                rendered="{!!isPreview}"/>
+              <apex:commandLink value="確定保存"
+                                styleclass="disableColor2"
+                                action="{!dummyAction}"
+                                rerender="dummy" 
+                                rendered="{!isPreview}"/>
+            </div>
+          </apex:outputPanel>
+        </footer>
+      </section>
+   
+    </div>
+    <footer class="document-footer"></footer>
+  </div>
+  <script>
+
+    function setView_05_01_01() {
+
+      $j(".document-header").show();
+      $j('.enquete-section-top').show();
+      $j('.enquete-section-list').hide();
+      $j('.enquete-section-detail').hide();
+
+      setView_05_01_01_logic();
+    }
+
+    function setView_05_01_01_logic() {
+
+      $j(".enquete-section-read").off("click");  
+      $j(".enquete-section-read").on("click", function (e) {
+        if(!$j(".enquete-section-read").hasClass("current")) {
+          $j(".enquete-section-read").addClass("current");
+          $j(".enquete-section-unread").removeClass("current");
+          jsShowInquiryReplied();
+        }
+      });
+
+      $j(".enquete-section-unread").off("click");  
+      $j(".enquete-section-unread").on("click", function (e) {
+        if(!$j(".enquete-section-unread").hasClass("current")) {
+          $j(".enquete-section-unread").addClass("current");
+          $j(".enquete-section-read").removeClass("current");
+          jsShowInquiryNotReplied();
+        }
+      });
+
+      $j(".inquiry-item").off("click");
+      $j(".inquiry-item").on("click", onClickCalenderItem);
+    }
+
+    function setView_05_01_05() {
+
+      $j(".document-header").hide();
+      $j('.enquete-section-top').hide();
+      $j('.enquete-section-list').show();
+      $j('.enquete-section-detail').hide();
+
+      setView_05_01_05_logic();
+
+    }
+
+    function setView_05_01_05_logic() {
+
+      $j(".btn-back").off("click");
+      $j(".btn-back").on("click", function (e) {
+        setView_05_01_01();
+      });
+
+      $j(".btn-create").off("click");
+      $j(".btn-create").on("click", function (e) {
+
+        /* Get the checked Business Location */
+        $j('.idBusinessLocation').val($j('input:radio[name=radiobuttonsBL]:checked').val());
+        jsShowInquiry();
+
+      });
+      
+    }
+
+    function setView_05_01_02(activateButtons) {
+
+      $j(".document-header").hide();
+      $j('.enquete-section-top').hide();
+      $j('.enquete-section-list').hide();
+      $j('.enquete-section-detail').show();
+
+      $j('.dateInput').each(function(i, obj) {
+          $j(this).val($j(this).attr('defaultvalue'));
+      });
+
+      setView_05_01_02_logic(activateButtons);
+    }
+
+    function setView_05_01_02_logic(activateButtons) {
+
+      jsChangeRadioCheckedDefault();
+
+      $j(".btn-back").off("click");
+      $j(".btn-back").on("click", function (e) {
+        setView_05_01_01();
+      });
+
+      if (activateButtons) {
+
+        $j(".btn-save").off("click");
+        $j(".btn-save").on("click", function (e) {
+            buttonsEnabled(false);
+            jsSaveInquiry();
+        });
+
+        $j(".btn-send").off("click");
+        $j(".btn-send").on("click", function (e) {
+            buttonsEnabled(false);
+            jsSendInquiryConfirm();
+        });
+        
+      }
+
+    }
+
+	function setView_preview() {
+
+      $j(".document-header").hide();
+      $j('.enquete-section-top').hide();
+      $j('.enquete-section-list').hide();
+      $j('.enquete-section-detail').show();
+
+      $j('.dateInput').each(function(i, obj) {
+          $j(this).val($j(this).attr('defaultvalue'));
+      });
+
+      setView_preview_logic();
+    }
+
+    function setView_preview_logic(activateButtons) {
+
+      jsChangeRadioCheckedDefault();
+
+      $j(".btn-back").off("click");
+      $j(".btn-back").on("click", jsBackToMainLogic);
+
+        $j(".btn-save").off("click");
+        $j(".btn-send").off("click");
+    }
+    
+    /* カレンダーの日付をクリックした際の処理 */
+    function onClickCalenderItem(e) {
+      
+      var $target, $categories;
+      
+      $target = $j(e.currentTarget);
+      $j('.idHearingReply').val($target.attr('inquiry'));
+      $j('.select-base-section-header').find('h1').text($target.find(".title").text());
+
+      if ($target.attr("BusinessLocation").length > 0) {
+        // Some data has already been created
+        $j('.idBusinessLocation').val($target.attr('BusinessLocation'));
+        jsShowInquiry();
+        setView_05_01_02();
+      } else {
+        // There is no data
+        setView_05_01_05();
+      }
+    }
+
+
+    $j(document).ready(function () {
+
+      $j('.isCheckedDefault').prop('checked', true);
+      if($j('.isPreview').val().toLowerCase()=="true"){
+      	setView_preview();
+      }else{
+      	setView_05_01_01();
+      	}
+      $j('.enquete-section-unread').addClass('current');
+
+    });
+
+  </script>
+</body>
+</html>
+
+</apex:form>
+
+</apex:page>

@@ -1,0 +1,740 @@
+<apex:page cache="false" showHeader="false" standardStylesheets="true" applyHtmlTag="false" applyBodyTag="false" doctype="html-5.0" controller="kdKnowledgeHomePageCtrl">
+<html class="no-js" lang="en-GB">
+<c:auMainHeaderComp />
+<head>
+  <apex:slds />
+  <apex:stylesheet value="{!URLFOR($Resource.jQueryUIFull, 'jquery-ui-1.12.1/jquery-ui.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.jQueryUIFull, 'jquery-ui-1.12.1/jquery-ui.min.css')}"/>
+
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/external/jquery/jquery.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.datepicker-ja.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryMin)}"/>
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.min.js')}"/> 
+
+  <style>
+    .col1{
+      width: 155px;
+      overflow-x: hidden;
+    }
+    .col2{
+      min-width: 100px;
+    }
+    .col3{
+      min-width: 100px;
+      max-width: 300px;
+      overflow-x: hidden;
+    }
+    .col4{
+      min-width: 100px;
+      max-width: 300px;
+      overflow-x: hidden;
+    }
+    .col5, .col6{
+      min-width: 50px;
+      max-width: 60px;
+      overflow-x: hidden;
+      text-align: right !important;
+      margin-right: 0.5rem;
+    }
+    .col3 p, .col4 p{
+      word-break: break-all;
+      word-wrap: break-word;
+      white-space: normal;
+    }
+    .col7{
+      min-width: 50px;
+      max-width: 60px;
+      overflow-x: hidden;
+    }
+
+    .content {
+      padding: 1em;
+    }
+
+    .selectDate {
+      width: 7rem;
+      margin-left: 1em;
+      height: 2.1rem;
+    }
+
+    .menu-item-inside{/* kawada追加 ;*/
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .menu-item-inside:hover{/* kawada追加 ;*/
+      background: #f5f5f5;
+    }
+
+    .dataTables_scrollBody {
+/*      max-height: 50rem !IMPORTANT;*/
+    }
+    .theme {
+/*      height: 100vh !IMPORTANT;
+*/    }
+    .content.content--theme {
+/*      style="overflow-x: hidden;"
+*/    }
+
+    .button.button--update{
+      margin-right: 0.5rem;
+    }
+
+    .button.button--update.button--update--space{
+      margin-right: 5rem;
+    }
+
+    .no-arrow::before {
+      display: none;
+    }
+    .theme-desc-list-fullsize {
+      width: 100%;
+    }
+
+    .button--cancel {
+      cursor: pointer;
+      cursor: hand;
+    }
+
+    .popup-inner {
+      top: 45%;
+      max-height: 78%;
+    }
+
+    .attachInput {
+      height: 4rem;
+      width: 4rem;
+      position: absolute;
+      left: 0.5rem;
+      opacity: 0;
+      overflow: hidden;
+    margin-top: -2rem;
+   }
+
+    .icon-attach {
+      height: 4rem;
+      width: 4rem;
+      position: absolute;
+      left: 0.5rem;
+    margin-top: -2rem;
+      pointer-events: none;
+    }
+
+    .icon--knowledge-letter {
+      height: 2rem;
+      width: 2rem;
+    }
+
+    .js-slide-width {
+/*      height: 495px !important;
+  */
+    }
+
+    .theme-desc__head_side {
+      height: 4.5rem;
+      max-height: 4.5rem;
+    }
+
+    .theme-desc__upload {
+      width: 100%;
+    }
+
+    .knowledge-list--attachment {
+      height: 2.5rem;
+      padding-left: 1rem;
+      background-color: #eee;
+      border-bottom: 1px solid #fff;
+      line-height: 2.5;
+      overflow: hidden;
+    }
+
+    .knowledge-list--attachment .button--delete-list {
+      float: right;
+    }
+
+    .isLink {
+      cursor: pointer;
+      cursor: hand;      
+    }
+
+    .linkPutInTop {
+      float: right;
+      margin-right: 1rem
+    }
+
+    .theme-infoxxx {
+      overflow-y: scroll !important;
+    }
+
+    .theme-desc {
+      width: 100%;
+    }
+/* NEW CODE FOR CX */
+
+    .theme-list tbody {
+      height: auto !important;
+    }
+
+    .theme-list tbody td {
+      vertical-align: inherit;
+    }
+
+    .input-title {
+      height: 2.3rem !important;
+    }
+
+    .table--theme-info .is-middle {
+      width: 15rem;
+      margin-right: 1rem;
+    }
+
+    .no-attach {
+      opacity: 0.15;
+    }
+
+    .knowledge-list--attachment {
+      height: auto;
+      overflow: auto;
+    }
+
+    .theme-info__head.is-cx span{
+      color: #fff;
+    }
+
+    .popup--like textarea,
+    .popup--copy textarea {
+      width: 100%;
+      height: 20rem;
+    }
+
+    .popup--like .popup-inner,
+    .popup--copy .popup-inner {
+        width: 50%;
+        background-color: transparent;
+    }
+
+    .close-label {
+      font-size: 1.6rem;
+      line-height: 1.8 !important;
+    }
+
+    .popup__button-container {
+      bottom: 13rem;
+    }
+
+    .ui-datepicker {
+      z-index: 5 !important;
+    }
+
+    .thspanwithoutarrow {
+      top: auto !important;
+    }
+
+    .shopsItem, .categoryItem {
+        display: inline-block;
+        width: 240px;
+        float: left;
+        text-align: left;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin: 4px;
+        height: 1.8em;
+    }
+
+    .search-status__select {
+      width: auto;
+      height: 2.1rem;
+    }
+
+    .filter-category, .filter-daterange {
+      padding-left: 0 !important;
+      height: 44px;
+    }
+
+    .linkstyle {
+      text-decoration: underline;
+    }
+    .linkstyle:hover {
+      color: blue;
+    }
+    .linkstyle a:hover {
+      color: blue;
+    }
+
+    .highlightRow {
+      background-color: Cornsilk;
+    }
+
+    ul li, ol li {
+      margin-left: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      display: inherit;
+    }
+
+    body a:hover {
+      text-decoration: none;
+    }
+
+  .btn, .button, .formulaButton, .btnWhatsNew {
+      font-family: HelveticaNeueRoman,HelveticaNeue-Roman,Meiryo,Hiragino Kaku Gothic ProN,Kozuka Gothic Pr6N,Arial,Helvetica Neue Roman,HelveticaNeue,Helvetica Neue,TeXGyreHerosRegular,Helvetica,Tahoma,Geneva,sans-serif;
+      background-image: none;
+      background-repeat: no-repeat;
+      background-position: initial;
+      border-right: none;
+      border-bottom: none;
+      border-top: none;
+      border-left: none;
+      font-size: inherit;
+      color: initial;
+  }
+  
+  body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .menuButton .menuButtonButton {
+      color: #333;
+      margin: auto;
+      padding: 0;
+      border: none;
+      background: unset;
+      font-weight: normal;
+      font-size: inherit;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+      border-radius: 3px;
+  }
+  
+  .button--remove {
+      background-color: #999;
+  }
+  .menu-title{
+    height: 5%;
+  }
+  .selection-active{
+      /*background-color: #F9B593;*/
+      background-color: #ffe0d1; /*kawada edited*/
+      opacity: 1 !important;
+  }
+  .left-menu{
+    /*border: solid 1px grey;
+    width: 14%;
+    float: left;
+    height: 93%;
+    -webkit-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+    overflow:scroll;
+    overflow-x:hidden;*/
+    /*kawada edited*/
+    width: 14%;
+    float: left;
+    height: 99%;
+    overflow:scroll;
+    overflow-x:hidden;
+  }
+  .margin-top-15{
+    margin-top: 15px;
+  }
+  .item-display{
+    display: block;
+    width: 86%;
+    float: left;
+    padding-left: 2%;
+    overflow:scroll;
+    overflow-x:hidden;
+    height: 99%;
+    background: white; /*kawada added*/
+  }
+  .left-menu ul li{
+    height: 35px;
+    vertical-align: middle;
+    margin-left: 2px;
+  }
+  .item-title{
+    height: 28px;
+    vertical-align: middle;
+    /*background-color: #F9B593;
+    border: solid 1px grey;
+    -webkit-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow:0 0 10px rgba(0, 0, 0, 0.5);*/
+    margin-left: 1%;
+    margin-right: 1%;
+    /*kawada added*/
+    color:#ed5500;
+    font-size: 16px;
+  }
+  .cat-display{
+    margin-bottom: 15px;
+  }
+  .item-solo-area{
+    width: 24%;
+    height: 130px;
+    float: left;
+    margin-right: 1%;
+    margin-top: 10px;
+    /*border: solid 1px grey
+    -webkit-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow:0 0 10px rgba(0, 0, 0, 0.5);*/
+    background: #f5f5f5; /*kawada added*/
+    position: relative;
+  }
+  /*kawada added*/
+  .item-solo-area:hover{
+      background: #eaeaea;
+  }
+
+  .item-list{
+    margin-left: 1%;
+  }
+  .newItem{
+    background-color: #dc374d;/*red;*/
+    font-weight: bold;
+    color: white;
+    display:inline-block;
+    width: 40px;
+    text-align: center;
+    margin-right: 10px;   
+  }
+  .minH-200{
+    min-height: 200px;
+  }
+  .display-category{
+    height: 33px;
+    /*vertical-align: middle;
+    background-color: #5AA6DB;
+    border: solid 1px grey;
+    -webkit-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow:0 0 10px rgba(0, 0, 0, 0.5);*/
+    margin-bottom: 10px;
+    /*kawada added*/
+    line-height: 2.1;
+    border-bottom: 2px solid #a6a6a6;
+  }
+
+  .main {
+    background-color: transparent !important;
+  }
+  .slds-section__title-action{
+    background-color: #3D5273 !important;
+    color: #fff !important;
+    height: 3em;
+    vertical-align: middle !important;
+  }
+  .margin-left-5-minus{
+    margin-left: -5px !important;
+  }
+  .web-content{
+    margin-top: 10px;
+  }
+  #menu-type-section, #menu-channel-section{
+    margin-top: 25px;
+  }
+  .top-item-bottom{
+    background-color: #ed5500; 
+    border-radius: 0 0 15px 15px; 
+    height: 2.7em; 
+    text-align: center;
+  }
+  .top-item-title{
+    height: 30px; 
+    text-align: center; 
+    padding-top: 5px; 
+    background-color: #ed5500; 
+    color: #fff; 
+    font-size: 14px; 
+    border-radius: 15px 15px 0 0;
+  }
+  .top-item-showmore{
+    margin: 5px 10px 10px 0; 
+    float: right; 
+    color: #fff !important; 
+    font-size: 14px !important;
+  }
+  .header{
+    position: fixed;
+    z-index: 10;
+  }
+  #content{
+    margin-top: 5rem;
+  }
+</style>
+
+<script>
+  var $j = jQuery.noConflict();
+  $( function() {
+      $.datepicker.setDefaults($.datepicker.regional['ja']);
+      $( ".datepicker" ).datepicker({ dateFormat: 'yy/mm/dd' });
+      $(".menu-item").click(function(){
+        handleClickMenuItem($(this));
+      });
+      $(".item-solo-area").click(function(){
+        var knowledgeId = $(this).attr("knowledgeId");
+        console.log('knowledgeId: ' + knowledgeId);
+        window.location.replace('/apex/kdKnowledgeListPage?knowledge=' + knowledgeId);
+      });
+  } );
+
+  function handleClickMenuItem(object) {
+    var catName = object.attr("category");
+    var catPart = catName.split("-");
+    var catNumber = catPart[1];
+    $(".menu-item-inside").removeClass("selection-active");
+    object.children(".menu-item-inside").addClass("selection-active");
+    var myElement = document.getElementById('cat-' + catNumber);
+    if(myElement == null) {
+      console.log('there is no data');
+      return;
+    }
+    var topPos = myElement.offsetTop;
+    topPos = topPos - document.getElementById('cat-0').offsetTop;
+    if(isNaN(topPos)) {
+      topPos = 0;
+    }
+    console.log('catNumber: ' + catNumber);
+    console.log('topPos: ' + topPos);
+    document.getElementById('{!$Component.formId.itemDisplay}').scrollTop = topPos;
+  }
+
+  function toggleSection(sectionId){
+      if($('#' + sectionId).hasClass("slds-is-open")) {
+          $('#' + sectionId).removeClass("slds-is-open");
+          $('#' + sectionId).addClass("slds-is-close");
+      } else if($('#' + sectionId).hasClass("slds-is-close")) {
+          $('#' + sectionId).removeClass("slds-is-close");
+          $('#' + sectionId).addClass("slds-is-open");
+      }
+      return false;
+  }
+
+</script>
+</head>
+<body class="theme" >
+<apex:form id="formId">
+  <c:auMainTopComp typeOfScreen="{!typeOfScreen}" />
+  <apex:outputPanel >
+    <apex:inputText styleClass="errorMessageInput" value="{!errorMessage}" style="display: none;" />
+  </apex:outputPanel>
+  <div class="container js-get-height" id="container">
+    <main class="main main--theme clear" id="main" role="main">
+      <article class="content content--theme" id="content">
+<!--
+    <div class="menu-title">
+      <h4>カテゴリメニュー</h4>
+    </div>        
+-->
+        <div class="left-menu slds-scope">
+          <div class="slds-section slds-is-open" id="menu-thema-section">
+            <h3 class="slds-section__title">
+              <button aria-controls="menu-thema" aria-expanded="true" class="slds-button slds-section__title-action" onclick="return toggleSection('menu-thema-section');">
+                <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#switch')}" />
+                </svg>
+                <span class="slds-truncate" title="Section Title">テーマ</span>
+              </button>
+            </h3>
+            <div id="menu-thema" aria-hidden="false" class="slds-section__content"> 
+              <ul>
+                <apex:repeat value="{!menuItemList}" var="menuItem">
+                <li class="{!IF(menuItem.index == 0, 'margin-top-15', '')}">
+                  <a href="/kdKnowledgeListPage?thema={!menuItem.apiName}" class="menu-item" title="{!menuItem.displayLabel} ({!menuItem.count})">
+                    <div class="menu-item-inside {!IF(menuItem.index == 0, 'selection-active', '')}">
+                      <apex:image alt="{!menuItem.displayLabel}" value="{!URLFOR($Resource.kdKnowledgeHomePage_icons,'gray/'+menuItem.apiName+'.svg')}" width="20" height="20"/> {!menuItem.displayLabel} ({!menuItem.count})
+                    </div>
+                  </a>
+                </li>
+                </apex:repeat>
+              </ul>
+            </div>
+          </div>
+          <div class="slds-section slds-is-open" id="menu-type-section">
+            <h3 class="slds-section__title">
+              <button aria-controls="menu-type" aria-expanded="true" class="slds-button slds-section__title-action" onclick="return toggleSection('menu-type-section');">
+                <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#switch')}" />
+                </svg>
+                <span class="slds-truncate" title="Section Title">カテゴリ</span>
+              </button>
+            </h3>
+            <div id="menu-type" aria-hidden="false" class="slds-section__content"> 
+              <ul>
+                <apex:repeat value="{!typeItemList}" var="menuItem">
+                <li class="{!IF(menuItem.index == 0, 'margin-top-15', '')}">
+                  <a href="/kdKnowledgeListPage?type={!menuItem.apiName}" class="menu-item" title="{!menuItem.displayLabel} ({!menuItem.count})">
+                    <div class="menu-item-inside">
+                      {!menuItem.displayLabel} ({!menuItem.count})
+                    </div>
+                  </a>
+                </li>
+                </apex:repeat>
+              </ul>
+            </div>
+          </div>
+          <div class="slds-section slds-is-open" id="menu-channel-section">
+            <h3 class="slds-section__title">
+              <button aria-controls="menu-channel" aria-expanded="true" class="slds-button slds-section__title-action" onclick="return toggleSection('menu-channel-section');">
+                <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#switch')}" />
+                </svg>
+                <span class="slds-truncate" title="Section Title">チャネル区分</span>
+              </button>
+            </h3>
+            <div id="menu-channel" aria-hidden="false" class="slds-section__content"> 
+              <ul>
+                <apex:repeat value="{!channelItemList}" var="menuItem">
+                <li class="{!IF(menuItem.index == 0, 'margin-top-15', '')}">
+                  <a href="/kdKnowledgeListPage?channel={!menuItem.apiName}" class="menu-item" title="{!menuItem.displayLabel} ({!menuItem.count})">
+                    <div class="menu-item-inside">
+                      {!menuItem.displayLabel} ({!menuItem.count})
+                    </div>
+                  </a>
+                </li>
+                </apex:repeat>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <apex:outputPanel id="itemDisplay" styleClass="item-display slds-scope" rendered="{!totalItem > 0}">
+          <div class="slds-section slds-is-open" id="web-content-section">
+            <h3 class="slds-section__title margin-left-5-minus">
+              <button aria-controls="web-content" aria-expanded="true" class="slds-button slds-section__title-action margin-left-5-minus" onclick="return toggleSection('web-content-section');">
+                <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#switch')}" />
+                </svg>
+                <span class="slds-truncate" title="Section Title">おすすめナレッジ</span>
+              </button>
+            </h3>
+            <div id="web-content" aria-hidden="false" class="slds-section__content web-content"> 
+              <div style="width: 99%;margin: 0 1% 1% 1%; display: table;">
+
+               <div style="display: table-cell; width: 31%; border-radius: 15px;">
+                 <p class="top-item-title">ウィークリーアクセスランキング</p>
+                 <table>
+                  <apex:repeat value="{!topViewlist}" var="item">
+                    <tr style="background-color: {!IF(item.index == 0 || item.index == 2, '#FAE4E1', '#FFFED1')}; font-size: 12px;">
+                      <td width="65%" style="padding-left: 5px;"><a href="/kdKnowledgeListPage?knowledge={!item.id}">{!item.itemLabel}</a></td>
+                      <td width="35%" style="margin-left: 5px;">{!item.itemThema}</td>
+                    </tr>
+                  </apex:repeat>
+                </table>
+                <div class="top-item-bottom">
+                <apex:outputLink styleClass="top-item-showmore menu-item" value="/kdKnowledgeListPage?vieworder=true" rendered="{!topViewlist.size > 0}">
+                    ＞もっと見る
+                </apex:outputLink>
+                <apex:outputText rendered="{!topViewlist.size == 0}" value="データ無し" style="color: #fff; font-size: 14px">
+                </apex:outputText>
+                </div>
+               </div>
+               <div style="display: table-cell; width: 2%;"></div>
+               <div style="display: table-cell; width: 31%; border-radius: 15px;">
+                 <p class="top-item-title">事務局おすすめ</p>
+                 <table>
+                  <apex:repeat value="{!recommendLastCreatedList}" var="item">
+                    <tr style="background-color: {!IF(item.index == 0 || item.index == 2, '#FAE4E1', '#FFFED1')}; font-size: 12px;">
+                      <td width="65%" style="padding-left: 5px;"><a href="/kdKnowledgeListPage?knowledge={!item.id}">{!item.itemLabel}</a></td>
+                      <td width="35%" style="margin-left: 5px;">{!item.itemThema}</td>
+                    </tr>
+                  </apex:repeat>
+                </table>
+                <div class="top-item-bottom">
+                <apex:outputLink styleClass="top-item-showmore menu-item" value="/kdKnowledgeListPage?recommend=true" rendered="{!recommendLastCreatedList.size > 0}">
+                    ＞もっと見る
+                </apex:outputLink>
+                <apex:outputText rendered="{!recommendLastCreatedList.size == 0}" value="データ無し" style="color: #fff; font-size: 14px">
+                </apex:outputText>
+                </div>
+               </div>
+               <div style="display: table-cell; width: 2%;"></div>
+               <div style="display: table-cell; width: 31%; border-radius: 15px;">
+                 <p class="top-item-title">殿堂入りレポート</p>
+                 <table>
+                  <apex:repeat value="{!dentouiriLastCreatedList}" var="item">
+                    <tr style="background-color: {!IF(item.index == 0 || item.index == 2, '#FAE4E1', '#FFFED1')}; font-size: 12px;">
+                      <td width="65%" style="padding-left: 5px;"><a href="/kdKnowledgeListPage?knowledge={!item.id}">{!item.itemLabel}</a></td>
+                      <td width="35%" style="margin-left: 5px;">{!item.itemThema}</td>
+                    </tr>
+                  </apex:repeat>
+                </table>
+                <div class="top-item-bottom">
+                <apex:outputLink styleClass="top-item-showmore menu-item" value="/kdKnowledgeListPage?dentouiri=true" rendered="{!dentouiriLastCreatedList.size > 0}">
+                    ＞もっと見る
+                </apex:outputLink>
+                <apex:outputText rendered="{!dentouiriLastCreatedList.size == 0}" value="データ無し" style="color: #fff; font-size: 14px">
+                </apex:outputText>
+                </div>
+               </div>
+               <div style="display: table-cell; width: 3%;"></div>
+              </div>
+            </div>
+            <div style="height: 20px"></div>
+          </div>
+          
+          <div class="slds-section slds-is-open" id="thema-list-section">
+            <h3 class="slds-section__title margin-left-5-minus">
+              <button aria-controls="thema-list" aria-expanded="true" class="slds-button slds-section__title-action margin-left-5-minus" onclick="return toggleSection('thema-list-section');">
+                <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#switch')}" />
+                </svg>
+                <span class="slds-truncate" title="Section Title">テーマ別記事一覧</span>
+              </button>
+            </h3>
+            <div id="thema-list" aria-hidden="false" class="slds-section__content thema-list">
+              <apex:repeat value="{!menuItemList}" var="menuItem">
+              <apex:repeat value="{!kdKnwlListMap}" var="themaItem">
+              <apex:outputPanel rendered="{!IF(menuItem.apiName == themaItem.strKey, true, false)}">
+              <div id="cat-{!menuItem.index}" class="cat-display clear">
+                <div class="{!IF(themaItem.isDisplayCategory, 'display-category', 'hidden')}">
+                  <span style="font-weight: bold; font-size: 15px">{!themaItem.category}</span>
+                </div>
+                <div class="item-title">
+                  <apex:image value="{!URLFOR($Resource.kdKnowledgeHomePage_icons,'orange/'+menuItem.apiName+'.svg')}" width="20" height="20"/> {!themaItem.themaLabel}
+                </div>
+                <div class="item-list">
+                  <apex:repeat value="{!themaItem.listValue}" var="kd">
+                    <div class="item-solo-area" knowledgeId="{!kd.Id}">
+                      <div style="min-height: 25px; margin: 10px 10px 0 10px;">
+                      <apex:outputLabel styleClass="newItem" rendered="{!IF(kd.PostTime__c == null || kd.PostTime__c < NOW() - 7, false, true)}" value="New"/>
+                      <span style="float: right">
+                      <apex:image value="{!URLFOR($Resource.auStyling,'/images/icon-video.png')}" width="20" height="20" rendered="{!kd.HasMovie__c}"/>
+                      <apex:image value="{!URLFOR($Resource.auStyling,'/images/icon-attach.png')}" width="20" height="20" rendered="{!kd.Attachments.Size > 0}"/>
+                      </span>
+                      </div>
+                      <div style="margin-left: 10px; overflow:auto; height: 4.9em; font-weight: bold; font-size: 1.2em;">{!kd.Title__c}</div>
+
+                      <p style="position:absolute; bottom:0; height: 20px; margin-bottom: 5px !important;">
+                      <label style="width: 85px; display: inline-block; margin-left: 10px">
+                        閲覧数 {!kd.NbView__c}
+                      </label>
+                      <label style="display: inline-block;">
+                        いいね！ {!kd.NbLike__c}件
+                      </label>
+                      </p>
+                    </div>
+                  </apex:repeat>
+                </div>
+              </div>
+              </apex:outputPanel>
+              </apex:repeat>
+              </apex:repeat>
+            </div>
+          </div>
+        </apex:outputPanel>
+      </article>
+    </main>
+
+  </div>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');    
+      ga('create', 'UA-xxxxxx', 'auto');
+      ga('send', 'pageview');
+    </script> 
+</apex:form>
+</body>
+</html>
+</apex:page>

@@ -1,0 +1,155 @@
+<apex:page controller="saLinksCtrl" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" cache="false" action="{!redirectIfNecessaryMobile}" docType="html-5.0">
+
+<apex:form id="allForm">
+
+<html lang="ja">
+<head>
+
+  <meta charset="utf-8" />
+  <title>auポータル</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/sanitize.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/common.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/style-home.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/iphone.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/flatpickr.min.css')}"/>
+
+  <!-- libraries -->
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/jquery-3.2.1.min.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/flatpickr.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/ja.js')}"/> 
+  
+  <!-- scripts -->
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_check_ua.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_fitting.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_sp.js')}"/> 
+
+  <script>
+    var $j = jQuery.noConflict();
+
+  </script>
+
+  <style type="text/css">
+
+    /*
+     * protect-screen
+     ******************************************************/
+    @media screen {
+
+      .protect-screen-bis {
+        position: fixed;
+        left: 0;
+        top: 0;
+
+        width: 100%;
+        height: 100%;
+
+        background-color: rgba(0, 0, 0, 0.2);
+
+        z-index: 998;
+      }
+      .protect-screen-bis.hide {
+        display: none;
+      }
+    }
+
+    .avatar > img {
+      width: 110px;
+      height: 110px;
+    }
+
+    .postContentList {
+      line-height: 1.3rem;
+      max-height: 5rem;
+    }
+
+    .group-list-item {
+      color: black;
+    }
+
+  </style>
+</head>
+
+
+<body class="page-home">
+  
+  <apex:inputHidden id="messageError" html-class="message-error" value="{!messageError}" />
+  <apex:inputHidden id="messageQuestion" html-class="message-question" value="{!messageQuestion}" />
+
+
+  <c:saMainTopComp typeOfScreen="{!typeOfScreen}" />
+
+  <div class="protect-screen-bis hide"></div>
+  
+  <!-- template-popup -->
+  <div class="modal-dialog hide"><p>ダイアログメッセージ</p><div class="btn-cancel"><a href="#">キャンセル</a></div><div class="btn-ok"><a href="#">OK</a></div></div>
+
+  <div class="document-container">
+    <header class="document-header">
+      <div class="btn-menu"><a href="#">ナビゲーション</a></div>
+    </header>
+
+    <div class="document-contents">
+
+
+      
+      <!-- #View 00-01-04(typ.) -->
+      <section class="home-section">
+        <header class="link-list-section-header">
+          <h1>リンク集</h1>
+          <div class="btn-back"><a href="#" class="ui-color-dark">戻る</a></div>
+        </header>
+
+        <div class="section-body link-list-section-body">
+
+          <!-- #DynamicItem -->
+          <ul class="link-list">
+
+            <apex:repeat value="{!lsLinks}" var="link">
+              <li class="group-list-item">
+
+                <a href="{!link.linkUrl}" 
+                   target="{!IF(!link.linkSameWindow, '_blank', '')}">{!link.linkTitle}</a>
+
+              </li>       
+            </apex:repeat>
+
+          </ul>
+
+        </div>
+
+        <footer class="link-list-section-footer"></footer>
+      </section>
+   
+   
+    </div>
+    <footer class="document-footer"></footer>
+  </div>
+  <script>
+
+    function setView_00_01_04() {
+
+      $j(".document-header").show();
+      $j('.documents-section-list').show();
+
+      setView_00_01_04_logic();
+    }
+
+    function setView_00_01_04_logic() {
+
+    }
+
+    $j(document).ready(function () {
+
+      setView_00_01_04();
+
+    });
+
+  </script>
+</body>
+</html>
+
+</apex:form>
+
+</apex:page>

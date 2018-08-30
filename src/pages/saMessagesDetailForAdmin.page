@@ -1,0 +1,45 @@
+<apex:page standardcontroller="saMessageDetail__c">
+
+	<apex:form >
+
+		<apex:pageBlock >
+
+			<apex:pageBlockButtons location="top">
+
+        <apex:outputLink styleclass="btn" 
+        								 style="padding: 5.5px 3px; margin: 0 3px; text-decoration: none;"
+        								 value="{!'/' + saMessageDetail__c.saMessage__c}" >
+					戻る
+				</apex:outputLink>
+
+
+			</apex:pageBlockButtons>
+
+			<apex:pageBlockSection columns="2">
+
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="To Do"/>
+					<apex:outputField value="{!saMessageDetail__c.saMessage__c}" />
+				</apex:pageBlockSectionItem>
+
+				<apex:outputField value="{!saMessageDetail__c.CreatedDate}" />
+				<apex:outputField value="{!saMessageDetail__c.User__c}" />
+				<apex:outputField value="{!saMessageDetail__c.LastModifiedDate}" />
+
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection columns="1">
+
+				<apex:outputField value="{!saMessageDetail__c.ReplyComment__c}" />
+
+			</apex:pageBlockSection>
+
+		</apex:pageBlock>
+
+	</apex:form>
+
+	<apex:relatedList subject="{!saMessageDetail__c}" list="CombinedAttachments">
+		<apex:facet name="header"><table><tr style="height:1.9rem;"><td class="pbTitle"><h3>添付ファイル</h3></td></tr></table></apex:facet>
+	</apex:relatedList>
+
+</apex:page>

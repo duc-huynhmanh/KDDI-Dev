@@ -1,0 +1,831 @@
+38.0 APEX_CODE,FINEST;APEX_PROFILING,INFO;CALLOUT,INFO;DB,INFO;SYSTEM,DEBUG;VALIDATION,INFO;VISUALFORCE,INFO;WAVE,INFO;WORKFLOW,INFO
+20:47:59.0 (45657)|USER_INFO|[EXTERNAL]|005N00000057RPN|duc.huynhmanh+kddi-gwdev01@globalway.co.jp|日本標準時|GMT+09:00
+20:47:59.0 (74806)|EXECUTION_STARTED
+20:47:59.0 (78114)|CODE_UNIT_STARTED|[EXTERNAL]|066N0000000Lyeg|VF: /apex/kdKnowledgeListPage
+20:47:59.0 (209791)|VF_DESERIALIZE_VIEWSTATE_BEGIN|066N0000000Lyeg
+20:47:59.0 (3108387)|HEAP_ALLOCATE|[72]|Bytes:3
+20:47:59.0 (3137625)|HEAP_ALLOCATE|[77]|Bytes:152
+20:47:59.0 (3150810)|HEAP_ALLOCATE|[342]|Bytes:408
+20:47:59.0 (3163048)|HEAP_ALLOCATE|[355]|Bytes:408
+20:47:59.0 (3173588)|HEAP_ALLOCATE|[467]|Bytes:48
+20:47:59.0 (3198625)|HEAP_ALLOCATE|[139]|Bytes:6
+20:47:59.0 (3809691)|HEAP_ALLOCATE|[50]|Bytes:5
+20:47:59.0 (3829626)|HEAP_ALLOCATE|[56]|Bytes:5
+20:47:59.0 (3837700)|HEAP_ALLOCATE|[64]|Bytes:7
+20:47:59.0 (5065689)|VARIABLE_SCOPE_BEGIN|[21]|kdKnowledgeListCtrl.COOKIE_CREATEDBY|String|false|true
+20:47:59.0 (5078151)|VARIABLE_SCOPE_BEGIN|[36]|kdKnowledgeListCtrl.COOKIE_EXPIRATION_DATE|Integer|false|true
+20:47:59.0 (5085025)|VARIABLE_SCOPE_BEGIN|[32]|kdKnowledgeListCtrl.COOKIE_FREETEXT|String|false|true
+20:47:59.0 (5090767)|VARIABLE_SCOPE_BEGIN|[22]|kdKnowledgeListCtrl.COOKIE_HASMOVIE|String|false|true
+20:47:59.0 (5096192)|VARIABLE_SCOPE_BEGIN|[35]|kdKnowledgeListCtrl.COOKIE_LABEL_INIT_SEARCH_FLG|String|false|true
+20:47:59.0 (5102128)|VARIABLE_SCOPE_BEGIN|[15]|kdKnowledgeListCtrl.COOKIE_PREFIX|String|false|true
+20:47:59.0 (5107559)|VARIABLE_SCOPE_BEGIN|[16]|kdKnowledgeListCtrl.COOKIE_STATUS|String|false|true
+20:47:59.0 (5112997)|VARIABLE_SCOPE_BEGIN|[19]|kdKnowledgeListCtrl.COOKIE_SUBJECTDIVISION|String|false|true
+20:47:59.0 (5118344)|VARIABLE_SCOPE_BEGIN|[18]|kdKnowledgeListCtrl.COOKIE_THEMA|String|false|true
+20:47:59.0 (5123718)|VARIABLE_SCOPE_BEGIN|[20]|kdKnowledgeListCtrl.COOKIE_TITLE|String|false|true
+20:47:59.0 (5128876)|VARIABLE_SCOPE_BEGIN|[17]|kdKnowledgeListCtrl.COOKIE_TYPE|String|false|true
+20:47:59.0 (5135784)|VARIABLE_SCOPE_BEGIN|[23]|kdKnowledgeListCtrl.MOVIE_CONTENTTYPE|Set<String>|true|true
+20:47:59.0 (5143581)|VARIABLE_SCOPE_BEGIN|[3]|kdKnowledgeListCtrl.URL_PARAM_NAME_KNOWLEDGE_ID|String|false|true
+20:47:59.0 (5150184)|VARIABLE_SCOPE_BEGIN|[4]|kdKnowledgeListCtrl.URL_PARAM_NAME_SHOP_ID|String|false|true
+20:47:59.0 (6016314)|VARIABLE_SCOPE_BEGIN|[7]|auMainTopCompCtrl.TYPE_SCREEN_CX_SCREEN|Integer|false|true
+20:47:59.0 (6027495)|VARIABLE_SCOPE_BEGIN|[8]|auMainTopCompCtrl.TYPE_SCREEN_CX_TIMELINE|Integer|false|true
+20:47:59.0 (6033490)|VARIABLE_SCOPE_BEGIN|[9]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE|Integer|false|true
+20:47:59.0 (6040077)|VARIABLE_SCOPE_BEGIN|[10]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE_LIST|Integer|false|true
+20:47:59.0 (6046027)|VARIABLE_SCOPE_BEGIN|[11]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_DASHBOARD|Integer|false|true
+20:47:59.0 (6051880)|VARIABLE_SCOPE_BEGIN|[12]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_LIST|Integer|false|true
+20:47:59.0 (6057390)|VARIABLE_SCOPE_BEGIN|[4]|auMainTopCompCtrl.TYPE_SCREEN_STPD_EVENT|Integer|false|true
+20:47:59.0 (6062931)|VARIABLE_SCOPE_BEGIN|[6]|auMainTopCompCtrl.TYPE_SCREEN_STPD_SCREEN|Integer|false|true
+20:47:59.0 (6069017)|VARIABLE_SCOPE_BEGIN|[5]|auMainTopCompCtrl.TYPE_SCREEN_STPD_TIMELINE|Integer|false|true
+20:47:59.0 (6077793)|VARIABLE_SCOPE_BEGIN|[3]|auMainTopCompCtrl.TYPE_SCREEN_SWITCH|Integer|false|true
+20:47:59.0 (9077585)|VF_DESERIALIZE_VIEWSTATE_END
+20:47:59.0 (12721989)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (12753845)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:26
+20:47:59.0 (12765610)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:724
+20:47:59.0 (12771047)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:322
+20:47:59.0 (12775539)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:43
+20:47:59.0 (12779797)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:9
+20:47:59.0 (12799987)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_CREATEDBY|"CreatedBy"
+20:47:59.0 (12806139)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+20:47:59.0 (12811725)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_FREETEXT|"FreeText"
+20:47:59.0 (12816610)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+20:47:59.0 (12821935)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_HASMOVIE|"HasMovie"
+20:47:59.0 (12825543)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:13
+20:47:59.0 (12830570)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_LABEL_INIT_SEARCH_FLG|"initSearchFlg"
+20:47:59.0 (12834439)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:20
+20:47:59.0 (12843926)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_PREFIX|"kdKnowledgeListPage_"
+20:47:59.0 (12848524)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:6
+20:47:59.0 (12853559)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_STATUS|"Status"
+20:47:59.0 (12857253)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:15
+20:47:59.0 (12862129)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_SUBJECTDIVISION|"SubjectDivision"
+20:47:59.0 (12865697)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:5
+20:47:59.0 (12870481)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_THEMA|"Thema"
+20:47:59.0 (12873884)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:5
+20:47:59.0 (12878552)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_TITLE|"Title"
+20:47:59.0 (12881819)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+20:47:59.0 (12886756)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_TYPE|"Type"
+20:47:59.0 (12893600)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:9
+20:47:59.0 (12899935)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.URL_PARAM_NAME_KNOWLEDGE_ID|"knowledge"
+20:47:59.0 (12904179)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+20:47:59.0 (12909863)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.URL_PARAM_NAME_SHOP_ID|"shop"
+20:47:59.0 (12919852)|METHOD_ENTRY|[1]|01pN0000000a5VF|kdKnowledgeListCtrl.kdKnowledgeListCtrl()
+20:47:59.0 (12924850)|STATEMENT_EXECUTE|[1]
+20:47:59.0 (12930245)|STATEMENT_EXECUTE|[1]
+20:47:59.0 (12940423)|SYSTEM_MODE_ENTER|false
+20:47:59.0 (12950806)|HEAP_ALLOCATE|[23]|Bytes:5
+20:47:59.0 (12955728)|STATEMENT_EXECUTE|[23]
+20:47:59.0 (12972171)|METHOD_ENTRY|[23]|01pN0000000a5VF|kdKnowledgeListCtrl.getMovieContentType()
+20:47:59.0 (13001077)|HEAP_ALLOCATE|[100]|Bytes:5
+20:47:59.0 (13005878)|STATEMENT_EXECUTE|[99]
+20:47:59.0 (13007318)|STATEMENT_EXECUTE|[100]
+20:47:59.0 (13016454)|HEAP_ALLOCATE|[100]|Bytes:4
+20:47:59.0 (13047453)|VARIABLE_SCOPE_BEGIN|[100]|movies|Set<String>|true|false
+20:47:59.0 (13074416)|VARIABLE_ASSIGNMENT|[100]|movies|[]|0x1574525a
+20:47:59.0 (13080535)|STATEMENT_EXECUTE|[101]
+20:47:59.0 (13083880)|HEAP_ALLOCATE|[101]|Bytes:15
+20:47:59.0 (13110397)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+20:47:59.0 (13120516)|STATEMENT_EXECUTE|[103]
+20:47:59.0 (13127165)|METHOD_EXIT|[23]|01pN0000000a5VF|kdKnowledgeListCtrl.getMovieContentType()
+20:47:59.0 (13144344)|VARIABLE_ASSIGNMENT|[23]|kdKnowledgeListCtrl.MOVIE_CONTENTTYPE|["video/quicktime"]|0x1574525a
+20:47:59.0 (13150611)|STATEMENT_EXECUTE|[36]
+20:47:59.0 (13154238)|HEAP_ALLOCATE|[36]|Bytes:4
+20:47:59.0 (13161492)|VARIABLE_ASSIGNMENT|[36]|kdKnowledgeListCtrl.COOKIE_EXPIRATION_DATE|-1
+20:47:59.0 (13165466)|STATEMENT_EXECUTE|[1064]
+20:47:59.0 (13167032)|STATEMENT_EXECUTE|[1070]
+20:47:59.0 (13169969)|SYSTEM_MODE_EXIT|false
+20:47:59.0 (13177949)|METHOD_EXIT|[1]|kdKnowledgeListCtrl
+20:47:59.0 (13314974)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (13337264)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+20:47:59.0 (13342030)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:152
+20:47:59.0 (13457807)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.attachmentId|"00PN00000071f03MAA"|0x2ab1b4be
+20:47:59.0 (13759584)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:152
+20:47:59.0 (13768684)|VARIABLE_SCOPE_BEGIN|[1004]|this|kdKnowledgeListCtrl|true|false
+20:47:59.0 (13964950)|VARIABLE_ASSIGNMENT|[1004]|this|{"attachmentId":"00PN00000071f03MAA","currentUser":"0x66f5a620","errorMessage":"","filterCreatedBy":"","filterFreeText":"","filterHasMovie":false,"filterTitle":"","initSearchFlg":"true","isApprover":false,"isCreator":false,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"kdKnowledgeNew":"0x4146fa04","kdKnowledgeNewAttachmentSize":63166,"kdKnowledgeUpdate":"0x761786f4","kdKnowledgeUpdateDetailCopy":"0x228e80a","kdKnowledgeUpdateDetailLike":"0x49279ac9","kdKnowledgeUpdateId":"a0AN0000009dZQgMAM","lsKnowledgeUpdateAttachment":"0x3f47df33","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@75adce09"}|0x2ab1b4be
+20:47:59.0 (13997750)|SYSTEM_MODE_ENTER|false
+20:47:59.0 (14005651)|HEAP_ALLOCATE|[1006]|Bytes:5
+20:47:59.0 (14010951)|STATEMENT_EXECUTE|[1004]
+20:47:59.0 (14012780)|STATEMENT_EXECUTE|[1006]
+20:47:59.0 (14016154)|HEAP_ALLOCATE|[1006]|Bytes:64
+20:47:59.0 (14031075)|HEAP_ALLOCATE|[1006]|Bytes:4
+20:47:59.0 (14041214)|HEAP_ALLOCATE|[1006]|Bytes:7
+20:47:59.0 (14215610)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"00PN00000071f03MAA","currentUser":"0x66f5a620","errorMessage":"","filterCreatedBy":"","filterFreeText":"","filterHasMovie":false,"filterTitle":"","initSearchFlg":"true","isApprover":false,"isCreator":false,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"kdKnowledgeNew":"0x4146fa04","kdKnowledgeNewAttachmentSize":63166,"kdKnowledgeUpdate":"0x761786f4","kdKnowledgeUpdateDetailCopy":"0x228e80a","kdKnowledgeUpdateDetailLike":"0x49279ac9","kdKnowledgeUpdateId":"a0AN0000009dZQgMAM","lsKnowledgeUpdateAttachment":"0x3f47df33","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@75adce09"}|0x2ab1b4be
+20:47:59.0 (14724798)|SOQL_EXECUTE_BEGIN|[1006]|Aggregations:0|SELECT ContentType, ParentId FROM Attachment WHERE id = :tmpVar1
+20:47:59.0 (16364875)|SOQL_EXECUTE_END|[1006]|Rows:1
+20:47:59.0 (16383470)|HEAP_ALLOCATE|[1006]|Bytes:8
+20:47:59.0 (16400272)|HEAP_ALLOCATE|[1006]|Bytes:89
+20:47:59.0 (16436141)|HEAP_ALLOCATE|[1006]|Bytes:8
+20:47:59.0 (16446159)|HEAP_ALLOCATE|[1006]|Bytes:36
+20:47:59.0 (16479620)|HEAP_ALLOCATE|[1006]|Bytes:16
+20:47:59.0 (16486985)|VARIABLE_SCOPE_BEGIN|[1006]|att|Attachment|true|false
+20:47:59.0 (16505997)|VARIABLE_ASSIGNMENT|[1006]|att|{"ContentType":"video/quicktime","ParentId":"a0AN0000009dZQgMAM","Id":"00PN00000071f03MAA"}|0x4d53dae7
+20:47:59.0 (16512816)|STATEMENT_EXECUTE|[1008]
+20:47:59.0 (16516518)|HEAP_ALLOCATE|[1008]|Bytes:36
+20:47:59.0 (16584460)|HEAP_ALLOCATE|[1008]|Bytes:92
+20:47:59.0 (16601875)|HEAP_ALLOCATE|[1008]|Bytes:128
+20:47:59.0 (16617606)|USER_DEBUG|[1008]|DEBUG|kdKnowledgeAttachmentDelete -> att: Attachment:{ContentType=video/quicktime, ParentId=a0AN0000009dZQgMAM, Id=00PN00000071f03MAA}
+20:47:59.0 (16673069)|STATEMENT_EXECUTE|[1009]
+20:47:59.0 (16675381)|STATEMENT_EXECUTE|[1010]
+20:47:59.0 (16678608)|HEAP_ALLOCATE|[1010]|Bytes:109
+20:47:59.0 (16691391)|HEAP_ALLOCATE|[1010]|Bytes:4
+20:47:59.0 (16716221)|HEAP_ALLOCATE|[1010]|Bytes:7
+20:47:59.0 (17094960)|SOQL_EXECUTE_BEGIN|[1010]|Aggregations:1|SELECT HasMovie__c, (SELECT Id FROM Attachments WHERE Id != :tmpVar1) FROM kdKnowledge__c WHERE Id = :tmpVar2
+20:47:59.0 (21118734)|SOQL_EXECUTE_END|[1010]|Rows:1
+20:47:59.0 (21141540)|HEAP_ALLOCATE|[1010]|Bytes:8
+20:47:59.0 (21156478)|HEAP_ALLOCATE|[1010]|Bytes:48
+20:47:59.0 (21205449)|HEAP_ALLOCATE|[1010]|Bytes:8
+20:47:59.0 (21216342)|HEAP_ALLOCATE|[1010]|Bytes:40
+20:47:59.0 (21245903)|HEAP_ALLOCATE|[1010]|Bytes:12
+20:47:59.0 (21252804)|VARIABLE_SCOPE_BEGIN|[1010]|knowledge|kdKnowledge__c|true|false
+20:47:59.0 (21271380)|VARIABLE_ASSIGNMENT|[1010]|knowledge|{"HasMovie__c":true,"Id":"a0AN0000009dZQgMAM"}|0x179438eb
+20:47:59.0 (21277150)|STATEMENT_EXECUTE|[1011]
+20:47:59.0 (21280660)|HEAP_ALLOCATE|[1011]|Bytes:42
+20:47:59.0 (21337299)|HEAP_ALLOCATE|[1011]|Bytes:56
+20:47:59.0 (21353131)|HEAP_ALLOCATE|[1011]|Bytes:98
+20:47:59.0 (21364020)|USER_DEBUG|[1011]|DEBUG|kdKnowledgeAttachmentDelete => knowledge: kdKnowledge__c:{HasMovie__c=true, Id=a0AN0000009dZQgMAM}
+20:47:59.0 (21370654)|STATEMENT_EXECUTE|[1012]
+20:47:59.0 (21374537)|VARIABLE_SCOPE_BEGIN|[1012]|hasMovie|Boolean|false|false
+20:47:59.0 (21384424)|HEAP_ALLOCATE|[1012]|Bytes:5
+20:47:59.0 (21391191)|VARIABLE_ASSIGNMENT|[1012]|hasMovie|false
+20:47:59.0 (21397634)|HEAP_ALLOCATE|[1013]|Bytes:11
+20:47:59.0 (21401381)|HEAP_ALLOCATE|[1013]|Bytes:10
+20:47:59.0 (21544635)|HEAP_ALLOCATE|[1013]|Bytes:54
+20:47:59.0 (21552373)|HEAP_ALLOCATE|[1013]|Bytes:8
+20:47:59.0 (21573666)|SYSTEM_METHOD_ENTRY|[7]|QueryLocatorIterator.QueryLocatorIterator()
+20:47:59.0 (21577728)|STATEMENT_EXECUTE|[7]
+20:47:59.0 (21584332)|SYSTEM_METHOD_EXIT|[7]|QueryLocatorIterator
+20:47:59.0 (21591323)|HEAP_ALLOCATE|[1013]|Bytes:28
+20:47:59.0 (21603069)|HEAP_ALLOCATE|[1013]|Bytes:8
+20:47:59.0 (21606284)|HEAP_ALLOCATE|[1013]|Bytes:8
+20:47:59.0 (21610352)|VARIABLE_SCOPE_BEGIN|[15]|this|Database.QueryLocatorIterator|true|false
+20:47:59.0 (21632171)|VARIABLE_ASSIGNMENT|[15]|this|{}|0x6697cfa3
+20:47:59.0 (21638168)|VARIABLE_SCOPE_BEGIN|[15]|values|List<SObject>|true|false
+20:47:59.0 (21645524)|VARIABLE_ASSIGNMENT|[15]|values|null|
+20:47:59.0 (21649275)|VARIABLE_SCOPE_BEGIN|[15]|ql|Database.QueryLocator|true|false
+20:47:59.0 (21659644)|VARIABLE_ASSIGNMENT|[15]|ql|{}|0x5215bd1
+20:47:59.0 (21664907)|VARIABLE_SCOPE_BEGIN|[15]|totalNumRecords|Integer|false|false
+20:47:59.0 (21671935)|VARIABLE_ASSIGNMENT|[15]|totalNumRecords|0
+20:47:59.0 (21675773)|VARIABLE_SCOPE_BEGIN|[15]|queryMoreSize|Integer|false|false
+20:47:59.0 (21681443)|VARIABLE_ASSIGNMENT|[15]|queryMoreSize|200
+20:47:59.0 (21757518)|HEAP_ALLOCATE|[1013]|Bytes:28
+20:47:59.0 (21774217)|METHOD_ENTRY|[1013]||Database.QueryLocatorIterator.hasNext()
+20:47:59.0 (21790483)|METHOD_EXIT|[1013]||Database.QueryLocatorIterator.hasNext()
+20:47:59.0 (21799432)|VARIABLE_ASSIGNMENT|[1013]|a|null|
+20:47:59.0 (21804018)|STATEMENT_EXECUTE|[1013]
+20:47:59.0 (21805890)|STATEMENT_EXECUTE|[1019]
+20:47:59.0 (21809338)|HEAP_ALLOCATE|[1019]|Bytes:41
+20:47:59.0 (21838936)|HEAP_ALLOCATE|[1019]|Bytes:5
+20:47:59.0 (21851214)|HEAP_ALLOCATE|[1019]|Bytes:46
+20:47:59.0 (21860931)|USER_DEBUG|[1019]|DEBUG|kdKnowledgeAttachmentDelete => hasMovie: false
+20:47:59.0 (21868749)|STATEMENT_EXECUTE|[1021]
+20:47:59.0 (21870331)|STATEMENT_EXECUTE|[1023]
+20:47:59.0 (21921037)|VARIABLE_ASSIGNMENT|[1023]|this.HasMovie__c|false|0x179438eb
+20:47:59.0 (21927100)|STATEMENT_EXECUTE|[1024]
+20:47:59.0 (21951660)|HEAP_ALLOCATE|[1024]|Bytes:8
+20:47:59.0 (21962002)|DML_BEGIN|[1024]|Op:Update|Type:kdKnowledge__c|Rows:1
+20:47:59.0 (21983738)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+20:47:59.0 (41807858)|DML_END|[1024]
+20:47:59.0 (41821671)|STATEMENT_EXECUTE|[1025]
+20:47:59.0 (41827534)|HEAP_ALLOCATE|[1025]|Bytes:56
+20:47:59.0 (41899289)|HEAP_ALLOCATE|[1025]|Bytes:57
+20:47:59.0 (41916318)|HEAP_ALLOCATE|[1025]|Bytes:113
+20:47:59.0 (41928686)|USER_DEBUG|[1025]|DEBUG|kdKnowledgeAttachmentDelete => after update, knowledge: kdKnowledge__c:{HasMovie__c=false, Id=a0AN0000009dZQgMAM}
+20:47:59.0 (41937507)|STATEMENT_EXECUTE|[1028]
+20:47:59.0 (41960136)|HEAP_ALLOCATE|[1028]|Bytes:8
+20:47:59.0 (41967532)|HEAP_ALLOCATE|[1028]|Bytes:8
+20:47:59.0 (41973937)|DML_BEGIN|[1028]|Op:Delete|Type:Attachment|Rows:1
+20:47:59.0 (41995400)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+20:47:59.0 (82662067)|DML_END|[1028]
+20:47:59.0 (82680939)|STATEMENT_EXECUTE|[1029]
+20:47:59.0 (82687239)|HEAP_ALLOCATE|[1029]|Bytes:100
+20:47:59.0 (82707017)|HEAP_ALLOCATE|[1029]|Bytes:4
+20:47:59.0 (82991814)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"00PN00000071f03MAA","currentUser":"0x66f5a620","errorMessage":"","filterCreatedBy":"","filterFreeText":"","filterHasMovie":false,"filterTitle":"","initSearchFlg":"true","isApprover":false,"isCreator":false,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"kdKnowledgeNew":"0x4146fa04","kdKnowledgeNewAttachmentSize":63166,"kdKnowledgeUpdate":"0x761786f4","kdKnowledgeUpdateDetailCopy":"0x228e80a","kdKnowledgeUpdateDetailLike":"0x49279ac9","kdKnowledgeUpdateId":"a0AN0000009dZQgMAM","lsKnowledgeUpdateAttachment":"0x3f47df33","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@75adce09"}|0x2ab1b4be
+20:47:59.0 (83208914)|SOQL_EXECUTE_BEGIN|[1029]|Aggregations:0|SELECT id, Name FROM Attachment WHERE ParentId = :tmpVar1 ORDER BY LastModifiedDate DESC NULLS FIRST
+20:47:59.0 (85191936)|SOQL_EXECUTE_END|[1029]|Rows:0
+20:47:59.0 (85212072)|HEAP_ALLOCATE|[1029]|Bytes:4
+20:47:59.0 (85227519)|HEAP_ALLOCATE|[1029]|Bytes:0
+20:47:59.0 (85258948)|HEAP_ALLOCATE|[1029]|Bytes:4
+20:47:59.0 (85441203)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"00PN00000071f03MAA","currentUser":"0x66f5a620","errorMessage":"","filterCreatedBy":"","filterFreeText":"","filterHasMovie":false,"filterTitle":"","initSearchFlg":"true","isApprover":false,"isCreator":false,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"kdKnowledgeNew":"0x4146fa04","kdKnowledgeNewAttachmentSize":63166,"kdKnowledgeUpdate":"0x761786f4","kdKnowledgeUpdateDetailCopy":"0x228e80a","kdKnowledgeUpdateDetailLike":"0x49279ac9","kdKnowledgeUpdateId":"a0AN0000009dZQgMAM","lsKnowledgeUpdateAttachment":"0x3f47df33","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@75adce09"}|0x2ab1b4be
+20:47:59.0 (85464606)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|[]|0x5b70d6c3
+20:47:59.0 (85482624)|VARIABLE_ASSIGNMENT|[90]|this.lsKnowledgeUpdateAttachment|[]|0x2ab1b4be
+20:47:59.0 (85496604)|SYSTEM_MODE_EXIT|false
+20:47:59.0 (106765364)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (106804759)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:284
+20:47:59.0 (106818205)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:84
+20:47:59.0 (106833703)|METHOD_ENTRY|[1]|01pN0000000Mill|auMainTopCompCtrl.auMainTopCompCtrl()
+20:47:59.0 (106839110)|STATEMENT_EXECUTE|[1]
+20:47:59.0 (106843640)|STATEMENT_EXECUTE|[1]
+20:47:59.0 (106845030)|STATEMENT_EXECUTE|[3]
+20:47:59.0 (106849860)|HEAP_ALLOCATE|[3]|Bytes:4
+20:47:59.0 (106864087)|VARIABLE_ASSIGNMENT|[3]|auMainTopCompCtrl.TYPE_SCREEN_SWITCH|0
+20:47:59.0 (106868865)|STATEMENT_EXECUTE|[4]
+20:47:59.0 (106871635)|HEAP_ALLOCATE|[4]|Bytes:4
+20:47:59.0 (106877925)|VARIABLE_ASSIGNMENT|[4]|auMainTopCompCtrl.TYPE_SCREEN_STPD_EVENT|11
+20:47:59.0 (106881880)|STATEMENT_EXECUTE|[5]
+20:47:59.0 (106883768)|HEAP_ALLOCATE|[5]|Bytes:4
+20:47:59.0 (106888818)|VARIABLE_ASSIGNMENT|[5]|auMainTopCompCtrl.TYPE_SCREEN_STPD_TIMELINE|12
+20:47:59.0 (106892319)|STATEMENT_EXECUTE|[6]
+20:47:59.0 (106894125)|HEAP_ALLOCATE|[6]|Bytes:4
+20:47:59.0 (106899091)|VARIABLE_ASSIGNMENT|[6]|auMainTopCompCtrl.TYPE_SCREEN_STPD_SCREEN|13
+20:47:59.0 (106902606)|STATEMENT_EXECUTE|[7]
+20:47:59.0 (106904846)|HEAP_ALLOCATE|[7]|Bytes:4
+20:47:59.0 (106909161)|VARIABLE_ASSIGNMENT|[7]|auMainTopCompCtrl.TYPE_SCREEN_CX_SCREEN|21
+20:47:59.0 (106912678)|STATEMENT_EXECUTE|[8]
+20:47:59.0 (106914317)|HEAP_ALLOCATE|[8]|Bytes:4
+20:47:59.0 (106918717)|VARIABLE_ASSIGNMENT|[8]|auMainTopCompCtrl.TYPE_SCREEN_CX_TIMELINE|22
+20:47:59.0 (106921907)|STATEMENT_EXECUTE|[9]
+20:47:59.0 (106923836)|HEAP_ALLOCATE|[9]|Bytes:4
+20:47:59.0 (106928192)|VARIABLE_ASSIGNMENT|[9]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE|31
+20:47:59.0 (106931766)|STATEMENT_EXECUTE|[10]
+20:47:59.0 (106933821)|HEAP_ALLOCATE|[10]|Bytes:4
+20:47:59.0 (106939007)|VARIABLE_ASSIGNMENT|[10]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE_LIST|32
+20:47:59.0 (106942653)|STATEMENT_EXECUTE|[11]
+20:47:59.0 (106944527)|HEAP_ALLOCATE|[11]|Bytes:4
+20:47:59.0 (106949469)|VARIABLE_ASSIGNMENT|[11]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_DASHBOARD|41
+20:47:59.0 (106952824)|STATEMENT_EXECUTE|[12]
+20:47:59.0 (106954459)|HEAP_ALLOCATE|[12]|Bytes:4
+20:47:59.0 (106959038)|VARIABLE_ASSIGNMENT|[12]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_LIST|42
+20:47:59.0 (106966525)|METHOD_EXIT|[1]|auMainTopCompCtrl
+20:47:59.0 (106971616)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+20:47:59.0 (106978627)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iCountComments|null|0x6aa5b02e
+20:47:59.0 (107033349)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (107048150)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+20:47:59.0 (107055473)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iCountLikes|null|0x6aa5b02e
+20:47:59.0 (107139475)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (107170177)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:152
+20:47:59.0 (107175654)|VARIABLE_SCOPE_BEGIN|[92]|this|kdKnowledgeListCtrl|true|false
+20:47:59.0 (107380852)|VARIABLE_ASSIGNMENT|[92]|this|{"attachmentId":"00PN00000071f03MAA","currentUser":"0x66f5a620","errorMessage":"","filterCreatedBy":"","filterFreeText":"","filterHasMovie":false,"filterTitle":"","initSearchFlg":"true","isApprover":false,"isCreator":false,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"kdKnowledgeNew":"0x4146fa04","kdKnowledgeNewAttachmentSize":63166,"kdKnowledgeUpdate":"0x761786f4","kdKnowledgeUpdateDetailCopy":"0x228e80a","kdKnowledgeUpdateDetailLike":"0x49279ac9","kdKnowledgeUpdateId":"a0AN0000009dZQgMAM","lsKnowledgeUpdateAttachment":"0x5b70d6c3","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@75adce09"}|0x2ab1b4be
+20:47:59.0 (107408084)|SYSTEM_MODE_ENTER|false
+20:47:59.0 (107417066)|HEAP_ALLOCATE|[92]|Bytes:5
+20:47:59.0 (107421905)|STATEMENT_EXECUTE|[92]
+20:47:59.0 (107423556)|STATEMENT_EXECUTE|[92]
+20:47:59.0 (107428890)|SYSTEM_MODE_EXIT|false
+20:47:59.0 (107505726)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (107530671)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+20:47:59.0 (107535399)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+20:47:59.0 (107544452)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iTypeOfScreen|42|0x6aa5b02e
+20:47:59.0 (107700401)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (107726789)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+20:47:59.0 (107732256)|VARIABLE_SCOPE_BEGIN|[101]|this|auMainTopCompCtrl|true|false
+20:47:59.0 (107764493)|VARIABLE_ASSIGNMENT|[101]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (107774671)|STATEMENT_EXECUTE|[101]
+20:47:59.0 (107810910)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (107848812)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (107876063)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (107906099)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (107930201)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (107939947)|STATEMENT_EXECUTE|[110]
+20:47:59.0 (107941658)|STATEMENT_EXECUTE|[111]
+20:47:59.0 (108018694)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (108041163)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+20:47:59.0 (108046473)|VARIABLE_SCOPE_BEGIN|[115]|this|auMainTopCompCtrl|true|false
+20:47:59.0 (108070358)|VARIABLE_ASSIGNMENT|[115]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (108079142)|STATEMENT_EXECUTE|[115]
+20:47:59.0 (108104123)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (108134311)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (108159407)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (108186920)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (108210742)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (108219528)|STATEMENT_EXECUTE|[124]
+20:47:59.0 (108220955)|STATEMENT_EXECUTE|[125]
+20:47:59.0 (110005041)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (111630496)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (111660124)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+20:47:59.0 (111666594)|VARIABLE_SCOPE_BEGIN|[43]|this|auMainTopCompCtrl|true|false
+20:47:59.0 (111698350)|VARIABLE_ASSIGNMENT|[43]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (111708319)|STATEMENT_EXECUTE|[43]
+20:47:59.0 (111710113)|STATEMENT_EXECUTE|[44]
+20:47:59.0 (111742224)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (111778350)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (111808015)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (111821426)|HEAP_ALLOCATE|[44]|Bytes:5
+20:47:59.0 (111887914)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (111908476)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+20:47:59.0 (111916068)|VARIABLE_SCOPE_BEGIN|[49]|this|auMainTopCompCtrl|true|false
+20:47:59.0 (111940186)|VARIABLE_ASSIGNMENT|[49]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (111947952)|STATEMENT_EXECUTE|[49]
+20:47:59.0 (111949480)|STATEMENT_EXECUTE|[50]
+20:47:59.0 (111974132)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (112004258)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (112017571)|HEAP_ALLOCATE|[50]|Bytes:5
+20:47:59.0 (112075694)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (112095035)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:40
+20:47:59.0 (112100641)|VARIABLE_SCOPE_BEGIN|[59]|this|auMainTopCompCtrl|true|false
+20:47:59.0 (112124679)|VARIABLE_ASSIGNMENT|[59]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (112132779)|STATEMENT_EXECUTE|[59]
+20:47:59.0 (112134268)|STATEMENT_EXECUTE|[60]
+20:47:59.0 (112158621)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (112188457)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0xdeb4b57","iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6aa5b02e
+20:47:59.0 (112200586)|HEAP_ALLOCATE|[60]|Bytes:5
+20:47:59.0 (112487717)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (112935116)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (112962064)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:152
+20:47:59.0 (112968594)|VARIABLE_SCOPE_BEGIN|[527]|this|kdKnowledgeListCtrl|true|false
+20:47:59.0 (113141138)|VARIABLE_ASSIGNMENT|[527]|this|{"attachmentId":"00PN00000071f03MAA","currentUser":"0x66f5a620","errorMessage":"","filterCreatedBy":"","filterFreeText":"","filterHasMovie":false,"filterTitle":"","initSearchFlg":"true","isApprover":false,"isCreator":false,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"kdKnowledgeNew":"0x4146fa04","kdKnowledgeNewAttachmentSize":63166,"kdKnowledgeUpdate":"0x761786f4","kdKnowledgeUpdateDetailCopy":"0x228e80a","kdKnowledgeUpdateDetailLike":"0x49279ac9","kdKnowledgeUpdateId":"a0AN0000009dZQgMAM","lsKnowledgeUpdateAttachment":"0x5b70d6c3","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@75adce09"}|0x2ab1b4be
+20:47:59.0 (113168233)|SYSTEM_MODE_ENTER|false
+20:47:59.0 (113175612)|HEAP_ALLOCATE|[529]|Bytes:5
+20:47:59.0 (113181132)|STATEMENT_EXECUTE|[527]
+20:47:59.0 (113182928)|STATEMENT_EXECUTE|[529]
+20:47:59.0 (113269345)|HEAP_ALLOCATE|[529]|Bytes:4
+20:47:59.0 (113326943)|VARIABLE_SCOPE_BEGIN|[529]|recs|List<kdKnowledgeListCtrl.KnowledgeItem>|true|false
+20:47:59.0 (113346461)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+20:47:59.0 (113359291)|VARIABLE_ASSIGNMENT|[529]|recs|[]|0x599e7d30
+20:47:59.0 (113542385)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"00PN00000071f03MAA","currentUser":"0x66f5a620","errorMessage":"","filterCreatedBy":"","filterFreeText":"","filterHasMovie":false,"filterTitle":"","initSearchFlg":"true","isApprover":false,"isCreator":false,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"kdKnowledgeNew":"0x4146fa04","kdKnowledgeNewAttachmentSize":63166,"kdKnowledgeUpdate":"0x761786f4","kdKnowledgeUpdateDetailCopy":"0x228e80a","kdKnowledgeUpdateDetailLike":"0x49279ac9","kdKnowledgeUpdateId":"a0AN0000009dZQgMAM","lsKnowledgeUpdateAttachment":"0x5b70d6c3","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@75adce09"}|0x2ab1b4be
+20:47:59.0 (113564216)|STATEMENT_EXECUTE|[531]
+20:47:59.0 (113566125)|STATEMENT_EXECUTE|[532]
+20:47:59.0 (113716569)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"00PN00000071f03MAA","currentUser":"0x66f5a620","errorMessage":"","filterCreatedBy":"","filterFreeText":"","filterHasMovie":false,"filterTitle":"","initSearchFlg":"true","isApprover":false,"isCreator":false,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"kdKnowledgeNew":"0x4146fa04","kdKnowledgeNewAttachmentSize":63166,"kdKnowledgeUpdate":"0x761786f4","kdKnowledgeUpdateDetailCopy":"0x228e80a","kdKnowledgeUpdateDetailLike":"0x49279ac9","kdKnowledgeUpdateId":"a0AN0000009dZQgMAM","lsKnowledgeUpdateAttachment":"0x5b70d6c3","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@75adce09"}|0x2ab1b4be
+20:47:59.0 (113789623)|HEAP_ALLOCATE|[532]|Bytes:52
+20:47:59.0 (113817312)|HEAP_ALLOCATE|[532]|Bytes:52
+20:47:59.0 (113830412)|VARIABLE_SCOPE_BEGIN|[532]|knowledges|List<kdKnowledge__c>|true|false
+20:47:59.0 (113843585)|VARIABLE_ASSIGNMENT|[532]|knowledges|"List of size 12 too large to display"|0x31da13b9
+20:47:59.0 (113950869)|HEAP_ALLOCATE|[533]|Bytes:5
+20:47:59.0 (113978349)|HEAP_ALLOCATE|[533]|Bytes:68
+20:47:59.0 (113988274)|VARIABLE_SCOPE_BEGIN|[533]|knowledge|kdKnowledge__c|true|false
+20:47:59.0 (114036832)|VARIABLE_ASSIGNMENT|[533]|knowledge|{"Id":"a0AN0000009dZQqMAM","Name":"EK-00000007","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val1","Type__c":"Value1","NbCopy__c":0,"NbLike__c":0,"NbView__c":2,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T11:47:54.000Z","Status__c":"TemporarySaved","HasMovie__c":true,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dZQqMAM","Id":"00PN00000071f0IMAQ","Name":"icon-video (1).mov"}],"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x69fafdbb
+20:47:59.0 (114049027)|STATEMENT_EXECUTE|[533]
+20:47:59.0 (114050838)|STATEMENT_EXECUTE|[534]
+20:47:59.0 (114055704)|HEAP_ALLOCATE|[534]|Bytes:92
+20:47:59.0 (114061465)|HEAP_ALLOCATE|[534]|Bytes:4
+20:47:59.0 (114068084)|HEAP_ALLOCATE|[534]|Bytes:8
+20:47:59.0 (114077586)|CONSTRUCTOR_ENTRY|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (114091357)|VARIABLE_SCOPE_BEGIN|[1064]|this|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (114107701)|VARIABLE_ASSIGNMENT|[1064]|this|{}|0x5a176030
+20:47:59.0 (114126357)|STATEMENT_EXECUTE|[1064]
+20:47:59.0 (114128241)|STATEMENT_EXECUTE|[1065]
+20:47:59.0 (114131186)|CONSTRUCTOR_EXIT|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (114136601)|VARIABLE_SCOPE_BEGIN|[534]|knowledgeItem|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (114148236)|VARIABLE_ASSIGNMENT|[534]|knowledgeItem|{}|0x5a176030
+20:47:59.0 (114155199)|STATEMENT_EXECUTE|[535]
+20:47:59.0 (114177077)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{}|0x5a176030
+20:47:59.0 (114203089)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0AN0000009dZQqMAM","Name":"EK-00000007","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val1","Type__c":"Value1","NbCopy__c":0,"NbLike__c":0,"NbView__c":2,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T11:47:54.000Z","Status__c":"TemporarySaved","HasMovie__c":true,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dZQqMAM","Id":"00PN00000071f0IMAQ","Name":"icon-video (1).mov"}],"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x69fafdbb
+20:47:59.0 (114238368)|VARIABLE_ASSIGNMENT|[1065]|this.knowledge|{"Id":"a0AN0000009dZQqMAM","Name":"EK-00000007","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val1","Type__c":"Value1","NbCopy__c":0,"NbLike__c":0,"NbView__c":2,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T11:47:54.000Z","Status__c":"TemporarySaved","HasMovie__c":true,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dZQqMAM","Id":"00PN00000071f0IMAQ","Name":"icon-video (1).mov"}],"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x5a176030
+20:47:59.0 (114253659)|STATEMENT_EXECUTE|[536]
+20:47:59.0 (114281734)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+20:47:59.0 (114297609)|HEAP_ALLOCATE|[533]|Bytes:5
+20:47:59.0 (114318360)|HEAP_ALLOCATE|[533]|Bytes:68
+20:47:59.0 (114325649)|VARIABLE_SCOPE_BEGIN|[533]|knowledge|kdKnowledge__c|true|false
+20:47:59.0 (114350773)|VARIABLE_ASSIGNMENT|[533]|knowledge|{"Id":"a0AN0000009dZQgMAM","Name":"EK-00000006","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val1","Type__c":"Value1","NbCopy__c":0,"NbLike__c":0,"NbView__c":2,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T11:46:43.000Z","Status__c":"TemporarySaved","HasMovie__c":true,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dZQgMAM","Id":"00PN00000071f03MAA","Name":"icon-video (1).mov"}],"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x1eb5e106
+20:47:59.0 (114361598)|STATEMENT_EXECUTE|[533]
+20:47:59.0 (114363112)|STATEMENT_EXECUTE|[534]
+20:47:59.0 (114366880)|HEAP_ALLOCATE|[534]|Bytes:8
+20:47:59.0 (114372717)|CONSTRUCTOR_ENTRY|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (114378190)|VARIABLE_SCOPE_BEGIN|[1064]|this|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (114391565)|VARIABLE_ASSIGNMENT|[1064]|this|{}|0x3e1d2e79
+20:47:59.0 (114403777)|STATEMENT_EXECUTE|[1064]
+20:47:59.0 (114405333)|STATEMENT_EXECUTE|[1065]
+20:47:59.0 (114407984)|CONSTRUCTOR_EXIT|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (114412842)|VARIABLE_SCOPE_BEGIN|[534]|knowledgeItem|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (114423361)|VARIABLE_ASSIGNMENT|[534]|knowledgeItem|{}|0x3e1d2e79
+20:47:59.0 (114427993)|STATEMENT_EXECUTE|[535]
+20:47:59.0 (114437443)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{}|0x3e1d2e79
+20:47:59.0 (114466728)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0AN0000009dZQgMAM","Name":"EK-00000006","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val1","Type__c":"Value1","NbCopy__c":0,"NbLike__c":0,"NbView__c":2,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T11:46:43.000Z","Status__c":"TemporarySaved","HasMovie__c":true,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dZQgMAM","Id":"00PN00000071f03MAA","Name":"icon-video (1).mov"}],"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x1eb5e106
+20:47:59.0 (114494482)|VARIABLE_ASSIGNMENT|[1065]|this.knowledge|{"Id":"a0AN0000009dZQgMAM","Name":"EK-00000006","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val1","Type__c":"Value1","NbCopy__c":0,"NbLike__c":0,"NbView__c":2,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T11:46:43.000Z","Status__c":"TemporarySaved","HasMovie__c":true,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dZQgMAM","Id":"00PN00000071f03MAA","Name":"icon-video (1).mov"}],"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x3e1d2e79
+20:47:59.0 (114508436)|STATEMENT_EXECUTE|[536]
+20:47:59.0 (114515252)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+20:47:59.0 (114526817)|HEAP_ALLOCATE|[533]|Bytes:5
+20:47:59.0 (114543734)|HEAP_ALLOCATE|[533]|Bytes:72
+20:47:59.0 (114550639)|VARIABLE_SCOPE_BEGIN|[533]|knowledge|kdKnowledge__c|true|false
+20:47:59.0 (114582234)|VARIABLE_ASSIGNMENT|[533]|knowledge|{"Id":"a0AN0000009dYa7MAE","Name":"EK-00000001","Agency__c":"001N0000017kyuTIAQ","Description__c":"descr 1","SubjectDivision__c":"V3","Thema__c":"Val2","Title__c":"title 1a","Type__c":"Value1","NbCopy__c":1,"NbLike__c":1,"NbView__c":3,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T08:47:59.000Z","Status__c":"TemporarySaved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dYa7MAE","Id":"00PN00000071UypMAE","Name":"England - (Specimen) (23 more) ..."},{"ParentId":"a0AN0000009dYa7MAE","Id":"00PN00000071Uz4MAE","Name":"England - (Specimen) (24 more) ..."},{"ParentId":"a0AN0000009dYa7MAE","Id":"00PN00000071UyuMAE","Name":"England - (Specimen) (23 more) ..."},{"ParentId":"a0AN0000009dYa7MAE","Id":"00PN00000071YWTMA2","Name":"大仏航空 - 80円.png"}]}|0x75a10b2d
+20:47:59.0 (114595707)|STATEMENT_EXECUTE|[533]
+20:47:59.0 (114597155)|STATEMENT_EXECUTE|[534]
+20:47:59.0 (114600506)|HEAP_ALLOCATE|[534]|Bytes:8
+20:47:59.0 (114606335)|CONSTRUCTOR_ENTRY|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (114612039)|VARIABLE_SCOPE_BEGIN|[1064]|this|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (114625381)|VARIABLE_ASSIGNMENT|[1064]|this|{}|0x1957000a
+20:47:59.0 (114637135)|STATEMENT_EXECUTE|[1064]
+20:47:59.0 (114638548)|STATEMENT_EXECUTE|[1065]
+20:47:59.0 (114640931)|CONSTRUCTOR_EXIT|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (114645827)|VARIABLE_SCOPE_BEGIN|[534]|knowledgeItem|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (114655733)|VARIABLE_ASSIGNMENT|[534]|knowledgeItem|{}|0x1957000a
+20:47:59.0 (114660223)|STATEMENT_EXECUTE|[535]
+20:47:59.0 (114669423)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{}|0x1957000a
+20:47:59.0 (114695709)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0AN0000009dYa7MAE","Name":"EK-00000001","Agency__c":"001N0000017kyuTIAQ","Description__c":"descr 1","SubjectDivision__c":"V3","Thema__c":"Val2","Title__c":"title 1a","Type__c":"Value1","NbCopy__c":1,"NbLike__c":1,"NbView__c":3,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T08:47:59.000Z","Status__c":"TemporarySaved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dYa7MAE","Id":"00PN00000071UypMAE","Name":"England - (Specimen) (23 more) ..."},{"ParentId":"a0AN0000009dYa7MAE","Id":"00PN00000071Uz4MAE","Name":"England - (Specimen) (24 more) ..."},{"ParentId":"a0AN0000009dYa7MAE","Id":"00PN00000071UyuMAE","Name":"England - (Specimen) (23 more) ..."},{"ParentId":"a0AN0000009dYa7MAE","Id":"00PN00000071YWTMA2","Name":"大仏航空 - 80円.png"}]}|0x75a10b2d
+20:47:59.0 (114728894)|VARIABLE_ASSIGNMENT|[1065]|this.knowledge|{"Id":"a0AN0000009dYa7MAE","Name":"EK-00000001","Agency__c":"001N0000017kyuTIAQ","Description__c":"descr 1","SubjectDivision__c":"V3","Thema__c":"Val2","Title__c":"title 1a","Type__c":"Value1","NbCopy__c":1,"NbLike__c":1,"NbView__c":3,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T08:47:59.000Z","Status__c":"TemporarySaved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dYa7MAE","Id":"00PN00000071UypMAE","Name":"England - (Specimen) (23 more) ..."},{"ParentId":"a0AN0000009dYa7MAE","Id":"00PN00000071Uz4MAE","Name":"England - (Specimen) (24 more) ..."},{"ParentId":"a0AN0000009dYa7MAE","Id":"00PN00000071UyuMAE","Name":"England - (Specimen) (23 more) ..."},{"ParentId":"a0AN0000009dYa7MAE","Id":"00PN00000071YWTMA2","Name":"大仏航空 - 80円.png"}]}|0x1957000a
+20:47:59.0 (114744993)|STATEMENT_EXECUTE|[536]
+20:47:59.0 (114750749)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+20:47:59.0 (114761935)|HEAP_ALLOCATE|[533]|Bytes:5
+20:47:59.0 (114777030)|HEAP_ALLOCATE|[533]|Bytes:64
+20:47:59.0 (114783149)|VARIABLE_SCOPE_BEGIN|[533]|knowledge|kdKnowledge__c|true|false
+20:47:59.0 (114804547)|VARIABLE_ASSIGNMENT|[533]|knowledge|{"Id":"a0AN0000009dZXEMA2","Name":"EK-00000010","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val1","Type__c":"Value1","NbCopy__c":1,"NbLike__c":0,"NbView__c":3,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T08:45:46.000Z","Status__c":"TemporarySaved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x5a3a4ae5
+20:47:59.0 (114814675)|STATEMENT_EXECUTE|[533]
+20:47:59.0 (114815945)|STATEMENT_EXECUTE|[534]
+20:47:59.0 (114819166)|HEAP_ALLOCATE|[534]|Bytes:8
+20:47:59.0 (114824060)|CONSTRUCTOR_ENTRY|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (114829224)|VARIABLE_SCOPE_BEGIN|[1064]|this|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (114841607)|VARIABLE_ASSIGNMENT|[1064]|this|{}|0x78a0f5f0
+20:47:59.0 (114852626)|STATEMENT_EXECUTE|[1064]
+20:47:59.0 (114854158)|STATEMENT_EXECUTE|[1065]
+20:47:59.0 (114856525)|CONSTRUCTOR_EXIT|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (114861237)|VARIABLE_SCOPE_BEGIN|[534]|knowledgeItem|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (114870752)|VARIABLE_ASSIGNMENT|[534]|knowledgeItem|{}|0x78a0f5f0
+20:47:59.0 (114875351)|STATEMENT_EXECUTE|[535]
+20:47:59.0 (114884558)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{}|0x78a0f5f0
+20:47:59.0 (114903912)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0AN0000009dZXEMA2","Name":"EK-00000010","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val1","Type__c":"Value1","NbCopy__c":1,"NbLike__c":0,"NbView__c":3,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T08:45:46.000Z","Status__c":"TemporarySaved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x5a3a4ae5
+20:47:59.0 (114926117)|VARIABLE_ASSIGNMENT|[1065]|this.knowledge|{"Id":"a0AN0000009dZXEMA2","Name":"EK-00000010","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val1","Type__c":"Value1","NbCopy__c":1,"NbLike__c":0,"NbView__c":3,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T08:45:46.000Z","Status__c":"TemporarySaved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x78a0f5f0
+20:47:59.0 (114937679)|STATEMENT_EXECUTE|[536]
+20:47:59.0 (114943144)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+20:47:59.0 (114954083)|HEAP_ALLOCATE|[533]|Bytes:5
+20:47:59.0 (114968859)|HEAP_ALLOCATE|[533]|Bytes:64
+20:47:59.0 (114975433)|VARIABLE_SCOPE_BEGIN|[533]|knowledge|kdKnowledge__c|true|false
+20:47:59.0 (114997238)|VARIABLE_ASSIGNMENT|[533]|knowledge|{"Id":"a0AN0000009dZXJMA2","Name":"EK-00000011","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val1","Type__c":"Value1","NbCopy__c":1,"NbLike__c":1,"NbView__c":3,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T08:45:40.000Z","Status__c":"TemporarySaved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x6493633c
+20:47:59.0 (115006354)|STATEMENT_EXECUTE|[533]
+20:47:59.0 (115008145)|STATEMENT_EXECUTE|[534]
+20:47:59.0 (115011570)|HEAP_ALLOCATE|[534]|Bytes:8
+20:47:59.0 (115016455)|CONSTRUCTOR_ENTRY|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (115021417)|VARIABLE_SCOPE_BEGIN|[1064]|this|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (115033159)|VARIABLE_ASSIGNMENT|[1064]|this|{}|0x4c9d1483
+20:47:59.0 (115044818)|STATEMENT_EXECUTE|[1064]
+20:47:59.0 (115046181)|STATEMENT_EXECUTE|[1065]
+20:47:59.0 (115048503)|CONSTRUCTOR_EXIT|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (115053174)|VARIABLE_SCOPE_BEGIN|[534]|knowledgeItem|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (115062623)|VARIABLE_ASSIGNMENT|[534]|knowledgeItem|{}|0x4c9d1483
+20:47:59.0 (115067437)|STATEMENT_EXECUTE|[535]
+20:47:59.0 (115075843)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{}|0x4c9d1483
+20:47:59.0 (115094557)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0AN0000009dZXJMA2","Name":"EK-00000011","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val1","Type__c":"Value1","NbCopy__c":1,"NbLike__c":1,"NbView__c":3,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T08:45:40.000Z","Status__c":"TemporarySaved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x6493633c
+20:47:59.0 (115115802)|VARIABLE_ASSIGNMENT|[1065]|this.knowledge|{"Id":"a0AN0000009dZXJMA2","Name":"EK-00000011","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val1","Type__c":"Value1","NbCopy__c":1,"NbLike__c":1,"NbView__c":3,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T08:45:40.000Z","Status__c":"TemporarySaved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x4c9d1483
+20:47:59.0 (115127947)|STATEMENT_EXECUTE|[536]
+20:47:59.0 (115133048)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+20:47:59.0 (115143742)|HEAP_ALLOCATE|[533]|Bytes:5
+20:47:59.0 (115160230)|HEAP_ALLOCATE|[533]|Bytes:64
+20:47:59.0 (115186770)|VARIABLE_SCOPE_BEGIN|[533]|knowledge|kdKnowledge__c|true|false
+20:47:59.0 (115220487)|VARIABLE_ASSIGNMENT|[533]|knowledge|{"Id":"a0AN0000009dZQvMAM","Name":"EK-00000008","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val1","Type__c":"Value1","NbCopy__c":1,"NbLike__c":1,"NbView__c":3,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T08:45:35.000Z","Status__c":"Saved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x551f0379
+20:47:59.0 (115234966)|STATEMENT_EXECUTE|[533]
+20:47:59.0 (115236378)|STATEMENT_EXECUTE|[534]
+20:47:59.0 (115240232)|HEAP_ALLOCATE|[534]|Bytes:8
+20:47:59.0 (115246372)|CONSTRUCTOR_ENTRY|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (115251892)|VARIABLE_SCOPE_BEGIN|[1064]|this|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (115265744)|VARIABLE_ASSIGNMENT|[1064]|this|{}|0x1b24958f
+20:47:59.0 (115277670)|STATEMENT_EXECUTE|[1064]
+20:47:59.0 (115279098)|STATEMENT_EXECUTE|[1065]
+20:47:59.0 (115281591)|CONSTRUCTOR_EXIT|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (115286558)|VARIABLE_SCOPE_BEGIN|[534]|knowledgeItem|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (115296480)|VARIABLE_ASSIGNMENT|[534]|knowledgeItem|{}|0x1b24958f
+20:47:59.0 (115301671)|STATEMENT_EXECUTE|[535]
+20:47:59.0 (115310491)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{}|0x1b24958f
+20:47:59.0 (115330580)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0AN0000009dZQvMAM","Name":"EK-00000008","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val1","Type__c":"Value1","NbCopy__c":1,"NbLike__c":1,"NbView__c":3,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T08:45:35.000Z","Status__c":"Saved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x551f0379
+20:47:59.0 (115353758)|VARIABLE_ASSIGNMENT|[1065]|this.knowledge|{"Id":"a0AN0000009dZQvMAM","Name":"EK-00000008","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val1","Type__c":"Value1","NbCopy__c":1,"NbLike__c":1,"NbView__c":3,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T08:45:35.000Z","Status__c":"Saved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x1b24958f
+20:47:59.0 (115366000)|STATEMENT_EXECUTE|[536]
+20:47:59.0 (115371975)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+20:47:59.0 (115383218)|HEAP_ALLOCATE|[533]|Bytes:5
+20:47:59.0 (115399053)|HEAP_ALLOCATE|[533]|Bytes:68
+20:47:59.0 (115405790)|VARIABLE_SCOPE_BEGIN|[533]|knowledge|kdKnowledge__c|true|false
+20:47:59.0 (115428253)|VARIABLE_ASSIGNMENT|[533]|knowledge|{"Id":"a0AN0000009dZXOMA2","Name":"EK-00000012","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val2","Title__c":"eee","Type__c":"Value4","NbCopy__c":0,"NbLike__c":0,"NbView__c":2,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T08:45:27.000Z","Status__c":"TemporarySaved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x289a9294
+20:47:59.0 (115437839)|STATEMENT_EXECUTE|[533]
+20:47:59.0 (115439212)|STATEMENT_EXECUTE|[534]
+20:47:59.0 (115442551)|HEAP_ALLOCATE|[534]|Bytes:8
+20:47:59.0 (115447300)|CONSTRUCTOR_ENTRY|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (115451997)|VARIABLE_SCOPE_BEGIN|[1064]|this|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (115464898)|VARIABLE_ASSIGNMENT|[1064]|this|{}|0x3ad281b1
+20:47:59.0 (115475902)|STATEMENT_EXECUTE|[1064]
+20:47:59.0 (115477281)|STATEMENT_EXECUTE|[1065]
+20:47:59.0 (115479861)|CONSTRUCTOR_EXIT|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (115484392)|VARIABLE_SCOPE_BEGIN|[534]|knowledgeItem|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (115494215)|VARIABLE_ASSIGNMENT|[534]|knowledgeItem|{}|0x3ad281b1
+20:47:59.0 (115498858)|STATEMENT_EXECUTE|[535]
+20:47:59.0 (115507529)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{}|0x3ad281b1
+20:47:59.0 (115526898)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0AN0000009dZXOMA2","Name":"EK-00000012","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val2","Title__c":"eee","Type__c":"Value4","NbCopy__c":0,"NbLike__c":0,"NbView__c":2,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T08:45:27.000Z","Status__c":"TemporarySaved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x289a9294
+20:47:59.0 (115549280)|VARIABLE_ASSIGNMENT|[1065]|this.knowledge|{"Id":"a0AN0000009dZXOMA2","Name":"EK-00000012","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val2","Title__c":"eee","Type__c":"Value4","NbCopy__c":0,"NbLike__c":0,"NbView__c":2,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T08:45:27.000Z","Status__c":"TemporarySaved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x3ad281b1
+20:47:59.0 (115562066)|STATEMENT_EXECUTE|[536]
+20:47:59.0 (115567253)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+20:47:59.0 (115577496)|HEAP_ALLOCATE|[533]|Bytes:5
+20:47:59.0 (115592068)|HEAP_ALLOCATE|[533]|Bytes:76
+20:47:59.0 (115598381)|VARIABLE_SCOPE_BEGIN|[533]|knowledge|kdKnowledge__c|true|false
+20:47:59.0 (115620262)|VARIABLE_ASSIGNMENT|[533]|knowledge|{"Id":"a0AN0000009dZR0MAM","Name":"EK-00000009","Agency__c":"001N0000017kyuTIAQ","CreatedBy__c":"0056F000006PtYlQAK","Description__c":"XXXXXXXXXXXXXX","SubjectDivision__c":"V3","Thema__c":"Val2","Title__c":"XXXXX","Type__c":"Value1","NbCopy__c":1,"NbLike__c":1,"NbView__c":3,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T08:45:21.000Z","Status__c":"Saved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x20ff9800
+20:47:59.0 (115630719)|STATEMENT_EXECUTE|[533]
+20:47:59.0 (115631959)|STATEMENT_EXECUTE|[534]
+20:47:59.0 (115634999)|HEAP_ALLOCATE|[534]|Bytes:8
+20:47:59.0 (115639682)|CONSTRUCTOR_ENTRY|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (115644895)|VARIABLE_SCOPE_BEGIN|[1064]|this|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (115656764)|VARIABLE_ASSIGNMENT|[1064]|this|{}|0x4522fc6e
+20:47:59.0 (115667962)|STATEMENT_EXECUTE|[1064]
+20:47:59.0 (115669299)|STATEMENT_EXECUTE|[1065]
+20:47:59.0 (115671646)|CONSTRUCTOR_EXIT|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (115676613)|VARIABLE_SCOPE_BEGIN|[534]|knowledgeItem|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (115687072)|VARIABLE_ASSIGNMENT|[534]|knowledgeItem|{}|0x4522fc6e
+20:47:59.0 (115691551)|STATEMENT_EXECUTE|[535]
+20:47:59.0 (115699866)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{}|0x4522fc6e
+20:47:59.0 (115719329)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0AN0000009dZR0MAM","Name":"EK-00000009","Agency__c":"001N0000017kyuTIAQ","CreatedBy__c":"0056F000006PtYlQAK","Description__c":"XXXXXXXXXXXXXX","SubjectDivision__c":"V3","Thema__c":"Val2","Title__c":"XXXXX","Type__c":"Value1","NbCopy__c":1,"NbLike__c":1,"NbView__c":3,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T08:45:21.000Z","Status__c":"Saved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x20ff9800
+20:47:59.0 (115743976)|VARIABLE_ASSIGNMENT|[1065]|this.knowledge|{"Id":"a0AN0000009dZR0MAM","Name":"EK-00000009","Agency__c":"001N0000017kyuTIAQ","CreatedBy__c":"0056F000006PtYlQAK","Description__c":"XXXXXXXXXXXXXX","SubjectDivision__c":"V3","Thema__c":"Val2","Title__c":"XXXXX","Type__c":"Value1","NbCopy__c":1,"NbLike__c":1,"NbView__c":3,"CreatedByDisplayedNa (5 more) ...":"Duc","LastModifiedDate__c":"2018-03-02T08:45:21.000Z","Status__c":"Saved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x4522fc6e
+20:47:59.0 (115756860)|STATEMENT_EXECUTE|[536]
+20:47:59.0 (115761718)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+20:47:59.0 (115772173)|HEAP_ALLOCATE|[533]|Bytes:5
+20:47:59.0 (115786550)|HEAP_ALLOCATE|[533]|Bytes:64
+20:47:59.0 (115792467)|VARIABLE_SCOPE_BEGIN|[533]|knowledge|kdKnowledge__c|true|false
+20:47:59.0 (115815902)|VARIABLE_ASSIGNMENT|[533]|knowledge|{"Id":"a0AN0000009dZOaMAM","Name":"EK-00000002","Agency__c":"001N0000017kyuTIAQ","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"title2","Type__c":"Value1","NbCopy__c":1,"NbLike__c":1,"NbView__c":1,"LastModifiedDate__c":"2018-03-01T18:45:10.000Z","Status__c":"TemporarySaved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dZOaMAM","Id":"00PN00000071cgQMAQ","Name":"10 euro - 2014 (Reve (8 more) ..."}]}|0x5f8a95a0
+20:47:59.0 (115825424)|STATEMENT_EXECUTE|[533]
+20:47:59.0 (115826768)|STATEMENT_EXECUTE|[534]
+20:47:59.0 (115829962)|HEAP_ALLOCATE|[534]|Bytes:8
+20:47:59.0 (115834542)|CONSTRUCTOR_ENTRY|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (115839915)|VARIABLE_SCOPE_BEGIN|[1064]|this|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (115851916)|VARIABLE_ASSIGNMENT|[1064]|this|{}|0x61bfd145
+20:47:59.0 (115862587)|STATEMENT_EXECUTE|[1064]
+20:47:59.0 (115863966)|STATEMENT_EXECUTE|[1065]
+20:47:59.0 (115866174)|CONSTRUCTOR_EXIT|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (115870998)|VARIABLE_SCOPE_BEGIN|[534]|knowledgeItem|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (115880883)|VARIABLE_ASSIGNMENT|[534]|knowledgeItem|{}|0x61bfd145
+20:47:59.0 (115885814)|STATEMENT_EXECUTE|[535]
+20:47:59.0 (115894411)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{}|0x61bfd145
+20:47:59.0 (115913617)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0AN0000009dZOaMAM","Name":"EK-00000002","Agency__c":"001N0000017kyuTIAQ","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"title2","Type__c":"Value1","NbCopy__c":1,"NbLike__c":1,"NbView__c":1,"LastModifiedDate__c":"2018-03-01T18:45:10.000Z","Status__c":"TemporarySaved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dZOaMAM","Id":"00PN00000071cgQMAQ","Name":"10 euro - 2014 (Reve (8 more) ..."}]}|0x5f8a95a0
+20:47:59.0 (115936414)|VARIABLE_ASSIGNMENT|[1065]|this.knowledge|{"Id":"a0AN0000009dZOaMAM","Name":"EK-00000002","Agency__c":"001N0000017kyuTIAQ","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"title2","Type__c":"Value1","NbCopy__c":1,"NbLike__c":1,"NbView__c":1,"LastModifiedDate__c":"2018-03-01T18:45:10.000Z","Status__c":"TemporarySaved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dZOaMAM","Id":"00PN00000071cgQMAQ","Name":"10 euro - 2014 (Reve (8 more) ..."}]}|0x61bfd145
+20:47:59.0 (115948268)|STATEMENT_EXECUTE|[536]
+20:47:59.0 (115953305)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+20:47:59.0 (115964220)|HEAP_ALLOCATE|[533]|Bytes:5
+20:47:59.0 (115978804)|HEAP_ALLOCATE|[533]|Bytes:72
+20:47:59.0 (115984904)|VARIABLE_SCOPE_BEGIN|[533]|knowledge|kdKnowledge__c|true|false
+20:47:59.0 (116011844)|VARIABLE_ASSIGNMENT|[533]|knowledge|{"Id":"a0AN0000009dZeaMAE","Name":"EK-00000013","CreatedBy__c":"005N0000003dz53IAA","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"eeee","Type__c":"Value1","NbCopy__c":0,"NbLike__c":1,"NbView__c":3,"CreatedByDisplayedNa (5 more) ...":"支社S User S","LastModifiedDate__c":"2018-03-01T06:56:51.000Z","Status__c":"Saved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dZeaMAE","Id":"00PN00000071bFfMAI","Name":"ADF18E05-63C6-4391-9 (21 more) ..."}],"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"支社S User S","Id":"005N0000003dz53IAA"}}|0x722341e3
+20:47:59.0 (116023979)|STATEMENT_EXECUTE|[533]
+20:47:59.0 (116025313)|STATEMENT_EXECUTE|[534]
+20:47:59.0 (116028469)|HEAP_ALLOCATE|[534]|Bytes:8
+20:47:59.0 (116033369)|CONSTRUCTOR_ENTRY|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (116038169)|VARIABLE_SCOPE_BEGIN|[1064]|this|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (116050699)|VARIABLE_ASSIGNMENT|[1064]|this|{}|0x5e88b810
+20:47:59.0 (116061056)|STATEMENT_EXECUTE|[1064]
+20:47:59.0 (116062446)|STATEMENT_EXECUTE|[1065]
+20:47:59.0 (116064874)|CONSTRUCTOR_EXIT|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (116069105)|VARIABLE_SCOPE_BEGIN|[534]|knowledgeItem|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (116078974)|VARIABLE_ASSIGNMENT|[534]|knowledgeItem|{}|0x5e88b810
+20:47:59.0 (116083777)|STATEMENT_EXECUTE|[535]
+20:47:59.0 (116092108)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{}|0x5e88b810
+20:47:59.0 (116114004)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0AN0000009dZeaMAE","Name":"EK-00000013","CreatedBy__c":"005N0000003dz53IAA","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"eeee","Type__c":"Value1","NbCopy__c":0,"NbLike__c":1,"NbView__c":3,"CreatedByDisplayedNa (5 more) ...":"支社S User S","LastModifiedDate__c":"2018-03-01T06:56:51.000Z","Status__c":"Saved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dZeaMAE","Id":"00PN00000071bFfMAI","Name":"ADF18E05-63C6-4391-9 (21 more) ..."}],"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"支社S User S","Id":"005N0000003dz53IAA"}}|0x722341e3
+20:47:59.0 (116142011)|VARIABLE_ASSIGNMENT|[1065]|this.knowledge|{"Id":"a0AN0000009dZeaMAE","Name":"EK-00000013","CreatedBy__c":"005N0000003dz53IAA","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"eeee","Type__c":"Value1","NbCopy__c":0,"NbLike__c":1,"NbView__c":3,"CreatedByDisplayedNa (5 more) ...":"支社S User S","LastModifiedDate__c":"2018-03-01T06:56:51.000Z","Status__c":"Saved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dZeaMAE","Id":"00PN00000071bFfMAI","Name":"ADF18E05-63C6-4391-9 (21 more) ..."}],"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"支社S User S","Id":"005N0000003dz53IAA"}}|0x5e88b810
+20:47:59.0 (116159515)|STATEMENT_EXECUTE|[536]
+20:47:59.0 (116164782)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+20:47:59.0 (116176241)|HEAP_ALLOCATE|[533]|Bytes:5
+20:47:59.0 (116191184)|HEAP_ALLOCATE|[533]|Bytes:68
+20:47:59.0 (116197108)|VARIABLE_SCOPE_BEGIN|[533]|knowledge|kdKnowledge__c|true|false
+20:47:59.0 (116222258)|VARIABLE_ASSIGNMENT|[533]|knowledge|{"Id":"a0AN0000009dZQbMAM","Name":"EK-00000005","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val1","Type__c":"Value1","NbCopy__c":0,"NbLike__c":0,"NbView__c":2,"CreatedByDisplayedNa (5 more) ...":"GW Admin","LastModifiedDate__c":"2018-03-01T06:37:43.000Z","Status__c":"Saved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dZQbMAM","Id":"00PN00000071bDtMAI","Name":"E0B7FB2C-6CBD-4FEE-8 (21 more) ..."}],"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0xed17301
+20:47:59.0 (116236424)|STATEMENT_EXECUTE|[533]
+20:47:59.0 (116237879)|STATEMENT_EXECUTE|[534]
+20:47:59.0 (116241486)|HEAP_ALLOCATE|[534]|Bytes:8
+20:47:59.0 (116246328)|CONSTRUCTOR_ENTRY|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (116251014)|VARIABLE_SCOPE_BEGIN|[1064]|this|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (116263716)|VARIABLE_ASSIGNMENT|[1064]|this|{}|0x70f97579
+20:47:59.0 (116274702)|STATEMENT_EXECUTE|[1064]
+20:47:59.0 (116276165)|STATEMENT_EXECUTE|[1065]
+20:47:59.0 (116278584)|CONSTRUCTOR_EXIT|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (116282939)|VARIABLE_SCOPE_BEGIN|[534]|knowledgeItem|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (116292637)|VARIABLE_ASSIGNMENT|[534]|knowledgeItem|{}|0x70f97579
+20:47:59.0 (116297697)|STATEMENT_EXECUTE|[535]
+20:47:59.0 (116306438)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{}|0x70f97579
+20:47:59.0 (116328480)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0AN0000009dZQbMAM","Name":"EK-00000005","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val1","Type__c":"Value1","NbCopy__c":0,"NbLike__c":0,"NbView__c":2,"CreatedByDisplayedNa (5 more) ...":"GW Admin","LastModifiedDate__c":"2018-03-01T06:37:43.000Z","Status__c":"Saved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dZQbMAM","Id":"00PN00000071bDtMAI","Name":"E0B7FB2C-6CBD-4FEE-8 (21 more) ..."}],"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0xed17301
+20:47:59.0 (116356160)|VARIABLE_ASSIGNMENT|[1065]|this.knowledge|{"Id":"a0AN0000009dZQbMAM","Name":"EK-00000005","CreatedBy__c":"0056F000006PtYlQAK","SubjectDivision__c":"V1","Thema__c":"Val1","Type__c":"Value1","NbCopy__c":0,"NbLike__c":0,"NbView__c":2,"CreatedByDisplayedNa (5 more) ...":"GW Admin","LastModifiedDate__c":"2018-03-01T06:37:43.000Z","Status__c":"Saved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dZQbMAM","Id":"00PN00000071bDtMAI","Name":"E0B7FB2C-6CBD-4FEE-8 (21 more) ..."}],"CreatedBy__r":{"DisplayedUsernameFor (7 more) ...":"GW Admin","Id":"0056F000006PtYlQAK"}}|0x70f97579
+20:47:59.0 (116369310)|STATEMENT_EXECUTE|[536]
+20:47:59.0 (116374523)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+20:47:59.0 (116385491)|HEAP_ALLOCATE|[533]|Bytes:5
+20:47:59.0 (116400077)|HEAP_ALLOCATE|[533]|Bytes:60
+20:47:59.0 (116406637)|VARIABLE_SCOPE_BEGIN|[533]|knowledge|kdKnowledge__c|true|false
+20:47:59.0 (116429055)|VARIABLE_ASSIGNMENT|[533]|knowledge|{"Id":"a0AN0000009dZPiMAM","Name":"EK-00000003","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"Creator is GW Admin","Type__c":"Value1","NbCopy__c":0,"NbLike__c":0,"NbView__c":1,"LastModifiedDate__c":"2018-03-01T05:50:53.000Z","Status__c":"TemporarySaved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dZPiMAM","Id":"00PN00000071atFMAQ","Name":"100 euro - 2002 (Obv (9 more) ..."}]}|0x5232c543
+20:47:59.0 (116438273)|STATEMENT_EXECUTE|[533]
+20:47:59.0 (116439487)|STATEMENT_EXECUTE|[534]
+20:47:59.0 (116442706)|HEAP_ALLOCATE|[534]|Bytes:8
+20:47:59.0 (116447313)|CONSTRUCTOR_ENTRY|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (116452235)|VARIABLE_SCOPE_BEGIN|[1064]|this|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (116464356)|VARIABLE_ASSIGNMENT|[1064]|this|{}|0x22ea3684
+20:47:59.0 (116474903)|STATEMENT_EXECUTE|[1064]
+20:47:59.0 (116476276)|STATEMENT_EXECUTE|[1065]
+20:47:59.0 (116478750)|CONSTRUCTOR_EXIT|[534]|01pN0000000a5VF|<init>()
+20:47:59.0 (116483163)|VARIABLE_SCOPE_BEGIN|[534]|knowledgeItem|kdKnowledgeListCtrl.KnowledgeItem|true|false
+20:47:59.0 (116492614)|VARIABLE_ASSIGNMENT|[534]|knowledgeItem|{}|0x22ea3684
+20:47:59.0 (116497320)|STATEMENT_EXECUTE|[535]
+20:47:59.0 (116505919)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{}|0x22ea3684
+20:47:59.0 (116525592)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0AN0000009dZPiMAM","Name":"EK-00000003","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"Creator is GW Admin","Type__c":"Value1","NbCopy__c":0,"NbLike__c":0,"NbView__c":1,"LastModifiedDate__c":"2018-03-01T05:50:53.000Z","Status__c":"TemporarySaved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dZPiMAM","Id":"00PN00000071atFMAQ","Name":"100 euro - 2002 (Obv (9 more) ..."}]}|0x5232c543
+20:47:59.0 (116546759)|VARIABLE_ASSIGNMENT|[1065]|this.knowledge|{"Id":"a0AN0000009dZPiMAM","Name":"EK-00000003","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"Creator is GW Admin","Type__c":"Value1","NbCopy__c":0,"NbLike__c":0,"NbView__c":1,"LastModifiedDate__c":"2018-03-01T05:50:53.000Z","Status__c":"TemporarySaved","HasMovie__c":false,"UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009dZPiMAM","Id":"00PN00000071atFMAQ","Name":"100 euro - 2002 (Obv (9 more) ..."}]}|0x22ea3684
+20:47:59.0 (116558829)|STATEMENT_EXECUTE|[536]
+20:47:59.0 (116564208)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+20:47:59.0 (116574735)|HEAP_ALLOCATE|[533]|Bytes:5
+20:47:59.0 (116583385)|VARIABLE_ASSIGNMENT|[533]|knowledge|null|
+20:47:59.0 (116588467)|STATEMENT_EXECUTE|[539]
+20:47:59.0 (116591972)|HEAP_ALLOCATE|[539]|Bytes:20
+20:47:59.0 (117088444)|HEAP_ALLOCATE|[539]|Bytes:3382
+20:47:59.0 (117109929)|HEAP_ALLOCATE|[539]|Bytes:3402
+20:47:59.0 (117124897)|USER_DEBUG|[539]|DEBUG|getRecords -> recs: (KnowledgeItem:[knowledge=kdKnowledge__c:{Id=a0AN0000009dZQqMAM, Name=EK-00000007, CreatedBy__c=0056F000006PtYlQAK, SubjectDivision__c=V1, Thema__c=Val1, Type__c=Value1, NbCopy__c=0, NbLike__c=0, NbView__c=2, CreatedByDisplayedName__c=Duc, LastModifiedDate__c=2018-03-02 11:47:54, Status__c=TemporarySaved, HasMovie__c=true}], KnowledgeItem:[knowledge=kdKnowledge__c:{Id=a0AN0000009dZQgMAM, Name=EK-00000006, CreatedBy__c=0056F000006PtYlQAK, SubjectDivision__c=V1, Thema__c=Val1, Type__c=Value1, NbCopy__c=0, NbLike__c=0, NbView__c=2, CreatedByDisplayedName__c=Duc, LastModifiedDate__c=2018-03-02 11:46:43, Status__c=TemporarySaved, HasMovie__c=true}], KnowledgeItem:[knowledge=kdKnowledge__c:{Id=a0AN0000009dYa7MAE, Name=EK-00000001, Agency__c=001N0000017kyuTIAQ, Description__c=descr 1, SubjectDivision__c=V3, Thema__c=Val2, Title__c=title 1a, Type__c=Value1, NbCopy__c=1, NbLike__c=1, NbView__c=3, CreatedByDisplayedName__c=Duc, LastModifiedDate__c=2018-03-02 08:47:59, Status__c=TemporarySaved, HasMovie__c=false}], KnowledgeItem:[knowledge=kdKnowledge__c:{Id=a0AN0000009dZXEMA2, Name=EK-00000010, CreatedBy__c=0056F000006PtYlQAK, SubjectDivision__c=V1, Thema__c=Val1, Type__c=Value1, NbCopy__c=1, NbLike__c=0, NbView__c=3, CreatedByDisplayedName__c=Duc, LastModifiedDate__c=2018-03-02 08:45:46, Status__c=TemporarySaved, HasMovie__c=false}], KnowledgeItem:[knowledge=kdKnowledge__c:{Id=a0AN0000009dZXJMA2, Name=EK-00000011, CreatedBy__c=0056F000006PtYlQAK, SubjectDivision__c=V1, Thema__c=Val1, Type__c=Value1, NbCopy__c=1, NbLike__c=1, NbView__c=3, CreatedByDisplayedName__c=Duc, LastModifiedDate__c=2018-03-02 08:45:40, Status__c=TemporarySaved, HasMovie__c=false}], KnowledgeItem:[knowledge=kdKnowledge__c:{Id=a0AN0000009dZQvMAM, Name=EK-00000008, CreatedBy__c=0056F000006PtYlQAK, SubjectDivision__c=V1, Thema__c=Val1, Type__c=Value1, NbCopy__c=1, NbLike__c=1, NbView__c=3, CreatedByDisplayedName__c=Duc, LastModifiedDate__c=2018-03-02 08:45:35, Status__c=Saved, HasMovie__c=false}], KnowledgeItem:[knowledge=kdKnowledge__c:{Id=a0AN0000009dZXOMA2, Name=EK-00000012, CreatedBy__c=0056F000006PtYlQAK, SubjectDivision__c=V1, Thema__c=Val2, Title__c=eee, Type__c=Value4, NbCopy__c=0, NbLike__c=0, NbView__c=2, CreatedByDisplayedName__c=Duc, LastModifiedDate__c=2018-03-02 08:45:27, Status__c=TemporarySaved, HasMovie__c=false}], KnowledgeItem:[knowledge=kdKnowledge__c:{Id=a0AN0000009dZR0MAM, Name=EK-00000009, Agency__c=001N0000017kyuTIAQ, CreatedBy__c=0056F000006PtYlQAK, Description__c=XXXXXXXXXXXXXX, SubjectDivision__c=V3, Thema__c=Val2, Title__c=XXXXX, Type__c=Value1, NbCopy__c=1, NbLike__c=1, NbView__c=3, CreatedByDisplayedName__c=Duc, LastModifiedDate__c=2018-03-02 08:45:21, Status__c=Saved, HasMovie__c=false}], KnowledgeItem:[knowledge=kdKnowledge__c:{Id=a0AN0000009dZOaMAM, Name=EK-00000002, Agency__c=001N0000017kyuTIAQ, SubjectDivision__c=V1, Thema__c=Val1, Title__c=title2, Type__c=Value1, NbCopy__c=1, NbLike__c=1, NbView__c=1, LastModifiedDate__c=2018-03-01 18:45:10, Status__c=TemporarySaved, HasMovie__c=false}], KnowledgeItem:[knowledge=kdKnowledge__c:{Id=a0AN0000009dZeaMAE, Name=EK-00000013, CreatedBy__c=005N0000003dz53IAA, SubjectDivision__c=V1, Thema__c=Val1, Title__c=eeee, Type__c=Value1, NbCopy__c=0, NbLike__c=1, NbView__c=3, CreatedByDisplayedName__c=支社S User S, LastModifiedDate__c=2018-03-01 06:56:51, Status__c=Saved, HasMovie__c=false}], ...)
+20:47:59.0 (117172659)|STATEMENT_EXECUTE|[540]
+20:47:59.0 (117177198)|SYSTEM_MODE_EXIT|false
+20:47:59.0 (121929342)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (122018891)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (122194335)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (122513563)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (122541351)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:152
+20:47:59.0 (122548339)|VARIABLE_SCOPE_BEGIN|[11]|this|kdKnowledgeListCtrl|true|false
+20:47:59.0 (122724946)|VARIABLE_ASSIGNMENT|[11]|this|{"attachmentId":"00PN00000071f03MAA","currentUser":"0x66f5a620","errorMessage":"","filterCreatedBy":"","filterFreeText":"","filterHasMovie":false,"filterTitle":"","initSearchFlg":"true","isApprover":false,"isCreator":false,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"kdKnowledgeNew":"0x4146fa04","kdKnowledgeNewAttachmentSize":63166,"kdKnowledgeUpdate":"0x761786f4","kdKnowledgeUpdateDetailCopy":"0x228e80a","kdKnowledgeUpdateDetailLike":"0x49279ac9","kdKnowledgeUpdateId":"a0AN0000009dZQgMAM","lsKnowledgeUpdateAttachment":"0x5b70d6c3","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@75adce09"}|0x2ab1b4be
+20:47:59.0 (122751299)|SYSTEM_MODE_ENTER|false
+20:47:59.0 (122758795)|HEAP_ALLOCATE|[11]|Bytes:5
+20:47:59.0 (122763544)|STATEMENT_EXECUTE|[11]
+20:47:59.0 (122765704)|STATEMENT_EXECUTE|[11]
+20:47:59.0 (122832464)|VARIABLE_SCOPE_BEGIN|[44]|auConstantCmn.ACCOUNT_CHANNEL_DAIRITEN|String|false|true
+20:47:59.0 (122841522)|VARIABLE_SCOPE_BEGIN|[42]|auConstantCmn.ACCOUNT_CHANNEL_SHOP|String|false|true
+20:47:59.0 (122847590)|VARIABLE_SCOPE_BEGIN|[43]|auConstantCmn.ACCOUNT_CHANNEL_UNEIHOJIN|String|false|true
+20:47:59.0 (122853965)|VARIABLE_SCOPE_BEGIN|[95]|auConstantCmn.CX_KNOWLEDGE_SHARING_NATIONAL|String|false|true
+20:47:59.0 (122860263)|VARIABLE_SCOPE_BEGIN|[94]|auConstantCmn.CX_KNOWLEDGE_SHARING_REGIONAL_OFFICE|String|false|true
+20:47:59.0 (122866000)|VARIABLE_SCOPE_BEGIN|[100]|auConstantCmn.CX_KNOWLEDGE_STATUS_APPROVED|String|false|true
+20:47:59.0 (122872079)|VARIABLE_SCOPE_BEGIN|[101]|auConstantCmn.CX_KNOWLEDGE_STATUS_NATIONAL_APPROVED|String|false|true
+20:47:59.0 (122878879)|VARIABLE_SCOPE_BEGIN|[102]|auConstantCmn.CX_KNOWLEDGE_STATUS_REJECTED|String|false|true
+20:47:59.0 (122885129)|VARIABLE_SCOPE_BEGIN|[99]|auConstantCmn.CX_KNOWLEDGE_STATUS_SAVED|String|false|true
+20:47:59.0 (122891041)|VARIABLE_SCOPE_BEGIN|[98]|auConstantCmn.CX_KNOWLEDGE_STATUS_TEMPORARY_SAVED|String|false|true
+20:47:59.0 (122897098)|VARIABLE_SCOPE_BEGIN|[16]|auConstantCmn.FORGOT_PASSWORD_ERR_MESSAGE001|String|false|true
+20:47:59.0 (122902903)|VARIABLE_SCOPE_BEGIN|[106]|auConstantCmn.KDDI_KNOWLEDGE_STATUS_SAVED|String|false|true
+20:47:59.0 (122908984)|VARIABLE_SCOPE_BEGIN|[105]|auConstantCmn.KDDI_KNOWLEDGE_STATUS_TEMPORARY_SAVED|String|false|true
+20:47:59.0 (122914891)|VARIABLE_SCOPE_BEGIN|[10]|auConstantCmn.LOGIN_ERR_MESSAGE001|String|false|true
+20:47:59.0 (122920791)|VARIABLE_SCOPE_BEGIN|[11]|auConstantCmn.LOGIN_ERR_MESSAGE002|String|false|true
+20:47:59.0 (122926522)|VARIABLE_SCOPE_BEGIN|[12]|auConstantCmn.LOGIN_ERR_MESSAGE003|String|false|true
+20:47:59.0 (122932176)|VARIABLE_SCOPE_BEGIN|[13]|auConstantCmn.LOGIN_ERR_MESSAGE004|String|false|true
+20:47:59.0 (122938500)|VARIABLE_SCOPE_BEGIN|[81]|auConstantCmn.PAGE_ALIAS_SHOP_CX|String|false|true
+20:47:59.0 (122944514)|VARIABLE_SCOPE_BEGIN|[72]|auConstantCmn.PAGE_ALIAS_SHOP_EVENTS|String|false|true
+20:47:59.0 (122950547)|VARIABLE_SCOPE_BEGIN|[58]|auConstantCmn.PAGE_ALIAS_SHOP_FORGOTPW|String|false|true
+20:47:59.0 (122956684)|VARIABLE_SCOPE_BEGIN|[62]|auConstantCmn.PAGE_ALIAS_SHOP_FORGOTPWCOMP|String|false|true
+20:47:59.0 (122963015)|VARIABLE_SCOPE_BEGIN|[69]|auConstantCmn.PAGE_ALIAS_SHOP_HOME|String|false|true
+20:47:59.0 (122969091)|VARIABLE_SCOPE_BEGIN|[50]|auConstantCmn.PAGE_ALIAS_SHOP_LOGIN|String|false|true
+20:47:59.0 (122975229)|VARIABLE_SCOPE_BEGIN|[54]|auConstantCmn.PAGE_ALIAS_SHOP_LOGOUT|String|false|true
+20:47:59.0 (122982312)|VARIABLE_SCOPE_BEGIN|[66]|auConstantCmn.PAGE_ALIAS_SHOP_PASSWORDSIGNUP|String|false|true
+20:47:59.0 (122988432)|VARIABLE_SCOPE_BEGIN|[87]|auConstantCmn.PAGE_ALIAS_SHOP_SCHEDULE|String|false|true
+20:47:59.0 (122994899)|VARIABLE_SCOPE_BEGIN|[90]|auConstantCmn.PAGE_ALIAS_SHOP_SCHEDULE_LIST|String|false|true
+20:47:59.0 (123001511)|VARIABLE_SCOPE_BEGIN|[75]|auConstantCmn.PAGE_ALIAS_SHOP_STPD|String|false|true
+20:47:59.0 (123008743)|VARIABLE_SCOPE_BEGIN|[84]|auConstantCmn.PAGE_ALIAS_SHOP_TIMELINE_CX|String|false|true
+20:47:59.0 (123015087)|VARIABLE_SCOPE_BEGIN|[78]|auConstantCmn.PAGE_ALIAS_SHOP_TIMELINE_STPD|String|false|true
+20:47:59.0 (123022272)|VARIABLE_SCOPE_BEGIN|[80]|auConstantCmn.PAGE_VF_SHOP_CX|String|false|true
+20:47:59.0 (123029253)|VARIABLE_SCOPE_BEGIN|[71]|auConstantCmn.PAGE_VF_SHOP_EVENTS|String|false|true
+20:47:59.0 (123035652)|VARIABLE_SCOPE_BEGIN|[57]|auConstantCmn.PAGE_VF_SHOP_FORGOTPW|String|false|true
+20:47:59.0 (123042421)|VARIABLE_SCOPE_BEGIN|[61]|auConstantCmn.PAGE_VF_SHOP_FORGOTPWCOMP|String|false|true
+20:47:59.0 (123049046)|VARIABLE_SCOPE_BEGIN|[68]|auConstantCmn.PAGE_VF_SHOP_HOME|String|false|true
+20:47:59.0 (123055751)|VARIABLE_SCOPE_BEGIN|[49]|auConstantCmn.PAGE_VF_SHOP_LOGIN|String|false|true
+20:47:59.0 (123062785)|VARIABLE_SCOPE_BEGIN|[53]|auConstantCmn.PAGE_VF_SHOP_LOGOUT|String|false|true
+20:47:59.0 (123069542)|VARIABLE_SCOPE_BEGIN|[65]|auConstantCmn.PAGE_VF_SHOP_PASSWORDSIGNUP|String|false|true
+20:47:59.0 (123076143)|VARIABLE_SCOPE_BEGIN|[86]|auConstantCmn.PAGE_VF_SHOP_SCHEDULE|String|false|true
+20:47:59.0 (123082931)|VARIABLE_SCOPE_BEGIN|[89]|auConstantCmn.PAGE_VF_SHOP_SCHEDULE_LIST|String|false|true
+20:47:59.0 (123089899)|VARIABLE_SCOPE_BEGIN|[74]|auConstantCmn.PAGE_VF_SHOP_STPD|String|false|true
+20:47:59.0 (123096667)|VARIABLE_SCOPE_BEGIN|[83]|auConstantCmn.PAGE_VF_SHOP_TIMELINE_CX|String|false|true
+20:47:59.0 (123103630)|VARIABLE_SCOPE_BEGIN|[77]|auConstantCmn.PAGE_VF_SHOP_TIMELINE_STPD|String|false|true
+20:47:59.0 (123110733)|VARIABLE_SCOPE_BEGIN|[24]|auConstantCmn.PASSWORD_SIGNUP_ERR_EXPIREDURL|String|false|true
+20:47:59.0 (123117812)|VARIABLE_SCOPE_BEGIN|[27]|auConstantCmn.PASSWORD_SIGNUP_ERR_INTERNAL|String|false|true
+20:47:59.0 (123125499)|VARIABLE_SCOPE_BEGIN|[25]|auConstantCmn.PASSWORD_SIGNUP_ERR_INVALIDURL|String|false|true
+20:47:59.0 (123132941)|VARIABLE_SCOPE_BEGIN|[19]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE001|String|false|true
+20:47:59.0 (123140166)|VARIABLE_SCOPE_BEGIN|[20]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE002|String|false|true
+20:47:59.0 (123147354)|VARIABLE_SCOPE_BEGIN|[21]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE003|String|false|true
+20:47:59.0 (123157830)|VARIABLE_SCOPE_BEGIN|[22]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE004|String|false|true
+20:47:59.0 (123166915)|VARIABLE_SCOPE_BEGIN|[23]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE005|String|false|true
+20:47:59.0 (123174982)|VARIABLE_SCOPE_BEGIN|[26]|auConstantCmn.PASSWORD_SIGNUP_ERR_OLDURL|String|false|true
+20:47:59.0 (123183311)|VARIABLE_SCOPE_BEGIN|[31]|auConstantCmn.PROFILE_COMMUNITY_MANAGEMENT|String|false|true
+20:47:59.0 (123191482)|VARIABLE_SCOPE_BEGIN|[32]|auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT|String|false|true
+20:47:59.0 (123200261)|VARIABLE_SCOPE_BEGIN|[30]|auConstantCmn.PROFILE_COMMUNITY_SHOP|String|false|true
+20:47:59.0 (123207994)|VARIABLE_SCOPE_BEGIN|[33]|auConstantCmn.PROFILE_KDDI_BRANCH|String|false|true
+20:47:59.0 (123215758)|VARIABLE_SCOPE_BEGIN|[35]|auConstantCmn.PROFILE_KDDI_HEADQUARTERS|String|false|true
+20:47:59.0 (123227671)|VARIABLE_SCOPE_BEGIN|[36]|auConstantCmn.PROFILE_KDDI_HEADQUARTERS_V2|String|false|true
+20:47:59.0 (123236531)|VARIABLE_SCOPE_BEGIN|[34]|auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE|String|false|true
+20:47:59.0 (123244619)|VARIABLE_SCOPE_BEGIN|[37]|auConstantCmn.PROFILE_SYSADMIN_CUSTOM|String|false|true
+20:47:59.0 (123252924)|VARIABLE_SCOPE_BEGIN|[38]|auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN|String|false|true
+20:47:59.0 (123261383)|VARIABLE_SCOPE_BEGIN|[39]|auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP|String|false|true
+20:47:59.0 (123269369)|VARIABLE_SCOPE_BEGIN|[7]|auConstantCmn.ROLE_CODE_HONBU|String|false|true
+20:47:59.0 (123278797)|HEAP_ALLOCATE|[11]|Bytes:5
+20:47:59.0 (123290359)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.ACCOUNT_CHANNEL_DAIRITEN|"一次代理店"
+20:47:59.0 (123295405)|HEAP_ALLOCATE|[11]|Bytes:6
+20:47:59.0 (123300914)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.ACCOUNT_CHANNEL_SHOP|"auショップ"
+20:47:59.0 (123304922)|HEAP_ALLOCATE|[11]|Bytes:4
+20:47:59.0 (123309722)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.ACCOUNT_CHANNEL_UNEIHOJIN|"運営法人"
+20:47:59.0 (123313848)|HEAP_ALLOCATE|[11]|Bytes:8
+20:47:59.0 (123318756)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.CX_KNOWLEDGE_SHARING_NATIONAL|"National"
+20:47:59.0 (123322700)|HEAP_ALLOCATE|[11]|Bytes:14
+20:47:59.0 (123327945)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.CX_KNOWLEDGE_SHARING_REGIONAL_OFFICE|"RegionalOffice"
+20:47:59.0 (123331464)|HEAP_ALLOCATE|[11]|Bytes:8
+20:47:59.0 (123336649)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.CX_KNOWLEDGE_STATUS_APPROVED|"Approved"
+20:47:59.0 (123340529)|HEAP_ALLOCATE|[11]|Bytes:16
+20:47:59.0 (123345788)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.CX_KNOWLEDGE_STATUS_NATIONAL_APPROVED|"NationalApproved"
+20:47:59.0 (123349455)|HEAP_ALLOCATE|[11]|Bytes:8
+20:47:59.0 (123354268)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.CX_KNOWLEDGE_STATUS_REJECTED|"Rejected"
+20:47:59.0 (123357849)|HEAP_ALLOCATE|[11]|Bytes:5
+20:47:59.0 (123362665)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.CX_KNOWLEDGE_STATUS_SAVED|"Saved"
+20:47:59.0 (123366056)|HEAP_ALLOCATE|[11]|Bytes:14
+20:47:59.0 (123371305)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.CX_KNOWLEDGE_STATUS_TEMPORARY_SAVED|"TemporarySaved"
+20:47:59.0 (123375399)|HEAP_ALLOCATE|[11]|Bytes:12
+20:47:59.0 (123380285)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.FORGOT_PASSWORD_ERR_MESSAGE001|"IDを入力してください。"
+20:47:59.0 (123384268)|HEAP_ALLOCATE|[11]|Bytes:5
+20:47:59.0 (123389385)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.KDDI_KNOWLEDGE_STATUS_SAVED|"Saved"
+20:47:59.0 (123393048)|HEAP_ALLOCATE|[11]|Bytes:14
+20:47:59.0 (123398184)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.KDDI_KNOWLEDGE_STATUS_TEMPORARY_SAVED|"TemporarySaved"
+20:47:59.0 (123401728)|HEAP_ALLOCATE|[11]|Bytes:15
+20:47:59.0 (123407647)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.LOGIN_ERR_MESSAGE001|"パスワードを入力してください。"
+20:47:59.0 (123411382)|HEAP_ALLOCATE|[11]|Bytes:27
+20:47:59.0 (123417957)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.LOGIN_ERR_MESSAGE002|"8文字以上の英数字混在のパスワードを指定 (7 more) ..."
+20:47:59.0 (123422232)|HEAP_ALLOCATE|[11]|Bytes:19
+20:47:59.0 (123427656)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.LOGIN_ERR_MESSAGE003|"ID或いはパスワードが間違っています。"
+20:47:59.0 (123431489)|HEAP_ALLOCATE|[11]|Bytes:46
+20:47:59.0 (123437527)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.LOGIN_ERR_MESSAGE004|"ログイン失敗回数を超えた為、ロックされま (26 more) ..."
+20:47:59.0 (123441478)|HEAP_ALLOCATE|[11]|Bytes:3
+20:47:59.0 (123446768)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_CX|"/CX"
+20:47:59.0 (123450471)|HEAP_ALLOCATE|[11]|Bytes:7
+20:47:59.0 (123455736)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_EVENTS|"/events"
+20:47:59.0 (123459768)|HEAP_ALLOCATE|[11]|Bytes:16
+20:47:59.0 (123465471)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_FORGOTPW|"/forgot-password"
+20:47:59.0 (123468971)|HEAP_ALLOCATE|[11]|Bytes:25
+20:47:59.0 (123474990)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_FORGOTPWCOMP|"/forgot-password-com (5 more) ..."
+20:47:59.0 (123478595)|HEAP_ALLOCATE|[11]|Bytes:5
+20:47:59.0 (123484211)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_HOME|"/home"
+20:47:59.0 (123487695)|HEAP_ALLOCATE|[11]|Bytes:6
+20:47:59.0 (123493626)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_LOGIN|"/login"
+20:47:59.0 (123497633)|HEAP_ALLOCATE|[11]|Bytes:7
+20:47:59.0 (123503386)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_LOGOUT|"/logout"
+20:47:59.0 (123507042)|HEAP_ALLOCATE|[11]|Bytes:16
+20:47:59.0 (123512715)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_PASSWORDSIGNUP|"/password-signup"
+20:47:59.0 (123516204)|HEAP_ALLOCATE|[11]|Bytes:9
+20:47:59.0 (123521739)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_SCHEDULE|"/calendar"
+20:47:59.0 (123525530)|HEAP_ALLOCATE|[11]|Bytes:11
+20:47:59.0 (123531516)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_SCHEDULE_LIST|"/activities"
+20:47:59.0 (123535000)|HEAP_ALLOCATE|[11]|Bytes:5
+20:47:59.0 (123540746)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_STPD|"/STPD"
+20:47:59.0 (123544582)|HEAP_ALLOCATE|[11]|Bytes:11
+20:47:59.0 (123550687)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_TIMELINE_CX|"/timelineCX"
+20:47:59.0 (123554788)|HEAP_ALLOCATE|[11]|Bytes:13
+20:47:59.0 (123580048)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_TIMELINE_STPD|"/timelineSTPD"
+20:47:59.0 (123587740)|HEAP_ALLOCATE|[11]|Bytes:27
+20:47:59.0 (123600110)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_CX|"/apex/auCXKnowledgeL (7 more) ..."
+20:47:59.0 (123606914)|HEAP_ALLOCATE|[11]|Bytes:22
+20:47:59.0 (123615771)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_EVENTS|"/apex/auEventsListPa (2 more) ..."
+20:47:59.0 (123620038)|HEAP_ALLOCATE|[11]|Bytes:21
+20:47:59.0 (123626472)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_FORGOTPW|"/auForgotPasswordPag (1 more) ..."
+20:47:59.0 (123630906)|HEAP_ALLOCATE|[11]|Bytes:29
+20:47:59.0 (123637623)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_FORGOTPWCOMP|"/auForgotPasswordCom (9 more) ..."
+20:47:59.0 (123642042)|HEAP_ALLOCATE|[11]|Bytes:24
+20:47:59.0 (123648800)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_HOME|"/apex/auSwitchScreen (4 more) ..."
+20:47:59.0 (123652577)|HEAP_ALLOCATE|[11]|Bytes:12
+20:47:59.0 (123662681)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_LOGIN|"/auLoginPage"
+20:47:59.0 (123666397)|HEAP_ALLOCATE|[11]|Bytes:13
+20:47:59.0 (123672665)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_LOGOUT|"/auLogoutPage"
+20:47:59.0 (123676397)|HEAP_ALLOCATE|[11]|Bytes:21
+20:47:59.0 (123683688)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_PASSWORDSIGNUP|"/auPasswordSignupPag (1 more) ..."
+20:47:59.0 (123687481)|HEAP_ALLOCATE|[11]|Bytes:16
+20:47:59.0 (123694141)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_SCHEDULE|"/apex/auSchedule"
+20:47:59.0 (123698015)|HEAP_ALLOCATE|[11]|Bytes:20
+20:47:59.0 (123704761)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_SCHEDULE_LIST|"/apex/auScheduleList"
+20:47:59.0 (123708797)|HEAP_ALLOCATE|[11]|Bytes:20
+20:47:59.0 (123715153)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_STPD|"/apex/auSTPDListPage"
+20:47:59.0 (123719463)|HEAP_ALLOCATE|[11]|Bytes:31
+20:47:59.0 (123726700)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_TIMELINE_CX|"/apex/auCxKnowledgeT (11 more) ..."
+20:47:59.0 (123730531)|HEAP_ALLOCATE|[11]|Bytes:24
+20:47:59.0 (123737659)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_TIMELINE_STPD|"/apex/auSTPDTimeline (4 more) ..."
+20:47:59.0 (123742214)|HEAP_ALLOCATE|[11]|Bytes:55
+20:47:59.0 (123749808)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PASSWORD_SIGNUP_ERR_EXPIREDURL|"パスワードリセットの有効期限が切れていま (35 more) ..."
+20:47:59.0 (123754406)|HEAP_ALLOCATE|[11]|Bytes:27
+20:47:59.0 (123762144)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PASSWORD_SIGNUP_ERR_INTERNAL|"内部エラーが発生しました。サイト管理者に (7 more) ..."
+20:47:59.0 (123766653)|HEAP_ALLOCATE|[11]|Bytes:51
+20:47:59.0 (123775644)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PASSWORD_SIGNUP_ERR_INVALIDURL|"不正なパスワードリセットURLです。\u003Cb (31 more) ..."
+20:47:59.0 (123780106)|HEAP_ALLOCATE|[11]|Bytes:15
+20:47:59.0 (123787083)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE001|"パスワードを入力してください。"
+20:47:59.0 (123791448)|HEAP_ALLOCATE|[11]|Bytes:19
+20:47:59.0 (123798245)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE002|"確認用のパスワードを入力してください。"
+20:47:59.0 (123801905)|HEAP_ALLOCATE|[11]|Bytes:27
+20:47:59.0 (123809206)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE003|"8文字以上の英数字混在のパスワードを指定 (7 more) ..."
+20:47:59.0 (123813925)|HEAP_ALLOCATE|[11]|Bytes:22
+20:47:59.0 (123821715)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE004|"パスワードと確認用のパスワードが不一致で (2 more) ..."
+20:47:59.0 (123825692)|HEAP_ALLOCATE|[11]|Bytes:21
+20:47:59.0 (123832876)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE005|"以前利用したパスワードはご利用できません (1 more) ..."
+20:47:59.0 (123836944)|HEAP_ALLOCATE|[11]|Bytes:46
+20:47:59.0 (123845184)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PASSWORD_SIGNUP_ERR_OLDURL|"以前のパスワードリセットURLは利用でき (26 more) ..."
+20:47:59.0 (123849224)|HEAP_ALLOCATE|[11]|Bytes:14
+20:47:59.0 (123856500)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_COMMUNITY_MANAGEMENT|"au ショップ - 運営法人"
+20:47:59.0 (123860618)|HEAP_ALLOCATE|[11]|Bytes:15
+20:47:59.0 (123867906)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT|"au ショップ - 一次代理店"
+20:47:59.0 (123872591)|HEAP_ALLOCATE|[11]|Bytes:12
+20:47:59.0 (123879780)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_COMMUNITY_SHOP|"au ショップ - 店舗"
+20:47:59.0 (123883555)|HEAP_ALLOCATE|[11]|Bytes:9
+20:47:59.0 (123890866)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_KDDI_BRANCH|"KDDI - 支店"
+20:47:59.0 (123894623)|HEAP_ALLOCATE|[11]|Bytes:9
+20:47:59.0 (123902223)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_KDDI_HEADQUARTERS|"KDDI - 本部"
+20:47:59.0 (123906498)|HEAP_ALLOCATE|[11]|Bytes:12
+20:47:59.0 (123914059)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_KDDI_HEADQUARTERS_V2|"KDDI - 本部 v2"
+20:47:59.0 (123918097)|HEAP_ALLOCATE|[11]|Bytes:9
+20:47:59.0 (123925205)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE|"KDDI - 支社"
+20:47:59.0 (123928867)|HEAP_ALLOCATE|[11]|Bytes:12
+20:47:59.0 (123936070)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_SYSADMIN_CUSTOM|"System Admin"
+20:47:59.0 (123939941)|HEAP_ALLOCATE|[11]|Bytes:20
+20:47:59.0 (123947339)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN|"System Administrator"
+20:47:59.0 (123951434)|HEAP_ALLOCATE|[11]|Bytes:7
+20:47:59.0 (123958832)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP|"システム管理者"
+20:47:59.0 (123962733)|HEAP_ALLOCATE|[11]|Bytes:7
+20:47:59.0 (123970294)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.ROLE_CODE_HONBU|"C000000"
+20:47:59.0 (123978418)|METHOD_ENTRY|[4]|01pN0000000Miks|auConstantCmn.auConstantCmn()
+20:47:59.0 (123983084)|STATEMENT_EXECUTE|[4]
+20:47:59.0 (123986592)|STATEMENT_EXECUTE|[4]
+20:47:59.0 (123997213)|HEAP_ALLOCATE|[11]|Bytes:5
+20:47:59.0 (124006173)|METHOD_EXIT|[4]|auConstantCmn
+20:47:59.0 (124012909)|SYSTEM_MODE_EXIT|false
+20:47:59.0 (128347063)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (129692656)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (131294183)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (131843275)|SYSTEM_MODE_ENTER|true
+20:47:59.0 (143473013)|VF_SERIALIZE_VIEWSTATE_BEGIN|066N0000000Lyeg
+20:47:59.0 (149701806)|VF_SERIALIZE_VIEWSTATE_END
+20:47:59.161 (161731193)|CUMULATIVE_LIMIT_USAGE
+20:47:59.161 (161731193)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 3 out of 100
+  Number of query rows: 2 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 2 out of 150
+  Number of DML rows: 2 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+20:47:59.161 (161731193)|CUMULATIVE_LIMIT_USAGE_END
+
+20:47:59.0 (161768164)|CODE_UNIT_FINISHED|VF: /apex/kdKnowledgeListPage
+20:47:59.0 (162479572)|EXECUTION_FINISHED

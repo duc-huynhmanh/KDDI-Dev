@@ -1,0 +1,31 @@
+<apex:page showHeader="false">
+  <!-- 導入元にBootstrapが必要 -->
+  <apex:stylesheet value="{!URLFOR($Resource.KDDI_CustomizedMaterials, 'KDDI_CustomizedMaterials/KDDI_VisualforceHeaderStyle.css')}" />
+  <div class="kddi-visualforce-header">
+    <div class="kddi-visualforce-header-content" >
+      <div class="kddi-visualforce-logo-cover">
+        <div class="kddi-logo"></div>
+      </div>
+      <div class="dropdown">
+        <a href="/home/home.jsp">
+          <button class="user-info" type="button">
+            <span class="username">管理画面トップに戻る</span>
+          </button>
+        </a>
+
+<!--
+        <button class="user-info" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="username">{!$User.Alias}</span>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" >
+          <li class="option-item">
+            <apex:outputLink value="/home/home.jsp">salesforce画面へ戻る</apex:outputLink>
+          </li>
+        </ul>
+-->
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</apex:page>

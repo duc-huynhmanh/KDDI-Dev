@@ -1,0 +1,366 @@
+<apex:page controller="saDocumentsCtrl" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" cache="false" action="{!redirectIfNecessaryMobile}" docType="html-5.0">
+
+<apex:form id="allForm">
+
+<html lang="ja">
+<head>
+
+  <meta charset="utf-8" />
+  <title>auポータル</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/sanitize.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/common.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/style-documents.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/iphone.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/flatpickr.min.css')}"/>
+
+  <!-- libraries -->
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/jquery-3.2.1.min.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/flatpickr.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/ja.js')}"/> 
+  
+  <!-- scripts -->
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_check_ua.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_fitting.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_sp.js')}"/> 
+
+  <script>
+    var $j = jQuery.noConflict();
+
+    // converts HTML to text using Javascript
+    function html2text(html) {
+      var tag = document.createElement('div');
+      tag.innerHTML = html;
+      return tag.innerText;
+    }
+
+
+    function jsAfterShowInquiry() {
+        if ($j('.message-error').val().length > 0) {
+          alert($j('.message-error').val());
+          $j('.message-error').val("正しいデーターを入れてください。");
+        } else {
+          $j('.message-error').val("正しいデーターを入れてください。");
+
+          if ($j('.message-question').val().length > 0) {
+            if (confirm($j('.message-question').val())) {
+              /* Confirmation OK -> Continue */
+              setView_04_01_03();
+            }
+          } else {
+            /* No question needed -> Continue */
+            setView_04_01_03();
+          }
+
+        }
+    }
+
+    function jsAfterSaveInquiry() {
+        if ($j('.message-error').val().length > 0) {
+          alert($j('.message-error').val());
+          $j('.message-error').val("正しいデーターを入れてください。");
+        } else {
+          $j('.message-error').val("正しいデーターを入れてください。");
+          alert('保存しました。');
+        }
+    }
+
+    function jsAfterSendInquiryConfirm() {
+        if ($j('.message-error').val().length > 0) {
+          alert($j('.message-error').val());
+          $j('.message-error').val("正しいデーターを入れてください。");
+        } else {
+          $j('.message-error').val("正しいデーターを入れてください。");
+
+          if ($j('.message-question').val().length > 0) {
+            if (confirm($j('.message-question').val())) {
+              /* Confirmation OK -> Continue */
+              jsSendInquiry();
+            }
+          } else {
+            /* No question needed -> Continue */
+            jsSendInquiry();
+          }
+
+        }
+    }
+
+
+
+
+  </script>
+
+  <style type="text/css">
+
+    /*
+     * protect-screen
+     ******************************************************/
+    @media screen {
+
+      .protect-screen-bis {
+        position: fixed;
+        left: 0;
+        top: 0;
+
+        width: 100%;
+        height: 100%;
+
+        background-color: rgba(0, 0, 0, 0.2);
+
+        z-index: 998;
+      }
+      .protect-screen-bis.hide {
+        display: none;
+      }
+    }
+
+    .avatar > img {
+      width: 110px;
+      height: 110px;
+    }
+
+    .postContentList {
+      line-height: 1.3rem;
+      max-height: 5rem;
+    }
+
+    .group-list-item {
+      color: black;
+    }
+
+  </style>
+</head>
+
+
+<body class="page-documents">
+  
+  <apex:inputHidden id="messageError" html-class="message-error" value="{!messageError}" />
+  <apex:inputHidden id="messageQuestion" html-class="message-question" value="{!messageQuestion}" />
+  <apex:inputHidden html-class="idDocumentCategory" value="{!idDocumentCategory}" />
+
+  <apex:actionFunction name="jsShowCategoryDetail"
+                       action="{!showCategoryDetail}"
+                       rerender="pnlCategoryName, pnlCategoryDetail"
+                       oncomplete="setView_06_01_02();" />
+
+
+  <c:saMainTopComp typeOfScreen="{!typeOfScreen}" />
+
+  <div class="protect-screen-bis hide"></div>
+  
+  <!-- template-popup -->
+  <div class="modal-dialog hide"><p>ダイアログメッセージ</p><div class="btn-cancel"><a href="#">キャンセル</a></div><div class="btn-ok"><a href="#">OK</a></div></div>
+
+  <div class="document-container">
+    <header class="document-header">
+      <div class="btn-menu"><a href="#">ナビゲーション</a></div>
+    </header>
+
+    <div class="document-contents">
+
+
+
+      <!-- #View 06-01-01(typ.) -->
+      <section class="documents-section documents-section-list hide">
+        <header class="document-category-list-section-header">
+          <h1>資料集</h1>
+        </header>
+
+        <div class="section-body document-category-list-section-body">
+
+          <!-- #DynamicItem -->
+          <ul class="document-category-list">
+
+            <apex:repeat value="{!lsDocs}" var="doc">
+              <li class="group-list-item" docId="{!doc.Id}">
+                <apex:commandLink value="{!doc.Category__c}"
+                                  action="{!dummyAction}"
+                                  reRender="dummy" />       
+              </li>       
+            </apex:repeat>
+
+          </ul>
+
+        </div>
+
+        <footer class="document-category-list-section-footer"></footer>
+      </section>
+
+        
+      <!-- #View 06-01-02(typ.) -->
+      <section class="documents-section  documents-section-detail hide">
+        <header class="document-list-section-header">
+          <h1><apex:outputText id="pnlCategoryName" value="{!categoryName}" /></h1>
+          <div class="btn-back"><a href="#" class="ui-color-dark">戻る</a></div>
+        </header>
+
+        <div class="section-body document-list-section-body">
+
+          <apex:outputPanel id="pnlCategoryDetail">
+
+            <!-- #DynamicItem -->
+            <ul class="document-list">
+
+              <apex:repeat value="{!lsContentVersion}" var="cv">
+
+                <li>
+
+                  <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!cv.Id}"
+                                   rendered="{!cv.FileType == 'MP4' ||
+                                               cv.FileType == 'MOV'}"
+                                   target="_blank">
+
+                    <span class="thumbnail" style="background-image: url({!URLFOR($Resource.auResPortalSA,'images_sp/file/movie.png')});"></span>
+                    <span class="name">{!cv.Title}</span>
+                  </apex:outputLink>
+
+                  <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!cv.Id}"
+                                   rendered="{!cv.FileType == 'BMP' ||
+                                               cv.FileType == 'JPEG' ||
+                                               cv.FileType == 'PNG' ||
+                                               cv.FileType == 'GIF' ||
+                                               cv.FileType == 'JPG'}"
+                                   target="_blank">
+
+                    <span class="thumbnail" style="background-image: url(/sfc/servlet.shepherd/version/download/{!cv.Id});"></span>
+                    <span class="name">{!cv.Title}</span>
+                  </apex:outputLink>
+
+                  <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!cv.Id}"
+                                   rendered="{!cv.FileType == 'PDF'}"
+                                   target="_blank">
+
+                    <span class="thumbnail" style="background-image: url({!URLFOR($Resource.auResPortalSA,'images_sp/file/pdf.png')});"></span>
+                    <span class="name">{!cv.Title}</span>
+                  </apex:outputLink>
+
+                  <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!cv.Id}"
+                                   rendered="{!cv.FileType == 'EXCEL' ||
+                                               cv.FileType == 'EXCEL_X' ||
+                                               cv.FileType == 'CSV'}"
+                                   target="_blank">
+
+                    <span class="thumbnail" style="background-image: url({!URLFOR($Resource.auResPortalSA,'images_sp/file/xls.png')});"></span>
+                    <span class="name">{!cv.Title}</span>
+                  </apex:outputLink>
+
+                  <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!cv.Id}"
+                                   rendered="{!cv.FileType == 'WORD' ||
+                                               cv.FileType == 'WORD_X' ||
+                                               cv.FileType == 'RTF' ||
+                                               cv.FileType == 'TEXT'}"
+                                   target="_blank">
+
+                    <span class="thumbnail" style="background-image: url({!URLFOR($Resource.auResPortalSA,'images_sp/file/doc.png')});"></span>
+                    <span class="name">{!cv.Title}</span>
+                  </apex:outputLink>
+
+                  <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!cv.Id}"
+                                   rendered="{!cv.FileType == 'POWER_POINT' ||
+                                               cv.FileType == 'POWER_POINT_X' ||
+                                               cv.FileType == 'PPS' ||
+                                               cv.FileType == 'PPSX'}"
+                                   target="_blank">
+
+                    <span class="thumbnail" style="background-image: url({!URLFOR($Resource.auResPortalSA,'images_sp/file/ppt.png')});"></span>
+                    <span class="name">{!cv.Title}</span>
+                  </apex:outputLink>
+
+                  <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!cv.Id}"
+                                   rendered="{!cv.FileType != 'MP4' &&
+                                               cv.FileType != 'MOV' &&
+                                               cv.FileType != 'PDF' &&
+                                               cv.FileType != 'BMP' &&
+                                               cv.FileType != 'JPEG' &&
+                                               cv.FileType != 'PNG' &&
+                                               cv.FileType != 'GIF' &&
+                                               cv.FileType != 'JPG' &&
+                                               cv.FileType != 'EXCEL' &&
+                                               cv.FileType != 'EXCEL_X' && 
+                                               cv.FileType != 'CSV' &&
+                                               cv.FileType != 'WORD' && 
+                                               cv.FileType != 'WORD_X' && 
+                                               cv.FileType != 'RTF' &&
+                                               cv.FileType != 'TEXT' && 
+                                               cv.FileType != 'POWER_POINT' && 
+                                               cv.FileType != 'POWER_POINT_X' && 
+                                               cv.FileType != 'PPS' &&
+                                               cv.FileType != 'PPSX'}"
+                                   target="_blank">
+
+                    <span class="thumbnail" style="background-image: url({!URLFOR($Resource.auResPortalSA,'images_sp/file/file.png')});"></span>
+                    <span class="name">{!cv.Title}</span>
+                  </apex:outputLink>
+
+                </li>
+
+              </apex:repeat>
+
+            </ul>
+
+          </apex:outputPanel>
+
+        </div>
+
+        <footer class="document-list-section-footer"></footer>
+      </section>
+   
+    </div>
+    <footer class="document-footer"></footer>
+  </div>
+  <script>
+
+    function setView_06_01_01() {
+
+      $j(".document-header").show();
+      $j('.documents-section-list').show();
+      $j('.documents-section-detail').hide();
+
+      setView_06_01_01_logic();
+    }
+
+    function setView_06_01_01_logic() {
+
+      $j(".group-list-item").off("click");  
+      $j(".group-list-item").on("click", function (e) {
+
+        $j('.idDocumentCategory').val($j(this).attr('docId'));
+        jsShowCategoryDetail();
+
+      });
+
+    }
+
+    function setView_06_01_02() {
+
+      $j(".document-header").hide();
+      $j('.documents-section-list').hide();
+      $j('.documents-section-detail').show();
+
+      setView_06_01_02_logic();
+
+    }
+
+    function setView_06_01_02_logic() {
+
+      $j(".btn-back").off("click");
+      $j(".btn-back").on("click", function (e) {
+        setView_06_01_01();
+      });
+      
+    }
+
+    $j(document).ready(function () {
+
+      setView_06_01_01();
+
+    });
+
+  </script>
+</body>
+</html>
+
+</apex:form>
+
+</apex:page>

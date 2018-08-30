@@ -1,0 +1,533 @@
+<apex:page controller="auSendEventMailCtrl" title="auSendEventMail" action="{!init}" >
+
+    <apex:includeLightning />
+    <apex:slds />  
+    <apex:slds rendered="true" />
+
+<apex:includeScript value="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" />
+<apex:includeScript value="//soap/ajax/20.0/connection.js" />
+  <style type="text/css" >
+
+    .table-usr-resp {
+      width: 90% !important;
+      margin-left: 5%;
+      margin-top: -0.5rem; 
+    }
+    .verticalAlign {
+      vertical-align: middle !important;
+    }
+    #scrollArea {
+      overflow-y:auto;
+      height: 220px;
+    }
+    #requiredInput {
+      border-left : 3px solid red;
+    }
+    .hidePortalUsers select{
+      display: none;
+    }
+
+    .hidePortalUsers .lookupInput input{
+      min-height: calc(1.875rem + (1px * 2));
+      border-radius: .25rem;
+      border: 1px solid #d8dde6;
+      padding: 0 1rem 0 .75rem;
+      color: #16325c;
+      width: 15rem;
+    }
+
+    
+
+  </style>
+  <script>
+    function NoSubmit(e){
+      if(!e) var e = window.event;
+
+      if(e.keyCode==13){
+          if(e.srcElement.type!='submit' && e.srcElement.type!='textarea'){
+              if(e.srcElement.type!='image'){
+                  return false;
+              }
+           }
+      }
+    }
+    // チェックボックス全選択/全解除
+    function chAll(chk,changecheckId) {
+       var checkBoxs = document.querySelectorAll('input[id$='+changecheckId+']');
+       var len = checkBoxs.length;
+      // 子のcheckboxを全選択または全解除する
+      for (var i=0; i < len; i++) {
+        checkBoxs[i].checked = chk.checked;
+      }
+
+    }
+    // 確認ダイアログ
+    function doConfirmSendEmail(message) {
+       if (confirm('{!$Label.auSendEventMail_MSG_12}')) {
+          document.getElementsByClassName('mailBodyMemo')[0].value = document.getElementsByClassName('mailBody')[0].value;
+          sendEmail();
+       }
+    }
+
+    // 確認ダイアログ
+    function doConfirmPattern1() {
+       if (confirm('パターン１を保存してよろしいですか？')) {
+          document.getElementsByClassName('patternNameMemo')[0].value = document.getElementsByClassName('patternName')[0].value;
+          savePattern1();
+       }
+    }
+    function doConfirmPattern2() {
+       if (confirm('パターン２を保存してよろしいですか？')) {
+          document.getElementsByClassName('patternNameMemo')[0].value = document.getElementsByClassName('patternName')[0].value;
+          savePattern2();
+       }
+    }
+    function doConfirmPattern3() {
+       if (confirm('パターン３を保存してよろしいですか？')) {
+          document.getElementsByClassName('patternNameMemo')[0].value = document.getElementsByClassName('patternName')[0].value;
+          savePattern3();
+       }
+    }
+    function doConfirmPattern4() {
+       if (confirm('パターン４を保存してよろしいですか？')) {
+          document.getElementsByClassName('patternNameMemo')[0].value = document.getElementsByClassName('patternName')[0].value;
+          savePattern4();
+       }
+    }
+    function doConfirmPattern5() {
+       if (confirm('パターン５を保存してよろしいですか？')) {
+          document.getElementsByClassName('patternNameMemo')[0].value = document.getElementsByClassName('patternName')[0].value;
+          savePattern5();
+       }
+    }
+
+    //Focusを付けたくない場合
+   beenFocused = true;
+  </script>
+
+  <div class="slds">
+    <div class="slds-box">
+
+      <apex:form id="sendform" onkeydown="return NoSubmit(event);">
+      
+        <!-- メッセージエリア -->
+        <apex:pageMessages id="message-area"/>
+
+        <apex:actionRegion renderRegionOnly="false">
+          <apex:actionFunction name="sendEmail" action="{!sendMail}" rerender="message-area"/>
+          <apex:actionFunction name="savePattern1" action="{!pattern1Save}" rerender="message-area, ptn1, patternSelect"/>
+          <apex:actionFunction name="savePattern2" action="{!pattern2Save}" rerender="message-area, ptn2, patternSelect"/>
+          <apex:actionFunction name="savePattern3" action="{!pattern3Save}" rerender="message-area, ptn3, patternSelect"/>
+          <apex:actionFunction name="savePattern4" action="{!pattern4Save}" rerender="message-area, ptn4, patternSelect"/>
+          <apex:actionFunction name="savePattern5" action="{!pattern5Save}" rerender="message-area, ptn5, patternSelect"/>
+          <apex:inputHidden html-class="patternNameMemo" value="{!changePatternTextMemo}" />
+          <apex:inputHidden html-class="mailBodyMemo" value="{!resultTextAreaMemo}" />
+        </apex:actionRegion>
+        <apex:actionRegion renderRegionOnly="false">
+          <apex:pageBlock title="検索条件" mode="edit">
+
+            <apex:pageBlockSection columns="2">
+
+              <apex:pageBlockSectionItem labelStyleClass="verticalAlign"
+                                         dataStyleClass="verticalAlign" >
+                <label class="slds-form-element__label" for="filterStartDate" style="margin-bottom: 0.5rem;">{!$ObjectType.auCriteria__c.fields.StartDate__c.Label}</label>
+                <apex:outputPanel >
+                  <div class="slds-form-element__control" style="margin-bottom: 0.5rem;">
+                      <apex:inputField id="filterStartDate"
+                                       value="{!criteria1.StartDate__c}"
+                                       styleClass="slds-input"
+                                       style="width: auto;"/>
+                  </div>
+                </apex:outputPanel>
+              </apex:pageBlockSectionItem>
+
+              <apex:pageBlockSectionItem labelStyleClass="verticalAlign"
+                                         dataStyleClass="verticalAlign" >
+                <label class="slds-form-element__label" for="filterEndDate" style="margin-bottom: 0.5rem;">{!$ObjectType.auCriteria__c.fields.EndDate__c.Label}</label>
+                <apex:outputPanel >
+                  <div class="slds-form-element__control" style="margin-bottom: 0.5rem;">
+                      <apex:inputField id="filterEndDate"
+                                       value="{!criteria1.EndDate__c}"
+                                       styleClass="slds-input"
+                                       style="width: auto;"/>
+                  </div>
+                </apex:outputPanel>
+              </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+
+          </apex:pageBlock>
+
+          <div class="slds-m-top--small" style="text-align: center; margin-bottom: 0.5rem;">
+              <apex:commandButton action="{!search}"
+                                  value="検索"
+                                  styleClass="slds-button slds-button--neutral slds-button--brand"
+                                  reRender="searchResults,event,message-area,resultlist,noList" />
+          </div>   
+        </apex:actionRegion>
+
+        <apex:actionRegion renderRegionOnly="false">
+
+          <apex:pageBlock id="searchResults" title="活動結果" mode="edit">
+            <br/>
+            <apex:outputPanel id="usrRespGrid" style="display: {!IF(resultList.size > 0,'','none')}">
+                <table class="table-usr-resp slds-table slds-table--bordered slds-table--fixed-layout xxxslds-table--cell-buffer">
+                  <thead>
+                    <tr class="slds-text-title--caps">
+                      <th scope="col" style="line-height: 1.5rem;text-align: center;width: 12rem;">
+                        <label for="chkAll">全選択/全解除</label><br/>
+                        <input type="checkbox"
+                               id="chkAll"
+                               style="vertical-align: -2px; font-size:11.8px"
+                               onclick="chAll(this,'resultCheck');" />
+                      </th>
+                      <th scope="col" style="width: 15rem;">
+                        <div class="slds-truncate" title="開始時間">開始時間</div>
+                      </th>
+                      <th scope="col" style="width: 15rem;">
+                        <div class="slds-truncate" title="終了時間">終了時間</div>
+                      </th>
+                      <th scope="col">
+                        <div class="slds-truncate" title="件名">件名</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                      <apex:repeat value="{!resultList}" var="items">
+                        <tr>
+
+                          <td style="text-align: center;">
+                            <apex:inputCheckbox id="resultCheck" value="{!items.checked}"/>
+                          </td>
+
+                          <td data-label="開始時間">
+                            <apex:outputField value="{!items.event.StartDateTime}" rendered="{!!items.event.IsAllDayEvent}"/>
+                            <apex:outputText value="{0, date, yyyy/MM/dd}" rendered="{!items.event.IsAllDayEvent}">
+                                <apex:param value="{!items.startDate}" /> 
+                            </apex:outputText>
+                          </td>
+
+                          <td data-label="終了時間">
+                            <apex:outputField value="{!items.event.EndDateTime}" rendered="{!!items.event.IsAllDayEvent}"/>
+                            <apex:outputText value="{0, date, yyyy/MM/dd}" rendered="{!items.event.IsAllDayEvent}">
+                                <apex:param value="{!items.endDate}" /> 
+                            </apex:outputText>
+                          </td>
+
+                          <td data-label="件名" style="white-space: normal;">
+                            <apex:outputText id="resultSubject" value="{!items.event.Subject}"/>
+                          </td>
+
+                        </tr>
+                      </apex:repeat>
+
+                  </tbody>
+                </table>
+            </apex:outputPanel>
+
+            <apex:outputPanel id="noList" 
+                              styleClass="table-usr-resp"
+                              style="display: {!IF(resultList.size > 0,'none','')}">
+                <apex:outputText value="検索結果はありません。"/>
+            </apex:outputPanel>
+
+            <div class="slds-m-top--small" style="text-align: center; margin-bottom: 0.5rem;">
+                <apex:commandButton action="{!addResultToTextArea}"
+                                    value="検索結果を追記"
+                                    rendered="{!resultList.size>0}"
+                                    styleClass="slds-button slds-button--neutral slds-button--brand"
+                                    reRender="message-area, outputTextArea" />
+            </div>   
+
+            <apex:outputPanel styleClass="table-usr-resp">
+              <apex:outputText value="メール本文"
+                               styleClass="slds-form-element__label"/><br/>
+              <apex:inputTextarea id="outputTextArea"
+                                  style="width: 90%; margin-left: 5%; margin-bottom: 1rem; line-height: 1.5rem;"
+                                  styleClass="slds-input mailBody"
+                                  value="{!resultTextArea}"
+                                  rows="13"/>
+            </apex:outputPanel>
+
+          </apex:pageBlock>
+        </apex:actionRegion>
+
+        <apex:pageBlock id="mailInfo" title="メール情報" mode="edit">
+
+          <apex:pageBlockSection columns="1">
+            <apex:pageBlockSectionItem labelStyleClass="verticalAlign">
+              <apex:outputLabel value="パターン取得"
+                                styleClass="slds-form-element__label"/>
+              <apex:outputPanel >
+                <apex:actionRegion renderRegionOnly="false">
+                  <apex:selectList id="patternSelect" 
+                                   value="{!patternData}"
+                                   size="1"
+                                   styleClass="slds-input"
+                                   style="width: auto; height: calc(1.875rem + (1px * 2));">
+                    <apex:selectOptions value="{!selectPattern}"/>
+                  </apex:selectList>
+                  <apex:commandButton value="取得"
+                                      action="{!acquisition}"
+                                      styleClass="slds-button slds-button--neutral slds-button--brand"
+                                      style="margin-left: 1rem;"
+                                      reRender="message-area,changeText,toTextArea,ccTextArea,bccTextArea"/>
+                </apex:actionRegion>
+
+              </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem />
+
+            <apex:pageBlockSectionItem labelStyleClass="verticalAlign"
+                                       dataStyleClass="verticalAlign" >
+              <apex:outputLabel value="登録ユーザ"
+                                styleClass="slds-form-element__label"/>
+              <apex:outputPanel >
+                <apex:actionRegion renderRegionOnly="false">
+                  <div style="width: 25rem;display: inline-block;">
+                    <apex:inputField id="userLookup"
+                                     value="{!criteria1.User__c}"
+                                     styleClass="hidePortalUsers"/>
+                  </div>
+
+                  <apex:commandButton value="TO追加"
+                                      action="{!addAddress}"
+                                      styleClass="slds-button slds-button--neutral"
+                                      style="margin-left: 1rem;"
+                                      reRender="message-area, toTextArea, userLookup">
+                    <apex:param name="parameter" value="toAdd"/>
+                  </apex:commandButton>
+
+                  <apex:commandButton value="CC追加"
+                                      action="{!addAddress}"
+                                      styleClass="slds-button slds-button--neutral"
+                                      reRender="message-area, ccTextArea, userLookup">
+                    <apex:param name="parameter" value="ccAdd"/>
+                  </apex:commandButton>
+
+                  <apex:commandButton value="BCC追加"
+                                      action="{!addAddress}"
+                                      styleClass="slds-button slds-button--neutral"
+                                      reRender="message-area, bccTextArea, userLookup">
+                    <apex:param name="parameter" value="bccAdd"/>
+                  </apex:commandButton>
+                </apex:actionRegion>
+              </apex:outputPanel>
+            </apex:pageBlockSectionItem>        
+
+            <apex:pageBlockSectionItem />
+
+            <apex:pageBlockSectionItem labelStyleClass="verticalAlign"
+                                       dataStyleClass="verticalAlign" >
+              <apex:outputLabel value="手入力"
+                                styleClass="slds-form-element__label"/>
+
+              <apex:outputPanel >
+                <apex:actionRegion renderRegionOnly="false">
+                  <div style="width: 25rem;display: inline-block;">
+                    <apex:inputText id="emailManual"
+                                    value="{!manualInputText}"
+                                    styleClass="slds-input {!classInputManualEmail}"/>
+                  </div>
+
+                  <apex:commandButton value="TO追加"
+                                      action="{!addAddress}"
+                                      styleClass="slds-button slds-button--neutral"
+                                      style="margin-left: 1rem;"
+                                      reRender="message-area, toTextArea, emailManual">
+                    <apex:param name="parameter" value="toAdd"/>
+                    <apex:param name="inputParam" value="manual"/>
+                  </apex:commandButton>
+
+                  <apex:commandButton value="CC追加"
+                                      action="{!addAddress}"
+                                      styleClass="slds-button slds-button--neutral"
+                                      reRender="message-area, ccTextArea, emailManual">
+                    <apex:param name="parameter" value="ccAdd"/>
+                    <apex:param name="inputParam" value="manual"/>
+                  </apex:commandButton>
+
+                  <apex:commandButton value="BCC追加"
+                                      action="{!addAddress}"
+                                      styleClass="slds-button slds-button--neutral"
+                                      reRender="message-area, bccTextArea, emailManual">
+                    <apex:param name="parameter" value="bccAdd"/>
+                    <apex:param name="inputParam" value="manual"/>
+                  </apex:commandButton>
+                </apex:actionRegion>
+              </apex:outputPanel>
+
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem />
+
+            <apex:pageBlockSectionItem >
+              <apex:commandButton value="クリア"
+                                  action="{!textClear}"
+                                  reRender="message-area, toTextArea"
+                                  style="font-weight: 400;"
+                                  styleClass="slds-button slds-button--neutral"
+                                  immediate="true">
+                <apex:param name="parameter" value="toClear"/>
+              </apex:commandButton>
+
+              <apex:outputPanel >
+                <table style="border:solid 1px; height: 100px;scroll:auto;width: 85%; border: 1px solid #d8dde6;border-radius: .25rem;"
+                       class="slds-table slds-table--bordered slds-no-row-hover slds-table--cell-buffer">
+                  <tr style="height: 20%;" class="slds-text-heading--label">
+                    <td style="border-top: 0">
+                      <apex:outputLabel styleclass="slds-text-heading--label" style="font-weight: 700;" value="TO"/>
+                    </td>
+                  </tr>
+                  <tr style="height: 80%;">
+                    <td style="color: #16325c;">
+                      <apex:outputPanel id="toTextArea">
+                        <apex:repeat value="{!mailToAddressList}" var="to" id="toRepList">
+                          <apex:outputText value="{!to.userName}：{!to.email}"/><br/>
+                        </apex:repeat>
+                      </apex:outputPanel>
+                    </td>
+                  </tr>
+                </table>
+              </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            
+            <apex:pageBlockSectionItem />
+
+            <apex:pageBlockSectionItem >
+              <apex:commandButton value="クリア"
+                                  action="{!textClear}"
+                                  reRender="message-area, ccTextArea"
+                                  style="font-weight: 400;"
+                                  styleClass="slds-button slds-button--neutral"
+                                  immediate="true">
+                <apex:param name="parameter" value="ccClear"/>
+              </apex:commandButton>
+
+              <apex:outputPanel >
+                <table style="border:solid 1px; height: 100px;scroll:auto;width: 85%; border: 1px solid #d8dde6;border-radius: .25rem;"
+                       class="slds-table slds-table--bordered slds-no-row-hover slds-table--cell-buffer">
+                  <tr style="height: 20%;" class="slds-text-heading--label">
+                    <td style="border-top: 0">
+                      <apex:outputLabel styleclass="slds-text-heading--label" style="font-weight: 700;" value="CC"/>
+                    </td>
+                  </tr>
+                  <tr style="height: 80%;">
+                    <td style="color: #16325c;">
+                      <apex:outputPanel id="ccTextArea">
+                        <apex:repeat value="{!mailCcAddressList}" var="cc" id="ccRepList">
+                          <apex:outputText value="{!cc.userName}：{!cc.email}"/><br/>
+                        </apex:repeat>
+                      </apex:outputPanel>
+                    </td>
+                  </tr>
+                </table>
+              </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            
+            <apex:pageBlockSectionItem />
+
+            <apex:pageBlockSectionItem >
+              <apex:commandButton value="クリア"
+                                  action="{!textClear}"
+                                  reRender="message-area, bccTextArea"
+                                  style="font-weight: 400;"
+                                  styleClass="slds-button slds-button--neutral"
+                                  immediate="true">
+                <apex:param name="parameter" value="bccClear"/>
+              </apex:commandButton>
+
+              <apex:outputPanel >
+                <table style="border:solid 1px; height: 100px;scroll:auto;width: 85%; border: 1px solid #d8dde6;border-radius: .25rem;"
+                       class="slds-table slds-table--bordered slds-no-row-hover slds-table--cell-buffer">
+                  <tr style="height: 20%;" class="slds-text-heading--label">
+                    <td style="border-top: 0">
+                      <apex:outputLabel styleclass="slds-text-heading--label" style="font-weight: 700;" value="BCC"/>
+                    </td>
+                  </tr>
+                  <tr style="height: 80%;">
+                    <td style="color: #16325c;">
+                      <apex:outputPanel id="bccTextArea">
+                        <apex:repeat value="{!mailBccAddressList}" var="bcc" id="bccRepList">
+                          <apex:outputText value="{!bcc.userName}：{!bcc.email}"/><br/>
+                        </apex:repeat>
+                      </apex:outputPanel>
+                    </td>
+                  </tr>
+                </table>
+              </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem />
+
+            <apex:pageBlockSectionItem labelStyleClass="verticalAlign"
+                                       dataStyleClass="verticalAlign" >
+              <apex:outputLabel value="パターン名"
+                                styleClass="slds-form-element__label"/>
+              <apex:inputText id="changeText"
+                              value="{!changePatternText}"
+                              styleClass="slds-input patternName"
+                              style="width: 25rem;"/>
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem />
+
+            <apex:pageBlockSectionItem labelStyleClass="verticalAlign"
+                                       dataStyleClass="verticalAlign" >
+              <apex:outputLabel value="パターン保存"
+                                styleClass="slds-form-element__label"/>
+              <apex:outputPanel >
+                <apex:commandButton value="{!patternBtnName1}"
+                                    id="ptn1"
+                                    onclick="return doConfirmPattern1();"
+                                    styleClass="slds-button slds-button--neutral slds-button--brand"
+                                    reRender="dummy"/>
+
+                <apex:commandButton value="{!patternBtnName2}"
+                                    id="ptn2"
+                                    onclick="return doConfirmPattern2();"
+                                    styleClass="slds-button slds-button--neutral slds-button--brand"
+                                    reRender="dummy"/>
+
+                <apex:commandButton value="{!patternBtnName3}"
+                                    id="ptn3"
+                                    onclick="return doConfirmPattern3();"
+                                    styleClass="slds-button slds-button--neutral slds-button--brand"
+                                    reRender="dummy"/>
+
+                <apex:commandButton value="{!patternBtnName4}"
+                                    id="ptn4"
+                                    onclick="return doConfirmPattern4();"
+                                    styleClass="slds-button slds-button--neutral slds-button--brand"
+                                    reRender="dummy"/>
+
+                <apex:commandButton value="{!patternBtnName5}"
+                                    id="ptn5"
+                                    onclick="return doConfirmPattern5();"
+                                    styleClass="slds-button slds-button--neutral slds-button--brand"
+                                    reRender="dummy"/>
+
+              </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+          </apex:pageBlockSection>
+
+          <br/><br/>
+          
+      </apex:pageBlock>
+
+        <apex:actionRegion renderRegionOnly="false">
+          <div class="slds-m-top--small" style="text-align: center; margin-bottom: 0.5rem;">
+              <apex:commandButton value="送信"
+                                  onclick="return doConfirmSendEmail('SendMail');"
+                                  styleClass="slds-button slds-button--neutral slds-button--destructive"
+                                  reRender="dummy"/>
+          </div>   
+        </apex:actionRegion>
+  </apex:form>
+
+</div>
+</div>
+
+</apex:page>
