@@ -3,7 +3,6 @@
     <apex:form id="allForm">
 
         <html lang="ja">
-
 <head>
 
 <meta charset="utf-8" />
@@ -18,6 +17,8 @@
 <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'/css_sp/style-report.css')}" />
 <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'/css_sp/iphone.css')}" />
 <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'/css/flatpickr.min.css')}" />
+
+<apex:stylesheet value="https://fonts.googleapis.com/icon?family=Material+Icons"/>
 
 <!-- libraries -->
 <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/jquery-3.2.1.min.js')}" />
@@ -444,8 +445,220 @@
     .report-form {
       padding-bottom: 50px;
     }
-  
+
+    .pager-area {
+      float: right;
+    }
+    .pager-area .customButton,
+    .pager-area .disabled-button,
+    .pager-area .current-page-number,
+    .pager-area .separator,
+    .pager-area .max-page-number {
+      display: block;
+      float: left;
+      padding: 0px;
+      height: 36px;
+      line-height: 36px;
+      color: #2f4159;
+    font-size: 13px;
+        font-family: メイリオ, 'Lucida Grande','Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, sans-serif;
+    }
+    .pager-area .customButton,
+    .pager-area .disabled-button {
+      width: 36px;
+      text-align: center;
+    }
+    .pager-area .current-page-number {
+      text-align: right;
+    }
+    .pager-area .max-page-number {
+      text-align: left;
+    }
+    .pager-area .current-page-number,
+    .pager-area .max-page-number {
+      width: 48px;
+    }
+    .pager-area .separator {
+      padding: 0 8px;
+    }
+    .clearfix{
+      clear: both;
+    }
+    .customButton {
+  text-shadow: 1px 1px #ffffff;
+  background: none;
+  background-color: #ffffff;
+  display: block;
+  margin: 0 auto;
+  padding: 4px 16px;
+  border: 1px solid #7e9bc1;
+  color: #2f4159;
+  cursor: pointer;
+  border-radius: 4px;
+  text-decoration: none;
+  text-align: center;
+  box-shadow: none;
+  transition: box-shadow 0.1s linear 0s, background-color 0.1s linear 0s, border-color 0.1s linear 0s;
+  height: 30px;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  font-weight: normal;
 }
+.customButton:hover {
+  background: none;
+  background-color: #f2f5f8;
+  border-color: #00ABFF;
+  text-decoration: none;
+  box-shadow: 0px 1px 5px rgba(0,171,255,0.25);
+  position: relative;
+}
+.customButton:focus {
+  background: none;
+  box-shadow: 0px 1px 5px rgba(0,171,255,0.25);
+  border-color: #00ABFF;
+  background-color: #f2f5f8;
+  position: relative;
+}
+.customButton:active {
+  background: none;
+  transition: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.20) inset;
+  background-color: #e5ebf2;
+}
+
+.disabled-button {
+  border: 1px solid #CCCCCC;
+  border-radius: 4px;
+  color: #CCCCCC;
+  padding: 4px 16px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  cursor: default;
+  text-align: center;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;  
+}
+.pagination {
+  display: inline-block;
+  padding-left: 0;
+  margin: 1rem 0;
+}
+
+.pagination > li {
+  display: inline;
+}
+
+.pagination > li > a,
+.pagination > li > span {
+  position: relative;
+  float: left;
+  padding: 0.3rem 0.3rem;
+  margin-left: 0.5rem;
+  text-decoration: none;
+}
+
+.pagination > li > a {
+  border: 1px solid #ccc;
+  height: 3rem;
+  min-width: 3rem;
+  text-align: center;
+  line-height: 2.3;
+  font-size: 2rem;
+}
+
+.pagination > li:first-child > a,
+.pagination > li:first-child > span {
+  color: #fff;
+  background-color: #E3E3E3;
+  border: none;
+  margin-left: 0;
+  padding: 0.3rem 0.5rem;
+}
+
+.pagination > li:last-child > a,
+.pagination > li:last-child > span {
+  color: #fff;
+  background-color: #E3E3E3;
+  border: none;
+  padding: 0.3rem 0.5rem;
+}
+
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+  z-index: 2;
+  color: #fff;
+  background-color: #ccc;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  z-index: 3;
+  color: #F66C13;
+  font-weight: bold;
+  cursor: default;
+  background-color: #fff;
+}
+.pagination > .disabled > span,
+.pagination > .disabled > span:hover,
+.pagination > .disabled > span:focus,
+.pagination > .disabled > a,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > a:focus {
+  color: #999;
+  cursor: not-allowed;
+  background-color: #f3f3f3;
+}
+.hidden{
+  display: none !important;
+}
+.material-icons {
+    font-size: 2rem;
+    font-family: 'Material Icons';
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    word-wrap: normal;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    direction: ltr;
+    line-height: 2.4;
+}
+ul{margin:0;padding:0;list-style:none;font-size:1rem;line-height:1.6}
+.search-pagination{
+  /*padding-left: 20px;
+  padding-right: 20px;*/
+  margin-left: 20px;
+}
+nav{
+  width: fit-content;
+  /*margin: 0 auto;*/
+}
+
+.countTable{
+	table-layout: fixed;
+    width: -webkit-fill-available;
+}
+
+.countValue{
+	color: #ed5500;
+}
+
+.title{
+	margin-top: 10px;
+}
+
 </style>
 
 </head>
@@ -509,10 +722,10 @@
   <apex:actionFunction name="jsSetPendingSelectedReportFromSearch" action="{!setSelectedUnpublishedReport}" rerender="ReportPendingPanel" oncomplete="previousReportList='Panel2-3';setView_02_01_14();"/>
 
   <!-- For error and OK Message --> 
-  <apex:actionFunction name="jsCheckCreateValidity" action="{!createDraftReport}" rerender="messageError,messageSubmissionComplete,CreatePanel,HomePanel,ReportPanel,MyReportsPanel,MySearchResultPanel, selectedReportName" oncomplete="jsCheckCreateReport();" />
+  <!--apex:actionFunction name="jsCheckCreateValidity" action="{!createDraftReport}" rerender="messageError,messageSubmissionComplete,CreatePanel,HomePanel,ReportPanel,MyReportsPanel,MySearchResultPanel, selectedReportName" oncomplete="jsCheckCreateReport();" /-->
   <apex:actionFunction name="jsCheckSaveValidity" action="{!saveDraftReport}" rerender="messageError,messageSubmissionComplete,DraftPanel,RemandPanel,HomePanel,ReportPanel,MyReportsPanel,MySearchResultPanel, selectedReportName" oncomplete="jsCheckSaveReport();" />
   <apex:actionFunction name="jsCheckSaveRemandValidity" action="{!saveRemandReport}" rerender="messageError,messageSubmissionComplete,DraftPanel,RemandPanel,HomePanel,ReportPanel,MyReportsPanel,MySearchResultPanel, selectedReportName" oncomplete="jsCheckSaveReport();" />
-  <apex:actionFunction name="jsCheckSubmitValidity" action="{!submission}" rerender="messageError,messageSubmissionComplete,CreatePanel,HomePanel,ReportPanel,MyReportsPanel,MySearchResultPanel,listOfSAReports" oncomplete="jsCheckSubmitReport();" />
+  <!--apex:actionFunction name="jsCheckSubmitValidity" action="{!submission}" rerender="messageError,messageSubmissionComplete,CreatePanel,HomePanel,ReportPanel,MyReportsPanel,MySearchResultPanel,listOfSAReports" oncomplete="jsCheckSubmitReport();" /-->
   <apex:actionFunction name="jsCheckSubmitDraft" action="{!submitDraft}" rerender="messageError,messageSubmissionComplete,DraftPanel,HomePanel,ReportPanel,MyReportsPanel,MySearchResultPanel,listOfSAReports" oncomplete="jsCheckSubmitReport();" />
   <apex:actionFunction name="jsCheckSubmitRemand" action="{!submitRemand}" rerender="messageError,messageSubmissionComplete,RemandPanel,HomePanel,ReportPanel,MyReportsPanel,MySearchResultPanel,listOfSAReports" oncomplete="jsCheckSubmitReport();" />
   <apex:actionFunction name="jsCheckApproveValidity" action="{!approveReport}" rerender="messageError,messageSubmissionComplete,RemandPanel,HomePanel,ReportPanel,MyReportsPanel,MySearchResultPanel,listOfSAReports" oncomplete="jsCheckApproval();" />
@@ -521,7 +734,7 @@
     <apex:actionFunction name="rerenderHomePanel" rerender="HomePanel" onComplete="setBasicListClickListener();"/>
     <apex:actionFunction name="rerenderBasicSearchPanel" rerender="BasicSearchPanel" onComplete="$j('.datetimepicker').flatpickr({'locale': 'ja','dateFormat': 'Y/m/d'});"/>
     <apex:actionFunction name="rerenderReportPanel" rerender="ReportPanel" onComplete="setBasicSearchListClickListener();"/>
-  <apex:actionFunction name="rerenderReportDetailsPanel" rerender="ReportDetailsPanel"/>
+    <apex:actionFunction name="rerenderReportDetailsPanel" rerender="ReportDetailsPanel"/>
     <apex:actionFunction name="rerenderManagedViewsPanel" rerender="ManagedViewsPanel"/>
     <apex:actionFunction name="rerenderGoodViewsPanel" rerender="GoodViewsPanel"/>
     <apex:actionFunction name="rerenderCreateReportPanel" rerender="CreatePanel"/>
@@ -544,28 +757,31 @@
     <apex:actionFunction name="initRole1Picklist" action="{!initRole1Picklist}" oncomplete="rerenderBasicSearchPanel();"/>
     <apex:actionFunction name="initRole2Picklist" action="{!initRole2Picklist}" oncomplete="rerenderBasicSearchPanel();"/>
     
+    <apex:actionFunction name="initBasicSearchPages" action="{!initBasicSearchPages}" oncomplete="updateBasicResultParameters();"/>
     
   <!-- Check if required -->
   
   <!-- Called From Javascript Function -->
     <!-- Access Report List Pages -->
     <apex:actionFunction name="callInitHomePage" action="{!dummyFunction}" rerender="report-section-home" onComplete="setView_02_01_01();"/>
-    <apex:actionFunction name="callGetAllMyReports" action="{!getAllMyReports}" rerender="report-section-search-my-entry" onComplete="setView_02_01_07();"/>
-    <apex:actionFunction name="callGetPendingReports" action="{!getPendingReports}" rerender="report-Pending-result" onComplete="setView_02_02_01();"/>
+    <apex:actionFunction name="callGetAllMyReports" action="{!setPageThenGetAllMyReports}" rerender="report-section-search-my-entry" onComplete="setView_02_01_07();"/>
+    <apex:actionFunction name="callGetPendingReports" action="{!setPageThenGetPendingReports}" rerender="report-Pending-result" onComplete="setView_02_02_01();"/>
     <apex:actionFunction name="controllerBasicSearch" rerender="researchParameters" onComplete="executeSearch();"/>
-    <apex:actionFunction name="executeSearch" action="{!searchReport}" onComplete="updateBasicResultParameters();"/>
+    <apex:actionFunction name="executeSearch" action="{!setPageThenSearchReport}" onComplete="updateBasicResultParameters();"/>
     <apex:actionFunction name="updateBasicResultParameters" onComplete="setView_02_01_03();"/>
     <apex:actionFunction name="controllerSearchMyReport" rerender="researchParameters" onComplete="executeSearchMine();"/>
-    <apex:actionFunction name="executeSearchMine" action="{!searchMyReports}" oncomplete="setView_02_01_09();"/>
+    <apex:actionFunction name="executeSearchMine" action="{!setPageThenSearchMyReports}" oncomplete="setView_02_01_09();"/>
     <apex:actionFunction name="controllerPendingReportsSearch" rerender="researchParameters" onComplete="executePendingReportsSearch();"/>
-    <apex:actionFunction name="executePendingReportsSearch" action="{!searchPendingReports}" onComplete="updatePendingResultParameters();"/>
+    <apex:actionFunction name="executePendingReportsSearch" action="{!setPageThenSearchPendingReports}" onComplete="updatePendingResultParameters();"/>
     <apex:actionFunction name="updatePendingResultParameters" onComplete="setView_02_02_03();"/>    
     
     <!-- Reset old values for Back Function -->
-    <apex:actionFunction name="latestSearchReport" action="{!latestSearchReport}" rerender="ReportPanel" onComplete="setView_02_01_03();"/>
-    <apex:actionFunction name="latestSearchMyReports" action="{!latestSearchMyReports}" rerender="MySearchResultPanel" onComplete="setView_02_01_09();"/>
-    <apex:actionFunction name="latestSearchPendingReports" action="{!latestSearchPendingReports}" rerender="ReportPendingResultPanel" onComplete="setView_02_02_03();"/>
+    <apex:actionFunction name="latestSearchReport" action="{!setPageThenLatestSearchReport}" rerender="ReportPanel" onComplete="setView_02_01_03();"/>
+    <apex:actionFunction name="latestSearchMyReports" action="{!setPageThenLatestSearchMyReports}" rerender="MySearchResultPanel" onComplete="setView_02_01_09();"/>
+    <apex:actionFunction name="latestSearchPendingReports" action="{!setPageThenLatestSearchPendingReports}" rerender="ReportPendingResultPanel" onComplete="setView_02_02_03();"/>
     <apex:actionFunction name="returnToHome" action="{!returnToHome}"/>
+    <apex:actionFunction name="returnToRankingView" action="{!returnToRankingView}"/>
+    <apex:actionFunction name="returnToRankingLike" action="{!returnToRankingLike}"/>
     
   <!-- --------------------- -->
   <!-- ---- InputHidden ---- -->
@@ -582,6 +798,8 @@
 
   <!-- To test -->
   
+    <!--  apex:inputHidden html-class="scrollTopValue" value="{!scrollTopValue}" / -->
+    <!--  apex:inputHidden html-class="isBackCall" value="{!isBackCall}" / -->
     
     <apex:inputHidden id="messageError"         html-class="messageError"       value="{!messageError}" />
     <apex:inputHidden id="messageSubmissionComplete"  html-class="messageSubmissionComplete"      value="{!messageSubmissionComplete}" />
@@ -611,17 +829,17 @@
                     <ul class ="{!IF(isApprover,'','cheat')}">
                         <li class="{!IF(isApprover,'','cheat')}">
                           <h2>
-                    <apex:commandLink html-class="current" value="公開レポート" action="{!dummyFunction}" rerender="listOfSAReports,HomePanel" oncomplete="setView_02_01_01();"/>
+                    <apex:commandLink html-class="current" value="公開レポート" action="{!dummyFunction}" rerender="listOfSAReports,HomePanel" oncomplete="resetPositionOnList();setView_02_01_01();"/>
                   </h2>
                         </li>
                         <li class="{!IF(isApprover,'','cheat')}">
                           <h2>
-                                <apex:commandLink value="Myレポート" action="{!getAllMyReports}" rerender="listOfSAReports,MyReportsPanel" oncomplete="setView_02_01_07();"/>
+                                <apex:commandLink value="Myレポート" action="{!setPageThenGetAllMyReports}" rerender="listOfSAReports,MyReportsPanel" oncomplete="resetPositionOnList();setView_02_01_07();"/>
                             </h2>
                         </li>
                         <li>
               <h2>
-                  <apex:commandLink value="承認待ち" rendered="{!isApprover}" styleClass="approver-tab" action="{!getPendingReports}" rerender="listOfSAReports,ReportPendingListPanel" oncomplete="setView_02_02_01();"/>
+                  <apex:commandLink value="承認待ち" rendered="{!isApprover}" styleClass="approver-tab" action="{!setPageThenGetPendingReports}" rerender="listOfSAReports,ReportPendingListPanel" oncomplete="resetPositionOnList();setView_02_02_01();"/>
   
               </h2>
             </li>
@@ -708,18 +926,18 @@
                     <ul class="{!IF(isApprover,'','cheat')}">
                         <li class="{!IF(isApprover,'','cheat')}">
                             <h2>
-                              <apex:commandLink html-class="current" value="公開レポート" action="{!dummyFunction}" rerender="listOfSAReports,HomePanel" oncomplete="setView_02_01_01();"/>
+                              <apex:commandLink html-class="current" value="公開レポート" action="{!dummyFunction}" rerender="listOfSAReports,HomePanel" oncomplete="resetPositionOnList();setView_02_01_01();"/>
                             </h2>
                         </li>
                         <li class="{!IF(isApprover,'','cheat')}">
                             <h2>
-                                <apex:commandLink value="Myレポート" action="{!getAllMyReports}" rerender="listOfSAReports,MyReportsPanel" oncomplete="setView_02_01_07();"/>
+                                <apex:commandLink value="Myレポート" action="{!setPageThenGetAllMyReports}" rerender="listOfSAReports,MyReportsPanel" oncomplete="resetPositionOnList();setView_02_01_07();"/>
                             </h2>
                         </li>
                         <li>
                           <h2>
                             <apex:outputPanel rendered="{!isApprover}">
-                  <apex:commandLink value="承認待ち" styleClass="approver-tab" action="{!getPendingReports}" rerender="listOfSAReports,ReportPendingListPanel" oncomplete="setView_02_02_01();"/>
+                  <apex:commandLink value="承認待ち" styleClass="approver-tab" action="{!setPageThenGetPendingReports}" rerender="listOfSAReports,ReportPendingListPanel" oncomplete="resetPositionOnList();setView_02_02_01();"/>
                 </apex:outputPanel>
                             </h2>
                         </li>
@@ -734,10 +952,9 @@
 
                     <div class="report-search-condition-form">
     
-                        <form>
                             
                             <label class="keyword">
-                                <apex:inputText value="{!basicSearchKeywords}" html-placeholder="キーワード検索"/>
+                                <apex:inputText styleClass="basicSearchKeywords" value="{!basicSearchKeywords}" html-placeholder="キーワード検索"/>
                             </label>
                             <div class="create-date">
                                 <label>投稿日</label>
@@ -785,7 +1002,6 @@
                                     <a href="#" class="btn-search ui-color-1" onClick="executeSearchReportQuery();" rerender="ReportPanel">検索</a>
                                  </div>
     
-                        </form>
     
                     </div>
 
@@ -803,18 +1019,18 @@
                     <ul class="{!IF(isApprover,'','cheat')}">
                         <li class="{!IF(isApprover,'','cheat')}">
                             <h2>
-                              <apex:commandLink html-class="current" value="公開レポート" action="{!dummyFunction}" rerender="listOfSAReports,HomePanel" oncomplete="setView_02_01_01();"/>
+                              <apex:commandLink html-class="current" value="公開レポート" action="{!dummyFunction}" rerender="listOfSAReports,HomePanel" oncomplete="resetPositionOnList();setView_02_01_01();"/>
                             </h2>
                         </li>
                         <li class="{!IF(isApprover,'','cheat')}">
                             <h2>
-                                <apex:commandLink value="Myレポート" action="{!getAllMyReports}" rerender="listOfSAReports,MyReportsPanel" oncomplete="setView_02_01_07();"/>
+                                <apex:commandLink value="Myレポート" action="{!setPageThenGetAllMyReports}" rerender="listOfSAReports,MyReportsPanel" oncomplete="resetPositionOnList();setView_02_01_07();"/>
                             </h2>
                         </li>
                         <li>
                           <h2>
                             <apex:outputPanel rendered="{!isApprover}">
-                  <apex:commandLink value="承認待ち" styleClass="approver-tab" action="{!getPendingReports}" rerender="listOfSAReports,ReportPendingListPanel" oncomplete="setView_02_02_01();"/>
+                  <apex:commandLink value="承認待ち" styleClass="approver-tab" action="{!setPageThenGetPendingReports}" rerender="listOfSAReports,ReportPendingListPanel" oncomplete="resetPositionOnList();setView_02_02_01();"/>
                 </apex:outputPanel>
                           </h2>
                         </li>
@@ -829,7 +1045,7 @@
 
                 <apex:outputPanel id="ReportPanel">
 
-                <div class="section-body report-section-body">
+                <div id="testLocation" class="section-body report-section-body testLocation">
 
                     <div class="report-search-condition">
                         <ul>
@@ -848,7 +1064,156 @@
                             </a>
                         </div>
                     </div>
-
+                    <!--DUC: PAGING HERE-->
+                    <div class="mdl-cell mdl-cell--7-col search-pagination">
+                      <apex:outputPanel >
+                        <apex:outputPanel rendered="{!!(recordsCount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1)}">
+                          <div style="height: 53px;" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!recordsCount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1}">
+                          <nav>
+                          <apex:panelGroup rendered="{!pageNum == 1}" style="display: inline-block; width: 2.79rem;" />
+                            <ul class="pagination">
+                              <li>
+                                <apex:panelGroup rendered="{!pageNum > 1}" >
+                                  <apex:outputLink value="javascript:void(0)">
+                                    <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPagePrev}" oncomplete="setView_02_01_03();"/>
+                                    <i class="material-icons">navigate_before</i>
+                                  </apex:outputLink>
+                                </apex:panelGroup>
+                              </li>
+                              <!-- 1st button -->
+                              <li class="{!IF(pageNum == 1, 'active', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPage1}" oncomplete="setView_02_01_03();"/>
+                                  <apex:outputText value="1" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 2nd button -->
+                              <li class="{!IF(pageNum == 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPage2}" oncomplete="setView_02_01_03();"/>
+                                  <apex:outputText value="2" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4), 'hidden', '')}">
+                                <span>…</span>
+                              </li>
+                              <!-- 3rd button -->
+                              <li class="{!IF(pageNum == 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPage3}" oncomplete="setView_02_01_03();"/>
+                                  <apex:outputText value="3" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPagePrev}" oncomplete="setView_02_01_03();"/>
+                                  <apex:outputText value="{!pageNum - 1}" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPageLastBfr5}" oncomplete="setView_02_01_03();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 5}" />
+                                </apex:outputLink>                          
+                              </li>
+                              <!-- 4th button -->
+                              <li class="{!IF(pageNum == 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPage4}" oncomplete="setView_02_01_03();"/>
+                                  <apex:outputText value="4" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="active {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <a href="#">{!pageNum}</a>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPageLastBfr4}" oncomplete="setView_02_01_03();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 4}" />
+                                </apex:outputLink>                          
+                              </li>
+                              <!-- 5th button -->
+                              <li class="{!IF(pageNum == 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPage5}" oncomplete="setView_02_01_03();"/>
+                                  <apex:outputText value="5" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPageNext}" oncomplete="setView_02_01_03();"/>
+                                  <apex:outputText value="{!pageNum + 1}" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPageLastBfr3}" oncomplete="setView_02_01_03();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 3}" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 6th button -->
+                              <li class="{!IF(pageNum == 6, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPage6}" oncomplete="setView_02_01_03();"/>
+                                  <apex:outputText value="6" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPage2ndNext}" oncomplete="setView_02_01_03();"/>
+                                  <apex:outputText value="{!pageNum + 2}" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPageLastBfr2}" oncomplete="setView_02_01_03();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 2}" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 7th button -->
+                              <li class="{!IF(pageNum == 7, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPage7}" oncomplete="setView_02_01_03();"/>
+                                  <apex:outputText value="7" />
+                                </apex:outputLink>                          
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <span>…</span>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 1, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPageLastBfr1}" oncomplete="setView_02_01_03();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 1}" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 8th button -->
+                              <li class="{!IF(pageNum == 8, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 8 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPage8}" oncomplete="setView_02_01_03();"/>
+                                  <apex:outputText value="8" />
+                                </apex:outputLink>                          
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1), 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPageLast}" oncomplete="setView_02_01_03();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1)}" />
+                                </apex:outputLink>
+                              </li>
+                              <li>
+                                <apex:panelGroup rendered="{!hasNext}" >
+                                  <apex:outputLink value="javascript:void(0)">
+                                    <apex:actionSupport event="onclick" reRender="ReportPanel" action="{!goToPageNext}" oncomplete="setView_02_01_03();"/>
+                                    <i class="material-icons">navigate_next</i>
+                                  </apex:outputLink>
+                                </apex:panelGroup>
+                              </li>
+                            </ul>
+                          </nav>
+                        </apex:outputPanel>
+                      </apex:outputPanel>
+                    </div>
                     <ul class="result-item-container">
                         <!-- #DynamicItem -->
 
@@ -862,12 +1227,32 @@
                                     <apex:outputText styleClass="datetime" value="{0,date,yyyy/MM/dd}">
                                       <apex:param value="{!report.CreatedDate__c+offset}"/>
                                   </apex:outputText>
-                                  <div class="user">
+                                  	<div class="user">
                                         <span class="name">{!report.CreatedBy__r.DisplayedUsernameFormula__c}</span>
-                                  </div>
-                                    <div class="text outputfield_summary">
-                                    <apex:outputfield value="{!report.Report_body__c}"/>
-                                </div>
+                                  	</div>
+                                  	<table class="countTable">
+                                  		<tr>
+                                  			<td>
+			                                    <div class="text outputfield_summary" style="text-align: left;">
+			                                    	<!-- apex:outputfield value="{!report.Report_body__c}"/ -->
+			                                    	<apex:outputText value="{!labelNbLike}"/>
+			                                    	<apex:outputText styleclass="countValue" value="{!report.NbLike__c}"/>
+			                               		</div>
+		                               		</td>
+		                               		<td>
+			                               		<div class="text outputfield_summary" style="text-align: center;">
+			                               			<apex:outputText value="{!labelNbCopy}"/>
+			                                    	<apex:outputText styleclass="countValue" value="{!report.NbCopy__c}"/>
+			                               		</div>
+		                               		</td>
+		                               		<td>
+			                               		<div class="text outputfield_summary" style="text-align: right;">
+			                               			<apex:outputText value="{!labelNbView}"/>
+			                                    	<apex:outputText styleclass="countValue" value="{!report.NbView__c}"/>
+			                               		</div>
+		                               		</td>
+	                               		</tr>
+                               		</table>
                                 </li>
                             </apex:outputPanel>
                             <!-- With New Tag -->
@@ -881,16 +1266,35 @@
                                     <div class="user">
                                         <span class="name">{!report.CreatedBy__r.DisplayedUsernameFormula__c}</span>
                                     </div>
-                                    <div class="text outputfield_summary">
-                                    <apex:outputfield value="{!report.Report_body__c}"/>
-                                </div>
+                                    <table class="countTable">
+                                  		<tr>
+                                  			<td>
+			                                    <div class="text outputfield_summary" style="text-align: left;">
+			                                    	<!-- apex:outputfield value="{!report.Report_body__c}"/ -->
+			                                    	<apex:outputText value="{!labelNbLike}"/>
+			                                    	<apex:outputText styleclass="countValue" value="{!report.NbLike__c}"/>
+			                               		</div>
+		                               		</td>
+		                               		<td>
+			                               		<div class="text outputfield_summary" style="text-align: center;">
+			                               			<apex:outputText value="{!labelNbCopy}"/>
+			                                    	<apex:outputText styleclass="countValue" value="{!report.NbCopy__c}"/>
+			                               		</div>
+		                               		</td>
+		                               		<td>
+			                               		<div class="text outputfield_summary" style="text-align: right;">
+			                               			<apex:outputText value="{!labelNbView}"/>
+			                                    	<apex:outputText styleclass="countValue" value="{!report.NbView__c}"/>
+			                               		</div>
+		                               		</td>
+	                               		</tr>
+                               		</table>
                                 </li>
                             </apex:outputPanel>
                                 
                         </apex:repeat>
 
                     </ul>
-
                 </div>
 
                 </apex:outputPanel>
@@ -912,7 +1316,7 @@
                 <header class="report-detail-section-header">
                     <h1>レポート詳細</h1>
                     <div class="btn-back">
-                      <a href="#" class="ui-color-dark" onClick="setBackToListLogic();">戻る</a>
+                      <a href="#" class="ui-color-dark" onClick="isBackCall=true;setBackToListLogic();">戻る</a>
                     </div>
                 </header>
 
@@ -936,13 +1340,16 @@
                         <!-- #DynamicItem -->
     
                         <apex:outputPanel rendered="{!!selectedReport.IsNew__c}" style="padding-top:1em;">
-                            <div class="report-detail">
-                                <h3 class="title">{!selectedReport.Subject__c}</h3>
+                            <div class="report-detail">                         
                                 <div class="attributes">
+                                	<apex:outputText styleClass="datetime" value="{0,date,yyyy/MM/dd}">
+                                    	<apex:param value="{!selectedReport.CreatedDate__c+offset}"/>
+                                	</apex:outputText>
                                     <div class="category">{!selectedReport.Category__c}</div>
-                                    <apex:outputText styleClass="datetime" value="{0,date,yyyy/MM/dd}">
-                                    <apex:param value="{!selectedReport.CreatedDate__c+offset}"/>
-                                  </apex:outputText>
+                                    <h3 class="title">{!selectedReport.Subject__c}</h3>
+                                    <div class="user">
+                                    	<span class="name">{!selectedReport.CreatedBy__r.DisplayedUsernameFormula__c}</span>
+                                	</div>
                                     <div class="process">{!selectedReport.Process__c}</div>
                                     <div class="view">
                                         <span class="label">閲覧</span><span class="value">{!selectedReport.NbView__c}</span>
@@ -968,9 +1375,6 @@
                                   </p>
                                 </apex:outputPanel>
 
-                                <div class="user">
-                                    <span class="name">{!selectedReport.CreatedBy__r.DisplayedUsernameFormula__c}</span>
-                                </div>
                                 <ul class="engagement">
                                     <li class="good">
                                       <span class="label">
@@ -1043,12 +1447,16 @@
                         </apex:outputPanel>
                         <apex:outputPanel rendered="{!selectedReport.IsNew__c}">
                             <div class="report-detail new">
-                                <h3 class="title">{!selectedReport.Subject__c}</h3>
+                                
                                 <div class="attributes">
-                                    <div class="category">{!selectedReport.Category__c}</div>
                                     <apex:outputText styleClass="datetime" value="{0,date,yyyy/MM/dd}">
-                                    <apex:param value="{!selectedReport.CreatedDate__c+offset}"/>
-                                </apex:outputText>
+                                    	<apex:param value="{!selectedReport.CreatedDate__c+offset}"/>
+                                	</apex:outputText>
+                                	<div class="category">{!selectedReport.Category__c}</div>
+                                	<h3 class="title">{!selectedReport.Subject__c}</h3>
+                                	<div class="user">
+                                    	<span class="name">{!selectedReport.CreatedBy__r.DisplayedUsernameFormula__c}</span>
+                                	</div>
                                     <div class="process">{!selectedReport.Process__c}</div>
                                     <div class="view">
                                         <span class="label">閲覧</span><span class="value">{!selectedReport.NbView__c}</span>
@@ -1074,9 +1482,7 @@
                                   </p>
                                 </apex:outputPanel>
 
-                                <div class="user">
-                                    <span class="name">{!selectedReport.CreatedBy__r.DisplayedUsernameFormula__c}</span>
-                                </div>
+                                
                                 <ul class="engagement">
                                     <li class="good">
                                       <span class="label">
@@ -1150,7 +1556,6 @@
 
               
                         <div class="post-comment">
-                            <form>
                                   <apex:inputTextarea style="height: 7em !important;" value="{!newCommentValue1}" rows="5"/>
                                   <apex:outputPanel >
                                       <div class="btn btn-post">
@@ -1165,7 +1570,6 @@
                                       action="{!createNewComment1}"
                                       rerender="messageError,ReportDetailsPanel"
                                       oncomplete="jsCheckAddComment();rerenderReportDetailsPanel();" />
-                            </form>
                         </div>
     
                         <ul class="comments">
@@ -1268,10 +1672,9 @@
 
                     <div class="report-form">
 
-                        <form>
 
                             <label class="title">
-                                <apex:inputText value="{!createSubject}" styleClass="title" html-placeholder="件名"/>
+                                <apex:inputText id="abcdef" value="{!createSubject}" styleClass="title" html-placeholder="件名"/>
                             </label>
 
                             <div class="category">
@@ -1294,22 +1697,31 @@
 
                             <ul class="functions">
                                 <li class="btn btn-save">
-                                  <apex:commandLink value="一時保存"
+                                  <!--apex:commandLink value="一時保存"
                                                         html-class="ui-color-1"
                                                         action="{!dummyFunction}"
                                                         rerender="messageError"
-                                                        oncomplete="jsCheckCreateValidity();"/> 
+                                                        oncomplete="jsCheckCreateValidity();"/--> 
+                                  <apex:commandLink value="一時保存"
+                                                        html-class="ui-color-1"
+                                                        action="{!createDraftReport}" 
+                                                        rerender="messageError,messageSubmissionComplete,CreatePanel,HomePanel,ReportPanel,MyReportsPanel,MySearchResultPanel, selectedReportName, abcdef" 
+                                                        oncomplete="jsCheckCreateReport();"/> 
                                 </li>
                                 <li class="btn btn-request">
-                                    <apex:commandLink value="投稿承認申請"
+                                    <!--apex:commandLink value="投稿承認申請"
                                                   html-class="ui-color-1"
                                                   action="{!dummyFunction}"
                                                     rerender="messageError"
-                                                  oncomplete="jsCheckSubmitValidity();"/> 
+                                                  oncomplete="jsCheckSubmitValidity();"/-->
+                                    <apex:commandLink value="投稿承認申請"
+                                                  html-class="ui-color-1"
+                                                  action="{!submission}" 
+                                                  rerender="messageError,messageSubmissionComplete,CreatePanel,HomePanel,ReportPanel,MyReportsPanel,MySearchResultPanel,listOfSAReports, abcdef" 
+                                                  oncomplete="jsCheckSubmitReport();"/> 
                                 </li>
                             </ul>
 
-                        </form>
 
                     </div>
 
@@ -1328,18 +1740,18 @@
                     <ul class="{!IF(isApprover,'','cheat')}">
                         <li class="{!IF(isApprover,'','cheat')}">
                             <h2>
-                                <apex:commandLink value="公開レポート" action="{!dummyFunction}" rerender="listOfSAReports,HomePanel" oncomplete="setView_02_01_01();"/>
+                                <apex:commandLink value="公開レポート" action="{!dummyFunction}" rerender="listOfSAReports,HomePanel" oncomplete="resetPositionOnList();setView_02_01_01();"/>
                             </h2>
                         </li>
                         <li class="{!IF(isApprover,'','cheat')}">
                             <h2>
-                                <apex:commandLink html-class="current" value="Myレポート" action="{!getAllMyReports}" rerender="listOfSAReports,MyReportsPanel" oncomplete="setView_02_01_07();"/>
+                                <apex:commandLink html-class="current" value="Myレポート" action="{!setPageThenGetAllMyReports}" rerender="listOfSAReports,MyReportsPanel" oncomplete="resetPositionOnList();setView_02_01_07();"/>
                             </h2>
                         </li>
                         <li>
                           <h2>
                             <apex:outputPanel rendered="{!isApprover}">
-                              <apex:commandLink value="承認待ち" styleClass="approver-tab" action="{!getPendingReports}" rerender="listOfSAReports,ReportPendingListPanel" oncomplete="setView_02_02_01();"/>
+                              <apex:commandLink value="承認待ち" styleClass="approver-tab" action="{!setPageThenGetPendingReports}" rerender="listOfSAReports,ReportPendingListPanel" oncomplete="resetPositionOnList();setView_02_02_01();"/>
                             </apex:outputPanel>
                           </h2>
                         </li>
@@ -1355,7 +1767,156 @@
                 <apex:outputPanel id="MyReportsPanel">
 
                 <div class="section-body report-section-body">
-
+                    <!--DUC: PAGING HERE-->
+                    <div class="mdl-cell mdl-cell--7-col search-pagination">
+                      <apex:outputPanel >
+                        <apex:outputPanel rendered="{!!(recordsCount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1)}">
+                          <div style="height: 53px;" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!recordsCount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1}">
+                          <nav>
+                          <apex:panelGroup rendered="{!pageNum == 1}" style="display: inline-block; width: 2.79rem;" />
+                            <ul class="pagination">
+                              <li>
+                                <apex:panelGroup rendered="{!pageNum > 1}" >
+                                  <apex:outputLink value="javascript:void(0)">
+                                    <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPagePrev}" oncomplete="setView_02_01_07();"/>
+                                    <i class="material-icons">navigate_before</i>
+                                  </apex:outputLink>
+                                </apex:panelGroup>
+                              </li>
+                              <!-- 1st button -->
+                              <li class="{!IF(pageNum == 1, 'active', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPage1}" oncomplete="setView_02_01_07();"/>
+                                  <apex:outputText value="1" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 2nd button -->
+                              <li class="{!IF(pageNum == 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPage2}" oncomplete="setView_02_01_07();"/>
+                                  <apex:outputText value="2" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4), 'hidden', '')}">
+                                <span>…</span>
+                              </li>
+                              <!-- 3rd button -->
+                              <li class="{!IF(pageNum == 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPage3}" oncomplete="setView_02_01_07();"/>
+                                  <apex:outputText value="3" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPagePrev}" oncomplete="setView_02_01_07();"/>
+                                  <apex:outputText value="{!pageNum - 1}" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPageLastBfr5}" oncomplete="setView_02_01_07();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 5}" />
+                                </apex:outputLink>                          
+                              </li>
+                              <!-- 4th button -->
+                              <li class="{!IF(pageNum == 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPage4}" oncomplete="setView_02_01_07();"/>
+                                  <apex:outputText value="4" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="active {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <a href="#">{!pageNum}</a>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPageLastBfr4}" oncomplete="setView_02_01_07();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 4}" />
+                                </apex:outputLink>                          
+                              </li>
+                              <!-- 5th button -->
+                              <li class="{!IF(pageNum == 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPage5}" oncomplete="setView_02_01_07();"/>
+                                  <apex:outputText value="5" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPageNext}" oncomplete="setView_02_01_07();"/>
+                                  <apex:outputText value="{!pageNum + 1}" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPageLastBfr3}" oncomplete="setView_02_01_07();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 3}" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 6th button -->
+                              <li class="{!IF(pageNum == 6, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPage6}" oncomplete="setView_02_01_07();"/>
+                                  <apex:outputText value="6" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPage2ndNext}" oncomplete="setView_02_01_07();"/>
+                                  <apex:outputText value="{!pageNum + 2}" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPageLastBfr2}" oncomplete="setView_02_01_07();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 2}" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 7th button -->
+                              <li class="{!IF(pageNum == 7, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPage7}" oncomplete="setView_02_01_07();"/>
+                                  <apex:outputText value="7" />
+                                </apex:outputLink>                          
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <span>…</span>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 1, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPageLastBfr1}" oncomplete="setView_02_01_07();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 1}" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 8th button -->
+                              <li class="{!IF(pageNum == 8, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 8 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPage8}" oncomplete="setView_02_01_07();"/>
+                                  <apex:outputText value="8" />
+                                </apex:outputLink>                          
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1), 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPageLast}" oncomplete="setView_02_01_07();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1)}" />
+                                </apex:outputLink>
+                              </li>
+                              <li>
+                                <apex:panelGroup rendered="{!hasNext}" >
+                                  <apex:outputLink value="javascript:void(0)">
+                                    <apex:actionSupport event="onclick" reRender="MyReportsPanel" action="{!goToPageNext}" oncomplete="setView_02_01_07();"/>
+                                    <i class="material-icons">navigate_next</i>
+                                  </apex:outputLink>
+                                </apex:panelGroup>
+                              </li>
+                            </ul>
+                          </nav>
+                        </apex:outputPanel>
+                      </apex:outputPanel>
+                    </div>
                     <ul>
                         <!-- #DynamicItem -->
 
@@ -1376,9 +1937,6 @@
                                             <div class="user">
                                                 <span class="name">{!report.CreatedBy__r.DisplayedUsernameFormula__c}</span>
                                             </div>
-                                            <div class="text outputfield_summary">
-                                        <apex:outputfield value="{!report.Report_body__c}"/>
-                                    </div>
                                         </apex:actionSupport>
                                     </apex:outputPanel>
                                 </li>
@@ -1397,9 +1955,6 @@
                                             <div class="user">
                                                 <span class="name">{!report.CreatedBy__r.DisplayedUsernameFormula__c}</span>
                                             </div>
-                                            <div class="text outputfield_summary">
-                                        <apex:outputfield value="{!report.Report_body__c}"/>
-                                    </div>
                                         </apex:actionSupport>
                                     </apex:outputPanel>
                                 </li>
@@ -1418,9 +1973,29 @@
                                             <div class="user">
                                                 <span class="name">{!report.CreatedBy__r.DisplayedUsernameFormula__c}</span>
                                             </div>
-                                            <div class="text outputfield_summary">
-                                        <apex:outputfield value="{!report.Report_body__c}"/>
-                                    </div>
+                                            <table class="countTable">
+		                                  		<tr>
+		                                  			<td>
+					                                    <div class="text outputfield_summary" style="text-align: left;">
+					                                    	<!-- apex:outputfield value="{!report.Report_body__c}"/ -->
+					                                    	<apex:outputText value="{!labelNbLike}"/>
+					                                    	<apex:outputText styleclass="countValue" value="{!report.NbLike__c}"/>
+					                               		</div>
+				                               		</td>
+				                               		<td>
+					                               		<div class="text outputfield_summary" style="text-align: center;">
+					                               			<apex:outputText value="{!labelNbCopy}"/>
+					                                    	<apex:outputText styleclass="countValue" value="{!report.NbCopy__c}"/>
+					                               		</div>
+				                               		</td>
+				                               		<td>
+					                               		<div class="text outputfield_summary" style="text-align: right;">
+					                               			<apex:outputText value="{!labelNbView}"/>
+					                                    	<apex:outputText styleclass="countValue" value="{!report.NbView__c}"/>
+					                               		</div>
+				                               		</td>
+			                               		</tr>
+		                               		</table>
                                         </apex:actionSupport>
                                     </apex:outputPanel>
                                 </li>
@@ -1439,9 +2014,6 @@
                                             <div class="user">
                                                 <span class="name">{!report.CreatedBy__r.DisplayedUsernameFormula__c}</span>
                                             </div>
-                                            <div class="text outputfield_summary">
-                                        <apex:outputfield value="{!report.Report_body__c}"/>
-                                    </div>
                                         </apex:actionSupport>
                                     </apex:outputPanel>
                                 </li>
@@ -1450,7 +2022,6 @@
                         </apex:repeat>
 
                     </ul>
-
                 </div>
                 </apex:outputPanel>
 
@@ -1471,18 +2042,18 @@
                     <ul class="{!IF(isApprover,'','cheat')}">
                         <li class="{!IF(isApprover,'','cheat')}">
                           <h2>
-                                <apex:commandLink value="公開レポート" action="{!dummyFunction}" rerender="listOfSAReports,HomePanel" oncomplete="setView_02_01_01();"/>
+                                <apex:commandLink value="公開レポート" action="{!dummyFunction}" rerender="listOfSAReports,HomePanel" oncomplete="resetPositionOnList();setView_02_01_01();"/>
                             </h2>
                         </li>
                         <li class="{!IF(isApprover,'','cheat')}">
                           <h2>
-                                <apex:commandLink html-class="current" value="Myレポート" action="{!getAllMyReports}" rerender="listOfSAReports,MyReportsPanel" oncomplete="setView_02_01_07();"/>
+                                <apex:commandLink html-class="current" value="Myレポート" action="{!setPageThenGetAllMyReports}" rerender="listOfSAReports,MyReportsPanel" oncomplete="resetPositionOnList();setView_02_01_07();"/>
                             </h2>
                         </li>
                         <li>
                           <h2>
                             <apex:outputPanel rendered="{!isApprover}">
-                              <apex:commandLink value="承認待ち" styleClass="approver-tab" action="{!getPendingReports}" rerender="listOfSAReports,ReportPendingListPanel" oncomplete="setView_02_02_01();"/>
+                              <apex:commandLink value="承認待ち" styleClass="approver-tab" action="{!setPageThenGetPendingReports}" rerender="listOfSAReports,ReportPendingListPanel" oncomplete="resetPositionOnList();setView_02_02_01();"/>
                             </apex:outputPanel>
                           </h2>
                         </li>
@@ -1496,7 +2067,6 @@
                 
                 <div class="report-search-condition-form">
 
-                    <form>
                             
                             <label class="status">
                                   <apex:selectList id="mySearchSelectState" value="{!mySearchState}" size="1">
@@ -1504,7 +2074,7 @@
                                   </apex:selectList>
                             </label>
                             <label class="keyword">
-                                <apex:inputText value="{!mySearchKeywords}" html-placeholder="キーワード検索"/>
+                                <apex:inputText styleClass="mySearchKeywords" value="{!mySearchKeywords}" html-placeholder="キーワード検索"/>
                             </label>
                             
                             <div class="create-date">
@@ -1524,7 +2094,6 @@
                                     <a href="#" class="btn-search ui-color-1" onClick="executeSearchMyReportQuery();" >検索</a>
                                  </div>
                            
-                        </form>
 
                 </div>
 
@@ -1540,18 +2109,18 @@
                     <ul class="{!IF(isApprover,'','cheat')}">
                         <li class="{!IF(isApprover,'','cheat')}">
                           <h2>
-                               <apex:commandLink value="公開レポート" action="{!dummyFunction}" rerender="listOfSAReports,HomePanel" oncomplete="setView_02_01_01();"/>
+                               <apex:commandLink value="公開レポート" action="{!dummyFunction}" rerender="listOfSAReports,HomePanel" oncomplete="resetPositionOnList();setView_02_01_01();"/>
                             </h2>
                         </li>
                         <li class="{!IF(isApprover,'','cheat')}">
                           <h2>
-                               <apex:commandLink html-class="current" value="Myレポート" action="{!getAllMyReports}" rerender="listOfSAReports,MyReportsPanel" oncomplete="setView_02_01_07();"/>
+                               <apex:commandLink html-class="current" value="Myレポート" action="{!setPageThenGetAllMyReports}" rerender="listOfSAReports,MyReportsPanel" oncomplete="resetPositionOnList();setView_02_01_07();"/>
                             </h2>
                         </li>
                         <li>
                           <h2>
                             <apex:outputPanel rendered="{!isApprover}">
-                              <apex:commandLink value="承認待ち" styleClass="approver-tab" action="{!getPendingReports}" rerender="listOfSAReports,ReportPendingListPanel" oncomplete="setView_02_02_01();"/>
+                              <apex:commandLink value="承認待ち" styleClass="approver-tab" action="{!setPageThenGetPendingReports}" rerender="listOfSAReports,ReportPendingListPanel" oncomplete="resetPositionOnList();setView_02_02_01();"/>
                             </apex:outputPanel>
                           </h2>
                         </li>
@@ -1578,14 +2147,164 @@
                         <div class="btn btn-clear">
                             <a href="#" class="ui-color-1">
                                 <apex:outputPanel >
-                                    <apex:actionSupport event="onclick" action="{!getAllMyReports}" rerender="MyReportsPanel" oncomplete="setView_02_01_07();">
+                                    <apex:actionSupport event="onclick" action="{!setPageThenGetAllMyReports}" rerender="MyReportsPanel" oncomplete="setView_02_01_07();">
                                         検索クリア
                                     </apex:actionSupport>
                                 </apex:outputPanel>
                             </a>
                         </div>
                     </div>
-
+                    <!--DUC: PAGING HERE-->
+                    
+                    <div class="mdl-cell mdl-cell--7-col search-pagination">
+                      <apex:outputPanel >
+                        <apex:outputPanel rendered="{!!(recordsCount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1)}">
+                          <div style="height: 53px;" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!recordsCount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1}">
+                          <nav>
+                          <apex:panelGroup rendered="{!pageNum == 1}" style="display: inline-block; width: 2.79rem;" />
+                            <ul class="pagination">
+                              <li>
+                                <apex:panelGroup rendered="{!pageNum > 1}" >
+                                  <apex:outputLink value="javascript:void(0)">
+                                    <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPagePrev}" oncomplete="setView_02_01_09();"/>
+                                    <i class="material-icons">navigate_before</i>
+                                  </apex:outputLink>
+                                </apex:panelGroup>
+                              </li>
+                              <!-- 1st button -->
+                              <li class="{!IF(pageNum == 1, 'active', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPage1}" oncomplete="setView_02_01_09();"/>
+                                  <apex:outputText value="1" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 2nd button -->
+                              <li class="{!IF(pageNum == 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPage2}" oncomplete="setView_02_01_09();"/>
+                                  <apex:outputText value="2" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4), 'hidden', '')}">
+                                <span>…</span>
+                              </li>
+                              <!-- 3rd button -->
+                              <li class="{!IF(pageNum == 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPage3}" oncomplete="setView_02_01_09();"/>
+                                  <apex:outputText value="3" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPagePrev}" oncomplete="setView_02_01_09();"/>
+                                  <apex:outputText value="{!pageNum - 1}" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPageLastBfr5}" oncomplete="setView_02_01_09();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 5}" />
+                                </apex:outputLink>                          
+                              </li>
+                              <!-- 4th button -->
+                              <li class="{!IF(pageNum == 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPage4}" oncomplete="setView_02_01_09();"/>
+                                  <apex:outputText value="4" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="active {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <a href="#">{!pageNum}</a>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPageLastBfr4}" oncomplete="setView_02_01_09();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 4}" />
+                                </apex:outputLink>                          
+                              </li>
+                              <!-- 5th button -->
+                              <li class="{!IF(pageNum == 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPage5}" oncomplete="setView_02_01_09();"/>
+                                  <apex:outputText value="5" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPageNext}" oncomplete="setView_02_01_09();"/>
+                                  <apex:outputText value="{!pageNum + 1}" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPageLastBfr3}" oncomplete="setView_02_01_09();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 3}" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 6th button -->
+                              <li class="{!IF(pageNum == 6, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPage6}" oncomplete="setView_02_01_09();"/>
+                                  <apex:outputText value="6" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPage2ndNext}" oncomplete="setView_02_01_09();"/>
+                                  <apex:outputText value="{!pageNum + 2}" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPageLastBfr2}" oncomplete="setView_02_01_09();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 2}" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 7th button -->
+                              <li class="{!IF(pageNum == 7, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPage7}" oncomplete="setView_02_01_09();"/>
+                                  <apex:outputText value="7" />
+                                </apex:outputLink>                          
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <span>…</span>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 1, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPageLastBfr1}" oncomplete="setView_02_01_09();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 1}" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 8th button -->
+                              <li class="{!IF(pageNum == 8, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 8 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPage8}" oncomplete="setView_02_01_09();"/>
+                                  <apex:outputText value="8" />
+                                </apex:outputLink>                          
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1), 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPageLast}" oncomplete="setView_02_01_09();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1)}" />
+                                </apex:outputLink>
+                              </li>
+                              <li>
+                                <apex:panelGroup rendered="{!hasNext}" >
+                                  <apex:outputLink value="javascript:void(0)">
+                                    <apex:actionSupport event="onclick" reRender="MySearchResultPanel" action="{!goToPageNext}" oncomplete="setView_02_01_09();"/>
+                                    <i class="material-icons">navigate_next</i>
+                                  </apex:outputLink>
+                                </apex:panelGroup>
+                              </li>
+                            </ul>
+                          </nav>
+                        </apex:outputPanel>
+                      </apex:outputPanel>
+                    </div>
                     <ul>
                         <!-- #DynamicItem -->
                         <apex:repeat value="{!listOfSAReports}" var="report" >
@@ -1604,9 +2323,6 @@
                                             <div class="user">
                                                 <span class="name">{!report.CreatedBy__r.DisplayedUsernameFormula__c}</span>
                                             </div>
-                                            <div class="text outputfield_summary">
-                                        <apex:outputfield value="{!report.Report_body__c}"/>
-                                    </div>
                                         </apex:actionSupport>
                                     </apex:outputPanel>
                                 </li>
@@ -1625,9 +2341,6 @@
                                             <div class="user">
                                                 <span class="name">{!report.CreatedBy__r.DisplayedUsernameFormula__c}</span>
                                             </div>
-                                            <div class="text outputfield_summary">
-                                        <apex:outputfield value="{!report.Report_body__c}"/>
-                                    </div>
                                         </apex:actionSupport>
                                     </apex:outputPanel>
                                 </li>
@@ -1646,9 +2359,6 @@
                                             <div class="user">
                                                 <span class="name">{!report.CreatedBy__r.DisplayedUsernameFormula__c}</span>
                                             </div>
-                                            <div class="text outputfield_summary">
-                                        <apex:outputfield value="{!report.Report_body__c}"/>
-                                    </div>
                                         </apex:actionSupport>
                                     </apex:outputPanel>
                                 </li>
@@ -1667,9 +2377,29 @@
                                             <div class="user">
                                                 <span class="name">{!report.CreatedBy__r.DisplayedUsernameFormula__c}</span>
                                             </div>
-                                            <div class="text outputfield_summary">
-                                        <apex:outputfield value="{!report.Report_body__c}"/>
-                                    </div>
+                                            <table class="countTable">
+		                                  		<tr>
+		                                  			<td>
+					                                    <div class="text outputfield_summary" style="text-align: left;">
+					                                    	<!-- apex:outputfield value="{!report.Report_body__c}"/ -->
+					                                    	<apex:outputText value="{!labelNbLike}"/>
+					                                    	<apex:outputText styleclass="countValue" value="{!report.NbLike__c}"/>
+					                               		</div>
+				                               		</td>
+				                               		<td>
+					                               		<div class="text outputfield_summary" style="text-align: center;">
+					                               			<apex:outputText value="{!labelNbCopy}"/>
+					                                    	<apex:outputText styleclass="countValue" value="{!report.NbCopy__c}"/>
+					                               		</div>
+				                               		</td>
+				                               		<td>
+					                               		<div class="text outputfield_summary" style="text-align: right;">
+					                               			<apex:outputText value="{!labelNbView}"/>
+					                                    	<apex:outputText styleclass="countValue" value="{!report.NbView__c}"/>
+					                               		</div>
+				                               		</td>
+			                               		</tr>
+		                               		</table>
                                         </apex:actionSupport>
                                     </apex:outputPanel>
                                 </li>
@@ -1679,7 +2409,6 @@
                         </apex:repeat>
 
                     </ul>
-
                 </div>
 
                 </apex:outputPanel>
@@ -1698,7 +2427,7 @@
                 <header class="report-detail-section-header">
                     <h1>レポート詳細</h1>
                     <div class="btn-back">
-                        <a href="#" class="ui-color-dark" onClick="setBackToListLogic();">戻る</a>
+                        <a href="#" class="ui-color-dark" onClick="isBackCall=true;setBackToListLogic();">戻る</a>
                     </div>
                 </header>
 
@@ -1756,7 +2485,7 @@
                 <header class="report-create-section-header">
                     <h1>レポート編集</h1>
                     <div class="btn-back">
-                        <a href="#" class="ui-color-dark" onClick="setBackToListLogic();">戻る</a>
+                        <a href="#" class="ui-color-dark" onClick="isBackCall=true;setBackToListLogic();">戻る</a>
                     </div>
                 </header>
 
@@ -1766,7 +2495,6 @@
 
                     <div class="report-form draft">
 
-                        <form>
 
                             <apex:inputText value="{!draftSubject}" styleClass="title" html-placeholder="件名"/>
 
@@ -1829,7 +2557,6 @@
                                </li>
                             </ul>
 
-                        </form>
 
                     </div>
 
@@ -1856,7 +2583,7 @@
                 <header class="report-detail-section-header">
                     <h1>Myレポート</h1>
                     <div class="btn-back">
-                        <a href="#" class="ui-color-dark" onClick="setBackToListLogic();">戻る</a>
+                        <a href="#" class="ui-color-dark" onClick="isBackCall=true;setBackToListLogic();">戻る</a>
                     </div>
                 </header>
 
@@ -1867,16 +2594,20 @@
           <apex:outputPanel rendered="{!selectedReport.IsNew__c}">
                       <div class="report-detail new publish">
                           <!-- #DynamicItem -->
-                          <h3 class="title">{!selectedReport.Subject__c}</h3>
+                          
                           <div class="attributes">
-                              <div class="category">{!selectedReport.Category__c}</div>
-                              <apex:outputText styleClass="datetime" value="{0,date,yyyy/MM/dd}">
+                          	<apex:outputText styleClass="datetime" value="{0,date,yyyy/MM/dd}">
                                 <apex:param value="{!selectedReport.CreatedDate__c+offset}"/>
-                          </apex:outputText>
-                              <div class="process">{!selectedReport.Process__c}</div>
-                              <div class="view">
-                                  <span class="label">閲覧</span><span class="value">{!selectedReport.NbView__c}</span>
-                              </div>
+                          	</apex:outputText>
+                          	<div class="category">{!selectedReport.Category__c}</div>
+                            <h3 class="title">{!selectedReport.Subject__c}</h3>
+                            <div class="user">
+                              <span class="name">{!selectedReport.CreatedBy__r.DisplayedUsernameFormula__c}</span>
+                          	</div>
+                            <div class="process">{!selectedReport.Process__c}</div>
+                            <div class="view">
+                            	<span class="label">閲覧</span><span class="value">{!selectedReport.NbView__c}</span>
+                            </div>
                           </div>
                           <div class="text outputfield_body">
                                 <apex:outputfield value="{!selectedReport.Report_body__c}"/>
@@ -1898,10 +2629,6 @@
                             </p>
                           </apex:outputPanel>
 
-
-                          <div class="user">
-                              <span class="name">{!selectedReport.CreatedBy__r.DisplayedUsernameFormula__c}</span>
-                          </div>
                           <ul class="engagement">
                             <li class="good">
                         <span class="label">
@@ -1925,16 +2652,20 @@
                     <apex:outputPanel rendered="{!!selectedReport.IsNew__c}">
                       <div class="report-detail publish">
                           <!-- #DynamicItem -->
-                          <h3 class="title">{!selectedReport.Subject__c}</h3>
+                          
                           <div class="attributes">
-                              <div class="category">{!selectedReport.Category__c}</div>
-                              <apex:outputText styleClass="datetime" value="{0,date,yyyy/MM/dd}">
+                          	<apex:outputText styleClass="datetime" value="{0,date,yyyy/MM/dd}">
                                 <apex:param value="{!selectedReport.CreatedDate__c+offset}"/>
-                          </apex:outputText>
-                              <div class="process">{!selectedReport.Process__c}</div>
-                              <div class="view">
-                                  <span class="label">閲覧</span><span class="value">{!selectedReport.NbView__c}</span>
-                              </div>
+                          	</apex:outputText>
+                          	<div class="category">{!selectedReport.Category__c}</div>
+                            <h3 class="title">{!selectedReport.Subject__c}</h3> 
+                            <div class="user">
+                              <span class="name">{!selectedReport.CreatedBy__r.DisplayedUsernameFormula__c}</span>
+                          	</div>
+                            <div class="process">{!selectedReport.Process__c}</div>
+                            <div class="view">
+                            	<span class="label">閲覧</span><span class="value">{!selectedReport.NbView__c}</span>
+                            </div>
                           </div>
                           <p class="text">
                               {!selectedReport.Report_body__c}
@@ -1956,9 +2687,7 @@
                             </p>
                           </apex:outputPanel>
 
-                          <div class="user">
-                              <span class="name">{!selectedReport.CreatedBy__r.DisplayedUsernameFormula__c}</span>
-                          </div>
+                          
                           <ul class="engagement">
                             <li class="good">
                         <span class="label">
@@ -1981,7 +2710,6 @@
                     </apex:outputPanel>
 
                     <div class="post-comment">
-            <form>
                 <apex:inputTextarea style="height: 7em !important;" value="{!newCommentValue2}"/>
                             <apex:outputPanel >
                           <div class="btn btn-post">
@@ -1989,7 +2717,6 @@
                             </div>
                           </apex:outputPanel>               
                             <apex:actionFunction name="jsCheckBodyValidity2" action="{!createNewComment2}" rerender="messageError,PublishPanel" oncomplete="jsCheckAddComment();rerenderPublishReportPanel();" />
-                      </form>
                   </div>
 
                     <ul class="comments">
@@ -2024,7 +2751,7 @@
                 <header class="report-create-section-header">
                     <h1>レポート編集</h1>
                     <div class="btn-back">
-                        <a href="#" class="ui-color-dark" onClick="setBackToListLogic();">戻る</a>
+                        <a href="#" class="ui-color-dark" onClick="isBackCall=true;setBackToListLogic();">戻る</a>
                     </div>
                 </header>
 
@@ -2034,7 +2761,6 @@
 
                     <div class="report-form remand">
 
-                        <form>
                             <!-- #DynamicItem -->
 
               <apex:inputText value="{!remandSubject}" styleClass="title" html-placeholder="件名"/>
@@ -2096,7 +2822,6 @@
                                 </li>
                             </ul>
 
-                        </form>
 
                     </div>
 
@@ -2124,7 +2849,7 @@
             <header class="report-detail-section-header">
                 <h1>レポート詳細</h1>
                 <div class="btn-back">
-                  <a href="#" class="ui-color-dark" onClick="setBackToListLogic();">戻る</a>
+                  <a href="#" class="ui-color-dark" onClick="isBackCall=true;setBackToListLogic();">戻る</a>
                 </div>
             </header>
 
@@ -2134,14 +2859,17 @@
   
             <div class="report-detail">
             
-              <form>
                       <!-- #DynamicItem -->
-                        <h3 class="title">{!selectedReport.Subject__c}</h3>
+                        
                         <div class="attributes">
+                        	<apex:outputText styleClass="datetime" value="{0,date,yyyy/MM/dd}">
+                        		<apex:param value="{!selectedReport.CreatedDate__c+offset}"/>
+                        	</apex:outputText> 
                             <div class="category">{!selectedReport.Category__c}</div>
-                            <apex:outputText styleClass="datetime" value="{0,date,yyyy/MM/dd}">
-                                    <apex:param value="{!selectedReport.CreatedDate__c+offset}"/>
-                              </apex:outputText> 
+                            <h3 class="title">{!selectedReport.Subject__c}</h3>
+                            <div class="user">
+                            	<span class="name">{!selectedReport.CreatedBy__r.DisplayedUsernameFormula__c}</span>
+                          	</div>
                             <div class="process">{!selectedReport.Process__c}</div>
                         </div>
                         <div class="text outputfield_body">
@@ -2164,9 +2892,7 @@
                             </p>
                           </apex:outputPanel>
 
-                          <div class="user">
-                            <span class="name">{!selectedReport.CreatedBy__r.DisplayedUsernameFormula__c}</span>
-                          </div>
+                          
     
                   <div class="post-comment">
                                       <apex:inputTextarea style="height: 7em !important;" value="{!approveCommentValue}" rows="5"/>
@@ -2180,7 +2906,6 @@
                                 <apex:commandLink value="承認" style="text-indent: 0px;" html-class="ui-color-1" action="{!dummyFunction}" rerender="ReportPendingList,ReportPendingResult" oncomplete="jsCheckApproveValidity();"/>
                             </li>
                           </ul>
-              </form>
                   </div>
                 </div>
 
@@ -2195,18 +2920,18 @@
               <ul>
                 <li>
             <h2>
-              <apex:commandLink value="公開レポート" action="{!dummyFunction}" rerender="listOfSAReports,HomePanel" oncomplete="setView_02_01_01();"/>
+              <apex:commandLink value="公開レポート" action="{!dummyFunction}" rerender="listOfSAReports,HomePanel" oncomplete="resetPositionOnList();setView_02_01_01();"/>
             </h2>
           </li>
           <li>
             <h2>
-              <apex:commandLink value="Myレポート" action="{!getAllMyReports}" rerender="listOfSAReports,MyReportsPanel" oncomplete="setView_02_01_07();"/>
+              <apex:commandLink value="Myレポート" action="{!setPageThenGetAllMyReports}" rerender="listOfSAReports,MyReportsPanel" oncomplete="resetPositionOnList();setView_02_01_07();"/>
             </h2>
           </li>
                 <li>
                   <h2 class="current-approver-tab">
                     <apex:outputPanel rendered="{!isApprover}">
-                      <apex:commandLink html-class="current" value="承認待ち" action="{!getPendingReports}" rerender="listOfSAReports,ReportPendingList" oncomplete="setView_02_02_01();"/>
+                      <apex:commandLink html-class="current" value="承認待ち" action="{!setPageThenGetPendingReports}" rerender="listOfSAReports,ReportPendingList" oncomplete="resetPositionOnList();setView_02_02_01();"/>
                     </apex:outputPanel>
                   </h2>
                 </li>
@@ -2222,7 +2947,156 @@
       <apex:outputPanel id="ReportPendingListPanel">
 
             <div class="section-body report-section-body">
-  
+          <!--DUC: PAGING HERE-->
+          <div class="mdl-cell mdl-cell--7-col search-pagination">
+                      <apex:outputPanel >
+                        <apex:outputPanel rendered="{!!(recordsCount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1)}">
+                          <div style="height: 53px;" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!recordsCount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1}">
+                          <nav>
+                          <apex:panelGroup rendered="{!pageNum == 1}" style="display: inline-block; width: 2.79rem;" />
+                            <ul class="pagination">
+                              <li>
+                                <apex:panelGroup rendered="{!pageNum > 1}" >
+                                  <apex:outputLink value="javascript:void(0)">
+                                    <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPagePrev}" oncomplete="setView_02_02_01();"/>
+                                    <i class="material-icons">navigate_before</i>
+                                  </apex:outputLink>
+                                </apex:panelGroup>
+                              </li>
+                              <!-- 1st button -->
+                              <li class="{!IF(pageNum == 1, 'active', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPage1}" oncomplete="setView_02_02_01();"/>
+                                  <apex:outputText value="1" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 2nd button -->
+                              <li class="{!IF(pageNum == 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPage2}" oncomplete="setView_02_02_01();"/>
+                                  <apex:outputText value="2" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4), 'hidden', '')}">
+                                <span>…</span>
+                              </li>
+                              <!-- 3rd button -->
+                              <li class="{!IF(pageNum == 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPage3}" oncomplete="setView_02_02_01();"/>
+                                  <apex:outputText value="3" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPagePrev}" oncomplete="setView_02_02_01();"/>
+                                  <apex:outputText value="{!pageNum - 1}" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPageLastBfr5}" oncomplete="setView_02_02_01();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 5}" />
+                                </apex:outputLink>                          
+                              </li>
+                              <!-- 4th button -->
+                              <li class="{!IF(pageNum == 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPage4}" oncomplete="setView_02_02_01();"/>
+                                  <apex:outputText value="4" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="active {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <a href="#">{!pageNum}</a>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPageLastBfr4}" oncomplete="setView_02_02_01();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 4}" />
+                                </apex:outputLink>                          
+                              </li>
+                              <!-- 5th button -->
+                              <li class="{!IF(pageNum == 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPage5}" oncomplete="setView_02_02_01();"/>
+                                  <apex:outputText value="5" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPageNext}" oncomplete="setView_02_02_01();"/>
+                                  <apex:outputText value="{!pageNum + 1}" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPageLastBfr3}" oncomplete="setView_02_02_01();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 3}" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 6th button -->
+                              <li class="{!IF(pageNum == 6, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPage6}" oncomplete="setView_02_02_01();"/>
+                                  <apex:outputText value="6" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPage2ndNext}" oncomplete="setView_02_02_01();"/>
+                                  <apex:outputText value="{!pageNum + 2}" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPageLastBfr2}" oncomplete="setView_02_02_01();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 2}" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 7th button -->
+                              <li class="{!IF(pageNum == 7, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPage7}" oncomplete="setView_02_02_01();"/>
+                                  <apex:outputText value="7" />
+                                </apex:outputLink>                          
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <span>…</span>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 1, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPageLastBfr1}" oncomplete="setView_02_02_01();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 1}" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 8th button -->
+                              <li class="{!IF(pageNum == 8, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 8 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPage8}" oncomplete="setView_02_02_01();"/>
+                                  <apex:outputText value="8" />
+                                </apex:outputLink>                          
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1), 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPageLast}" oncomplete="setView_02_02_01();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1)}" />
+                                </apex:outputLink>
+                              </li>
+                              <li>
+                                <apex:panelGroup rendered="{!hasNext}" >
+                                  <apex:outputLink value="javascript:void(0)">
+                                    <apex:actionSupport event="onclick" reRender="ReportPendingListPanel" action="{!goToPageNext}" oncomplete="setView_02_02_01();"/>
+                                    <i class="material-icons">navigate_next</i>
+                                  </apex:outputLink>
+                                </apex:panelGroup>
+                              </li>
+                            </ul>
+                          </nav>
+                        </apex:outputPanel>
+                      </apex:outputPanel>
+                    </div>
           <ul>
                   <!-- #DynamicItem -->
   
@@ -2236,16 +3110,11 @@
                         <div class="user">
                           <span class="name">{!report.CreatedBy__r.DisplayedUsernameFormula__c}</span>
                         </div>
-                        <div class="text outputfield_summary">
-                                  <apex:outputfield value="{!report.Report_body__c}"/>
-                              </div>
                       </li>
 
             </apex:repeat>
     
           </ul>
-
-
         </div>
 
       </apex:outputPanel>
@@ -2260,18 +3129,18 @@
           <ul>
             <li>
                             <h2>
-                                <apex:commandLink value="公開レポート" action="{!dummyFunction}" rerender="listOfSAReports,HomePanel" oncomplete="setView_02_01_01();"/>
+                                <apex:commandLink value="公開レポート" action="{!dummyFunction}" rerender="listOfSAReports,HomePanel" oncomplete="resetPositionOnList();setView_02_01_01();"/>
                             </h2>
                         </li>
                         <li>
                             <h2>
-                                <apex:commandLink value="Myレポート" action="{!getAllMyReports}" rerender="listOfSAReports,MyReportsPanel" oncomplete="setView_02_01_07();"/>
+                                <apex:commandLink value="Myレポート" action="{!setPageThenGetAllMyReports}" rerender="listOfSAReports,MyReportsPanel" oncomplete="resetPositionOnList();setView_02_01_07();"/>
                             </h2>
                         </li>
             <li>
               <h2 class="current-approver-tab">
                 <apex:outputPanel rendered="{!isApprover}">
-                  <apex:commandLink html-class="current" value="承認待ち" action="{!getPendingReports}" rerender="listOfSAReports,ReportPendingListPanel" oncomplete="setView_02_02_01();"/>
+                  <apex:commandLink html-class="current" value="承認待ち" action="{!setPageThenGetPendingReports}" rerender="listOfSAReports,ReportPendingListPanel" oncomplete="resetPositionOnList();setView_02_02_01();"/>
                 </apex:outputPanel>
               </h2>
             </li>
@@ -2285,10 +3154,9 @@
 
           <div class="report-search-condition-form">
   
-            <form>
   
               <label class="keyword">
-                <apex:inputText html-placeholder="キーワード検索" value="{!pendingKeywords}" />
+                <apex:inputText styleClass="pendingKeywords" html-placeholder="キーワード検索" value="{!pendingKeywords}" />
               </label>
               <div class="create-date">
                 <label>投稿日</label>
@@ -2307,7 +3175,6 @@
                                     <a href="#" class="btn-search ui-color-1" onClick="executeSearchPendingReportsQuery();">検索</a>
                                  </div>
             
-            </form>
   
           </div>
         
@@ -2324,18 +3191,18 @@
           <ul>
             <li>
                             <h2>
-                                <apex:commandLink value="公開レポート" action="{!dummyFunction}" rerender="listOfSAReports,HomePanel" oncomplete="setView_02_01_01();"/>
+                                <apex:commandLink value="公開レポート" action="{!dummyFunction}" rerender="listOfSAReports,HomePanel" oncomplete="resetPositionOnList();setView_02_01_01();"/>
                             </h2>
                         </li>
                         <li>
                             <h2>
-                                <apex:commandLink value="Myレポート" action="{!getAllMyReports}" rerender="listOfSAReports,MyReportsPanel" oncomplete="setView_02_01_07();"/>
+                                <apex:commandLink value="Myレポート" action="{!setPageThenGetAllMyReports}" rerender="listOfSAReports,MyReportsPanel" oncomplete="resetPositionOnList();setView_02_01_07();"/>
                             </h2>
                         </li>
             <li>
               <h2 class="current-approver-tab">
                 <apex:outputPanel rendered="{!isApprover}">
-                  <apex:commandLink html-class="current" value="承認待ち" action="{!getPendingReports}" rerender="listOfSAReports,ReportPendingListPanel" oncomplete="setView_02_02_01();"/>
+                  <apex:commandLink html-class="current" value="承認待ち" action="{!setPageThenGetPendingReports}" rerender="listOfSAReports,ReportPendingListPanel" oncomplete="resetPositionOnList();setView_02_02_01();"/>
                 </apex:outputPanel>
               </h2>
             </li>
@@ -2358,14 +3225,163 @@
             <div class="btn btn-clear">
                             <a href="#" class="ui-color-1">
                                 <apex:outputPanel >
-                                    <apex:actionSupport event="onclick" action="{!getAllMyReports}" rerender="ReportPendingListPanel" oncomplete="setView_02_02_01();">
+                                    <apex:actionSupport event="onclick" action="{!setPageThenGetAllMyReports}" rerender="ReportPendingListPanel" oncomplete="setView_02_02_01();">
                                           検索クリア
                                     </apex:actionSupport>
                                 </apex:outputPanel>
                             </a>
                         </div>
           </div>
-
+          <!--DUC: PAGING HERE-->
+          <div class="mdl-cell mdl-cell--7-col search-pagination">
+                      <apex:outputPanel >
+                        <apex:outputPanel rendered="{!!(recordsCount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1)}">
+                          <div style="height: 53px;" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!recordsCount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1}">
+                          <nav>
+                          <apex:panelGroup rendered="{!pageNum == 1}" style="display: inline-block; width: 2.79rem;" />
+                            <ul class="pagination">
+                              <li>
+                                <apex:panelGroup rendered="{!pageNum > 1}" >
+                                  <apex:outputLink value="javascript:void(0)">
+                                    <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPagePrev}" onComplete="setView_02_02_03();"/>
+                                    <i class="material-icons">navigate_before</i>
+                                  </apex:outputLink>
+                                </apex:panelGroup>
+                              </li>
+                              <!-- 1st button -->
+                              <li class="{!IF(pageNum == 1, 'active', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPage1}" onComplete="setView_02_02_03();"/>
+                                  <apex:outputText value="1" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 2nd button -->
+                              <li class="{!IF(pageNum == 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPage2}" onComplete="setView_02_02_03();"/>
+                                  <apex:outputText value="2" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4), 'hidden', '')}">
+                                <span>…</span>
+                              </li>
+                              <!-- 3rd button -->
+                              <li class="{!IF(pageNum == 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPage3}" onComplete="setView_02_02_03();"/>
+                                  <apex:outputText value="3" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPagePrev}" onComplete="setView_02_02_03();"/>
+                                  <apex:outputText value="{!pageNum - 1}" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPageLastBfr5}" onComplete="setView_02_02_03();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 5}" />
+                                </apex:outputLink>                          
+                              </li>
+                              <!-- 4th button -->
+                              <li class="{!IF(pageNum == 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPage4}" onComplete="setView_02_02_03();"/>
+                                  <apex:outputText value="4" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="active {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <a href="#">{!pageNum}</a>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPageLastBfr4}" onComplete="setView_02_02_03();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 4}" />
+                                </apex:outputLink>                          
+                              </li>
+                              <!-- 5th button -->
+                              <li class="{!IF(pageNum == 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPage5}" onComplete="setView_02_02_03();"/>
+                                  <apex:outputText value="5" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPageNext}" onComplete="setView_02_02_03();"/>
+                                  <apex:outputText value="{!pageNum + 1}" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPageLastBfr3}" onComplete="setView_02_02_03();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 3}" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 6th button -->
+                              <li class="{!IF(pageNum == 6, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPage6}" onComplete="setView_02_02_03();"/>
+                                  <apex:outputText value="6" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPage2ndNext}" onComplete="setView_02_02_03();"/>
+                                  <apex:outputText value="{!pageNum + 2}" />
+                                </apex:outputLink>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPageLastBfr2}" onComplete="setView_02_02_03();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 2}" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 7th button -->
+                              <li class="{!IF(pageNum == 7, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPage7}" onComplete="setView_02_02_03();"/>
+                                  <apex:outputText value="7" />
+                                </apex:outputLink>                          
+                              </li>
+                              <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                                <span>…</span>
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 1, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPageLastBfr1}" onComplete="setView_02_02_03();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 1}" />
+                                </apex:outputLink>
+                              </li>
+                              <!-- 8th button -->
+                              <li class="{!IF(pageNum == 8, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 8 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPage8}" onComplete="setView_02_02_03();"/>
+                                  <apex:outputText value="8" />
+                                </apex:outputLink>                          
+                              </li>
+                              <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1), 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8), 'hidden', '')}">
+                                <apex:outputLink value="javascript:void(0)">
+                                  <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPageLast}" onComplete="setView_02_02_03();"/>
+                                  <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1)}" />
+                                </apex:outputLink>
+                              </li>
+                              <li>
+                                <apex:panelGroup rendered="{!hasNext}" >
+                                  <apex:outputLink value="javascript:void(0)">
+                                    <apex:actionSupport event="onclick" reRender="ReportPendingResultPanel" action="{!goToPageNext}" onComplete="setView_02_02_03();"/>
+                                    <i class="material-icons">navigate_next</i>
+                                  </apex:outputLink>
+                                </apex:panelGroup>
+                              </li>
+                            </ul>
+                          </nav>
+                        </apex:outputPanel>
+                      </apex:outputPanel>
+                    </div>
           <ul>
             <!-- #DynamicItem -->
             <apex:repeat value="{!listOfSAReports}" var="report" >
@@ -2380,16 +3396,12 @@
                   <div class="user">
                     <span class="name">{!report.CreatedBy__r.DisplayedUsernameFormula__c}</span>
                   </div>
-                  <div class="text outputfield_summary">
-                                    <apex:outputfield value="{!report.Report_body__c}"/>
-                                </div>
                         </a>
                     </li>
                   
                   </apex:repeat>
 
           </ul>
-  
         </div>
 
       </apex:outputPanel>
@@ -2423,6 +3435,9 @@
 
     <script>
     
+    	var scrollTopValue = 0;
+    	var isBackCall = false;
+    
         //General Hide and Show function
         function onCommandHideAll() {
             $j(".report-section-home").hide();
@@ -2450,7 +3465,8 @@
             onCommandHideAll();
             $j(".document-header").show();
             $j(".report-section-home").show();
-            window.scrollTo(0,0);
+            //window.scrollTo(0,0);
+            setPositionOnList();
             rerenderHomePanel();
         }
         
@@ -2458,7 +3474,8 @@
             onCommandHideAll();
             $j(".document-header").show();
             $j(".report-section-my-reports").show();
-            window.scrollTo(0,0);
+            //window.scrollTo(0,0);
+            setPositionOnList();
             rerenderMyReportPanel();
         }
         
@@ -2475,7 +3492,13 @@
             onCommandHideAll();
             $j(".document-header").show();
             $j(".report-section-search-all-result").show();
-            window.scrollTo(0,0);
+            //window.scrollTo(0,0);
+            if(!isBackCall){
+            	scrollTopValue = 0;
+            	window.scrollTo(0,0);
+            }else{
+            	setPositionOnList();
+            }
             rerenderReportPanel();
         }
 
@@ -2491,12 +3514,14 @@
             onCommandHideAll();
             $j(".document-header").show();
             $j(".report-section-search-my-result").show();
-            window.scrollTo(0,0);
+            //window.scrollTo(0,0);
+            setPositionOnList();
             rerenderMySearchResultPanel();
         }
 
         //Report Detail Pages
         function setView_02_01_04() {
+        	scrollTopValue=window.scrollY;
             onCommandHideAll();
             $j(".document-header").hide();
             $j(".report-detail-standard-report").show();
@@ -2505,6 +3530,7 @@
         }
         
         function setView_02_01_04_noRefresh() {
+        	scrollTopValue=window.scrollY;
             onCommandHideAll();
             $j(".document-header").hide();
             $j(".report-detail-standard-report").show();
@@ -2513,6 +3539,7 @@
         }
 
         function setView_02_01_10() {
+        	scrollTopValue=window.scrollY;
             onCommandHideAll();
             $j(".document-header").hide();
             $j(".report-pending-detail-section").show();
@@ -2521,6 +3548,7 @@
         }
 
         function setView_02_01_12() {
+        	scrollTopValue=window.scrollY;
             onCommandHideAll();
             $j(".document-header").hide();
             $j(".report-publish-detail-section").show();
@@ -2538,6 +3566,7 @@
         }
 
         function setView_02_01_11(rerenderForced) {
+        	scrollTopValue=window.scrollY;
             onCommandHideAll();
             $j(".document-header").hide();
             $j(".report-draft-create-section").show();
@@ -2559,6 +3588,7 @@
         }
         
         function setView_02_01_11_noRefresh() {
+        	scrollTopValue=window.scrollY;
             onCommandHideAll();
             $j(".document-header").hide();
             $j(".report-draft-create-section").show();
@@ -2574,6 +3604,7 @@
         }
         
         function setView_02_01_13(rerenderForced) {
+        	scrollTopValue=window.scrollY;
             onCommandHideAll();
             $j(".document-header").hide();
             $j(".report-remand-create-section").show();
@@ -2595,6 +3626,7 @@
         }
         
         function setView_02_01_13_noRefresh() {
+        	scrollTopValue=window.scrollY;
             onCommandHideAll();
             $j(".document-header").hide();
             $j(".report-remand-create-section").show();
@@ -2630,6 +3662,7 @@
         }
         
         function setView_02_01_14() {
+        	scrollTopValue=window.scrollY;
             onCommandHideAll();
             $j(".document-header").hide();
             $j(".report-to-validate").show();
@@ -2641,7 +3674,8 @@
             onCommandHideAll();
             $j(".document-header").show();
             $j(".report-pending-list").show();
-            window.scrollTo(0,0);
+            //window.scrollTo(0,0);
+            setPositionOnList();
             rerenderReportPendingListPanel();
         }
         
@@ -2657,8 +3691,24 @@
             onCommandHideAll();
             $j(".document-header").show();
             $j(".report-pending-result").show();
-            window.scrollTo(0,0);
+            //window.scrollTo(0,0);
+            setPositionOnList();
             rerenderReportPendingResultPanel();
+        }
+        
+        function setPositionOnList(){
+        	if(isBackCall){
+				$j(document).scrollTop(scrollTopValue);
+        		scrollTopValue=0;
+        		isBackCall=false;
+        	}
+        }
+        
+        function resetPositionOnList(){
+        	scrollTopValue=0;
+        	//$j(document).scrollTop(scrollTopValue);
+        	window.scrollTo(0,0);
+        	isBackCall=false;
         }
         
         //Other Functions
@@ -2668,7 +3718,7 @@
               callInitHomePage();
               break;
           case 'Panel3':
-            latestSearchReport();
+              latestSearchReport();
               break;
             case 'Panel7':
               callGetAllMyReports();
@@ -2685,10 +3735,17 @@
             case 'Home':
               returnToHome();
               break;
+            case 'RankingView':
+              returnToRankingView();
+              break;
+            case 'RankingLike':
+              returnToRankingLike();
+              break;
           default:
 //            alert('レポートホームに戻ります。');
               callInitHomePage();
-      }   
+      	  }   
+      	  
         }
         
         function setBackToReportLogic(){
@@ -2706,16 +3763,31 @@
         }
         
         function executeSearchReportQuery(){
+            var searchKeyword = $j('.basicSearchKeywords');
+            if(searchKeyword.val() != undefined && searchKeyword.val().length == 1 && !searchKeyword.val().match(/[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/)){
+              alert('英数字、記号を検索する場合は、2文字以上でご入力ください');
+              return null;
+            }
             controllerBasicSearch();
             return null;
         }
         
         function executeSearchPendingReportsQuery(){
+            var searchKeyword = $j('.pendingKeywords');
+            if(searchKeyword.val() != undefined && searchKeyword.val().length == 1 && !searchKeyword.val().match(/[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/)){
+              alert('英数字、記号を検索する場合は、2文字以上でご入力ください');
+              return null;
+            }
             controllerPendingReportsSearch();
             return null;
         }
         
         function executeSearchMyReportQuery(){
+            var searchKeyword = $j('.mySearchKeywords');
+            if(searchKeyword.val() != undefined && searchKeyword.val().length == 1 && !searchKeyword.val().match(/[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/)){
+              alert('英数字、記号を検索する場合は、2文字以上でご入力ください');
+              return null;
+            }
             controllerSearchMyReport();
             return null;
         }
@@ -2769,6 +3841,8 @@
 
         //Init Function
         $j(document).ready(function() {
+        scrollTopValue = 0;
+    	isBackCall = false;
         if({!reportRendered}){
           if({!sourceOfExecution=='Home'}){
             previousReportList='Panel1';
@@ -2830,12 +3904,18 @@
               $j('.messageError').val("");
             }
 
+          }else if({!sourceOfExecution=='rsView'}){
+          	previousReportList='RankingView';
+            setView_02_01_04();
+          }else if({!sourceOfExecution=='rsLike'}){
+          	previousReportList='RankingLike';
+            setView_02_01_04();
           }else{
             previousReportList='';
             setView_02_01_04();
           }       
         } else {
-          setView_02_01_01();
+          	setView_02_01_01();
         }
 
             // for libraries, flatpickr ********************************

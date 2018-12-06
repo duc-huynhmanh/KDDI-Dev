@@ -26,6 +26,9 @@ public with sharing class saHomeCtrl {
 	public List<saReport__c> lsMostSeenReports {get;set;}
 	public List<saReport__c> lsMostRecentReports {get;set;}
 
+	public Integer currentMostSeenLimit {get;set;}
+	public Integer currentMostRecentLimit {get;set;}
+
     public saHomeCtrl () {
 
       messageError = '正しいデーターを入れてください。';
@@ -91,6 +94,9 @@ public with sharing class saHomeCtrl {
       lsContentVersion = new List<ContentVersion>();
       categoryName ='';
 
+	  currentMostSeenLimit=3;
+	  currentMostRecentLimit=3;
+	  
 	  //List of Most recent report regarding the profile of the User
 	  String whereConditionRegardingProfile = saUtilSharing.getWhereCondForCorrespondingProfile(myUser.Profile.Name);
 
@@ -123,6 +129,56 @@ public with sharing class saHomeCtrl {
 	  
     }
 
+	public void displayMoreMostSeenReports(){
+		if(currentMostRecentLimit<190){
+			
+			currentMostSeenLimit+=10;
+			system.debug('currentMostSeenLimit : '+currentMostSeenLimit);
+		
+			//List of Most seen Report regarding the profile of the User
+	  		String IdOfMostSeenReport = '';
+	  		saReport__c mostSeenReports;
+	  		lsMostSeenReports = new List<saReport__c>();
+			//Get List of report Evolva or Kddi
+	  		List<AggregateResult> listOfMostSeenReportsID;
+	  		Date past7days = Date.today().addDays(-7);
+	  		if(saUtilSharing.isUserProfileEvolva(myUser.Profile.Name)){
+	  			listOfMostSeenReportsID = [Select Count(Id),ConcernedReport__c FROM saReportDetail__c WHERE Type__c= :saConstantCmn.SA_MESSAGEDETAIL_TYPE_READ And CreatedDate__c> :past7days And ConcernedReport__r.IsReportEvolva__c=true Group BY ConcernedReport__c ORDER BY Count(Id) Desc LIMIT :currentMostSeenLimit];
+	  		}else{
+	  			listOfMostSeenReportsID = [Select Count(Id),ConcernedReport__c FROM saReportDetail__c WHERE Type__c= :saConstantCmn.SA_MESSAGEDETAIL_TYPE_READ And CreatedDate__c> :past7days And ConcernedReport__r.IsReportEvolva__c=false Group BY ConcernedReport__c ORDER BY Count(Id) Desc LIMIT :currentMostSeenLimit];
+	  		}
+	  		
+	  		system.debug('Select Count(Id),ConcernedReport__c FROM saReportDetail__c WHERE Type__c= '+saConstantCmn.SA_MESSAGEDETAIL_TYPE_READ+' And CreatedDate__c> '+past7days+' And ConcernedReport__r.IsReportEvolva__c=true Group BY ConcernedReport__c ORDER BY Count(Id) Desc LIMIT '+currentMostSeenLimit);
+	  		
+	  		if(listOfMostSeenReportsID.size()>0){
+		  		for(AggregateResult result : listOfMostSeenReportsID){
+		  			IdOfMostSeenReport = (String) result.get('ConcernedReport__c');
+		  			system.debug('IdOfMostSeenReport :'+IdOfMostSeenReport);
+		  			mostSeenReports = [Select Id,Subject__c,toLabel(Category__c),CreatedDate__c,Report_body__c FROM saReport__c WHERE Id= :IdOfMostSeenReport][0];
+		  			system.debug('mostSeenReports :'+mostSeenReports.Id);
+		  			lsMostSeenReports.add(mostSeenReports);
+		  		}
+	  		}
+	  		
+	  		system.debug('lsMostSeenReports : '+lsMostSeenReports);
+		}
+	}
+
+//getScrollFromTopValue(); getMoreForMostViewedList();
+	public void displayMoreMostRecentReports(){
+		if(currentMostRecentLimit<190){
+			
+			currentMostRecentLimit+=10;
+			system.debug('currentMostRecentLimit : '+currentMostRecentLimit);
+			
+			String whereConditionRegardingProfile = saUtilSharing.getWhereCondForCorrespondingProfile(myUser.Profile.Name);
+	  		String strRecentReportQuery = 'Select Id,Subject__c,toLabel(Category__c),CreatedDate__c,Report_body__c FROM saReport__c WHERE State__c=\''+saConstantCmn.SA_REPORT_STATE_PUBLISHED+'\' And '+whereConditionRegardingProfile+' ORDER BY AvailabilityDate__c Desc NULLS LAST LIMIT '+currentMostRecentLimit;
+	  		lsMostRecentReports = Database.query(strRecentReportQuery);
+	  		
+	  		system.debug('lsMostRecentReports : '+lsMostRecentReports);
+		}
+	}
+
 	//Calculate the offset depending on The User TimeZone
 	public Double offset{get{
         TimeZone tz = UserInfo.getTimeZone();
@@ -132,7 +188,7 @@ public with sharing class saHomeCtrl {
 
 
 
-
+	
 
     public User myUser {get;private set;}
 

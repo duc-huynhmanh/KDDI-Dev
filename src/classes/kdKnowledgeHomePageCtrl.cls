@@ -2,13 +2,16 @@ public with sharing class kdKnowledgeHomePageCtrl {
 	public String errorMessage{get;set;}
 	public Integer getTypeOfScreen(){return auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_DASHBOARD;}
 	public List<ThemaBlock> kdKnwlListMap{get; private set;}
+	public List<MenuItemData> seasonalThemas{get; private set;}
 	public List<MenuItemData> menuItemList{get; private set;}
 	public List<MenuItemData> typeItemList{get; private set;}
 	public List<MenuItemData> channelItemList{get; private set;}
 	public Integer totalItem{get; private set;}
-	private Map<String, String> themaMap;
+	public Map<String, String> themaMap{get;set;}
 	private Map<String, String> cateMap;
 	private Map<String,Integer> mapKnowledgeCountItem;
+	public String seasonalMessage{get;set;}
+	public String textAlign{get;set;}
 
 	public List<WebContent> topViewlist{get; private set;}
 	public List<WebContent> recommendLastCreatedList{get; private set;}
@@ -28,7 +31,7 @@ public with sharing class kdKnowledgeHomePageCtrl {
 			topViewlist.add(w);
 		}
 		index = 0;
-		for (kdKnowledge__c k : [SELECT Title__c, Thema__c FROM kdKnowledge__c WHERE RecommendFlag__c = True ORDER BY DisplayOrder__c NULLS LAST, LastModifiedDate__c DESC LIMIT 3]){
+		for (kdKnowledge__c k : [SELECT Title__c, Thema__c FROM kdKnowledge__c WHERE RecommendFlag__c = True ORDER BY DisplayOrder__c DESC NULLS LAST, LastModifiedDate__c DESC LIMIT 3]){
 			WebContent w = new WebContent();
 			w.itemLabel = k.Title__c;
 			w.itemThema = themaMap.get(k.Thema__c);
@@ -47,10 +50,53 @@ public with sharing class kdKnowledgeHomePageCtrl {
 		}
 	}
 
+	private void getSeasonalThema(){
+		seasonalThemas = new List<MenuItemData>();
+		auCommunityCustomSettings__c setting = auCommunityCustomSettings__c.getOrgDefaults();
+		if(setting == null || String.isBlank(setting.SeasonalThema__c)){
+			return;
+		}
+   		List<String> themas = setting.SeasonalThema__c.split(';');
+		Integer index = 0;
+		for(String t : themas){
+			if(String.isBlank(t) || !themaMap.containsKey(t)) continue;
+			MenuItemData item = new MenuItemData();
+			item.apiName = t;
+			item.displayLabel = themaMap.get(t);
+			item.index = index++;
+			for(MenuItemData menuItem : menuItemList){
+				if(menuItem.apiName == t){
+					item.count = menuItem.index;
+					break;
+				}
+			}
+			seasonalThemas.add(item);
+		}
+	}
+
 	public List<MenuItemData> getListThema() {
         List<MenuItemData> menuItems = new List<MenuItemData>();
         Integer index = 0;
         for (Schema.PicklistEntry f : kdKnowledge__c.Thema__c.getDescribe().getPicklistValues()) {
+        	//push iPhone関連 on top
+        	if(f.getValue() == 'Val20'){
+        		MenuItemData item = new MenuItemData();
+        		item.displayLabel = f.getLabel();
+        		item.apiName = f.getValue();
+        		item.index = index++;
+        		item.count = mapKnowledgeCountItem.get('Thema' + f.getValue());
+        		if (item.count == null) {
+        			item.count = 0;
+        		}
+            	menuItems.add(item);
+            	break;
+        	}
+        }
+        
+        for (Schema.PicklistEntry f : kdKnowledge__c.Thema__c.getDescribe().getPicklistValues()) {
+        	if(f.getValue() == 'Val20'){
+        		continue;
+        	}
         	MenuItemData item = new MenuItemData();
         	item.displayLabel = f.getLabel();
         	item.apiName = f.getValue();
@@ -161,6 +207,12 @@ public with sharing class kdKnowledgeHomePageCtrl {
 		themaMap = new Map<String, String>();
 		mapKnowledgeCountItem = new Map<String,Integer>();
 		Integer count;
+		seasonalMessage = auCommunityCustomSettings__c.getOrgDefaults().SeasonalMessage__c;
+		if(String.isEmpty(seasonalMessage)){
+			seasonalMessage = '';
+		} else {
+			textAlign = seasonalMessage.contains('\n') ? 'left' : 'center';
+		}
 		List<kdKnowledge__c> allKnowledges = [SELECT Type__c, SubjectDivision__c, Thema__c, MediumCategory__c, NbCopy__c, NbLike__c, NbView__c, HasMovie__c, Title__c,
 			PostTime__c, (SELECT Id FROM Attachments LIMIT 1)
 			FROM kdKnowledge__c ORDER BY Thema__c, LastModifiedDate__c DESC];
@@ -201,11 +253,11 @@ public with sharing class kdKnowledgeHomePageCtrl {
             cateMap.put(f.getValue(), f.getLabel());
         } 
         getWebContentData();
-
 		menuItemList = getListThema();
 		typeItemList = getListType();
 		channelItemList = getListChannel();
 		kdKnwlListMap = getDetailData(allKnowledges);
+		getSeasonalThema();
 	}
 
 	public class MenuItemData {
@@ -225,9 +277,9 @@ public with sharing class kdKnowledgeHomePageCtrl {
     }
 
     public class WebContent{
-    	public string itemLabel {get;set;}
-    	public string itemThema {get;set;}
-    	public String id 		{get;set;}
-    	public Integer index 	{get;set;}
+    	public string itemLabel  {get;set;}
+    	public string itemThema  {get;set;}
+    	public String id 		 {get;set;}
+    	public Integer index 	 {get;set;}
     }
 }

@@ -1,5 +1,4 @@
 <apex:page showHeader="false" sidebar="false" controller="saDailyReportCSVFileExportingCtrl" readonly="true" contentType="{!IF(isProcess,'text/csv;charset=Shift_JIS;','text/html')}">{!sTitle}
-<!--apex:page showHeader="false" sidebar="false" controller="saDailyReportCSVFileExportingCtrl" readonly="true" contentType="text/csv;charset=Shift_JIS;">{!sTitle}-->
 	<apex:repeat value="{!lslsRow}" var="lsRow" rows="9999"><apex:repeat value="{!lsRow}" var="row" rows="9999">
 {!row}</apex:repeat></apex:repeat>
 	<apex:outputPanel rendered="{!Not(isProcess)}">

@@ -99,28 +99,4 @@ public with sharing class auSharingToolCtrl {
             
     }
     
-    public static void shareDataPermissionsHonbuDirect(List<auHonbuDirectDetail__c> honbuDirectDetailToShare) {
-
-		auHonbuDirect__share perm;
-		List<auHonbuDirect__share> listOfPerm = new List<auHonbuDirect__share>();
-		for(auHonbuDirectDetail__c auHonbuDirectDetailToAdd: honbuDirectDetailToShare){
-			perm = new auHonbuDirect__share();
-			perm.ParentId = auHonbuDirectDetailToAdd.auHonbuDirect__c;
-			perm.userOrGroupId = auHonbuDirectDetailToAdd.User__c;
-			if(auHonbuDirectDetailToAdd.Type__c==auConstantCmn.ACCESS_TYPE_SA){
-				perm.RowCause = Schema.auHonbuDirect__share.RowCause.shared_To_This_SA_User__c;
-			}else if(auHonbuDirectDetailToAdd.Type__c==auConstantCmn.ACCESS_TYPE_KDDI){
-				perm.RowCause = Schema.auHonbuDirect__share.RowCause.shared_To_This_KDDI_User__c;
-			}else if(auHonbuDirectDetailToAdd.Type__c==auConstantCmn.ACCESS_TYPE_SHOP){
-				perm.RowCause = Schema.auHonbuDirect__share.RowCause.shared_To_This_Shop_User__c;
-			}
-			
-			perm.AccessLevel = 'Read';
-			listOfPerm.add(perm);
-		}
-		
-		Insert listOfPerm;    
-
-    }
-    
 }

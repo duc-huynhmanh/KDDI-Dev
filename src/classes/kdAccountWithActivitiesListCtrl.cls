@@ -44,6 +44,9 @@ public with sharing class kdAccountWithActivitiesListCtrl {
     public String filterSalesman        {get; set;}
     public Boolean filterCcpFlag        {get; set;}
 
+    public List<SelectOption> optShisha{get; set;}
+    public List<SelectOption> optShiten{get; set;}
+
     public Id accountUpdateId {get; set;}
 
     public Boolean hasData {get;set;}
@@ -84,10 +87,31 @@ public with sharing class kdAccountWithActivitiesListCtrl {
         pageNum = 1;
         orderBy = 'partnerCode, corpCode';
         errorMessage = '';
+        optShisha = auUtilChatter.getListShisha(currentUser);
+        optShiten = auUtilChatter.getListShiten(currentUser, filterRegionalOffice);
+
         Boolean hasSearchValue = initFieldFromCookie();//保持項目有無チェック
         firstLoad = true;
         recordSearch();
         firstLoad = false;
+    }
+
+    public void refreshShiten() {
+        optShiten = auUtilChatter.getListShiten(currentUser, filterRegionalOffice);
+
+        // Initialize Shiten if no more selectable
+        if (filterBranch != NULL && filterBranch.length() > 0) {
+            Boolean fShitenFound = false;
+            for (SelectOption opt : optShiten) {
+                if (opt.getValue() == filterBranch) {
+                    fShitenFound = true;
+                    break;
+                }
+            }
+            if (!fShitenFound) {
+                filterBranch = NULL;
+            }
+        }
     }
 
     //cookie保存
@@ -343,11 +367,13 @@ public with sharing class kdAccountWithActivitiesListCtrl {
         }
 
         if (!String.isBlank(this.filterRegionalOffice)) {
-            strList.add('(RegionalOfficeId__r.Name LIKE \'%' + this.filterRegionalOffice +'%\')');
+            strList.add('(RegionalOfficeId__c = \'' + this.filterRegionalOffice + '\' OR ' +
+                            ' RegionalOffice2Id__c = \'' + this.filterRegionalOffice + '\')');     
         }
 
         if (!String.isBlank(this.filterBranch)) {
-            strList.add('(BranchId__r.Name LIKE \'%' + this.filterBranch +'%\')');
+            strList.add('(BranchId__c = \'' + this.filterBranch + '\' OR ' +
+                            ' Branch2Id__c = \'' + this.filterBranch + '\')');     
         }
 
         if (!String.isBlank(this.filterSalesman)) {
@@ -637,6 +663,23 @@ public with sharing class kdAccountWithActivitiesListCtrl {
         this.pageNum = 1;
         recordSearch();
     }
+
+    public void clearCookie(){
+        List<Cookie> cookies = new List<Cookie>();
+
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_PARTNERCODE   , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_PARTNERNAME   , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_MNGCORPCODE   , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_MNGCORPNAME   , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_REGIONALOFFICE, null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_BRANCH        , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_SALESMAN      , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_CCPFLAG       , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_LABEL_INIT_SEARCH_FLG, null, null, 0, true));
+
+        Apexpages.currentPage().setCookies(cookies);
+    }
+
 
     public Pagereference addAccountNewAttachment() {
       accountNewAttachmentLocal.OwnerId = UserInfo.getUserId();

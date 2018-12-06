@@ -10,14 +10,13 @@ public with sharing class auCxKnowledgeTimelineCtrl {
     public Integer getTypeOfScreen(){return auMainTopCompCtrl.TYPE_SCREEN_CX_TIMELINE;}
 
     public Id idCurrentFeedElement {get; set;}
+    public Id removingLikeId {get; set;}
     public Id idCurrentCxKnowledge {get; set;}
     public Boolean isShopUser {get; set;}
     public User currentUser {get; set;}
     public Boolean isReceiveApprovalRequestEmailEdit {get; set;}
     public String isReceiveApprovalRequestEmailStr {get; set;}
     public String isReceiveApprovalRequestEmailLabel {get; set;}
-    public double scrollTopValue{get; set;}
-    public double currentScrollValue{get; set;}
 
     public String urlUserPhoto;
     public String getUrlUserPhoto() {
@@ -66,9 +65,6 @@ public with sharing class auCxKnowledgeTimelineCtrl {
     public auCxKnowledgeTimelineCtrl() {    
         pageSize = 20;
         pageNum = 1;
-        scrollTopValue = 0;
-        currentScrollValue = 0;
-        
         currentOrder = '1';
         optRankingValue = '3';
         currentUser = [SELECT id, Profile.Name, ReceiveApprovalRequestEmail__c FROM User WHERE Id=:UserInfo.getUserId()];
@@ -179,7 +175,7 @@ public with sharing class auCxKnowledgeTimelineCtrl {
             String queryStr = 'SELECT Id, ParentId, Body, Title, CommentCount, LikeCount, ' +
                                 '(SELECT Id, CommentBody, InsertedById, InsertedBy.DisplayedUsernameFormula__c, InsertedBy.SmallPhotoUrl, CreatedDate ' +
                                 'FROM FeedComments ' + 
-                                'ORDER BY CreatedDate DESC) ' +
+                                'ORDER BY CreatedDate DESC), (SELECT Id FROM FeedLikes WHERE InsertedById = \'' + currentUser.Id + '\') ' +
                               'FROM auCxKnowledge__Feed ' +
                               'ORDER BY ' + (currentOrder == '1' ? 'Parent.DisplayedDate__c' : 'LikeCount DESC, Parent.DisplayedDate__c') + ' DESC';
             if(math.floor((recordsCount-1) / pageSize) + 1 < pageNum) {
@@ -243,10 +239,13 @@ public with sharing class auCxKnowledgeTimelineCtrl {
         recordSearch();
     }
 
-    public void addFavoriteCxKnowledge() {
+    public void removeLikeCxKnowledgeFeedElement(){
+        ConnectApi.ChatterFeeds.deleteLike(null, removingLikeId);
+        removingLikeId = null;
+        recordSearch();
+    }
 
-        scrollTopValue = currentScrollValue;
-        
+    public void addFavoriteCxKnowledge() {
         auCXKnowledgeFavorite__c fav = new auCXKnowledgeFavorite__c();
         fav.CxKnowledge__c = idCurrentCxKnowledge;
         fav.User__c = UserInfo.getUserId();
@@ -255,9 +254,6 @@ public with sharing class auCxKnowledgeTimelineCtrl {
     }
 
     public void removeFavoriteCxKnowledge() {
-
-        scrollTopValue = currentScrollValue;
-
         List<auCXKnowledgeFavorite__c> lsFav = [SELECT ID
                                                 FROM auCXKnowledgeFavorite__c
                                                 WHERE CxKnowledge__c = :idCurrentCxKnowledge
@@ -267,6 +263,10 @@ public with sharing class auCxKnowledgeTimelineCtrl {
     }
 
     public void commentCxKnowledgeFeedElement() {
+        system.debug('into commentCxKnowledgeFeedElement');
+        system.debug('idCurrentFeedElement: ' + idCurrentFeedElement);
+        system.debug('idCurrentCxKnowledge: ' + idCurrentCxKnowledge);
+        system.debug('record: ' + mpFeedData.get(idCurrentCxKnowledge));
 
         String sComment = NULL;
 
@@ -284,6 +284,7 @@ public with sharing class auCxKnowledgeTimelineCtrl {
 
         } else {
             sComment = mpFeedData.get(idCurrentCxKnowledge).TechnicalAlwaysBlank__c;
+            system.debug('sComment: ' + sComment);
         }
 
         if (sComment != NULL) {

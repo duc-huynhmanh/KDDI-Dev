@@ -15,7 +15,7 @@ global with sharing class auAddUserCtrl {
 	public Map<String, String> mpShishaOptions{get; set;}
 
 	public Boolean educationalStaff{get; set;}
-	
+	public String listUserId{get; set;}
 	public auHonbuDirect__c honbuDirect{get; set;}
 	public String formatedTransmissionDate{get; set;}
 	//public String formatedSubmissionDate{get; set;}
@@ -48,7 +48,10 @@ global with sharing class auAddUserCtrl {
 	public String lastSearchUserCode{get; set;}
 	public String lastSearchEducationalStaff{get; set;}
 	
-    public static final String USER_BASE_QUERY = ' SELECT id, Name, Profile.Name, UserRole.Name, UserRole.DeveloperName FROM User ';
+    public static final String USER_BASE_QUERY_SA = ' SELECT id, (Select BusinessLocation__r.BusinessLocationName__c from saBusinessLocationDetail_user__r order by Type__c Nulls Last), Name, Profile.Name, UserRole.Name, UserRole.DeveloperName FROM User ';
+    public static final String USER_BASE_QUERY_KDDI = ' SELECT id, Department, Name, Profile.Name, UserRole.Name, UserRole.DeveloperName FROM User ';
+  	public static final String USER_BASE_QUERY_SHOP = ' SELECT id, Name, Profile.Name, UserRole.Name, UserRole.DeveloperName FROM User ';
+  
   
     private User currentUser = [SELECT Id, Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
     
@@ -76,6 +79,7 @@ global with sharing class auAddUserCtrl {
 			filterRole8Option = '';
 			filterChannelOption = '';
 			filterBusinessLocationOption = '';
+			listUserId = '';
 
 			//EmployeeName = '';
 			//EmployeeNumber = '';
@@ -122,7 +126,10 @@ global with sharing class auAddUserCtrl {
     
     public List<Id> getLstUser(){
     	system.debug('run : getLstUser');
-    	List<Id> listId = new List<Id>(new Map<Id, auHonbuDirectDetail__c>([select Id from auHonbuDirectDetail__c where auHonbuDirect__c = :sourceId]).keySet());
+    	List<Id> listId = new List<Id>();
+    	for(auHonbuDirectDetail__c au : [select user__c from auHonbuDirectDetail__c where auHonbuDirect__c = :sourceId]){
+    		listId.add(au.user__c);
+    	}
 		return listId;
 	}
 	
@@ -158,6 +165,7 @@ global with sharing class auAddUserCtrl {
     		}
     	}else if(pageType==auConstantCmn.ACCESS_TYPE_KDDI){
     		system.debug('For Type KDDI');
+    		lsReturn.add(new SelectOption('C000000','コンシューマ事業本部'));
     		for (UserRole ur : auUtilCmn.getChildRoles(lsRolesFull, auConstantCmn.ROLE_CODE_HONBU, false, false)) {
 		   		lsReturn.add(new SelectOption(ur.DeveloperName, ur.Name));
     		}
@@ -197,7 +205,7 @@ global with sharing class auAddUserCtrl {
 	    filterRole7Option = '';
 	    filterRole8Option = '';
 	
-		if (filterRole5Option != NULL) {
+		if (filterRole5Option != NULL && filterRole5Option!='C000000') {
 			
 			List<SelectOption> lsReturn = new List<SelectOption>();
       		lsReturn.add(new SelectOption('', ''));
@@ -285,7 +293,7 @@ global with sharing class auAddUserCtrl {
 
   	}	
 	
-	public static String joinWhereConditions(List<String> conditions) {
+	private static String joinWhereConditions(List<String> conditions) {
         String ret;
         if (conditions == null) {
             conditions = new List<String>();
@@ -309,6 +317,8 @@ global with sharing class auAddUserCtrl {
 		system.debug('Run: getUserList');
 		system.debug(values);
 
+		String queryBase = '';
+
         List<String> conditions = new List<String>();
         
         //TODO Change to real Role 
@@ -322,49 +332,58 @@ global with sharing class auAddUserCtrl {
         system.debug('remotePageType: '+remotePageType); 
                    
         if(remotePageType==auConstantCmn.ACCESS_TYPE_SA){
+        	queryBase = USER_BASE_QUERY_SA;
         	conditions.add('(Profile.Name = \'' + auConstantCmn.PROFILE_SA_USER_SA + '\' OR Profile.Name = \'' + auConstantCmn.PROFILE_SA_USER_CSA + '\')');
         }else if(remotePageType==auConstantCmn.ACCESS_TYPE_KDDI){
+        	queryBase = USER_BASE_QUERY_KDDI;
         	conditions.add('(Profile.Name = \'' + auConstantCmn.PROFILE_KDDI_BRANCH + '\' OR Profile.Name = \'' + auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE + '\' OR Profile.Name = \'' + auConstantCmn.PROFILE_KDDI_HEADQUARTERS + '\' OR Profile.Name = \'' + auConstantCmn.PROFILE_SYSADMIN_CUSTOM + '\' OR Profile.Name = \'' + auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN + '\' OR Profile.Name = \'' + auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP + '\')');
         }else if(remotePageType==auConstantCmn.ACCESS_TYPE_SHOP){
+        	queryBase = USER_BASE_QUERY_SHOP;
         	conditions.add('(Profile.Name = \'' + auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT + '\' OR Profile.Name = \'' + auConstantCmn.PROFILE_COMMUNITY_SHOP + '\' OR Profile.Name = \'' + auConstantCmn.PROFILE_COMMUNITY_MANAGEMENT + '\')');
         }else{
         	system.debug('Enable to recognize the Type of user wanted.');
         }
           
-        if(remotePageType!=auConstantCmn.ACCESS_TYPE_SHOP){                            
-	        if (values.containsKey('Role8DeveloperName') && String.isNotBlank(values.get('Role8DeveloperName'))) {
-	          roleDvlperName = values.get('Role8DeveloperName');
-	        } else if (values.containsKey('Role7DeveloperName') && String.isNotBlank(values.get('Role7DeveloperName'))) {
-	          roleDvlperName = values.get('Role7DeveloperName');
-	        } else if (values.containsKey('Role6DeveloperName') && String.isNotBlank(values.get('Role6DeveloperName'))) {
-	          roleDvlperName = values.get('Role6DeveloperName');
-	        } else if (values.containsKey('Role5DeveloperName') && String.isNotBlank(values.get('Role5DeveloperName'))) {
-	          roleDvlperName = values.get('Role5DeveloperName');
-	        }else{
-	          roleDvlperName = getShisha(remotePageType);
-	        }
-	
-	      	//List<UserRole> lsRl = auUtilCmn.getChildRoles(NULL, roleDvlperName, true, true);
-	      	List<UserRole> lsRl = [SELECT DeveloperName, Name, ParentRoleId From UserRole Where PortalType <> 'CustomerPortal' And DeveloperName = :roleDvlperName];
-    		if(lsRl.size() > 0){
-    			lsRl.addAll(auUtilCmn.getChildRoles(new List<Id>{lsRl[0].Id}));
-    		}
-    		
-	      	if (lsRl == NULL || lsRl.size() == 0) {
-	      		conditions.add('Id = NULL');
-	      	} else {
-	      		String sCond = '';
-	      		for (UserRole ur : lsRl) {
-	      			if (sCond.length() == 0) {
-		        		sCond += 'UserRole.Id in (';
-		        	} else {
-		        		sCond += ',';
-	      			}
-	      			sCond += '\'' + ur.Id + '\'';
-	      		}
-	      		sCond += ')';
-	      		conditions.add(sCond);
-	      	}
+        if(remotePageType!=auConstantCmn.ACCESS_TYPE_SHOP){  
+        	
+        	if (values.containsKey('Role8DeveloperName') && String.isNotBlank(values.get('Role8DeveloperName'))) {
+		    	roleDvlperName = values.get('Role8DeveloperName');
+		    } else if (values.containsKey('Role7DeveloperName') && String.isNotBlank(values.get('Role7DeveloperName'))) {
+		    	roleDvlperName = values.get('Role7DeveloperName');
+		   	} else if (values.containsKey('Role6DeveloperName') && String.isNotBlank(values.get('Role6DeveloperName'))) {
+		   		roleDvlperName = values.get('Role6DeveloperName');
+		  	} else if (values.containsKey('Role5DeveloperName') && String.isNotBlank(values.get('Role5DeveloperName'))) {
+		     	roleDvlperName = values.get('Role5DeveloperName');
+		   	}else{
+		    	roleDvlperName = getShisha(remotePageType);
+		  	}
+		  	
+		  	system.debug('roleDvlperName : '+roleDvlperName);
+			if (values.get('Role5DeveloperName')=='C000000'){                         
+		        conditions.add('UserRole.DeveloperName=\''+values.get('Role5DeveloperName')+'\'');
+        	}else{
+		      	//List<UserRole> lsRl = auUtilCmn.getChildRoles(NULL, roleDvlperName, true, true);
+		      	List<UserRole> lsRl = [SELECT DeveloperName, Name, ParentRoleId From UserRole Where PortalType <> 'CustomerPortal' And DeveloperName = :roleDvlperName];
+	    		if(lsRl.size() > 0){
+	    			lsRl.addAll(auUtilCmn.getChildRoles(new List<Id>{lsRl[0].Id}));
+	    		}
+	    		
+		      	if (lsRl == NULL || lsRl.size() == 0) {
+		      		conditions.add('Id = NULL');
+		      	} else {
+		      		String sCond = '';
+		      		for (UserRole ur : lsRl) {
+		      			if (sCond.length() == 0) {
+			        		sCond += 'UserRole.Id in (';
+			        	} else {
+			        		sCond += ',';
+		      			}
+		      			sCond += '\'' + ur.Id + '\'';
+		      		}
+		      		sCond += ')';
+		      		conditions.add(sCond);
+		      	}
+        	}
         }else{
 
         	if (values.containsKey('Role6DeveloperName') && String.isNotBlank(values.get('Role6DeveloperName'))) {
@@ -405,163 +424,54 @@ global with sharing class auAddUserCtrl {
     	
     	conditions.add('IsActive = true');
     	
-		system.debug('Remote GetUserQuery -> ' + USER_BASE_QUERY + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
+		system.debug('Remote GetUserQuery -> ' + queryBase + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
   
-        List<User> lsUsers = Database.query(USER_BASE_QUERY + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
+        List<User> lsUsers = Database.query(queryBase + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
+        
+        /*For Display of technical String*/ 
+        
+        List<saBusinessLocationMembers__c> BusinessLocationMembersList;
+      	List<String> BusinessLocationNameList;
+      	system.debug('List of users : '+lsUsers);
+      
+      	//system.debug(lsUsers[0].get('saBusinessLocationDetail_user__r'));
+      	for(User retrievedUsr: lsUsers){
+        
+        	BusinessLocationNameList = new List<String>(); 
+        	BusinessLocationMembersList = retrievedUsr.saBusinessLocationDetail_user__r;
+  
+        	for(saBusinessLocationMembers__c blName : BusinessLocationMembersList){
+          		BusinessLocationNameList.add(blName.BusinessLocation__r.BusinessLocationName__c);
+        	}
+      
+        	retrievedUsr.TechnicalString__c=String.join(BusinessLocationNameList,' , ');
+        	system.debug('List of BusinessLocationName : '+BusinessLocationMembersList);
+      	}           
+        
         return lsUsers;
     }
-    
-    //Method named createSelectedInquiryReply before
-    //Create new auHonbuDirectDetails (Users) for those who don't already exists and delete the ones no longuer required 
-	public PageReference addNewUsers() {
-		
-		system.debug('Run: addNewUsers');
-		
-		String jsonUserList = Apexpages.currentPage().getParameters().get('jsonText');
-		system.debug('JsonListValues : ' + jsonUserList);
-		
-		//Get the current list of the 'Users' dropped in the drop list
-		Map<String, Object> infoData = (Map<String, Object>)JSON.deserializeUntyped(jsonUserList);
-		createdItemInfos = null;
-		List<Object> selectedItems = (List<Object>)infoData.get('items');
-		
-		List<auHonbuDirectDetail__c> newDetails = new List<auHonbuDirectDetail__c>();
-		
-		system.debug('1 : '+selectedItems);
-		//lstUserOnInit => List of the user already existing 
-		for (Integer i = 0; i < selectedItems.size(); i++) {
-			Map<String, Object> item = (Map<String, Object>)selectedItems[i];
-			Boolean alreadyExist = false;
-			//Check if already existing
-			system.debug('2 : '+lstUserOnInit);
-			for (Id detail : lstUserOnInit) {
-				if (item.containsKey('Id')) {
-					if(detail==(String)item.get('Id')){
-						alreadyExist=true;
-					}
-				}
-			}
-			//If not already existing then create it.
-			system.debug('3 : '+alreadyExist);
-			if(!alreadyExist){
-				auHonbuDirectDetail__c newDetail = new auHonbuDirectDetail__c();
-				newDetail.auHonbuDirect__c=sourceId;
-				//TODO ChangeType
-				newDetail.Type__c=pageType;
-				newDetail.User__c=(Id)item.get('Id');
-				if(pageType==auConstantCmn.ACCESS_TYPE_SA){
-					newDetail.auHonbuDirectSA__c=sourceId;
-				}
-				if(pageType==auConstantCmn.ACCESS_TYPE_KDDI){
-					newDetail.auHonbuDirectKDDI__c=sourceId;
-				}
-				if(pageType==auConstantCmn.ACCESS_TYPE_SHOP){
-					newDetail.auHonbuDirectShop__c=sourceId;
-				}
-				system.debug('4 : '+newDetail);
-				newDetails.add(newDetail);
-			}
-		}
 
-		//Insert the new users
-		insert(newDetails);
-		auSharingToolCtrl.shareDataPermissionsHonbuDirect(newDetails);
-	
-		return validateAndRedirect();
-	}
-	
-	public PageReference addAllCorrespondingUsers() {
-           
-       	system.debug('Run: addAllCorrespondingUsers');
-            
-		List<User> lsUsr = getUserList(
-			lastSearchUserRole5Filter,
-			lastSearchUserRole6Filter,
-			lastSearchUserRole7Filter,
-			lastSearchUserRole8Filter,
-			lastBusinessLocationName,
-			lastSearchUserName,
-			lastSearchUserNumber,
-			lastSearchDepartment,
-			lastSearchUserCode,
-			lastSearchEducationalStaff,
-			lastSearchUserChannelFilter);
-
-		system.debug('lsUsr : '+lsUsr);
-		
-		List<auHonbuDirectDetail__c> newDetails = new List<auHonbuDirectDetail__c>();
-		
-		for (Integer i = 0; i < lsUsr.size(); i++) {
-			User usr = lsUsr[i];
-			Boolean alreadyExist = false;
-			//Check if already existing
-			for (Id detail : lstUserOnInit) {
-				if(detail==usr.Id){
-					alreadyExist=true;
-				}
-			}
-			
-			//If not already existing then create it.
-			if(!alreadyExist){
-				auHonbuDirectDetail__c newDetail = new auHonbuDirectDetail__c();
-				newDetail.auHonbuDirect__c=sourceId;
-				//TODO ChangeType
-				newDetail.Type__c=pageType;
-				newDetail.User__c=usr.Id;
-				if(pageType==auConstantCmn.ACCESS_TYPE_SA){
-					newDetail.auHonbuDirectSA__c=sourceId;
-				}
-				if(pageType==auConstantCmn.ACCESS_TYPE_KDDI){
-					newDetail.auHonbuDirectKDDI__c=sourceId;
-				}
-				if(pageType==auConstantCmn.ACCESS_TYPE_SHOP){
-					newDetail.auHonbuDirectShop__c=sourceId;
-				}
-				newDetails.add(newDetail);
-			}
-
-		}
-		//Insert the new users
-		insert(newDetails);
-		auSharingToolCtrl.shareDataPermissionsHonbuDirect(newDetails);
-	
-		return validateAndRedirect();
-	}
-	
-	public List<User> getUserList(String role5DeveloperName, String role6DeveloperName, String role7DeveloperName, String role8DeveloperName, String businessLocationName, String searchUserName, String searchUserNumber, String searchDepartment, String searchUserCode, String searchEducationalStaff, String searchChannelName) {
-			
-		system.debug('Run: getUserList');
-			
+    private Set<Id> getAllUserList() {
+    	
+    	String queryBase = '';
+    	
         List<String> conditions = new List<String>();
-
-        User usr = [SELECT Id, Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
-            
-        String roleDvlperName = '';
+        String roleDvlperName = getShisha(pageType);
 
 		if(pageType==auConstantCmn.ACCESS_TYPE_SA){
+			queryBase = USER_BASE_QUERY_SA;
         	conditions.add('(Profile.Name like \'%'+auConstantCmn.PROFILE_SA_USER_SA+'%\' OR Profile.Name like \'%'+auConstantCmn.PROFILE_SA_USER_CSA+'%\')');
         }else if(pageType==auConstantCmn.ACCESS_TYPE_KDDI){
+        	queryBase = USER_BASE_QUERY_KDDI;
         	conditions.add('(Profile.Name like \'%'+auConstantCmn.PROFILE_KDDI_BRANCH+'%\' OR Profile.Name like \'%'+auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE+'%\' OR Profile.Name like \'%'+auConstantCmn.PROFILE_KDDI_HEADQUARTERS+'%\')');
-        	//conditions.add('(Profile.Name like \'%' + auConstantCmn.PROFILE_KDDI_BRANCH + '%\' OR Profile.Name like \'%' + auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE + '%\' OR Profile.Name like \'%' + auConstantCmn.PROFILE_KDDI_HEADQUARTERS + '%\' OR Profile.Name like \'%' + auConstantCmn.PROFILE_SYSADMIN_CUSTOM + '%\' OR Profile.Name like \'%' + auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN + '%\' OR Profile.Name like \'%' + auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP + '%\')');
         }else if(pageType==auConstantCmn.ACCESS_TYPE_SHOP){
+        	queryBase = USER_BASE_QUERY_SHOP;
         	conditions.add('(Profile.Name like \'%'+auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT+'%\' OR Profile.Name like \'%'+auConstantCmn.PROFILE_COMMUNITY_SHOP+'%\' OR Profile.Name like \'%'+auConstantCmn.PROFILE_COMMUNITY_MANAGEMENT+'%\')');
         }else{
         	system.debug('Enable to recognize the Type of user wanted.');
         }
 
 		if(pageType!=auConstantCmn.ACCESS_TYPE_SHOP){
-	        if (role8DeveloperName.length() > 0) {
-	          roleDvlperName = role8DeveloperName;
-	        } else if (role7DeveloperName.length() > 0) {
-	          roleDvlperName = role7DeveloperName;
-	        } else if (role6DeveloperName.length() > 0) {
-	          roleDvlperName = role6DeveloperName;
-	        } else if (role5DeveloperName.length() > 0) {
-	          roleDvlperName = role5DeveloperName;
-	        } else {
-	          roleDvlperName = getShisha(pageType);
-	        }
-	
 	      	//List<UserRole> lsRl = auUtilCmn.getChildRoles(NULL, roleDvlperName, true, true);
 	      	List<UserRole> lsRl = [SELECT DeveloperName, Name, ParentRoleId From UserRole Where PortalType <> 'CustomerPortal' And DeveloperName = :roleDvlperName];
     		if(lsRl.size() > 0){
@@ -583,52 +493,90 @@ global with sharing class auAddUserCtrl {
 	      		sCond += ')';
 	      		conditions.add(sCond);
 	      	}
-		}else{
-
-        	if (role6DeveloperName.length() > 0) {
-        		conditions.add('Contact.Account.BranchId__c=\''+role6DeveloperName+'\'');
-	        } else if (role5DeveloperName.length() > 0) {
-	        	conditions.add('Contact.Account.RegionalOfficeId__c=\''+role5DeveloperName+'\'');
-	        }
-
-		}      
-
-        if (businessLocationName.length() > 0) {
-					conditions.add('ID IN (SELECT User__c FROM saBusinessLocationMembers__c WHERE BusinessLocation__r.BusinessLocationName__c like \'%' + businessLocationName + '%\')');
-        }
-
-		if (String.isNotBlank(searchUserName)) {
-	    	conditions.add('Name like \'%' + searchUserName + '%\'');
-	   	}
-	   	
-	   	if (String.isNotBlank(searchUserNumber)) {
-	    	conditions.add('KDDIEmployeeId__c like \'%' + searchUserNumber + '%\'');
-	   	}
-	   	
-	   	if (String.isNotBlank(searchDepartment)) {
-	    	conditions.add('Department like \'%' + searchDepartment + '%\'');
-	   	}
-	   	
-	   	if (String.isNotBlank(searchUserCode)) {
-	    	conditions.add('Contact.Account.PartnerCode__c like \'%' + searchUserCode + '%\'');
-	   	}
-	   	
-	   	if (String.isNotBlank(searchChannelName)) {
-	    	conditions.add('Contact.Account.Channel__c like \'%' + searchChannelName + '%\'');
-	   	}
-	   	
-	   	if(pageType==auConstantCmn.ACCESS_TYPE_SA){
-	   		if (String.isNotBlank(searchEducationalStaff)) {
-				conditions.add('SAUserId__c like \'%' + searchEducationalStaff + '%\'');
-	   		}
-		}
-
+		}    
         conditions.add('IsActive = true');
-
-		system.debug(USER_BASE_QUERY + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
-		    
-        List<User> lsUsers = Database.query(USER_BASE_QUERY + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
-        return lsUsers;
+        List<User> lsUsers = Database.query(queryBase + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
+        
+        /*For Display of technical String*/
+        
+        List<saBusinessLocationMembers__c> BusinessLocationMembersList;
+      	List<String> BusinessLocationNameList;
+      	system.debug('List of users : '+lsUsers);
+      
+      	//system.debug(lsUsers[0].get('saBusinessLocationDetail_user__r'));
+      	for(User retrievedUsr: lsUsers){
+        
+        	BusinessLocationNameList = new List<String>(); 
+        	BusinessLocationMembersList = retrievedUsr.saBusinessLocationDetail_user__r;
+  
+        	for(saBusinessLocationMembers__c blName : BusinessLocationMembersList){
+          		BusinessLocationNameList.add(blName.BusinessLocation__r.BusinessLocationName__c);
+        	}
+      
+        	retrievedUsr.TechnicalString__c=String.join(BusinessLocationNameList,' , ');
+        	system.debug('List of BusinessLocationName : '+BusinessLocationMembersList);
+      	}        
+        
+        Map<Id, User> userMap = new Map<Id, User>(lsUsers);
+        return userMap.keySet();
     }
-    
+	
+	public PageReference addAllCorrespondingUsers() {
+       	system.debug('Run: addAllCorrespondingUsers');
+       	system.debug('start Limits.getCpuTime(): ' + Limits.getCpuTime());    
+       	system.debug('listUserId: ' + listUserId);
+       	Set<Id> newIds;
+       	//not click search button
+       	if(String.isBlank(listUserId)) {
+       		newIds = getAllUserList();
+       	} else {
+       		List<Id> userIds =  listUserId.split(';');
+        	newIds = new Set<Id>(userIds);
+       	}
+        system.debug('after getUserList Limits.getCpuTime(): ' + Limits.getCpuTime()); 
+		system.debug('Limits before removing newIds : ' + newIds.size());
+        //remove duplicate
+        newIds.removeAll(lstUserOnInit);
+        system.debug('Limits after removing newIds : ' + newIds.size());
+        
+        /*List<auHonbuDirectDetail__c> newDetails = new List<auHonbuDirectDetail__c>();
+        List<auHonbuDirect__share> listOfPerm = new List<auHonbuDirect__share>();
+        for(Id newId : newIds){
+        	auHonbuDirectDetail__c newDetail = new auHonbuDirectDetail__c();
+			newDetail.auHonbuDirect__c=sourceId;
+
+			auHonbuDirect__share perm = new auHonbuDirect__share();
+			perm.ParentId = sourceId;
+			perm.userOrGroupId = newId;
+
+			//TODO ChangeType
+			newDetail.Type__c = pageType;
+			newDetail.User__c = newId;
+			if(pageType==auConstantCmn.ACCESS_TYPE_SA){
+				newDetail.auHonbuDirectSA__c=sourceId;
+				perm.RowCause = Schema.auHonbuDirect__share.RowCause.shared_To_This_SA_User__c;
+			}
+			if(pageType==auConstantCmn.ACCESS_TYPE_KDDI){
+				newDetail.auHonbuDirectKDDI__c=sourceId;
+				perm.RowCause = Schema.auHonbuDirect__share.RowCause.shared_To_This_KDDI_User__c;
+			}
+			if(pageType==auConstantCmn.ACCESS_TYPE_SHOP){
+				newDetail.auHonbuDirectShop__c=sourceId;
+				perm.RowCause = Schema.auHonbuDirect__share.RowCause.shared_To_This_Shop_User__c;
+			}
+			perm.AccessLevel = 'Read';
+			listOfPerm.add(perm);
+			newDetails.add(newDetail);
+        }
+        system.debug('before insert Limits.getCpuTime(): ' + Limits.getCpuTime());
+		//Insert the new users
+		insert(newDetails);
+		
+		insert listOfPerm;  
+		system.debug('finish Limits.getCpuTime(): ' + Limits.getCpuTime());*/  
+		//Replaced by 
+		auAddUserWithoutSharing.addAllCorrespondingUsers(newIds, sourceId, pageType);
+		
+		return validateAndRedirect();
+	}
 }

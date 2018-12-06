@@ -1,0 +1,375 @@
+42.0 APEX_CODE,FINEST;APEX_PROFILING,INFO;CALLOUT,INFO;DB,INFO;NBA,INFO;SYSTEM,DEBUG;VALIDATION,INFO;VISUALFORCE,INFO;WAVE,INFO;WORKFLOW,INFO
+16:59:45.0 (92745)|USER_INFO|[EXTERNAL]|005N00000057RPN|duc.huynhmanh+kddi-gwdev01@globalway.co.jp|日本標準時|GMT+09:00
+16:59:45.0 (138761)|EXECUTION_STARTED
+16:59:45.0 (145323)|CODE_UNIT_STARTED|[EXTERNAL]|066N0000000Qcdt|VF: /apex/saTasksListForAdmin
+16:59:45.0 (705572)|VF_DESERIALIZE_VIEWSTATE_BEGIN|066N0000000Qcdt
+16:59:45.0 (9398285)|HEAP_ALLOCATE|[72]|Bytes:3
+16:59:45.0 (9452853)|HEAP_ALLOCATE|[77]|Bytes:152
+16:59:45.0 (9466441)|HEAP_ALLOCATE|[342]|Bytes:408
+16:59:45.0 (9478409)|HEAP_ALLOCATE|[355]|Bytes:408
+16:59:45.0 (9488949)|HEAP_ALLOCATE|[467]|Bytes:48
+16:59:45.0 (9515128)|HEAP_ALLOCATE|[139]|Bytes:6
+16:59:45.0 (9544441)|HEAP_ALLOCATE|[50]|Bytes:5
+16:59:45.0 (9568199)|HEAP_ALLOCATE|[56]|Bytes:5
+16:59:45.0 (9575767)|HEAP_ALLOCATE|[64]|Bytes:7
+16:59:45.0 (12030246)|VARIABLE_SCOPE_BEGIN|[69]|saTasksListForAdminCtl.BASE_QUERY_STRING|String|false|true
+16:59:45.0 (12044075)|VARIABLE_SCOPE_BEGIN|[7]|saTasksListForAdminCtl.COOKIE_LABEL_CREATOR_NAME|String|false|true
+16:59:45.0 (12051680)|VARIABLE_SCOPE_BEGIN|[14]|saTasksListForAdminCtl.COOKIE_LABEL_INIT_SEARCH_FLG|String|false|true
+16:59:45.0 (12058946)|VARIABLE_SCOPE_BEGIN|[8]|saTasksListForAdminCtl.COOKIE_LABEL_NAME|String|false|true
+16:59:45.0 (12066915)|VARIABLE_SCOPE_BEGIN|[11]|saTasksListForAdminCtl.COOKIE_LABEL_PAGE_NUMBER|String|false|true
+16:59:45.0 (12074532)|VARIABLE_SCOPE_BEGIN|[12]|saTasksListForAdminCtl.COOKIE_LABEL_PAGE_SIZE|String|false|true
+16:59:45.0 (12081040)|VARIABLE_SCOPE_BEGIN|[3]|saTasksListForAdminCtl.COOKIE_LABEL_PREFIX|String|false|true
+16:59:45.0 (12087412)|VARIABLE_SCOPE_BEGIN|[4]|saTasksListForAdminCtl.COOKIE_LABEL_SHISHA|String|false|true
+16:59:45.0 (12093585)|VARIABLE_SCOPE_BEGIN|[5]|saTasksListForAdminCtl.COOKIE_LABEL_SHITEN|String|false|true
+16:59:45.0 (12099742)|VARIABLE_SCOPE_BEGIN|[6]|saTasksListForAdminCtl.COOKIE_LABEL_TITLE|String|false|true
+16:59:45.0 (12106199)|VARIABLE_SCOPE_BEGIN|[9]|saTasksListForAdminCtl.COOKIE_LABEL_VALIDITY_DATE|String|false|true
+16:59:45.0 (12113273)|VARIABLE_SCOPE_BEGIN|[13]|saTasksListForAdminCtl.COOKIE_PATH|String|false|true
+16:59:45.0 (12120873)|VARIABLE_SCOPE_BEGIN|[74]|saTasksListForAdminCtl.QUERY_LIMIT|String|false|true
+16:59:45.0 (12129493)|VARIABLE_SCOPE_BEGIN|[75]|saTasksListForAdminCtl.QUERY_LIMIT_MAX|String|false|true
+16:59:45.0 (12137491)|VARIABLE_SCOPE_BEGIN|[73]|saTasksListForAdminCtl.SELECTOPTION_ALL|String|false|true
+16:59:45.0 (12146167)|VARIABLE_SCOPE_BEGIN|[72]|saTasksListForAdminCtl.SELECTOPTION_LASTMODIFIED|String|false|true
+16:59:45.0 (12159082)|VARIABLE_SCOPE_BEGIN|[84]|saTasksListForAdminCtl.targetRecordsOption|List<System.SelectOption>|true|true
+16:59:45.0 (15464136)|VF_DESERIALIZE_VIEWSTATE_END
+16:59:45.0 (20661648)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (20706083)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:396
+16:59:45.0 (20724755)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:145
+16:59:45.0 (20733608)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:27
+16:59:45.0 (20742220)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:12
+16:59:45.0 (20775518)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saTasksListForAdminCtl.COOKIE_LABEL_PREFIX|"saTasksList_"
+16:59:45.0 (20792776)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saTasksListForAdminCtl.COOKIE_PATH|""
+16:59:45.0 (20799671)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+16:59:45.0 (20811806)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saTasksListForAdminCtl.QUERY_LIMIT|"1000"
+16:59:45.0 (20818859)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:5
+16:59:45.0 (20829943)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saTasksListForAdminCtl.QUERY_LIMIT_MAX|"10000"
+16:59:45.0 (20837393)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+16:59:45.0 (20848646)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saTasksListForAdminCtl.SELECTOPTION_ALL|"2"
+16:59:45.0 (20856506)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+16:59:45.0 (20868090)|VARIABLE_ASSIGNMENT|[EXTERNAL]|saTasksListForAdminCtl.SELECTOPTION_LASTMODIFIED|"1"
+16:59:45.0 (20888802)|METHOD_ENTRY|[1]|01pN0000000oSaF|saTasksListForAdminCtl.saTasksListForAdminCtl()
+16:59:45.0 (20898492)|STATEMENT_EXECUTE|[1]
+16:59:45.0 (20906050)|STATEMENT_EXECUTE|[1]
+16:59:45.0 (20921477)|SYSTEM_MODE_ENTER|false
+16:59:45.0 (20940824)|HEAP_ALLOCATE|[4]|Bytes:5
+16:59:45.0 (20946412)|STATEMENT_EXECUTE|[4]
+16:59:45.0 (20953895)|HEAP_ALLOCATE|[4]|Bytes:6
+16:59:45.0 (20975168)|HEAP_ALLOCATE|[4]|Bytes:18
+16:59:45.0 (20989121)|VARIABLE_ASSIGNMENT|[4]|saTasksListForAdminCtl.COOKIE_LABEL_SHISHA|"saTasksList_Shisha"
+16:59:45.0 (20993690)|STATEMENT_EXECUTE|[5]
+16:59:45.0 (20996993)|HEAP_ALLOCATE|[5]|Bytes:6
+16:59:45.0 (21002054)|HEAP_ALLOCATE|[5]|Bytes:18
+16:59:45.0 (21011953)|VARIABLE_ASSIGNMENT|[5]|saTasksListForAdminCtl.COOKIE_LABEL_SHITEN|"saTasksList_Shiten"
+16:59:45.0 (21015750)|STATEMENT_EXECUTE|[6]
+16:59:45.0 (21018750)|HEAP_ALLOCATE|[6]|Bytes:5
+16:59:45.0 (21023479)|HEAP_ALLOCATE|[6]|Bytes:17
+16:59:45.0 (21030852)|VARIABLE_ASSIGNMENT|[6]|saTasksListForAdminCtl.COOKIE_LABEL_TITLE|"saTasksList_Title"
+16:59:45.0 (21035663)|STATEMENT_EXECUTE|[7]
+16:59:45.0 (21038383)|HEAP_ALLOCATE|[7]|Bytes:11
+16:59:45.0 (21042431)|HEAP_ALLOCATE|[7]|Bytes:23
+16:59:45.0 (21051537)|VARIABLE_ASSIGNMENT|[7]|saTasksListForAdminCtl.COOKIE_LABEL_CREATOR_NAME|"saTasksList_CreatorN (3 more) ..."
+16:59:45.0 (21056364)|STATEMENT_EXECUTE|[8]
+16:59:45.0 (21059141)|HEAP_ALLOCATE|[8]|Bytes:4
+16:59:45.0 (21063487)|HEAP_ALLOCATE|[8]|Bytes:16
+16:59:45.0 (21070853)|VARIABLE_ASSIGNMENT|[8]|saTasksListForAdminCtl.COOKIE_LABEL_NAME|"saTasksList_Name"
+16:59:45.0 (21074759)|STATEMENT_EXECUTE|[9]
+16:59:45.0 (21077546)|HEAP_ALLOCATE|[9]|Bytes:12
+16:59:45.0 (21081434)|HEAP_ALLOCATE|[9]|Bytes:24
+16:59:45.0 (21089571)|VARIABLE_ASSIGNMENT|[9]|saTasksListForAdminCtl.COOKIE_LABEL_VALIDITY_DATE|"saTasksList_Validity (4 more) ..."
+16:59:45.0 (21094225)|STATEMENT_EXECUTE|[11]
+16:59:45.0 (21097452)|HEAP_ALLOCATE|[11]|Bytes:10
+16:59:45.0 (21101893)|HEAP_ALLOCATE|[11]|Bytes:22
+16:59:45.0 (21110037)|VARIABLE_ASSIGNMENT|[11]|saTasksListForAdminCtl.COOKIE_LABEL_PAGE_NUMBER|"saTasksList_PageNumb (2 more) ..."
+16:59:45.0 (21114487)|STATEMENT_EXECUTE|[12]
+16:59:45.0 (21117661)|HEAP_ALLOCATE|[12]|Bytes:8
+16:59:45.0 (21121754)|HEAP_ALLOCATE|[12]|Bytes:20
+16:59:45.0 (21128723)|VARIABLE_ASSIGNMENT|[12]|saTasksListForAdminCtl.COOKIE_LABEL_PAGE_SIZE|"saTasksList_PageSize"
+16:59:45.0 (21132962)|STATEMENT_EXECUTE|[14]
+16:59:45.0 (21135544)|HEAP_ALLOCATE|[14]|Bytes:13
+16:59:45.0 (21139537)|HEAP_ALLOCATE|[14]|Bytes:25
+16:59:45.0 (21147731)|VARIABLE_ASSIGNMENT|[14]|saTasksListForAdminCtl.COOKIE_LABEL_INIT_SEARCH_FLG|"saTasksList_initSear (5 more) ..."
+16:59:45.0 (21151964)|STATEMENT_EXECUTE|[69]
+16:59:45.0 (21154135)|HEAP_ALLOCATE|[69]|Bytes:289
+16:59:45.0 (21163242)|VARIABLE_ASSIGNMENT|[69]|saTasksListForAdminCtl.BASE_QUERY_STRING|"SELECT Title__c, Des (269 more) ..."
+16:59:45.0 (21167756)|STATEMENT_EXECUTE|[85]
+16:59:45.0 (21169429)|STATEMENT_EXECUTE|[86]
+16:59:45.0 (21190823)|HEAP_ALLOCATE|[86]|Bytes:4
+16:59:45.0 (21295248)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+16:59:45.0 (21314767)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|[]|0x237012dd
+16:59:45.0 (21340065)|VARIABLE_ASSIGNMENT|[84]|saTasksListForAdminCtl.targetRecordsOption|[]|0x237012dd
+16:59:45.0 (21353715)|STATEMENT_EXECUTE|[87]
+16:59:45.0 (21390468)|HEAP_ALLOCATE|[87]|Bytes:9
+16:59:45.0 (21439715)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+16:59:45.0 (21451759)|STATEMENT_EXECUTE|[88]
+16:59:45.0 (21476048)|HEAP_ALLOCATE|[88]|Bytes:5
+16:59:45.0 (21501313)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+16:59:45.0 (21516997)|SYSTEM_MODE_EXIT|false
+16:59:45.0 (21530888)|METHOD_EXIT|[1]|saTasksListForAdminCtl
+16:59:45.22 (22331123)|SYSTEM_MODE_ENTER|true
+16:59:45.22 (22415246)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:38
+16:59:45.22 (22433621)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:7
+16:59:45.23 (23267786)|SYSTEM_MODE_ENTER|true
+16:59:45.23 (23327677)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+16:59:45.23 (23336328)|VARIABLE_SCOPE_BEGIN|[88]|this|ApexPage.PageMessagesComponentController|true|false
+16:59:45.23 (23369958)|VARIABLE_ASSIGNMENT|[88]|this|{}|0x540fa01f
+16:59:45.23 (23377381)|VARIABLE_SCOPE_BEGIN|[88]|escape|Boolean|false|false
+16:59:45.23 (23386777)|VARIABLE_ASSIGNMENT|[88]|escape|null
+16:59:45.0 (23694609)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (23974757)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (24182934)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (24422976)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:100
+16:59:45.0 (24437327)|VARIABLE_SCOPE_BEGIN|[380]|this|saTasksListForAdminCtl|true|false
+16:59:45.0 (24826086)|VARIABLE_ASSIGNMENT|[380]|this|{"conditionStr":" WHERE IsEvolva__c = false AND Type__c = 'TASK'","currentUser":"0x5437d576","errFlg":false,"filterCreatorName":"","filterName":"","filterShisha":"","filterShiten":"","filterTitle":"","filterValidityDate":"","initSearchFlg":"true","limitStr":" LIMIT 1000","mpShishaOptions":"0x48216052","mpShitenOptions":"0x71bf24d7","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"shitenOptions":"0x335266","ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@6a45ab73","targetRecords":"1"}|0x7cd4e9cd
+16:59:45.0 (24862650)|SYSTEM_MODE_ENTER|false
+16:59:45.0 (24882029)|HEAP_ALLOCATE|[381]|Bytes:5
+16:59:45.0 (24895094)|STATEMENT_EXECUTE|[380]
+16:59:45.0 (24897678)|STATEMENT_EXECUTE|[381]
+16:59:45.0 (24903123)|VARIABLE_SCOPE_BEGIN|[381]|recs|List<saMessage__c>|true|false
+16:59:45.0 (24919074)|VARIABLE_ASSIGNMENT|[381]|recs|null|
+16:59:45.0 (25130973)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE IsEvolva__c = false AND Type__c = 'TASK'","currentUser":"0x5437d576","errFlg":false,"filterCreatorName":"","filterName":"","filterShisha":"","filterShiten":"","filterTitle":"","filterValidityDate":"","initSearchFlg":"true","limitStr":" LIMIT 1000","mpShishaOptions":"0x48216052","mpShitenOptions":"0x71bf24d7","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"shitenOptions":"0x335266","ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@6a45ab73","targetRecords":"1"}|0x7cd4e9cd
+16:59:45.0 (25153668)|STATEMENT_EXECUTE|[382]
+16:59:45.0 (25155685)|STATEMENT_EXECUTE|[383]
+16:59:45.0 (25323026)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE IsEvolva__c = false AND Type__c = 'TASK'","currentUser":"0x5437d576","errFlg":false,"filterCreatorName":"","filterName":"","filterShisha":"","filterShiten":"","filterTitle":"","filterValidityDate":"","initSearchFlg":"true","limitStr":" LIMIT 1000","mpShishaOptions":"0x48216052","mpShitenOptions":"0x71bf24d7","orderDesc":true,"orderTarget":"LastModifiedDate","pageNum":1,"pageSize":50,"shitenOptions":"0x335266","ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@6a45ab73","targetRecords":"1"}|0x7cd4e9cd
+16:59:45.0 (25411929)|HEAP_ALLOCATE|[383]|Bytes:112
+16:59:45.0 (25448364)|HEAP_ALLOCATE|[383]|Bytes:112
+16:59:45.0 (25479127)|VARIABLE_ASSIGNMENT|[383]|recs|"List of size 27 too large to display"|0x21b475f6
+16:59:45.0 (25491982)|STATEMENT_EXECUTE|[385]
+16:59:45.0 (25494945)|STATEMENT_EXECUTE|[388]
+16:59:45.0 (25500797)|SYSTEM_MODE_EXIT|false
+16:59:45.0 (29623527)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (29695635)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (29738960)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (29773818)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (29808387)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (29841585)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (29873747)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (29908614)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (32296154)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (32338280)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:20
+16:59:45.0 (32348162)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:100
+16:59:45.0 (32372686)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.orderTarget|"PublishedDatetime__c"|0x7cd4e9cd
+16:59:45.0 (32432696)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (32455407)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+16:59:45.0 (32461443)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:100
+16:59:45.0 (32478805)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.targetRecords|"1"|0x7cd4e9cd
+16:59:45.0 (32520993)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (32540489)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:100
+16:59:45.0 (32554028)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.filterShisha|null|0x7cd4e9cd
+16:59:45.0 (32592188)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (32611559)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:100
+16:59:45.0 (32625595)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.filterShiten|null|0x7cd4e9cd
+16:59:45.0 (32662404)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (32681818)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:100
+16:59:45.0 (32695719)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.filterName|""|0x7cd4e9cd
+16:59:45.0 (32734420)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (32753042)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:100
+16:59:45.0 (32772211)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.filterTitle|""|0x7cd4e9cd
+16:59:45.0 (32834330)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (32862960)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:100
+16:59:45.0 (32879054)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.filterCreatorName|""|0x7cd4e9cd
+16:59:45.0 (32928163)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (32944609)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:100
+16:59:45.0 (32957938)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.filterValidityDate|""|0x7cd4e9cd
+16:59:45.33 (33085478)|SYSTEM_MODE_ENTER|true
+16:59:45.33 (33139062)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+16:59:45.33 (33147802)|VARIABLE_SCOPE_BEGIN|[88]|this|ApexPage.PageMessagesComponentController|true|false
+16:59:45.33 (33174082)|VARIABLE_ASSIGNMENT|[88]|this|{}|0x540fa01f
+16:59:45.33 (33181156)|VARIABLE_SCOPE_BEGIN|[88]|escape|Boolean|false|false
+16:59:45.33 (33188665)|VARIABLE_ASSIGNMENT|[88]|escape|null
+16:59:45.0 (33252367)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (33365255)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (33532611)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (35664582)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:100
+16:59:45.0 (35676901)|VARIABLE_SCOPE_BEGIN|[338]|this|saTasksListForAdminCtl|true|false
+16:59:45.0 (35889317)|VARIABLE_ASSIGNMENT|[338]|this|{"conditionStr":" WHERE IsEvolva__c = false AND Type__c = 'TASK'","currentUser":"0x5437d576","errFlg":false,"filterCreatorName":"","filterName":"","filterTitle":"","filterValidityDate":"","initSearchFlg":"true","limitStr":" LIMIT 1000","mpShishaOptions":"0x48216052","mpShitenOptions":"0x71bf24d7","orderDesc":true,"orderTarget":"PublishedDatetime__c","pageNum":1,"pageSize":50,"shitenOptions":"0x335266","ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@6a45ab73","targetRecords":"1"}|0x7cd4e9cd
+16:59:45.0 (35912244)|SYSTEM_MODE_ENTER|false
+16:59:45.0 (35923902)|HEAP_ALLOCATE|[339]|Bytes:5
+16:59:45.0 (35930083)|STATEMENT_EXECUTE|[338]
+16:59:45.0 (35932073)|STATEMENT_EXECUTE|[339]
+16:59:45.0 (35940764)|VARIABLE_SCOPE_BEGIN|[339]|querystr|String|false|false
+16:59:45.0 (35955193)|VARIABLE_ASSIGNMENT|[339]|querystr|"SELECT Title__c, Des (269 more) ..."
+16:59:45.0 (36142210)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE IsEvolva__c = false AND Type__c = 'TASK'","currentUser":"0x5437d576","errFlg":false,"filterCreatorName":"","filterName":"","filterTitle":"","filterValidityDate":"","initSearchFlg":"true","limitStr":" LIMIT 1000","mpShishaOptions":"0x48216052","mpShitenOptions":"0x71bf24d7","orderDesc":true,"orderTarget":"PublishedDatetime__c","pageNum":1,"pageSize":50,"shitenOptions":"0x335266","ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@6a45ab73","targetRecords":"1"}|0x7cd4e9cd
+16:59:45.0 (36168389)|STATEMENT_EXECUTE|[347]
+16:59:45.0 (36170645)|STATEMENT_EXECUTE|[348]
+16:59:45.0 (36352961)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE IsEvolva__c = false AND Type__c = 'TASK'","currentUser":"0x5437d576","errFlg":false,"filterCreatorName":"","filterName":"","filterTitle":"","filterValidityDate":"","initSearchFlg":"true","limitStr":" LIMIT 1000","mpShishaOptions":"0x48216052","mpShitenOptions":"0x71bf24d7","orderDesc":true,"orderTarget":"PublishedDatetime__c","pageNum":1,"pageSize":50,"shitenOptions":"0x335266","ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@6a45ab73","targetRecords":"1"}|0x7cd4e9cd
+16:59:45.0 (36371748)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|false
+16:59:45.0 (36379770)|HEAP_ALLOCATE|[52]|Bytes:5
+16:59:45.0 (36391531)|VARIABLE_ASSIGNMENT|[52]|this.orderDesc|false|0x7cd4e9cd
+16:59:45.0 (36402550)|STATEMENT_EXECUTE|[349]
+16:59:45.0 (36565939)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE IsEvolva__c = false AND Type__c = 'TASK'","currentUser":"0x5437d576","errFlg":false,"filterCreatorName":"","filterName":"","filterTitle":"","filterValidityDate":"","initSearchFlg":"true","limitStr":" LIMIT 1000","mpShishaOptions":"0x48216052","mpShitenOptions":"0x71bf24d7","orderDesc":false,"orderTarget":"PublishedDatetime__c","pageNum":1,"pageSize":50,"shitenOptions":"0x335266","ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@6a45ab73","targetRecords":"1"}|0x7cd4e9cd
+16:59:45.0 (36592125)|VARIABLE_ASSIGNMENT|[349]|this.selectedOrderTarget|"PublishedDatetime__c"|0x7cd4e9cd
+16:59:45.0 (36598431)|STATEMENT_EXECUTE|[352]
+16:59:45.0 (36635844)|METHOD_ENTRY|[352]|01pN0000000oSaF|saTasksListForAdminCtl.getOrderBy()
+16:59:45.0 (36652164)|VARIABLE_SCOPE_BEGIN|[359]|this|saTasksListForAdminCtl|true|false
+16:59:45.0 (36811796)|VARIABLE_ASSIGNMENT|[359]|this|{"conditionStr":" WHERE IsEvolva__c = false AND Type__c = 'TASK'","currentUser":"0x5437d576","errFlg":false,"filterCreatorName":"","filterName":"","filterTitle":"","filterValidityDate":"","initSearchFlg":"true","limitStr":" LIMIT 1000","mpShishaOptions":"0x48216052","mpShitenOptions":"0x71bf24d7","orderDesc":false,"orderTarget":"PublishedDatetime__c","pageNum":1,"pageSize":50,"selectedOrderTarget":"PublishedDatetime__c","shitenOptions":"0x335266","ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@6a45ab73","targetRecords":"1"}|0x7cd4e9cd
+16:59:45.0 (36831256)|HEAP_ALLOCATE|[360]|Bytes:5
+16:59:45.0 (36836918)|STATEMENT_EXECUTE|[359]
+16:59:45.0 (36838705)|STATEMENT_EXECUTE|[360]
+16:59:45.0 (36842768)|HEAP_ALLOCATE|[360]|Bytes:10
+16:59:45.0 (37006226)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE IsEvolva__c = false AND Type__c = 'TASK'","currentUser":"0x5437d576","errFlg":false,"filterCreatorName":"","filterName":"","filterTitle":"","filterValidityDate":"","initSearchFlg":"true","limitStr":" LIMIT 1000","mpShishaOptions":"0x48216052","mpShitenOptions":"0x71bf24d7","orderDesc":false,"orderTarget":"PublishedDatetime__c","pageNum":1,"pageSize":50,"selectedOrderTarget":"PublishedDatetime__c","shitenOptions":"0x335266","ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@6a45ab73","targetRecords":"1"}|0x7cd4e9cd
+16:59:45.0 (37034506)|HEAP_ALLOCATE|[360]|Bytes:30
+16:59:45.0 (37040688)|VARIABLE_SCOPE_BEGIN|[360]|orderByStr|String|false|false
+16:59:45.0 (37053184)|VARIABLE_ASSIGNMENT|[360]|orderByStr|" ORDER BY PublishedD (10 more) ..."
+16:59:45.0 (37058199)|STATEMENT_EXECUTE|[361]
+16:59:45.0 (37062020)|VARIABLE_SCOPE_BEGIN|[361]|descStr|String|false|false
+16:59:45.0 (37070323)|VARIABLE_ASSIGNMENT|[361]|descStr|""
+16:59:45.0 (37237753)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE IsEvolva__c = false AND Type__c = 'TASK'","currentUser":"0x5437d576","errFlg":false,"filterCreatorName":"","filterName":"","filterTitle":"","filterValidityDate":"","initSearchFlg":"true","limitStr":" LIMIT 1000","mpShishaOptions":"0x48216052","mpShitenOptions":"0x71bf24d7","orderDesc":false,"orderTarget":"PublishedDatetime__c","pageNum":1,"pageSize":50,"selectedOrderTarget":"PublishedDatetime__c","shitenOptions":"0x335266","ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@6a45ab73","targetRecords":"1"}|0x7cd4e9cd
+16:59:45.0 (37257931)|STATEMENT_EXECUTE|[364]
+16:59:45.0 (37260021)|STATEMENT_EXECUTE|[367]
+16:59:45.0 (37265581)|HEAP_ALLOCATE|[367]|Bytes:30
+16:59:45.0 (37276008)|VARIABLE_ASSIGNMENT|[367]|orderByStr|" ORDER BY PublishedD (10 more) ..."
+16:59:45.0 (37280839)|STATEMENT_EXECUTE|[368]
+16:59:45.0 (37288773)|METHOD_EXIT|[352]|01pN0000000oSaF|saTasksListForAdminCtl.getOrderBy()
+16:59:45.0 (37303948)|VARIABLE_ASSIGNMENT|[352]|this.orderBy|" ORDER BY PublishedD (10 more) ..."|0x7cd4e9cd
+16:59:45.0 (37309709)|STATEMENT_EXECUTE|[353]
+16:59:45.0 (37322713)|HEAP_ALLOCATE|[353]|Bytes:88
+16:59:45.0 (37328729)|HEAP_ALLOCATE|[353]|Bytes:377
+16:59:45.0 (37337004)|VARIABLE_ASSIGNMENT|[353]|querystr|"SELECT Title__c, Des (357 more) ..."
+16:59:45.0 (37341861)|STATEMENT_EXECUTE|[354]
+16:59:45.0 (37352539)|METHOD_ENTRY|[354]|01pN0000000oSaF|saTasksListForAdminCtl.createSsc(String)
+16:59:45.0 (37372151)|VARIABLE_SCOPE_BEGIN|[372]|this|saTasksListForAdminCtl|true|false
+16:59:45.0 (37541425)|VARIABLE_ASSIGNMENT|[372]|this|{"conditionStr":" WHERE IsEvolva__c = false AND Type__c = 'TASK'","currentUser":"0x5437d576","errFlg":false,"filterCreatorName":"","filterName":"","filterTitle":"","filterValidityDate":"","initSearchFlg":"true","limitStr":" LIMIT 1000","mpShishaOptions":"0x48216052","mpShitenOptions":"0x71bf24d7","orderBy":" ORDER BY PublishedDatetime__c","orderDesc":false,"orderTarget":"PublishedDatetime__c","pageNum":1,"pageSize":50,"selectedOrderTarget":"PublishedDatetime__c","shitenOptions":"0x335266","ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@6a45ab73","targetRecords":"1"}|0x7cd4e9cd
+16:59:45.0 (37554735)|VARIABLE_SCOPE_BEGIN|[372]|queryStr|String|false|false
+16:59:45.0 (37565277)|VARIABLE_ASSIGNMENT|[372]|queryStr|"SELECT Title__c, Des (357 more) ..."
+16:59:45.0 (37576863)|HEAP_ALLOCATE|[373]|Bytes:5
+16:59:45.0 (37581930)|STATEMENT_EXECUTE|[372]
+16:59:45.0 (37583590)|STATEMENT_EXECUTE|[373]
+16:59:45.0 (37586549)|HEAP_ALLOCATE|[373]|Bytes:23
+16:59:45.0 (37593291)|HEAP_ALLOCATE|[373]|Bytes:400
+16:59:45.0 (37638155)|USER_DEBUG|[373]|DEBUG|createSsc -> queryStr: SELECT Title__c, Description__c, CreatedDate, PublishedDatetime__c, DeadlineDatetime__c, IsPublished__c, LastModifiedDate, PushNotificationResendCountFormula__c,CreatedBy.Name, LastModifiedBy.Name, CountReply__c, CountShared__c, RegionalOfficeCode__c, BranchCode__c, Name FROM saMessage__c WHERE IsEvolva__c = false AND Type__c = 'TASK' ORDER BY PublishedDatetime__c LIMIT 1000
+16:59:45.0 (37651566)|STATEMENT_EXECUTE|[374]
+16:59:45.0 (40618514)|SOQL_EXECUTE_BEGIN|[374]|Aggregations:0|SELECT Title__c, Description__c, CreatedDate, PublishedDatetime__c, DeadlineDatetime__c, IsPublished__c, LastModifiedDate, PushNotificationResendCountFormula__c,CreatedBy.Name, LastModifiedBy.Name, CountReply__c, CountShared__c, RegionalOfficeCode__c, BranchCode__c, Name FROM saMessage__c 
+16:59:45.0 (86644269)|SOQL_EXECUTE_END|[374]|Rows:27
+16:59:45.0 (86742329)|HEAP_ALLOCATE|[374]|Bytes:20
+16:59:45.0 (86932018)|VARIABLE_SCOPE_BEGIN|[374]|localSsc|ApexPages.StandardSetController|true|false
+16:59:45.0 (87044500)|VARIABLE_ASSIGNMENT|[374]|localSsc|"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@40411ca9"|0x40411ca9
+16:59:45.0 (87056159)|STATEMENT_EXECUTE|[375]
+16:59:45.0 (100281275)|STATEMENT_EXECUTE|[376]
+16:59:45.0 (100377813)|STATEMENT_EXECUTE|[377]
+16:59:45.0 (100397451)|METHOD_EXIT|[354]|01pN0000000oSaF|saTasksListForAdminCtl.createSsc(String)
+16:59:45.0 (100708905)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE IsEvolva__c = false AND Type__c = 'TASK'","currentUser":"0x5437d576","errFlg":false,"filterCreatorName":"","filterName":"","filterTitle":"","filterValidityDate":"","initSearchFlg":"true","limitStr":" LIMIT 1000","mpShishaOptions":"0x48216052","mpShitenOptions":"0x71bf24d7","orderBy":" ORDER BY PublishedDatetime__c","orderDesc":false,"orderTarget":"PublishedDatetime__c","pageNum":1,"pageSize":50,"selectedOrderTarget":"PublishedDatetime__c","shitenOptions":"0x335266","ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@6a45ab73","targetRecords":"1"}|0x7cd4e9cd
+16:59:45.0 (100779473)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@40411ca9"|0x40411ca9
+16:59:45.0 (100852257)|VARIABLE_ASSIGNMENT|[38]|this.ssc|"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@40411ca9"|0x7cd4e9cd
+16:59:45.0 (100868176)|SYSTEM_MODE_EXIT|false
+16:59:45.0 (115841939)|SYSTEM_MODE_ENTER|true
+16:59:45.116 (116302765)|SYSTEM_MODE_ENTER|true
+16:59:45.116 (116397759)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+16:59:45.116 (116412819)|VARIABLE_SCOPE_BEGIN|[88]|this|ApexPage.PageMessagesComponentController|true|false
+16:59:45.116 (116462711)|VARIABLE_ASSIGNMENT|[88]|this|{}|0x540fa01f
+16:59:45.116 (116470565)|VARIABLE_SCOPE_BEGIN|[88]|escape|Boolean|false|false
+16:59:45.116 (116480393)|VARIABLE_ASSIGNMENT|[88]|escape|null
+16:59:45.116 (116575029)|SYSTEM_MODE_ENTER|true
+16:59:45.116 (116611796)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+16:59:45.116 (116619135)|VARIABLE_SCOPE_BEGIN|[2]|this|ApexPage.PageMessagesComponentController|true|false
+16:59:45.116 (116638660)|VARIABLE_ASSIGNMENT|[2]|this|{}|0x540fa01f
+16:59:45.0 (117215645)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (117357824)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (117535640)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (117569623)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:100
+16:59:45.0 (117576967)|VARIABLE_SCOPE_BEGIN|[380]|this|saTasksListForAdminCtl|true|false
+16:59:45.0 (117867287)|VARIABLE_ASSIGNMENT|[380]|this|{"conditionStr":" WHERE IsEvolva__c = false AND Type__c = 'TASK'","currentUser":"0x5437d576","errFlg":false,"filterCreatorName":"","filterName":"","filterTitle":"","filterValidityDate":"","initSearchFlg":"true","limitStr":" LIMIT 1000","mpShishaOptions":"0x48216052","mpShitenOptions":"0x71bf24d7","orderBy":" ORDER BY PublishedDatetime__c","orderDesc":false,"orderTarget":"PublishedDatetime__c","pageNum":1,"pageSize":50,"selectedOrderTarget":"PublishedDatetime__c","shitenOptions":"0x335266","ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@40411ca9","targetRecords":"1"}|0x7cd4e9cd
+16:59:45.0 (117889190)|SYSTEM_MODE_ENTER|false
+16:59:45.0 (117897819)|HEAP_ALLOCATE|[381]|Bytes:5
+16:59:45.0 (117904968)|STATEMENT_EXECUTE|[380]
+16:59:45.0 (117907406)|STATEMENT_EXECUTE|[381]
+16:59:45.0 (117912424)|VARIABLE_SCOPE_BEGIN|[381]|recs|List<saMessage__c>|true|false
+16:59:45.0 (117922856)|VARIABLE_ASSIGNMENT|[381]|recs|null|
+16:59:45.0 (118116462)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE IsEvolva__c = false AND Type__c = 'TASK'","currentUser":"0x5437d576","errFlg":false,"filterCreatorName":"","filterName":"","filterTitle":"","filterValidityDate":"","initSearchFlg":"true","limitStr":" LIMIT 1000","mpShishaOptions":"0x48216052","mpShitenOptions":"0x71bf24d7","orderBy":" ORDER BY PublishedDatetime__c","orderDesc":false,"orderTarget":"PublishedDatetime__c","pageNum":1,"pageSize":50,"selectedOrderTarget":"PublishedDatetime__c","shitenOptions":"0x335266","ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@40411ca9","targetRecords":"1"}|0x7cd4e9cd
+16:59:45.0 (118137361)|STATEMENT_EXECUTE|[382]
+16:59:45.0 (118139473)|STATEMENT_EXECUTE|[383]
+16:59:45.0 (118308449)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE IsEvolva__c = false AND Type__c = 'TASK'","currentUser":"0x5437d576","errFlg":false,"filterCreatorName":"","filterName":"","filterTitle":"","filterValidityDate":"","initSearchFlg":"true","limitStr":" LIMIT 1000","mpShishaOptions":"0x48216052","mpShitenOptions":"0x71bf24d7","orderBy":" ORDER BY PublishedDatetime__c","orderDesc":false,"orderTarget":"PublishedDatetime__c","pageNum":1,"pageSize":50,"selectedOrderTarget":"PublishedDatetime__c","shitenOptions":"0x335266","ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@40411ca9","targetRecords":"1"}|0x7cd4e9cd
+16:59:45.0 (118357204)|HEAP_ALLOCATE|[383]|Bytes:112
+16:59:45.0 (118386446)|HEAP_ALLOCATE|[383]|Bytes:112
+16:59:45.0 (118411035)|VARIABLE_ASSIGNMENT|[383]|recs|"List of size 27 too large to display"|0x38253d70
+16:59:45.0 (118419365)|STATEMENT_EXECUTE|[385]
+16:59:45.0 (118421391)|STATEMENT_EXECUTE|[388]
+16:59:45.0 (118431800)|SYSTEM_MODE_EXIT|false
+16:59:45.123 (123068799)|SYSTEM_MODE_ENTER|true
+16:59:45.123 (123132252)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+16:59:45.123 (123141124)|VARIABLE_SCOPE_BEGIN|[88]|this|ApexPage.PageMessagesComponentController|true|false
+16:59:45.123 (123164877)|VARIABLE_ASSIGNMENT|[88]|this|{}|0x540fa01f
+16:59:45.123 (123172070)|VARIABLE_SCOPE_BEGIN|[88]|escape|Boolean|false|false
+16:59:45.123 (123180368)|VARIABLE_ASSIGNMENT|[88]|escape|null
+16:59:45.123 (123292287)|SYSTEM_MODE_ENTER|true
+16:59:45.123 (123328819)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+16:59:45.123 (123335641)|VARIABLE_SCOPE_BEGIN|[2]|this|ApexPage.PageMessagesComponentController|true|false
+16:59:45.123 (123354559)|VARIABLE_ASSIGNMENT|[2]|this|{}|0x540fa01f
+16:59:45.0 (124892971)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (124933961)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:100
+16:59:45.0 (124942980)|VARIABLE_SCOPE_BEGIN|[19]|this|saTasksListForAdminCtl|true|false
+16:59:45.0 (125164492)|VARIABLE_ASSIGNMENT|[19]|this|{"conditionStr":" WHERE IsEvolva__c = false AND Type__c = 'TASK'","currentUser":"0x5437d576","errFlg":false,"filterCreatorName":"","filterName":"","filterTitle":"","filterValidityDate":"","initSearchFlg":"true","limitStr":" LIMIT 1000","mpShishaOptions":"0x48216052","mpShitenOptions":"0x71bf24d7","orderBy":" ORDER BY PublishedDatetime__c","orderDesc":false,"orderTarget":"PublishedDatetime__c","pageNum":1,"pageSize":50,"selectedOrderTarget":"PublishedDatetime__c","shitenOptions":"0x335266","ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@40411ca9","targetRecords":"1"}|0x7cd4e9cd
+16:59:45.0 (125187027)|SYSTEM_MODE_ENTER|false
+16:59:45.0 (125195102)|HEAP_ALLOCATE|[20]|Bytes:5
+16:59:45.0 (125200791)|STATEMENT_EXECUTE|[19]
+16:59:45.0 (125259431)|STATEMENT_EXECUTE|[20]
+16:59:45.0 (125262144)|STATEMENT_EXECUTE|[23]
+16:59:45.0 (125267741)|HEAP_ALLOCATE|[23]|Bytes:1
+16:59:45.0 (125274195)|HEAP_ALLOCATE|[23]|Bytes:3
+16:59:45.0 (125305209)|HEAP_ALLOCATE|[23]|Bytes:47
+16:59:45.0 (125316292)|HEAP_ALLOCATE|[23]|Bytes:5
+16:59:45.0 (125361795)|HEAP_ALLOCATE|[23]|Bytes:15
+16:59:45.0 (125375335)|SYSTEM_METHOD_ENTRY|[1]|EncodingUtil.EncodingUtil()
+16:59:45.0 (125380017)|STATEMENT_EXECUTE|[1]
+16:59:45.0 (125385923)|SYSTEM_METHOD_EXIT|[1]|EncodingUtil
+16:59:45.0 (125398116)|METHOD_ENTRY|[23]||System.EncodingUtil.urlEncode(String, String)
+16:59:45.0 (125457770)|METHOD_EXIT|[23]||System.EncodingUtil.urlEncode(String, String)
+16:59:45.0 (125466136)|SYSTEM_MODE_EXIT|false
+16:59:45.0 (125541513)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (125577994)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:100
+16:59:45.0 (125586004)|VARIABLE_SCOPE_BEGIN|[25]|this|saTasksListForAdminCtl|true|false
+16:59:45.0 (125778197)|VARIABLE_ASSIGNMENT|[25]|this|{"conditionStr":" WHERE IsEvolva__c = false AND Type__c = 'TASK'","currentUser":"0x5437d576","errFlg":false,"filterCreatorName":"","filterName":"","filterTitle":"","filterValidityDate":"","initSearchFlg":"true","limitStr":" LIMIT 1000","mpShishaOptions":"0x48216052","mpShitenOptions":"0x71bf24d7","orderBy":" ORDER BY PublishedDatetime__c","orderDesc":false,"orderTarget":"PublishedDatetime__c","pageNum":1,"pageSize":50,"selectedOrderTarget":"PublishedDatetime__c","shitenOptions":"0x335266","ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@40411ca9","targetRecords":"1"}|0x7cd4e9cd
+16:59:45.0 (125798873)|SYSTEM_MODE_ENTER|false
+16:59:45.0 (125806651)|HEAP_ALLOCATE|[26]|Bytes:5
+16:59:45.0 (125811388)|STATEMENT_EXECUTE|[25]
+16:59:45.0 (125846134)|STATEMENT_EXECUTE|[26]
+16:59:45.0 (125848408)|STATEMENT_EXECUTE|[29]
+16:59:45.0 (125853402)|SYSTEM_MODE_EXIT|false
+16:59:45.0 (129270786)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (129460945)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (130201352)|SYSTEM_MODE_ENTER|true
+16:59:45.0 (130242221)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:100
+16:59:45.0 (130460911)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"conditionStr":" WHERE IsEvolva__c = false AND Type__c = 'TASK'","currentUser":"0x5437d576","errFlg":false,"filterCreatorName":"","filterName":"","filterTitle":"","filterValidityDate":"","initSearchFlg":"true","limitStr":" LIMIT 1000","mpShishaOptions":"0x48216052","mpShitenOptions":"0x71bf24d7","orderBy":" ORDER BY PublishedDatetime__c","orderDesc":false,"orderTarget":"PublishedDatetime__c","pageNum":1,"pageSize":50,"selectedOrderTarget":"PublishedDatetime__c","shitenOptions":"0x335266","ssc":"core.apexpages.components.framework.controller.SetOrientedStandardControllerImpl@40411ca9","targetRecords":"1"}|0x7cd4e9cd
+16:59:45.0 (130482398)|SYSTEM_MODE_ENTER|false
+16:59:45.0 (130490730)|HEAP_ALLOCATE|[393]|Bytes:5
+16:59:45.0 (130496553)|STATEMENT_EXECUTE|[392]
+16:59:45.0 (130498772)|STATEMENT_EXECUTE|[393]
+16:59:45.0 (130534609)|HEAP_ALLOCATE|[393]|Bytes:93
+16:59:45.0 (130546344)|SYSTEM_METHOD_ENTRY|[1]|UserInfo.UserInfo()
+16:59:45.0 (130551003)|STATEMENT_EXECUTE|[1]
+16:59:45.0 (130556945)|SYSTEM_METHOD_EXIT|[1]|UserInfo
+16:59:45.0 (130567402)|METHOD_ENTRY|[393]||System.UserInfo.getTimeZone()
+16:59:45.0 (130766705)|METHOD_EXIT|[393]||System.UserInfo.getTimeZone()
+16:59:45.0 (130774687)|VARIABLE_SCOPE_BEGIN|[393]|tz|System.TimeZone|true|false
+16:59:45.0 (130797381)|VARIABLE_ASSIGNMENT|[393]|tz|{"delegate":"0x34a32d97"}|0x624d11ec
+16:59:45.0 (130804287)|STATEMENT_EXECUTE|[395]
+16:59:45.0 (130844449)|HEAP_ALLOCATE|[395]|Bytes:56
+16:59:45.0 (130863404)|METHOD_ENTRY|[395]||System.TimeZone.getOffset(Datetime)
+16:59:45.0 (130889513)|METHOD_EXIT|[395]||System.TimeZone.getOffset(Datetime)
+16:59:45.0 (130914435)|HEAP_ALLOCATE|[395]|Bytes:28
+16:59:45.0 (130923945)|HEAP_ALLOCATE|[395]|Bytes:28
+16:59:45.0 (130928436)|HEAP_ALLOCATE|[395]|Bytes:4
+16:59:45.0 (130937009)|HEAP_ALLOCATE|[395]|Bytes:28
+16:59:45.0 (130969125)|HEAP_ALLOCATE|[395]|Bytes:28
+16:59:45.0 (131034577)|HEAP_ALLOCATE|[395]|Bytes:28
+16:59:45.0 (131039853)|HEAP_ALLOCATE|[395]|Bytes:28
+16:59:45.0 (131055826)|HEAP_ALLOCATE|[395]|Bytes:12
+16:59:45.0 (131063032)|SYSTEM_MODE_EXIT|false
+16:59:45.0 (192984000)|VF_SERIALIZE_VIEWSTATE_BEGIN|066N0000000Qcdt
+16:59:45.0 (198959831)|VF_SERIALIZE_VIEWSTATE_END
+16:59:45.213 (213723717)|CUMULATIVE_LIMIT_USAGE
+16:59:45.213 (213723717)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 1 out of 100
+  Number of query rows: 27 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:59:45.213 (213723717)|CUMULATIVE_LIMIT_USAGE_END
+
+16:59:45.0 (213765673)|CODE_UNIT_FINISHED|VF: /apex/saTasksListForAdmin
+16:59:45.0 (214528534)|EXECUTION_FINISHED

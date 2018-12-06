@@ -80,7 +80,8 @@ public with sharing class saDailyReportCtrl {
 	    lsBusinessLocation = new List<clsBusinessLocation>();
 	    for (saBusinessLocation__c bl : lsBL) {
 	    	clsBusinessLocation objBL = new clsBusinessLocation();
-	    	objBL.saBusinessLocation = bl;
+        objBL.saBusinessLocation = bl;
+	    	objBL.BusinessLocationLabel = bl.Code__c + ' ' + bl.BusinessLocationName__c;
 	    	objBL.IsChecked = (lsBusinessLocation.size() == 0);
 	    	lsBusinessLocation.add(objBL);
 	    }
@@ -135,7 +136,7 @@ public with sharing class saDailyReportCtrl {
     public PageReference redirectIfNecessaryDesktop(){
 
         if (isIPhone) {
-            // return Page.auScheduleMob.setRedirect(true);
+            //return Page.auScheduleMob.setRedirect(true);
         }
 
         return null;
@@ -144,7 +145,7 @@ public with sharing class saDailyReportCtrl {
     public PageReference redirectIfNecessaryMobile(){
 
         if (!isIPhone) {
-            // return Page.auSchedule.setRedirect(true);
+            //return Page.auSchedule.setRedirect(true);
         }
 
         return null;
@@ -1099,6 +1100,7 @@ public with sharing class saDailyReportCtrl {
     public class clsBusinessLocation{
 
         public String BusinessLocationDetail {get;set;}
+        public String BusinessLocationLabel {get;set;}
         public Boolean IsChecked {get;set;}
         public saBusinessLocation__c saBusinessLocation {get;set;}
 

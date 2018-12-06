@@ -1,6 +1,6 @@
 public with sharing class auHearingListForAdminCtl {
 	
-	private static final String COOKIE_LABEL_PREFIX = 'saTasksList_';
+	private static final String COOKIE_LABEL_PREFIX = 'auHearingList_';
     private static final String COOKIE_LABEL_SHISHA = COOKIE_LABEL_PREFIX + 'Shisha';
     private static final String COOKIE_LABEL_SHITEN = COOKIE_LABEL_PREFIX + 'Shiten';
     private static final String COOKIE_LABEL_CREATOR_NAME = COOKIE_LABEL_PREFIX + 'CreatorName';
@@ -8,10 +8,10 @@ public with sharing class auHearingListForAdminCtl {
     private static final String COOKIE_LABEL_NAME = COOKIE_LABEL_PREFIX + 'Name';
     private static final String COOKIE_LABEL_VALIDITY_DATE = COOKIE_LABEL_PREFIX + 'ValidityDate';
 
-    private static final String COOKIE_LABEL_PAGE_NUMBER = 'PageNumber';
-    private static final String COOKIE_LABEL_PAGE_SIZE = 'PageSize';
-    private static final String COOKIE_PATH = '/apex/auHearingListForAdmin';
-    private static final String COOKIE_LABEL_INIT_SEARCH_FLG = 'initSearchFlg';  // 画面起動時検索フラグ
+    private static final String COOKIE_LABEL_PAGE_NUMBER = COOKIE_LABEL_PREFIX + 'PageNumber';
+    private static final String COOKIE_LABEL_PAGE_SIZE = COOKIE_LABEL_PREFIX + 'PageSize';
+    private static final String COOKIE_PATH = '';
+    private static final String COOKIE_LABEL_INIT_SEARCH_FLG = COOKIE_LABEL_PREFIX + 'initSearchFlg';  // 画面起動時検索フラグ
 	
     public String getWhereStrParam(){
         if(String.isBlank(conditionStr)) {
@@ -67,7 +67,7 @@ public with sharing class auHearingListForAdminCtl {
     private List<String> regionalOfficeCodes; 
 
     private static final String BASE_QUERY_STRING = 'SELECT RegionalOfficeCode__c, BranchCode__c, Name, ReportName__c, CreatedDate, LastModifiedDate, LastModifiedDateFormula__c, Type__c, PushNotificationResendCountFormula__c, ' +
-                                        'Status__c, CreatedBy.Name, LastModifiedBy.Name, ValidFromDatetime__c, ValidToDatetime__c, IsValid__c, CountReply__c, CountShared__c FROM saInquiry__c';
+                                        'Status__c, CreatedBy.Name, LastModifiedBy.Name, ValidFromDatetime__c, ValidToDatetime__c, DisplayedValidToDatetime__c, IsValid__c, CountReply__c, CountShared__c FROM saInquiry__c';
     
     private static final String SELECTOPTION_LASTMODIFIED = '1'; //最終更新ラジオボタン判定
     private static final String SELECTOPTION_ALL = '2'; //すべて表示ラジオボタン判定
@@ -454,8 +454,12 @@ public with sharing class auHearingListForAdminCtl {
     
 	private Boolean initFieldFromCookie() {
 
+		system.debug('Run : initFieldFromCookie');
+
         Map<String, Cookie> cookies = Apexpages.currentPage().getCookies();
         Boolean hasSearchValues = false;
+
+		system.debug('Map of Cookie to display : '+cookies);
 
         if (cookies.containsKey(COOKIE_LABEL_SHISHA)) {
             this.filterShisha = cookies.get(COOKIE_LABEL_SHISHA).getValue();
@@ -493,7 +497,8 @@ public with sharing class auHearingListForAdminCtl {
     }
 
     private void saveInputValues() {
-    	system.debug('Set The Cookies : SHISHA');
+    	system.debug('Run : saveInputValues');
+    	
     	system.debug(this.filterShisha+' SHITEN '+this.filterShiten+' CREATORNAME '+this.filterCreatorName+' NAME '+this.filterReportName+' REPORTNAME '+this.filterReportName+' VALIDITYDATE '+this.filterValidityDate+' PAGENUM '+String.valueOf(pageNum)+' PAGESIZE '+String.valueOf(pageSize)+' SEARCH FLAG '+this.initSearchFlg);
         
         List<Cookie> cookies = new List<Cookie>();
@@ -508,6 +513,8 @@ public with sharing class auHearingListForAdminCtl {
         cookies.add(new Cookie(COOKIE_LABEL_PAGE_NUMBER, String.valueOf(pageNum), COOKIE_PATH, -1, true));  // ページ番号
         //cookies.add(new Cookie(COOKIE_LABEL_PAGE_SIZE, String.valueOf(pageSize), COOKIE_PATH, -1, true));  // ページサイズ
         cookies.add(new Cookie(COOKIE_LABEL_INIT_SEARCH_FLG, this.initSearchFlg, COOKIE_PATH, -1, true));  // 画面起動時検索フラグ
+        
+        system.debug('Map of Cookie to save : '+cookies);
         
         Apexpages.currentPage().setCookies(cookies);
     }

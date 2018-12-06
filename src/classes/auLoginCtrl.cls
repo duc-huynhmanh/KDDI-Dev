@@ -27,6 +27,8 @@ public with sharing class auLoginCtrl {
 
     public PageReference login(){
 
+		system.debug('Run : Login');
+
         errorMessage = null;
         errorLoginUsername  = false;
         errorLoginPassword  = false;
@@ -45,25 +47,32 @@ public with sharing class auLoginCtrl {
         String siteUserName;
         PageReference pageRef = new PageReference('/home');
         try{
-            //ログインユーザー
-            auCommunityCustomSettings__c opps = auCommunityCustomSettings__c.getOrgDefaults();
-            siteUserName= loginUsername + '@' + opps.CommunityUserIDSuffix__c;
-
-            List<User> lsUsr = [SELECT Id, Profile.Name
-                                FROM User
-                                WHERE username =:siteUserName];
-            For (User usr : lsUsr) {
-                if (usr.Profile.Name == auConstantCmn.PROFILE_SA_USER_SA ||
-                    usr.Profile.Name == auConstantCmn.PROFILE_SA_USER_CSA ||
-                    usr.Profile.Name == auConstantCmn.PROFILE_EVOLVA_USER ||
-                    usr.Profile.Name == auConstantCmn.PROFILE_EVOLVA_ADMIN_USER) {
-                    isSA = true;
-                    pageRef = new PageReference('/saHome');
-                }
-            }
-
-
-            pageRef = site.login( siteUserName.toLowerCase(), loginPassword, isSA ? '/saHome' : '/home');
+        	
+        	//Redirect On startURL
+			String startURL = System.currentPageReference().getParameters().get('startURL');
+			Boolean startURLExist = false;
+			system.debug('Start URL : '+startURL);
+			if(startURL!=null){
+				startURLExist=true;
+			}
+		
+	        //ログインユーザー
+	        auCommunityCustomSettings__c opps = auCommunityCustomSettings__c.getOrgDefaults();
+	        siteUserName= loginUsername + '@' + opps.CommunityUserIDSuffix__c;
+	
+	        List<User> lsUsr = [SELECT Id, Profile.Name
+	                            FROM User
+	                            WHERE username =:siteUserName];
+	        For (User usr : lsUsr) {
+	            if (usr.Profile.Name == auConstantCmn.PROFILE_SA_USER_SA ||
+	                usr.Profile.Name == auConstantCmn.PROFILE_SA_USER_CSA ||
+	                usr.Profile.Name == auConstantCmn.PROFILE_EVOLVA_USER ||
+	                usr.Profile.Name == auConstantCmn.PROFILE_EVOLVA_ADMIN_USER) {
+	                isSA = true;
+	                pageRef = new PageReference('/saHome');
+	            }
+	        }
+	        pageRef = site.login( siteUserName.toLowerCase(), loginPassword, startURLExist? startURL : isSA ? '/saHome' : '/home');    
 			
             // ログイン失敗
             if(ApexPages.hasMessages()){
@@ -99,39 +108,47 @@ public with sharing class auLoginCtrl {
             return null;
         }
 
-        return pageRef ;
+        return pageRef;
 
     }
 
     public PageReference redirectIfNecessary(){
 
+		system.debug('Run : redirectIfNecessary');
+		
         //Manage the case where the URL is like this:
         // https://gwdev01-au-cxknowledge.cs6.force.com/login?startURL=%2Fhome
-
         String redirectPage = System.currentPagereference().getParameters().get('startURL');
         if (UserInfo.getUserType() != 'Guest' && redirectPage != NULL && redirectPage.length() > 0) {
             return new PageReference(redirectPage);
         }
 
-/*
-        if (UserInfo.getUserType() == 'Guest' && redirectPage != NULL) {
+        /*if (UserInfo.getUserType() == 'Guest' && redirectPage != NULL) {
             while(redirectPage.indexOf('/') >= 0) {
                 redirectPage = redirectPage.substring(redirectPage.indexOf('/') + 1);
             }
             if (redirectPage.startsWith('sa')) {
                 return new PageReference('/auLoginPageMob');
             }
-        }
-*/
+        }*/
 
         if (isIPhone) {
-            return Page.auLoginPageMob.setRedirect(true);
+        	if(redirectPage != NULL && redirectPage.length() > 0){
+        		PageReference p = Page.auLoginPageMob;
+        		p.getParameters().put('startURL',redirectPage);
+        		p.setRedirect(true);
+        		return p;
+        	}else{
+            	return Page.auLoginPageMob.setRedirect(true);
+        	}
         }
 
         return null;
     }
 
     public PageReference redirectIfNecessaryMobile(){
+
+		system.debug('Run : redirectIfNecessaryMobile');
 
         //Manage the case where the URL is like this:
         // https://gwdev01-au-cxknowledge.cs6.force.com/login?startURL=%2Fhome
@@ -141,7 +158,14 @@ public with sharing class auLoginCtrl {
         }
 
         if (!isIPhone) {
-            return Page.auLoginPage.setRedirect(true);
+        	if(redirectPage != NULL && redirectPage.length() > 0){
+        		PageReference p = Page.auLoginPage;
+        		p.getParameters().put('startURL',redirectPage);
+        		p.setRedirect(true);
+        		return p;
+        	}else{
+            	return Page.auLoginPage.setRedirect(true);
+        	}
         }
 
         return null;

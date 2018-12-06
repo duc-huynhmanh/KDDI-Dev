@@ -72,6 +72,7 @@ public class auTestDataUtil {
 		u.LocaleSidKey = 'ja_JP';
 		u.EmailEncodingKey = 'UTF-8';
 		u.LanguageLocaleKey = 'ja';
+		u.GpsConsentResult__c = true;
 		insert u;
 		return u;
 	}

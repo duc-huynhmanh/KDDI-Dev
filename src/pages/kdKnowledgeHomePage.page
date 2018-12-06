@@ -13,41 +13,6 @@
   <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.min.js')}"/> 
 
   <style>
-    .col1{
-      width: 155px;
-      overflow-x: hidden;
-    }
-    .col2{
-      min-width: 100px;
-    }
-    .col3{
-      min-width: 100px;
-      max-width: 300px;
-      overflow-x: hidden;
-    }
-    .col4{
-      min-width: 100px;
-      max-width: 300px;
-      overflow-x: hidden;
-    }
-    .col5, .col6{
-      min-width: 50px;
-      max-width: 60px;
-      overflow-x: hidden;
-      text-align: right !important;
-      margin-right: 0.5rem;
-    }
-    .col3 p, .col4 p{
-      word-break: break-all;
-      word-wrap: break-word;
-      white-space: normal;
-    }
-    .col7{
-      min-width: 50px;
-      max-width: 60px;
-      overflow-x: hidden;
-    }
-
     .content {
       padding: 1em;
     }
@@ -71,8 +36,8 @@
 /*      max-height: 50rem !IMPORTANT;*/
     }
     .theme {
-/*      height: 100vh !IMPORTANT;
-*/    }
+      overflow: hidden;
+    }
     .content.content--theme {
 /*      style="overflow-x: hidden;"
 */    }
@@ -328,9 +293,10 @@
     /*kawada edited*/
     width: 14%;
     float: left;
-    height: 99%;
-    overflow:scroll;
-    overflow-x:hidden;
+    max-height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: Calc(100vh - 6rem);
   }
   .margin-top-15{
     margin-top: 15px;
@@ -340,9 +306,10 @@
     width: 86%;
     float: left;
     padding-left: 2%;
-    overflow:scroll;
-    overflow-x:hidden;
-    height: 99%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 100%;
+    height: Calc(100vh - 6rem);
     background: white; /*kawada added*/
   }
   .left-menu ul li{
@@ -423,11 +390,8 @@
     height: 3em;
     vertical-align: middle !important;
   }
-  .margin-left-5-minus{
-    margin-left: -5px !important;
-  }
   .web-content{
-    margin-top: 10px;
+    /*margin-top: 10px;*/
   }
   #menu-type-section, #menu-channel-section{
     margin-top: 25px;
@@ -444,8 +408,9 @@
     padding-top: 5px; 
     background-color: #ed5500; 
     color: #fff; 
-    font-size: 14px; 
+    font-size: 16px; 
     border-radius: 15px 15px 0 0;
+    font-weight: bold;
   }
   .top-item-showmore{
     margin: 5px 10px 10px 0; 
@@ -460,6 +425,75 @@
   #content{
     margin-top: 5rem;
   }
+  .active{
+    font-weight: bold;
+  }
+  .no-active{
+    font-weight: normal;
+    cursor: pointer;
+    cursor: hand;
+  }
+  .thema-item{
+    margin-bottom: 15px;
+    height: 32px;
+    background-color: #ed5500;
+    text-align: center;
+    border-radius: 16px;
+    width: 48.5%;
+    margin-right: 1%; 
+    display: inline-block;
+    cursor: pointer;
+    cursor: hand;
+  }
+  .left{
+    float: left;
+    /*width: 85%;*/
+    margin-left: 25px;
+  }
+  .right{
+    float: left;
+    /*width: 85%;*/
+  }
+  .seasonal-list{
+    /*-moz-column-count: 2;
+    -moz-column-gap: 20px;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 20px;
+    column-count: 2;
+    column-gap: 20px;*/
+  }
+  .seasonal-item{
+    height: 28px;
+    vertical-align: middle;
+    color: white;
+    font-size: 20px;
+    font-weight: bold; 
+  }
+
+  .seasonal-item img{ 
+    filter: grayscale(100%) contrast(99999%) invert(100%); 
+    margin-top: -4px; 
+    height: 30px; 
+    width: 30px; 
+    margin-right: 1.5%; 
+  }
+
+  .seasonal-message{
+    display: block;
+    text-align: center;
+    background-color: #FFFED1;
+    border-radius: 15px 15px 15px 15px;
+    vertical-align: middle;
+    width: 100%;
+    margin: 0 auto 20px;
+    padding: 1px 10px 1px;
+  }
+  .seasonal-message .message-content{
+    font-size: 20px;
+    font-weight: bold; 
+    background-color: #FFFED1;
+    word-break: break-all;
+  }
 </style>
 
 <script>
@@ -467,36 +501,98 @@
   $( function() {
       $.datepicker.setDefaults($.datepicker.regional['ja']);
       $( ".datepicker" ).datepicker({ dateFormat: 'yy/mm/dd' });
-      $(".menu-item").click(function(){
-        handleClickMenuItem($(this));
+      $(".thema-item").click(function(){
+        handleClickSeasonalItem($(this));
       });
       $(".item-solo-area").click(function(){
         var knowledgeId = $(this).attr("knowledgeId");
         console.log('knowledgeId: ' + knowledgeId);
         window.location.replace('/apex/kdKnowledgeListPage?knowledge=' + knowledgeId);
       });
-  } );
 
-  function handleClickMenuItem(object) {
+      $("#seasonal-content").on('click', '.no-active', function(){
+        $(this).siblings().each(function(){
+          if($(this).hasClass( "active" )){
+            $(this).addClass( "no-active" );
+          }
+        });
+        $(this).removeClass( "no-active" ).addClass( "active" );
+
+        if($(this).closest(".seasonalBlock").attr('id').indexOf('thema1') != -1){
+          reorderThema1();
+        }
+        if($(this).closest(".seasonalBlock").attr('id').indexOf('thema2') != -1){
+          reorderThema2();
+        }
+        if($(this).closest(".seasonalBlock").attr('id').indexOf('thema3') != -1){
+          reorderThema3();
+        }
+      });
+
+      $(function() {
+          $('.seasonal-message textarea').each(function() {
+              /*var padding = parseInt($(this).css('paddingTop'),10) + parseInt($(this).css('paddingBottom'),10);
+              var lineheight = parseInt($(this).css('lineHeight'),10);
+              var lines = ($(this).prop('scrollHeight') - padding) / lineheight;
+              console.log('lines: ' + lines);
+              if(lines == 1){
+                $(this).height('30');
+              } else {
+                $(this).height($(this).prop('scrollHeight'));
+              }*/
+              $(this).height($(this).prop('scrollHeight'));
+          });
+
+      });
+
+  } );
+  function backToTop(){
+    document.getElementById('{!$Component.formId.itemDisplay}').scrollTop = 0;
+  }
+
+  function handleClickSeasonalItem(object) {
     var catName = object.attr("category");
     var catPart = catName.split("-");
     var catNumber = catPart[1];
-    $(".menu-item-inside").removeClass("selection-active");
-    object.children(".menu-item-inside").addClass("selection-active");
+    console.log('catNumber: ' + catNumber);
     var myElement = document.getElementById('cat-' + catNumber);
     if(myElement == null) {
       console.log('there is no data');
       return;
     }
     var topPos = myElement.offsetTop;
-    topPos = topPos - document.getElementById('cat-0').offsetTop;
+    topPos = topPos - document.getElementById('{!$Component.formId.itemDisplay}').offsetTop;
     if(isNaN(topPos)) {
       topPos = 0;
     }
-    console.log('catNumber: ' + catNumber);
     console.log('topPos: ' + topPos);
     document.getElementById('{!$Component.formId.itemDisplay}').scrollTop = topPos;
   }
+
+  /*function handleClickSeasonalItem(object) {
+    var catName = object.attr("category");
+    var catPart = catName.split("-");
+    var catNumber = catPart[1];
+    console.log('catNumber: ' + catNumber);
+    var myElement = document.getElementById('cat-' + catNumber);
+    if(myElement == null) {
+      console.log('there is no data');
+      return;
+    }
+    var topPos = myElement.offsetTop;
+    topPos = topPos - document.getElementById('thema-list').offsetTop;
+    console.log('topPos: ' + topPos);
+    if(isNaN(topPos)) {
+      topPos = 0;
+    }
+    console.log('topPos: ' + topPos);
+    
+    var main = $("#{!$Component.formId.itemDisplay}:not(:animated)");
+    var destination = $('#cat-' + catNumber).offset().top + main.scrollTop();
+    main.animate({ scrollTop: destination},500, function(){console.log(main.scrollTop());} );
+    return false;
+    //document.getElementById('{!$Component.formId.itemDisplay}').scrollTop = topPos;
+  }*/
 
   function toggleSection(sectionId){
       if($('#' + sectionId).hasClass("slds-is-open")) {
@@ -520,11 +616,6 @@
   <div class="container js-get-height" id="container">
     <main class="main main--theme clear" id="main" role="main">
       <article class="content content--theme" id="content">
-<!--
-    <div class="menu-title">
-      <h4>カテゴリメニュー</h4>
-    </div>        
--->
         <div class="left-menu slds-scope">
           <div class="slds-section slds-is-open" id="menu-thema-section">
             <h3 class="slds-section__title">
@@ -539,8 +630,8 @@
               <ul>
                 <apex:repeat value="{!menuItemList}" var="menuItem">
                 <li class="{!IF(menuItem.index == 0, 'margin-top-15', '')}">
-                  <a href="/kdKnowledgeListPage?thema={!menuItem.apiName}" class="menu-item" title="{!menuItem.displayLabel} ({!menuItem.count})">
-                    <div class="menu-item-inside {!IF(menuItem.index == 0, 'selection-active', '')}">
+                  <a href="/kdKnowledgeListPage?thema={!menuItem.apiName}" title="{!menuItem.displayLabel} ({!menuItem.count})">
+                    <div class="menu-item-inside">
                       <apex:image alt="{!menuItem.displayLabel}" value="{!URLFOR($Resource.kdKnowledgeHomePage_icons,'gray/'+menuItem.apiName+'.svg')}" width="20" height="20"/> {!menuItem.displayLabel} ({!menuItem.count})
                     </div>
                   </a>
@@ -562,7 +653,7 @@
               <ul>
                 <apex:repeat value="{!typeItemList}" var="menuItem">
                 <li class="{!IF(menuItem.index == 0, 'margin-top-15', '')}">
-                  <a href="/kdKnowledgeListPage?type={!menuItem.apiName}" class="menu-item" title="{!menuItem.displayLabel} ({!menuItem.count})">
+                  <a href="/kdKnowledgeListPage?type={!menuItem.apiName}" title="{!menuItem.displayLabel} ({!menuItem.count})">
                     <div class="menu-item-inside">
                       {!menuItem.displayLabel} ({!menuItem.count})
                     </div>
@@ -585,7 +676,7 @@
               <ul>
                 <apex:repeat value="{!channelItemList}" var="menuItem">
                 <li class="{!IF(menuItem.index == 0, 'margin-top-15', '')}">
-                  <a href="/kdKnowledgeListPage?channel={!menuItem.apiName}" class="menu-item" title="{!menuItem.displayLabel} ({!menuItem.count})">
+                  <a href="/kdKnowledgeListPage?channel={!menuItem.apiName}" title="{!menuItem.displayLabel} ({!menuItem.count})">
                     <div class="menu-item-inside">
                       {!menuItem.displayLabel} ({!menuItem.count})
                     </div>
@@ -599,8 +690,11 @@
 
         <apex:outputPanel id="itemDisplay" styleClass="item-display slds-scope" rendered="{!totalItem > 0}">
           <div class="slds-section slds-is-open" id="web-content-section">
-            <h3 class="slds-section__title margin-left-5-minus">
-              <button aria-controls="web-content" aria-expanded="true" class="slds-button slds-section__title-action margin-left-5-minus" onclick="return toggleSection('web-content-section');">
+            <apex:outputPanel styleClass="seasonal-message" rendered="{!seasonalMessage != ''}">
+              <pre class="message-content" style="text-align: {!textAlign}">{!seasonalMessage}</pre>
+            </apex:outputPanel>
+            <h3 class="slds-section__title">
+              <button aria-controls="web-content" aria-expanded="true" class="slds-button slds-section__title-action" onclick="return toggleSection('web-content-section');">
                 <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#switch')}" />
                 </svg>
@@ -608,7 +702,7 @@
               </button>
             </h3>
             <div id="web-content" aria-hidden="false" class="slds-section__content web-content"> 
-              <div style="width: 99%;margin: 0 1% 1% 1%; display: table;">
+              <div style="width: 98%;margin: 0 0 1% 1%; display: table;">
 
                <div style="display: table-cell; width: 31%; border-radius: 15px;">
                  <p class="top-item-title">ウィークリーアクセスランキング</p>
@@ -666,15 +760,38 @@
                 </apex:outputText>
                 </div>
                </div>
-               <div style="display: table-cell; width: 3%;"></div>
+               <!--div style="display: table-cell; width: 3%;"></div-->
               </div>
             </div>
-            <div style="height: 20px"></div>
+            <div style="height: 5px"></div>
           </div>
-          
+          <apex:outputPanel rendered="{!seasonalThemas.size > 0}">
+          <div class="slds-section slds-is-open" id="seansonal-section">
+            <h3 class="slds-section__title">
+              <button aria-controls="seasonal-content" aria-expanded="true" class="slds-button slds-section__title-action" onclick="return toggleSection('seansonal-section');">
+                <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#switch')}" />
+                </svg>
+                <span class="slds-truncate" title="Section Title">旬なテーマ</span>
+              </button>
+            </h3>
+            <div id="seasonal-content" aria-hidden="false" class="slds-section__content seasonal-content">
+              <div style="width: 98%; margin: 0 0 1% 1%; display: table">
+                <ul class="seasonal-list">
+                <apex:repeat value="{!seasonalThemas}" var="thema">
+                  <li class="thema-item {!IF(thema.index < seasonalThemas.size / 2, 'left', 'right')}" category="cat-{!thema.count}">
+                    <span class="seasonal-item"><apex:image value="{!URLFOR($Resource.kdKnowledgeHomePage_icons,'orange/'+thema.apiName+'.svg')}" width="20" height="20"/>{!thema.displayLabel}</span>
+                  </li>
+                </apex:repeat>
+                </ul>
+              </div>
+            </div>
+            <div style="height: 5px"></div>
+          </div>
+          </apex:outputPanel>
           <div class="slds-section slds-is-open" id="thema-list-section">
-            <h3 class="slds-section__title margin-left-5-minus">
-              <button aria-controls="thema-list" aria-expanded="true" class="slds-button slds-section__title-action margin-left-5-minus" onclick="return toggleSection('thema-list-section');">
+            <h3 class="slds-section__title">
+              <button aria-controls="thema-list" aria-expanded="true" class="slds-button slds-section__title-action" onclick="return toggleSection('thema-list-section');">
                 <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#switch')}" />
                 </svg>
@@ -685,12 +802,17 @@
               <apex:repeat value="{!menuItemList}" var="menuItem">
               <apex:repeat value="{!kdKnwlListMap}" var="themaItem">
               <apex:outputPanel rendered="{!IF(menuItem.apiName == themaItem.strKey, true, false)}">
-              <div id="cat-{!menuItem.index}" class="cat-display clear">
+              <div class="cat-display clear">
                 <div class="{!IF(themaItem.isDisplayCategory, 'display-category', 'hidden')}">
                   <span style="font-weight: bold; font-size: 15px">{!themaItem.category}</span>
                 </div>
-                <div class="item-title">
+                <div id="cat-{!menuItem.index}" class="item-title">
+                  <a style="color: inherit"  href="/kdKnowledgeListPage?thema={!themaItem.strKey}">
                   <apex:image value="{!URLFOR($Resource.kdKnowledgeHomePage_icons,'orange/'+menuItem.apiName+'.svg')}" width="20" height="20"/> {!themaItem.themaLabel}
+                  </a>
+                  <span style="float: right; cursor: pointer; cursor: hand;" onclick="backToTop();">
+                    <apex:image title="トップへ戻る" alt="トップへ戻る" value="{!URLFOR($Resource.auStyling,'/images/img-to-top.png')}" width="20" height="20"/>
+                  </span>
                 </div>
                 <div class="item-list">
                   <apex:repeat value="{!themaItem.listValue}" var="kd">

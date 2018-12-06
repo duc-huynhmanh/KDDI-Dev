@@ -1,4 +1,4 @@
-public with sharing class kdActivityListCtrl {
+public without sharing class kdActivityListCtrl {
     public Account parentAcc {get;set;}
     public Id accAttachmentId {get; set;}
     public List<Event> ssc{get;set;}
@@ -7,13 +7,22 @@ public with sharing class kdActivityListCtrl {
 
     public String initSearchFlg = '';
     private static final String COOKIE_PREFIX = 'event_';
-    private static final String COOKIE_MONTH = 'Month';
-    private static final String COOKIE_FROM = 'From';
-    private static final String COOKIE_TO = 'To';
+    private static final String COOKIE_ACCOUNTID = 'AccountId';
     private static final String COOKIE_CATEGORY = 'Category';
     private static final String COOKIE_FREETEXT = 'FreeText';
     private static final String COOKIE_LABEL_INIT_SEARCH_FLG = 'initSearchFlg';  // 画面起動時検索フラグ
     private static final Integer COOKIE_EXPIRATION_DATE = -1;
+
+    private User adminUser;
+
+    public Evaluation__c eval {get;set;}
+    public String evalDescription {get;set;}
+    public String evalTarget {get;set;}
+    public String evalResult {get;set;}
+    public String evalType {get;set;}
+    public String evalMonthInput {get;set;}
+    public String evalYearInput {get;set;}
+    public String evalTypeInput {get;set;}
 
     public String whereStr {get;set;}
     public String getWhereStrParam(){
@@ -43,6 +52,7 @@ public with sharing class kdActivityListCtrl {
     public String eventUpdateStart {get;set;}
     public String eventUpdateEnd {get;set;}
     public Id eventUpdateId {get; set;}
+    public Id eventRelatedObjectId {get; set;}
     public Id eventOwnerId {get; set;}
 
     public auActivityRelated__c newRelatedEvent {get; set;}
@@ -55,7 +65,20 @@ public with sharing class kdActivityListCtrl {
     public String newEventEndMinute {get; set;}
 
     public String filterCategory {get; set;}
+    public String getDisplayMonth(){
+        if (String.isBlank(filterMonth)){
+            return String.valueOf(Date.today().month()).leftPad(2, '0');
+        }
+        return filterMonth;
+    }
+    public String getDisplayYear(){
+        if (String.isBlank(filterYear)){
+            return String.valueOf(Date.today().year());
+        }
+        return filterYear;
+    }
     public String filterMonth {get; set;}
+    public String filterYear {get; set;}
     public Date filterDateFrom {get; set;}
     public Date filterDateTo {get; set;}
     public String filterDateFromStr {get; set;}
@@ -114,7 +137,36 @@ public with sharing class kdActivityListCtrl {
         return options;
     }
 
+    public List<SelectOption> getListYear() {
+        list<SelectOption> options = new list<SelectOption>();
+        Integer thisYear = Date.today().year();
+        options.add(new SelectOption('', ''));
+        for (Integer i = thisYear-10; i < thisYear+10; i++) {
+            options.add(new SelectOption(String.valueOf(i), String.valueOf(i) + '年'));
+        }       
+        return options;
+    }
+    public List<SelectOption> getListMonth() {
+        list<SelectOption> options = new list<SelectOption>();
+        options.add(new SelectOption('', ''));
+        for (Integer i = 1; i < 13; i++) {
+            options.add(new SelectOption(String.valueOf(i).leftPad(2, '0'), String.valueOf(i) + '月'));
+        }       
+        return options;
+    }
+
     public kdActivityListCtrl() {   
+        adminUser = [SELECT Id FROM User WHERE Username LIKE 'gwadmin%' LIMIT 1];
+        
+        Integer intMonth = Date.today().month();
+        Integer intYear = Date.today().year();
+        filterMonth = String.valueOf(intMonth).leftPad(2, '0');
+        filterYear = String.valueOf(intYear);
+		DateTime startMonth = DateTime.newinstance(intYear, intMonth, 1); 
+        DateTime endMonth = startMonth.addMonths(1).addDays(-1);
+        filterDateFromStr = startMonth.format('yyyy/MM/dd');
+        filterDateToStr = endMonth.format('yyyy/MM/dd');
+
         pageNum = 1; 
         pageSize = 20;
         orderBy = 'EndDateTime';
@@ -123,6 +175,22 @@ public with sharing class kdActivityListCtrl {
         initNewEvent();
         if(parentAcc == null) {
             String accId = Apexpages.currentPage().getParameters().get('Id');
+            //if there is no parameter then get acc id from cookie
+            if(String.isEmpty(accId)){
+                Map<String, Cookie> cookies = Apexpages.currentPage().getCookies();
+                if(cookies.containsKey(COOKIE_PREFIX + COOKIE_ACCOUNTID)){
+                    String tempAccId = cookies.get(COOKIE_PREFIX + COOKIE_ACCOUNTID).getValue();
+                    if(!String.isEmpty(tempAccId)){
+                        accId = tempAccId;
+                    }
+                }
+            //always update cookie with newest acc id
+            } else {
+                List<Cookie> cookies = new List<Cookie>();
+                cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_ACCOUNTID, accId, null, COOKIE_EXPIRATION_DATE, true));
+                Apexpages.currentPage().setCookies(cookies);
+            }
+            
             if(!String.isBlank(accId)){
                 try{
                     parentAcc = [SELECT PartnerCode__c, Name, ParentAgencyId__r.Name, ParentAgencyId__r.PartnerCode__c, ManagementCorpCode__c, RegionalOfficeId__r.Name, 
@@ -135,6 +203,12 @@ public with sharing class kdActivityListCtrl {
             }
         }
 
+        for(Evaluation__c tempEval : [SELECT Target__c, Result__c FROM Evaluation__c WHERE Month__c = :intMonth AND Year__c = :intYear AND Account__c = :parentAcc.Id]){
+            evalResult = tempEval.Result__c;
+            evalTarget = tempEval.Target__c;
+        }
+        initEvaluation();
+
         eventUpdate = new Event();
         lsEventUpdateAttachment = new List<Attachment>();
 
@@ -144,6 +218,32 @@ public with sharing class kdActivityListCtrl {
                 accAttachmentId = parentAcc.Attachments[0].Id;
             }
             recordSearch(); 
+        }
+    }
+
+    //update content in 2 textbox in listing page
+    public void updateEvaluation(){
+        Integer intMonth;
+        Integer intYear;
+
+        if(String.isBlank(filterMonth) || String.isBlank(filterYear)){
+            intMonth = Date.today().month();
+            intYear = Date.today().year();
+        } else {
+            intMonth = Integer.valueOf(filterMonth);
+            intYear = Integer.valueOf(filterYear);
+        }
+
+        List<Evaluation__c> tempEvals = [SELECT Target__c, Result__c FROM Evaluation__c WHERE Month__c = :intMonth AND Year__c = :intYear AND Account__c = :parentAcc.Id];
+        //if there is data already
+        if(tempEvals != null && tempEvals.size() > 0){
+            evalResult = tempEvals[0].Result__c;
+            evalTarget = tempEvals[0].Target__c;
+            //evalResult = evalResult.replace('\r\n', '<br/>');
+            //evalTarget = evalTarget.replace('\r\n', '<br/>');
+        } else {
+            evalResult = '';
+            evalTarget = '';
         }
     }
 
@@ -165,6 +265,67 @@ public with sharing class kdActivityListCtrl {
         }
     }
 
+
+    //first load when open popup
+    public void refreshEvaluation(){
+        if(String.isBlank(filterMonth) || String.isBlank(filterYear)){
+            eval.Month__c = Date.today().month();
+            eval.Year__c = Date.today().year();
+        } else {
+            eval.Month__c = Integer.valueOf(filterMonth);
+            eval.Year__c = Integer.valueOf(filterYear);
+        }
+        
+        evalType = '目標';
+        evalTypeInput = '目標';
+        List<Evaluation__c> tempEvals = [SELECT Target__c, Result__c, Month__c, Year__c FROM Evaluation__c WHERE Month__c = :eval.Month__c AND Year__c = :eval.Year__c AND Account__c = :parentAcc.Id];
+        //if there is data already
+        if(tempEvals != null && tempEvals.size() > 0){
+            eval = tempEvals[0];
+            evalDescription = eval.Target__c;
+        } else {
+            evalDescription = '';
+        }
+    }
+
+    public void initEvaluation(){
+        eval = new Evaluation__c();
+        eval.Account__c = parentAcc.Id;
+        evalType = '目標';
+        evalTypeInput = '目標';
+        evalDescription = '';
+    }
+
+    public void callDoSaveEvaluation(){
+        if(evalTypeInput == '目標'){
+            eval.Target__c = evalDescription;
+        } else {
+            eval.Result__c = evalDescription;
+        }
+        upsert eval;
+        initEvaluation();
+        updateEvaluation();
+    }
+
+    public void reloadDescription(){
+        //TODO: eval variable is not binded, so using string variables instead of
+        Integer month = Integer.valueOf(evalMonthInput);
+        Integer year = Integer.valueOf(evalYearInput);
+
+        List<Evaluation__c> tempEvals = [SELECT Target__c, Result__c, Month__c, Year__c FROM Evaluation__c WHERE Month__c = :month AND Year__c = :year AND Account__c = :parentAcc.Id];
+        //if there is data already
+        if(tempEvals != null && tempEvals.size() > 0){
+            eval = tempEvals[0];
+            evalDescription = (evalTypeInput == '目標' ? eval.Target__c : eval.Result__c);
+        } else {
+            eval = new Evaluation__c();
+            eval.Account__c = parentAcc.Id;
+            eval.Month__c = month;
+            eval.Year__c = year;
+            evalDescription = '';
+        }
+    }
+
     public void callDoSaveNewEvent(){
         insert newRelatedEvent;
         newEvent.auActivityRelated__c = newRelatedEvent.Id;
@@ -182,7 +343,10 @@ public with sharing class kdActivityListCtrl {
         newEvent.EndDateTime = Datetime.newInstance(iYear, iMonth, iDay, endHr, endMn, 0);
         newEvent.Subject = newEventSubject;
         newEvent.WhatId = parentAcc.Id;
+        newEvent.Type__c = '社外';
         newEvent.Category__c = '代理店商談';
+        newEvent.OwnerId =  adminUser.Id;
+        newEvent.cppIsCreate__c = true;
         insert newEvent;
 
         initNewEvent();
@@ -193,12 +357,18 @@ public with sharing class kdActivityListCtrl {
     //cookie保存
     private void saveInputValues() {
         List<Cookie> cookies = new List<Cookie>();
-        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_MONTH, this.filterMonth, null, COOKIE_EXPIRATION_DATE, true));
-        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_FROM, this.filterDateFromStr, null, COOKIE_EXPIRATION_DATE, true));
-        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_TO, this.filterDateToStr, null, COOKIE_EXPIRATION_DATE, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_CATEGORY, this.filterCategory, null, COOKIE_EXPIRATION_DATE, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_FREETEXT, this.filterFreeText, null, COOKIE_EXPIRATION_DATE, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_LABEL_INIT_SEARCH_FLG, this.initSearchFlg, null, COOKIE_EXPIRATION_DATE, true));  // 画面起動時検索フラグ
+        Apexpages.currentPage().setCookies(cookies);
+    }
+
+    public void clearCookie(){
+        List<Cookie> cookies = new List<Cookie>();
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_CATEGORY   , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_FREETEXT, null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_LABEL_INIT_SEARCH_FLG        , null    , null, 0, true));
+
         Apexpages.currentPage().setCookies(cookies);
     }
 
@@ -207,18 +377,6 @@ public with sharing class kdActivityListCtrl {
 
         Map<String, Cookie> cookies = Apexpages.currentPage().getCookies();
         Boolean hasSearchValues = false;
-
-        if(cookies.containsKey(COOKIE_PREFIX + COOKIE_MONTH)){
-                this.filterMonth = cookies.get(COOKIE_PREFIX + COOKIE_MONTH).getValue();
-        }
-
-        if(cookies.containsKey(COOKIE_PREFIX + COOKIE_FROM)){
-                this.filterDateFromStr = cookies.get(COOKIE_PREFIX + COOKIE_FROM).getValue();
-        }
-
-        if(cookies.containsKey(COOKIE_PREFIX + COOKIE_TO)){
-                this.filterDateToStr = cookies.get(COOKIE_PREFIX + COOKIE_TO).getValue();
-        }
 
         if(cookies.containsKey(COOKIE_PREFIX + COOKIE_CATEGORY)){
                 this.filterCategory = cookies.get(COOKIE_PREFIX + COOKIE_CATEGORY).getValue();
@@ -239,7 +397,8 @@ public with sharing class kdActivityListCtrl {
 
     public void loadEventDetail(){
         try{
-            eventUpdate = [SELECT OwnerId, ActivityDate, EndDateTime, CreatedBy.DisplayedUsernameFormula__c, Subject, StartDateTime, auActivityRelated__c, auActivityRelated__r.SubCategory__c, auActivityRelated__r.Activity_Description__c FROM Event WHERE Id = :eventUpdateId];    
+            eventUpdate = [SELECT OwnerId, ActivityDate, EndDateTime, CreatedBy.DisplayedUsernameFormula__c, Subject, StartDateTime, cppIsDelete__c, cppIsCreate__c, auActivityRelated__c, auActivityRelated__r.SubCategory__c, auActivityRelated__r.AttachmentsFromEvent__c, auActivityRelated__r.Activity_Description__c, 
+            (SELECT Name, IsPrivate, OwnerId FROM Attachments) FROM Event WHERE Id = :eventUpdateId];    
             if(eventUpdate.auActivityRelated__r != null) {
                 eventDescription = eventUpdate.auActivityRelated__r.Activity_Description__c;
                 eventCategory = eventUpdate.auActivityRelated__r.SubCategory__c;
@@ -249,11 +408,10 @@ public with sharing class kdActivityListCtrl {
                 eventUpdate.auActivityRelated__c = r.Id;
                 update eventUpdate;
             }
+            eventRelatedObjectId = eventUpdate.auActivityRelated__c;
 
             eventUpdateStart = eventUpdate.StartDateTime.format('HH:mm');
             eventUpdateEnd = eventUpdate.EndDateTime.format('HH:mm');
-
-            system.debug('currentUser.Profile.Name: ' + currentUser.Profile.Name);
 
             isEditable = (eventUpdate.OwnerId == currentUser.Id || 
                 currentUser.Profile.Name == 'System Admin' || 
@@ -267,9 +425,14 @@ public with sharing class kdActivityListCtrl {
             
             lsEventUpdateAttachment = [SELECT id, Name, IsPrivate, OwnerId
                                        FROM Attachment 
-                                       WHERE ParentId = :eventUpdateId 
+                                       WHERE ParentId = :eventRelatedObjectId 
                                        ORDER BY LastModifiedDate DESC];
-            
+            //check if event attachments were deleted from CCP? if not delete then display it on the list
+            for(Attachment att : eventUpdate.Attachments){
+                if(!String.isBlank(eventUpdate.auActivityRelated__r.AttachmentsFromEvent__c) && eventUpdate.auActivityRelated__r.AttachmentsFromEvent__c.contains(att.Id)){
+                    lsEventUpdateAttachment.add(att);
+                }
+            }
         } catch(Exception ex) {
             eventUpdate = new Event();
         }
@@ -287,7 +450,16 @@ public with sharing class kdActivityListCtrl {
         for(auActivityRelated__c related : [SELECT Id FROM auActivityRelated__c WHERE Id = :eventUpdate.auActivityRelated__c]){
             delete related;
         }
-        delete eventUpdate;
+        //if event was created from CCP then real delte
+        if(eventUpdate.cppIsCreate__c){
+            delete eventUpdate;
+        } else {
+            //if event was created from S-bari, just flag it as deleted
+            eventUpdate.cppIsDelete__c = true;
+            eventUpdate.auActivityRelated__c = null;
+            update eventUpdate;
+        }
+        
         recordSearch();
         eventUpdate = new Event();
     }
@@ -304,8 +476,8 @@ public with sharing class kdActivityListCtrl {
             pageNum = 1;
         }
         this.initSearchFlg = 'true';  // 画面起動時検索フラグON
-        String queryStr = 'SELECT OwnerId, ActivityDate, EndDateTime, StartDateTime, auActivityRelated__r.Activity_Description__c, auActivityRelated__r.SubCategory__c, (SELECT Id, Name FROM Attachments LIMIT 1) FROM ' +
-        'Event WHERE (Category__c = \'代理店商談\') AND (AccountId = \'' + parentAcc.Id + '\')';
+        String queryStr = 'SELECT OwnerId, ActivityDate, EndDateTime, StartDateTime, auActivityRelated__r.Activity_Description__c, auActivityRelated__r.SubCategory__c, auActivityRelated__r.HasAttachment__c, CCPHasAttachment__c FROM ' +
+        'Event WHERE cppIsDelete__c != True AND (Category__c = \'代理店商談\') AND (AccountId = \'' + parentAcc.Id + '\')';
 
         if(String.isBlank(whereStr)) {
             List<String> whereStrElems = getWhereStrList();
@@ -482,11 +654,11 @@ public with sharing class kdActivityListCtrl {
     }
 
     public void doSearch() {
-        system.debug('into doSearch');
         whereStr = '';
         searchFilter = filterFreeText;
         this.pageNum = 1;
         recordSearch();
+        updateEvaluation();
     }
 
     /**
@@ -518,7 +690,7 @@ public with sharing class kdActivityListCtrl {
                 eventItem.category = e.auActivityRelated__r.SubCategory__c;
                 eventItem.referrenceId = e.auActivityRelated__c;
                 eventItem.ownerId = e.OwnerId;
-                eventItem.hasAttachment = e.Attachments != null && e.Attachments.size() > 0;
+                eventItem.hasAttachment = e.CCPHasAttachment__c;
                 recs.add(eventItem);
             }
         }
@@ -527,9 +699,8 @@ public with sharing class kdActivityListCtrl {
     }
 
     public Pagereference addEventNewAttachment() {
-        system.debug('eventOwnerId: ' + eventOwnerId);
       eventNewAttachmentLocal.OwnerId = eventOwnerId;
-      eventNewAttachmentLocal.ParentId = eventUpdateId; // the record the file is attached to
+      eventNewAttachmentLocal.ParentId = eventRelatedObjectId; // the record the file is attached to
       eventNewAttachmentLocal.IsPrivate = False;
 
       try {
@@ -559,8 +730,32 @@ public with sharing class kdActivityListCtrl {
     public void kdKnowledgeAttachmentDelete() {
         try{
             Attachment att = [SELECT ContentType, ParentId FROM Attachment WHERE Id = :attachmentId];
-            Delete att;
-            lsEventUpdateAttachment = [SELECT Name from Attachment WHERE ParentId = :eventUpdateId ORDER BY LastModifiedDate DESC];
+            //if attachment was created from CCP then real delete
+            if(att.ParentId.getSobjectType() == auActivityRelated__c.SobjectType){
+                Delete att;
+                lsEventUpdateAttachment = [SELECT Name from Attachment WHERE ParentId = :eventRelatedObjectId ORDER BY LastModifiedDate DESC];
+
+                auActivityRelated__c relatedEvent = [SELECT AttachmentsFromEvent__c FROM auActivityRelated__c WHERE Id = :eventRelatedObjectId];
+                for(Attachment a : eventUpdate.Attachments){
+                    if(!String.isBlank(relatedEvent.AttachmentsFromEvent__c) && relatedEvent.AttachmentsFromEvent__c.contains(a.Id)){
+                        lsEventUpdateAttachment.add(a);
+                    }
+                }
+            } else {
+                //if attachment was created from S-bari then remove it from AttachmentsFromEvent__c
+                auActivityRelated__c relatedEvent = [SELECT AttachmentsFromEvent__c, IsHaveAttachmentFromEvent__c FROM auActivityRelated__c WHERE Id = :eventRelatedObjectId];
+                relatedEvent.AttachmentsFromEvent__c = relatedEvent.AttachmentsFromEvent__c.remove(';' + att.Id).remove(att.Id + ';').remove(att.Id);
+                relatedEvent.IsHaveAttachmentFromEvent__c = !String.isBlank(relatedEvent.AttachmentsFromEvent__c);
+                update relatedEvent;
+
+                lsEventUpdateAttachment = [SELECT Name from Attachment WHERE ParentId = :eventRelatedObjectId ORDER BY LastModifiedDate DESC];
+                for(Attachment a : eventUpdate.Attachments){
+                    if(!String.isBlank(relatedEvent.AttachmentsFromEvent__c) && relatedEvent.AttachmentsFromEvent__c.contains(a.Id)){
+                        lsEventUpdateAttachment.add(a);
+                    }
+                }
+            }
+
             isReloadAfterClosePopup = (lsEventUpdateAttachment == null || lsEventUpdateAttachment.size() == 0);
         } catch(Exception e){
 

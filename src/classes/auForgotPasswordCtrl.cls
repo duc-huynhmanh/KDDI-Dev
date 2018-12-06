@@ -40,8 +40,17 @@ public without sharing class auForgotPasswordCtrl {
 			}
 			
 			System.debug('@@@:' + siteUserName);
-			User target = [Select Id, Profile.Name, LastName, FirstName, KDDIEmployeeId__c, SAUserId__c, PasswordResetOneTimeKey__c, Email From User Where UserName = :siteUserName];
-
+			List<User> targetList = [Select Id, Profile.Name, LastName, FirstName, KDDIEmployeeId__c, SAUserId__c, PasswordResetOneTimeKey__c, Email From User Where UserName = :siteUserName];
+			
+			User target = null;
+			if(targetList.size()>0){
+				target=targetList[0];
+			}else{
+				errorMessage=auConstantCmn.FORGOT_PASSWORD_ERR_MESSAGE002;
+				errorLoginUsername = true;
+            	return null;
+			}
+			
 			if (target != null) {
 
 				System.debug('@@@:' + target.LastName);

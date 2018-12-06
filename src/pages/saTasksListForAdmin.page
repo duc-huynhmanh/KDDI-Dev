@@ -377,7 +377,7 @@
 
               <li class="field">
 
-                <apex:outputLabel value="支社"
+                <apex:outputLabel value="{!$ObjectType.saMessage__c.fields.RegionalOfficeCode__c.Label}"
                                   for="filterShisha"
                                   styleClass="field-label" />
 
@@ -396,7 +396,7 @@
 
               <li class="field" style="min-width: 400px;">
 
-                <apex:outputLabel value="支店"
+                <apex:outputLabel value="{!$ObjectType.saMessage__c.fields.BranchCode__c.Label}"
                                   for="filterShiten"
                                   styleClass="field-label" />
 
@@ -509,13 +509,13 @@
                       <!-- COLUMN 1-->
                       <th>
                         <a href="javascript:void(0)" onclick="sortOrder('RegionalOfficeCode__c');">
-                          <apex:outputText value="支社" />
+                          <apex:outputText value="{!$ObjectType.saMessage__c.fields.RegionalOfficeCode__c.Label}" />
                           <apex:outputText rendered="{!orderTarget == 'RegionalOfficeCode__c' && orderDesc == false}" value="△" />
                           <apex:outputText rendered="{!orderTarget == 'RegionalOfficeCode__c' && orderDesc == true}" value="▽" />
                         </a>
                         <br/>
                         <a href="javascript:void(0)" onclick="sortOrder('BranchCode__c');">
-                          <apex:outputText value="支店" />
+                          <apex:outputText value="{!$ObjectType.saMessage__c.fields.BranchCode__c.Label}" />
                           <apex:outputText rendered="{!orderTarget == 'BranchCode__c' && orderDesc == false}" value="△" />
                           <apex:outputText rendered="{!orderTarget == 'BranchCode__c' && orderDesc == true}" value="▽" />
                         </a>

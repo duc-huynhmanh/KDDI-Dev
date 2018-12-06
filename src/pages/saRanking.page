@@ -86,9 +86,6 @@
         }
     }
 
-
-
-
   </script>
 
   <style type="text/css">
@@ -134,11 +131,11 @@
 		/*height: 230px;*/
 		height: 6em;
 	}
-
+	
 	.ranking-list li .description {
 	    display: block;
 	    position: absolute;
-	    left: 120px;
+	    left: 130px;
 	    top: 65px;
 	    height: 10rem;
 	    /*line-height: 0.95em;*/
@@ -183,6 +180,76 @@
 	    background: white;
 	}
 	
+	.ranking-list li > a { 
+		margin-top: -120px; 
+		margin-left: -40px;
+		padding: 0 0 0 180px;
+	}
+	
+	.first > a, .second > a, .third > a{ 
+		margin-top: -162px !important;
+		margin-left: -20px !important;
+	}
+
+	.rankingSpan {
+		line-height: normal !important;
+		float: left !important;
+		font-weight: lighter;
+    	font-size: small;
+		clear: left;
+		margin-right: 20px;
+		padding: 5px;
+		column-width: 25%;
+	}
+	
+	.rankingSpanValue {
+		line-height: normal !important;
+		float: left !important;
+		font-weight: lighter;
+    	font-size: small;
+		clear: right;
+		margin-right: 20px;
+		padding: 5px;
+	}
+	
+	.ranking-list li {
+		min-height: 6em;
+    	line-height: 160px;
+		/*height: fit-content;*/
+	}
+	
+	table {
+		margin-top: 10px;
+		width: 75%;
+		float: right;
+		font-size: small;
+		position: absolute;
+		top: 10px;
+    	left: 160px;
+    	table-layout: fixed;
+	}
+	
+	tr{
+		line-height: normal;
+		width: 75%;
+	}
+	
+	td.rankingDataLabel {
+    	width: 30% !important;
+	}
+	
+	td.rankingDataValue {
+    	width: 70% !important;
+	}
+	
+	.ellipsedSpan{
+	    display: inline-block;
+    	text-overflow: ellipsis;
+    	white-space: nowrap;
+    	overflow: hidden;
+    	width: 100%;
+	}
+	
   </style>
 </head>
 
@@ -197,7 +264,6 @@
                        action="{!showRankingDetail}"
                        rerender="pnlRankingName, pnlRankingDetail"
                        oncomplete="setView_07_01_02();" />
-
 
   <c:saMainTopComp typeOfScreen="{!typeOfScreen}" />
 
@@ -253,16 +319,75 @@
           <apex:outputPanel id="pnlRankingDetail">
 
             <!-- #DynamicItem -->
-            <ol class="ranking-list">
+            <ol class="ranking-list" style="{!IF(currentRankingType!=typeUserCst, '', 'display: none;')}">
 
               <apex:repeat value="{!lsRankingResults}" var="res">
-
+				
                 <li class="{!res.resPositionClsNm}">
-                  <!-- a href="#"> -->
-                    <span class="name">{!res.resName}</span>
-                    <span class="description truncated-text">{!res.resDescription}</span>
-                  <!-- /a> -->
+                  
+                  	<div onClick="location.href='{!res.resURL}'">
+                  		<table>
+                  			<tr>
+                  				<!-- td class="rankingDataLabel"><span class="ellipsedSpan">カテゴリ : </span></td-->
+                  				<td class="rankingDataValue"><span class="ellipsedSpan">{!res.resCategory}</span></td>
+                  			</tr>
+                  			<tr>
+                  				<!-- td class="rankingDataLabel"><span class="ellipsedSpan">タイトル : </span></td -->
+                  				<td class="rankingDataValue"><span class="ellipsedSpan">{!res.resName}</span></td>
+                  			</tr>
+                  			<!--tr>
+                  				<td class="rankingDataLabel"><span class="ellipsedSpan">投稿者所属 : </span></td>
+                  				<td class="rankingDataValue"><span class="ellipsedSpan">{!res.resDepartment}</span></td>
+                  			</tr-->
+                  			<tr>
+                  				<!-- td class="rankingDataLabel"><span class="ellipsedSpan">投稿者名 : </span></td -->
+                  				<td class="rankingDataValue"><span class="ellipsedSpan">{!res.resDisplayedUserName}</span></td>
+                  			</tr>
+                  			<tr style="{!IF(currentRankingType=typeViewsCst, '', 'display: none;')}">
+                  				<!-- td class="rankingDataLabel"><span class="ellipsedSpan">閲覧数 : </span></td-->
+                  				<td class="rankingDataValue"><span class="ellipsedSpan">閲覧数 : {!res.resRankingValue}</span></td>
+                  			</tr>
+                  			<tr style="{!IF(currentRankingType=typeLikeCst, '', 'display: none;')}">
+                  				<!-- td class="rankingDataLabel"><span class="ellipsedSpan">いいね数 : </span></td-->
+                  				<td class="rankingDataValue"><span class="ellipsedSpan">いいね数 : {!res.resRankingValue}</span></td>
+                  			</tr>
+                  			<tr>
+                  				<!-- td class="rankingDataLabel"><span class="ellipsedSpan">承認日時 : </span></td-->
+                  				<td class="rankingDataValue"><span class="ellipsedSpan">{!res.resDateTime}</span></td>
+                  			</tr>
+                  		</table>
+                  	</div>
+                  	
                 </li>
+               
+              </apex:repeat>
+
+            </ol>
+            
+            <ol class="ranking-list" style="{!IF(currentRankingType=typeUserCst, '', 'display: none;')}">
+
+              <apex:repeat value="{!lsRankingResults}" var="res">
+				
+                <li class="{!res.resPositionClsNm}" style="min-height: auto;height:/*160px*/fit-content !important;">
+                  
+	                <table>
+	                	<tr>
+	                  		<!-- td class="rankingDataLabel"><span class="ellipsedSpan">所属組織 : </span></td -->
+	                  		<td class="rankingDataValue"><span class="ellipsedSpan">{!res.resDisplayedUserName}</span></td>
+	               		</tr>
+	                  	<!-- tr>
+	                  		<td class="rankingDataLabel"><span class="ellipsedSpan">ユーザ名 : </span></td>
+	                  		<td class="rankingDataValue"><span class="ellipsedSpan">{!res.resUserName}</span></td>
+	                  	</tr -->
+	                  	<tr>
+	                  		<!-- td class="rankingDataLabel"><span class="ellipsedSpan">投稿数 : </span></td -->
+	                  		<td class="rankingDataValue"><span class="ellipsedSpan">投稿数 : {!res.resRankingValue}</span></td>
+	                  	</tr>
+	             	</table>
+
+                  	
+                </li>
+               
               </apex:repeat>
 
             </ol>
@@ -317,7 +442,13 @@
 
     $j(document).ready(function () {
 
-      setView_07_01_01();
+	　　if({!redirectDestination==rankingTypeView || redirectDestination==rankingTypeLike}){
+	    jsShowRankingDetail();
+	    setView_07_01_02();
+      }else{
+      	setView_07_01_01();
+      }
+      
 
     });
 

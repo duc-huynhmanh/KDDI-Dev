@@ -406,7 +406,7 @@
                     <apex:selectOption itemValue="50" itemLabel="50 件表示"/>
                   </apex:selectList>
               </div>
-              <div class="mdl-cell mdl-cell--5-col search-pagination" style="width: calc(100% - 13.5em); margin-left: 1rem;">
+              <div class="mdl-cell mdl-cell--5-col search-pagination" style="width: 50%; margin-left: 1rem;">
                 <apex:outputPanel id="pnlPagination">
                   <apex:outputPanel rendered="{!!(recOrdscount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1)}">
                     <div style="height: 53px;" />
@@ -555,10 +555,11 @@
                   </apex:outputPanel>
                 </apex:outputPanel>
               </div>
-              <div class="mdl-cell mdl-cell--4-col search-numbers" style="width: 8em; position: absolute; right: 2.3em;">
-                <apex:outputPanel id="pnlDataCount" style="display: inline-block; margin-top: 1rem; margin-right: 1em;">
+              <div class="mdl-cell mdl-cell--4-col search-numbers" style="width: 16.6666666667%; position: absolute; right: 2.3em;">
+                <apex:outputPanel id="pnlDataCount" style="display: inline-block; margin-top: 1rem; margin-right: 1rem;">
                   <span class="search-numbers__total"><span>{!RecordsCountLabel}</span><small>件</small></span>
                 </apex:outputPanel>
+                <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="/auEventsListCSVExport?olddata={!isOldData}" target="_blank">CSV出力</a>
               </div>
           </apex:actionRegion>
           </div>

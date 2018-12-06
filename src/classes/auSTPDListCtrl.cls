@@ -14,6 +14,7 @@ public with sharing class auSTPDListCtrl {
     private static final String COOKIE_FREETEXT = 'FreeText';
     private static final String COOKIE_SHISHA = 'Shisha';
     private static final String COOKIE_SHITEN = 'Shiten';
+    private static final String COOKIE_DAIRITEN = 'Dairiten';
     private static final String COOKIE_UNEIHOJIN = 'UneiHojin';
     private static final String COOKIE_SHOPS = 'Shops';
     private static final String COOKIE_LABEL_INIT_SEARCH_FLG = 'initSearchFlg';  // 画面起動時検索フラグ
@@ -32,6 +33,7 @@ public with sharing class auSTPDListCtrl {
     public String filterFreeText {get; set;}
     public String filterShiten {get; set;}
     public String filterShisha {get; set;}
+    public String filterDairiten {get; set;}
     public String filterUneiHojin {get; set;}
     public auSTPD__c stpdNew {get; set;}
     public auSTPD__c stpdUpdate {get; set;}
@@ -44,6 +46,7 @@ public with sharing class auSTPDListCtrl {
 
     public List<SelectOption> optShisha{get; set;}
     public List<SelectOption> optShiten{get; set;}
+    public List<SelectOption> optDairiten{get; set;}
     public List<SelectOption> optUneiHojin{get; set;}
 
     public Boolean isShopUser {get; set;}
@@ -58,6 +61,12 @@ public with sharing class auSTPDListCtrl {
 
     public Boolean getIsVisibleFilterShisha() {
         return isHonbuOrAdmin;
+    }
+
+    public Boolean getIsVisibleFilterDairiten() {
+        return (currentUser.Profile.Name != auConstantCmn.PROFILE_COMMUNITY_SHOP &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_COMMUNITY_MANAGEMENT &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT);
     }
 
     public Boolean getIsVisibleFilterUneiHojin() {
@@ -111,15 +120,16 @@ public with sharing class auSTPDListCtrl {
         Boolean hasSearchValue = initFieldFromCookie();//保持項目有無チェック
 
         isShopUser = (currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_SHOP);
-        isHonbuOrAdmin = (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS_V2 || currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_CUSTOM || currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN || currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP);
-        isShisha = (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2);
-        isShiten = (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH_V2);
+        isHonbuOrAdmin = (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS || currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_CUSTOM || currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN || currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP);
+        isShisha = (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA);
+        isShiten = (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2);
         isRestrictedUser = currentUser.IsRestrictedUser__c;
 
         // 支店
         optShisha = auUtilChatter.getListShisha(currentUser);
         optShiten = auUtilChatter.getListShiten(currentUser, filterShisha);
-        optUneiHojin = auUtilChatter.getListUneiHojin(currentUser, filterShisha, filterShiten);
+        optDairiten = auUtilChatter.getListDairiten(currentUser, filterShisha, filterShiten);
+        optUneiHojin = auUtilChatter.getListUneiHojin(currentUser, filterShisha, filterShiten, filterDairiten);
 
         // 系列項目設定
         List<optionDetail> shopsOptions = new List<optionDetail>();
@@ -129,7 +139,7 @@ public with sharing class auSTPDListCtrl {
         }
 
         List<SelectOption> options = new List<SelectOption>();
-        options = auUtilChatter.getListShops(currentUser, filterShisha, filterShiten, filterUneiHojin);
+        options = auUtilChatter.getListShops(currentUser, filterShisha, filterShiten, filterDairiten, filterUneiHojin);
 
         for (SelectOption option: options) {
             Boolean isSelected = false;
@@ -193,6 +203,7 @@ public with sharing class auSTPDListCtrl {
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_FREETEXT, this.filterFreeText, null, COOKIE_EXPIRATION_DATE, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_SHISHA, this.filterShisha, null, COOKIE_EXPIRATION_DATE, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_SHITEN, this.filterShiten, null, COOKIE_EXPIRATION_DATE, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_DAIRITEN, this.filterDairiten, null, COOKIE_EXPIRATION_DATE, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_UNEIHOJIN, this.filterUneiHojin, null, COOKIE_EXPIRATION_DATE, true));
 
         String targetShopsText = '';
@@ -205,6 +216,21 @@ public with sharing class auSTPDListCtrl {
 
         Apexpages.currentPage().setCookies(cookies);
 
+    }
+
+    public void clearCookie(){
+        List<Cookie> cookies = new List<Cookie>();
+
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_STATUS   , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_FREETEXT   , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_SHISHA   , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_SHITEN   , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_DAIRITEN, null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_UNEIHOJIN        , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_SHOPS        , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_LABEL_INIT_SEARCH_FLG        , null    , null, 0, true));
+
+        Apexpages.currentPage().setCookies(cookies);
     }
 
     //保持項目有無判定
@@ -227,6 +253,10 @@ public with sharing class auSTPDListCtrl {
 
         if(cookies.containsKey(COOKIE_PREFIX + COOKIE_SHITEN) && cookies.get(COOKIE_PREFIX + COOKIE_SHITEN).getValue().length() > 0){
                 this.filterShiten = cookies.get(COOKIE_PREFIX + COOKIE_SHITEN).getValue();
+        }
+
+        if(cookies.containsKey(COOKIE_PREFIX + COOKIE_DAIRITEN) && cookies.get(COOKIE_PREFIX + COOKIE_DAIRITEN).getValue().length() > 0){
+                this.filterDairiten = cookies.get(COOKIE_PREFIX + COOKIE_DAIRITEN).getValue();
         }
 
         if(cookies.containsKey(COOKIE_PREFIX + COOKIE_UNEIHOJIN) && cookies.get(COOKIE_PREFIX + COOKIE_UNEIHOJIN).getValue().length() > 0){
@@ -506,9 +536,13 @@ public with sharing class auSTPDListCtrl {
 
             if (this.targetShops != null && this.targetShops.size() > 0) {
                 strList.add(auUtilCmn.appendInText('CreatedBy__r.AccountId', this.targetShops));
-            } else if (getIsVisibleFilterUneiHojin() && this.filterUneiHojin != null && this.filterUneiHojin .length() > 0) {
+            } else if (getIsVisibleFilterUneiHojin() && this.filterUneiHojin != null && this.filterUneiHojin.length() > 0) {
                 strList.add('(CreatedBy__r.AccountId = \'' + filterUneiHojin + '\' OR ' +
                             ' CreatedBy__r.Account.ParentId = \'' + filterUneiHojin + '\')');                
+            } else if (getIsVisibleFilterDairiten() && this.filterDairiten != null && this.filterDairiten.length() > 0) {
+                strList.add('(CreatedBy__r.AccountId = \'' + filterDairiten + '\' OR ' +
+                            ' CreatedBy__r.Account.ParentId = \'' + filterDairiten + '\' OR ' +
+                            ' CreatedBy__r.Account.Parent.ParentId = \'' + filterDairiten + '\')');    
             } else if (getIsVisibleFilterShiten() && this.filterShiten != null && this.filterShiten.length() > 0) {
                 // Filter on Shiten is used only if UneiHojin and shops have not been selected
                 strList.add('(CreatedBy__r.Account.BranchId__c = \'' + filterShiten + '\' OR ' +
@@ -1126,11 +1160,31 @@ system.debug(filterDateFromStr);
 
         }
 
+        refreshDairitenFilter();
+    }
+
+    public void refreshDairitenFilter() {
+        optDairiten = auUtilChatter.getListDairiten(currentUser, filterShisha, filterShiten);
+
+        // Initialize Dairiten if no more selectable
+        if (filterDairiten != NULL && filterDairiten.length() > 0) {
+            Boolean fDairitenFound = false;
+            for (SelectOption opt : optDairiten) {
+                if (opt.getValue() == filterDairiten) {
+                    fDairitenFound = true;
+                    break;
+                }
+            }
+            if (!fDairitenFound) {
+                filterDairiten = NULL;
+            }
+
+        }
         refreshUneiHojinFilter();
     }
 
     public void refreshUneiHojinFilter() {
-        optUneiHojin = auUtilChatter.getListUneiHojin(currentUser, filterShisha, filterShiten);
+        optUneiHojin = auUtilChatter.getListUneiHojin(currentUser, filterShisha, filterShiten, filterDairiten);
 
         // Initialize Uneihojin if no more selectable
         if (filterUneiHojin != NULL && filterUneiHojin.length() > 0) {
@@ -1160,7 +1214,7 @@ system.debug(filterDateFromStr);
         }
 
         List<SelectOption> options = new List<SelectOption>();
-        options = auUtilChatter.getListShops(currentUser, filterShisha, filterShiten, filterUneiHojin);
+        options = auUtilChatter.getListShops(currentUser, filterShisha, filterShiten, filterDairiten, filterUneiHojin);
 
         for (SelectOption option: options) {
             Boolean isSelected = false;

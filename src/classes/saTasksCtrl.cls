@@ -54,9 +54,14 @@ public with sharing class saTasksCtrl {
 
     public Pagereference addCxKnowledgeNewAttachment() {
 
+	  system.debug('Run : addCxKnowledgeNewAttachment');
+
       cxKnowledgeNewAttachmentLocal.OwnerId = UserInfo.getUserId();
+      system.debug('Step 1'); 
       cxKnowledgeNewAttachmentLocal.ParentId = currentMessageId; // the record the file is attached to
+      system.debug('Step 2'); 
       cxKnowledgeNewAttachmentLocal.IsPrivate = False;
+	  system.debug('Step 3'); 
 
       try {
         if (cxKnowledgeNewAttachmentSize == NULL) {
@@ -65,6 +70,7 @@ public with sharing class saTasksCtrl {
             insert cxKnowledgeNewAttachmentLocal;
         }
 
+		system.debug('Step 4'); 
         // Refresh the list of attachments
         currentMessage.refreshMessageDetail();
 
@@ -73,9 +79,12 @@ public with sharing class saTasksCtrl {
         ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error uploading attachment'));
         return null;
       } finally {
+      	system.debug('Step 5'); 
         cxKnowledgeNewAttachmentLocal = new Attachment(); 
+        system.debug('Step 5bis');
       }
 
+	  system.debug('Step 6'); 
       ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'Attachment uploaded successfully'));
       return null;
 
@@ -201,6 +210,8 @@ public with sharing class saTasksCtrl {
         }
 
         public void attachmentDelete() {
+        	
+        	system.debug('Run : attachmentDelete');
 
             Attachment att = [SELECT id FROM Attachment WHERE id = :attachmentId];
             Delete att;
@@ -210,6 +221,8 @@ public with sharing class saTasksCtrl {
         }
 
         public void attachmentPutInTop() {
+
+			system.debug('Run : attachmentPutInTop');
 
             Attachment att = [SELECT id FROM Attachment WHERE id = :attachmentId];
             Update att;
@@ -223,6 +236,7 @@ public with sharing class saTasksCtrl {
             clsNm = '';
             dateLabel ='';
 
+			system.debug('CurrentMessageID'+msg.Id);
             // Get the data associated to the reply
             msgDetail = [SELECT Id, saMessage__c, ReplyComment__c
                          FROM saMessageDetail__c

@@ -21,6 +21,8 @@ public with sharing class kdKnowledgeListCtrl {
     private static final String COOKIE_CREATEDBY = 'CreatedBy';
     private static final String COOKIE_HASMOVIE = 'HasMovie';
     private static final String COOKIE_NEW = 'NewItems';
+    private static final String COOKIE_FAVORITE = 'Favorite';
+
     private static final Set<String> MOVIE_CONTENTTYPE = getMovieContentType();
 
 /*
@@ -61,6 +63,8 @@ public with sharing class kdKnowledgeListCtrl {
 
     public Boolean filterHasMovie {get; set;}
     public Boolean filterNew {get;set;}
+    public Boolean filterFavorite {get;set;}
+
     public Boolean hasData {get;set;}
 
     public String filterDateFromStr {get; set;}
@@ -91,6 +95,7 @@ public with sharing class kdKnowledgeListCtrl {
     private Id forcedShopId;
     private Boolean forcedRecommend;
     private Boolean forcedDentouiri;
+    public Boolean isUpdate {get;set;}
 
     public String whereStr {get;set;}
     public String getWhereStrParam(){
@@ -136,13 +141,14 @@ public with sharing class kdKnowledgeListCtrl {
      * Created on 2017/01/15
      */
     public kdKnowledgeListCtrl() {    
+        system.debug('constructor: kdKnowledgeListCtrl');
         pageNum = 1;
         pageSize = 20;
-        orderBy = 'LastModifiedDate__c DESC';
+        orderBy = 'PostTime__c DESC NULLS LAST';
         errorMessage = '';
 
         isShopUser = (currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_SHOP);
-        isHonbu = (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS_V2);
+        isHonbu = (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS);
         isRestrictedUser = currentUser.IsRestrictedUser__c;
         themaMap = new Map<String, String>();
 
@@ -150,7 +156,7 @@ public with sharing class kdKnowledgeListCtrl {
             themaMap.put(f.getValue(), f.getLabel());
         }  
 
-        kdKnowledgeUpdate = new kdKnowledge__c();
+        clearUpdateKnowledge();
         kdKnowledgeUpdateDetailCopy = new kdKnowledgeDetail__c();
         kdKnowledgeUpdateDetailLike = new kdKnowledgeDetail__c();
         isCreator = False;
@@ -177,10 +183,10 @@ public with sharing class kdKnowledgeListCtrl {
             filterThema = params.get('thema');
         } else if (params.containsKey('recommend') && params.get('recommend') == 'true') {
             forcedRecommend = true;
-            orderBy = 'DisplayOrder__c NULLS LAST, LastModifiedDate__c DESC';
+            orderBy = 'DisplayOrder__c DESC NULLS LAST, PostTime__c DESC NULLS LAST';
         } else if (params.containsKey('dentouiri') && params.get('dentouiri') == 'true') {
             forcedDentouiri = true;
-            orderBy = 'LastModifiedDate__c DESC';
+            orderBy = 'PostTime__c DESC NULLS LAST';
         } else if (params.containsKey('vieworder') && params.get('vieworder') == 'true') {
             orderBy = 'NbView1Week__c DESC';
         } else {
@@ -201,8 +207,27 @@ public with sharing class kdKnowledgeListCtrl {
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_CREATEDBY, this.filterCreatedBy, null, COOKIE_EXPIRATION_DATE, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_HASMOVIE, this.filterHasMovie != null ? (this.filterHasMovie ? '1' : '0') : '0', null, COOKIE_EXPIRATION_DATE, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_NEW, this.filterNew != null ? (this.filterNew ? '1' : '0') : '0', null, COOKIE_EXPIRATION_DATE, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_FAVORITE, this.filterFavorite != null ? (this.filterFavorite ? '1' : '0') : '0', null, COOKIE_EXPIRATION_DATE, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_FREETEXT, this.searchFilter, null, COOKIE_EXPIRATION_DATE, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_LABEL_INIT_SEARCH_FLG, this.initSearchFlg, null, COOKIE_EXPIRATION_DATE, true));  // 画面起動時検索フラグ
+
+        Apexpages.currentPage().setCookies(cookies);
+    }
+
+    public void clearCookie(){
+        List<Cookie> cookies = new List<Cookie>();
+
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_STATUS   , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_TYPE   , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_THEMA   , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_SUBJECTDIVISION   , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_TITLE, null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_CREATEDBY        , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_HASMOVIE        , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_NEW        , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_FAVORITE        , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_FREETEXT        , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_LABEL_INIT_SEARCH_FLG        , null    , null, 0, true));
 
         Apexpages.currentPage().setCookies(cookies);
     }
@@ -245,6 +270,10 @@ public with sharing class kdKnowledgeListCtrl {
         if(cookies.containsKey(COOKIE_PREFIX + COOKIE_NEW)){
                 this.filterNew = (cookies.get(COOKIE_PREFIX + COOKIE_NEW).getValue() == '1');
         }
+        this.filterFavorite = false;
+        if(cookies.containsKey(COOKIE_PREFIX + COOKIE_FAVORITE)){
+                this.filterFavorite = (cookies.get(COOKIE_PREFIX + COOKIE_FAVORITE).getValue() == '1');
+        }
         if(cookies.containsKey(COOKIE_PREFIX + COOKIE_FREETEXT)){
                 this.searchFilter = cookies.get(COOKIE_PREFIX + COOKIE_FREETEXT).getValue();
                 this.filterFreeText = this.searchFilter;
@@ -261,6 +290,7 @@ public with sharing class kdKnowledgeListCtrl {
     private void clearNewKnowledge() {
         kdKnowledgeNew = new kdKnowledge__c();
         kdKnowledgeNew.CreatedBy__c = UserInfo.getUserId();
+        //kdKnowledgeNew.Description__c = '■背景\r\n\r\n■目的\r\n\r\n■期待する効果\r\n\r\n■取り組み内容\r\n\r\n■まねポイント\r\n\r\n■検索ワード\r\n';
 
         // Get the default calue in the picklist
 
@@ -281,6 +311,29 @@ public with sharing class kdKnowledgeListCtrl {
                 kdKnowledgeNew.SubjectDivision__c = pv.getValue();
             }    
         }
+    }
+
+    private void clearUpdateKnowledge(){
+        kdKnowledgeUpdate = new kdKnowledge__c();
+
+        for (Schema.PicklistEntry pv : kdKnowledge__c.Type__c.getDescribe().getPicklistValues()) {
+            if (pv.isDefaultValue()) {
+                kdKnowledgeUpdate.Type__c = pv.getValue();
+            }    
+        }
+
+        for (Schema.PicklistEntry pv : kdKnowledge__c.Thema__c.getDescribe().getPicklistValues()) {
+            if (pv.isDefaultValue()) {
+                kdKnowledgeUpdate.Thema__c = pv.getValue();
+            }    
+        }
+
+        for (Schema.PicklistEntry pv : kdKnowledge__c.SubjectDivision__c.getDescribe().getPicklistValues()) {
+            if (pv.isDefaultValue()) {
+                kdKnowledgeUpdate.SubjectDivision__c = pv.getValue();
+            }    
+        }
+
     }
 
     public List<SelectOption> getListStatus() {
@@ -341,12 +394,12 @@ public with sharing class kdKnowledgeListCtrl {
     public void recordSearch() {
         this.initSearchFlg = 'true';  // 画面起動時検索フラグON
         String queryStr = 'SELECT id, Name, AgencyLabel__c, Agency__c, CreatedBy__c, Description__c, SharedBy__c, SubjectDivision__c, ' +
-                    'Thema__c, Title__c, Type__c, NbCopy__c, NbLike__c, NbView__c, CreatedByDisplayedName__c, LastModifiedDate__c, ' + 
-                    'CreatedBy__r.DisplayedUsernameFormula__c, Status__c, HasMovie__c, MediumCategory__c, ' +
+                    'Thema__c, Title__c, Type__c, NbCopy__c, NbLike__c, NbView__c, CreatedByDisplayedName__c, LastModifiedDate__c, PostTime__c, ' + 
+                    'CreatedBy__r.DisplayedUsernameFormula__c, Status__c, HasMovie__c, MediumCategory__c, TechnicalFavorite__c, ' +
                     'UserRecordAccess.HasEditAccess, LastModifiedBy__c, LastModifiedByDisplayName__c, ' +
                     '(select id, Name from Attachments) ' +
                     'FROM kdKnowledge__c';
-        
+        system.debug('recordSearch() -> whereStr: ' + whereStr);
         if(String.isBlank(whereStr)) {
             List<String> whereStrElems = getWhereStrList();
             whereStr = joinWhereConditions(whereStrElems);
@@ -507,12 +560,16 @@ public with sharing class kdKnowledgeListCtrl {
                 strList.add('PostTime__c >= ' + DateTime.now().addDays(-7).formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\''));
             }
 
+            if (this.filterFavorite != NULL && this.filterFavorite) {
+                strList.add('ID IN (SELECT kdKnowledgeFavorite__c FROM kdKnowledgeDetail__c WHERE IsFavorite__c = True AND User__c = \'' + UserInfo.getUserId() + '\')');
+            }
+
             // Modification Date
             if (this.filterDateFrom != null) {
-                strList.add('LastModifiedDateFormula__c >= ' + String.valueOf(this.filterDateFrom));
+                strList.add('PostTime__c >= ' + String.valueOf(this.filterDateFrom));
             }
             if (this.filterDateTo != null) {
-                strList.add('LastModifiedDateFormula__c <= ' + String.valueOf(this.filterDateTo));
+                strList.add('PostTime__c <= ' + String.valueOf(this.filterDateTo));
             }
 
         }
@@ -837,12 +894,16 @@ public with sharing class kdKnowledgeListCtrl {
 
 
     public void doSaveUpdateKnowledge() {
+        if(kdKnowledgeUpdate.Status__c == auConstantCmn.KDDI_KNOWLEDGE_STATUS_TEMPORARY_SAVED) {
+            isUpdate = true;
+        }
         doSaveUpdateKnowledgeReal();
     }
 
     public void doSaveUpdateKnowledgeWithChangeStatusToSaved() {
         kdKnowledgeUpdate.Status__c = auConstantCmn.KDDI_KNOWLEDGE_STATUS_SAVED;
         kdKnowledgeUpdate.PostTime__c = DateTime.now();
+        isUpdate = true;
         shareKnowledge(kdKnowledgeUpdate.Id);
         doSaveUpdateKnowledgeReal();
     }
@@ -863,9 +924,9 @@ public with sharing class kdKnowledgeListCtrl {
         //kdKnowledgeNew.DisplayedDate__c = DateTime.now();
         kdKnowledgeNew.LastModifiedDate__c = DateTime.now();
         kdKnowledgeNew.LastModifiedBy__c = UserInfo.getUserId();
-        if (isRealSave) {
+        //if (isRealSave) {
             kdKnowledgeNew.PostTime__c = DateTime.now();
-        }
+        //}
         Insert kdKnowledgeNew;
 
         if (isRealSave) {
@@ -906,10 +967,37 @@ public with sharing class kdKnowledgeListCtrl {
             
     }
 
+    public void changeFavoriteStatus() {
+
+        if (!kdKnowledgeUpdate.TechnicalFavorite__c) {
+
+            kdKnowledgeDetail__c fav = new kdKnowledgeDetail__c();
+            fav.kdKnowledge__c = kdKnowledgeUpdate.id;
+            fav.User__c = UserInfo.getUserId();
+            fav.kdKnowledgeFavorite__c = kdKnowledgeUpdate.id;
+            fav.IsFavorite__c = true;
+            insert fav;
+            kdKnowledgeUpdate.TechnicalFavorite__c = true;
+
+        } else {
+
+            List<kdKnowledgeDetail__c> lsFav = [SELECT ID
+                                                    FROM kdKnowledgeDetail__c
+                                                    WHERE kdKnowledge__c = :kdKnowledgeUpdate.id
+                                                    AND User__c = :UserInfo.getUserId() AND kdKnowledgeFavorite__c = :kdKnowledgeUpdate.id AND IsFavorite__c = true];
+            delete lsFav;
+            kdKnowledgeUpdate.TechnicalFavorite__c = false;
+
+        }
+    }
+
     
     private void doSaveUpdateKnowledgeReal() {
         
         if (kdKnowledgeUpdate.id != null) {
+            if(isUpdate != null && isUpdate == true){
+                kdKnowledgeUpdate.PostTime__c = Datetime.now();
+            }
 
             //kdKnowledgeUpdate.CreatedByDisplayedName__c = currentUser.DisplayedUsernameFormula__c;
             //kdKnowledgeUpdate.DisplayedDate__c = DateTime.now();
@@ -921,9 +1009,11 @@ public with sharing class kdKnowledgeListCtrl {
 
         recordSearch();
 
-        kdKnowledgeUpdate = new kdKnowledge__c();
+        clearUpdateKnowledge();
+
         kdKnowledgeUpdateDetailCopy = new kdKnowledgeDetail__c();
         kdKnowledgeUpdateDetailLike = new kdKnowledgeDetail__c();
+
         isCreator = False;
         isApprover = False;
         isNationalApprover = False;
@@ -935,16 +1025,19 @@ public with sharing class kdKnowledgeListCtrl {
         Boolean fLikeFound = false;
         Boolean fCopyFound = false;
         Boolean fViewFound = false;
+        isUpdate = false;
 
-        kdKnowledgeUpdate = [SELECT Id, Name, AgencyLabel__c, Agency__c, CreatedBy__c, Description__c, SharedBy__c, SubjectDivision__c,
-                                    Thema__c, Title__c, Type__c, MediumCategory__c, LastModifiedBy__c,
-                                    CreatedBy__r.DisplayedUsernameFormula__c, Status__c,
+        kdKnowledgeUpdate = [SELECT Id, Name, AgencyLabel__c, Agency__c, Agency__r.Name, CreatedBy__c, Description__c, SharedBy__c, SubjectDivision__c,
+                                    Thema__c, Title__c, Type__c, MediumCategory__c, LastModifiedBy__c, PostTime__c, 
+                                    CreatedBy__r.DisplayedUsernameFormula__c, Status__c, TechnicalFavorite__c, 
                                     UserRecordAccess.HasEditAccess, UserRecordAccess.HasDeleteAccess,
                                     (SELECT User__r.DisplayedUsernameFormula__c, CommentLike__c FROM kdKnowledgeDetail_Like__r),
-                                    (SELECT User__r.DisplayedUsernameFormula__c, CommentCopy__c FROM kdKnowledgeDetail_Copy__r)
+                                    (SELECT User__r.DisplayedUsernameFormula__c, CommentCopy__c FROM kdKnowledgeDetail_Copy__r),
+                                    (SELECT Id FROM kdKnowledgeDetail_Favorite__r WHERE User__c = :UserInfo.getUserId())
                              FROM kdKnowledge__c
                              WHERE id = :kdKnowledgeUpdateId];
 
+        kdKnowledgeUpdate.TechnicalFavorite__c = kdKnowledgeUpdate.kdKnowledgeDetail_Favorite__r != NULL && kdKnowledgeUpdate.kdKnowledgeDetail_Favorite__r.size() > 0;
         for (kdKnowledgeDetail__c kdd : [SELECT Id, kdKnowledge__c, User__c, IsLike__c, CommentLike__c, IsCopy__c, CommentCopy__c, IsView__c
                                          FROM kdKnowledgeDetail__c
                                          WHERE kdKnowledge__c = :kdKnowledgeUpdateId
@@ -1092,7 +1185,8 @@ public with sharing class kdKnowledgeListCtrl {
 
         recordSearch();
 
-        kdKnowledgeUpdate = new kdKnowledge__c();
+        clearUpdateKnowledge();
+
         kdKnowledgeUpdateDetailCopy = new kdKnowledgeDetail__c();
         kdKnowledgeUpdateDetailLike = new kdKnowledgeDetail__c();
         isCreator = False;

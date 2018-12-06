@@ -1,15 +1,15 @@
 public with sharing class saHearingListForAdminCtl {
 
-	private static final String COOKIE_LABEL_PREFIX = 'saTasksList_';
+	private static final String COOKIE_LABEL_PREFIX = 'saHearingList_';
     private static final String COOKIE_LABEL_SHISHA = COOKIE_LABEL_PREFIX + 'Shisha';
     private static final String COOKIE_LABEL_CREATOR_NAME = COOKIE_LABEL_PREFIX + 'CreatorName';
     private static final String COOKIE_LABEL_REPORT_NAME = COOKIE_LABEL_PREFIX + 'ReportName';
     private static final String COOKIE_LABEL_VALIDITY_DATE = COOKIE_LABEL_PREFIX + 'ValidityDate';
 
-    private static final String COOKIE_LABEL_PAGE_NUMBER = 'PageNumber';
-    private static final String COOKIE_LABEL_PAGE_SIZE = 'PageSize';
-    private static final String COOKIE_PATH = '/apex/saHearingListForAdmin';
-    private static final String COOKIE_LABEL_INIT_SEARCH_FLG = 'initSearchFlg';  // 画面起動時検索フラグ
+    private static final String COOKIE_LABEL_PAGE_NUMBER = COOKIE_LABEL_PREFIX + 'PageNumber';
+    private static final String COOKIE_LABEL_PAGE_SIZE = COOKIE_LABEL_PREFIX + 'PageSize';
+    private static final String COOKIE_PATH = '';
+    private static final String COOKIE_LABEL_INIT_SEARCH_FLG = COOKIE_LABEL_PREFIX + 'initSearchFlg';  // 画面起動時検索フラグ
 
     // This variable determines whether we are working on Daily Report or Hearing
     public Boolean getIsDailyReport() {return false;}
@@ -50,7 +50,7 @@ public with sharing class saHearingListForAdminCtl {
     private List<String> regionalOfficeCodes; 
 
     private static final String BASE_QUERY_STRING = 'SELECT RegionalOfficeCode__c, ReportName__c, CreatedDate, LastModifiedDate, LastModifiedDateFormula__c, Type__c, PushNotificationResendCountFormula__c, ' +
-                                        'Status__c, CreatedBy.Name, LastModifiedBy.Name, ValidFromDatetime__c, ValidToDatetime__c, IsValid__c, CountReply__c, CountShared__c FROM saInquiry__c';
+                                        'Status__c, CreatedBy.Name, LastModifiedBy.Name, ValidFromDatetime__c, ValidToDatetime__c, DisplayedValidToDatetime__c, IsValid__c, CountReply__c, CountShared__c FROM saInquiry__c';
 
     
     private static final String SELECTOPTION_LASTMODIFIED = '1'; //最終更新ラジオボタン判定
@@ -284,15 +284,18 @@ public with sharing class saHearingListForAdminCtl {
     public void recordSearch() {
     	this.initSearchFlg = 'true';  // 画面起動時検索フラグON
 
+		system.debug('1');
         //ページ初期化
         pageNum = 1;
         //pageSize = 2;
 
+		system.debug('2');
         setStandardSetController();
         if(ssc != null) {
             ssc.setPageNumber(1);
         }
 
+		system.debug('3');
         saveInputValues(); //cookie保存
     }
 
@@ -300,7 +303,8 @@ public with sharing class saHearingListForAdminCtl {
         String queryStr = BASE_QUERY_STRING;//SELECT、FROM設定
         //this.initSearchFlg = 'true';  // 画面起動時検索フラグON
 
-        //検索WHERE句作成 
+        //検索WHERE句作成
+         
         String conditionStr = getConditions();
         system.debug('recordSearch -> conditionStr: ' + conditionStr);
         system.debug(' Test Update OK ');
@@ -319,9 +323,12 @@ public with sharing class saHearingListForAdminCtl {
         //SELECT文、 WHERE句、LIMIT句を連結
         queryStr += conditionStr + orderBy + limitStr;
 
+		system.debug('4');
+		
         if(errFlg){
             this.ssc = null;
         }else{
+        	system.debug('5');
             this.ssc = createSsc(queryStr);
             this.conditionStr = conditionStr;
             this.limitStr = limitStr;

@@ -413,12 +413,12 @@
               <div class="title">メッセージ一覧</div>
 
               <apex:outputPanel layout="block" styleClass="pager-area clearfix" rendered="{!hasRecords}">
-                <apex:commandLink action="{!ssc.previous}" rerender="recordList" styleClass="customButton" rendered="{!ssc.HasPrevious}" >&laquo;</apex:commandLink>
+                <apex:commandLink action="{!previousAndSaveCurrentPageNumber}" rerender="recordList" styleClass="customButton" rendered="{!ssc.HasPrevious}" >&laquo;</apex:commandLink>
                 <apex:outputPanel layout="block" styleClass="disabled-button" rendered="{!!ssc.HasPrevious}" >&laquo;</apex:outputPanel>
                 <div class="current-page-number">{!pageNum}</div>
                 <div class="separator">/</div>
                 <div class="max-page-number">{!FLOOR(((resultSize - 1) / ssc.PageSize) + 1)}</div>
-                <apex:commandLink action="{!ssc.next}" rerender="recordList" styleClass="customButton" rendered="{!ssc.HasNext}" >&raquo;</apex:commandLink>
+                <apex:commandLink action="{!nextAndSaveCurrentPageNumber}" rerender="recordList" styleClass="customButton" rendered="{!ssc.HasNext}" >&raquo;</apex:commandLink>
                 <apex:outputPanel layout="block" styleClass="disabled-button" rendered="{!!ssc.HasNext}" >&raquo;</apex:outputPanel>
               </apex:outputPanel>
             </div>
@@ -563,12 +563,12 @@
             </div>
             <div class="section-footer footer-pager clearfix">
               <apex:outputPanel layout="block" styleClass="pager-area clearfix" rendered="{!hasRecords}">
-                <apex:commandLink action="{!ssc.previous}" rerender="recordList" styleClass="customButton" rendered="{!ssc.HasPrevious}" >&laquo;</apex:commandLink>
+                <apex:commandLink action="{!previousAndSaveCurrentPageNumber}" rerender="recordList" styleClass="customButton" rendered="{!ssc.HasPrevious}" >&laquo;</apex:commandLink>
                 <apex:outputPanel layout="block" styleClass="disabled-button" rendered="{!!ssc.HasPrevious}" >&laquo;</apex:outputPanel>
                 <div class="current-page-number">{!pageNum}</div>
                 <div class="separator">/</div>
                 <div class="max-page-number">{!FLOOR(((resultSize - 1) / ssc.PageSize) + 1)}</div>
-                <apex:commandLink action="{!ssc.next}" rerender="recordList" styleClass="customButton" rendered="{!ssc.HasNext}" >&raquo;</apex:commandLink>
+                <apex:commandLink action="{!nextAndSaveCurrentPageNumber}" rerender="recordList" styleClass="customButton" rendered="{!ssc.HasNext}" >&raquo;</apex:commandLink>
                 <apex:outputPanel layout="block" styleClass="disabled-button" rendered="{!!ssc.HasNext}" >&raquo;</apex:outputPanel>
               </apex:outputPanel>
             </div>

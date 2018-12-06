@@ -160,6 +160,15 @@ public without sharing class auUtilCmn
         return sRtn;
     }
 
+
+    public static String appendLikeText(String fieldName, String value) {
+        return ' ' + escapeNull(fieldName) + ' LIKE \'%' + String.escapeSingleQuotes(escapeNull(value)) + '%\' ';
+    }
+    public static String appendEqualText(String fieldName, String value) {
+        return ' ' + escapeNull(fieldName) + ' = \'' + String.escapeSingleQuotes(escapeNull(value)) + '\' ';
+    }
+
+
     public static String appendInText(String fieldName, List<String> values) {
         return appendInText(fieldName, values, false);
     }

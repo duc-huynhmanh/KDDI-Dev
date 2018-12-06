@@ -55,6 +55,20 @@
 
   .navigation__item.STPD>a{opacity:1;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";}
 
+  .navigation__item>a:hover {
+    color: #fff;
+  }
+
+  .navigation__item>a.telema.active {
+    background-color: inherit;
+    opacity: .5;
+  }
+  .navigation__item>a.telema.active:hover {
+    background-color: #ed5500;
+    opacity: 1;
+  }
+  
+
   </style>
 
   <script>
@@ -321,6 +335,52 @@
 
           <!-- BACK -->
           <li class="navigation__item {!IF(sidebarTitle == '1', 'STPD', '')}">
+            <a href="/home">
+              <i class="icon icon--back"></i>
+              <span>auポータル<br/>トップ</span>
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+    </aside>
+  </apex:outputPanel>
+
+
+  <apex:outputPanel rendered="{!IsShowAsideTelema}">
+    <aside class="sidebar" role="sidebar">
+
+      <p class="sidebar__item-name">CX促進<br/>テレマ</p>
+
+      <nav class="navigation">
+        <ul>
+
+          <!-- TELEMA LIST -->
+          <li class="navigation__item">
+            <a href="/apex/kdTelemarketingListPage" class="{!IF(isTelemaList, 'menu--active', 'telema')}">
+              <i class="icon icon--home"></i>
+              <span>テレマ<br/>リスト</span>
+            </a>
+          </li>
+
+          <!-- RESULTS -->
+          <li class="navigation__item">
+            <a href="/apex/kdTelemarketingListPage?Type=RESULTS" class="{!IF(isTelemaResults, 'menu--active', 'telema')}">
+              <i class="icon icon--list"></i>
+              <span>対応結果</span>
+            </a>
+          </li>
+
+          <!-- SIGMA -->
+          <li class="navigation__item">
+            <a href="http://sigma.kddi.com/sgmWebApp/jsp/sgmC/SgmCGCA1000.jsp" class="telema" target="blank">
+              <i class="icon icon--sigma"></i>
+              <span>SIGMA</span>
+            </a>
+          </li>
+
+          <!-- BACK -->
+          <li class="navigation__item">
             <a href="/home">
               <i class="icon icon--back"></i>
               <span>auポータル<br/>トップ</span>

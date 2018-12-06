@@ -233,11 +233,11 @@ public without sharing class saUtilSharing
     public static Boolean isUserProfileKddi(String userProfileName){
 
         return userProfileName == auConstantCmn.PROFILE_KDDI_BRANCH ||
-               userProfileName == auConstantCmn.PROFILE_KDDI_BRANCH_V2 ||
                userProfileName == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE ||
-               userProfileName == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2 ||
                userProfileName == auConstantCmn.PROFILE_KDDI_HEADQUARTERS ||
-               userProfileName == auConstantCmn.PROFILE_KDDI_HEADQUARTERS_V2 ||
+               userProfileName == auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA ||
+               userProfileName == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 ||
+               userProfileName == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2 ||
                userProfileName == auConstantCmn.PROFILE_SYSADMIN_CUSTOM ||
                userProfileName == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN ||
                userProfileName == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP;

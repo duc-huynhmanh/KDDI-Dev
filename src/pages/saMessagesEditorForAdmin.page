@@ -1557,6 +1557,7 @@
                 {sobjectField:['UserRole','Name'], label: '組織', className: 'master-userRoleName', targetFormClassName: 'RoleName'},
                 {sobjectField:['UserRole','DeveloperName'], label: '組織', className: 'master-userRoleCode', targetFormClassName: 'RoleCode', hidden: true},
                 {sobjectField:['Name'], label: '社員名', className: 'master-userName', targetFormClassName: 'name'},
+                {sobjectField:['Department'], label: '部署名', className: 'master-department', targetFormClassName: 'department'},
                 {sobjectField:['Id'], label: 'Id', className: 'master-userId', targetFormClassName: 'Id', hidden: true}
             ]
         };
@@ -2299,23 +2300,48 @@
 
                       <div class="quotation-item-body clearfix">
 
-                        <div class="field" style="min-width: 650px;">
-                          <apex:outputLabel value="{!$ObjectType.saMessage__c.fields.PublishedDatetime__c.Label}"
-                                            for="inputPublishedDatetime"
-                                            styleClass="field-label {!IF(isReadOnly,'','requireField ')}" />
-                          <apex:inputField rendered="{!!isReadOnly}"
-                                           id="inputPublishedDatetime"
-                                           styleClass="field-value"
-                                           value="{!idm.parentRec.PublishedDatetime__c}"
-                                           html-data-compare-value="{!idm.baseParentRec.PublishedDatetime__c}"
-                                           onclick="makeSafetyCheck=false;"
-                                           onblur="safetyLockCheck(this);makeSafetyCheck=true;"
-                                           onmouseout="makeSafetyCheck=true;"/>
-                          <apex:outputText rendered="{!isReadOnly}"
-                                           styleClass="field-value"
-                                           style="width: 140px; overflow: hidden;"
-                                           value="{!idm.PublishedDatetimeFormatted}" />
-                        </div>
+                        <apex:outputPanel layout="none" rendered="{!!isReadOnly}">
+                          <div class="field" style="min-width: 450px;">
+                            <apex:outputLabel value="{!$ObjectType.saMessage__c.fields.TechnicalPublishedDate__c.Label}"
+                                              for="inputPublishedDate"
+                                              styleClass="field-label requireField" />
+                            <apex:inputField id="inputPublishedDate"
+                                             styleClass="field-value"
+                                             value="{!idm.parentRec.TechnicalPublishedDate__c}"
+                                             html-data-compare-value="{!idm.baseParentRec.TechnicalPublishedDate__c}"
+                                             onclick="makeSafetyCheck=false;"
+                                             onblur="safetyLockCheck(this);makeSafetyCheck=true;"
+                                             onmouseout="makeSafetyCheck=true;"/>
+
+                          </div>
+                        </apex:outputPanel>
+
+                        <apex:outputPanel layout="none" rendered="{!!isReadOnly}">
+                          <div class="field" style="min-width: 450px;">
+                            <apex:outputLabel value="{!$ObjectType.saMessage__c.fields.TechnicalPublishedTime__c.Label}"
+                                              for="inputPublishedTime"
+                                              styleClass="field-label requireField" />
+                            <apex:inputField id="inputPublishedTime"
+                                             styleClass="field-value"
+                                             value="{!idm.parentRec.TechnicalPublishedTime__c}"
+                                             html-data-compare-value="{!idm.baseParentRec.TechnicalPublishedTime__c}"
+                                             onclick="makeSafetyCheck=false;"
+                                             onblur="safetyLockCheck(this);makeSafetyCheck=true;"
+                                             onmouseout="makeSafetyCheck=true;"/>
+
+                          </div>
+                        </apex:outputPanel>
+
+
+                        <apex:outputPanel layout="none" rendered="{!isReadOnly}">
+                          <div class="field" style="min-width: 650px;">
+                            <apex:outputLabel value="{!$ObjectType.saMessage__c.fields.PublishedDatetime__c.Label}"
+                                              styleClass="field-label" />
+                            <apex:outputText styleClass="field-value"
+                                             style="width: 140px; overflow: hidden;"
+                                             value="{!idm.PublishedDatetimeFormatted}" />
+                          </div>
+                        </apex:outputPanel>
 
                         <div class="field" style="{!IF(callType == '2','min-width: 450px;','display: none;')}">
                           <apex:outputLabel value="{!$ObjectType.saMessage__c.fields.RegionalOfficeCode__c.Label}"
@@ -2357,8 +2383,7 @@
                         <div class="field" style="{!IF(callType == '2','min-width: 450px;','display: none;')}">
                           <apex:outputLabel value="{!$ObjectType.saMessage__c.fields.BranchCode__c.Label}"
                                             for="inputBranch"
-                                            styleClass="field-label"
-                                            style="width: 100px;" />
+                                            styleClass="field-label" />
                           <apex:selectList rendered="{!!isReadOnly}"
                                            id="inputBranch"
                                            styleClass="field-value"
@@ -2444,31 +2469,51 @@
                                            style="width: 900px;"/>
                         </div>
 
-                        <apex:outputPanel layout="none" rendered="{!callType == '2'}">
-                          <div class="field" style="min-width: 650px;">
-                            <apex:outputLabel value="{!$ObjectType.saMessage__c.fields.DeadlineDatetime__c.Label}"
-                                              for="inputDeadlineDatetime"
-                                              styleClass="field-label {!IF(isReadOnly,'','requireField ')}" />
-                            <apex:inputField rendered="{!!isReadOnly}"
-                                             id="inputDeadlineDatetime"
+                        <apex:outputPanel layout="none" rendered="{!callType == '2' && !isReadOnly}">
+                          <div class="field" style="min-width: 450px;">
+                            <apex:outputLabel value="{!$ObjectType.saMessage__c.fields.TechnicalDeadlineDate__c.Label}"
+                                              for="inputDeadlineDate"
+                                              styleClass="field-label requireField" />
+                            <apex:inputField id="inputDeadlineDate"
                                              styleClass="field-value"
-                                             value="{!idm.parentRec.DeadlineDatetime__c}"
-                                             html-data-compare-value="{!idm.baseParentRec.DeadlineDatetime__c}"
+                                             value="{!idm.parentRec.TechnicalDeadlineDate__c}"
+                                             html-data-compare-value="{!idm.baseParentRec.TechnicalDeadlineDate__c}"
                                              onclick="makeSafetyCheck=false;"
                                              onblur="safetyLockCheck(this);makeSafetyCheck=true;"
                                              onmouseout="makeSafetyCheck=true;"/>
-                            <apex:outputText rendered="{!isReadOnly}"
+
+                          </div>
+                        </apex:outputPanel>
+
+                        <apex:outputPanel layout="none" rendered="{!callType == '2' && !isReadOnly}">
+                          <div class="field" style="min-width: 450px;">
+                            <apex:outputLabel value="{!$ObjectType.saMessage__c.fields.TechnicalDeadlineTime__c.Label}"
+                                              for="inputDeadlineTime"
+                                              styleClass="field-label requireField" />
+                            <apex:inputField id="inputDeadlineTime"
                                              styleClass="field-value"
+                                             value="{!idm.parentRec.TechnicalDeadlineTime__c}"
+                                             html-data-compare-value="{!idm.baseParentRec.TechnicalDeadlineTime__c}"
+                                             onclick="makeSafetyCheck=false;"
+                                             onblur="safetyLockCheck(this);makeSafetyCheck=true;"
+                                             onmouseout="makeSafetyCheck=true;"/>
+
+                          </div>
+                        </apex:outputPanel>
+
+
+                        <apex:outputPanel layout="none" rendered="{!callType == '2' && isReadOnly}">
+                          <div class="field" style="min-width: 650px;">
+                            <apex:outputLabel value="{!$ObjectType.saMessage__c.fields.DeadlineDatetime__c.Label}"
+                                              styleClass="field-label" />
+                            <apex:outputText styleClass="field-value"
                                              style="width: 140px; overflow: hidden;"
                                              value="{!idm.DeadlineDatetimeFormatted}" />
 
-                            <apex:outputLabel rendered="{!isReadOnly}"
-                                              value="{!$ObjectType.saMessage__c.fields.PushNotificationResendCount__c.Label}"
-                                              for="inputDeadlineDatetime"
+                            <apex:outputLabel value="{!$ObjectType.saMessage__c.fields.PushNotificationResendCount__c.Label}"
                                               styleClass="field-label {!IF(isReadOnly,'','requireField ')}"
                                               style="width: 360px;" />
-                            <apex:outputText rendered="{!isReadOnly}"
-                                             styleClass="field-value"
+                            <apex:outputText styleClass="field-value"
                                              style="width: 50px; overflow: hidden;"
                                              value="{!pushNotificationsResendCount}" />
 
@@ -2508,7 +2553,7 @@
                             <button type="button" class="customButton" data-toggle="modal" data-target="#multiDeleteView">複数ユーザーを削除</button>
                           </div>
 
-                          <apex:outputPanel rendered="{!isReadOnly && idm.parentRec.IsPublished__c && callType != '1'}" styleClass="field" >
+                          <apex:outputPanel rendered="{!isReadOnly && idm.parentRec.IsPublished__c && callType != '1' && (idm.isCreator || isUserAdministrator)}" styleClass="field" >
                             <button class="customButton" type="button" data-toggle="modal" data-target="#pushNotificationConfirm">リマインド通知</button>
                           </apex:outputPanel>
 

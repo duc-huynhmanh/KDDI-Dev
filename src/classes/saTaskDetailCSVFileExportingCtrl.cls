@@ -7,7 +7,7 @@ public with sharing class saTaskDetailCSVFileExportingCtrl {
 	
 
 	public saTaskDetailCSVFileExportingCtrl() {
-		sTitle = '"支社","支店","作成者","ToDo件名","ToDo開始日","ToDo終了日","運用中フラグ","最終更新日","最終更新者","序列コード","組織名","社員番号","報告者名"';
+		sTitle = '"発信元支社","発信元支店","作成者","ToDo件名","ToDo開始日","ToDo終了日","運用中フラグ","最終更新日","最終更新者","序列コード","組織名","社員番号","報告者名"';
 		String messageId = Apexpages.currentPage().getParameters().get('id');
 		String queryStr = 'SELECT RegionalOfficeCode__c, BranchCode__c, CreatedBy.Name, Title__c, PublishedDateFormula__c, DeadlineDateFormula__c, IsPublished__c, LastModifiedDate, LastModifiedBy.Name, Description__c FROM saMessage__c WHERE Id = \'' +  String.escapeSingleQuotes(messageId) + '\'';
 		
@@ -16,7 +16,7 @@ public with sharing class saTaskDetailCSVFileExportingCtrl {
        		fileName = 'ToDo_';
        		String tit = (m.Title__c == null ? Datetime.now().format('yyyyMMdd') : m.Title__c.replace('/', '-'));
 			filename = 	filename + tit + '.csv';
-			Apexpages.currentPage().getHeaders().put('content-disposition', 'attachment; filename="' + EncodingUtil.urlEncode(fileName, 'UTF-8') + '"');
+			Apexpages.currentPage().getHeaders().put('content-disposition', 'attachment; filename="";filename*=UTF-8\'\'' + EncodingUtil.urlEncode(fileName, 'UTF-8'));
 			sTitle += (',"' + (m.Description__c == null ? '' : m.Description__c) + '"');
         	String queryDetail = 'SELECT User__r.UserRole.DeveloperName, User__r.UserRole.Name, User__r.KDDIEmployeeId__c, User__r.DisplayedUsernameFormula__c, ReplyComment__c ' + 
 				'FROM saMessageDetail__c WHERE Type__c = \'DONE\' AND saMessage__c = \'' +  String.escapeSingleQuotes(messageId) + '\'';

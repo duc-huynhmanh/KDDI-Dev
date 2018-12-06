@@ -43,6 +43,10 @@ public with sharing class auHonbuDirectCtrl {
       lsHonbuDirect = new List<clsHonbuDirect>();
       lsHonbuDirectTopPage = searchDataTopPage();
 
+	  this.isNewOnly=false;
+	  this.isNotRepliedOnly=false;
+	  this.isFavoriteOnly=false;
+	  
       currentHonbuDirectId = '';
       lsCategoryOptions = getCategoryOptions();
       mpCategoryOptions = new Map<String, String>();
@@ -94,7 +98,7 @@ public with sharing class auHonbuDirectCtrl {
 
     public void searchData() {
 
-        String sqlSelect = ' SELECT Id, Title__c, Category__c, TransmissionDate__c, ' +
+        String sqlSelect = ' SELECT Id, Title__c, Category__c, TransmissionDate__c, DistributionRecipient__c, ' +
                            '        ImplementationStartDate__c, ImplementationEndDate__c, ' +
                            '        LinkURL1__c, LinkURL2__c, LinkURL3__c, LinkURL4__c, LinkURL5__c, ' +
                            '        LinkURL6__c, LinkURL7__c, LinkURL8__c, LinkURL9__c, LinkURL10__c, ' +
@@ -108,7 +112,7 @@ public with sharing class auHonbuDirectCtrl {
         List<String> conditions = new List<String>();
 
         // Filter Submission Date
-        conditions.add('TransmissionDate__c <= TODAY');
+        conditions.add('TransmissionDate__c <= ' + DateTime.now().formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\''));
         
         //Filter for non Archived Report Only
         conditions.add('IsArchived__c=false');
@@ -144,7 +148,7 @@ public with sharing class auHonbuDirectCtrl {
         // Filter New
         if (isNewOnly) {
 
-          String dateForNew = DateTime.now().addDays(-7).format('yyyy-MM-dd');
+          String dateForNew = DateTime.now().addDays(-7).formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
           conditions.add('TransmissionDate__c >= ' + dateForNew);
 
         }
@@ -152,14 +156,14 @@ public with sharing class auHonbuDirectCtrl {
         // Filter Not Read
         if (isNotRepliedOnly) {
           
-          conditions.add('Id NOT IN (SELECT auHonbuDirect__c FROM auHonbuDirectDetail__c WHERE Type__c = \'' + auConstantCmn.HONBU_DIRECT_DETAIL_TYPE_READ + '\')');
+          conditions.add('Id NOT IN (SELECT auHonbuDirect__c FROM auHonbuDirectDetail__c WHERE Type__c = \'' + auConstantCmn.HONBU_DIRECT_DETAIL_TYPE_READ + '\' and User__c=\'' + UserInfo.getUserId() + '\')');
 
         }
 
         // Filter Favorite
         if (isFavoriteOnly) {
 
-          conditions.add('Id IN (SELECT auHonbuDirect__c FROM auHonbuDirectDetail__c WHERE Type__c = \'' + auConstantCmn.HONBU_DIRECT_DETAIL_TYPE_FAVORITE + '\')');
+          conditions.add('Id IN (SELECT auHonbuDirect__c FROM auHonbuDirectDetail__c WHERE Type__c = \'' + auConstantCmn.HONBU_DIRECT_DETAIL_TYPE_FAVORITE + '\' and User__c=\'' + UserInfo.getUserId() + '\')');
           
         }
 
@@ -207,19 +211,16 @@ public with sharing class auHonbuDirectCtrl {
 
         List<clsHonbuDirect> lsReturn = new List<clsHonbuDirect>();
 
-        List<auHonbuDirect__c> lsHD = [SELECT Id, Title__c, Category__c, TransmissionDate__c,
-                                              ImplementationStartDate__c, ImplementationEndDate__c,
-                                              LinkURL1__c, LinkURL2__c, LinkURL3__c, LinkURL4__c, LinkURL5__c,
-                                              LinkURL6__c, LinkURL7__c, LinkURL8__c, LinkURL9__c, LinkURL10__c,
-                                              (SELECT id, Name, ContentType, Description
-                                               FROM Attachments
-                                               ORDER BY LastModifiedDate DESC)
-                                       FROM auHonbuDirect__c
-                                       WHERE TransmissionDate__c <= TODAY
-                                       and IsArchived__c=false
-                                       ORDER BY TransmissionDate__c DESC,
-                                                CreatedDate DESC
-                                       LIMIT 5];
+		//DateTime currentDateTime = DateTime.now().addDays(0).formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
+		List<auHonbuDirect__c> lsHD = [SELECT Id, Title__c, Category__c, TransmissionDate__c, 
+										ImplementationStartDate__c, ImplementationEndDate__c, 
+										LinkURL1__c, LinkURL2__c, LinkURL3__c, LinkURL4__c, LinkURL5__c, 
+										LinkURL6__c, LinkURL7__c, LinkURL8__c, LinkURL9__c, LinkURL10__c, 
+										(SELECT id, Name, ContentType, Description FROM Attachments ORDER BY LastModifiedDate DESC) 
+										FROM auHonbuDirect__c 
+										WHERE TransmissionDate__c <= :DateTime.now() and IsArchived__c=false 
+										ORDER BY TransmissionDate__c DESC, CreatedDate DESC 
+										LIMIT 5];
 
         List<Id> lsHonbuDirectId = new List<Id>();
         for (auHonbuDirect__c hd : lsHD) {
@@ -261,7 +262,7 @@ public with sharing class auHonbuDirectCtrl {
 
       system.debug('showCurrentHonbuDirect: ' + currentHonbuDirectId);
 
-      auHonbuDirect__c hd = [SELECT Id, Title__c, toLabel(Category__c), TransmissionDate__c,
+      auHonbuDirect__c hd = [SELECT Id, Title__c, toLabel(Category__c), DistributionRecipient__c, TransmissionDate__c,
                                     ImplementationStartDate__c, ImplementationEndDate__c,
                                     CreatedBy.DisplayedUsernameFormula__c,
                                     LinkDescription1__c, LinkURL1__c, 
@@ -312,7 +313,7 @@ public with sharing class auHonbuDirectCtrl {
                                            ORDER BY LastModifiedDate DESC];
 
         currentHonbuDirect = new clsHonbuDirect(hd, mpDocs, lsVersions, 1);
-
+        auUtilChatter.addToViewHonbuDirect(currentHonbuDirect);
     }
 
 
@@ -337,12 +338,14 @@ public with sharing class auHonbuDirectCtrl {
 
         public Boolean isFavorite {get;set;}
         public Boolean isRead {get;set;}
+        public Boolean isView {get;set;}
 
         public clsHonbuDirect(auHonbuDirect__c rec, Map<Id, Id> mpDocumentsId, List<ContentVersion> lsContentVersions, Integer index) {
 
           this.auHonbuDirect = rec;
           this.idx = index;
           this.isRead = false;
+          this.isView = false;
           this.isFavorite = false;
           this.hasVideo = false;
           this.hasPop = false;
@@ -450,7 +453,9 @@ public with sharing class auHonbuDirectCtrl {
           if (rec.auHonbuDirectDetail_MD__r != NULL && rec.auHonbuDirectDetail_MD__r.size() > 0) {
             for (auHonbuDirectDetail__c det : rec.auHonbuDirectDetail_MD__r) {
 
-              if (det.Type__c == auConstantCmn.HONBU_DIRECT_DETAIL_TYPE_READ) {
+              if (det.Type__c == auConstantCmn.HONBU_DIRECT_DETAIL_TYPE_VIEW) {
+                this.isView = true;
+              } else if (det.Type__c == auConstantCmn.HONBU_DIRECT_DETAIL_TYPE_READ) {
                 this.isRead = true;
               } else if (det.Type__c == auConstantCmn.HONBU_DIRECT_DETAIL_TYPE_FAVORITE) {
                 this.isFavorite = true;

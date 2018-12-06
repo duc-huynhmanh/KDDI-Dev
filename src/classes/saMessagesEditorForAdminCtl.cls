@@ -8,7 +8,7 @@ global with sharing class saMessagesEditorForAdminCtl {
   public static final String CALL_TYPE_MESSAGES = '1';
   public static final String CALL_TYPE_TASKS    = '2';
 
-  public static final String USER_BASE_QUERY = ' SELECT id, (Select BusinessLocation__r.BusinessLocationName__c from saBusinessLocationDetail_user__r order by Type__c Nulls Last), Name, UserRole.Name, UserRole.DeveloperName FROM User ';
+  public static final String USER_BASE_QUERY = ' SELECT id, (Select BusinessLocation__r.BusinessLocationName__c from saBusinessLocationDetail_user__r order by Type__c Nulls Last), Name, Department, UserRole.Name, UserRole.DeveloperName FROM User ';
    
   public Boolean isReadOnly{get; set;}
   public Boolean isTypeTask{get; set;}
@@ -46,6 +46,11 @@ global with sharing class saMessagesEditorForAdminCtl {
   private Boolean isUserProfileEvolva(){
     return currentUser.Profile.Name == auConstantCmn.PROFILE_EVOLVA_USER ||
            currentUser.Profile.Name == auConstantCmn.PROFILE_EVOLVA_ADMIN_USER;
+  }
+
+  public Boolean getIsUserAdministrator() {
+    return (currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN || 
+            currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP);
   }
 
   public Boolean getIsEvolva(){
@@ -97,7 +102,7 @@ global with sharing class saMessagesEditorForAdminCtl {
           Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, '不正な操作が行われました。'));
           return;
         }
-        
+
         if (params.containsKey(PARAM_ID)) {
           String targetId = params.get(PARAM_ID);
           rec = getTargetRecord(targetId);
@@ -293,7 +298,10 @@ global with sharing class saMessagesEditorForAdminCtl {
 
   private saMessage__c getTargetRecord(String targetId) {
     saMessage__c targetaRecord = null;
-    List<saMessage__c> recs = [SELECT id, Owner.Id, name, IsEvolva__c, Type__c, Status__c, Title__c, Description__c, PushNotificationResendCount__c, PublishedDatetime__c, DeadlineDatetime__c, IssuerLabel__c, IsPublished__c, RegionalOfficeCode__c, BranchCode__c, UserRecordAccess.HasEditAccess
+    List<saMessage__c> recs = [SELECT id, Owner.Id, name, IsEvolva__c, Type__c, Status__c, Title__c, Description__c, PushNotificationResendCount__c,
+                                      PublishedDatetime__c, TechnicalPublishedDate__c, TechnicalPublishedTime__c, DeadlineDatetime__c, TechnicalDeadlineDate__c, TechnicalDeadlineTime__c,
+                                      IssuerLabel__c, IsPublished__c, RegionalOfficeCode__c, BranchCode__c,
+                                      UserRecordAccess.HasEditAccess, CreatedById
                                FROM saMessage__c
                                WHERE Id =: targetId];
 
@@ -301,6 +309,14 @@ global with sharing class saMessagesEditorForAdminCtl {
       targetaRecord = recs.get(0);
       if (targetaRecord.PushNotificationResendCount__c == NULL) {
         targetaRecord.PushNotificationResendCount__c = 0;
+      }
+      if (targetaRecord.DeadlineDatetime__c != NULL) {
+        targetaRecord.TechnicalDeadlineDate__c = targetaRecord.DeadlineDatetime__c.date();
+        targetaRecord.TechnicalDeadlineTime__c = targetaRecord.DeadlineDatetime__c.time();
+      }
+      if (targetaRecord.PublishedDatetime__c != NULL) {
+        targetaRecord.TechnicalPublishedDate__c = targetaRecord.PublishedDatetime__c.date();
+        targetaRecord.TechnicalPublishedTime__c = targetaRecord.PublishedDatetime__c.time();
       }
     } else {
       throw new KDDIException('不正な操作が行われました。');
@@ -417,8 +433,6 @@ global with sharing class saMessagesEditorForAdminCtl {
 
       return lsReturn;
     }
-
-
 
     public void inputRoleShisha() {
 
@@ -816,16 +830,46 @@ global with sharing class saMessagesEditorForAdminCtl {
 
     boolean confirmData(boolean isDefinitive) {
 
-      if (idm.parentRec.PublishedDatetime__c == NULL) {
+      if (idm.parentRec.TechnicalPublishedDate__c == NULL) {
+          String sMsg = '公開開始日が必須です。';
+              Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
+          return false;
+      }
+
+      if (idm.parentRec.TechnicalPublishedTime__c == NULL) {
           String sMsg = '公開開始時間が必須です。';
               Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
           return false;
       }
 
+      idm.parentRec.PublishedDatetime__c = Datetime.newInstance(idm.parentRec.TechnicalPublishedDate__c, idm.parentRec.TechnicalPublishedTime__c);
+
       if (idm.parentRec.Title__c == NULL || idm.parentRec.Title__c.trim().length() == 0) {
           String sMsg = 'タイトルが必須です。';
               Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
           return false;
+      }
+
+      if (callType == CALL_TYPE_TASKS && idm.parentRec.TechnicalDeadlineDate__c == NULL) {
+          String sMsg = '締切日が必須です。';
+              Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
+          return false;
+      }
+
+      if (callType == CALL_TYPE_TASKS && idm.parentRec.TechnicalDeadlineTime__c == NULL) {
+          String sMsg = '締切時間が必須です。';
+              Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
+          return false;
+      }
+
+      if (callType == CALL_TYPE_TASKS) {
+        idm.parentRec.DeadlineDatetime__c = Datetime.newInstance(idm.parentRec.TechnicalDeadlineDate__c, idm.parentRec.TechnicalDeadlineTime__c);
+      }
+
+      if (callType == CALL_TYPE_TASKS && idm.parentRec.DeadlineDatetime__c < idm.parentRec.PublishedDatetime__c) {
+        String sMsg = '締切時間が運公開開始時間より前です。';
+        Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
+        return false;
       }
 
       if (isDefinitive) {
@@ -836,25 +880,11 @@ global with sharing class saMessagesEditorForAdminCtl {
           return false;
         }
 
-        if (callType == CALL_TYPE_TASKS && idm.parentRec.DeadlineDatetime__c == NULL) {
-            String sMsg = '締切時間が必須です。';
-                Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
-            return false;
-        }
-
-        if (callType == CALL_TYPE_TASKS && idm.parentRec.DeadlineDatetime__c < idm.parentRec.PublishedDatetime__c) {
-          String sMsg = '締切時間が運公開開始時間より前です。';
-          Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
-          return false;
-        }
-
-
         if (idm.itemsReply == NULL || idm.itemsReply.size() == 0) {
           String sMsg = 'ユーザーを追加してください。';
           Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
           return false;
         }
-
       }
 
       return true;
@@ -954,6 +984,8 @@ global with sharing class saMessagesEditorForAdminCtl {
         public String createdItemInfosSA{get; set;}
         public String createdItemInfosKDDI{get; set;}
 
+        public Boolean isCreator{get; set;}
+
         public String lastSearchUserSARole5Filter{get; set;}
         public String lastSearchUserSARole6Filter{get; set;}
         public String lastSearchUserSARole7Filter{get; set;}
@@ -995,6 +1027,7 @@ global with sharing class saMessagesEditorForAdminCtl {
             lastSearchUserKddiRole6Filter = 'dummy1stTime';
 
             List<saMessageDetail__c> recsReply = this.getReplyRecs(parentRec.id);
+            system.debug('recsReply'+recsReply);
             if (recsReply == null) {
                 recsReply = new List<saMessageDetail__c>();
             }
@@ -1002,24 +1035,34 @@ global with sharing class saMessagesEditorForAdminCtl {
             List<InquiryReplyItem> localItemsReply = this.itemsReply;
             for (saMessageDetail__c rec: recsReply) {
                 if (isCopy) {
-                    rec = rec.clone(false,true,false,false);
+                	if(rec.User__r.isActive){
+                    	rec = rec.clone(false,true,false,false);
+                    	InquiryReplyItem item = new InquiryReplyItem(rec);
+                		localItemsReply.add(item);
+                	}
+                }else{
+                	InquiryReplyItem item = new InquiryReplyItem(rec);
+                	localItemsReply.add(item);
                 }
-                InquiryReplyItem item = new InquiryReplyItem(rec);
-                localItemsReply.add(item);
             }
             if (isCopy) {
                 parentRec = parentRec.clone(false,true,false,false);
                 parentRec.PushNotificationResendCount__c = 0;
+                // It seems the OwnerId is preserved when cloning here, so we need to reinitialize it
+                parentRec.OwnerId = UserInfo.getUserId();
             }
             this.parentRec = parentRec;
             this.baseParentRec =  this.parentRec.clone(true);
+
+            this.isCreator = parentRec.CreatedById == UserInfo.getUserId();
+
         }
 
         private List<saMessageDetail__c> getReplyRecs(Id parentId) {
 
           List<saMessageDetail__c> lsReturn = new List<saMessageDetail__c>();
 
-          List<saMessageDetail__c> lsAllDetails = [SELECT Id, User__c, User__r.Name, User__r.DisplayedUsernameFormula__c, User__r.UserRole.Name, User__r.UserRole.DeveloperName, Type__c
+          List<saMessageDetail__c> lsAllDetails = [SELECT Id, User__c, User__r.Name, User__r.DisplayedUsernameFormula__c, User__r.isActive, User__r.UserRole.Name, User__r.UserRole.DeveloperName, Type__c
                                                    FROM   saMessageDetail__c
                                                    WHERE  saMessage__c = :parentId
                                                    AND    Type__c IN (:saConstantCmn.SA_MESSAGEDETAIL_TYPE_SHARED, :saConstantCmn.SA_MESSAGEDETAIL_TYPE_DONE)

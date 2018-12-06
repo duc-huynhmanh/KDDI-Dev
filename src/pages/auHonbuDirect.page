@@ -148,7 +148,24 @@
 	.direct-home-section-body .detail-documents {
 	    border-bottom: 1px solid #b3b3b3;
 	}
-	
+
+  .direct-home-section-body .detail-info .category .value::before,
+  .direct-home-section-body .detail-info .recipient .value::before {
+      content: ":";
+      margin-right: 0.5em;
+  }
+  .direct-home-section-body .detail-info .category .label,
+  .direct-home-section-body .detail-info .recipient .label,
+  .direct-home-section-body .detail-info .post-date .label,
+  .direct-home-section-body .detail-info .period .label {
+      margin-right: 0.2em;
+  }
+
+  .direct-home-section-body .detail-info .recipient {  
+    font-size: 2.2rem;
+    font-weight: normal;
+  }
+
   </style>
 }
 </head>
@@ -371,12 +388,20 @@
                         </apex:outputText>
                       </span>
                     </div>
-                    <div class="icons">
+                    <div class="period">
+                      <apex:outputPanel rendered="{!hd.auHonbuDirect.DistributionRecipient__c!=''}">
+                        <span class="label">配信先</span>
+                        <span class="value">
+                          <apex:outputText value="{!hd.auHonbuDirect.DistributionRecipient__c}"/>
+                        </span>
+                      </apex:outputPanel>
+                    </div>
+                    <!-- div class="icons"> 
                       <span class="icon-file" style="{!IF(hd.hasDoc, '', 'display: none;')}"></span>
                       <span class="icon-pop" style="{!IF(hd.hasPop, '', 'display: none;')}"></span>
                       <span class="icon-movie" style="{!IF(hd.hasVideo, '', 'display: none;')}"></span>
                       <span class="icon-link" style="{!IF(hd.hasLink, '', 'display: none;')}"></span>
-                    </div>
+                    </div-->
                   </a>
                 </li>
 
@@ -435,6 +460,10 @@
                   <span class="label">カテゴリ</span>
                   <span class="value">{!currentHonbuDirect.auHonbuDirect.Category__c}</span>
                 </div>
+                <div class="recipient" style="{!IF(currentHonbuDirect.auHonbuDirect.DistributionRecipient__c != NULL, '', 'display: none;')}">
+                  <span class="label">配信先</span>
+                  <span class="value">{!currentHonbuDirect.auHonbuDirect.DistributionRecipient__c}</span>
+                </div>
                 <!-- div class="issuer">
                   <span class="label">発信元</span>
                   <span class="value">{!currentHonbuDirect.auHonbuDirect.IssuerLabel__c}</span>
@@ -453,7 +482,7 @@
                     <apex:outputText value="{0,date,yyyy/MM/dd}">
                         <apex:param value="{!currentHonbuDirect.auHonbuDirect.ImplementationStartDate__c}"/>
                     </apex:outputText>
-                    ～
+                    <apex:outputText value=" ～ " />
                     <apex:outputText value="{0,date,yyyy/MM/dd}">
                         <apex:param value="{!currentHonbuDirect.auHonbuDirect.ImplementationEndDate__c}"/>
                     </apex:outputText>
@@ -507,7 +536,7 @@
 
               </ul>
 
-              <h4 style="{!IF(currentHonbuDirect.lsAttachPop.size == 0 && currentHonbuDirect.lsAttachOther.size == 0, 'display: none;', '')}">関連資料</h4>
+              <h4 style="{!IF(currentHonbuDirect.lsAttachPop.size == 0 && currentHonbuDirect.lsAttachOther.size == 0, 'display: none;', '')}">資料</h4>
               <ul class="detail-files">
 
                 <apex:repeat value="{!currentHonbuDirect.lsAttachPop}"

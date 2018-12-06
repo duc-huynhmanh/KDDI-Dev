@@ -22,9 +22,11 @@ public with sharing class auCXKnowledgeListCtrl {
     private static final String COOKIE_FAVORITE = 'Favorite';
     private static final String COOKIE_SHISHA = 'Shisha';
     private static final String COOKIE_SHITEN = 'Shiten';
+    private static final String COOKIE_DAIRITEN = 'Dairiten';
     private static final String COOKIE_UNEIHOJIN = 'UneiHojin';
     private static final String COOKIE_SHOPS = 'Shops';
     private static final String COOKIE_CATEGORY = 'Category';
+    private static final String COOKIE_HASATTACHMENT = 'Attachment';
     private static final String COOKIE_LABEL_INIT_SEARCH_FLG = 'initSearchFlg';  // 画面起動時検索フラグ
     private static final Integer COOKIE_EXPIRATION_DATE = -1;
 
@@ -48,6 +50,7 @@ public with sharing class auCXKnowledgeListCtrl {
     public String filterStatus {get; set;}
 //    public String filterCategory {get; set;}
     public String filterFreeText {get; set;}
+    public Boolean filterHasAttachment {get; set;}
     private String searchFilter;
     public String getSearchFilter(){
         return searchFilter;
@@ -55,6 +58,7 @@ public with sharing class auCXKnowledgeListCtrl {
     public Boolean filterFavorite {get; set;}
     public String filterShisha {get; set;}
     public String filterShiten {get; set;}
+    public String filterDairiten {get; set;}
     public String filterUneiHojin {get; set;}
 
     public auCXKnowledge__c cxKnowledgeNew {get; set;}
@@ -81,6 +85,7 @@ public with sharing class auCXKnowledgeListCtrl {
 
     public List<SelectOption> optShisha{get; set;}
     public List<SelectOption> optShiten{get; set;}
+    public List<SelectOption> optDairiten{get; set;}
     public List<SelectOption> optUneiHojin{get; set;}
 
     public Boolean isShopUser {get; set;}
@@ -88,6 +93,41 @@ public with sharing class auCXKnowledgeListCtrl {
     public Boolean isShisha {get; set;}
     public Boolean isShiten {get; set;}
     public Boolean isRestrictedUser {get; set;}
+
+    //TODO DUC
+    public String updateStaffNo1 {get; set;}
+    public String updateStaffNo2 {get; set;}
+    public String updateStaffNo3 {get; set;}
+    public String updateStaffNo4 {get; set;}
+    public String updateStaffNo5 {get; set;}
+    public String updateStaffNo6 {get; set;}
+    public String updateStaffNo7 {get; set;}
+    public String updateStaffNo8 {get; set;}
+    public String updateStaffNo9 {get; set;}
+    public String updateStaffNo10 {get; set;}
+    public String updateStaffNo11 {get; set;}
+    public String updateStaffNo12 {get; set;}
+    public String updateStaffNo13 {get; set;}
+    public String updateStaffNo14 {get; set;}
+    public String updateStaffNo15 {get; set;}
+
+    public String newStaffNo1 {get; set;}
+    public String newStaffNo2 {get; set;}
+    public String newStaffNo3 {get; set;}
+    public String newStaffNo4 {get; set;}
+    public String newStaffNo5 {get; set;}
+    public String newStaffNo6 {get; set;}
+    public String newStaffNo7 {get; set;}
+    public String newStaffNo8 {get; set;}
+    public String newStaffNo9 {get; set;}
+    public String newStaffNo10 {get; set;}
+    public String newStaffNo11 {get; set;}
+    public String newStaffNo12 {get; set;}
+    public String newStaffNo13 {get; set;}
+    public String newStaffNo14 {get; set;}
+    public String newStaffNo15 {get; set;}
+
+    public Boolean staffNoVisible {get;set;}
 
     public Boolean getIsVisibleFilterShisha() {
         return isHonbuOrAdmin || isShisha || isShiten;
@@ -102,7 +142,19 @@ public with sharing class auCXKnowledgeListCtrl {
                 currentUser.Profile.Name != auConstantCmn.PROFILE_COMMUNITY_MANAGEMENT);
     }
 
+    public Boolean getIsVisibleFilterDairiten() {
+        return (currentUser.Profile.Name != auConstantCmn.PROFILE_COMMUNITY_SHOP &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_COMMUNITY_MANAGEMENT &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT);
+    }
+
     private String whereStr;
+    public String getWhereStrParam(){
+        if(String.isBlank(whereStr)) {
+            return '';
+        }
+        return EncodingUtil.urlEncode(whereStr, 'UTF-8');
+    }
     private Id forcedCXKnowledgeId;
     private Id forcedShopId;
 
@@ -147,15 +199,16 @@ public with sharing class auCXKnowledgeListCtrl {
         Boolean hasSearchValue = initFieldFromCookie();//保持項目有無チェック
 system.debug('Status: ' + filterStatus);
         isShopUser = (currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_SHOP);
-        isHonbuOrAdmin = (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS_V2 || currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_CUSTOM || currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN || currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP);
-        isShisha = (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2);
-        isShiten = (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH_V2);
+        isHonbuOrAdmin = (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS || currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_CUSTOM || currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN || currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP);
+        isShisha = (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA);
+        isShiten = (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2);
         isRestrictedUser = currentUser.IsRestrictedUser__c;
 
         // 支店
         optShisha = auUtilChatter.getListShisha(currentUser);
         optShiten = auUtilChatter.getListShiten(currentUser, filterShisha);
-        optUneiHojin = auUtilChatter.getListUneiHojin(currentUser, filterShisha, filterShiten);
+        optDairiten = auUtilChatter.getListDairiten(currentUser, filterShisha, filterShiten);
+        optUneiHojin = auUtilChatter.getListUneiHojin(currentUser, filterShisha, filterShiten, filterDairiten);
 
         // 系列項目設定
         List<optionDetail> shopsOptions = new List<optionDetail>();
@@ -165,7 +218,7 @@ system.debug('Status: ' + filterStatus);
         }
 
         List<SelectOption> options = new List<SelectOption>();
-        options = auUtilChatter.getListShops(currentUser, filterShisha, filterShiten, filterUneiHojin);
+        options = auUtilChatter.getListShops(currentUser, filterShisha, filterShiten, filterDairiten, filterUneiHojin);
 
         for (SelectOption option: options) {
             Boolean isSelected = false;
@@ -245,7 +298,9 @@ system.debug('Status: ' + filterStatus);
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_FAVORITE, this.filterFavorite ? '1' : '0', null, COOKIE_EXPIRATION_DATE, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_SHISHA, this.filterShisha, null, COOKIE_EXPIRATION_DATE, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_SHITEN, this.filterShiten, null, COOKIE_EXPIRATION_DATE, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_DAIRITEN, this.filterDairiten, null, COOKIE_EXPIRATION_DATE, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_UNEIHOJIN, this.filterUneiHojin, null, COOKIE_EXPIRATION_DATE, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_HASATTACHMENT, this.filterHasAttachment != null ? (this.filterHasAttachment ? '1' : '0') : '0', null, COOKIE_EXPIRATION_DATE, true));
 
         String targetShopsText = '';
         if (this.targetShops != null && this.targetShops.size() > 0) {
@@ -263,6 +318,24 @@ system.debug('Status: ' + filterStatus);
 
         Apexpages.currentPage().setCookies(cookies);
 
+    }
+
+    public void clearCookie(){
+        List<Cookie> cookies = new List<Cookie>();
+
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_STATUS   , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_FREETEXT   , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_FAVORITE   , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_SHISHA   , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_SHITEN, null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_DAIRITEN        , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_UNEIHOJIN        , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_HASATTACHMENT        , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_SHOPS        , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_CATEGORY        , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_LABEL_INIT_SEARCH_FLG        , null    , null, 0, true));
+
+        Apexpages.currentPage().setCookies(cookies);
     }
 
     //保持項目有無判定
@@ -297,8 +370,17 @@ system.debug('Status: ' + filterStatus);
                 this.filterShiten = cookies.get(COOKIE_PREFIX + COOKIE_SHITEN).getValue();
         }
 
+        if(cookies.containsKey(COOKIE_PREFIX + COOKIE_DAIRITEN) && cookies.get(COOKIE_PREFIX + COOKIE_DAIRITEN).getValue().length() > 0){
+                this.filterDairiten = cookies.get(COOKIE_PREFIX + COOKIE_DAIRITEN).getValue();
+        }
+
         if(cookies.containsKey(COOKIE_PREFIX + COOKIE_UNEIHOJIN) && cookies.get(COOKIE_PREFIX + COOKIE_UNEIHOJIN).getValue().length() > 0){
                 this.filterUneiHojin = cookies.get(COOKIE_PREFIX + COOKIE_UNEIHOJIN).getValue();
+        }
+
+        this.filterHasAttachment = false;
+        if(cookies.containsKey(COOKIE_PREFIX + COOKIE_HASATTACHMENT)){
+                this.filterHasAttachment = (cookies.get(COOKIE_PREFIX + COOKIE_HASATTACHMENT).getValue() == '1');
         }
 
         if(cookies.containsKey(COOKIE_PREFIX + COOKIE_SHOPS)){
@@ -461,6 +543,26 @@ system.debug('Status: ' + filterStatus);
     private void clearNewCXKnowledge() {
 
         cxKnowledgeNew = new auCXKnowledge__c();
+        cxKnowledgeNew.Contribution__c = '①取組きっかけ\n\n' + 
+                                        '②取組内容\n\n' + 
+                                        '③結果(効果)\n\n' + 
+                                        '④工夫点・まねポイント\n';
+        //TODO DUC
+        newStaffNo1 = NULL;
+        newStaffNo2 = NULL;
+        newStaffNo3 = NULL;
+        newStaffNo4 = NULL;
+        newStaffNo5 = NULL;
+        newStaffNo6 = NULL;
+        newStaffNo7 = NULL;
+        newStaffNo8 = NULL;
+        newStaffNo9 = NULL;
+        newStaffNo10 = NULL;
+        newStaffNo11 = NULL;
+        newStaffNo12 = NULL;
+        newStaffNo13 = NULL;
+        newStaffNo14 = NULL;
+        newStaffNo15 = NULL;
 
     }
 
@@ -526,20 +628,25 @@ system.debug('Status: ' + filterStatus);
         queryStr += ' ORDER BY ' + orderBy;
 
         if(String.isBlank(this.searchFilter)){
-            String countQueryStr = 'SELECT COUNT() FROM auCXKnowledge__c' + whereStr;
-            recordsCount = database.countQuery(countQueryStr);
-            if(recordsCount > 1000) {
-                recordsCount = 1000;
-            }
-            if(recordsCount > 0){
-                if(math.floor((recordsCount-1) / pageSize) + 1 < pageNum) {
-                    pageNum = (Integer)math.floor((recordsCount-1) / pageSize) + 1;
-                }
-                queryStr += ' LIMIT ' + this.pageSize + ' OFFSET ' + ((pageNum - 1) * pageSize);
-                this.ssc = createSsc(queryStr);
+            if(this.filterHasAttachment){
+                queryStr += ' LIMIT 10000';
+                this.ssc = createSscFilterAttachment(queryStr);
             } else {
-                pageNum = 1;
-                this.ssc = new List<auCXKnowledge__c>();
+                String countQueryStr = 'SELECT COUNT() FROM auCXKnowledge__c' + whereStr;
+                recordsCount = database.countQuery(countQueryStr);
+                if(recordsCount > 1000) {
+                    recordsCount = 1000;
+                }
+                if(recordsCount > 0){
+                    if(math.floor((recordsCount-1) / pageSize) + 1 < pageNum) {
+                        pageNum = (Integer)math.floor((recordsCount-1) / pageSize) + 1;
+                    }
+                    queryStr += ' LIMIT ' + this.pageSize + ' OFFSET ' + ((pageNum - 1) * pageSize);
+                    this.ssc = createSsc(queryStr);
+                } else {
+                    pageNum = 1;
+                    this.ssc = new List<auCXKnowledge__c>();
+                }
             }
         } else {
             queryStr += ' LIMIT 10000';
@@ -552,6 +659,32 @@ system.debug('Status: ' + filterStatus);
 
     }
 
+    private List<auCXKnowledge__c> createSscFilterAttachment(String queryStr) {
+        List<auCXKnowledge__c> localSsc = (List<auCXKnowledge__c>)Database.query(queryStr);
+        List<auCXKnowledge__c> filteredList = new List<auCXKnowledge__c>();
+        List<auCXKnowledge__c> displayList = new List<auCXKnowledge__c>();
+        //get all record filtered (max 1000 records)
+        for(auCXKnowledge__c k: localSsc) {
+            if (k.Attachments != null && k.Attachments.size() > 0) {
+                filteredList.add(k);
+                if (filteredList.size() >= 1000) {
+                    break;
+                }                    
+            }
+        }
+
+        recordsCount = filteredList.size();
+        if(recordsCount > 0){
+            if(math.floor((recordsCount-1) / pageSize) + 1 < pageNum) {
+                pageNum = (Integer)math.floor((recordsCount-1) / pageSize) + 1;
+            } 
+            Integer max = recordsCount > pageNum*pageSize ? pageNum*pageSize : recordsCount;
+            for(Integer i = (pageNum-1)*pageSize; i < max; i++) {
+                displayList.add(filteredList.get(i));
+            }
+        }
+        return displayList;
+    }
     private List<auCXKnowledge__c> createSsc(String queryStr) {
         List<auCXKnowledge__c> localSsc = (List<auCXKnowledge__c>)Database.query(queryStr);
         return localSsc;
@@ -576,10 +709,12 @@ system.debug('Status: ' + filterStatus);
                 }
             }
             if (fFilterFilled) {
-                filteredList.add(k);
-                if (filteredList.size() >= 1000) {
-                    break;
-                }                    
+                if(!this.filterHasAttachment || (this.filterHasAttachment && k.Attachments != null && k.Attachments.size() > 0)){
+                    filteredList.add(k);
+                    if (filteredList.size() >= 1000) {
+                        break;
+                    } 
+                }
             }
         }
 
@@ -647,9 +782,13 @@ system.debug('Status: ' + filterStatus);
 
             if (this.targetShops != null && this.targetShops.size() > 0) {
                 strList.add(auUtilCmn.appendInText('CreatedBy__r.AccountId', this.targetShops));
-            } else if (getIsVisibleFilterUneiHojin() && this.filterUneiHojin != null && this.filterUneiHojin .length() > 0) {
+            } else if (getIsVisibleFilterUneiHojin() && this.filterUneiHojin != null && this.filterUneiHojin.length() > 0) {
                 strList.add('(CreatedBy__r.AccountId = \'' + filterUneiHojin + '\' OR ' +
                             ' CreatedBy__r.Account.ParentId = \'' + filterUneiHojin + '\')');                
+            } else if (getIsVisibleFilterDairiten() && this.filterDairiten != null && this.filterDairiten.length() > 0) {
+                strList.add('(CreatedBy__r.AccountId = \'' + filterDairiten + '\' OR ' +
+                            ' CreatedBy__r.Account.ParentId = \'' + filterDairiten + '\' OR ' +
+                            ' CreatedBy__r.Account.Parent.ParentId = \'' + filterDairiten + '\')');                
             } else if (getIsVisibleFilterShiten() && this.filterShiten != null && this.filterShiten.length() > 0) {
                 // Filter on Shiten is used only if UneiHojin and shops have not been selected
                 strList.add('(CreatedBy__r.Account.BranchId__c = \'' + filterShiten + '\' OR ' +
@@ -975,6 +1114,8 @@ system.debug('Status: ' + filterStatus);
     private void doSaveNewCxKnowledgeReal(Boolean askApproval) {
         
         cxKnowledgeNew.DisplayedDate__c = DateTime.now();
+        //TODO DUC
+        cxKnowledgeNew.Staff_No__c = createNewStaffNoString();
         Insert cxKnowledgeNew;
 
         if (askApproval) {
@@ -1068,6 +1209,43 @@ system.debug('Status: ' + filterStatus);
         doSaveUpdateCxKnowledgeReal(False);
 
     }
+    //TODO DUC
+    
+    private String createUpdateStaffNoString(){
+        return (String.isBlank(updateStaffNo1) ? '' : updateStaffNo1 + ';') +
+        (String.isBlank(updateStaffNo2) ? '' : updateStaffNo2 + ';') +
+        (String.isBlank(updateStaffNo3) ? '' : updateStaffNo3 + ';') +
+        (String.isBlank(updateStaffNo4) ? '' : updateStaffNo4 + ';') +
+        (String.isBlank(updateStaffNo5) ? '' : updateStaffNo5 + ';') +
+        (String.isBlank(updateStaffNo6) ? '' : updateStaffNo6 + ';') +
+        (String.isBlank(updateStaffNo7) ? '' : updateStaffNo7 + ';') +
+        (String.isBlank(updateStaffNo8) ? '' : updateStaffNo8 + ';') +
+        (String.isBlank(updateStaffNo9) ? '' : updateStaffNo9 + ';') +
+        (String.isBlank(updateStaffNo10) ? '' : updateStaffNo10 + ';') +
+        (String.isBlank(updateStaffNo11) ? '' : updateStaffNo11 + ';') +
+        (String.isBlank(updateStaffNo12) ? '' : updateStaffNo12 + ';') +
+        (String.isBlank(updateStaffNo13) ? '' : updateStaffNo13 + ';') +
+        (String.isBlank(updateStaffNo14) ? '' : updateStaffNo14 + ';') +
+        (String.isBlank(updateStaffNo15) ? '' : updateStaffNo15);
+    }
+
+    private String createNewStaffNoString(){
+        return (String.isBlank(newStaffNo1) ? '' : newStaffNo1 + ';') +
+        (String.isBlank(newStaffNo2) ? '' : newStaffNo2 + ';') +
+        (String.isBlank(newStaffNo3) ? '' : newStaffNo3 + ';') +
+        (String.isBlank(newStaffNo4) ? '' : newStaffNo4 + ';') +
+        (String.isBlank(newStaffNo5) ? '' : newStaffNo5 + ';') +
+        (String.isBlank(newStaffNo6) ? '' : newStaffNo6 + ';') +
+        (String.isBlank(newStaffNo7) ? '' : newStaffNo7 + ';') +
+        (String.isBlank(newStaffNo8) ? '' : newStaffNo8 + ';') +
+        (String.isBlank(newStaffNo9) ? '' : newStaffNo9 + ';') +
+        (String.isBlank(newstaffNo10) ? '' : newStaffNo10 + ';') +
+        (String.isBlank(newstaffNo11) ? '' : newStaffNo11 + ';') +
+        (String.isBlank(newstaffNo12) ? '' : newStaffNo12 + ';') +
+        (String.isBlank(newstaffNo13) ? '' : newStaffNo13 + ';') +
+        (String.isBlank(newstaffNo14) ? '' : newStaffNo14 + ';') +
+        (String.isBlank(newstaffNo15) ? '' : newStaffNo15);
+    }
     
     private void doSaveUpdateCxKnowledgeReal(Boolean createFeed) {
         
@@ -1080,6 +1258,8 @@ system.debug('Status: ' + filterStatus);
             }    
             cxKnowledgeUpdate.TechnicalFavorite__c = false;
             cxKnowledgeUpdate.DisplayedDate__c = DateTime.now();
+            //TODO DUC
+            cxKnowledgeUpdate.Staff_No__c = createUpdateStaffNoString();
 
             Update cxKnowledgeUpdate;
 
@@ -1170,12 +1350,124 @@ system.debug('Status: ' + filterStatus);
         }
     }
 
+    //TODO DUC
+    private void getStaffNo(String dataSource){
+        updateStaffNo1 = null;
+        updateStaffNo2 = null;
+        updateStaffNo3 = null;
+        updateStaffNo4 = null;
+        updateStaffNo5 = null;
+        updateStaffNo6 = null;
+        updateStaffNo7 = null;
+        updateStaffNo8 = null;
+        updateStaffNo9 = null;
+        updateStaffNo10 = null;
+        updateStaffNo11 = null;
+        updateStaffNo12 = null;
+        updateStaffNo13 = null;
+        updateStaffNo14 = null;
+        updateStaffNo15 = null;
+        if(!String.isBlank(dataSource)){
+            List<String> staffNos = dataSource.split(';');
+            if(staffNos.size()>=1){
+                updateStaffNo1 = staffNos[0];
+            }
+            if(staffNos.size()>=2){
+                updateStaffNo2 = staffNos[1];
+            }
+            if(staffNos.size()>=3){
+                updateStaffNo3 = staffNos[2];
+            }
+            if(staffNos.size()>=4){
+                updateStaffNo4 = staffNos[3];
+            }
+            if(staffNos.size()>=5){
+                updateStaffNo5 = staffNos[4];
+            }
+            if(staffNos.size()>=6){
+                updateStaffNo6 = staffNos[5];
+            }
+            if(staffNos.size()>=7){
+                updateStaffNo7 = staffNos[6];
+            }
+            if(staffNos.size()>=8){
+                updateStaffNo8 = staffNos[7];
+            }
+            if(staffNos.size()>=9){
+                updateStaffNo9 = staffNos[8];
+            }
+            if(staffNos.size()>=10){
+                updateStaffNo10 = staffNos[9];
+            }
+            if(staffNos.size()>=11){
+                updateStaffNo11 = staffNos[10];
+            }
+            if(staffNos.size()>=12){
+                updateStaffNo12 = staffNos[11];
+            }
+            if(staffNos.size()>=13){
+                updateStaffNo13 = staffNos[12];
+            }
+            if(staffNos.size()>=14){
+                updateStaffNo14 = staffNos[13];
+            }
+            if(staffNos.size()>=15){
+                updateStaffNo15 = staffNos[14];
+            }
+        }
+    }
+    //TODO DUC
+    private Boolean checkStaffNoVisibility(auCXKnowledge__c cxKnowledge){
+        /*//if user is shop user -> must be creator
+        if(currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_SHOP){
+            if(cxKnowledge.CreatedBy__c == currentUser.Id){
+                return true;
+            }
+            return false;
+        }
+        //if user is 運営法人 -> cxKnowledge's account must be child of user's account
+        if(currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_MANAGEMENT){
+            if(cxKnowledge.CreatedBy__r.Account.ManagementCorpId__c == currentUser.AccountId) {
+                return true;
+            }
+            return false;
+        }
+        //if user is 代理店 -> cxKnowledge's account must be grandChild of user's account
+        if(currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT){
+            if(cxKnowledge.CreatedBy__r.Account.ParentAgencyId__c == currentUser.AccountId) {
+                return true;
+            }
+            return false;
+        }
+        //TODO: check profile KDDI社員
+        if(currentUser.Profile.Name.startsWithIgnoreCase('kddi') || 
+            auConstantCmn.PROFILE_SYSADMIN_CUSTOM == currentUser.Profile.Name || 
+            auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN == currentUser.Profile.Name || 
+            auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP == currentUser.Profile.Name){
+            return true;
+        }
+        return false;*/
+        //TODO DUC
+        return currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_CUSTOM ||
+            currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN ||
+            currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP ||
+            currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS ||
+            currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE ||
+            currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH ||
+            cxKnowledge.CreatedBy__c == currentUser.Id ||
+            cxKnowledge.CreatedBy__r.Account.ParentId == currentUser.AccountId ||
+            (cxKnowledge.CreatedBy__r.Account.ParentId != null && cxKnowledge.CreatedBy__r.Account.Parent.ParentId == currentUser.AccountId);
+    }
+    
+
     public void refreshCxKnowledgeEdit() {
         likeId = null;
-        cxKnowledgeUpdate = [SELECT Id, Title__c, Status__c, Category1__c, Category2__c, Category3__c, Contribution__c, 
+        cxKnowledgeUpdate = [SELECT Id, Title__c, Status__c, Category1__c, Category2__c, Category3__c, Contribution__c, Staff_No__c, 
                                     AcceptComment__c, RejectComment__c, NationalAcceptComment__c, NationalRejectComment__c, ScopeSharing__c,
                                     IsCommentOnly__c, CommentOnly__c, PublishAlsoAttachments__c, PublishAlsoAttachmentsList__c, ScopeRecommendation__c, FirstApprover__c, SecondApprover__c,
                                     UserRecordAccess.HasEditAccess, UserRecordAccess.HasDeleteAccess,
+                                    //CreatedBy__r.Account.ParentAgencyId__c, CreatedBy__r.Account.ManagementCorpId__c, 
+                                    CreatedBy__r.Account.ParentId, CreatedBy__r.Account.Parent.ParentId, 
                                     CreatedBy__r.Account.RegionalOfficeId__r.DepartmentCode__c,
                                     CreatedBy__r.Account.RegionalOffice2Id__r.DepartmentCode__c,
                                     CreatedBy__r.Account.BranchId__r.DepartmentCode__c,
@@ -1184,8 +1476,11 @@ system.debug('Status: ' + filterStatus);
                                     (SELECT Id FROM CXKnowledgeFavorite_CXKnowledge__r WHERE User__c = :UserInfo.getUserId())
                              FROM auCXKnowledge__c
                              WHERE id = :cxKnowledgeUpdateId];
+        //TODO DUC
+        staffNoVisible = checkStaffNoVisibility(cxKnowledgeUpdate);
         cxKnowledgeUpdate.TechnicalFavorite__c = cxKnowledgeUpdate.CXKnowledgeFavorite_CXKnowledge__r != NULL && cxKnowledgeUpdate.CXKnowledgeFavorite_CXKnowledge__r.size() > 0;
-
+        //TODO DUC
+        getStaffNo(cxKnowledgeUpdate.Staff_No__c);
         cxKnowledgeAttachSharing = '0';
 
         isCreator =  (cxKnowledgeUpdate.CreatedBy__c == UserInfo.getUserId());
@@ -1340,11 +1635,32 @@ system.debug('Status: ' + filterStatus);
 
         }
 
+        refreshDairitenFilter();
+    }
+
+    public void refreshDairitenFilter() {
+        optDairiten = auUtilChatter.getListDairiten(currentUser, filterShisha, filterShiten);
+
+        // Initialize Dairiten if no more selectable
+        if (filterDairiten != NULL && filterDairiten.length() > 0) {
+            Boolean fDairitenFound = false;
+            for (SelectOption opt : optDairiten) {
+                if (opt.getValue() == filterDairiten) {
+                    fDairitenFound = true;
+                    break;
+                }
+            }
+            if (!fDairitenFound) {
+                filterDairiten = NULL;
+            }
+
+        }
+
         refreshUneiHojinFilter();
     }
 
     public void refreshUneiHojinFilter() {
-        optUneiHojin = auUtilChatter.getListUneiHojin(currentUser, filterShisha, filterShiten);
+        optUneiHojin = auUtilChatter.getListUneiHojin(currentUser, filterShisha, filterShiten, filterDairiten);
 
         // Initialize Uneihojin if no more selectable
         if (filterUneiHojin != NULL && filterUneiHojin.length() > 0) {
@@ -1374,7 +1690,7 @@ system.debug('Status: ' + filterStatus);
         }
 
         List<SelectOption> options = new List<SelectOption>();
-        options = auUtilChatter.getListShops(currentUser, filterShisha, filterShiten, filterUneiHojin);
+        options = auUtilChatter.getListShops(currentUser, filterShisha, filterShiten, filterDairiten, filterUneiHojin);
 
         for (SelectOption option: options) {
             Boolean isSelected = false;

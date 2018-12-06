@@ -29,8 +29,8 @@ public with sharing class kdKnowledgeCSVFileExportingCtrl {
 			'"まねした！コメント１","まねした！コメント２","まねした！コメント３","まねした！コメント４","まねした！コメント５","氏名","所属１",' +
 			'"所属２","社員番号","記載日時"';
         }
-		filename = 	Datetime.now().format('yyyyMMdd') + '_' + filename + '.csv';
-		Apexpages.currentPage().getHeaders().put('content-disposition', 'attachment; filename="' + EncodingUtil.urlEncode(fileName, 'UTF-8') + '"');
+		filename = 	filename + '_' + Datetime.now().format('yyyyMMdd') + '.csv';
+		Apexpages.currentPage().getHeaders().put('content-disposition', 'attachment; filename="";filename*=UTF-8\'\'' + EncodingUtil.urlEncode(fileName, 'UTF-8'));
 	}
 
 	private String createQueryString(){

@@ -24,6 +24,7 @@ private class saDailyReportEditorForAdminCtlTest {
 		inq.ReportName__c = 'Test';
 		inq.ValidFrom__c = Date.today().addDays(-2);
 		inq.ValidTo__c = Date.today().addDays(2);
+		inq.RegionalOfficeCode__c = 'S010M0L020A';
 		insert inq;
 		return inq;
 	}
@@ -60,6 +61,67 @@ private class saDailyReportEditorForAdminCtlTest {
 		insert replyDetail;
 		return replyDetail;
 	}
+
+
+	@isTest
+	static void RoleOptionsTest(){
+	
+		Profile p = [SELECT Id FROM Profile WHERE Name = 'System Administrator' OR Name = 'システム管理者'];
+		User u = new User(Alias = 'standt', Email='dummy.test@kddi.biz.ezweb.ne.jp', 
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US', 
+            LocaleSidKey='en_US', ProfileId = p.Id, 
+            TimeZoneSidKey='Asia/Tokyo', UserName='duchm@kddi.biz.ezweb.ne.jp');
+        System.runAs(u) {
+        	PageReference pageRef = Page.saDailyReportEditorForAdmin;
+			Test.setCurrentPage(pageRef);
+			saInquiry__c inq = createInquiry();
+			ApexPages.currentPage().getParameters().put('top', '0');
+			ApexPages.currentPage().getParameters().put('type', '1');
+			ApexPages.currentPage().getParameters().put('id', inq.Id);
+			ApexPages.currentPage().getParameters().put('isCopy', 'true');
+			
+			saDailyReportEditorForAdminCtl ctl = new saDailyReportEditorForAdminCtl();
+			
+			if (ctl.SARole5Options.size() >= 2) {
+          		ctl.filterSARole5Option = ctl.SARole5Options[1].getValue();
+          		ctl.inputSARole5Option();
+        	}
+        	if (ctl.SARole6Options.size() >= 2) {
+        		ctl.filterSARole6Option = ctl.SARole6Options[1].getValue();
+        		ctl.inputSARole6Option();
+      		}
+      		if (ctl.SARole7Options.size() >= 2) {
+        		ctl.filterSARole7Option = ctl.SARole7Options[1].getValue();
+        		ctl.inputSARole7Option();
+      		}
+      		if (ctl.SARole8Options.size() >= 2) {
+        		ctl.filterSARole8Option = ctl.SARole8Options[1].getValue();
+      		}
+
+        	if (ctl.KDDIRole5Options.size() >= 2) {
+          		ctl.filterKDDIRole5Option = ctl.KDDIRole5Options[1].getValue();
+          		ctl.inputKDDIRole5Option();
+        	}
+        	if (ctl.KDDIRole6Options.size() >= 2) {
+        		ctl.filterKDDIRole6Option = ctl.KDDIRole6Options[1].getValue();
+      		}
+      		
+      		if (ctl.ShopRole5Options.size() >= 2) {
+          		ctl.filterShopRole5Option = ctl.ShopRole5Options[1].getValue();
+          		ctl.inputShopRole5Option();
+        	}
+        	
+        	boolean noError = ctl.confirmData(false);
+        	system.assertEquals(noError,true);
+        	noError = ctl.confirmData(true);
+        	system.assertEquals(noError,true);
+      		
+        }
+	
+	}
+	
+
+
 
 	@isTest static void test_Constructor1() {
 		Profile p = [SELECT Id FROM Profile WHERE Name = 'System Administrator' OR Name = 'システム管理者'];

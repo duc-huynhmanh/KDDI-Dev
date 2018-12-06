@@ -16,45 +16,63 @@
   <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.min.js')}"/> 
 
   <style>
+
     .col1{
-      width: 155px;
+      min-width: 120px !important;
+      width: 150px !important;
+      max-width: 150px !important;
       overflow-x: hidden;
     }
     .col2{
-      min-width: 100px;
+      min-width: 120px !important;
+      width: 150px !important;
+      max-width:150px !important;
+      overflow-x: hidden;
     }
     .col3{
-      min-width: 60px;
-      max-width: 70px;
+      min-width: 300px !important;
+      width: 450px !important;
+      max-width: 450px !important;
       overflow-x: hidden;
     }
     .col4{
-      min-width: 100px;
-      max-width: 300px;
+      min-width: 120px !important;
+      width: 150px !important;
+      max-width: 150px !important;
       overflow-x: hidden;
     }
     .col5{
-      min-width: 60px;
-      max-width: 70px;
+      min-width: 60px !important;
+      width: 70px !important;
+      max-width: 70px !important;
       overflow-x: hidden;
     }
-    .col6{
-      min-width: 80px;
-      max-width: 90px;
+      .col6{
+      min-width: 60px !important;
+      width: 70px !important;
+      max-width: 70px !important;
       overflow-x: hidden;
     }
-    .col7{
-      min-width: 50px;
-      max-width: 60px;
+      .col7{
+      min-width: 50px !important;
+      width: 50px !important;
+      max-width: 60px !important;
       overflow-x: hidden;
     }
-    .col8{
-      min-width: 50px;
-      max-width: 60px;
+      .col8{
+      min-width: 50px !important;
+      width: 50px !important;
+      max-width: 60px !important;
+      overflow-x: hidden;
+    }
+      .col9{
+      min-width: 50px !important;
+      width: 50px !important;
+      max-width: 60px !important;
       overflow-x: hidden;
     }
 
-    .col2 p, .col4 p{
+    .col1 p, .col2 p, .col3 p, .col4 p{
       word-break: break-all;
       word-wrap: break-word;
       white-space: normal;
@@ -243,7 +261,7 @@ margin-top: -2rem;
     }
 
     .thspanwithoutarrow {
-      top: auto !important;
+      /*top: auto !important;*/
     }
 
 
@@ -401,6 +419,18 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
   .max-height-100{
     max-height: 100% !important;
   }
+    .margin-right10{
+    margin-right: 10px;
+    }
+
+    .newItem{
+    background-color: #dc374d;/*red;*/
+    font-weight: bold;
+    color: white;
+    display:inline-block;
+    width: 40px;
+    text-align: center; 
+  }
   </style>
 
   <script>
@@ -471,15 +501,19 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
       cateOption.selected = 'selected';
     }
 
+    function callChangeFavoriteStatus() {
+        jsChangeFavoriteStatus();
+    }
+
     function callAddLike() {
 
         var obj = $j('.LikeCommentInput');
 
-        if (obj.val().trim().length == 0) {
+        /*if (obj.val().trim().length == 0) {
           alert('コメントを入力してください。');
-        } else {
+        } else {*/
           jsAddLike();
-        }
+        //}
 
     }
 
@@ -489,13 +523,13 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
 
     function callAddCopy() {
 
-        var obj = $j('.CopyCommentInput');
+        /*var obj = $j('.CopyCommentInput');
 
         if (obj.val().trim().length == 0) {
           alert('コメントを入力してください。');
-        } else {
+        } else {*/
           jsAddCopy();
-        }
+        //}
 
     }
 
@@ -526,6 +560,14 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
         return goodSize;
     }
 
+    function clearSearchCondition(){
+      $j('.filter-text input[type=text]').each(function(){
+        this.value = '';
+      });
+      $j(".filter-select select").val("");
+      $j('.filter-checkbox input[type=checkbox]').prop('checked', false);
+      clearCookie();
+    }
 
     window.onload = function onLoadJS() {
       if({!!hasData}){
@@ -567,6 +609,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
       <apex:inputText id="attachmentId" styleClass="AttachmentIdInput" value="{!attachmentId}" style="display: none;" />
       <apex:actionFunction name="jsKnowledgeAttachmentDelete" action="{!kdKnowledgeAttachmentDelete}" rerender="editKnowledge14" />
       <apex:actionFunction name="jsKnowledgeAttachmentPutInTop" action="{!kdKnowledgeAttachmentPutInTop}" rerender="editKnowledge14" />
+      <apex:actionFunction name="jsChangeFavoriteStatus" action="{!changeFavoriteStatus}" rerender="editFavorite" />
     </apex:actionRegion>
 
     <apex:actionFunction name="addKnowledgeNewAttachment" action="{!addKnowledgeNewAttachment}" />
@@ -655,6 +698,14 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                           <apex:inputField style="width: 100%;" styleclass="input-title" value="{!kdKnowledgeUpdate.Title__c}" />
                         </td>
                       </tr>
+                      
+                      <tr class="{!IF(kdKnowledgeUpdate.UserRecordAccess.HasEditAccess && kdKnowledgeUpdate.Status__c != statusTemporarySaved, '', 'hidden')}">
+                        <th>投稿日を更新</th>
+                        <td class="">
+                          <apex:inputCheckbox style="float: left; width: 20px; height: 20px;" value="{!isUpdate}" />
+                          <div style="float: left; padding-top: 0.1rem; margin-left: -0.4rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;※投稿日を更新したい場合にはチェックを入れてください。</div>
+                        </td>
+                      </tr>
 
                       <tr>
                         <th>種類</th>
@@ -687,7 +738,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                                            value="{!kdKnowledgeUpdate.Agency__c}"
                                            rendered="{!isCreator}" />
 
-                          <apex:outputField value="{!kdKnowledgeUpdate.Agency__c}"
+                          <apex:outputText value="{!kdKnowledgeUpdate.Agency__r.Name}"
                                             rendered="{!!isCreator}"
                                             />
 
@@ -771,6 +822,29 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                         </apex:outputPanel>
                       </td>
                     </tr>
+
+                    <tr>
+                      <th>お気に入り</th>
+                      <td class="last-child">
+                        <apex:outputPanel id="editFavorite">
+                          <apex:actionRegion renderRegionOnly="false">
+
+                            <apex:commandLink onclick="callChangeFavoriteStatus()"
+                                              rendered="{!!kdKnowledgeUpdate.TechnicalFavorite__c}"
+                                              reRender="DUMMY">                        
+                              <i class="icon icon--favorite--off"></i>
+                            </apex:commandLink>
+
+                            <apex:commandLink onclick="callChangeFavoriteStatus()"
+                                              rendered="{!kdKnowledgeUpdate.TechnicalFavorite__c}"
+                                              reRender="DUMMY">                        
+                              <i class="icon icon--favorite--on"></i>
+                            </apex:commandLink>
+
+                          </apex:actionRegion>
+                        </apex:outputPanel>
+                      </td>
+                    </tr>
                   </table>
                 </apex:outputPanel>
               </div>
@@ -785,68 +859,76 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
               <div class="mdl-cell mdl-cell--12-col">
                 <div class="search-filter clearfix search_criteria_form" >
                   <apex:actionRegion id="area51f" renderRegionOnly="false">
+                  <apex:actionFunction name="clearCookie" action="{!clearCookie}" reRender="area51f" />
                     <div style="display: inline-block;">
-                      <fieldset class="filter-daterange">
-                        <label >最終更新日</label>
+                      <fieldset class="filter-daterange filter-text">
+                        <label >投稿日</label>
                         <apex:input value="{!filterDateFromStr}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd" />
                         <label style="margin-left: 0.5em;">></label>
                         <apex:input value="{!filterDateToStr}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd" />
                       </fieldset>
                       
-                      <fieldset class="filter-category">
+                      <fieldset class="filter-category filter-select">
                         <label>ステータス</label>
                         <apex:selectList styleClass="search-status__select" value="{!filterStatus}" size="1" style="margin-left: 0.5rem">
                           <apex:selectOptions value="{!ListStatus}" />
                         </apex:selectList>
                       </fieldset>
 
-                      <fieldset class="filter-category">
+                      <fieldset class="filter-category filter-select">
                         <label>種類</label>
                         <apex:selectList styleClass="search-status__select" value="{!filterType}" size="1" style="margin-left: 0.5rem">
                           <apex:selectOptions value="{!ListType}" />
                         </apex:selectList>
                       </fieldset>
 
-                      <fieldset class="filter-category">
+                      <fieldset class="filter-category filter-select">
                         <label>テーマ</label>
                         <apex:selectList styleClass="search-status__select" value="{!filterThema}" size="1" style="margin-left: 0.5rem">
                           <apex:selectOptions value="{!ListThema}" />
                         </apex:selectList>
                       </fieldset>
 
-                      <fieldset class="filter-category">
+                      <fieldset class="filter-category filter-select">
                         <label>チャネル区分</label>
                         <apex:selectList styleClass="search-status__select" value="{!filterSubjectDivision}" size="1" style="margin-left: 0.5rem">
                           <apex:selectOptions value="{!ListSubjectDivision}" />
                         </apex:selectList>
                       </fieldset>
 
-                      <fieldset class="filter-category">
+                      <fieldset class="filter-category filter-text">
                         <label>タイトル</label>
                         <apex:inputText styleClass="search-status__select" value="{!filterTitle}" style="margin-left: 0.5rem; width:10rem;" />
                       </fieldset>
 
-                      <fieldset class="filter-category">
+                      <fieldset class="filter-category filter-text">
                         <label>作成者及び組織名称</label>
                         <apex:inputText styleClass="search-status__select" value="{!filterCreatedBy}" style="margin-left: 0.5rem; width:10rem;" />
                       </fieldset>
 
-                      <fieldset class="filter-category">
-                        <label>動画有りのみ</label>
-                        <apex:inputCheckbox styleClass="search-status__select" value="{!filterHasMovie}" style="margin-left: 0.5rem; vertical-align: middle;" />
+                      <fieldset class="filter-category filter-checkbox">
+                        <apex:outputLabel for="favoriteCheckbox" value="お気に入りのみ" />
+                        <apex:inputCheckbox id="favoriteCheckbox" styleClass="search-status__select" value="{!filterFavorite}" style="margin-left: 0.5rem; vertical-align: middle;" />
                       </fieldset>
 
-                      <fieldset class="filter-category">
-                        <label>新着</label>
-                        <apex:inputCheckbox styleClass="search-status__select" value="{!filterNew}" style="margin-left: 0.5rem; vertical-align: middle;" />
+                      <fieldset class="filter-category filter-checkbox">
+                        <apex:outputLabel for="hasVideoCheckbox" value="動画有りのみ" />
+                        <apex:inputCheckbox id="hasVideoCheckbox" styleClass="search-status__select" value="{!filterHasMovie}" style="margin-left: 0.5rem; vertical-align: middle;" />
                       </fieldset>
 
-                      <fieldset class="filter-category">
+                      <fieldset class="filter-category filter-checkbox">
+                        <apex:outputLabel for="newCheckbox" value="新着" />
+                        <apex:inputCheckbox id="newCheckbox" styleClass="search-status__select" value="{!filterNew}" style="margin-left: 0.5rem; vertical-align: middle;" />
+                      </fieldset>
+
+                      <fieldset class="filter-category filter-text">
                         <label>フリー検索</label>
                         <apex:inputText styleClass="search-status__select" value="{!filterFreeText}" style="margin-left: 0.5rem; width:10rem;" />
                       </fieldset>   
+                      <apex:pageMessages id="error"/>
                       <fieldset class="filter-button">
-                        <apex:commandLink value="絞り込む/実行" styleClass="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" action="{!doSearch}" />
+                        <apex:commandLink value="絞り込む/実行" styleClass="margin-right10 mdl-button mdl-js-button mdl-button--raised mdl-button--colored" action="{!doSearch}" />
+                        <apex:commandLink styleClass="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="クリアする" onclick="clearSearchCondition();" reRender="area51g"/>
                       </fieldset>                                
                     </div>
                   </apex:actionRegion>
@@ -869,6 +951,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
 -->
           </div>
         </header>
+
         <div class="mdl-grid">
               <div class="mdl-cell mdl-cell--2-col">
                 <apex:outputPanel >
@@ -1088,13 +1171,13 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                 <tr>
                   <th class="col1 mdl-data-table__cell--non-numeric sort">
                     <ul>
-                      <li class="{!IF(orderBy == 'LastModifiedDate__c ASC', 'active', '')}">
-                        <a href="javascript:void(0);" onclick="callChangeOrder('LastModifiedDate__c ASC');">
+                      <li class="{!IF(orderBy == 'PostTime__c ASC NULLS LAST', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('PostTime__c ASC NULLS LAST');">
                           <i class="material-icons">arrow_drop_up</i>
                         </a>
                       </li>
-                      <li class="{!IF(orderBy == 'LastModifiedDate__c DESC', 'active', '')}">
-                        <a href="javascript:void(0);" onclick="callChangeOrder('LastModifiedDate__c DESC');">
+                      <li class="{!IF(orderBy == 'PostTime__c DESC NULLS LAST', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('PostTime__c DESC NULLS LAST');">
                           <i class="material-icons">arrow_drop_down</i>
                         </a>
                       </li>
@@ -1103,24 +1186,113 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                   </th>
 
                   <th class="col2 mdl-data-table__cell--non-numeric sort">
-                    <span class="thspanwithoutarrow">テーマ・タイトル</span>
+                    <ul>
+                      <li class="{!IF(orderBy == 'Thema__c NULLS LAST', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('Thema__c NULLS LAST');">
+                          <i class="material-icons">arrow_drop_up</i>
+                        </a>
+                      </li>
+                      <li class="{!IF(orderBy == 'Thema__c DESC NULLS LAST', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('Thema__c DESC NULLS LAST');">
+                          <i class="material-icons">arrow_drop_down</i>
+                        </a>
+                      </li>
+                    </ul>
+                    <span class="thspanwithoutarrow">テーマ</span>
                   </th>
+
+                  <th class="col3 mdl-data-table__cell--non-numeric sort">
+                    <ul>
+                      <li class="{!IF(orderBy == 'Title__c NULLS LAST', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('Title__c NULLS LAST');">
+                          <i class="material-icons">arrow_drop_up</i>
+                        </a>
+                      </li>
+                      <li class="{!IF(orderBy == 'Title__c DESC NULLS LAST', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('Title__c DESC NULLS LAST');">
+                          <i class="material-icons">arrow_drop_down</i>
+                        </a>
+                      </li>
+                    </ul>
+                    <span class="thspanwithoutarrow">タイトル</span>
+                  </th>
+
                   <th class="col4 mdl-data-table__cell--non-numeric sort">
+                    <ul>
+                      <li class="{!IF(orderBy == 'CreatedByDisplayedName__c ASC NULLS LAST', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('CreatedByDisplayedName__c ASC NULLS LAST');">
+                          <i class="material-icons">arrow_drop_up</i>
+                        </a>
+                      </li>
+                      <li class="{!IF(orderBy == 'CreatedByDisplayedName__c DESC NULLS LAST', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('CreatedByDisplayedName__c DESC NULLS LAST');">
+                          <i class="material-icons">arrow_drop_down</i>
+                        </a>
+                      </li>
+                    </ul>
                     <span class="thspanwithoutarrow">作成者</span>
                   </th>
                   <th class="col5 mdl-data-table__cell--non-numeric sort">
                     <span class="thspanwithoutarrow">添付</span>
                   </th>
-                  <th class="col3 mdl-data-table__cell--non-numeric sort">
+                  <th class="col6 mdl-data-table__cell--non-numeric sort">
+                    <ul>
+                      <li class="{!IF(orderBy == 'HasMovie__c ASC NULLS LAST', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('HasMovie__c ASC NULLS LAST');">
+                          <i class="material-icons">arrow_drop_up</i>
+                        </a>
+                      </li>
+                      <li class="{!IF(orderBy == 'HasMovie__c DESC NULLS LAST', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('HasMovie__c DESC NULLS LAST');">
+                          <i class="material-icons">arrow_drop_down</i>
+                        </a>
+                      </li>
+                    </ul>
                     <span class="thspanwithoutarrow">動画</span>
                   </th>
-                  <th class="col6 mdl-data-table__cell--non-numeric sort">
-                    <span class="thspanwithoutarrow">累計閲覧数</span>
+                  <th class="col7 mdl-data-table__cell--non-numeric sort">
+                    <ul>
+                      <li class="{!IF(orderBy == 'NbView__c ASC NULLS LAST', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('NbView__c ASC NULLS LAST');">
+                          <i class="material-icons">arrow_drop_up</i>
+                        </a>
+                      </li>
+                      <li class="{!IF(orderBy == 'NbView__c DESC NULLS LAST', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('NbView__c DESC NULLS LAST');">
+                          <i class="material-icons">arrow_drop_down</i>
+                        </a>
+                      </li>
+                    </ul>
+                    <span class="thspanwithoutarrow">閲覧数</span>
                   </th>
-                  <th class="col7 mdl-data-table__cell--non-numeric sort u-text-center" data-sort="thumb">
+                  <th class="col8 mdl-data-table__cell--non-numeric sort u-text-center" data-sort="thumb">
+                    <ul>
+                      <li class="{!IF(orderBy == 'NbLike__c ASC NULLS LAST', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('NbLike__c ASC NULLS LAST');">
+                          <i class="material-icons">arrow_drop_up</i>
+                        </a>
+                      </li>
+                      <li class="{!IF(orderBy == 'NbLike__c DESC NULLS LAST', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('NbLike__c DESC NULLS LAST');">
+                          <i class="material-icons">arrow_drop_down</i>
+                        </a>
+                      </li>
+                    </ul>
                     <span class="thspanwithoutarrow"><i class="material-icons">thumb_up</i></span>
                   </th>
-                  <th class="col8 mdl-data-table__cell--non-numeric sort u-text-center" data-sort="comment">
+                  <th class="col9 mdl-data-table__cell--non-numeric sort u-text-center" data-sort="comment">
+                    <ul>
+                      <li class="{!IF(orderBy == 'NbCopy__c ASC NULLS LAST', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('NbCopy__c ASC NULLS LAST');">
+                          <i class="material-icons">arrow_drop_up</i>
+                        </a>
+                      </li>
+                      <li class="{!IF(orderBy == 'NbCopy__c DESC NULLS LAST', 'active', '')}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('NbCopy__c DESC NULLS LAST');">
+                          <i class="material-icons">arrow_drop_down</i>
+                        </a>
+                      </li>
+                    </ul>
                     <span class="thspanwithoutarrow"><i class="material-icons">comment</i></span>
                   </th>
                 </tr>
@@ -1136,7 +1308,8 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
   
                       <td class="js-slide-info-trigger base-info js-base-info col1" data-target=".theme-info">
                         <p>
-                          <span class="u-sub-colour"><apex:outputText value="{0,date,yyyy.MM.dd}"> <apex:param value="{!rec.knowledge.LastModifiedDate__c}" /> </apex:outputText></span>
+                          <apex:outputLabel styleClass="newItem" rendered="{!IF(rec.knowledge.PostTime__c == null || rec.knowledge.PostTime__c < NOW() - 7, false, true)}" value="New"/>
+                          <span class="u-sub-colour"><apex:outputText value="{0,date,yyyy.MM.dd}"> <apex:param value="{!rec.knowledge.PostTime__c}" /> </apex:outputText></span>
                           <br/>
 
                           <apex:outputField value="{!rec.knowledge.Status__c}"/>
@@ -1144,7 +1317,11 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                       </td>
                       <!--テーマ-->
                       <td class="col2">
-                        <p>{!rec.themaLabel} {!IF(len(rec.knowledge.Title__c) > 0 || rec.knowledge.Title__c != null, '・ ','')}{!rec.knowledge.Title__c}</p>  
+                        <span>{!rec.themaLabel}</span> 
+                      </td>
+                       <!--タイトル-->
+                      <td class="col3">
+                        <p>{!rec.knowledge.Title__c}</p>  
                       </td>    
                       
                       <!--作成者氏名-->
@@ -1162,22 +1339,22 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                         </apex:outputLabel>
                       </td>
                       <!--動画-->              
-                      <td class="col3">
+                      <td class="col6">
                         <p>
                           <img class="icon-attach {!IF(rec.knowledge.hasMovie__c, '', 'hidden')}" src="{!URLFOR($Resource.auStyling,'/images/icon-video.png')}" />
                         </p>
                       </td>
                       <!--累計閲覧数-->
-                      <td class="col6">
-                        <p>{!rec.knowledge.NbView__c}</p>
+                      <td class="col7">
+                        <p style="text-align: center;">{!rec.knowledge.NbView__c}</p>
                       </td> 
                       <!--thumb_up-->
-                      <td class="col7">
-                        <p>{!rec.knowledge.NbLike__c}</p>
+                      <td class="col8">
+                        <p style="text-align: center;">{!rec.knowledge.NbLike__c}</p>
                       </td>
                       <!--comment-->
-                      <td class="col8">
-                        <p>{!rec.knowledge.NbCopy__c}</p>
+                      <td class="col9">
+                        <p style="text-align: center;">{!rec.knowledge.NbCopy__c}</p>
                       </td>
 
                     </tr>
@@ -1272,7 +1449,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
           <p>
             <apex:inputField id="editKnowledge5a"
                              styleclass="LikeCommentInput" 
-                             html-placeholder="コメントをご記入ください！"
+                             html-placeholder="コメントがある場合には入力ください。"
                              value="{!kdKnowledgeUpdateDetailLike.CommentLike__c}" />
             <apex:actionFunction name="jsAddLike" action="{!doAddLike}" reRender="editKnowledge17, pnlPopupLike"/>
             <apex:actionFunction name="jsRemoveLike" action="{!doRemoveLike}" reRender="editKnowledge17, pnlPopupLike"/>
@@ -1306,7 +1483,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
           <p>
             <apex:inputField id="editKnowledge5b"
                              styleclass="CopyCommentInput" 
-                             html-placeholder="コメントをご記入ください！"
+                             html-placeholder="コメントがある場合には入力ください。"
                              value="{!kdKnowledgeUpdateDetailCopy.CommentCopy__c}" />
             <apex:actionFunction name="jsAddCopy" action="{!doAddCopy}" reRender="editKnowledge18, pnlPopupCopy"/>
             <apex:actionFunction name="jsRemoveCopy" action="{!doRemoveCopy}" reRender="editKnowledge18, pnlPopupCopy"/>

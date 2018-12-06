@@ -20,7 +20,7 @@
   <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/flatpickr.js')}"/> 
   <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/ja.js')}"/> 
   
-  <!-- scripts -->
+  <!-- scripts :  rerender="{!$Component.mostRecentOutputPanel}" onComplete="setScrollFromTopValue();" -->
   <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_check_ua.js')}"/> 
   <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_fitting.js')}"/> 
   <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_sp.js')}"/> 
@@ -173,6 +173,110 @@
 	    background: white;
 	}
 
+	/* To Adapt to the new outputPanel */
+	.home-pickup-area {    
+	    box-sizing: border-box;
+	    padding-left: 155px;
+	    width: 100%;
+	    overflow: hidden;
+	  }
+	  .home-pickup-area.home-ranking {
+	    margin-bottom: 20px;
+	  }
+	  .home-pickup-area.home-reports {
+	    margin-bottom: 20px;
+	  }
+	  .home-pickup-area h3 {
+	    height: 100px;
+	    line-height: 100px;	    
+	    border-bottom: 1px solid #b3b3b3;	    
+	    text-align: center;	    
+	    font-size: 3.6rem;/* arranged */
+	    font-weight: normal;
+	  }
+	  .home-pickup-area > div > ol {
+	    margin-bottom: 20px;
+	    list-style: inside decimal;	    
+	    font-size: 3.8rem;/* arranged */
+	    font-weight: bold;
+	  }
+	  .home-pickup-area > div > ol > li {
+	    height: 190px;
+	    line-height: 190px;	    
+	    box-sizing: border-box;
+	    padding-left: 20px;	    
+	    border-bottom: 1px solid #b3b3b3;	    
+	    position: relative;	    
+	    overflow: hidden;
+	  }
+	  .home-pickup-area > div > ol > li > a {
+	    display: block;
+	    width: 100%;
+	    height: 100%;	    
+	    box-sizing: border-box;
+	    padding-left: 40px;	    
+	    color: #333333;
+	  }
+	  .home-pickup-area > div > ol > li > a .title {
+	    display: block;	    
+	    position: absolute;
+	    left: 0;
+	    top: 0;	    
+	    width: 100%;
+	    height: 50px;
+	    line-height: 50px;	    
+	    box-sizing: border-box;	    
+	    padding: 0 40px 0 60px;	    
+	    font-size: 3.2rem;/* arranged */
+	    font-weight: bold;	    
+	    overflow: hidden;
+	  }
+	  .home-pickup-area > div > ol > li > a .category {
+	    display: block;	    
+	    position: absolute;
+	    left: 0;
+	    top: 50px;	    
+	    width: 100%;
+	    height: 30px;
+	    line-height: 30px;	    
+	    box-sizing: border-box;	    
+	    padding: 0 40px 0 60px;	    
+	    font-size: 2.4rem;/* arranged */
+	    font-weight: normal;
+	    color: #666666;	    
+	    overflow: hidden;
+	  }
+	  .home-pickup-area > div > ol > li > a time {
+	    display: block;	    
+	    position: absolute;
+	    left: 0;
+	    top: 80px;	    
+	    width: 100%;
+	    height: 30px;
+	    line-height: 30px;	    
+	    box-sizing: border-box;	    
+	    padding: 0 40px 0 60px;	    
+	    font-size: 2.4rem;/* arranged */
+	    font-weight: normal;
+	    color: #666666;	    
+	    overflow: hidden;
+	  }
+	  .home-pickup-area > div > ol > li > a .text {
+	    display: block;	    
+	    position: absolute;
+	    left: 0;
+	    top: 120px;	    
+	    width: 100%;
+	    height: 70px;
+	    line-height: 35px;	    
+	    box-sizing: border-box;	    
+	    padding: 0 40px 0 60px;	    
+	    font-size: 2.8rem;/* arranged */
+	    font-weight: normal;	    
+	    overflow: hidden;
+	  }
+	/* End of Add */
+
   </style>
 </head>
 
@@ -213,10 +317,15 @@
         <div class="section-body home-section-body">
 
           <!-- #DynamicItem -->
-          <div class="home-pickup-area home-ranking">
+          <div id="home-ranking" class="home-pickup-area home-ranking">
             <h3>Weekly アクセスランキング</h3>        
             
-            <ol class="home-ranking-list">
+            <!-- outputPanel id="mostViewedOutputPanel" -->
+            <apex:outputPanel id="mostViewedOutputPanel" layout="block">
+            <ol id="mostViewedOutputPanel" class="home-ranking-list">
+            	
+            	
+            	
             	<apex:repeat value="{!lsMostSeenReports}" var="popularReport">
             		<li class="clickeffect">
             			<apex:commandLink action="{!redirectToConcernedReport}">
@@ -230,18 +339,27 @@
 						</apex:commandLink>
 			     	</li>
 	            </apex:repeat>
+	            
+	            
+	            
             </ol>
+            </apex:outputPanel>
+            <!-- /outputPanel -->
 
-          <div class="btn btn-more">
-          	<apex:commandLink value="もっと見る" styleClass="ui-color-1" action="{!goToReportPages}">
-          		<apex:param name="source" value="{!saReportSourceWeekly}"/>
-          	</apex:commandLink>
+	        <div class="btn btn-more">
+	         	<apex:commandLink value="もっと見る" styleClass="ui-color-1" action="{!displayMoreMostSeenReports}" rerender="mostViewedOutputPanel"/>
+	        </div>
+          
           </div>
-          </div>
-          <div class="home-pickup-area home-reports">
+          <div id="home-reports" class="home-pickup-area home-reports">
             <h3>新着レポート</h3>
             
+            
+            <apex:outputPanel id="mostRecentOutputPanel" layout="block">
             <ol class="home-reports-list">
+ 
+ 				
+ 				
 	            <apex:repeat value="{!lsMostRecentReports}" var="recentReport">
 	            	<li class="clickeffect">
 	            		<apex:commandLink action="{!redirectToConcernedReport}">
@@ -255,12 +373,15 @@
 	            		</apex:commandLink>
 	            	</li>
 	            </apex:repeat>
+
+				
+
             </ol>
+			</apex:outputPanel>
+			
 
             <div class="btn btn-more">
-            	<apex:commandLink value="もっと見る" styleClass="ui-color-1" action="{!goToReportPages}">
-          			<apex:param name="source" value="{!saReportSourceNew}"/>
-          		</apex:commandLink>
+            	<apex:commandLink value="もっと見る" styleClass="ui-color-1" action="{!displayMoreMostRecentReports}" rerender="mostRecentOutputPanel"/>
             </div>
           </div>
           
@@ -287,7 +408,6 @@
     <footer class="document-footer"></footer>
   </div>
   <script>
-
     function setView_00_01_01() {
 
       $j(".document-header").hide();

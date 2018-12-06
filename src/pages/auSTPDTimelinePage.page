@@ -170,6 +170,12 @@
         jsLikeSTPDFeedElement();
     }
 
+    function callRemoveLikeStpd(key){
+        var obj = $j('.removingLikeId');
+        obj.val(key);
+        jsRemoveLikeSTPDFeedElement();
+    }
+
     function callCommentStpd(key, key2) {
 
       var obj = $j('.STPDFeedElementIdInput');
@@ -277,17 +283,19 @@
   <c:auMainTopComp typeOfScreen="{!typeOfScreen}" />
 
   <apex:outputPanel >
-
+    <apex:actionRegion id="area51c" renderRegionOnly="false">
     <apex:inputText styleclass="STPDFeedElementIdInput" value="{!idCurrentFeedElement}" style="display: none;" />
     <apex:inputText styleClass="errorMessageInput" value="{!errorMessage}" style="display: none;" />
     <apex:inputText styleclass="STPDIdInput" value="{!idCurrentSTPD}" style="display: none;" />
+    <apex:inputText styleclass="removingLikeId" value="{!removingLikeId}" style="display: none;" />
 
-    <apex:actionFunction name="jsLikeSTPDFeedElement" action="{!likeSTPDFeedElement}" />
+    <apex:actionFunction name="jsLikeSTPDFeedElement" action="{!likeSTPDFeedElement}" reRender="{!$Component.repeater.likeSection}"/>
     <apex:actionFunction name="jsCommentSTPDFeedElement" action="{!commentSTPDFeedElement}" />
     <apex:actionFunction name="jsDeleteCommentStpdFeedElement" action="{!deleteCommentStpdFeedElement}" />
     <apex:actionFunction name="jsDeleteCommentOnlyStpd" action="{!deleteCommentOnlyStpd}" />
     <apex:actionFunction name="addStpdNewAttachment" action="{!addStpdNewAttachment}" />
-
+    <apex:actionFunction name="jsRemoveLikeSTPDFeedElement" action="{!removeLikeSTPDFeedElement}" reRender="{!$Component.repeater.likeSection}"/>
+    </apex:actionRegion>
   </apex:outputPanel>
 
 
@@ -504,7 +512,7 @@
                </div>
               </div>
             </div>
-            <apex:repeat value="{!lsFeeds}" var="feed" >
+            <apex:repeat value="{!lsFeeds}" var="feed" id="repeater">
 
               <div class="section-inner">
                 <article class="timeline-post">
@@ -677,17 +685,21 @@
                   <div class="u-flex">
 
                     <div class="u-flex" style="width: 80%;">
+                      <apex:outputPanel id="likeSection">
                       <div class="likes-container">
                         <p class="likes">
                           <span class="number">{!feed.LikeCount}</span>
                         </p>
                         <apex:actionRegion renderRegionOnly="false">
-                          <apex:commandLink styleClass="linkstyle" onclick="callLikeStpd('{!feed.Id}')" reRender="DUMMY">
-                            いいね！
-                          </apex:commandLink>
+                          <apex:outputPanel rendered="{!feed.FeedLikes != NULL && feed.FeedLikes.size > 0}">
+                            <a href="javascript:void(0)" onclick="callRemoveLikeStpd('{!feed.FeedLikes[0].Id}');" class="linkstyle">いいねの削除</a>
+                          </apex:outputPanel>
+                          <apex:outputPanel rendered="{!feed.FeedLikes == NULL || feed.FeedLikes.size == 0}">
+                            <a href="javascript:void(0)" onclick="callLikeStpd('{!feed.Id}')" class="linkstyle">いいね</a>
+                          </apex:outputPanel>
                         </apex:actionRegion>
                       </div>
-
+                      </apex:outputPanel>
                       <div class="comment-head">
                         <i class="icon icon--comment"></i>
                         コメント {!feed.CommentCount}件
@@ -780,6 +792,7 @@
 
         <div class="row is-standard" style="overflow-y: auto; margin-left: 3.5%; width: 36%">
         
+          <!-- 2018/10/22 Remove Headquarter Information (to decrease number of objects used)
           <section class="section section--info">
             <h3 class="section-title">
             連絡事項・掲示板
@@ -810,12 +823,13 @@
                 </apex:repeat>
               </ul>
             </div>
-          </section>    
+          </section>
+          -->
 
           <apex:actionRegion >
             <apex:outputPanel id="pnlSlogan" rendered="{!$ObjectType.Account.fields.Slogan__c.Updateable}">
 
-              <section class="section section--knowledge addspace">
+              <section class="section section--knowledge">
                 <h3 class="section-title">店舗スローガン（STPDシートに反映されます）<br/><span>Slogan</span></h3>
                 <div class="section-inner">
                   <ul class="knowledge-list">
@@ -841,7 +855,7 @@
           <apex:actionRegion >
             <apex:outputPanel id="pnlPersonalMemo">
 
-              <section class="section section--knowledge addspace">
+              <section class="section section--knowledge {!IF($ObjectType.Account.fields.Slogan__c.Updateable, 'addspace', '')}">
                 <h3 class="section-title">個人メモ<br/><span>Memo</span></h3>
                 <div class="section-inner">
                   <ul class="knowledge-list">

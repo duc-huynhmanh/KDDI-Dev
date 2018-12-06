@@ -73,7 +73,7 @@
     }
 
     .selectDate {
-      width: 7rem;
+      width: 7.5rem;
       margin-left: 1em;
       height: 2.1rem;
     }
@@ -432,6 +432,30 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
   .mdl-data-table__cell--non-numeric ul li.active a{
     pointer-events: none;
   }
+  .mdl-data-table td{
+    height: 50px;
+  }
+  .output-evaluation{
+    max-height: 11rem;
+  }
+  .output-evaluation textarea {
+    border: none;
+    background-color: rgb(255, 255, 255);
+    resize: none;
+    margin-left: 0.5rem; 
+    height: 9rem; 
+    width: calc(100% - 1rem);
+  }
+  .evaluation-box{
+    min-height: 12rem; 
+    border: 2px solid #555; 
+    width: 49%; 
+    display: inline; 
+    -moz-border-radius:5px; 
+    border-radius: 5px; 
+    -webkit-border-radius: 5px;
+    background-color: rgb(255, 255, 255);
+  }
 
   </style>
 
@@ -452,7 +476,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
 
     function callAddEventNewAttachmentId(key, ownerId) {
         if (checkFileSize()) {
-          var obj = $j('.eventUpdateIdInput');
+          var obj = $j('.eventRelatedObjectId');
           obj.val(key);
           var owner = $j('.eventOwnerIdInput');
           owner.val(ownerId);
@@ -489,27 +513,72 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
         loadEventDetail();
     }
 
-    function monthChange(){
+    function monthYearChange(){
         var month = document.getElementById('{!$Component.thisForm.filterMonth}');
+        var year = document.getElementById('{!$Component.thisForm.filterYear}');
         var from = document.getElementById('{!$Component.thisForm.filterFrom}');
         var to = document.getElementById('{!$Component.thisForm.filterTo}');
 
-        if(month.value != '') {
+        if(month.value != '' && year.value != '') {
             var today = new Date();
-            var yyyy = today.getFullYear();
+            var yyyy = year.value;
             from.value = yyyy + '/' + month.value + '/01';
             today.setMonth(month.value, 0);
             to.value = yyyy + '/' + month.value + '/' + ((today.getDate().length < 2) ? ('0' + today.getDate()) : today.getDate());
         }
+        /*var obj1 = $j('.evalMonthInput');
+        obj1.val(month.value);
+
+        var obj2 = $j('.evalYearInput');
+        obj2.val(year.value);
+        updateEvaluation();*/
     }
 
     function timeChange(){
         var month = document.getElementById('{!$Component.thisForm.filterMonth}');
+        var year = document.getElementById('{!$Component.thisForm.filterYear}');
         var from = document.getElementById('{!$Component.thisForm.filterFrom}');
         var to = document.getElementById('{!$Component.thisForm.filterTo}');
 
-        if(from.value != '' || to.value != '') {
+        var fromMonth = from.value.substring(5,7);
+        var toMonth = to.value.substring(5,7);
+        var fromYear = from.value.substring(0,4);
+        var toYear = to.value.substring(0,4);
+
+
+        /*if(fromMonth != toMonth || fromYear != toYear) {
             month.value = '';
+            year.value = '';
+        } else {*/
+            month.value = fromMonth;
+            year.value = fromYear;
+            /*var obj1 = $j('.evalMonthInput');
+            obj1.val(month.value);
+    
+            var obj2 = $j('.evalYearInput');
+            obj2.val(year.value);
+            updateEvaluation();*/
+        //}
+    }
+
+    function reloadData(){
+        var month = document.getElementById('{!$Component.thisForm.evalMonth}');
+        var year = document.getElementById('{!$Component.thisForm.evalYear}');
+        var type = document.getElementById('{!$Component.thisForm.evalType}');
+
+        console.log('month: ' + month.value + '; year: ' + year.value);
+
+        if(month.value != '' && year.value != '' && type.value != ''){
+          var obj1 = $j('.evalMonthInput');
+          obj1.val(month.value);
+
+          var obj2 = $j('.evalYearInput');
+          obj2.val(year.value);
+
+          var obj3 = $j('.evalTypeInput');
+          obj3.val(type.value);
+
+          reloadDescription();
         }
     }
 
@@ -530,6 +599,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
         this.value = '';
       });
       $j(".filter-select select").val("");
+      clearCookie();
     }
 
     window.onload = function onLoadJS() {
@@ -550,6 +620,12 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
       if (obj.val().length > 0) {
         alert(obj.val());
         obj.val('');        
+      }
+      var from = document.getElementById('{!$Component.thisForm.filterFrom}');
+      var to = document.getElementById('{!$Component.thisForm.filterTo}');
+      if(from.value == '' && to.value == ''){
+        console.log('call change time from on load');
+        monthYearChange();
       }
     }
 
@@ -578,6 +654,17 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
       } else jsDoSaveNewEvent();
     }
 
+    function hideSearchCriteriaPanel() {
+        $j("#open_icon").show();
+        $j("#close_icon").hide();
+        $j("#accountInfo").slideUp(500);
+    }
+    function showSearchCriteriaPanel() {
+        $j("#open_icon").hide();
+        $j("#close_icon").show();
+        $j("#accountInfo").slideDown(500);
+    }
+
   </script>
 
 </head>
@@ -596,7 +683,13 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
     <apex:inputText styleClass="errorMessageInput" value="{!errorMessage}" style="display: none;" />
     <apex:actionRegion id="area51c" renderRegionOnly="false">
       <apex:inputText id="attachmentId" styleClass="AttachmentIdInput" value="{!attachmentId}" style="display: none;" />
+      <apex:inputText id="evalMonthInput" styleClass="evalMonthInput" value="{!evalMonthInput}" style="display: none;" />
+      <apex:inputText id="evalYearInput" styleClass="evalYearInput" value="{!evalYearInput}" style="display: none;" />
+      <apex:inputText id="evalTypeInput" styleClass="evalTypeInput" value="{!evalTypeInput}" style="display: none;" />
       <apex:actionFunction name="jsKnowledgeAttachmentDelete" action="{!kdKnowledgeAttachmentDelete}" rerender="attViewDel" />
+      <apex:actionFunction name="reloadDescription" action="{!reloadDescription}" reRender="evalDescription"/>
+      <!--apex:actionFunction name="updateEvaluation" action="{!updateEvaluation}" reRender="target, result"/-->
+      <apex:actionFunction name="refreshEvaluation" action="{!refreshEvaluation}" reRender="evalYear, evalMonth, evalDescription"/>
     </apex:actionRegion>
     <apex:actionFunction name="addEventNewAttachment" action="{!addEventNewAttachment}" />
     <apex:actionFunction name="changeOrder" action="{!changeOrder}" />
@@ -703,6 +796,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
         </div>
       </div>
       <article class="content content--theme" id="content">
+        
         <!--Search criteria area-->
         <header class="content-header search-tools" >
           <div class="content-header__top" style="margin-top: -0.5rem; margin-bottom: -0.5rem;">
@@ -710,7 +804,9 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
               <div class="mdl-cell mdl-cell--12-col">
                 <div class="search-filter account-info clearfix search_criteria_form" >
                   <apex:actionRegion id="area51f" renderRegionOnly="false">
-                    <div style="display: inline-block;">
+                  <apex:actionFunction name="clearCookie" action="{!clearCookie}" reRender="area51f" />
+                    <div style="display: inline-block; position: relative; min-height: 20px; width: 100%">
+                      <div id="accountInfo">
                       <fieldset class="filter-item">
                         <label >代理店コード</label>
                         <apex:outputText value="{!IF(parentAcc.Channel__c == '運営法人', parentAcc.ParentAgencyId__r.PartnerCode__c, parentAcc.PartnerCode__c)}" styleclass="search-textfield" />
@@ -750,6 +846,11 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                         <apex:outputLabel rendered="{!accAttachmentId == null}" value="CCP＋カルテ無し"/>
                         <apex:outputLabel styleClass="isLink linkstyle" rendered="{!accAttachmentId != null}" value="CCP＋カルテ有り" onclick="window.open('{!URLFOR($Action.Attachment.Download, accAttachmentId)}','_blank');"/>
                       </fieldset>
+                      </div>
+                      <fieldset style="cursor: hand; cursor: pointer; position: absolute; right: 0; bottom: 0; margin: 0; padding: 0 5px 0 0;">
+                          <img id="close_icon" src="{!URLFOR($Resource.auStyling,'/images/icon-burret-black-top.png')}" width="20px" onclick="hideSearchCriteriaPanel()" />
+                          <img id="open_icon" src="{!URLFOR($Resource.auStyling, '/images/icon-burret-black-bottom.png')}" width="20px" onclick="showSearchCriteriaPanel()" style="display:none;"/>
+                      </fieldset>
                     </div>
                   </apex:actionRegion>
 
@@ -769,26 +870,17 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                       </fieldset>
 
                       <fieldset class="filter-select">
-                        <label>訪問月</label>
-                        <apex:selectList id="filterMonth" styleClass="search-category__select" value="{!filterMonth}" size="1" style="margin-left: 0.5rem" onchange="monthChange();">
-                          <apex:selectOption itemValue="" itemLabel=""/>
-                          <apex:selectOption itemValue="01" itemLabel="１月"/>
-                          <apex:selectOption itemValue="02" itemLabel="２月"/>
-                          <apex:selectOption itemValue="03" itemLabel="３月"/>
-                          <apex:selectOption itemValue="04" itemLabel="４月"/>
-                          <apex:selectOption itemValue="05" itemLabel="５月"/>
-                          <apex:selectOption itemValue="06" itemLabel="６月"/>
-                          <apex:selectOption itemValue="07" itemLabel="７月"/>
-                          <apex:selectOption itemValue="08" itemLabel="８月"/>
-                          <apex:selectOption itemValue="09" itemLabel="９月"/>
-                          <apex:selectOption itemValue="10" itemLabel="１０月"/>
-                          <apex:selectOption itemValue="11" itemLabel="１１月"/>
-                          <apex:selectOption itemValue="12" itemLabel="１２月"/>
+                        <label>対象月</label>
+                        <apex:selectList id="filterYear" styleClass="search-category__select" value="{!filterYear}" size="1" style="margin-left: 0.5rem" onchange="monthYearChange();">
+                          <apex:selectOptions value="{!ListYear}" />
+                        </apex:selectList>
+                        <apex:selectList id="filterMonth" styleClass="search-category__select" value="{!filterMonth}" size="1" style="margin-left: 0.5rem" onchange="monthYearChange();">
+                          <apex:selectOptions value="{!ListMonth}" />
                         </apex:selectList>
                       </fieldset>
 
                       <fieldset class="filter-text">
-                        <label >訪問期間</label>
+                        <label >対象期間</label>
                         <apex:input value="{!filterDateFromStr}" id="filterFrom" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd" onchange="timeChange();"/>
                         <label style="margin-left: 0.5em;">></label>
                         <apex:input value="{!filterDateToStr}" id="filterTo" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd" onchange="timeChange();"/>
@@ -800,8 +892,8 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                       </fieldset>
 
                       <fieldset class="filter-button" style="margin-bottom: 8px;">
-                        <apex:commandLink styleClass="margin-right10 mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="クリアする" onclick="clearSearchCondition();" reRender="area51g"/>
-                        <apex:commandLink value="絞り込む/実行" styleClass="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" action="{!doSearch}" />
+                        <apex:commandLink value="絞り込む/実行" styleClass="margin-right10 mdl-button mdl-js-button mdl-button--raised mdl-button--colored" action="{!doSearch}" />
+                        <apex:commandLink styleClass="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="クリアする" onclick="clearSearchCondition();" reRender="area51g"/>
                       </fieldset>   
                     </div>
                   </apex:actionRegion>
@@ -812,10 +904,31 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
           </div>
 
           <div class="content-header__bottom">
+            <div class="u-buttons-container search-buttons" style="padding-top: 0.5em;"><a class="js-popup-trigger" data-popup=".popup--evaluation" onclick="refreshEvaluation();" style="margin-left: 0; width: 12rem;"><i class="icon icon--pen"></i>目標・結果入力</a></div>
+            <div style="clear: both;"/>
+
+            <div style="margin-bottom: 15px;">
+              <div style="display: inline; margin-top: 0">
+                <fieldset class="evaluation-box">
+                  <legend style="margin:0 auto; font-size: 20px">&lt;{!displayYear + '/' +  displayMonth} 目標&gt;</legend>
+                  <div class="output-evaluation">
+                    <apex:inputTextarea readonly="true" id="target" value="{!evalTarget}"/>
+                  </div>
+                </fieldset>
+              </div>
+              <div style="display: inline; margin-top: 0">
+                <fieldset class="evaluation-box">
+                  <legend style="margin:0 auto; font-size: 20px">&lt;{!displayYear + '/' +  displayMonth} 結果&gt;</legend>
+                  <div class="output-evaluation">
+                    <apex:inputTextarea readonly="true" id="result" value="{!evalResult}"/>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
           </div>
         </header>
         <div class="mdl-grid">
-              <div class="mdl-cell" style=" width: 10%">
+              <div class="mdl-cell" style=" width: 12rem;">
                 <apex:outputPanel >
                   <div class="u-buttons-container search-buttons" style="padding-top: 0.5em;"><a class="js-popup-trigger" data-popup=".popup--theme" style="float: left;margin-left: 0;"><i class="icon icon--pen"></i>新規活動</a></div>
                 </apex:outputPanel>
@@ -1073,6 +1186,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
               <tbody>
                 <apex:actionRegion id="area51a" renderRegionOnly="false">
                 <apex:inputText styleClass="eventUpdateIdInput" value="{!eventUpdateId}" style="display: none;" />
+                <apex:inputText styleClass="eventRelatedObjectId" value="{!eventRelatedObjectId}" style="display: none;" />
                 <apex:inputText styleClass="eventOwnerIdInput" value="{!eventOwnerId}" style="display: none;" />
                 <apex:actionFunction name="loadEventDetail" action="{!loadEventDetail}" rerender="editEvent, buttonArea" />
                 </apex:actionRegion>
@@ -1107,7 +1221,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                       <td class="col7 hide-yscroll" style="text-align: center;">
                         <apex:inputFile disabled="false" id="upload--file" styleclass="attachInput" value="{!eventNewAttachment.body}" filename="{!eventNewAttachment.name}" contentType="{!eventNewAttachment.contentType}" 
                                         filesize="{!eventNewAttachmentSize}"
-                                        onchange="callAddEventNewAttachmentId('{!rec.eventId}', '{!rec.ownerId}');"/>
+                                        onchange="callAddEventNewAttachmentId('{!rec.referrenceId}', '{!rec.ownerId}');"/>
                         <apex:outputLabel for="upload--file">
                             <img class="icon-upload isLink" src="{!URLFOR($Resource.auStyling,'/images/icons/icon-file.png')}" />
                         </apex:outputLabel>
@@ -1120,6 +1234,55 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
         </div>
       </article>
     </main>
+
+    <!--Evaluation popup-->
+    <div class="popup popup--evaluation">
+      <div class="popup-inner max-height-100 background-transparent">
+        <table class="table--theme-info background-white">
+          <tr>
+            <th>種別</th>
+            <td class="">
+              <apex:selectList id="evalType" styleClass="search-category__select" value="{!evalType}" size="1" style="margin-left: 0" onchange="reloadData();">
+                <!--apex:selectOption itemValue="" itemLabel=""/-->
+                <apex:selectOption itemValue="目標" itemLabel="目標"/>
+                <apex:selectOption itemValue="結果" itemLabel="結果"/>
+              </apex:selectList>
+              <apex:pageMessages />
+            </td>
+          </tr>
+          <tr>
+            <th>月</th>
+            <td class="">
+              <apex:selectList id="evalYear" styleClass="" value="{!eval.Year__c}" size="1" onchange="reloadData();">
+                <apex:selectOption itemValue="" itemLabel=""/>
+                <apex:selectOptions value="{!ListYear}" />
+              </apex:selectList>
+              <apex:selectList id="evalMonth" styleClass="" value="{!eval.Month__c}" size="1" style="margin-left: 0.5rem" onchange="reloadData();">
+                <apex:selectOption itemValue="" itemLabel=""/>
+                <apex:selectOptions value="{!ListMonth}" />
+              </apex:selectList>
+            </td>
+          </tr>
+          <tr>
+            <th>内容</th>
+            <td class="" style="padding-bottom: 10px;">
+              <apex:inputTextarea id="evalDescription" style="width: 100%; min-height: 25rem;" value="{!evalDescription}" />
+            </td>
+          </tr>
+        </table>
+        <div class="padding-top-50 background-transparent u-text-center">
+        <a href="" class="button button--cancel js-popup-close">キャンセル</a>
+        <apex:actionRegion renderRegionOnly="false">   
+          <apex:commandLink value="保存" 
+                            styleClass="button button--post"
+                            action="{!callDoSaveEvaluation}"
+                            /> 
+        </apex:actionRegion>
+
+        </div>
+      </div>
+    </div>
+
     <!--Create new popup-->
     <div class="popup popup--theme">
       <div class="popup-inner max-height-100 background-transparent">
@@ -1172,7 +1335,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
           <tr>
             <th>活動内容</th>
             <td class="" style="padding-bottom: 10px;">
-              <apex:inputField style="width: 50rem;" value="{!newRelatedEvent.Activity_Description__c}" />
+              <apex:inputField style="width: 100%; min-height: 25rem;" value="{!newRelatedEvent.Activity_Description__c}" />
             </td>
           </tr>
         </table>

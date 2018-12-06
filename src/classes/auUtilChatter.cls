@@ -956,11 +956,11 @@ public without sharing class auUtilChatter
                 currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN && 
                 currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP && 
                 currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS_V2 && 
                 currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2 && 
                 currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH_V2) {
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA && 
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 && 
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2) {
                 return options;
             }
 
@@ -1001,11 +1001,11 @@ public without sharing class auUtilChatter
                 currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN && 
                 currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP && 
                 currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS_V2 && 
                 currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2 && 
                 currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH_V2) {
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA && 
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 && 
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2) {
                 return options;
             }
 
@@ -1040,13 +1040,14 @@ public without sharing class auUtilChatter
                 }
 
                 if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE || 
-                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2 || 
                     currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH || 
-                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH_V2) {
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA && 
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 && 
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2) {
 
                     String sHonshaDepartmentCode = '';
                     if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE ||
-                        currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2) {
+                        currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA) {
                         sHonshaDepartmentCode = currentUser.UserRole.DeveloperName;
                     } else {
                         String dpt1 = currentUser.UserRole.DeveloperName;
@@ -1083,87 +1084,7 @@ public without sharing class auUtilChatter
     }
 
 
-/*
-        public static List<SelectOption> getListShiten(User currentUser) {
-
-        list<SelectOption> options = new list<SelectOption>();
-        options.add(new SelectOption('', '全て'));
-
-        try {
-
-            if (currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_CUSTOM && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS_V2 && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2 && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH_V2) {
-                return options;
-            }
-
-            if (currentUser.UserRole.DeveloperName == NULL) {
-                return options;
-            }
-
-            if (currentUser.UserRole.DeveloperName == ROLE_CODE_HONBU) {
-                for (auOrganization__c org : [SELECT id, name, Category__c, RegionalOfficeCode__c, DepartmentCode__c, BranchCode__c, BranchName__c 
-                                              FROM auOrganization__c
-                                              WHERE Category__c = '支店'
-                                              ORDER BY BranchName__c]) {
-                    options.add(new SelectOption(org.Id, org.BranchName__c));
-                }
-                return options;
-            }
-
-            if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE || 
-                currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2 || 
-                currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH || 
-                currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH_V2) {
-
-                String sHonshaDepartmentCode = '';
-                if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE ||
-                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2) {
-                    sHonshaDepartmentCode = currentUser.UserRole.DeveloperName;
-                } else {
-                    String dpt1 = currentUser.UserRole.DeveloperName;
-                    String dpt2 = dpt1.substring(1);
-                    for (auOrganization__c org : [SELECT RegionalOfficeCode__c
-                                                  FROM auOrganization__c
-                                                  WHERE Category__c = '支店'
-                                                  AND DepartmentCode__c in (:dpt1, :dpt2)]) {
-                        sHonshaDepartmentCode = org.RegionalOfficeCode__c;
-                    }
-                }
-
-                if (sHonshaDepartmentCode.toUpperCase().substring(0, 1) == 'X') {
-                    sHonshaDepartmentCode = sHonshaDepartmentCode.substring(1);
-                }
-
-                for (auOrganization__c org : [SELECT id, name, Category__c, RegionalOfficeCode__c, DepartmentCode__c, BranchCode__c, BranchName__c 
-                                              FROM auOrganization__c
-                                              WHERE Category__c = '支店'
-                                              AND RegionalOfficeCode__c = :sHonshaDepartmentCode
-                                              ORDER BY BranchName__c]) {
-                    options.add(new SelectOption(org.Id, org.BranchName__c));
-                }
-
-            }
-
-
-        } catch (Exception ex) {
-            return new list<SelectOption>();
-        }
-
-        return options;
-
-    }
-*/
-
-
-
-    public static List<SelectOption> getListUneiHojin(User currentUser, id currentShisha, id currentShiten) {
+    public static List<SelectOption> getListDairiten(User currentUser, id currentShisha, id currentShiten) {
 
         list<SelectOption> options = new list<SelectOption>();
         options.add(new SelectOption('', '全て'));
@@ -1178,11 +1099,137 @@ public without sharing class auUtilChatter
                 currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN && 
                 currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP && 
                 currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS_V2 && 
                 currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2 && 
                 currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH_V2 && 
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA && 
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 && 
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2) {
+                return options;
+            }
+
+            if (currentUser.UserRole.DeveloperName == NULL) {
+                return options;
+            }
+
+            if (currentShiten != NULL) {
+                // Show only the Dairiten for the selected Shiten
+
+                for (Account acc : [SELECT id, Name
+                                    FROM Account
+                                    WHERE Channel__c = :auConstantCmn.ACCOUNT_CHANNEL_DAIRITEN
+                                    AND (BranchId__c = :currentShiten OR
+                                         Branch2Id__c = :currentShiten)
+                                    ORDER BY Name]) {
+
+                    options.add(new SelectOption(acc.Id, acc.Name));
+                }
+                return options;
+
+            } else if (currentShisha != NULL) {
+                // Show only the Dairiten for the selected Shisha
+
+                String shishaCode = [SELECT RegionalOfficeCode__c FROM auOrganization__c WHERE Id = :currentShisha].RegionalOfficeCode__c;
+
+                for (Account acc : [SELECT id, Name
+                                    FROM Account
+                                    WHERE Channel__c = :auConstantCmn.ACCOUNT_CHANNEL_DAIRITEN
+                                    AND (RegionalOfficeId__r.DepartmentCode__c = :shishaCode OR
+                                         RegionalOffice2Id__r.DepartmentCode__c = :shishaCode)
+                                    ORDER BY Name]) {
+
+                    options.add(new SelectOption(acc.Id, acc.Name));
+                }
+
+                return options;
+
+            } else {
+
+                if (currentUser.UserRole.DeveloperName == ROLE_CODE_HONBU) {
+                    // Show all the Dairiten
+
+                    for (Account acc : [SELECT id, Name
+                                        FROM Account
+                                        WHERE Channel__c = :auConstantCmn.ACCOUNT_CHANNEL_DAIRITEN
+                                        ORDER BY Name]) {
+
+                        options.add(new SelectOption(acc.Id, acc.Name));
+                    }
+                    return options;
+                }
+
+                if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE || 
+                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH || 
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA && 
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 && 
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2) {
+
+                    // Show all the Dairiten of the 支社
+
+                    String sHonshaDepartmentCode = '';
+                    if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE ||
+                        currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA) {
+                        sHonshaDepartmentCode = currentUser.UserRole.DeveloperName;
+                    } else {
+                        String dpt1 = currentUser.UserRole.DeveloperName;
+                        String dpt2 = dpt1.substring(1);
+                        for (auOrganization__c org : [SELECT RegionalOfficeCode__c
+                                                      FROM auOrganization__c
+                                                      WHERE Category__c = '支店'
+                                                      AND DepartmentCode__c in (:dpt1, :dpt2)]) {
+                            sHonshaDepartmentCode = org.RegionalOfficeCode__c;
+                        }
+                    }
+
+                    if (sHonshaDepartmentCode.toUpperCase().substring(0, 1) == 'X') {
+                        sHonshaDepartmentCode = sHonshaDepartmentCode.substring(1);
+                    }
+
+                    for (Account acc : [SELECT id, Name
+                                        FROM Account
+                                        WHERE Channel__c = :auConstantCmn.ACCOUNT_CHANNEL_DAIRITEN
+                                        AND (RegionalOfficeId__r.DepartmentCode__c = :sHonshaDepartmentCode OR
+                                             RegionalOffice2Id__r.DepartmentCode__c = :sHonshaDepartmentCode)
+                                        ORDER BY Name]) {
+
+                        options.add(new SelectOption(acc.Id, acc.Name));
+                    }
+                    return options;
+
+                }
+
+            }
+
+        } catch (Exception ex) {
+            return new list<SelectOption>();
+        }
+
+        return options;
+
+    }
+
+
+
+
+    public static List<SelectOption> getListUneiHojin(User currentUser, id currentShisha, id currentShiten, id currentDairiten) {
+
+        list<SelectOption> options = new list<SelectOption>();
+        options.add(new SelectOption('', '全て'));
+
+        try {
+
+            if (Test.isRunningTest()) {
+                currentUser = [SELECT Id, AccountId, Profile.Name, UserRole.DeveloperName FROM User WHERE Id = :currentUser.Id];
+            }
+
+            if (currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_CUSTOM && 
+                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN && 
+                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP && 
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS && 
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE && 
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH && 
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA && 
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 && 
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2 &&
                 currentUser.Profile.Name != auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT) {
                 return options;
             }
@@ -1200,7 +1247,20 @@ public without sharing class auUtilChatter
                 return options;
             }
 
-            if (currentShiten != NULL) {
+            if (currentDairiten != NULL) {
+                // Show only the UneiHojin for the selected Dairiten
+                for (Account acc : [SELECT id, Name
+                                    FROM Account
+                                    WHERE Channel__c = :auConstantCmn.ACCOUNT_CHANNEL_UNEIHOJIN
+                                    AND ParentId = :currentDairiten
+                                    ORDER BY Name
+                                    LIMIT 1000]) {
+
+                    options.add(new SelectOption(acc.Id, acc.Name));
+                }
+                return options;
+
+            } else if (currentShiten != NULL) {
                 // Show only the UneiHojin for the selected Shiten
 
                 for (Account acc : [SELECT id, Name
@@ -1247,15 +1307,16 @@ public without sharing class auUtilChatter
                 }
 
                 if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE || 
-                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2 || 
                     currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH || 
-                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH_V2) {
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA && 
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 && 
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2) {
 
                     // Show all the UneiHojin of the 支社
 
                     String sHonshaDepartmentCode = '';
                     if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE ||
-                        currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2) {
+                        currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA) {
                         sHonshaDepartmentCode = currentUser.UserRole.DeveloperName;
                     } else {
                         String dpt1 = currentUser.UserRole.DeveloperName;
@@ -1296,128 +1357,11 @@ public without sharing class auUtilChatter
     }
 
 
-/*
-    public static List<SelectOption> getListUneiHojin(User currentUser, id currentShiten) {
-
-        list<SelectOption> options = new list<SelectOption>();
-        options.add(new SelectOption('', '全て'));
-
-        try {
-
-            if (currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_CUSTOM && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS_V2 && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2 && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH_V2 && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT) {
-                return options;
-            }
-
-            if (currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT) {
-
-                for (Account acc : [SELECT Id, Name FROM Account WHERE ParentId = :currentUser.AccountId ORDER BY Account.Name]) {
-                    options.add(new SelectOption(acc.Id, acc.Name));
-                }                                
-                return options;
-
-            }
-
-            if (currentUser.UserRole.DeveloperName == NULL) {
-                return options;
-            }
-
-            if (currentShiten != NULL) {
-                // Show only the UneiHojin for the selected Shiten
-
-                for (Account acc : [SELECT id, Name
-                                    FROM Account
-                                    WHERE Channel__c = :auConstantCmn.ACCOUNT_CHANNEL_UNEIHOJIN
-                                    AND (BranchId__c = :currentShiten OR
-                                         Branch2Id__c = :currentShiten)
-                                    ORDER BY Name]) {
-
-                    options.add(new SelectOption(acc.Id, acc.Name));
-                }
-                return options;
-
-            } else {
-
-                if (currentUser.UserRole.DeveloperName == ROLE_CODE_HONBU) {
-                    // Show all the UneiHojin
-
-                    for (Account acc : [SELECT id, Name
-                                        FROM Account
-                                        WHERE Channel__c = :auConstantCmn.ACCOUNT_CHANNEL_UNEIHOJIN
-                                        ORDER BY Name]) {
-
-                        options.add(new SelectOption(acc.Id, acc.Name));
-                    }
-                    return options;
-                }
-
-                if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE || 
-                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2 || 
-                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH || 
-                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH_V2) {
-
-                    // Show all the UneiHojin of the 支社
-
-                    String sHonshaDepartmentCode = '';
-                    if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE ||
-                        currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2) {
-                        sHonshaDepartmentCode = currentUser.UserRole.DeveloperName;
-                    } else {
-                        String dpt1 = currentUser.UserRole.DeveloperName;
-                        String dpt2 = dpt1.substring(1);
-                        for (auOrganization__c org : [SELECT RegionalOfficeCode__c
-                                                      FROM auOrganization__c
-                                                      WHERE Category__c = '支店'
-                                                      AND DepartmentCode__c in (:dpt1, :dpt2)]) {
-                            sHonshaDepartmentCode = org.RegionalOfficeCode__c;
-                        }
-                    }
-
-                    if (sHonshaDepartmentCode.toUpperCase().substring(0, 1) == 'X') {
-                        sHonshaDepartmentCode = sHonshaDepartmentCode.substring(1);
-                    }
-
-                    for (Account acc : [SELECT id, Name
-                                        FROM Account
-                                        WHERE Channel__c = :auConstantCmn.ACCOUNT_CHANNEL_UNEIHOJIN
-                                        AND (RegionalOfficeId__r.DepartmentCode__c = :sHonshaDepartmentCode OR
-                                             RegionalOffice2Id__r.DepartmentCode__c = :sHonshaDepartmentCode)
-                                        ORDER BY Name]) {
-
-                        options.add(new SelectOption(acc.Id, acc.Name));
-                    }
-                    return options;
-
-                }
-
-            }
-
-        } catch (Exception ex) {
-            return new list<SelectOption>();
-        }
-
-        return options;
-
-    }
-*/
 
 
 
 
-
-
-
-
-
-    public static List<SelectOption> getListShops(User currentUser, id currentShisha, id currentShiten, id currentUneiHojin) {
+    public static List<SelectOption> getListShops(User currentUser, id currentShisha, id currentShiten, id currentDairiten, id currentUneiHojin) {
 
         list<SelectOption> options = new list<SelectOption>();
 
@@ -1445,6 +1389,19 @@ public without sharing class auUtilChatter
                 for (Account acc : [SELECT id, Name
                                     FROM Account
                                     WHERE ParentId = :currentUneiHojin
+                                    ORDER BY Name
+                                    LIMIT 1000]) {
+
+                    options.add(new SelectOption(acc.Id, acc.Name));
+                }
+                return options;
+
+            } else if (currentDairiten != NULL) {
+                
+                // Show only the shops for the selected Dairiten
+                for (Account acc : [SELECT id, Name
+                                    FROM Account
+                                    WHERE Parent.ParentId = :currentDairiten
                                     ORDER BY Name
                                     LIMIT 1000]) {
 
@@ -1518,15 +1475,16 @@ public without sharing class auUtilChatter
 
 
                 if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE || 
-                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2 || 
                     currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH || 
-                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH_V2) {
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA && 
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 && 
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2) {
 
                     // Show all the Shops of the 支社
 
                     String sHonshaDepartmentCode = '';
                     if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE ||
-                        currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2) {
+                        currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA) {
                         sHonshaDepartmentCode = currentUser.UserRole.DeveloperName;
                     } else {
                         String dpt1 = currentUser.UserRole.DeveloperName;
@@ -1568,130 +1526,73 @@ public without sharing class auUtilChatter
 
     }
 
-/*
-    public static List<SelectOption> getListShops(User currentUser, id currentShiten, id currentUneiHojin) {
 
-        list<SelectOption> options = new list<SelectOption>();
+    public static void shareDataPermissionsHonbuDirect(List<auHonbuDirectDetail__c> honbuDirectDetailToShare) {
 
-        try {
+        List<auHonbuDirect__share> listOfPerm = new List<auHonbuDirect__share>();
 
-            if (currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_SHOP ||
-                currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_MANAGEMENT) {
+        for(auHonbuDirectDetail__c auHonbuDirectDetailToAdd: honbuDirectDetailToShare){
 
-                // List the shops of the same UneiHojin
-                id idUneiHojin = (currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_SHOP ? currentUser.Account.ParentId : currentUser.AccountId);
+            auHonbuDirect__share perm = new auHonbuDirect__share();
+            
+            perm.ParentId = auHonbuDirectDetailToAdd.auHonbuDirect__c;
+            perm.userOrGroupId = auHonbuDirectDetailToAdd.User__c;
 
-                for (Account acc : [SELECT Id, Name FROM Account WHERE ParentId = :idUneiHojin ORDER BY Name]) {
-                    options.add(new SelectOption(acc.Id, '　' + acc.Name));
-                }
-                return options;
+            if (auHonbuDirectDetailToAdd.Type__c == auConstantCmn.ACCESS_TYPE_SA) {
+                perm.RowCause = Schema.auHonbuDirect__share.RowCause.shared_To_This_SA_User__c;
+            } else if (auHonbuDirectDetailToAdd.Type__c == auConstantCmn.ACCESS_TYPE_KDDI) {
+                perm.RowCause = Schema.auHonbuDirect__share.RowCause.shared_To_This_KDDI_User__c;
+            } else if (auHonbuDirectDetailToAdd.Type__c == auConstantCmn.ACCESS_TYPE_SHOP) {
+                perm.RowCause = Schema.auHonbuDirect__share.RowCause.shared_To_This_Shop_User__c;
             }
+            
+            System.debug('ParentId:        ' + perm.ParentId + ' | ' + auHonbuDirectDetailToAdd.auHonbuDirect__c);
+            System.debug('userOrGroupId:   ' + perm.userOrGroupId + ' | ' + auHonbuDirectDetailToAdd.User__c);
+            System.debug('RowCause:        ' + perm.RowCause + ' | ' + auHonbuDirectDetailToAdd.Type__c);
+            System.debug('RowCausePossible: ' + Schema.auHonbuDirect__share.RowCause.shared_To_This_SA_User__c + ' | ' + Schema.auHonbuDirect__share.RowCause.shared_To_This_KDDI_User__c + ' | ' + Schema.auHonbuDirect__share.RowCause.shared_To_This_Shop_User__c);
 
-            if (currentUneiHojin != NULL) {
-
-                // Show only the shops for the selected UneiHojin
-                for (Account acc : [SELECT id, Name
-                                    FROM Account
-                                    WHERE ParentId = :currentUneiHojin
-                                    ORDER BY Name]) {
-
-                    options.add(new SelectOption(acc.Id, acc.Name));
-                }
-                return options;
-
-            } else if (currentShiten != NULL) {
-
-                // Show only the shops for the selected Shiten
-                for (Account acc : [SELECT id, Name
-                                    FROM Account
-                                    WHERE Channel__c = :auConstantCmn.ACCOUNT_CHANNEL_SHOP
-                                    AND (BranchId__c = :currentShiten OR
-                                         Branch2Id__c = :currentShiten)
-                                    ORDER BY Name]) {
-
-                    options.add(new SelectOption(acc.Id, acc.Name));
-                }
-                return options;
-
-            } else {
-
-                if (currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT) {
-
-                    // All accounts where the grand-parent is the current account            
-                    for (Account acc : [SELECT Id, Name FROM Account WHERE Parent.ParentId = :currentUser.AccountId ORDER BY Account.Name]) {
-                        options.add(new SelectOption(acc.Id, acc.Name));
-                    }
-                    return options;
-
-                }
-
-                // Case 支店・支社・本部
-                if (currentUser.UserRole.DeveloperName == NULL) {
-                    return NULL;
-                }
-
-                if (currentUser.UserRole.DeveloperName == ROLE_CODE_HONBU) {
-
-                    for (Account acc : [SELECT id, Name
-                                        FROM Account
-                                        WHERE Channel__c = :auConstantCmn.ACCOUNT_CHANNEL_SHOP
-                                        ORDER BY Name]) {
-
-                        options.add(new SelectOption(acc.Id, acc.Name));
-                    }
-                    return options;
-
-                }
-
-
-                if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE || 
-                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2 || 
-                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH || 
-                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH_V2) {
-
-                    // Show all the Shops of the 支社
-
-                    String sHonshaDepartmentCode = '';
-                    if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE ||
-                        currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2) {
-                        sHonshaDepartmentCode = currentUser.UserRole.DeveloperName;
-                    } else {
-                        String dpt1 = currentUser.UserRole.DeveloperName;
-                        String dpt2 = dpt1.substring(1);
-                        for (auOrganization__c org : [SELECT RegionalOfficeCode__c
-                                                      FROM auOrganization__c
-                                                      WHERE Category__c = '支店'
-                                                      AND DepartmentCode__c in (:dpt1, :dpt2)]) {
-                            sHonshaDepartmentCode = org.RegionalOfficeCode__c;
-                        }
-                    }
-
-                    if (sHonshaDepartmentCode.toUpperCase().substring(0, 1) == 'X') {
-                        sHonshaDepartmentCode = sHonshaDepartmentCode.substring(1);
-                    }
-
-                    for (Account acc : [SELECT id, Name
-                                        FROM Account
-                                        WHERE Channel__c = :auConstantCmn.ACCOUNT_CHANNEL_SHOP
-                                        AND (RegionalOfficeId__r.DepartmentCode__c = :sHonshaDepartmentCode OR
-                                             RegionalOffice2Id__r.DepartmentCode__c = :sHonshaDepartmentCode)
-                                        ORDER BY Name]) {
-
-                        options.add(new SelectOption(acc.Id, acc.Name));
-                    }
-                    return options;
-
-                }
-
-            }
-
-        } catch (Exception ex) {
-            return new list<SelectOption>();
+            perm.AccessLevel = 'Read';
+            
+            listOfPerm.add(perm);
         }
-
-        return options;
+        
+        Insert listOfPerm;    
 
     }
-*/
 
+    public static void addToViewHonbuDirect(auHonbuDirectCtrl.clsHonbuDirect honbuDirectToView) {
+
+      if (honbuDirectToView.isView) {
+        return;
+      }
+
+      auHonbuDirectDetail__c hdd = new auHonbuDirectDetail__c();
+      hdd.auHonbuDirect__c = honbuDirectToView.auHonbuDirect.Id;
+      hdd.User__c = UserInfo.getUserId();
+      hdd.Type__c = auConstantCmn.HONBU_DIRECT_DETAIL_TYPE_VIEW;
+      insert hdd;
+
+      honbuDirectToView.isView = true;
+
+      // There is some problem of doublons when doing it twice quickly so we remove the unnecessary rows.
+      List<auHonbuDirectDetail__c> lsHDD = [SELECT Id
+                                            FROM auHonbuDirectDetail__c
+                                            WHERE auHonbuDirect__c = :honbuDirectToView.auHonbuDirect.Id
+                                            AND User__c = :UserInfo.getUserId()
+                                            AND Type__c = :auConstantCmn.HONBU_DIRECT_DETAIL_TYPE_VIEW
+                                            ORDER BY CreatedDate];
+      if (lsHDD != NULL && lsHDD.size() > 1) {
+        boolean isFirst = true;
+        List<auHonbuDirectDetail__c> lsHDDToRemove = new List<auHonbuDirectDetail__c>();
+        for (auHonbuDirectDetail__c hddtmp : lsHDD) {
+            if (!isFirst) {
+                lsHDDToRemove.add(hddtmp);
+            }
+            isFirst = false;
+        }
+        delete lsHDDToRemove;
+      }
+
+    }
+    
 }

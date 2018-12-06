@@ -1,12 +1,15 @@
 public with sharing class auSwitchScreenCtrl {
     
-    public Boolean isCommunityUser {get; set;}
-    public Boolean isSystemAdministrator {get; set;}
-    public Boolean isKDDIUser {get; set;}
-    public Boolean isSAorEvolvaUser {get; set;}
     public Boolean isKDDIKnowledgeOnly {get; set;}
-    public Boolean isKDDIKnowledgeActivities {get; set;}
-    public Boolean isIPhone {get; set;}
+    public Boolean isCommunityUser {get; set;}
+    
+    private Boolean isSystemAdministrator;
+    private Boolean isKDDIUser;
+    private Boolean isSAorEvolvaUser;
+    private Boolean isKDDIKnowledgeActivities;
+    private Boolean isIPhone;
+    private Boolean isOkinawaFull;
+    private Boolean isOkinawaRestricted;
 
     public Integer getTypeOfScreen(){return auMainTopCompCtrl.TYPE_SCREEN_SWITCH;}
 
@@ -29,11 +32,8 @@ public with sharing class auSwitchScreenCtrl {
 
         isKDDIUser = isSystemAdministrator ||
                      currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH ||
-                     currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH_V2 ||
                      currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE ||
-                     currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2 ||
-                     currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS ||
-                     currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS_V2;
+                     currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS;
 
         isSAorEvolvaUser = currentUser.Profile.Name == auConstantCmn.PROFILE_SA_USER_SA ||
                            currentUser.Profile.Name == auConstantCmn.PROFILE_SA_USER_CSA ||
@@ -44,7 +44,17 @@ public with sharing class auSwitchScreenCtrl {
         
         isKDDIKnowledgeActivities = currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_KNOWLEDGE_ACTIVITIES;
 
-        
+        isOkinawaFull = currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA ||
+                        currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1;
+
+        isOkinawaRestricted = currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2 ||
+        					  currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_UQ;
+
+		/*urlSFDCHome = '';
+        if (!isCommunityUser) {
+            urlSFDCHome = auCommunityCustomSettings__c.getOrgDefaults().MainDomainUrl__c;
+            urlSingleSignOn = auCommunityCustomSettings__c.getOrgDefaults().URLSingleSignOn__c;
+        }*/
     }
 
     public PageReference redirectIfNecessary(){
@@ -68,31 +78,31 @@ public with sharing class auSwitchScreenCtrl {
 
     public boolean getHasAccessCalendar() {
 
-      return isKDDIUser || isKDDIKnowledgeActivities;
+      return isKDDIUser || isKDDIKnowledgeActivities || isOkinawaFull || isOkinawaRestricted;
 
     }
 
     public boolean getHasAccessCCP() {
 
-      return isKDDIUser && !isIPhone;
+      return (isKDDIUser || isOkinawaFull) && !isIPhone;
 
     }
 
     public boolean getHasAccessKdKnowledge() {
 
-      return (isKDDIUser || isKDDIKnowledgeOnly || isKDDIKnowledgeActivities) && !isIPhone;
+      return (isKDDIUser || isKDDIKnowledgeOnly || isKDDIKnowledgeActivities || isOkinawaFull) && !isIPhone;
 
     }
 
     public boolean getHasAccessSANX() {
 
-      return isKDDIUser;
+      return isKDDIUser || isOkinawaFull || isOkinawaRestricted;
 
     }
 
     public boolean getHasAccessAuChannelWithAdmin() {
 
-      return isKDDIUser;
+      return isKDDIUser;// || isOkinawaRestricted;
 
     }
 
@@ -116,13 +126,13 @@ public with sharing class auSwitchScreenCtrl {
 
     public boolean getHasAccessCxKnowledge() {
 
-      return (isKDDIUser || isCommunityUser) && !isIPhone;
+      return (isKDDIUser || isCommunityUser || isOkinawaFull) && !isIPhone;
 
     }
 
     public boolean getHasAccessStpd() {
 
-      return (isKDDIUser || isCommunityUser) && !isIPhone;
+      return (isKDDIUser || isCommunityUser || isOkinawaFull) && !isIPhone;
 
     }
 

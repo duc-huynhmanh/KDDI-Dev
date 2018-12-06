@@ -1685,7 +1685,7 @@
           width: 568px;
           overflow: hidden;
         }
-
+        
         .dateOnlyInput input {
           width: 8em;
         }
@@ -2457,6 +2457,7 @@
                 {sobjectField:['UserRole','DeveloperName'], label: '組織', className: 'master-userRoleCode', targetFormClassName: 'RoleCode', hidden: true},
                 {sobjectField:['Profile','Name'], label: 'Profile', className: 'master-userProfile', targetFormClassName: 'Profile', hidden: true},
                 {sobjectField:['Name'], label: '社員名', className: 'master-userName', targetFormClassName: 'name'},
+                {sobjectField:['Department'], label: '部署名', className: 'master-department', targetFormClassName: 'department'},
                 {sobjectField:['Id'], label: 'Id', className: 'master-userId', targetFormClassName: 'Id', hidden: true}
             ]
         };
@@ -3602,6 +3603,39 @@
                               <apex:param value="{!ValidToDatetime + offset}" />
                             </apex:outputText>
                           </div>
+                          
+                          <div class="field">
+                            <apex:outputLabel value="{!$ObjectType.saInquiry__c.fields.DisplayedValidToDatetime__c.Label}"
+                                              for="inputDisplayedValidToDatetime"
+                                              styleClass="field-label {!IF(isReadOnly,'','requireField ')}" />
+                            <apex:inputField rendered="{!!isReadOnly}"
+                                             id="inputDisplayedValidToDatetime"
+                                             styleClass="field-value"
+                                             value="{!idm.parentRec.DisplayedValidToDatetime__c}"
+                                             html-data-compare-value="{!idm.baseParentRec.DisplayedValidToDatetime__c}"
+                                             onclick="makeSafetyCheck=false;"
+                                             onblur="safetyLockCheck(this);makeSafetyCheck=true;"
+                                             onmouseout="makeSafetyCheck=true;"
+                                             onkeydown="if(event.keyCode==13){this.blur();}" />
+                            <apex:outputText rendered="{!isReadOnly}"
+                                             styleClass="field-value"
+                                             style="max-width: 400px; overflow: hidden;"
+                                             value="{0,date,yyyy/MM/dd　HH:mm}">
+                              <apex:param value="{!DisplayedValidToDatetime + offset}" />
+                            </apex:outputText>
+                            
+                          </div>
+                          
+                          <div class="field">
+                          	<apex:outputLabel rendered="{!!isReadOnly}"
+                          					  value=" "  
+                                              styleClass="field-label"/>
+                          	<apex:outputLabel rendered="{!!isReadOnly}"
+                                             styleClass="field-value"
+                                             style="float: right;padding: 0px;"
+                                             value="{!$Label.saInquiryDisplayedDeadLine_MSG_01}"
+                                             escape="false"/>
+                          </div>
                         </apex:outputPanel>
 
                       </div>
@@ -4209,7 +4243,7 @@
                             <button type="button" class="customButton" data-toggle="modal" data-target="#multiDeleteView">複数ユーザーを削除</button>
                           </div>
 
-                          <apex:outputPanel rendered="{!isReadOnly && idm.parentRec.IsValid__c && callType != '1'}" styleClass="field" >
+                          <apex:outputPanel rendered="{!isReadOnly && idm.parentRec.IsValid__c && callType != '1' && (idm.isCreator || isUserAdministrator)}" styleClass="field" >
                             <button class="customButton" type="button" data-toggle="modal" data-target="#pushNotificationConfirm">リマインド通知</button>
                           </apex:outputPanel>
 
@@ -4219,6 +4253,8 @@
                       <div class="quotation-item-header quotation-detail-header clearfix">
 
                         <div class="quotation-detail-header-item quotation-reply-userRole">組織</div>
+
+						<!-- div class="quotation-detail-header-item quotation-reply-department">部署名</div -->
 
                         <div class="quotation-detail-header-item quotation-reply-userName">社員名</div>
                         
@@ -4243,6 +4279,13 @@
                                                    value="{!itemReply.usrRoleName}" />
                                 </div>
                               </div>
+
+							  <!-- div class="field" style="overflow-x: hidden;" >
+                                <div class="indent-wrap" >
+                                  <apex:outputText styleClass="field-value quotation-reply-department"
+                                                   value="{!itemReply.department}" />
+                                </div>
+                              </div -->
 
                               <div class="field" style="overflow-x: hidden;" >
                                 <div class="indent-wrap" >
@@ -5608,6 +5651,7 @@ $j(function () {
                                                    style="width: 350px; text-align: left; overflow: hidden;" />
                                 </div>
                               </td>
+
                               <td >
                                 <div class="field">
                                   <apex:outputText value="{!item.usrName}"

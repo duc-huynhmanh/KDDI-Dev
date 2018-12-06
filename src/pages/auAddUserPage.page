@@ -853,7 +853,27 @@
 		            detailProductItemManage.setTargetNode($targetNode);
 		        }
 		
-				var productConfig = {
+				var productConfigSA = {
+		            fields: [
+		                {sobjectField:['UserRole','Name'], label: '組織', className: 'master-userRoleName', targetFormClassName: 'RoleName'},
+		                {sobjectField:['UserRole','DeveloperName'], label: '組織', className: 'master-userRoleCode', targetFormClassName: 'RoleCode', hidden: true},
+		                {sobjectField:['Name'], label: '社員名', className: 'master-userName', targetFormClassName: 'name'},
+		                {sobjectField:['TechnicalString__c'], label: '拠点', className: 'master-technicalString', targetFormClassName: 'saBusinessLocationDetail_user__r'},
+		                {sobjectField:['Id'], label: 'Id', className: 'master-userId', targetFormClassName: 'Id', hidden: true}
+		            ]
+		        };
+		
+				var productConfigKDDI = {
+		            fields: [
+		                {sobjectField:['UserRole','Name'], label: '組織', className: 'master-userRoleName', targetFormClassName: 'RoleName'},
+		                {sobjectField:['UserRole','DeveloperName'], label: '組織', className: 'master-userRoleCode', targetFormClassName: 'RoleCode', hidden: true},
+		                {sobjectField:['Name'], label: '社員名', className: 'master-userName', targetFormClassName: 'name'},
+		                {sobjectField:['Department'], label: '部署', className: 'master-department', targetFormClassName: 'department'},
+		                {sobjectField:['Id'], label: 'Id', className: 'master-userId', targetFormClassName: 'Id', hidden: true}
+		            ]
+		        };
+		        
+		        var productConfigShop = {
 		            fields: [
 		                {sobjectField:['UserRole','Name'], label: '組織', className: 'master-userRoleName', targetFormClassName: 'RoleName'},
 		                {sobjectField:['UserRole','DeveloperName'], label: '組織', className: 'master-userRoleCode', targetFormClassName: 'RoleCode', hidden: true},
@@ -861,6 +881,8 @@
 		                {sobjectField:['Id'], label: 'Id', className: 'master-userId', targetFormClassName: 'Id', hidden: true}
 		            ]
 		        };
+		        
+		        var productConfig = {!pageType==pageSAType}?productConfigSA:{!pageType==pageKDDIType}?productConfigKDDI:productConfigShop; 
 		        
 		        var detailProductItemManage = new PagerHelper();
 		        detailProductItemManage.setPageSize(13);
@@ -908,37 +930,34 @@
 		        }
 		        function chooseItemDetailProduct() {
 		        	console.log('Run : chooseItemDetailProduct');
-		            var items = [];
-		            var config = detailProductItemManage.getConfig();
-		            var fields = config.fields;
+		            var listUserId = '';
 		            var $modal = $j('#detailProductItemView');
 		            var $selectedItems = $modal.find('#productItemTabPanel .item.selected');
-		
+				
 		            if ($selectedItems.length) {
 		                for (var i = 0; i < $selectedItems.length; i++) {
 		                    var $selectedItem = $j($selectedItems[i]);
-		                    var values = [];
-		                    for (var j = 0; j < fields.length; j++) {
-		                        var field = fields[j];
-		                        if (field.targetFormClassName) {
-		                            var value = $selectedItem.find('.' + field.className).text();
-		                            values.push('"' + field.sobjectField.join('.') + '":"' + value + '"');
-		                        }
-		                    }
-		                    items.push('{' + values.join(',') + '}');
+		                    var value = $selectedItem.find('.' + 'master-userId').text();
+		                    listUserId += value + ';';
 		                }
-		                var jsonText = '{' + 
-		                                    '"sortNo":"0",' +
-		                                    '"items":[' + items.join(',') +']' +
-		                                '}';
-		                console.log('jsonText : '+jsonText); 
-		                addNewUsers(jsonText);
+		                $j('.listUserId').val(listUserId);
+		                addAllCorrespondingUsers();
 		            } else {
 		                showAlert('追加するユーザーを選択してください。', false);
 		            }
 		        }        
 		        function userSearchAndChooseItemDetailProduct() {
-		        	console.log('Run : userSearchAndChooseItemDetailProduct');
+		        	var records = detailProductItemManage._records;
+		        	if(records != null) {
+		        		var listUserId = '';
+		        		for (var i = 0; i < records.length; i++) {
+		        			target = records[i];
+		        			target = target['Id'];
+		        			target = convert(target);
+		        			listUserId += target + ';';
+		        		}
+		        		$j('.listUserId').val(listUserId);
+		        	}
 		            addAllCorrespondingUsers();
 		        }
 		        
@@ -1402,9 +1421,6 @@
 		<apex:form >
 		
 		<apex:actionFunction name="validateAndRedirect" action="{!validateAndRedirect}"/>
-		<apex:actionFunction name="addNewUsers"  action="{!addNewUsers}" rerender="">
-			<apex:param name="jsonText" value="" />
-        </apex:actionFunction>
         <apex:actionFunction name="addAllCorrespondingUsers"  action="{!addAllCorrespondingUsers}"/>
 		
 		<apex:inputHidden html-class="pageType" value="{!pageType}" />
@@ -1416,7 +1432,7 @@
 		<apex:inputHidden html-class="lastSearchBusinessLocationFilter" value="{!lastSearchBusinessLocationFilter}" />
 								        	
 		<apex:inputHidden html-class="lastBusinessLocationName" value="{!lastBusinessLocationName}" />
-		                        			
+		<apex:inputHidden html-class="listUserId" value="{!listUserId}" />		                        			
 		<apex:inputHidden html-class="lastSearchUserName" value="{!lastSearchUserName}" />
 		<apex:inputHidden html-class="lastSearchUserNumber" value="{!lastSearchUserNumber}" />
 		<apex:inputHidden html-class="lastSearchDepartment" value="{!lastSearchDepartment}" />
@@ -1426,9 +1442,9 @@
 		<!-- <apex:inputHidden html-class="lastSearchUserClassification" value="{!lastSearchUserClassification}" />
 		<apex:inputHidden html-class="lastSearchUserCertification" value="{!lastSearchUserCertification}" /> -->
 			
-		<!-- div id="alert" class="alert">
+		<div id="alert" class="alert">
         	<p class="description" ></p>
-        </div -->
+        </div>
 								        					        	
 		<div id="honbu-description" class="honbu-description" style="margin-left: auto; margin-right: auto;">
 

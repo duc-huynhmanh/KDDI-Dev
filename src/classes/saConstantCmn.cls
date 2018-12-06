@@ -44,4 +44,6 @@ public with sharing class saConstantCmn
     // Source to indicate the preview Mode
     public static final String SOURCE = 'src';
 	public static final String SOURCE_PREVIEW = 'preview';
+	public static final String SOURCE_RANKING_VIEW = 'rsView';
+	public static final String SOURCE_RANKING_LIKE = 'rsLike';
 }

@@ -8,10 +8,10 @@ public with sharing class saTasksListForAdminCtl {
     private static final String COOKIE_LABEL_NAME = COOKIE_LABEL_PREFIX + 'Name';
     private static final String COOKIE_LABEL_VALIDITY_DATE = COOKIE_LABEL_PREFIX + 'ValidityDate';
 
-    private static final String COOKIE_LABEL_PAGE_NUMBER = 'PageNumber';
-    private static final String COOKIE_LABEL_PAGE_SIZE = 'PageSize';
-    private static final String COOKIE_PATH = '/apex/saTasksListForAdmin';
-    private static final String COOKIE_LABEL_INIT_SEARCH_FLG = 'initSearchFlg';  // 画面起動時検索フラグ
+    private static final String COOKIE_LABEL_PAGE_NUMBER = COOKIE_LABEL_PREFIX + 'PageNumber';
+    private static final String COOKIE_LABEL_PAGE_SIZE = COOKIE_LABEL_PREFIX + 'PageSize';
+    private static final String COOKIE_PATH = '';
+    private static final String COOKIE_LABEL_INIT_SEARCH_FLG = COOKIE_LABEL_PREFIX + 'initSearchFlg';  // 画面起動時検索フラグ
 
 
 
@@ -398,8 +398,11 @@ public with sharing class saTasksListForAdminCtl {
 
     private Boolean initFieldFromCookie() {
 
+		system.debug('Run : initFieldFromCookie');
         Map<String, Cookie> cookies = Apexpages.currentPage().getCookies();
         Boolean hasSearchValues = false;
+
+		system.debug('Map of Cookie to display : '+cookies);
 
         if (cookies.containsKey(COOKIE_LABEL_SHISHA)) {
             this.filterShisha = cookies.get(COOKIE_LABEL_SHISHA).getValue();
@@ -435,6 +438,9 @@ public with sharing class saTasksListForAdminCtl {
     }
 
     private void saveInputValues() {
+    	
+    	system.debug('Run : saveInputValues');
+    	
         List<Cookie> cookies = new List<Cookie>();
 
         cookies.add(new Cookie(COOKIE_LABEL_SHISHA, this.filterShisha, COOKIE_PATH, -1, true));
@@ -447,6 +453,8 @@ public with sharing class saTasksListForAdminCtl {
         cookies.add(new Cookie(COOKIE_LABEL_PAGE_NUMBER, String.valueOf(pageNum), COOKIE_PATH, -1, true));  // ページ番号
         //cookies.add(new Cookie(COOKIE_LABEL_PAGE_SIZE, String.valueOf(pageSize), COOKIE_PATH, -1, true));  // ページサイズ
         cookies.add(new Cookie(COOKIE_LABEL_INIT_SEARCH_FLG, this.initSearchFlg, COOKIE_PATH, -1, true));  // 画面起動時検索フラグ
+        
+        system.debug('Map of Cookie to save : '+cookies);
         
         Apexpages.currentPage().setCookies(cookies);
     }

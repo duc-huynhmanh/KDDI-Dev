@@ -33,12 +33,22 @@ public with sharing class saReportCtrl {
     public static final String MESSAGE_PUBLISHED = '公開しました。';
     public static final String MESSAGE_TEMPORARY_SAVED = '一時保存しました。';
 
+  	public static final String SOURCE_RANKING_VIEW = 'rsView';
+  	public static final String SOURCE_RANKING_LIKE = 'rsLike';
+
+	public static final String LABEL_NBLIKE = 'いいね！超いいね！数 : ';//いいね
+    public static final String LABEL_NBCOPY = 'マネ数 : ';
+    public static final String LABEL_NBVIEW = '閲覧数 : ';
+    
     /* Static Properies */
     public String getTypeDraft() {return saConstantCmn.SA_REPORT_STATE_DRAFT;}
     public String getTypePending() {return saConstantCmn.SA_REPORT_STATE_WAITING_APPROVAL;}
     public String getTypeRemand() {return saConstantCmn.SA_REPORT_STATE_REJECTED;}
     public String getTypePublish() {return saConstantCmn.SA_REPORT_STATE_PUBLISHED;}
 
+	public String getLabelNbLike() {return LABEL_NBLIKE;}
+    public String getLabelNbCopy() {return LABEL_NBCOPY;}
+    public String getLabelNbView() {return LABEL_NBVIEW;}
     /* **********************
     **  Get/Set Variables  ** 
     ********************** */
@@ -137,6 +147,11 @@ public with sharing class saReportCtrl {
     public String latestBasicSearchRole1 {get;set;}
     public String latestBasicSearchRole2 {get;set;}
     public String latestBasicSearchRole3 {get;set;}
+    // Selected Page
+    public Integer latestpageNum {get;set;} 
+    //public double scrollTopValue{get; set;}
+    //public double currentScrollValue{get; set;}
+    //public Boolean isBackCall{get; set;}
 
     // Select Option Lists
     public List<SelectOption> categoryDataOptions{get; set;}
@@ -158,6 +173,13 @@ public with sharing class saReportCtrl {
     public String createSubject{get; set;}
     public String createBody{get; set;}
     public Boolean reportRendered{get; set;}
+
+     /*page properties*/
+    public Integer pageNum {get;set;} 
+    public Integer pageSize {get; set;}
+    public Integer recordsCount{get;set;}
+    public Boolean getHasNext() {return pageNum * pageSize < recordsCount;}
+    
     
     /* Other */
     public String selectedView{get; set;}
@@ -230,6 +252,7 @@ public with sharing class saReportCtrl {
     
     /* Standard */
     private String createdReportId;
+    public Integer searchParttern;
     //private String createdReportState;
     
     /* ***********************
@@ -243,12 +266,21 @@ public with sharing class saReportCtrl {
      * Created on 2018/03/05
      */
     public saReportCtrl(){
-        
+        searchParttern = 0;
+        pageNum = 1;
+        //scrollTopValue = 0;
+        //isBackCall = false;
+        pageSize = 20;
+        recordsCount = 0;
         system.debug('Run: saReportCtrl ');
         
         //Get the 2 variables from the URL
         this.sourceOfExecution=System.currentPagereference().getParameters().get('src');
         String reportId = System.currentPagereference().getParameters().get('rptid');
+        
+        system.debug('src : '+this.sourceOfExecution);
+        system.debug('rptid : '+reportId);
+        
         //Initialise Error and Information Message
         this.messageError = '';
         this.messageSubmissionComplete = '';
@@ -581,6 +613,14 @@ public with sharing class saReportCtrl {
         
         return listOfReports;      
     }
+
+    public void setPageThenGetAllMyReports(){
+        pageNum = 1;
+        //scrollTopValue = 0;
+        searchParttern = 8;
+        pageSize = 20;
+        getAllMyReports();
+    }
     
     /**
     * Set all reports that the user created and that fit it's actual profile
@@ -597,13 +637,36 @@ public with sharing class saReportCtrl {
         queryStr += ' WHERE CreatedBy__c=\'' + UserInfo.getUserId() + '\'';
         queryStr += ' And ' + getWhereCondForCorrespondingProfile();
         queryStr += ' ORDER BY CreatedDate__c Desc NULLS LAST'; 
-        
+
+        String countQueryStr = 'SELECT COUNT() FROM saReport__c WHERE CreatedBy__c=\'' + UserInfo.getUserId() + '\' And ' + getWhereCondForCorrespondingProfile();
+
+        recordsCount = database.countQuery(countQueryStr);
+        if(recordsCount > 2000) {
+            recordsCount = 2000;
+        }
+        if(recordsCount > 0){
+            if(math.floor((recordsCount-1) / pageSize) + 1 < pageNum) {
+                pageNum = (Integer)math.floor((recordsCount-1) / pageSize) + 1;
+            }
+            queryStr += ' LIMIT ' + pageSize + ' OFFSET ' + ((pageNum - 1) * pageSize);
+        } else {
+            pageNum = 1;
+            //scrollTopValue = 0;
+        }
         system.debug('Query to get all my reports : ' + queryStr);
+
         
         //Run the Query and affect the results to listOfSAReports for display
-        this.listOfSAReports = Database.query(queryStr);                    
+        this.listOfSAReports = Database.query(queryStr);    
     }
-    
+
+    public void setPageThenGetPendingReports(){
+        pageNum = 1;
+        //scrollTopValue = 0;
+        searchParttern = 9;
+        pageSize = 20;
+        getPendingReports();
+    }    
     /**
     * Set all the reports that are in a pending state and that the user can reject or approve
     * 
@@ -613,9 +676,37 @@ public with sharing class saReportCtrl {
     public void getPendingReports() {
         
         system.debug('Run: getPendingReports');
-        
+
         //Build and run the Query. Then affect the results to listOfSAReports for display
-        this.listOfSAReports = [SELECT Id, Name, Subject__c, toLabel(Category__c), Process__c, Report_body__c,
+        String queryStr = 'SELECT Id, Name, Subject__c, toLabel(Category__c), Process__c, Report_body__c, ' +
+                                       'CreatedBy__r.DisplayedUsernameFormula__c, CreatedDate__c, ' +
+                                       'AvailabilityDate__c, ApprovalRequestDatetime__c, State__c, IsNew__c, NbLike__c, ' +
+                                       'NbView__c, NbCopy__c FROM saReport__c';
+        String whereStr = ' WHERE State__c = \'' + saConstantCmn.SA_REPORT_STATE_WAITING_APPROVAL + '\' AND IsReportEvolva__c = ' + isUserProfileEvolva();
+        whereStr += ' AND (CreatedBy__r.SAApprover1__c = \'' + currentUser.Id + '\' OR CreatedBy__r.SAApprover2__c = \'' + currentUser.Id + '\' OR CreatedBy__r.SAApprover3__c = \'' + currentUser.Id + '\')';
+        queryStr = queryStr + whereStr + ' ORDER BY CreatedDate__c Desc NULLS LAST'; 
+
+        String countQueryStr = 'SELECT COUNT() FROM saReport__c' + whereStr;
+
+        recordsCount = database.countQuery(countQueryStr);
+        if(recordsCount > 2000) {
+            recordsCount = 2000;
+        }
+        if(recordsCount > 0){
+            if(math.floor((recordsCount-1) / pageSize) + 1 < pageNum) {
+                pageNum = (Integer)math.floor((recordsCount-1) / pageSize) + 1;
+            }
+            queryStr += ' LIMIT ' + pageSize + ' OFFSET ' + ((pageNum - 1) * pageSize);
+        } else {
+            pageNum = 1;
+            //scrollTopValue = 0;
+        }
+        
+        //Run the Query and affect the results to listOfSAReports for display
+        this.listOfSAReports = Database.query(queryStr);   
+        
+        
+        /*this.listOfSAReports = [SELECT Id, Name, Subject__c, toLabel(Category__c), Process__c, Report_body__c,
                                        CreatedBy__r.DisplayedUsernameFormula__c, CreatedDate__c,
                                        AvailabilityDate__c, ApprovalRequestDatetime__c, State__c, IsNew__c, NbLike__c, 
                                        NbView__c, NbCopy__c
@@ -623,7 +714,7 @@ public with sharing class saReportCtrl {
                                 WHERE State__c = :saConstantCmn.SA_REPORT_STATE_WAITING_APPROVAL
                                 AND   IsReportEvolva__c = :isUserProfileEvolva()
                                 AND   (CreatedBy__r.SAApprover1__c = :currentUser.Id OR CreatedBy__r.SAApprover2__c = :currentUser.Id OR CreatedBy__r.SAApprover3__c = :currentUser.Id)
-                                ORDER BY CreatedDate__c Desc NULLS LAST];
+                                ORDER BY CreatedDate__c Desc NULLS LAST];*/
                 
         system.debug('getPendingReports Results : '+ listOfSAReports);
     }
@@ -944,7 +1035,8 @@ public with sharing class saReportCtrl {
         this.basicSearchRole3='';
         
         //Set count to the lower value
-        this.basicSearchCount=SEARCH_COUNT_FEW_LABEL;
+        //this.basicSearchCount=SEARCH_COUNT_FEW_LABEL;
+        this.basicSearchCount='20';
         
         //Get the Sort Type for the corresponding value got from URL if this one was set
         if(sourceOfExecution==saConstantCmn.SA_REPORT_SOURCE_WEEKLY){
@@ -971,7 +1063,8 @@ public with sharing class saReportCtrl {
         this.mySearchDateEnd='';
         this.mySearchState='';
         //Set count to the lower value
-        this.mySearchCount=SEARCH_COUNT_FEW_LABEL;
+        //this.mySearchCount=SEARCH_COUNT_FEW_LABEL;
+        this.mySearchCount='20';
     }
     
     /**
@@ -987,7 +1080,8 @@ public with sharing class saReportCtrl {
         this.pendingDateStart='';
         this.pendingDateEnd='';
         //Set count to the lower value
-        this.pendingCount=SEARCH_COUNT_FEW_LABEL;
+        //this.pendingCount=SEARCH_COUNT_FEW_LABEL;
+        this.pendingCount='20';
     }
 
     /**
@@ -1008,7 +1102,7 @@ public with sharing class saReportCtrl {
         
     }
 
-    /**
+  /**
      * Indicate if the currentUser is Evolva
      * 
      * @author Thomas REMY
@@ -1037,11 +1131,11 @@ public with sharing class saReportCtrl {
         
         //Return the result from the Check on if the user's Profile fits Kddi Profiles 
         return currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH ||
-               currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH_V2 ||
                currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE ||
-               currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2 ||
                currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS ||
-               currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS_V2 ||
+               currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA ||
+               currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 ||
+               currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2 ||
                currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_CUSTOM ||
                currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN ||
                currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP;
@@ -1059,9 +1153,6 @@ public with sharing class saReportCtrl {
         
         messageError = '';
         messageSubmissionComplete = '';
-        
-        system.debug('createSubject : '+createSubject);
-        system.debug('createCategory : '+createCategory);
         
         //Check the validity of the input field
         if(createSubject==null || createSubject.trim()==''){
@@ -1110,9 +1201,6 @@ public with sharing class saReportCtrl {
 
         }
     }
-    
-    
-    
     
     /**
      * call the save function with the Draft Status
@@ -1440,6 +1528,72 @@ public with sharing class saReportCtrl {
             getAllMyReports();
         }
     }
+
+
+    public void setPageThenSearchReport(){
+        searchParttern = 1;
+        pageNum = 1;
+        //scrollTopValue = 0;
+        pageSize = String.isBlank(basicSearchCount) ? 20 : Integer.valueOf(basicSearchCount);
+        searchReport();
+    }
+
+    private String checkAddAnd(String whereStr){
+        if(whereStr != ' WHERE ') {
+            return ' AND ';
+        }
+        return '';
+    }
+
+    private List<String> buildWhereAndOrder(String searchDateStart, String searchDateEnd, String searchState, String searchCategory, String searchSort, String searchRole1){
+        String whereStr  = ' WHERE ';
+        String orderStr  = '';
+        /* Assemble where and order condition */
+        // Date Condition
+        whereStr += getWhereConditionForDate(searchDateStart,searchDateEnd);
+
+        // State Condition
+        if(!String.isBlank(searchState) && searchState.trim() != ''){
+            whereStr += checkAddAnd(whereStr) + 'State__c = \'' + searchState + '\'';
+        } 
+
+        // Category Condition
+        if(!String.isBlank(searchCategory) && searchCategory.trim() != ''){
+            whereStr += checkAddAnd(whereStr) + 'Category__c = \'' + searchCategory + '\'';
+        }
+
+        // Profile Condition
+        whereStr += checkAddAnd(whereStr) + getWhereCondForCorrespondingProfile();
+
+        // Role Condition
+        if(!String.isBlank(searchRole1) && searchRole1.trim() != ''){
+            whereStr += checkAddAnd(whereStr) + getWhereCondForRole();
+        }
+
+        // Sort order
+        if(!String.isBlank(searchSort) && searchSort.trim() != ''){
+            if(searchSort==SORTED_BY_NEWS_VALUE){
+                whereStr += checkAddAnd(whereStr) + 'IsNew__c=true';
+                orderStr += ' ORDER BY AvailabilityDate__c Desc NULLS LAST ';
+            }
+            if(searchSort==SORTED_BY_NUMBER_OF_VIEWS_VALUE){
+                orderStr += ' ORDER BY NbView__c Desc';
+            }
+            if(searchSort==SORTED_BY_FAVORITES_VALUE){
+                orderStr += ' ORDER BY NbLike__c Desc';
+            }
+            if(searchSort==SORTED_BY_RELEASE_DATES_VALUE){
+                orderStr += ' ORDER BY AvailabilityDate__c Desc NULLS LAST';
+            }
+        }else{
+        	if(searchParttern==1 || searchParttern==2 || searchParttern==3){
+        		orderStr += ' ORDER BY AvailabilityDate__c Desc NULLS LAST';
+        	}else{
+        		orderStr += ' ORDER BY CreatedDate__c Desc NULLS LAST';
+        	}
+        }
+        return new List<String>{whereStr, orderStr};
+    }
     
     /**
     * Search the report that correspond to the criteria given
@@ -1447,22 +1601,103 @@ public with sharing class saReportCtrl {
     * @author Thomas REMY
     * Created on 2018/03/05
     */
-    public void searchReport() {
+    public List<saReport__c> searchReportSOQL(String whereStr, String orderStr){
+        List<saReport__c> reportList = new List<saReport__c>();
+        if(pageNum < 1) {
+            pageNum = 1;
+            //scrollTopValue = 0;
+            return reportList;
+        }
+        try{
+            // Init query subpart values
+            String queryStr  = '';
+            String selectStr = getSelectParametersForSAReports();
+            String fromStr   = ' FROM saReport__c ';
+            String limitStr  = ' LIMIT ' + pageSize;
 
+            // Assemble full Query
+            queryStr = selectStr + fromStr + whereStr + orderStr + limitStr;
+            system.debug('Search Report Query : '+queryStr);
+
+            String countQueryStr = 'SELECT COUNT() FROM saReport__c';
+            if (!String.isBlank(whereStr)) {
+                countQueryStr += whereStr;
+            } 
+            recordsCount = database.countQuery(countQueryStr);
+            if(recordsCount > 2000) {
+                recordsCount = 2000;
+            }
+            if(recordsCount > 0){
+                if(math.floor((recordsCount-1) / pageSize) + 1 < pageNum) {
+                    pageNum = (Integer)math.floor((recordsCount-1) / pageSize) + 1;
+                }
+                queryStr += ' OFFSET ' + ((pageNum - 1) * pageSize);
+            } else {
+                pageNum = 1;
+                //scrollTopValue = 0;
+            }
+            
+            // Execute Query
+            reportList = Database.query(queryStr);
+        }catch(Exception e){
+            recordsCount = 0;
+            pageNum = 1;
+            //scrollTopValue = 0;
+            pageSize = 20;
+            messageError='An error Occurred : ' + e;
+        }
+        return reportList;
+    }
+
+    public List<saReport__c> searchReportSOSL(String keywords, String whereStr, String orderStr){
+        List<saReport__c> reportList = new List<saReport__c>();
+        if(pageNum < 1) {
+            pageNum = 1;
+            //scrollTopValue = 0;
+            return reportList;
+        }
+        
+        String fields = getSelectParametersForSAReports();
+        String searchquery='FIND {' + keywords + '} IN ALL FIELDS RETURNING saReport__c(' + fields.remove('SELECT ') + whereStr + orderStr + ')'; 
+        system.debug('searchquery: ' + searchquery);
+        try {
+            reportList = search.query(searchquery)[0];
+            if(reportList == null) {
+                return new List<saReport__c>();
+            }
+            recordsCount = reportList.size();
+            if(recordsCount > 2000) {
+                recordsCount = 2000;
+            }
+            if(recordsCount > 0){
+                if(math.floor((recordsCount-1) / pageSize) + 1 < pageNum) {
+                    pageNum = (Integer)math.floor((recordsCount-1) / pageSize) + 1;
+                }
+                List<saReport__c> result = new List<saReport__c>();
+                for(Integer i = (pageNum - 1) * pageSize; i < recordsCount && i < pageNum*pageSize; i++){
+                    result.add(reportList[i]);
+                }
+                return result;
+            } else {
+                pageNum = 1;
+                //scrollTopValue = 0;
+            }
+        } catch(Exception e){
+            recordsCount = 0;
+            pageNum = 1;
+            //scrollTopValue = 0;
+            pageSize = 20;
+            messageError='An error Occurred : ' + e;
+        }
+
+        return reportList;
+    }
+
+    public void searchReport() {
         messageError='';
 
         system.debug('Run: searchReport');
     
-        system.debug('filterKeyword : '+basicSearchKeywords);
-        system.debug('filterDateStart : '+basicSearchDateStart);
-        system.debug('filterDateEnd : '+basicSearchDateEnd);
-        system.debug('selectedCategoryData : ' + basicSearchCategory);
-        system.debug('selectedSortData : ' + basicSearchSort);
-        system.debug('selectedCountData : ' + basicSearchCount);
-        system.debug('basicSearchRole1 : ' + basicSearchRole1);
-        system.debug('basicSearchRole2 : ' + basicSearchRole2);
-        system.debug('basicSearchRole3 : ' + basicSearchRole3);
-        
         //Set the latest search values
         latestBasicSearchKeywords=basicSearchKeywords;
         latestBasicSearchDateStart=basicSearchDateStart;
@@ -1475,78 +1710,35 @@ public with sharing class saReportCtrl {
         latestBasicSearchRole3=basicSearchRole3;
         
         List<saReport__c> reportList = new List<saReport__c>();
+        List<String> whereAndOrderStr = buildWhereAndOrder(basicSearchDateStart, basicSearchDateEnd, saConstantCmn.SA_REPORT_STATE_PUBLISHED, basicSearchCategory, basicSearchSort, basicSearchRole1);
 
-        try{
-            // Init query subpart values
-            String queryStr  = '';
-            String selectStr = getSelectParametersForSAReports();
-            String fromStr   = ' FROM saReport__c ';
-            String whereStr  = '';
-            String orderStr  = '';
-            String limitStr  = ' LIMIT ' + basicSearchCount;
-    
-            /* Assemble where and order condition */
-            // Date Condition
-            whereStr += ' WHERE ' + getWhereConditionForDate(basicSearchDateStart,basicSearchDateEnd);
-            // If Date criteria input then add a ' And '
-            if(basicSearchDateStart.trim()!='' || basicSearchDateEnd.trim()!='')
-                whereStr += ' And ';
-            // State Condition
-            whereStr += ' State__c = \'' + saConstantCmn.SA_REPORT_STATE_PUBLISHED + '\'';
-            // Keyword Condition
-            String keywordsConditionForQuery = getWhereConditionForKeywords(basicSearchKeywords);
-            if(keywordsConditionForQuery!=''){
-                whereStr += ' And ' + keywordsConditionForQuery;
-            } 
-            // Category Condition
-            if(basicSearchCategory.trim() != ''){
-                whereStr += ' And Category__c = \'' + basicSearchCategory + '\'';
-            }
-            // Profile Condition
-            whereStr += ' And ' + getWhereCondForCorrespondingProfile();
-            // Role Condition
-            if(basicSearchRole1!=null){
-                if(basicSearchRole1.trim()!=''){
-                    whereStr += ' And ' + getWhereCondForRole();
-                }
-            }
-            // Sort order
-            if(basicSearchSort.trim() != ''){
-                if(basicSearchSort==SORTED_BY_NEWS_VALUE){
-                    whereStr += ' And IsNew__c=true';
-                    orderStr += ' ORDER BY AvailabilityDate__c Desc NULLS LAST ';
-                }
-                if(basicSearchSort==SORTED_BY_NUMBER_OF_VIEWS_VALUE){
-                    orderStr += ' ORDER BY NbView__c Desc';
-                }
-                if(basicSearchSort==SORTED_BY_FAVORITES_VALUE){
-                    orderStr += ' ORDER BY NbLike__c Desc';
-                }
-                if(basicSearchSort==SORTED_BY_RELEASE_DATES_VALUE){
-                    orderStr += ' ORDER BY CreatedDate__c Desc NULLS LAST';
-                }
-            }
-    
-            // Assemble full Query
-            queryStr = selectStr + fromStr + whereStr + orderStr  + limitStr;
-            system.debug('Search Report Query : '+queryStr);
-            
-            // Execute Query
-            reportList = Database.query(queryStr);
-            
-            searchCountLabel=getCountLabel(basicSearchCount);
-            searchCategoryLabel=getCategoryLabel(basicSearchCategory);
-
-        }catch(Exception e){
-            messageError='An error Occurred : ' + e;
+		system.debug('Where Condition : '+whereAndOrderStr[0]);
+		system.debug('Order Condition : '+whereAndOrderStr[1]);
+		
+        if(String.isBlank(basicSearchKeywords)){
+            reportList = searchReportSOQL(whereAndOrderStr[0], whereAndOrderStr[1]);
+            system.debug('SOQL : '+reportList);
+        } else {
+            reportList = searchReportSOSL(basicSearchKeywords, whereAndOrderStr[0], whereAndOrderStr[1]);
+            system.debug('SOSL : '+reportList);
         }
+        
         // Affect a valid result to the Main variable
         if (reportList.isEmpty()) {
             reportList = new List<saReport__c>();
         }
         this.listOfSAReports = reportList;
-
+        searchCountLabel=getCountLabel(basicSearchCount);
+        searchCategoryLabel=getCategoryLabel(basicSearchCategory);
         system.debug('Result of the search For reports : ' + listOfSAReports);
+    }
+
+    public void setPageThenLatestSearchReport(){
+        searchParttern = 3;
+        pageSize = String.isBlank(latestBasicSearchCount) ? 20 : Integer.valueOf(latestBasicSearchCount);
+        latestSearchReport();
+        goToCurrentPage();									  
+							   
     }
     
     /**
@@ -1556,78 +1748,24 @@ public with sharing class saReportCtrl {
     * Created on 2018/03/05
     */
     public void latestSearchReport() {
-
         messageError='';
-
         system.debug('Run: latestSearchReport');
         
-        List<saReport__c> reportList = new List<saReport__c>();
-        
-        //To Remove
-        system.debug('latestBasicSearchKeywords : '+latestBasicSearchKeywords);
         system.debug('latestBasicSearchDateStart : '+latestBasicSearchDateStart);
         system.debug('latestBasicSearchDateEnd : '+latestBasicSearchDateEnd);
-        system.debug('latestBasicSearchCategory : ' + latestBasicSearchCategory);
-        system.debug('latestBasicSearchSort : ' + latestBasicSearchSort);
-        system.debug('latestBasicSearchCount : ' + latestBasicSearchCount);
-        
-        try{
-            // Init query subpart values
-            String queryStr  = '';
-            String selectStr = getSelectParametersForSAReports();
-            String fromStr   = ' FROM saReport__c ';
-            String whereStr  = '';
-            String orderStr  = '';
-            String limitStr  = ' LIMIT ' + latestBasicSearchCount;
-    
-            /* Assemble where and order condition */
-            // Date Condition
-            whereStr += ' WHERE ' + getWhereConditionForDate(latestBasicSearchDateStart,latestBasicSearchDateEnd);
-            // If Date criteria input then add a ' And '
-            if(latestBasicSearchDateStart.trim()!='' || latestBasicSearchDateEnd.trim()!='')
-                whereStr += ' And ';
-            // State Condition
-            whereStr += ' State__c = \'' + saConstantCmn.SA_REPORT_STATE_PUBLISHED + '\'';
-            // Keyword Condition
-            String keywordsConditionForQuery = getWhereConditionForKeywords(latestBasicSearchKeywords);
-            if(keywordsConditionForQuery!=''){
-                whereStr += ' And ' + keywordsConditionForQuery;
-            } 
-            // Category Condition
-            if(latestBasicSearchCategory.trim() != ''){
-                whereStr += ' And Category__c = \'' + latestBasicSearchCategory + '\'';
-            }
-            // State Condition
-            whereStr += ' And State__c = \'' + saConstantCmn.SA_REPORT_STATE_PUBLISHED + '\'';
-            // Profile Condition
-            whereStr += ' And ' + getWhereCondForCorrespondingProfile();
-            // Sort Order
-            if(latestBasicSearchSort.trim() != ''){
-                if(latestBasicSearchSort==SORTED_BY_NEWS_VALUE){
-                    whereStr += ' And IsNew__c=true';
-                    orderStr += ' ORDER BY AvailabilityDate__c Desc NULLS LAST ';
-                }
-                if(latestBasicSearchSort==SORTED_BY_NUMBER_OF_VIEWS_VALUE){
-                    orderStr += ' ORDER BY NbView__c Desc';
-                }
-                if(latestBasicSearchSort==SORTED_BY_FAVORITES_VALUE){
-                    orderStr += ' ORDER BY NbLike__c Desc';
-                }
-                if(latestBasicSearchSort==SORTED_BY_RELEASE_DATES_VALUE){
-                    orderStr += ' ORDER BY CreatedDate__c Desc NULLS LAST';
-                }
-            }
-    
-            // Assemble Query
-            queryStr = selectStr + fromStr + whereStr + orderStr  + limitStr;
-            system.debug('検索SOQL'+queryStr);
-            
-            // Execute Query
-            reportList = Database.query(queryStr);
+        system.debug('latestBasicSearchCategory : '+latestBasicSearchCategory);
+        system.debug('latestBasicSearchSort : '+latestBasicSearchSort);
+        system.debug('latestBasicSearchKeywords : '+latestBasicSearchKeywords);
 
-        }catch(Exception e){
-            messageError='An error Occurred : ' + e;
+        List<saReport__c> reportList = new List<saReport__c>();
+        
+        List<String> whereAndOrderStr = buildWhereAndOrder(latestBasicSearchDateStart, latestBasicSearchDateEnd, saConstantCmn.SA_REPORT_STATE_PUBLISHED, latestBasicSearchCategory, latestBasicSearchSort, latestBasicSearchRole1);
+        if(String.isBlank(latestBasicSearchKeywords)){
+            reportList = searchReportSOQL(whereAndOrderStr[0], whereAndOrderStr[1]);
+        } else {
+            reportList = searchReportSOSL(latestBasicSearchKeywords, whereAndOrderStr[0], whereAndOrderStr[1]);
         }
+
         // Affect a valid result to the Main variable
         if (reportList.isEmpty()) {
             reportList = new List<saReport__c>();
@@ -1635,7 +1773,15 @@ public with sharing class saReportCtrl {
         this.listOfSAReports = reportList;
 
         system.debug('Result of the search For reports : ' + listOfSAReports);
-    }   
+    } 
+
+    public void setPageThenSearchMyReports(){
+        searchParttern = 4;
+        pageNum = 1;
+        //scrollTopValue = 0;
+        pageSize = pageSize = String.isBlank(mySearchCount) ? 20 : Integer.valueOf(mySearchCount);
+        searchMyReports();
+    }  
     
     /**
     * Search the report that the user created and that correspond to the criteria given
@@ -1644,15 +1790,7 @@ public with sharing class saReportCtrl {
     * Created on 2018/03/05
     */
     public void searchMyReports() {
-        
         system.debug('Run: searchMyReports');
-        
-        system.debug('filterKeyword : '+mySearchKeywords);
-        system.debug('filterDateStart : '+mySearchDateStart);
-        system.debug('filterDateEnd : '+mySearchDateEnd);
-        system.debug('selectedStateData : '+mySearchState);
-        system.debug('selectedCountData : '+mySearchCount);
-        
         messageError='';
 
         latestMySearchKeywords=mySearchKeywords;
@@ -1662,46 +1800,50 @@ public with sharing class saReportCtrl {
         latestMySearchCount=mySearchCount;
     
         List<saReport__c> reportList = new List<saReport__c>();
-         
-        try{
-            // Init query subpart values
-            String queryStr  = '';
-            String selectStr = getSelectParametersForSAReports();
-            String fromStr   = ' FROM saReport__c ';
-            String whereStr  = '';
-            String orderStr  = '';
-            String limitStr  = ' LIMIT ' + mySearchCount;
+        List<String> whereAndOrderStr = buildWhereAndOrder(mySearchDateStart, mySearchDateEnd, mySearchState, null, null, null);
+        
+        if(String.isBlank(mySearchKeywords)){
+            reportList = searchReportSOQL(whereAndOrderStr[0], whereAndOrderStr[1]);
+        } else {
+            reportList = searchReportSOSL(mySearchKeywords, whereAndOrderStr[0], whereAndOrderStr[1]);
+        }
+        
+        // Affect a valid result to the Main variable
+        if (reportList.isEmpty()) {
+            reportList = new List<saReport__c>();
+        }
+
+        searchStateLabel = getStateLabel(mySearchState);
+        searchCountLabel=getCountLabel(mySearchCount);
+        this.listOfSAReports = reportList;
+
+        system.debug('Result of the search For reports the concerned user created : ' + listOfSAReports);
+    }
+
+    public void setPageThenLatestSearchMyReports(){
+        searchParttern = 5;
+        //pageNum = 1;
+        pageSize = pageSize = String.isBlank(latestMySearchCount) ? 20 : Integer.valueOf(latestMySearchCount);
+        latestSearchMyReports();
+        goToCurrentPage();
+    }  
     
-            /* Assemble where condition */
-            // Date Condition
-            whereStr += ' WHERE ' + getWhereConditionForDate(mySearchDateStart,mySearchDateEnd);
-            // If Date criteria input then add a ' And '
-            if(mySearchDateStart.trim()!='' || mySearchDateEnd.trim()!='')
-                whereStr += ' And ';
-            // Profile Condition
-            whereStr +=  getWhereCondForCorrespondingProfile();
-            // Keyword Condition
-            String keywordsConditionForQuery = getWhereConditionForKeywords(mySearchKeywords);
-            if(keywordsConditionForQuery!=''){
-                whereStr += ' And ' + keywordsConditionForQuery;
-            } 
-            // State Condition
-            if((mySearchState.trim() != '')&&(mySearchState != SA_REPORT_STATE_NONE_VALUE)){
-                whereStr += ' And State__c=\''+mySearchState+'\'';
-            }
-    
-            // Assemble full query
-            queryStr = selectStr + fromStr  + whereStr + orderStr + limitStr;
-            system.debug('検索SOQL'+queryStr);
-            
-            // Execute Query
-            reportList = Database.query(queryStr);
-            
-            searchStateLabel = getStateLabel(mySearchState);
-            searchCountLabel=getCountLabel(mySearchCount);
-            
-        }catch(Exception e){
-            messageError='Error : '+e.getMessage();
+    /**
+    * Re-execute the previous search of the report the user created 
+    * 
+    * @author Thomas REMY
+    * Created on 2018/03/05
+    */
+    public void latestSearchMyReports() {
+        messageError='';
+        system.debug('Run: searchMyReports');
+        List<saReport__c> reportList = new List<saReport__c>();
+        List<String> whereAndOrderStr = buildWhereAndOrder(latestMySearchDateStart, latestMySearchDateEnd, latestMySearchState, null, null, null);
+        
+        if(String.isBlank(latestMySearchKeywords)){
+            reportList = searchReportSOQL(whereAndOrderStr[0], whereAndOrderStr[1]);
+        } else {
+            reportList = searchReportSOSL(latestMySearchKeywords, whereAndOrderStr[0], whereAndOrderStr[1]);
         }
         
         // Affect a valid result to the Main variable
@@ -1712,71 +1854,13 @@ public with sharing class saReportCtrl {
 
         system.debug('Result of the search For reports the concerned user created : ' + listOfSAReports);
     }
-    
-    /**
-    * Re-execute the previous search of the report the user created 
-    * 
-    * @author Thomas REMY
-    * Created on 2018/03/05
-    */
-    public void latestSearchMyReports() {
-        messageError='';
 
-        system.debug('Run: searchMyReports');
-        
-        system.debug('latestMySearchKeywords : '+latestMySearchKeywords);
-        system.debug('latestMySearchDateStart : '+latestMySearchDateStart);
-        system.debug('latestMySearchDateEnd : '+latestMySearchDateEnd);
-        system.debug('latestMySearchState : '+latestMySearchState);
-        system.debug('latestMySearchCount : '+latestMySearchCount);
-            
-        List<saReport__c> reportList = new List<saReport__c>();
-         
-        try{
-            // Init query subpart values
-            String queryStr  = '';
-            String selectStr = getSelectParametersForSAReports();
-            String fromStr   = ' FROM saReport__c ';
-            String whereStr  = '';
-            String orderStr  = '';
-            String limitStr  = ' LIMIT ' + latestMySearchCount;
-    
-            /* Assemble where condition */
-            // Date Condition
-            whereStr += ' WHERE ' + getWhereConditionForDate(latestMySearchDateStart,latestMySearchDateEnd);
-            // If Date criteria input then add a ' And '
-            if(latestMySearchDateStart.trim()!='' || latestMySearchDateEnd.trim()!='')
-                whereStr += ' And ';
-            // Profile Condition
-            whereStr +=  getWhereCondForCorrespondingProfile();
-            // Keyword Condition
-            String keywordsConditionForQuery = getWhereConditionForKeywords(latestMySearchKeywords);
-            if(keywordsConditionForQuery!=''){
-                whereStr += ' And ' + keywordsConditionForQuery;
-            } 
-            // State Condition
-            if((latestMySearchState.trim() != '')&&(latestMySearchState != SA_REPORT_STATE_NONE_VALUE)){
-                whereStr += ' And State__c=\''+latestMySearchState+'\'';
-            }
-    
-            // Assemble full query
-            queryStr = selectStr + fromStr  + whereStr + orderStr + limitStr;
-            system.debug('検索SOQL'+queryStr);
-            
-            // Execute Query
-            reportList = Database.query(queryStr);
-            
-        }catch(Exception e){
-            messageError='Error : '+e.getMessage();
-        }
-        
-        // Affect a valid result to the Main variable
-        if (reportList.isEmpty()) {
-            reportList = new List<saReport__c>();
-        }
-        this.listOfSAReports = reportList;
-
-        system.debug('Result of the search For reports the concerned user created : ' + listOfSAReports);
+    public void setPageThenSearchPendingReports(){
+        searchParttern = 6;
+        pageNum = 1;
+        //scrollTopValue = 0;
+        pageSize = String.isBlank(pendingCount) ? 20 : Integer.valueOf(pendingCount);
+        searchPendingReports();
     }
     
     /**
@@ -1787,7 +1871,7 @@ public with sharing class saReportCtrl {
     */
     public void searchPendingReports() {
 
-        system.debug('Run: searchReport');
+        system.debug('Run: searchPendingReports');
         
         system.debug('filterKeyword : '+pendingKeywords);
         system.debug('filterDateStart : '+pendingDateStart);
@@ -1802,47 +1886,17 @@ public with sharing class saReportCtrl {
         latestPendingCount=pendingCount;
 
         List<saReport__c> reportList = new List<saReport__c>();
-        
-        try{
-            // Init query subpart values
-            String queryStr  = '';
-            String selectStr = getSelectParametersForSAReports();
-            String fromStr   = ' FROM saReport__c ';
-            String whereStr  = '';
-            String orderStr  = '';
-            String limitStr  = ' LIMIT ' + pendingCount;
+        List<String> whereAndOrderStr = buildWhereAndOrder(pendingDateStart, pendingDateEnd, saConstantCmn.SA_REPORT_STATE_WAITING_APPROVAL, null, null, null);
+        String whereStr  = whereAndOrderStr[0];
+        //Aprovers Condition
+        whereStr += ' AND (CreatedBy__r.SAApprover1__c = \'' + currentUser.Id + '\' OR ';
+        whereStr += '      CreatedBy__r.SAApprover2__c = \'' + currentUser.Id + '\' OR ';
+        whereStr += '      CreatedBy__r.SAApprover3__c = \'' + currentUser.Id + '\') ';
 
-            /* Assemble where condition */
-            // Date Condition
-            whereStr += ' WHERE ' + getWhereConditionForDate(pendingDateStart,pendingDateEnd);
-            // If Date criteria input then add a ' And '
-            if(pendingDateStart.trim()!='' || pendingDateEnd.trim()!='')
-                whereStr += ' And ';
-            // Profile Condition
-            whereStr += getWhereCondForCorrespondingProfile();
-            // Keyword Condition
-            String keywordsConditionForQuery = getWhereConditionForKeywords(pendingKeywords);
-            if(keywordsConditionForQuery!=''){
-                whereStr += ' And ' + keywordsConditionForQuery;
-            }
-            // State Condition
-            whereStr += ' And State__c = \'' + saConstantCmn.SA_REPORT_STATE_WAITING_APPROVAL + '\''; 
-            //Aprovers Condition
-            whereStr += ' AND (CreatedBy__r.SAApprover1__c = \'' + currentUser.Id + '\' OR ';
-            whereStr += '      CreatedBy__r.SAApprover2__c = \'' + currentUser.Id + '\' OR ';
-            whereStr += '      CreatedBy__r.SAApprover3__c = \'' + currentUser.Id + '\') ';
-                    
-            // Assemble full Query
-            queryStr = selectStr + fromStr + whereStr + orderStr + limitStr;
-            system.debug('検索SOQL'+queryStr);
-            
-            // Execute Query
-            reportList = Database.query(queryStr);
-            
-            searchCountLabel=getCountLabel(pendingCount);
-
-        }catch(Exception e){
-            messageError='An error Occurred : ' + e;
+        if(String.isBlank(pendingKeywords)){
+            reportList = searchReportSOQL(whereStr, whereAndOrderStr[1]);
+        } else {
+            reportList = searchReportSOSL(pendingKeywords, whereStr, whereAndOrderStr[1]);
         }
         
         // Affect a valid result to the Main variable
@@ -1853,6 +1907,14 @@ public with sharing class saReportCtrl {
         
         system.debug('Result of the search For reports to validate: ' + listOfSAReports);
     }
+
+    public void setPageThenLatestSearchPendingReports(){
+        searchParttern = 7;
+        //pageNum = 1;
+        pageSize = String.isBlank(latestPendingCount) ? 20 : Integer.valueOf(latestPendingCount);
+        latestSearchPendingReports();
+        goToCurrentPage();
+    }
     
     /**
     * Re-execute the previous request for reports that are in a pending state and need Validation
@@ -1861,8 +1923,8 @@ public with sharing class saReportCtrl {
     * Created on 2018/03/14
     */
     public void latestSearchPendingReports() {
-
-        system.debug('Run: searchReport');
+        //DUC: todo add offset
+        system.debug('Run: latestSearchPendingReports');
         
         system.debug('latestPendingKeywords : '+latestPendingKeywords);
         system.debug('latestPendingDateStart : '+latestPendingDateStart);
@@ -1872,45 +1934,17 @@ public with sharing class saReportCtrl {
         messageError='';
     
         List<saReport__c> reportList = new List<saReport__c>();
-        
-        try{
-            // Init query subpart values
-            String queryStr  = '';
-            String selectStr = getSelectParametersForSAReports();
-            String fromStr   = ' FROM saReport__c ';
-            String whereStr  = '';
-            String orderStr  = '';
-            String limitStr  = ' LIMIT ' + latestPendingCount;
+        List<String> whereAndOrderStr = buildWhereAndOrder(latestPendingDateStart, latestPendingDateEnd, saConstantCmn.SA_REPORT_STATE_WAITING_APPROVAL, null, null, null);
+        String whereStr  = whereAndOrderStr[0];
+        //Aprovers Condition
+        whereStr += ' AND (CreatedBy__r.SAApprover1__c = \'' + currentUser.Id + '\' OR ';
+        whereStr += '      CreatedBy__r.SAApprover2__c = \'' + currentUser.Id + '\' OR ';
+        whereStr += '      CreatedBy__r.SAApprover3__c = \'' + currentUser.Id + '\') ';
 
-            /* Assemble where condition */
-            // Date Condition
-            whereStr += ' WHERE ' + getWhereConditionForDate(latestPendingDateStart,latestPendingDateEnd);
-            // If Date criteria input then add a ' And '
-            if(latestPendingDateStart.trim()!='' || latestPendingDateEnd.trim()!='')
-                whereStr += ' And ';
-                // Profile Condition
-            whereStr += getWhereCondForCorrespondingProfile();
-            // Keyword Condition
-            String keywordsConditionForQuery = getWhereConditionForKeywords(latestPendingKeywords);
-            if(keywordsConditionForQuery!=''){
-                whereStr += ' And ' + keywordsConditionForQuery;
-            }
-            // State Condition
-            whereStr += ' And State__c = \'' + saConstantCmn.SA_REPORT_STATE_WAITING_APPROVAL + '\''; 
-            //Aprovers Condition
-            whereStr += ' AND (CreatedBy__r.SAApprover1__c = \'' + currentUser.Id + '\' OR ';
-            whereStr += '      CreatedBy__r.SAApprover2__c = \'' + currentUser.Id + '\' OR ';
-            whereStr += '      CreatedBy__r.SAApprover3__c = \'' + currentUser.Id + '\') ';
-                    
-            // Assemble full Query
-            queryStr = selectStr + fromStr + whereStr + orderStr + limitStr;
-            system.debug('検索SOQL'+queryStr);
-            
-            // Execute Query
-            reportList = Database.query(queryStr);
-
-        }catch(Exception e){
-            messageError='An error Occurred : ' + e;
+        if(String.isBlank(latestPendingKeywords)){
+            reportList = searchReportSOQL(whereStr, whereAndOrderStr[1]);
+        } else {
+            reportList = searchReportSOSL(latestPendingKeywords, whereStr, whereAndOrderStr[1]);
         }
         
         // Affect a valid result to the Main variable
@@ -1991,54 +2025,6 @@ public with sharing class saReportCtrl {
         return dateConditionForQuery;
     }
     
-    /**
-    * Get Keywords Search Condition for a query
-    * 
-    * @author Thomas REMY
-    * Created on 2018/03/05
-    */
-    public String getWhereConditionForKeywords(String filterKeywords){
-    
-        system.debug('Run: getWhereConditionForKeywords');
-        
-        String keywordsConditionForQuery = '';
-        
-        //If keyword criteria input
-        if (filterKeywords.trim() != '') {
-            Integer iCountKeyword = 0;
-            //Get each word
-            List<String> lsKeywords = filterKeywords.split(' ');
-            //For each word
-            for (String kword : lsKeywords) {
-                if (kword.trim().length() > 0 && iCountKeyword < 3) {
-                    iCountKeyword++;
-                    if (iCountKeyword > 1) {
-                        keywordsConditionForQuery += ' AND';
-                    }
-                    //Check if owner looks like keyword
-                    keywordsConditionForQuery += ' (Owner.Name LIKE \'%' + kword + '%\'';
-                    keywordsConditionForQuery += ' OR';
-                    /* not possible to filter on longtext in SOQL
-                    //Check if report content looks like keyword
-                    keywordsConditionForQuery += ' Report_body__c LIKE \'%' + kword + '%\'';
-                    keywordsConditionForQuery += ' OR';
-                    */
-                    //Check if report subject looks like keyword
-                    keywordsConditionForQuery += ' Subject__c LIKE \'%' + kword + '%\')';
-                }
-            }
-        }
-        
-        return keywordsConditionForQuery;
-            
-    }
-    
-    /**
-    * Get User Profile Search Condition for a query
-    * 
-    * @author Thomas REMY
-    * Created on 2018/03/05
-    */
     public String getWhereCondForCorrespondingProfile(){
     
         return ' IsReportEvolva__c = ' + isUserProfileEvolva();
@@ -2056,6 +2042,7 @@ public with sharing class saReportCtrl {
         system.debug('Run: getAllSubRoleIds');
         
         List<Id> currentRoleIds = new List<Id>();
+        if(roleIds == null) return currentRoleIds;
         // get all of the roles underneath the passed roles
         for(UserRole userRole : lsRolesFull) {
             if(userRole.ParentRoleId==roleIds){
@@ -2147,6 +2134,7 @@ public with sharing class saReportCtrl {
     
         system.debug('Run: setSelectedReport');
         
+        //scrollTopValue = currentScrollValue;
         initSelectedReportDetails();
         
         return null;
@@ -2159,8 +2147,10 @@ public with sharing class saReportCtrl {
      * Created on 2018/05/07
      */
     public PageReference setSelectedCategory(){
-    
-        system.debug('Run: setSelectedCategory');
+        searchParttern = 2;
+        pageNum = 1;
+        //scrollTopValue = 0;
+        pageSize = 20;
         
         searchForSelectedCategory();
         
@@ -2177,7 +2167,6 @@ public with sharing class saReportCtrl {
 
         messageError='';
 
-        system.debug('Run: searchForSelectedCategory');
     
         basicSearchCategory=selectedCategoryName;
         basicSearchSort=SORTED_BY_RELEASE_DATES_VALUE;
@@ -2213,13 +2202,32 @@ public with sharing class saReportCtrl {
                 }
             }
 
-            orderStr += ' ORDER BY CreatedDate__c Desc NULLS LAST';
+
+            orderStr += ' ORDER BY AvailabilityDate__c Desc NULLS LAST';
     
             // Assemble full Query
-            queryStr = selectStr + fromStr + whereStr + orderStr  + limitStr;
-            system.debug('Search Report Query : '+queryStr);
+            queryStr = selectStr + fromStr + whereStr + orderStr + limitStr;
+
+            String countQueryStr = 'SELECT COUNT() FROM saReport__c';
+            if (!String.isBlank(whereStr)) {
+                countQueryStr += whereStr;
+            } 
+            recordsCount = database.countQuery(countQueryStr);
+            if(recordsCount > 2000) {
+                recordsCount = 2000;
+            }
+            if(recordsCount > 0){
+                if(math.floor((recordsCount-1) / pageSize) + 1 < pageNum) {
+                    pageNum = (Integer)math.floor((recordsCount-1) / pageSize) + 1;
+                }
+                queryStr += ' OFFSET ' + ((pageNum - 1) * pageSize);
+            } else {
+                pageNum = 1;
+                //scrollTopValue = 0;
+            }
             
             // Execute Query
+            system.debug('SOQL from the Category: ' + queryStr);
             reportList = Database.query(queryStr);
 
             searchCountLabel=getCountLabel(basicSearchCount);
@@ -2234,7 +2242,6 @@ public with sharing class saReportCtrl {
         }
         this.listOfSAReports = reportList;
 
-        system.debug('Result of the search For reports : ' + listOfSAReports);
     }
     
     /**
@@ -2245,39 +2252,33 @@ public with sharing class saReportCtrl {
      */
     public PageReference setSelectedUnpublishedReport(){
     
-        system.debug('Run: setSelectedUnpublishedReport');
-         
+        //scrollTopValue = currentScrollValue;
         this.createdReportId = selectedReportName;
         
         //Get the concerned Report
         String queryStr = ' SELECT Id, Name, Subject__c, toLabel(Category__c), Process__c, Report_body__c, CreatedBy__r.DisplayedUsernameFormula__c, CreatedDate__c, AvailabilityDate__c, ApprovalRequestDatetime__c, State__c, IsNew__c, NbLike__c, NbView__c, NbCopy__c FROM saReport__c WHERE Name = \'' + selectedReportName + '\'';
-        system.debug('Selected report details query : '+queryStr);
         List<saReport__c> selectedReportList = Database.query(queryStr);
         
         saReport__c report = selectedReportList.get(0);
         
         //If report state is Draft, set the Draft values
         if (report.State__c == saConstantCmn.SA_REPORT_STATE_DRAFT) {
-            system.debug('Manage Draft State');
             draftSubject=report.Subject__c;
             draftBody=report.Report_body__c;
             draftCategory = mapOfCategory.get(report.Category__c);
             draftProcess = report.Process__c;
         //Otherwise if report state is remand, set the Remand values
         } else if (report.State__c == saConstantCmn.SA_REPORT_STATE_REJECTED) {
-            system.debug('Manage Remand State');
             remandSubject=report.Subject__c;
             remandBody=report.Report_body__c;
             remandCategory = mapOfCategory.get(report.Category__c);
             remandProcess = report.Process__c;
         //Otherwise if report state is pending, set the Pending values
         } else if (report.State__c == saConstantCmn.SA_REPORT_STATE_WAITING_APPROVAL) {
-            system.debug('Manage Pending State : '+report);
             selectedReport=report;
             approveCommentValue='';
         //Otherwise the state of the report is not understood
         } else {
-            system.debug('Unmanaged Report State');
         }
         
         reportState = report.State__c;
@@ -2297,30 +2298,31 @@ public with sharing class saReportCtrl {
      */
     private void initSelectedReportDetails(){
         
-        system.debug('Run: initSelectedReportDetails');
         
         // Check User and increment View if not already done 
         String hasSeenQuery = 'Select CreatedBy__c, ConcernedReport__r.Name, Type__c FROM saReportDetail__c WHERE CreatedBy__c=\'' + UserInfo.getUserId() + '\' And ConcernedReport__r.Name=\'' + selectedReportName +'\' And Type__c = \'READ\'';
-        system.debug('Has seen query : ' + hasSeenQuery);
         List<saReportDetail__c> currentUserHasSeenReport = Database.query(hasSeenQuery);
-        system.debug('List of Views : ' + currentUserHasSeenReport);
+
         if(currentUserHasSeenReport.size()==0){
-            saReportDetail__c newView=new saReportDetail__c(
-                Type__c='READ', 
-                Comment__c='', 
-                CreatedDate__c=Datetime.now(), 
-                ConcernedReport__c=[Select Id, Name from saReport__c where Name = :selectedReportName limit 1][0].Id,
-                CreatedBy__c=UserInfo.getUserId());
-            insert newView;
+            for(saReport__c r : [Select Id from saReport__c where Name = :selectedReportName limit 1]){
+                saReportDetail__c newView = new saReportDetail__c();
+                newView.Type__c='READ';
+                newView.Comment__c='';
+                newView.CreatedDate__c=Datetime.now();
+                newView.ConcernedReport__c=r.Id;
+                newView.CreatedBy__c=UserInfo.getUserId();
+                insert newView;
+            }
         }
         
-        system.debug('Init Selected Report');
         //selectedReportName = ApexPages.CurrentPage().getParameters().get('clickedReport');  
         
         //Get the concerned Report
         String queryStr = ' SELECT Id, Name, Subject__c, toLabel(Category__c), Process__c, Report_body__c, CreatedBy__r.DisplayedUsernameFormula__c, CreatedDate__c, AvailabilityDate__c, ApprovalRequestDatetime__c, State__C, IsNew__c, NbLike__c, NbView__c, NbCopy__c  FROM saReport__c WHERE Name = \'' + selectedReportName + '\'';
         List<saReport__c> selectedReportList = Database.query(queryStr);
-        
+        if(selectedReportList.size()==0) {
+            return;
+        }
         this.selectedReport = selectedReportList.get(0);
         
         //Get the concerned report views
@@ -2345,16 +2347,13 @@ public with sharing class saReportCtrl {
      */
     public void getReportDetailPageViews(){
         
-        system.debug('Run: getReportDetailPageViews');
         
         //Get the concerned Good Report Details
         String queryStr = ' SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name=\'' + selectedReportName + '\' And (Type__c=\'LIKE\' OR Type__c=\'VERY_LIKE\') ORDER BY CreatedDate__c Desc NULLS LAST ';
-        system.debug('Requete Get Good : '+queryStr);
         this.reportGoodViews = Database.query(queryStr);
         
         //Get the concerned マネした人   Report Details
         queryStr = ' SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name=\'' + selectedReportName + '\' And Type__c=\'COPY\' ORDER BY CreatedDate__c Desc NULLS LAST ';
-        system.debug('Requete Get Bad : '+queryStr);
         this.reportManagedViews = Database.query(queryStr); 
     }
     
@@ -2366,7 +2365,6 @@ public with sharing class saReportCtrl {
      */
     public void getReportDetailPageComment(){
         
-        system.debug('Run: getReportDetailPageComment');
         
         //Get the concerned Report Comments
         String queryStr = ' SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name=\'' + selectedReportName + '\' And Type__c LIKE \'%コメント%\' ORDER BY CreatedDate__c Asc NULLS LAST';
@@ -2393,21 +2391,14 @@ public with sharing class saReportCtrl {
      * Created on 2018/03/05
      */
     public void initSelectedViewButton() {
-        
-        system.debug('Run: initSelectedViewButton');
-        
         isGoodSelected=false;
         isVeryGoodSelected=false;
         isCopySelected=false;
             
         //Get the Report details of the user that are not Comment info or View info
         String queryStr = ' SELECT Name, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Comment__c, CreatedDate__c, ConcernedReport__c FROM saReportDetail__c WHERE ConcernedReport__r.Name=\'' + selectedReportName + '\' And CreatedBy__c=\'' + UserInfo.getUserId() + '\' And Type__c!=\'COMMENT\' And Type__c!=\'READ\'';
-        system.debug('Requete Get Engagement : '+queryStr);
         List<saReportDetail__c> listOfViews = Database.query(queryStr);
                 
-        system.debug('Get View request : ' + queryStr);
-        system.debug('Get View result : ' + listOfViews);
-        
         //Set button value to true for the corresponding detail found
         if(listOfViews.size()>0){
             for(saReportDetail__c view : listOfViews){
@@ -2429,11 +2420,7 @@ public with sharing class saReportCtrl {
      */
     public void addRemoveView(){
         
-        system.debug('Run: addRemoveView');
-        
         String viewType = this.selectedView;
-        system.debug('View Type : '+viewType);
-        
         String queryStr = '';
         
         if(selectedView=='COPY'){
@@ -2503,8 +2490,6 @@ public with sharing class saReportCtrl {
      */
     public void createNewComment1(){
         
-        system.debug('Run: createNewComment1');
-        
         //If the comment Input text is filled
         if(newCommentValue1!=''){
 
@@ -2515,8 +2500,6 @@ public with sharing class saReportCtrl {
                 CreatedDate__c=Datetime.now(), 
                 ConcernedReport__c=[Select Id, Name from saReport__c where Name = :selectedReportName limit 1][0].Id,
                 CreatedBy__c=UserInfo.getUserId());
-            
-            system.debug('Comment Object Value : '+newComment);
             
             //Insert the record in the database
             insert newComment;
@@ -2533,8 +2516,6 @@ public with sharing class saReportCtrl {
     }
     public void createNewComment2(){
         
-        system.debug('Run: createNewComment2');
-        
         //If the comment Input text is filled
         if(newCommentValue2!=''){
 
@@ -2545,8 +2526,6 @@ public with sharing class saReportCtrl {
                 CreatedDate__c=Datetime.now(), 
                 ConcernedReport__c=[Select Id, Name from saReport__c where Name = :selectedReportName limit 1][0].Id,
                 CreatedBy__c=UserInfo.getUserId());
-            
-            system.debug('Comment Object Value : '+newComment);
             
             //Insert the record in the database
             insert newComment;
@@ -2570,8 +2549,6 @@ public with sharing class saReportCtrl {
      */
     public void createApprovalComment(){
         
-        system.debug('Run: createApprovalComment');
-        
         //If the comment Input text is filled
         if(approveCommentValue!=''){
             
@@ -2582,8 +2559,6 @@ public with sharing class saReportCtrl {
                 CreatedDate__c=Datetime.now(), 
                 ConcernedReport__c=[Select Id, Name from saReport__c where Name = :selectedReportName limit 1][0].Id,
                 CreatedBy__c=UserInfo.getUserId());
-            
-            system.debug('Comment Object Value : '+newComment);
             
             //Insert the record in the database
             insert newComment;
@@ -2605,8 +2580,6 @@ public with sharing class saReportCtrl {
      */
     public void rejectReport(){
         
-        system.debug('Run: rejectReport');
-        
         if (selectedReport.Id == NULL) {
             return;
         }
@@ -2624,15 +2597,12 @@ public with sharing class saReportCtrl {
      */
     public void approveReport(){
         
-        system.debug('Run: approveReport');
-        
         if (selectedReport.Id == NULL) {
             return;
         }
             
         if (approveCommentValue.trim() == '') {
             messageError = ERROR_COMMENT_MISSING;
-            system.debug('Category cannot be empty');
             return;
         }
         
@@ -2641,8 +2611,6 @@ public with sharing class saReportCtrl {
         addCountView(selectedReport.Id);
         
         selectedReport = new saReport__c();
-        
-        system.debug('Report Approved');
     }
     
     /**
@@ -2652,9 +2620,6 @@ public with sharing class saReportCtrl {
      * Created on 2018/03/05
      */
     private void refreshReportDetails(){
-        
-        system.debug('Run: refreshReportDetails');
-        
         // Report name selectedReportName
         
         // Gather the updated information the concerned Report
@@ -2681,6 +2646,24 @@ public with sharing class saReportCtrl {
         system.debug('Run: returnToHome');
         
         return Page.saHome;
+    }
+    
+    public PageReference returnToRankingView(){
+        
+        system.debug('Run: returnToRankingView');
+        
+        PageReference pageRef = Page.saRanking;
+        pageRef.getParameters().put('destination',saConstantCmn.SOURCE_RANKING_VIEW);
+        return pageRef;
+    }
+    
+    public PageReference returnToRankingLike(){
+        
+        system.debug('Run: returnToRankingLike');
+        
+        PageReference pageRef = Page.saRanking;
+        pageRef.getParameters().put('destination',saConstantCmn.SOURCE_RANKING_LIKE);
+        return pageRef;
     }
 
     public Pagereference addNewAttachment() {
@@ -2751,5 +2734,542 @@ public with sharing class saReportCtrl {
         }
 
     }
-        
+
+    /**
+     * Go to the 1st page
+     * 
+     * @author Bertrand Polus
+     * Created on 2017/01/16
+     */
+    public void goToPage1() {
+        pageNum = 1;
+        //scrollTopValue = 0;
+        if(searchParttern == 1){
+            searchReport();
+        } else if (searchParttern == 2){
+            searchForSelectedCategory();
+        } else if (searchParttern == 3){
+            latestSearchReport();
+        } else if (searchParttern == 4){
+            searchMyReports();
+        } else if (searchParttern == 5){
+            latestSearchMyReports();
+        } else if (searchParttern == 6){
+            searchPendingReports();
+        } else if (searchParttern == 7){
+            latestSearchPendingReports();
+        } else if (searchParttern == 8){
+            getAllMyReports();
+        } else if (searchParttern == 9){
+            getPendingReports();
+        }
+    }
+
+    /**
+     * Go to the 2nd page
+     * 
+     * @author Bertrand Polus
+     * Created on 2017/01/16
+     */
+    public void goToPage2() {
+        pageNum = 2;
+        //scrollTopValue = 0;
+        if(searchParttern == 1){
+            searchReport();
+        } else if (searchParttern == 2){
+            searchForSelectedCategory();
+        } else if (searchParttern == 3){
+            latestSearchReport();
+        } else if (searchParttern == 4){
+            searchMyReports();
+        } else if (searchParttern == 5){
+            latestSearchMyReports();
+        } else if (searchParttern == 6){
+            searchPendingReports();
+        } else if (searchParttern == 7){
+            latestSearchPendingReports();
+        } else if (searchParttern == 8){
+            getAllMyReports();
+        } else if (searchParttern == 9){
+            getPendingReports();
+        }
+    }
+
+    /**
+     * Go to the 3rd page
+     * 
+     * @author Bertrand Polus
+     * Created on 2017/01/16
+     */
+    public void goToPage3() {
+        pageNum = 3;
+        //scrollTopValue = 0;
+        if(searchParttern == 1){
+            searchReport();
+        } else if (searchParttern == 2){
+            searchForSelectedCategory();
+        } else if (searchParttern == 3){
+            latestSearchReport();
+        } else if (searchParttern == 4){
+            searchMyReports();
+        } else if (searchParttern == 5){
+            latestSearchMyReports();
+        } else if (searchParttern == 6){
+            searchPendingReports();
+        } else if (searchParttern == 7){
+            latestSearchPendingReports();
+        } else if (searchParttern == 8){
+            getAllMyReports();
+        } else if (searchParttern == 9){
+            getPendingReports();
+        }
+    }
+
+    /**
+     * Go to the 4th page
+     * 
+     * @author Bertrand Polus
+     * Created on 2017/01/16
+     */
+    public void goToPage4() {
+        pageNum = 4;
+        //scrollTopValue = 0;
+        if(searchParttern == 1){
+            searchReport();
+        } else if (searchParttern == 2){
+            searchForSelectedCategory();
+        } else if (searchParttern == 3){
+            latestSearchReport();
+        } else if (searchParttern == 4){
+            searchMyReports();
+        } else if (searchParttern == 5){
+            latestSearchMyReports();
+        } else if (searchParttern == 6){
+            searchPendingReports();
+        } else if (searchParttern == 7){
+            latestSearchPendingReports();
+        } else if (searchParttern == 8){
+            getAllMyReports();
+        } else if (searchParttern == 9){
+            getPendingReports();
+        }
+    }
+
+    /**
+     * Go to the 5th page
+     * 
+     * @author Bertrand Polus
+     * Created on 2017/01/16
+     */
+    public void goToPage5() {
+        pageNum = 5;
+        //scrollTopValue = 0;
+        if(searchParttern == 1){
+            searchReport();
+        } else if (searchParttern == 2){
+            searchForSelectedCategory();
+        } else if (searchParttern == 3){
+            latestSearchReport();
+        } else if (searchParttern == 4){
+            searchMyReports();
+        } else if (searchParttern == 5){
+            latestSearchMyReports();
+        } else if (searchParttern == 6){
+            searchPendingReports();
+        } else if (searchParttern == 7){
+            latestSearchPendingReports();
+        } else if (searchParttern == 8){
+            getAllMyReports();
+        } else if (searchParttern == 9){
+            getPendingReports();
+        }
+    }
+
+    /**
+     * Go to the 6thnd page
+     * 
+     * @author Bertrand Polus
+     * Created on 2017/01/16
+     */
+    public void goToPage6() {
+        pageNum = 6;
+        //scrollTopValue = 0;
+        if(searchParttern == 1){
+            searchReport();
+        } else if (searchParttern == 2){
+            searchForSelectedCategory();
+        } else if (searchParttern == 3){
+            latestSearchReport();
+        } else if (searchParttern == 4){
+            searchMyReports();
+        } else if (searchParttern == 5){
+            latestSearchMyReports();
+        } else if (searchParttern == 6){
+            searchPendingReports();
+        } else if (searchParttern == 7){
+            latestSearchPendingReports();
+        } else if (searchParttern == 8){
+            getAllMyReports();
+        } else if (searchParttern == 9){
+            getPendingReports();
+        }
+    }
+
+    /**
+     * Go to the 7th page
+     * 
+     * @author Bertrand Polus
+     * Created on 2017/01/16
+     */
+    public void goToPage7() {
+        pageNum = 7;
+        //scrollTopValue = 0;
+        if(searchParttern == 1){
+            searchReport();
+        } else if (searchParttern == 2){
+            searchForSelectedCategory();
+        } else if (searchParttern == 3){
+            latestSearchReport();
+        } else if (searchParttern == 4){
+            searchMyReports();
+        } else if (searchParttern == 5){
+            latestSearchMyReports();
+        } else if (searchParttern == 6){
+            searchPendingReports();
+        } else if (searchParttern == 7){
+            latestSearchPendingReports();
+        } else if (searchParttern == 8){
+            getAllMyReports();
+        } else if (searchParttern == 9){
+            getPendingReports();
+        }
+    }
+
+    /**
+     * Go to the 8th page
+     * 
+     * @author Bertrand Polus
+     * Created on 2017/01/16
+     */
+    public void goToPage8() {
+        pageNum = 8;
+        //scrollTopValue = 0;
+        if(searchParttern == 1){
+            searchReport();
+        } else if (searchParttern == 2){
+            searchForSelectedCategory();
+        } else if (searchParttern == 3){
+            latestSearchReport();
+        } else if (searchParttern == 4){
+            searchMyReports();
+        } else if (searchParttern == 5){
+            latestSearchMyReports();
+        } else if (searchParttern == 6){
+            searchPendingReports();
+        } else if (searchParttern == 7){
+            latestSearchPendingReports();
+        } else if (searchParttern == 8){
+            getAllMyReports();
+        } else if (searchParttern == 9){
+            getPendingReports();
+        }
+    }
+
+    /**
+     * Go to the previous page
+     * 
+     * @author Bertrand Polus
+     * Created on 2017/01/18
+     */
+    public void goToPagePrev() {
+        pageNum = pageNum - 1;
+        //scrollTopValue = 0;
+        if(searchParttern == 1){
+            searchReport();
+        } else if (searchParttern == 2){
+            searchForSelectedCategory();
+        } else if (searchParttern == 3){
+            latestSearchReport();
+        } else if (searchParttern == 4){
+            searchMyReports();
+        } else if (searchParttern == 5){
+            latestSearchMyReports();
+        } else if (searchParttern == 6){
+            searchPendingReports();
+        } else if (searchParttern == 7){
+            latestSearchPendingReports();
+        } else if (searchParttern == 8){
+            getAllMyReports();
+        } else if (searchParttern == 9){
+            getPendingReports();
+        }
+    }
+
+  /**
+     * Go to the previous page
+     * 
+     * @author Bertrand Polus
+     * Created on 2017/01/18
+     */
+    public void goToCurrentPage() {
+    if(searchParttern == 1){
+            searchReport();
+        } else if (searchParttern == 2){
+            searchForSelectedCategory();
+        } else if (searchParttern == 3){
+            latestSearchReport();
+        } else if (searchParttern == 4){
+            searchMyReports();
+        } else if (searchParttern == 5){
+            latestSearchMyReports();
+        } else if (searchParttern == 6){
+            searchPendingReports();
+        } else if (searchParttern == 7){
+            latestSearchPendingReports();
+        } else if (searchParttern == 8){
+            getAllMyReports();
+        } else if (searchParttern == 9){
+            getPendingReports();
+        }
+    }
+    
+    /**
+     * Go to the next page
+     * 
+     * @author Bertrand Polus
+     * Created on 2017/01/18
+     */
+    public void goToPageNext() {
+        pageNum = pageNum + 1;
+        //scrollTopValue = 0;
+        if(searchParttern == 1){
+            searchReport();
+        } else if (searchParttern == 2){
+            searchForSelectedCategory();
+        } else if (searchParttern == 3){
+            latestSearchReport();
+        } else if (searchParttern == 4){
+            searchMyReports();
+        } else if (searchParttern == 5){
+            latestSearchMyReports();
+        } else if (searchParttern == 6){
+            searchPendingReports();
+        } else if (searchParttern == 7){
+            latestSearchPendingReports();
+        } else if (searchParttern == 8){
+            getAllMyReports();
+        } else if (searchParttern == 9){
+            getPendingReports();
+        }
+    }
+
+    /**
+     * Go to the 2nd next page
+     * 
+     * @author Bertrand Polus
+     * Created on 2017/01/18
+     */
+    public void goToPage2ndNext() {
+        pageNum = pageNum + 2;
+        //scrollTopValue = 0;
+        if(searchParttern == 1){
+            searchReport();
+        } else if (searchParttern == 2){
+            searchForSelectedCategory();
+        } else if (searchParttern == 3){
+            latestSearchReport();
+        } else if (searchParttern == 4){
+            searchMyReports();
+        } else if (searchParttern == 5){
+            latestSearchMyReports();
+        } else if (searchParttern == 6){
+            searchPendingReports();
+        } else if (searchParttern == 7){
+            latestSearchPendingReports();
+        } else if (searchParttern == 8){
+            getAllMyReports();
+        } else if (searchParttern == 9){
+            getPendingReports();
+        }
+    }
+
+    /**
+     * Go to the last page
+     * 
+     * @author Bertrand Polus
+     * Created on 2017/01/18
+     */
+    public void goToPageLast() {
+        pageNum = ((recordsCount - 1) / pageSize) + 1;
+        //scrollTopValue = 0;
+        if(searchParttern == 1){
+            searchReport();
+        } else if (searchParttern == 2){
+            searchForSelectedCategory();
+        } else if (searchParttern == 3){
+            latestSearchReport();
+        } else if (searchParttern == 4){
+            searchMyReports();
+        } else if (searchParttern == 5){
+            latestSearchMyReports();
+        } else if (searchParttern == 6){
+            searchPendingReports();
+        } else if (searchParttern == 7){
+            latestSearchPendingReports();
+        } else if (searchParttern == 8){
+            getAllMyReports();
+        } else if (searchParttern == 9){
+            getPendingReports();
+        }
+    }
+
+    /**
+     * Go to 1 page before the last one
+     * 
+     * @author Bertrand Polus
+     * Created on 2017/01/18
+     */
+    public void goToPageLastBfr1() {
+        pageNum = ((recordsCount - 1) / pageSize) + 1 - 1;
+        //scrollTopValue = 0;
+        if(searchParttern == 1){
+            searchReport();
+        } else if (searchParttern == 2){
+            searchForSelectedCategory();
+        } else if (searchParttern == 3){
+            latestSearchReport();
+        } else if (searchParttern == 4){
+            searchMyReports();
+        } else if (searchParttern == 5){
+            latestSearchMyReports();
+        } else if (searchParttern == 6){
+            searchPendingReports();
+        } else if (searchParttern == 7){
+            latestSearchPendingReports();
+        } else if (searchParttern == 8){
+            getAllMyReports();
+        } else if (searchParttern == 9){
+            getPendingReports();
+        }
+    }
+
+    /**
+     * Go to 2 pages before the last one
+     * 
+     * @author Bertrand Polus
+     * Created on 2017/01/18
+     */
+    public void goToPageLastBfr2() {
+        pageNum = ((recordsCount - 1) / pageSize) + 1 - 2;
+        //scrollTopValue = 0;
+        if(searchParttern == 1){
+            searchReport();
+        } else if (searchParttern == 2){
+            searchForSelectedCategory();
+        } else if (searchParttern == 3){
+            latestSearchReport();
+        } else if (searchParttern == 4){
+            searchMyReports();
+        } else if (searchParttern == 5){
+            latestSearchMyReports();
+        } else if (searchParttern == 6){
+            searchPendingReports();
+        } else if (searchParttern == 7){
+            latestSearchPendingReports();
+        } else if (searchParttern == 8){
+            getAllMyReports();
+        } else if (searchParttern == 9){
+            getPendingReports();
+        }
+    }
+
+    /**
+     * Go to 3 pages before the last one
+     * 
+     * @author Bertrand Polus
+     * Created on 2017/01/18
+     */
+    public void goToPageLastBfr3() {
+        pageNum = ((recordsCount - 1) / pageSize) + 1 - 3;
+        //scrollTopValue = 0;
+        if(searchParttern == 1){
+            searchReport();
+        } else if (searchParttern == 2){
+            searchForSelectedCategory();
+        } else if (searchParttern == 3){
+            latestSearchReport();
+        } else if (searchParttern == 4){
+            searchMyReports();
+        } else if (searchParttern == 5){
+            latestSearchMyReports();
+        } else if (searchParttern == 6){
+            searchPendingReports();
+        } else if (searchParttern == 7){
+            latestSearchPendingReports();
+        } else if (searchParttern == 8){
+            getAllMyReports();
+        } else if (searchParttern == 9){
+            getPendingReports();
+        }
+    }
+
+    /**
+     * Go to 4 pages before the last one
+     * 
+     * @author Bertrand Polus
+     * Created on 2017/01/18
+     */
+    public void goToPageLastBfr4() {
+        pageNum = ((recordsCount - 1) / pageSize) + 1 - 4;
+        //scrollTopValue = 0;
+        if(searchParttern == 1){
+            searchReport();
+        } else if (searchParttern == 2){
+            searchForSelectedCategory();
+        } else if (searchParttern == 3){
+            latestSearchReport();
+        } else if (searchParttern == 4){
+            searchMyReports();
+        } else if (searchParttern == 5){
+            latestSearchMyReports();
+        } else if (searchParttern == 6){
+            searchPendingReports();
+        } else if (searchParttern == 7){
+            latestSearchPendingReports();
+        } else if (searchParttern == 8){
+            getAllMyReports();
+        } else if (searchParttern == 9){
+            getPendingReports();
+        }
+    }
+
+    /**
+     * Go to 5 pages before the last one
+     * 
+     * @author Bertrand Polus
+     * Created on 2017/01/18
+     */
+    public void goToPageLastBfr5() {
+        pageNum = ((recordsCount - 1) / pageSize) + 1 - 5;
+        //scrollTopValue = 0;
+        if(searchParttern == 1){
+            searchReport();
+        } else if (searchParttern == 2){
+            searchForSelectedCategory();
+        } else if (searchParttern == 3){
+            latestSearchReport();
+        } else if (searchParttern == 4){
+            searchMyReports();
+        } else if (searchParttern == 5){
+            latestSearchMyReports();
+        } else if (searchParttern == 6){
+            searchPendingReports();
+        } else if (searchParttern == 7){
+            latestSearchPendingReports();
+        } else if (searchParttern == 8){
+            getAllMyReports();
+        } else if (searchParttern == 9){
+            getPendingReports();
+        }
+    }
 }

@@ -1,6 +1,6 @@
 public with sharing class auSTPDTimelineCtrl {
 
-    public List<auHeadquarterInfos__c> hqInfos {get; set;}
+    // public List<auHeadquarterInfos__c> hqInfos {get; set;}
     public List<auEvent__c> lsEvents {get; set;}
     public List<auSTPD__Feed> lsFeeds {get; set;}
     public Map<ID, auSTPD__c> mpFeedData {get; set;}
@@ -9,6 +9,7 @@ public with sharing class auSTPDTimelineCtrl {
     public Integer getTypeOfScreen(){return auMainTopCompCtrl.TYPE_SCREEN_STPD_TIMELINE;}
 
     public Id idCurrentFeedElement {get; set;}
+    public Id removingLikeId {get; set;}
     public Id idCurrentSTPD {get; set;}
     public Boolean isHonbuOrShisha {get; set;}
     public Boolean isCommunityUser {get; set;}
@@ -77,7 +78,7 @@ public with sharing class auSTPDTimelineCtrl {
         if (currentUser.AccountId != NULL) {
           currentAccount = [SELECT Id, Slogan__c FROM Account WHERE Id = :currentUser.AccountId];
         }
-        isHonbuOrShisha = (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS_V2 || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2);
+        isHonbuOrShisha = (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA);
         isShopUser = (currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_SHOP);
         isCommunityUser = (currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_SHOP || currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_MANAGEMENT || currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT);
 
@@ -99,15 +100,19 @@ public with sharing class auSTPDTimelineCtrl {
      * Created on 2017/01/15
      */
     public void recordSearch() {
+
         if(pageNum <= 0) {
             pageNum = 1;
         }
+
+        /*
         hqInfos = [SELECT id, Information__c, InformationDate__c, Priority__c
                    FROM auHeadquarterInfos__c
                    WHERE DisplayStartDate__c <= :system.today()
                    AND DisplayEndDate__c >= :system.today()
                    ORDER BY Priority__c ASC, InformationDate__c DESC, CreatedDate ASC
                   ];
+        */
 
         lsEvents = [SELECT id, EventName__c, EventDate__c, CreatedBy__r.Account.Name
                     FROM auEvent__c
@@ -126,7 +131,7 @@ public with sharing class auSTPDTimelineCtrl {
             String queryStr = 'SELECT Id, ParentId, Body, Title, CommentCount, LikeCount, ' +
                                 '(SELECT Id, CommentBody, InsertedById, InsertedBy.DisplayedUsernameFormula__c, InsertedBy.SmallPhotoUrl, CreatedDate ' +
                                 'FROM FeedComments ' + 
-                                'ORDER BY CreatedDate DESC) ' +
+                                'ORDER BY CreatedDate DESC), (SELECT Id FROM FeedLikes WHERE InsertedById = \'' + currentUser.Id + '\') ' +
                               'FROM auSTPD__Feed ' +
                               'ORDER BY ' + (currentOrder == '1' ? 'LastModifiedDate' : 'LikeCount DESC, LastModifiedDate') + ' DESC';
             if(math.floor((recordsCount-1) / pageSize) + 1 < pageNum) {
@@ -188,6 +193,12 @@ public with sharing class auSTPDTimelineCtrl {
 
     public void likeSTPDFeedElement() {
         auUtilChatter.likeFeedElement(idCurrentFeedElement);
+        recordSearch();
+    }
+
+    public void removeLikeSTPDFeedElement(){
+        ConnectApi.ChatterFeeds.deleteLike(null, removingLikeId);
+        removingLikeId = null;
         recordSearch();
     }
 

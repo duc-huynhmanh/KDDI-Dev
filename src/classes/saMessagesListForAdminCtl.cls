@@ -1,5 +1,13 @@
 public with sharing class saMessagesListForAdminCtl {
 
+	private static final String COOKIE_LABEL_PREFIX = 'saMessageList_';
+    private static final String COOKIE_LABEL_TITLE = COOKIE_LABEL_PREFIX + 'Title';
+    private static final String COOKIE_LABEL_CREATOR_NAME = COOKIE_LABEL_PREFIX + 'CreatorName';
+
+    private static final String COOKIE_LABEL_PAGE_NUMBER = COOKIE_LABEL_PREFIX + 'PageNumber';
+    private static final String COOKIE_PATH = '';
+    private static final String COOKIE_LABEL_INIT_SEARCH_FLG = COOKIE_LABEL_PREFIX + 'initSearchFlg';  // 画面起動時検索フラグ
+
     // This variable determines whether we are working on Daily Report or Hearing
     public Boolean getIsDailyReport() {return true;}
 
@@ -81,6 +89,13 @@ public with sharing class saMessagesListForAdminCtl {
         mpShishaOptions.put('', '');
         for (SelectOption so : getShishaOptions()) {
             mpShishaOptions.put(so.getValue(), so.getLabel());
+        }
+
+		Boolean hasSearchValue = initFieldFromCookie();
+
+    	if (hasSearchValue) {
+        	setStandardSetController();
+            //recordSearch();
         }
 
     }
@@ -171,6 +186,21 @@ public with sharing class saMessagesListForAdminCtl {
     
     //検索条件(ラジオボタン)でのレコード取得メソッド WHERE句、LIMIT句設定&検索時のSOQL発行
     public void recordSearch() {
+    	this.initSearchFlg = 'true';  // 画面起動時検索フラグON
+
+        //ページ初期化
+        pageNum = 1;
+        //pageSize = 2;
+
+        setStandardSetController();
+        if(ssc != null) {
+            ssc.setPageNumber(1);
+        }
+
+        saveInputValues(); //cookie保存
+    }
+
+    private void setStandardSetController() {
         String queryStr = BASE_QUERY_STRING;//SELECT、FROM設定
         this.initSearchFlg = 'true';  // 画面起動時検索フラグON
 
@@ -199,7 +229,7 @@ public with sharing class saMessagesListForAdminCtl {
             this.conditionStr = conditionStr;
             this.limitStr = limitStr;
         }
-        //saveInputValues();//cookie保存
+        saveInputValues();//cookie保存
     }
     
     //ソートSOQL発行  WHERE句、LIMITを使って、SOQL発行
@@ -262,4 +292,60 @@ public with sharing class saMessagesListForAdminCtl {
         //Milliseconds to Day
         return tz.getOffset(DateTime.now()) / (1000 * 3600 * 24.0);
     }}
+    
+    private Boolean initFieldFromCookie() {
+
+        Map<String, Cookie> cookies = Apexpages.currentPage().getCookies();
+        Boolean hasSearchValues = false;
+
+        if (cookies.containsKey(COOKIE_LABEL_TITLE)) {
+            this.filterTitle = cookies.get(COOKIE_LABEL_TITLE).getValue();
+        }
+        if (cookies.containsKey(COOKIE_LABEL_CREATOR_NAME)) {
+            this.filterCreatorName = cookies.get(COOKIE_LABEL_CREATOR_NAME).getValue();
+        }
+
+        if(cookies.containsKey(COOKIE_LABEL_PAGE_NUMBER) && cookies.get(COOKIE_LABEL_PAGE_NUMBER).getValue().length() != 0){
+            PageNum = Integer.valueOf(cookies.get(COOKIE_LABEL_PAGE_NUMBER).getValue());
+        }
+        /*if(cookies.containsKey(COOKIE_LABEL_PAGE_SIZE) && cookies.get(COOKIE_LABEL_PAGE_SIZE).getValue().length() != 0){
+            PageSize = Integer.valueOf(cookies.get(COOKIE_LABEL_PAGE_SIZE).getValue());
+        }*/
+        if(cookies.containsKey(COOKIE_LABEL_INIT_SEARCH_FLG) && cookies.get(COOKIE_LABEL_INIT_SEARCH_FLG).getValue().length() != 0){
+            this.initSearchFlg = cookies.get(COOKIE_LABEL_INIT_SEARCH_FLG).getValue();
+            hasSearchValues = (this.initSearchFlg == 'true') ||  hasSearchValues ? true : false;
+        }
+
+        return hasSearchValues;
+    }
+
+    private void saveInputValues() {
+        List<Cookie> cookies = new List<Cookie>();
+
+        cookies.add(new Cookie(COOKIE_LABEL_TITLE, this.filterTitle, COOKIE_PATH, -1, true));
+        cookies.add(new Cookie(COOKIE_LABEL_CREATOR_NAME, this.filterCreatorName, COOKIE_PATH, -1, true));
+
+        cookies.add(new Cookie(COOKIE_LABEL_PAGE_NUMBER, String.valueOf(pageNum), COOKIE_PATH, -1, true));  // ページ番号
+        //cookies.add(new Cookie(COOKIE_LABEL_PAGE_SIZE, String.valueOf(pageSize), COOKIE_PATH, -1, true));  // ページサイズ
+        cookies.add(new Cookie(COOKIE_LABEL_INIT_SEARCH_FLG, this.initSearchFlg, COOKIE_PATH, -1, true));  // 画面起動時検索フラグ
+        
+        Apexpages.currentPage().setCookies(cookies);
+    }
+    
+    public void nextAndSaveCurrentPageNumber() {
+        ssc.next();
+        pageNum++;
+        setCookieCurrentPageNumber();
+    }
+    public void previousAndSaveCurrentPageNumber() {
+        ssc.previous();
+        pageNum--;
+        setCookieCurrentPageNumber();
+    }
+
+    private void setCookieCurrentPageNumber() {
+        if (ssc != null) {
+            Apexpages.currentPage().setCookies(new List<Cookie>{new Cookie(COOKIE_LABEL_PAGE_NUMBER, String.valueOf(ssc.getPageNumber()), COOKIE_PATH, -1, true)});
+        }
+    }
 }

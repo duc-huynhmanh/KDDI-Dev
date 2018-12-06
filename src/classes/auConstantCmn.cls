@@ -18,6 +18,7 @@ public with sharing  class auConstantCmn
 
     //パスワードの再発行画面のエラーメッセージ
     public static final String FORGOT_PASSWORD_ERR_MESSAGE001='IDを入力してください。';
+    public static final String FORGOT_PASSWORD_ERR_MESSAGE002='入力されたIDは正しくありません。半角英数字で正しく入力してください。';
 
     // パスワードの設定画面のエラーメッセージ
     public static final string PASSWORD_SIGNUP_ERR_MESSAGE001='パスワードを入力してください。';
@@ -35,13 +36,16 @@ public with sharing  class auConstantCmn
     public static final String PROFILE_COMMUNITY_MANAGEMENT      = 'au ショップ - 運営法人';
     public static final String PROFILE_COMMUNITY_PRIMARY_AGENT   = 'au ショップ - 一次代理店';
     public static final String PROFILE_KDDI_BRANCH               = 'KDDI - 支店';
-    public static final String PROFILE_KDDI_BRANCH_V2            = 'KDDI - 支店 v2';
     public static final String PROFILE_KDDI_REGIONAL_OFFICE      = 'KDDI - 支社';
-    public static final String PROFILE_KDDI_REGIONAL_OFFICE_V2   = 'KDDI - 支社 v2';
     public static final String PROFILE_KDDI_HEADQUARTERS         = 'KDDI - 本部';
-    public static final String PROFILE_KDDI_HEADQUARTERS_V2      = 'KDDI - 本部 v2';
+    public static final String PROFILE_KDDI_HEADQUARTERS_V2      = 'KDDI - 本部 v2'; // TO DELETE AFTER RELEASE OF kdKnowledgeListCtrl
     public static final String PROFILE_KDDI_KNOWLEDGE_ONLY       = 'KDDI - Knowledge only';
     public static final String PROFILE_KDDI_KNOWLEDGE_ACTIVITIES = 'KDDI - Knowledge & Activities';
+    public static final String PROFILE_KDDI_OKINAWA_SHISHA       = 'KDDI - 支社（沖縄）';
+    public static final String PROFILE_KDDI_OKINAWA_SHITEN_1     = 'KDDI - 支店（沖縄1）';
+    public static final String PROFILE_KDDI_OKINAWA_SHITEN_2     = 'KDDI - 支店（沖縄2）';
+    public static final String PROFILE_KDDI_OKINAWA_SHITEN_UQ    = 'KDDI - 支店（UQ沖縄）';
+    
     public static final String PROFILE_SA_USER_SA                = 'SA User - SA';
     public static final String PROFILE_SA_USER_CSA               = 'SA User - CSA';
     public static final String PROFILE_EVOLVA_USER               = 'Evolva User';
@@ -127,6 +131,7 @@ public with sharing  class auConstantCmn
     public static final String USER_CLASSIFICATION_CONTRACTOR = 'CONTRACTOR';
 
     // Picklist values for auHonbuDirectDetail__c.Type__c
+    public static final String HONBU_DIRECT_DETAIL_TYPE_VIEW     = 'VIEW';
     public static final String HONBU_DIRECT_DETAIL_TYPE_READ     = 'READ';
     public static final String HONBU_DIRECT_DETAIL_TYPE_FAVORITE = 'FAVORITE';
 

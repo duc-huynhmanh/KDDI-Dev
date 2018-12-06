@@ -25,6 +25,8 @@ public class auMainTopCompCtrl {
     public static final Integer TYPE_SCREEN_ACCOUNT_LIST = 81;
     public static final Integer TYPE_SCREEN_ACTIVITY_LIST = 82;
     public static final Integer TYPE_SCREEN_FILE_LIST = 83;
+    public static final Integer TYPE_SCREEN_TELEMA_LIST = 91;
+    public static final Integer TYPE_SCREEN_TELEMA_RESULTS = 92;
 
     public transient Blob newPictureBody{get;set;}
     public String newPictureName{get;set;}
@@ -115,6 +117,11 @@ public class auMainTopCompCtrl {
         return iTypeOfScreen == TYPE_SCREEN_SA_ENQUETE && !isSAUser;
     }
 
+    public Boolean getIsShowAsideTelema() {
+        return iTypeOfScreen == TYPE_SCREEN_TELEMA_LIST || 
+               iTypeOfScreen == TYPE_SCREEN_TELEMA_RESULTS;
+    }
+
     public Boolean getIsSTPDScreen() {
         return iTypeOfScreen == TYPE_SCREEN_STPD_SCREEN;
     }
@@ -199,6 +206,16 @@ public class auMainTopCompCtrl {
     public Boolean getIsSaRanking() {
         return iTypeOfScreen == TYPE_SCREEN_SA_RANKING;
     }
+
+    public Boolean getIsTelemaList() {
+        return iTypeOfScreen == TYPE_SCREEN_TELEMA_LIST;
+    }
+
+    public Boolean getIsTelemaResults() {
+        return iTypeOfScreen == TYPE_SCREEN_TELEMA_RESULTS;
+    }
+
+
 
 
     public Integer getCountLikes() {

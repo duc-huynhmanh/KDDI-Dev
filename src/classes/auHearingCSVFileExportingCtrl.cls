@@ -109,9 +109,9 @@ public with sharing class auHearingCSVFileExportingCtrl {
         }
         orderby = Apexpages.currentPage().getParameters().get('orderby');
         if(String.isBlank(orderby)){
-            orderby =  'LastModifiedDate desc';
+            orderby =  ' ORDER BY LastModifiedDate desc';
         } 
-        queryStr += ' ORDER BY ' + orderby + (orderby.trim().endsWithIgnoreCase('desc') ? ' NULLS LAST' : '');
+        queryStr += orderby + (orderby.trim().endsWithIgnoreCase('desc') ? ' NULLS LAST' : '');
 
         return queryStr;
     }

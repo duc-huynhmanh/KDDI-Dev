@@ -1,0 +1,1560 @@
+<apex:page cache="false"
+           showHeader="false"
+           standardStylesheets="true"
+           applyHtmlTag="false"
+           applyBodyTag="false"
+           doctype="html-5.0"
+           controller="kdTelemarketingListCtrl">
+
+<html class="no-js" lang="en-GB">
+
+<c:auMainHeaderComp />
+
+<head>
+
+  <apex:stylesheet value="{!URLFOR($Resource.jQueryUIFull, 'jquery-ui-1.12.1/jquery-ui.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.jQueryUIFull, 'jquery-ui-1.12.1/jquery-ui.min.css')}"/>
+
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/external/jquery/jquery.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.datepicker-ja.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryMin)}"/>
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.min.js')}"/> 
+
+  <style>
+
+    .detailCell {
+      vertical-align: top;
+    }
+
+    .detailLabel {
+      margin: 0.5rem;
+      padding: 0.5rem;
+      margin-right: 0;
+      width: 8rem;
+      background-color: #E0EFF6;
+      display: inline-block;
+      text-align: right;
+      vertical-align: top;
+    }
+
+    .detailValue {
+      margin: 0.5rem;
+      padding: 0.5rem;
+      margin-left: 0;
+      width: calc(100% - 9rem);
+      width: -webkit-calc(100% - 9rem);
+      width: -moz-calc(100% - 9rem);
+      background-color: white;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+
+
+    .col1{
+      width: 155px;
+      overflow-x: hidden;
+    }
+    .col2{
+      min-width: 80px;
+    }
+    .col3{
+      min-width: 90px;
+      max-width: 300px;
+    }
+    .col4{
+      min-width: 70px;
+      max-width: 80px;
+      overflow-x: hidden;
+    }
+    .col5{
+      min-width: 50px;
+      max-width: 60px;
+      overflow-x: hidden;
+    }
+    .col6{
+      min-width: 55px;
+      max-width: 65px;
+      overflow-x: hidden;
+    }
+    .col7{
+      min-width: 85px;
+      max-width: 95px;
+      overflow-x: hidden;
+    }
+    .col8{
+      min-width: 80px;
+      max-width: 90px;
+    }
+
+    .col2 p,  .col3 p, .col8 p {
+      word-break: break-all;
+      word-wrap: break-word;
+      white-space: normal;
+    }
+
+    .content {
+      padding: 1em;
+    }
+
+    .selectDate {
+      width: 7.5rem;
+      margin-left: 1em;
+      height: 2.1rem;
+    }
+
+    .dataTables_scrollBody {
+/*      max-height: 50rem !IMPORTANT;*/
+    }
+    .theme {
+/*      height: 100vh !IMPORTANT;
+*/    }
+    .content.content--theme {
+/*      style="overflow-x: hidden;"
+*/    }
+
+    .button.button--update{
+      margin-right: 0.5rem;
+    }
+
+    .button.button--update.button--update--space{
+      margin-right: 5rem;
+    }
+
+    .no-arrow::before {
+      display: none;
+    }
+    .theme-desc-list-fullsize {
+      width: 100%;
+    }
+
+    .button--cancel {
+      cursor: pointer;
+      cursor: hand;
+    }
+
+    .popup-inner {
+      top: 45%;
+      max-height: 78%;
+    }
+
+    .icon--knowledge-letter {
+      height: 2rem;
+      width: 2rem;
+    }
+
+    .js-slide-width {
+/*      height: 495px !important;
+  */
+    }
+
+    .theme-desc__head_side {
+      height: 4.5rem;
+      max-height: 4.5rem;
+    }
+
+    .theme-desc__upload {
+      width: 100%;
+    }
+
+    .isLink {
+      cursor: pointer;
+      cursor: hand;      
+    }
+
+    .linkPutInTop {
+      float: right;
+      margin-right: 1rem
+    }
+
+    .theme-infoxxx {
+      overflow-y: scroll !important;
+    }
+
+    .theme-desc {
+      width: 100%;
+    }
+
+    .theme-info{
+      height: 100% !important;
+      z-index: 4;
+    }
+
+
+/* NEW CODE FOR CX */
+
+    .theme-list tbody {
+      height: auto !important;
+    }
+
+    .theme-list tbody td {
+      vertical-align: inherit;
+    }
+
+    .input-title {
+      height: 2.3rem !important;
+    }
+
+    .table--theme-info .is-middle {
+      width: 15rem;
+      margin-right: 1rem;
+    }
+
+    .theme-info__head.is-cx span{
+      color: #fff;
+    }
+
+    .popup{
+      z-index: 5 !important;
+    }
+
+    .popup--like textarea,
+    .popup--copy textarea {
+      width: 100%;
+      height: 20rem;
+    }
+
+    .popup--like .popup-inner,
+    .popup--copy .popup-inner {
+        width: 50%;
+        background-color: transparent;
+    }
+
+    .close-label {
+      font-size: 1.6rem;
+      line-height: 1.8 !important;
+    }
+
+    .popup__button-container {
+      bottom: 13rem;
+    }
+
+    .ui-datepicker {
+      z-index: 5 !important;
+    }
+
+    .thspanwithoutarrow {
+      top: auto !important;
+    }
+
+
+    .shopsItem, .categoryItem {
+        display: inline-block;
+        width: 240px;
+        float: left;
+        text-align: left;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin: 4px;
+        height: 1.8em;
+    }
+
+
+
+    .search-status__select {
+      width: auto;
+      height: 2.1rem;
+    }
+
+    .filter-category, .filter-daterange {
+      padding-left: 0 !important;
+      height: 44px;
+    }
+
+    .linkstyle {
+      text-decoration: underline;
+    }
+    .linkstyle:hover {
+      color: blue;
+    }
+    .linkstyle a:hover {
+      color: blue;
+    }
+
+    .highlightRow {
+      background-color: Cornsilk;
+    }
+    .dataTables_empty{
+      display: none;
+    }
+
+    ul li, ol li {
+      margin-left: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      display: inherit;
+    }
+
+    body a:hover {
+      text-decoration: none;
+    }
+
+.btn, .button, .formulaButton, .btnWhatsNew {
+    font-family: HelveticaNeueRoman,HelveticaNeue-Roman,Meiryo,Hiragino Kaku Gothic ProN,Kozuka Gothic Pr6N,Arial,Helvetica Neue Roman,HelveticaNeue,Helvetica Neue,TeXGyreHerosRegular,Helvetica,Tahoma,Geneva,sans-serif;
+    background-image: none;
+    background-repeat: no-repeat;
+    background-position: initial;
+    border-right: none;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    font-size: inherit;
+    color: #000;
+/*
+    padding: inherit;
+    cursor: inherit;
+    font-weight: inherit;
+    display: inherit;
+
+    padding: 2px 3px;
+    border: 1px solid #b5b5b5;
+    border-bottom-color: #7f7f7f;
+    background: #e8e8e9 url(/img/alohaSkin/btn_sprite.png) repeat-x right top;
+    font-weight: bold;
+    font-size: .9em;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+*/
+
+}
+
+body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .menuButton .menuButtonButton {
+    color: #333;
+    margin: auto;
+
+    padding: 0;
+    border: none;
+    background: unset;
+    font-weight: normal;
+    font-size: inherit;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+  .button--remove {
+    background-color: #999;
+  }
+
+  a{
+    font-weight: 500 !important;
+  }
+  .table--theme-info input, .table--theme-info select, .table--theme-info textarea {
+    padding: 0 0 0 0.5rem !important;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  #btn-dropdown{
+    width: 196px;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    width: 196px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .dropdown-content a:hover {background-color: #f1f1f1}
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .dropdown:hover .dropbtn {
+    background-color: #3F51B5;
+  }
+
+  .padding-top-50{
+    padding-top: 50px;
+  }
+  .background-transparent {
+    background-color: transparent;
+  }
+  .background-white{
+    background-color: #fff;
+  }
+  .max-height-100{
+    max-height: 100% !important;
+  }
+    .margin-right10{
+    margin-right: 10px;
+    }
+
+  .mdl-data-table th a {
+    font-weight: 700 !important;
+    color: rgba(0,0,0,.54);
+  }
+
+  .mdl-data-table th a .thspanwithoutarrow:hover {
+    text-decoration: underline;
+  }
+
+  </style>
+
+  <script>
+
+    var $j = jQuery.noConflict();
+
+    $( function() {
+      $.datepicker.setDefaults($.datepicker.regional['ja']);
+      $( ".datepicker" ).datepicker({ dateFormat: 'yy/mm/dd' });
+    } );
+
+    function callChangeOrder(key) {
+        var obj = $j('.orderInput');
+        obj.val(key);
+        changeOrder();
+    }
+
+    function initDatePickers() {
+      $.datepicker.setDefaults($.datepicker.regional['ja']);
+      $( ".datepicker" ).datepicker({ dateFormat: 'yy/mm/dd' });
+    }
+
+    function callTelemaUpdateId(key) {
+        var obj = $j('.telemaUpdateIdInput');
+        obj.val(key);
+        refreshTelemaEdit();
+    }
+
+    function updateCategory(cateId){
+      console.log('cateId: ' + cateId);
+      var cateObject = document.getElementById(cateId);
+      var cateOption = cateObject.getElementsByTagName('option')[1];
+      cateOption.selected = 'selected';
+    }
+
+
+    function callAddLike() {
+
+        var obj = $j('.LikeCommentInput');
+
+        /*if (obj.val().trim().length == 0) {
+          alert('コメントを入力してください。');
+        } else {*/
+          jsAddLike();
+        //}
+
+    }
+
+    function callRemoveLike() {
+        jsRemoveLike();
+    }
+
+    function callAddCopy() {
+
+        /*var obj = $j('.CopyCommentInput');
+
+        if (obj.val().trim().length == 0) {
+          alert('コメントを入力してください。');
+        } else {*/
+          jsAddCopy();
+        //}
+
+    }
+
+    function callRemoveCopy() {
+        jsRemoveCopy();
+    }
+
+    window.onload = function onLoadJS() {
+      if({!!hasData}){
+        console.log("no data");
+        $row = $('<td valign="top" colspan="8">マッチングデータ無し</td>');
+        $j('.dataTables_scrollBody > table > tbody > tr').append($row);
+      }
+      
+      var x = document.getElementsByClassName("dataTables_scrollBody");
+      x[0].style.maxHeight="CALC(" + x[0].style.maxHeight + " + 4rem)";      
+
+      // Send an alert if there is an error message (Attachment failed?)
+      var obj = $j('.errorMessageInput');
+      if (obj.val().length > 0) {
+        alert(obj.val());
+        obj.val('');        
+      }
+    }
+
+  </script>
+
+</head>
+
+<body class="theme" >
+  <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+<apex:form id="thisForm">
+
+  <c:auMainTopComp typeOfScreen="{!typeOfScreen}" />
+
+  <apex:outputPanel >
+    <apex:inputText id="orderBy" styleClass="orderInput" value="{!orderBy}" style="display: none;" />
+    <apex:inputText styleClass="errorMessageInput" value="{!errorMessage}" style="display: none;" />
+    <apex:actionFunction name="changeOrder" action="{!changeOrder}" />
+  </apex:outputPanel>
+
+  <div class="container js-get-height" id="container">
+    <main class="main main--theme clear" id="main" role="main">
+      <div class="theme-info js-slide-width is-cx">
+        <div class="theme-info-inner">
+          <div class="theme-info__top is-cx">
+            <button class="button button--dropdown js-slide-info-close"></button>
+            <div class="theme-info__head clearfix is-cx">
+              <span class="close-label">閉じる</span>
+
+              <apex:outputPanel id="editKnowledge2" styleclass="theme-info__edit is-cx">
+
+                <a class="button button--update"
+                   href="/kdTelemarketingListCSV?where={!whereStrDetailParam}&orderby=Id"
+                   target="_blank">CSV出力</a>
+
+              </apex:outputPanel>
+
+            </div>
+
+          </div>
+          <div class="theme-detail clearfix">
+            <div class="theme-desc is-cx is-top" style="height: 100%">
+              <div class="theme-desc__inner" style="height: 100%">
+                <!--Edit Area-->
+                <apex:outputPanel id="editKnowledge1">
+
+                  <div style="background-color: #ccc; width: calc(100% - 1rem); margin: 0.5rem;">
+
+                    <table style="width: 100%">
+                      <tr>
+                        <td style="width: 21%" class="detailCell">
+                          <apex:outputLabel value="拠点CD" styleClass="detailLabel" />
+                          <apex:outputText value="{!saTelemarketingUpdate.BusinessLocationCode__c}" styleClass="detailValue" />
+                        </td>
+
+                        <td style="width: 21%" class="detailCell">
+                          <apex:outputLabel value="拠点名" styleClass="detailLabel" />
+                          <apex:outputText value="{!saTelemarketingUpdate.BusinessLocationName__c}" styleClass="detailValue" />
+                        </td>
+
+                        <td style="width: 21%" class="detailCell">
+                          <apex:outputLabel value="スタッフ氏名" styleClass="detailLabel" />
+                          <apex:outputText value="{!saTelemarketingUpdate.StaffName__c}" styleClass="detailValue" />
+                        </td>
+
+                        <td colspan="2" rowspan="2" style="width: 37%; vertical-align: top;text-align: right; padding-right: 1.5rem; padding-top: 0.5rem; ">
+                          <span style="color: #275193;">
+                            <apex:outputText value="{0,date,初回架電対応期日　M月 d日}" style="font-size: 1.5rem; font-weight: bold; border-bottom: 3px double;" >
+                              <apex:param value="{!saTelemarketingUpdate.CorrespondenceDate__c}" />
+                            </apex:outputText>
+                            <br/>
+                            <apex:outputText value="{0,date,架電対応完了期日　M月 d日}" style="font-size: 1.5rem; font-weight: bold; border-bottom: 3px double;" >
+                              <apex:param value="{!saTelemarketingUpdate.CorrespondenceCompletionDate__c}" />
+                            </apex:outputText>
+                          </span>
+                        </td>
+
+                      </tr>
+
+                      <tr>
+                        <td style="width: 21%" class="detailCell">
+                          <apex:outputLabel value="回答日" styleClass="detailLabel" />
+                          <apex:outputText value="{0,date,yyyy/MM/dd}" styleClass="detailValue" >
+                            <apex:param value="{!saTelemarketingUpdate.ReplyDate__c}" />
+                          </apex:outputText>
+                        </td>
+
+                        <td style="width: 21%" class="detailCell">
+                          <apex:outputLabel value="オーダー完了日" styleClass="detailLabel" />
+                          <apex:outputText value="{0,date,yyyy/MM/dd}" styleClass="detailValue" >
+                            <apex:param value="{!saTelemarketingUpdate.OrderDate__c}" />
+                          </apex:outputText>
+                        </td>
+
+                        <td style="width: 21%" class="detailCell">
+                          <apex:outputLabel value="リスト展開日" styleClass="detailLabel" />
+                          <apex:outputText value="{0,date,yyyy/MM/dd}" styleClass="detailValue" >
+                            <apex:param value="{!saTelemarketingUpdate.EvolutionDate__c}" />
+                          </apex:outputText>
+                        </td>
+
+                      </tr>
+
+                      <tr>
+                        <td style="width: 21%" class="detailCell">
+                          <apex:outputLabel value="オーダー種別" styleClass="detailLabel" />
+                          <apex:outputText value="{!saTelemarketingUpdate.OrderType__c}" styleClass="detailValue" />
+                        </td>
+
+                        <td style="width: 21%" class="detailCell">
+                          <apex:outputLabel value="申込番号" styleClass="detailLabel" />
+                          <apex:outputText value="{!saTelemarketingUpdate.ApplicationNumber__c}" styleClass="detailValue" />
+                        </td>
+
+                        <td style="width: 21%" class="detailCell">
+                          <apex:outputLabel value="加入者CD" styleClass="detailLabel" />
+                          <apex:outputText value="{!saTelemarketingUpdate.AffiliationCode__c}" styleClass="detailValue" />
+                        </td>
+
+                        <td style="width: 21%" class="detailCell">
+                          <apex:outputLabel value="加入者生年月日" styleClass="detailLabel" />
+                          <apex:outputText value="{0,date,yyyy/MM/dd}" styleClass="detailValue" >
+                            <apex:param value="{!saTelemarketingUpdate.AffiliationDate__c}" />
+                          </apex:outputText>
+                        </td>
+
+                        <td style="width: 16%; vertical-align: bottom;text-align: right; padding-right: 1.5rem; padding-bottom: 0.5rem; font-size: 1.5rem; font-weight: bold;">
+                          <div style="background-color: #ffcccc; display: inline-block; padding-top: 0.4rem; padding-bottom: 0.4rem;">
+                            <apex:outputLabel value="&nbsp;" escape="false"/>
+                            <span style="color: #275193;">
+                              <apex:outputLabel value="推奨度 " />
+                            </span>
+                            <span style="color: red;">
+                              <apex:outputText value="{!saTelemarketingUpdate.Q1_ShopRecommendationTime__c}" />
+                            </span>
+                            <apex:outputLabel value="&nbsp;" escape="false"/>
+                          </div>
+                        </td>
+
+                      </tr>
+
+                    </table>
+                  </div>
+
+
+                  <div style="background-color: #fff; width: calc(100%);">
+
+                    <table style="width: 100%; border-spacing: 0.5rem 0 ; border-collapse: separate;">
+
+                      <tr>
+                        <td style="width: 50%" class="detailCell">
+                          <div style="background-color: #eee; border: solid 1px #ccc; min-height: 17rem;" >
+                            <div style="padding: 0.5rem 0.5rem 0 0; margin-left: 0.5rem; width: 80%; border-bottom: 1px solid #275193; color: red; font-size: 1.5rem; font-weight: bold;">
+                              FAネガティブ
+                            </div>
+                            <div style="padding: 0.5rem; width: 100%;">
+                              <apex:outputText value="{!saTelemarketingUpdate.Q2_2_NoRecommendationReason__c}" />
+                            </div>
+                          </div>
+                        </td>
+
+                        <td style="width: 50%" class="detailCell">
+                          <div style="background-color: #fff; border: solid 1px #ccc;; min-height: 17rem;" >
+                            <div style="padding: 0.5rem 0.5rem 0 0; margin-left: 0.5rem; width: 80%; border-bottom: 1px solid; color: #275193; font-size: 1.5rem; font-weight: bold;">
+                              FAポジティブ
+                            </div>
+                            <div style="padding: 0.5rem; width: 100%;">
+                              <apex:outputText value="{!saTelemarketingUpdate.Q2_1_RecommendationReason__c}" />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+
+                    </table>
+                  </div>
+
+                  <div style="background-color: #fff; border-color: #ccc; width: calc(100% - 1rem); margin: 0.5rem 0.5rem 0 0.5rem;">
+
+                    <table style="width: 100%">
+
+                      <tr>
+                        <td style="width: 100%" class="detailCell">
+                          <div style="background-color: #eee; border: solid 1px #ccc; min-height: 17rem;" >
+                            <div style="padding: 0.5rem 0.5rem 0 0; margin-left: 0.5rem; width: auto; border-bottom: 1px solid #275193; color: red; font-size: 1.5rem; font-weight: bold;display: inline-block;">
+                              聴取内容
+                            </div>
+                            <div style="padding: 0.5rem; width: 100%;">
+
+                              <apex:variable var="idx" value="{!0}" />
+
+                              <apex:repeat value="{!saTelemarketingUpdate.saTelemarketingReply__r}" var="detail">
+
+                                <apex:variable value="{!idx + 1}" var="idx"/>
+
+                                <apex:outputPanel rendered="{!idx <> 1}" >
+                                  <br/>
+                                  <br/>
+                                </apex:outputPanel>
+
+                                <apex:outputLabel value="受付年月日：" />
+
+                                <apex:outputText value="{0,date,yyyy/MM/dd}" >
+                                  <apex:param value="{!detail.ReceptionDate__c}" />
+                                </apex:outputText>
+
+                                <apex:outputText value="{!detail.Status__c}"
+                                                 style="margin-left: 1rem;"  />
+
+                                <br/>
+
+                                <apex:outputText value="{!detail.Result__c}" />
+
+
+                              </apex:repeat>
+
+                            </div>
+                          </div>
+                        </td>
+
+                      </tr>
+
+                    </table>
+                  </div>
+
+
+
+
+
+                  <div style="background-color: #fff; width: calc(100% - 1rem)">
+
+                    <table style="width: 100%; border-spacing: calc(0.5rem - 2px); border-collapse: separate;">
+                      <tr>
+                        <td style="width: 30%" class="detailCell">
+
+                          <table style="width: 100%; border-spacing: 2px; border-collapse: separate;">
+
+                            <tr>
+                              <td style="width: 50%; text-align: center; background-color: #E0EFF6;" class="detailCell">
+                                設問
+                              </td>
+                              <td style="width: 50%; text-align: center; background-color: #E0EFF6;" class="detailCell">
+                                回答
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td style="text-align: center; background-color: #E0EFF6; color: #275193;" class="detailCell">
+                                <apex:outputText value="スタッフの対応" />
+                              </td>
+                              <td style="background-color: #f4fbff" class="detailCell">
+                                <apex:outputText value="{!saTelemarketingUpdate.Q3_StaffCorrespondence__c}" />
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td style="text-align: center; background-color: #E0EFF6; color: #275193;" class="detailCell">
+                                <apex:outputText value="店内の清潔さ・整理整頓" />
+                              </td>
+                              <td style="background-color: #f4fbff" class="detailCell">
+                                <apex:outputText value="{!saTelemarketingUpdate.ShopSanitaryPrecautions__c}" />
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td style="text-align: center; background-color: #E0EFF6; color: #275193;" class="detailCell">
+                                <apex:outputText value="掲示内容" />
+                              </td>
+                              <td style="background-color: #f4fbff" class="detailCell">
+                                <apex:outputText value="{!saTelemarketingUpdate.ShopNoticeContent__c}" />
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td style="text-align: center; background-color: #E0EFF6; color: #275193;" class="detailCell">
+                                <apex:outputText value="お声がけ" />
+                              </td>
+                              <td style="background-color: #f4fbff" class="detailCell">
+                                <apex:outputText value="{!saTelemarketingUpdate.VoiceTiming__c}" />
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td style="text-align: center; background-color: #E0EFF6; color: #275193;" class="detailCell">
+                                <apex:outputText value="待ち時間案内" />
+                              </td>
+                              <td style="background-color: #f4fbff" class="detailCell">
+                                <apex:outputText value="{!saTelemarketingUpdate.WaitingTimeInfo__c}" />
+                              </td>
+                            </tr>
+
+                          </table>
+
+                        </td>
+
+                        <td style="width: 30%" class="detailCell">
+
+                          <table style="width: 100%; border-spacing: 2px; border-collapse: separate;">
+
+                            <tr>
+                              <td style="width: 50%; text-align: center; background-color: #E0EFF6;" class="detailCell">
+                                設問
+                              </td>
+                              <td style="width: 50%; text-align: center; background-color: #E0EFF6;" class="detailCell">
+                                回答
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td style="text-align: center; background-color: #E0EFF6; color: #275193;" class="detailCell">
+                                <apex:outputText value="待ち時間気遣い" />
+                              </td>
+                              <td style="background-color: #f4fbff" class="detailCell">
+                                <apex:outputText value="{!saTelemarketingUpdate.WaitingTimeConsideration__c}" />
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td style="text-align: center; background-color: #E0EFF6; color: #275193;" class="detailCell">
+                                <apex:outputText value="挨拶" />
+                              </td>
+                              <td style="background-color: #f4fbff" class="detailCell">
+                                <apex:outputText value="{!saTelemarketingUpdate.Greeting__c}" />
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td style="text-align: center; background-color: #E0EFF6; color: #275193;" class="detailCell">
+                                <apex:outputText value="笑顔" />
+                              </td>
+                              <td style="background-color: #f4fbff" class="detailCell">
+                                <apex:outputText value="{!saTelemarketingUpdate.Smiling__c}" />
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td style="text-align: center; background-color: #E0EFF6; color: #275193;" class="detailCell">
+                                <apex:outputText value="身だしなみの清潔感" />
+                              </td>
+                              <td style="background-color: #f4fbff" class="detailCell">
+                                <apex:outputText value="{!saTelemarketingUpdate.AppearanceCleanliness__c}" />
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td style="text-align: center; background-color: #E0EFF6; color: #275193;" class="detailCell">
+                                <apex:outputText value="言葉遣い・態度" />
+                              </td>
+                              <td style="background-color: #f4fbff" class="detailCell">
+                                <apex:outputText value="{!saTelemarketingUpdate.SpeechAttitude__c}" />
+                              </td>
+                            </tr>
+
+                          </table>
+
+                        </td>
+
+                        <td style="width: 40%" class="detailCell">
+
+
+                          <table style="width: 100%; border-spacing: 2px; border-collapse: separate;">
+
+                            <tr>
+                              <td style="width: 60%; text-align: center; background-color: #E0EFF6;" class="detailCell">
+                                設問
+                              </td>
+                              <td style="width: 40%; text-align: center; background-color: #E0EFF6;" class="detailCell">
+                                回答
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td style="text-align: center; background-color: #E0EFF6; color: #275193;" class="detailCell">
+                                <apex:outputText value="親身に聞いていたか" />
+                              </td>
+                              <td style="background-color: #f4fbff" class="detailCell">
+                                <apex:outputText value="{!saTelemarketingUpdate.Cordiality__c}" />
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td style="text-align: center; background-color: #E0EFF6; color: #275193;" class="detailCell">
+                                <apex:outputText value="知識理解度に応じた分かりやすい説明" />
+                              </td>
+                              <td style="background-color: #f4fbff" class="detailCell">
+                                <apex:outputText value="{!saTelemarketingUpdate.InformationExplanation__c}" />
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td style="text-align: center; background-color: #E0EFF6; color: #275193;" class="detailCell">
+                                <apex:outputText value="使い方にあった料金の説明提案" />
+                              </td>
+                              <td style="background-color: #f4fbff" class="detailCell">
+                                <apex:outputText value="{!saTelemarketingUpdate.ChargeExplanation__c}" />
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td style="text-align: center; background-color: #E0EFF6; color: #275193;" class="detailCell">
+                                <apex:outputText value="電話機サービスの便利な使い方アドバイス" />
+                              </td>
+                              <td style="background-color: #f4fbff" class="detailCell">
+                                <apex:outputText value="{!saTelemarketingUpdate.PhoneServiceAdvice__c}" />
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td style="text-align: center; background-color: #E0EFF6; color: #275193;" class="detailCell">
+                                <apex:outputText value="他に何か相談、お困りごとがないかお伺い" />
+                              </td>
+                              <td style="background-color: #f4fbff" class="detailCell">
+                                <apex:outputText value="{!saTelemarketingUpdate.OtherProblemInquiry__c}" />
+                              </td>
+                            </tr>
+
+                          </table>
+
+                        </td>
+　
+                      </tr>
+
+
+                    </table>
+                  </div>
+
+                </apex:outputPanel>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content content--theme" id="content">
+        <div class="content-header search-tools" >
+          <div class="content-header__top" style="margin-top: -0.5rem; margin-bottom: -0.5rem;">
+            <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--12-col">
+                <div class="search-filter clearfix search_criteria_form" >
+
+                  <apex:actionRegion id="area51f" renderRegionOnly="false">
+                    <apex:outputPanel id="aaa">
+
+                      <div style="display: inline-block;width: 100%;">
+                        <fieldset class="filter-category filter-text">
+                          <label>支社</label>
+                          <apex:selectList id="filterShisha" styleClass="search-status__select" value="{!filterShisha}" size="1" style="margin-left: 0.5rem">
+                            <apex:selectOptions value="{!ListShisha}" />
+                            <apex:actionSupport event="onchange" action="{!dummyAction}" rerender="filterShiten" />
+                          </apex:selectList>
+                        </fieldset>
+
+                        <fieldset class="filter-category filter-text">
+                          <label>支店</label>
+                          <apex:selectList id="filterShiten" styleClass="search-status__select" value="{!filterShiten}" size="1" style="margin-left: 0.5rem">
+                            <apex:selectOptions value="{!ListShiten}" />
+                          </apex:selectList>
+                        </fieldset>
+
+                        <fieldset class="filter-category filter-text">
+                          <label>代理店担当者名</label>
+                          <apex:inputText id="filterDairitenResp" styleClass="search-status__select" value="{!filterDairitenResp}" style="margin-left: 0.5rem; width:10rem;" />
+                        </fieldset>
+
+                        <fieldset class="filter-category filter-text">
+                          <label>統括担当者名</label>
+                          <apex:inputText id="filterUnifiedAgencyResponsible" styleClass="search-status__select" value="{!filterUnifiedAgencyResponsible}" style="margin-left: 0.5rem; width:10rem;" />
+                        </fieldset>
+
+                        <fieldset class="filter-category filter-text">
+                          <label>拠点担当者名</label>
+                          <apex:inputText id="filterBusinessLocationResponsible" styleClass="search-status__select" value="{!filterBusinessLocationResponsible}" style="margin-left: 0.5rem; width:10rem;" />
+                        </fieldset>
+
+                      </div>
+                      <div style="display: inline-block;width: 100%;">
+
+                        <fieldset class="filter-category filter-text">
+                          <label>代理店</label>
+                          <apex:inputText id="filterParentAgency" styleClass="search-status__select" value="{!filterParentAgency}" style="margin-left: 0.5rem; width:10rem;" />
+                        </fieldset>
+
+                        <fieldset class="filter-category filter-text">
+                          <label>統括店</label>
+                          <apex:inputText id="filterUnifiedAgency" styleClass="search-status__select" value="{!filterUnifiedAgency}" style="margin-left: 0.5rem; width:10rem;" />
+                        </fieldset>
+
+                        <fieldset class="filter-category filter-text">
+                          <label>運営法人名</label>
+                          <apex:inputText id="filterManagementCorpName" styleClass="search-status__select" value="{!filterManagementCorpName}" style="margin-left: 0.5rem; width:10rem;" />
+                        </fieldset>
+
+                        <fieldset class="filter-category filter-text">
+                          <label>拠点</label>
+                          <apex:inputText id="filterBusinessLocation" styleClass="search-status__select" value="{!filterBusinessLocation}" style="margin-left: 0.5rem; width:10rem;" />
+                        </fieldset>
+
+                      </div>
+                      <div style="display: inline-block;width: 100%;">
+
+                        <fieldset class="filter-daterange filter-text">
+                          <label >回答日</label>
+                          <apex:input id="filterReplyDateFromStr" value="{!filterReplyDateFromStr}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd" />
+                          <label style="margin-left: 0.5em;">></label>
+                          <apex:input id="filterReplyDateToStr" value="{!filterReplyDateToStr}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd" />
+                        </fieldset>
+
+                        <fieldset class="filter-category filter-text">
+                          <label>回答月</label>
+
+                          <apex:selectList id="filterReplyMonth" styleClass="search-status__select" value="{!filterReplyMonth}" size="1" style="margin-left: 0.5rem">
+                            <apex:selectOptions value="{!ListMonths}" />
+                            <apex:actionSupport event="onchange"
+                                                action="{!changeReplyDate}"
+                                                rerender="filterReplyDateFromStr, filterReplyDateToStr"
+                                                oncomplete="initDatePickers();" />
+                          </apex:selectList>
+                        </fieldset>
+
+                        <fieldset class="filter-daterange filter-text">
+                          <label >オーダー完了日(≒来店日)</label>
+                          <apex:input id="filterOrderDateFromStr" value="{!filterOrderDateFromStr}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd" />
+                          <label style="margin-left: 0.5em;">></label>
+                          <apex:input id="filterOrderDateToStr" value="{!filterOrderDateToStr}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd" />
+                        </fieldset>
+
+                        <fieldset class="filter-daterange filter-text">
+                          <label >リスト展開日</label>
+                          <apex:input id="filterEvolutionDateFromStr" value="{!filterEvolutionDateFromStr}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd" />
+                          <label style="margin-left: 0.5em;">></label>
+                          <apex:input id="filterEvolutionDateToStr" value="{!filterEvolutionDateToStr}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd" />
+                        </fieldset>
+
+                        <fieldset class="filter-daterange filter-text" style="border-right: 0;">
+                          <label >初回架電対応期日</label>
+                          <apex:input id="filterCorrespondenceDateFromStr" value="{!filterCorrespondenceDateFromStr}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd" />
+                          <label style="margin-left: 0.5em;">></label>
+                          <apex:input id="filterCorrespondenceDateToStr" value="{!filterCorrespondenceDateToStr}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd" />
+                        </fieldset>
+
+                        <apex:pageMessages id="error"/>
+                        <fieldset class="filter-button">
+                          <apex:commandLink value="絞り込む/実行" styleClass="margin-right10 mdl-button mdl-js-button mdl-button--raised mdl-button--colored" action="{!doSearch}" />
+                          <apex:commandLink styleClass="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                                            value="クリアする"
+                                            action="{!clearCookie}"
+                                            rerender="filterShisha, filterShiten, filterDairitenResp, filterUnifiedAgencyResponsible, filterBusinessLocationResponsible, filterParentAgency, filterUnifiedAgency, filterManagementCorpName, filterBusinessLocation, filterReplyDateFromStr, filterReplyDateToStr, filterReplyMonth, filterOrderDateFromStr, filterOrderDateToStr, filterEvolutionDateFromStr, filterEvolutionDateToStr, filterCorrespondenceDateFromStr, filterCorrespondenceDateToStr"
+                                            oncomplete="initDatePickers();"/>
+
+                        </fieldset>                                
+
+                      </div>
+
+                    </apex:outputPanel>
+                  </apex:actionRegion>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-header__bottom">
+            
+<!--
+            <div class=search-display> 表示順
+              <select class=search-display__sort>
+                <option>投稿日</option>
+              </select>
+              <a class="button button--asc"></a>
+              <a class="button button--desc"></a>
+            </div>
+-->
+          </div>
+        </div>
+
+        <div class="mdl-grid">
+<!--
+              <div class="mdl-cell mdl-cell--2-col">
+                <apex:outputPanel >
+                  <div class="u-buttons-container search-buttons" style="padding-top: 0.5em"><a class="js-popup-trigger" data-popup=".popup--theme" style="float: left;margin-left: 0;"><i class="icon icon--pen"></i>新規投稿</a></div>
+                </apex:outputPanel>
+              </div>
+-->
+
+              <div class="mdl-cell mdl-cell--3-col">
+                  <apex:selectList styleclass="search-numbers__select" id="pageSize" value="{!pageSize}" size="1" disabled="{!recoRdscouNt < 5}" style="margin-top: 1rem; height: 2.5em;">
+                    <apex:actionSupport event="onchange" action="{!setSizeSaveCurrentPageSize}"/>
+                    <apex:selectOption itemValue="5" itemLabel="5 件表示"/>
+                    <apex:selectOption itemValue="10" itemLabel="10 件表示"/>
+                    <apex:selectOption itemValue="20" itemLabel="20 件表示"/>
+                    <apex:selectOption itemValue="50" itemLabel="50 件表示"/>
+                  </apex:selectList>
+              </div>
+              <div class="mdl-cell mdl-cell--5-col search-pagination">                
+                <apex:outputPanel id="pnlPagination">
+                  <apex:outputPanel rendered="{!!(recordScount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1)}">
+                    <div style="height: 53px;" />
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!recordScount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1}">
+
+                    <nav>
+
+                    <apex:panelGroup rendered="{!pageNum == 1}" style="display: inline-block; width: 27px;" />
+
+                      <ul class="pagination">
+                        <li>
+                          <apex:panelGroup rendered="{!pageNum > 1}" >
+                            <apex:outputLink value="javascript:void(0)">
+                              <apex:actionSupport event="onclick" action="{!goToPagePrev}" />
+                              <i class="material-icons">navigate_before</i>
+                            </apex:outputLink>
+                          </apex:panelGroup>
+                        </li>
+
+                        <!-- 1st button -->
+                        <li class="{!IF(pageNum == 1, 'active', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage1}" />
+                            <apex:outputText value="1" />
+                          </apex:outputLink>
+                        </li>
+
+
+                        <!-- 2nd button -->
+                        <li class="{!IF(pageNum == 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage2}" />
+                            <apex:outputText value="2" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4), 'hidden', '')}">
+                          <span>…</span>
+                        </li>
+
+
+                        <!-- 3rd button -->
+                        <li class="{!IF(pageNum == 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage3}" />
+                            <apex:outputText value="3" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPagePrev}" />
+                            <apex:outputText value="{!pageNum - 1}" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr5}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 5}" />
+                          </apex:outputLink>                          
+                        </li>
+
+
+                        <!-- 4th button -->
+                        <li class="{!IF(pageNum == 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage4}" />
+                            <apex:outputText value="4" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="active {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <a href="#">{!pageNum}</a>
+                        </li>
+
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr4}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 4}" />
+                          </apex:outputLink>                          
+                        </li>
+
+
+                        <!-- 5th button -->
+                        <li class="{!IF(pageNum == 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage5}" />
+                            <apex:outputText value="5" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageNext}" />
+                            <apex:outputText value="{!pageNum + 1}" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr3}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 3}" />
+                          </apex:outputLink>
+                        </li>
+
+
+
+                        <!-- 6th button -->
+                        <li class="{!IF(pageNum == 6, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage6}" />
+                            <apex:outputText value="6" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage2ndNext}" />
+                            <apex:outputText value="{!pageNum + 2}" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr2}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 2}" />
+                          </apex:outputLink>
+                        </li>
+
+
+                        <!-- 7th button -->
+                        <li class="{!IF(pageNum == 7, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage7}" />
+                            <apex:outputText value="7" />
+                          </apex:outputLink>                          
+                        </li>
+
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <span>…</span>
+                        </li>
+
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 1, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr1}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 1}" />
+                          </apex:outputLink>
+                        </li>
+
+
+                        <!-- 8th button -->
+                        <li class="{!IF(pageNum == 8, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 8 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage8}" />
+                            <apex:outputText value="8" />
+                          </apex:outputLink>                          
+                        </li>
+
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1), 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLast}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1)}" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li>
+                          <apex:panelGroup rendered="{!hasNext}" >
+                            <apex:outputLink value="javascript:void(0)">
+                              <apex:actionSupport event="onclick" action="{!goToPageNext}" />
+                              <i class="material-icons">navigate_next</i>
+                            </apex:outputLink>
+                          </apex:panelGroup>
+                        </li>
+                      </ul>
+                    </nav>
+
+                  </apex:outputPanel>
+                </apex:outputPanel>
+              </div>
+              <div class="mdl-cell mdl-cell--4-col search-numbers" style="position: absolute; right: 2rem;">
+                <apex:outputPanel id="pnlDataCount" style="display: inline-block; margin-top: 1rem; margin-right: 1rem;">
+                  <span class="search-numbers__total"><span>{!RecordsCountLabel}</span><small>件</small></span>
+                </apex:outputPanel>
+                <fieldset class="filter-button dropdown">
+
+                      <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="/kdTelemarketingListCSV?where={!whereStrParam}&orderby={!orderBy}" target="_blank">CSV出力</a>
+
+
+                </fieldset>
+              </div>
+            </div>
+        <div class="theme-list">
+        <apex:outputPanel id="pnlGrid">
+            <table class="mdl-data-table mdl-js-data-table table table--theme js-table-data is-long">
+              <thead>
+                <tr style="height: 4rem;">
+                  <th class="col1 mdl-data-table__cell--non-numeric sort">
+                    <span>
+
+                      <apex:outputPanel rendered="{!orderBy != 'RegionalOfficeName__c ASC NULLS LAST, BusinessLocationBranchGroup__c ASC'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('RegionalOfficeName__c ASC NULLS LAST, BusinessLocationBranchGroup__c ASC');">
+                          <span class="thspanwithoutarrow">支社 / 支店{!IF(orderBy == 'RegionalOfficeName__c DESC, BusinessLocationBranchGroup__c DESC NULLS LAST', ' ▼', '')}</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <apex:outputPanel rendered="{!orderBy == 'RegionalOfficeName__c ASC NULLS LAST, BusinessLocationBranchGroup__c ASC'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('RegionalOfficeName__c DESC, BusinessLocationBranchGroup__c DESC NULLS LAST');">
+                          <span class="thspanwithoutarrow">支社 / 支店 ▲</span>
+                        </a>
+                      </apex:outputPanel>
+
+                      <br/>
+
+                      （明細表示こちら）
+
+                    </span>           
+
+                  </th>
+
+                  <th class="col2 mdl-data-table__cell--non-numeric sort">
+                    <span class="thspanwithoutarrow">
+                      <apex:outputPanel rendered="{!orderBy != 'ParentAgencyCode__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('ParentAgencyCode__c NULLS LAST');">
+                          <span class="thspanwithoutarrow">代理店CD{!IF(orderBy == 'ParentAgencyCode__c DESC', ' ▼', '')}</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <apex:outputPanel rendered="{!orderBy == 'ParentAgencyCode__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('ParentAgencyCode__c DESC');">
+                          <span class="thspanwithoutarrow">代理店CD ▲</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <br/>
+                      <apex:outputPanel rendered="{!orderBy != 'ParentAgencyName__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('ParentAgencyName__c NULLS LAST');">
+                          <span class="thspanwithoutarrow">代理店名{!IF(orderBy == 'ParentAgencyName__c DESC', ' ▼', '')}</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <apex:outputPanel rendered="{!orderBy == 'ParentAgencyName__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('ParentAgencyName__c DESC');">
+                          <span class="thspanwithoutarrow">代理店名 ▲</span>
+                        </a>
+                      </apex:outputPanel>       
+                    </span>                                   
+                  </th>
+                  <th class="col3 mdl-data-table__cell--non-numeric sort">
+                    <span class="thspanwithoutarrow">
+                      <apex:outputPanel rendered="{!orderBy != 'BusinessLocationName__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('BusinessLocationName__c NULLS LAST');">
+                          <span class="thspanwithoutarrow">拠点名{!IF(orderBy == 'BusinessLocationName__c DESC', ' ▼', '')}</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <apex:outputPanel rendered="{!orderBy == 'BusinessLocationName__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('BusinessLocationName__c DESC');">
+                          <span class="thspanwithoutarrow">拠点名 ▲</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <br/>
+                      <apex:outputPanel rendered="{!orderBy != 'BusinessLocationResponsible__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('BusinessLocationResponsible__c NULLS LAST');">
+                          <span class="thspanwithoutarrow">拠点担当者名{!IF(orderBy == 'BusinessLocationResponsible__c DESC', ' ▼', '')}</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <apex:outputPanel rendered="{!orderBy == 'BusinessLocationResponsible__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('BusinessLocationResponsible__c DESC');">
+                          <span class="thspanwithoutarrow">拠点担当者名 ▲</span>
+                        </a>
+                      </apex:outputPanel>       
+                    </span>                                   
+                  </th>
+                  <th class="col4 mdl-data-table__cell--non-numeric sort">
+                    <span class="thspanwithoutarrow">
+                      <apex:outputPanel rendered="{!orderBy != 'ReplyDate__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('ReplyDate__c NULLS LAST');">
+                          <span class="thspanwithoutarrow">回答日{!IF(orderBy == 'ReplyDate__c DESC', ' ▼', '')}</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <apex:outputPanel rendered="{!orderBy == 'ReplyDate__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('ReplyDate__c DESC');">
+                          <span class="thspanwithoutarrow">回答日 ▲</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <br/>
+                      <apex:outputPanel rendered="{!orderBy != 'OrderDate__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('OrderDate__c NULLS LAST');">
+                          <span class="thspanwithoutarrow">オーダー完了日{!IF(orderBy == 'OrderDate__c DESC', ' ▼', '')}</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <apex:outputPanel rendered="{!orderBy == 'OrderDate__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('OrderDate__c DESC');">
+                          <span class="thspanwithoutarrow">オーダー完了日 ▲</span>
+                        </a>
+                      </apex:outputPanel>                                          
+                    </span>
+                  </th>
+
+                  <th class="col5 mdl-data-table__cell--non-numeric sort">
+                    <span class="thspanwithoutarrow">
+                      <apex:outputPanel rendered="{!orderBy != 'Q1_ShopRecommendationTime__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('Q1_ShopRecommendationTime__c NULLS LAST');">
+                          <span class="thspanwithoutarrow">推奨度{!IF(orderBy == 'Q1_ShopRecommendationTime__c DESC', ' ▼', '')}</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <apex:outputPanel rendered="{!orderBy == 'Q1_ShopRecommendationTime__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('Q1_ShopRecommendationTime__c DESC');">
+                          <span class="thspanwithoutarrow">推奨度 ▲</span>
+                        </a>
+                      </apex:outputPanel>                    
+                    </span>
+                  </th>
+
+                  <th class="col6 mdl-data-table__cell--non-numeric sort">
+                    <span class="thspanwithoutarrow">
+                      <apex:outputPanel rendered="{!orderBy != 'EvolutionDate__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('EvolutionDate__c NULLS LAST');">
+                          <span class="thspanwithoutarrow">展開日{!IF(orderBy == 'EvolutionDate__c DESC', ' ▼', '')}</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <apex:outputPanel rendered="{!orderBy == 'EvolutionDate__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('EvolutionDate__c DESC');">
+                          <span class="thspanwithoutarrow">展開日 ▲</span>
+                        </a>
+                      </apex:outputPanel>                    
+                    </span>
+                  </th>
+
+                  <th class="col7 mdl-data-table__cell--non-numeric sort">
+                    <span class="thspanwithoutarrow">
+                      <apex:outputPanel rendered="{!orderBy != 'CorrespondenceDate__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('CorrespondenceDate__c NULLS LAST');">
+                          <span class="thspanwithoutarrow">初回架電対応期日{!IF(orderBy == 'CorrespondenceDate__c DESC', ' ▼', '')}</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <apex:outputPanel rendered="{!orderBy == 'CorrespondenceDate__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('CorrespondenceDate__c DESC');">
+                          <span class="thspanwithoutarrow">初回架電対応期日 ▲</span>
+                        </a>
+                      </apex:outputPanel>                                          
+                      <br/>
+                      <apex:outputPanel rendered="{!orderBy != 'CorrespondenceCompletionDate__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('CorrespondenceCompletionDate__c NULLS LAST');">
+                          <span class="thspanwithoutarrow">架電対応完了期日{!IF(orderBy == 'CorrespondenceCompletionDate__c DESC', ' ▼', '')}</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <apex:outputPanel rendered="{!orderBy == 'CorrespondenceCompletionDate__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('CorrespondenceCompletionDate__c DESC');">
+                          <span class="thspanwithoutarrow">架電対応完了期日 ▲</span>
+                        </a>
+                      </apex:outputPanel>                                          
+                    </span>
+                  </th>
+
+                  <th class="col8 mdl-data-table__cell--non-numeric sort">
+                    <apex:outputPanel rendered="{!orderBy != 'Status__c'}">
+                      <a href="javascript:void(0);" onclick="callChangeOrder('Status__c');">
+                        <span class="thspanwithoutarrow">対応状況{!IF(orderBy == 'Status__c DESC', ' ▼', '')}</span>
+                      </a>
+                    </apex:outputPanel>                    
+                    <apex:outputPanel rendered="{!orderBy == 'Status__c'}">
+                      <a href="javascript:void(0);" onclick="callChangeOrder('Status__c DESC');">
+                        <span class="thspanwithoutarrow">対応状況 ▲</span>
+                      </a>
+                    </apex:outputPanel>                    
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <apex:actionRegion id="area51a" renderRegionOnly="false">
+                    <apex:inputText styleClass="telemaUpdateIdInput" value="{!telemaUpdateId}" style="display: none;" />
+                    <apex:actionFunction name="refreshTelemaEdit" action="{!refreshTelemaEdit}" rerender="editKnowledge1, editKnowledge2" />
+                </apex:actionRegion>
+
+                <apex:repeat value="{!Records}" var="rec" >
+                    <tr onclick="callTelemaUpdateId('{!rec.telema.Id}');">
+  
+                      <td class="js-slide-info-trigger base-info js-base-info col1" data-target=".theme-info">
+                        <p>
+                          <apex:outputField value="{!rec.telema.RegionalOfficeName__c}" />
+                          <br/>
+                          <apex:outputField value="{!rec.telema.BusinessLocationBranchGroup__c}" />
+                        </p>
+                      </td>
+
+                      <td class="col2">
+                        <p>
+                          <apex:outputField value="{!rec.telema.ParentAgencyCode__c}" />
+                          <br/>
+                          <apex:outputField value="{!rec.telema.ParentAgencyName__c}" />
+                        </p>
+                      </td>    
+                      
+                      <td class="col3">
+                        <p>
+                          <apex:outputField value="{!rec.telema.BusinessLocationName__c}" />
+                          <br/>
+                          <apex:outputField value="{!rec.telema.BusinessLocationResponsible__c}" />
+                        </p>
+                      </td> 
+
+                      <td class="col4">
+                        <p>
+                          <apex:outputField value="{!rec.telema.ReplyDate__c}" />
+                          <br/>
+                          <apex:outputField value="{!rec.telema.OrderDate__c}" />
+                        </p>
+                      </td>
+
+                      <td class="col5">
+                        <p>
+                          <apex:outputField value="{!rec.telema.Q1_ShopRecommendationTime__c}" />
+                        </p>
+                      </td>
+
+                      <td class="col6">
+                        <p>
+                          <apex:outputField value="{!rec.telema.EvolutionDate__c}" />
+                        </p>
+                      </td>
+
+                      <td class="col7">
+                        <p>
+                          <apex:outputField value="{!rec.telema.CorrespondenceDate__c}" />
+                          <br/>
+                          <apex:outputField value="{!rec.telema.CorrespondenceCompletionDate__c}" />
+                        </p>
+                      </td>
+
+                      <td class="col8">
+                        <p>
+                          <apex:repeat value="{!rec.telema.saTelemarketingReply__r}" var="detail">
+                            <apex:outputField value="{!detail.StatusShortLabel__c}" />
+                          </apex:repeat>
+                        </p>
+                      </td> 
+
+                    </tr>
+                </apex:repeat>
+
+              </tbody>
+            </table>
+        </apex:outputPanel>
+
+      
+    </div>
+
+
+      </div>
+    </main>
+
+
+
+  </div>
+
+          <script src="{!URLFOR($Resource.kdKnowledgeScript)}" type="text/javascript"></script>
+          
+          <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            
+            ga('create', 'UA-xxxxxx', 'auto');
+            ga('send', 'pageview');
+
+          </script> 
+
+</apex:form>
+
+</body>
+
+</html>
+
+
+</apex:page>

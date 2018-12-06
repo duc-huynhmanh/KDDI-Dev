@@ -160,6 +160,11 @@
         obj.val(key);
         jsLikeCxKnowledgeFeedElement();
     }
+    function callRemoveLikeCxKnowledge(key){
+        var obj = $j('.removingLikeId');
+        obj.val(key);
+        jsRemoveLikeCxKnowledgeFeedElement();
+    }
 
     function callAddFavoriteCxKnowledge(key) {
         var obj = $j('.CxKnowledgeIdInput');
@@ -180,8 +185,6 @@
 
       var obj2 = $j('.CxKnowledgeIdInput');
       obj2.val(key2);
-
-      jsCommentCxKnowledgeFeedElement();
     
     }
 
@@ -233,12 +236,13 @@
         return goodSize;
     }
 
-    window.onload = function onLoadJS() {
+    function setupAutogrow(){
+      $j('.autogrow').attr("rows", "1");    
+      autosize(document.querySelectorAll('.autogrow'));   
+    }
 
-      $j('.autogrow').attr("rows", "1");
-      autosize(document.querySelectorAll('.autogrow'));
-      $j('.scrollDiv').scrollTop({!scrollTopValue});
-
+    window.onload = function onLoadJS() {   
+      setupAutogrow();  
     }
 
   </script>
@@ -252,22 +256,23 @@
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 <apex:form >
-  <apex:inputText id="fieldScrollValue" styleclass="hidden" value="{!currentScrollValue}" />          
+           
 
   <c:auMainTopComp typeOfScreen="{!typeOfScreen}" />
 
   <apex:outputPanel >
-
+    <apex:actionRegion id="area51c" renderRegionOnly="false">
     <apex:inputText styleclass="CxKnowledgeFeedElementIdInput" value="{!idCurrentFeedElement}" style="display: none;" />
+    <apex:inputText styleclass="removingLikeId" value="{!removingLikeId}" style="display: none;" />
     <apex:inputText styleclass="CxKnowledgeIdInput" value="{!idCurrentCxKnowledge}" style="display: none;" />
-
-    <apex:actionFunction name="jsLikeCxKnowledgeFeedElement" action="{!likeCxKnowledgeFeedElement}" />
-    <apex:actionFunction name="jsCommentCxKnowledgeFeedElement" action="{!commentCxKnowledgeFeedElement}" />
-    <apex:actionFunction name="jsDeleteCommentCxKnowledgeFeedElement" action="{!deleteCommentCxKnowledgeFeedElement}" />
-    <apex:actionFunction name="jsDeleteCommentOnlyCxKnowledge" action="{!deleteCommentOnlyCxKnowledge}" />
-    <apex:actionFunction name="jsAddFavoriteCxKnowledge" action="{!addFavoriteCxKnowledge}"/>
-    <apex:actionFunction name="jsRemoveFavoriteCxKnowledge" action="{!removeFavoriteCxKnowledge}" />
-
+    <apex:actionFunction name="jsLikeCxKnowledgeFeedElement" action="{!likeCxKnowledgeFeedElement}" reRender="{!$Component.repeater.likeSection}"/>
+    <apex:actionFunction name="jsRemoveLikeCxKnowledgeFeedElement" action="{!removeLikeCxKnowledgeFeedElement}" reRender="{!$Component.repeater.likeSection}"/>
+    <apex:actionFunction name="jsCommentCxKnowledgeFeedElement" action="{!commentCxKnowledgeFeedElement}" reRender="{!$Component.repeater.commentCount}, {!$Component.repeater.commentPost}, {!$Component.repeater.commentNew}" oncomplete="setupAutogrow();"/>
+    <apex:actionFunction name="jsDeleteCommentCxKnowledgeFeedElement" action="{!deleteCommentCxKnowledgeFeedElement}" reRender="{!$Component.repeater.commentCount}, {!$Component.repeater.commentPost}" />
+    <apex:actionFunction name="jsDeleteCommentOnlyCxKnowledge" action="{!deleteCommentOnlyCxKnowledge}" reRender="{!$Component.repeater.commentCount}, {!$Component.repeater.commentPost}"/>
+    <apex:actionFunction name="jsAddFavoriteCxKnowledge" action="{!addFavoriteCxKnowledge}" reRender="{!$Component.repeater.favoriteSection}"/>
+    <apex:actionFunction name="jsRemoveFavoriteCxKnowledge" action="{!removeFavoriteCxKnowledge}" reRender="{!$Component.repeater.favoriteSection}"/>
+    </apex:actionRegion>
   </apex:outputPanel>
 
 
@@ -467,29 +472,29 @@
               </div>
           </apex:actionRegion>
           </div>
-            <div class="scrollDiv" style="overflow: auto; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; height: calc(100% - 13em);" onscroll="$j('input[id$=fieldScrollValue]').val($j('.scrollDiv').scrollTop());">
+            <div class="scrollDiv" style="overflow: auto; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; height: calc(100% - 13em);">
               <div class="u-flex" style="height: 50px;">
 
-              <div class="u-flex" style="width: 99%;">
+                <div class="u-flex" style="width: 99%;">
 
-                <div style="width: 50%;">
-                  <h3 class="section-title">タイムライン<br/><span>Time Line</span></h3>
-                </div>
-
-                <div style="width: 50%; float: right;">
-                  <div style="float: right;">
-                  　<apex:selectRadio value="{!currentOrder}" style="margin-top: 1rem;">
-                      <apex:actionSupport event="onchange" action="{!recordSearch}" />
-                      <apex:selectOptions value="{!OptionsOrder}"/>
-                    </apex:selectRadio>
+                  <div style="width: 50%;">
+                    <h3 class="section-title">タイムライン<br/><span>Time Line</span></h3>
                   </div>
-               </div>
+
+                  <div style="width: 50%; float: right;">
+                    <div style="float: right;">
+                    　<apex:selectRadio value="{!currentOrder}" style="margin-top: 1rem;">
+                        <apex:actionSupport event="onchange" action="{!recordSearch}" />
+                        <apex:selectOptions value="{!OptionsOrder}"/>
+                      </apex:selectRadio>
+                    </div>
+                 </div>
 
  
-              </div>
+                </div>
 
-            </div>
-            <apex:repeat value="{!lsFeeds}" var="feed" >
+              </div>
+            <apex:repeat value="{!lsFeeds}" var="feed" id="repeater">
               <div class="section-inner">
                 <article class="timeline-post">
                   <div class="timeline__head">
@@ -655,24 +660,29 @@
                   <div class="u-flex">
 
                     <div class="u-flex" style="width: 100%;">
+                      <apex:outputPanel id="likeSection">
                       <div class="likes-container">
                         <p class="likes">
                           <span class="number">{!feed.LikeCount}</span>
                         </p>
                         <apex:actionRegion renderRegionOnly="false">
-                          <apex:commandLink styleClass="linkstyle" onclick="callLikeCxKnowledge('{!feed.Id}')" reRender="DUMMY">
-                            いいね！
-                          </apex:commandLink>
+                          <apex:outputPanel rendered="{!feed.FeedLikes != NULL && feed.FeedLikes.size > 0}">
+                            <a href="javascript:void(0)" onclick="callRemoveLikeCxKnowledge('{!feed.FeedLikes[0].Id}');" class="linkstyle">いいねの削除</a>
+                          </apex:outputPanel>
+                          <apex:outputPanel rendered="{!feed.FeedLikes == NULL || feed.FeedLikes.size == 0}">
+                            <a href="javascript:void(0)" onclick="callLikeCxKnowledge('{!feed.Id}')" class="linkstyle">いいね</a>
+                          </apex:outputPanel>
                         </apex:actionRegion>
                       </div>
-
+                      </apex:outputPanel>
+                      <apex:outputPanel id="commentCount">
                       <div class="comment-head">
                         <i class="icon icon--comment"></i>
                         コメント {!feed.CommentCount}件
                       </div>
+                      </apex:outputPanel>
 
-
-                      <apex:outputPanel rendered="{!!mpFeedData[feed.ParentId].IsCommentOnly__c}">
+                      <apex:outputPanel rendered="{!!mpFeedData[feed.ParentId].IsCommentOnly__c}" id="favoriteSection">
                         <div class="favorite-container comment-head">
                           <apex:actionRegion renderRegionOnly="false">
                             <apex:commandLink styleClass="linkstyle"
@@ -698,9 +708,9 @@
 
                   </div>
 
-
+                  <apex:outputPanel id="commentPost">
                   <div class="timeline__comment">
-                    <apex:repeat value="{!feed.FeedComments}" var="feedCmt" >
+                    <apex:repeat value="{!feed.FeedComments}" var="feedCmt">
                       <div class="comment-section">
                         <span class="icon-container">
                           <img class="icon is-small" src="{!feedCmt.InsertedBy.SmallPhotoUrl}" style="width:30px;height:30px;float:left;"/>
@@ -731,27 +741,34 @@
                       </div>
                     </apex:repeat>
                   </div>
-
+                  </apex:outputPanel>
+                  
                   <div class="timeline__post">
                     <span class="icon-container" style="line-height: 0;border-width: 0;">
 <!--                      <i class="icon icon--user is-large"></i>
     -->                  <img class="icon is-large" src="{!urlUserPhoto}" style="width: calc(3.4rem - 2px);width:-webkit-calc(3.4rem - 2px);height: calc(3.4rem - 2px);height:-webkit-calc(3.4rem - 2px);"/>
                     </span>
                     <div class="post-section">
+                      <apex:outputPanel id="commentNew">
+                      <apex:actionRegion renderRegionOnly="false">
+                      
                       <apex:inputField value="{!mpFeedData[feed.ParentId].TechnicalAlwaysBlank__c}"
                                        html-placeholder="コメントする…"
                                        styleClass="autogrow"/>
+                      
                       <div class="post-section__buttons">
                         <!-- <a href=""><i class="icon icon--camera"></i></a> --> 
-                        <apex:actionRegion renderRegionOnly="false">
-                          <apex:commandLink onclick="callCommentCxKnowledge('{!feed.Id}', '{!feed.ParentId}')" reRender="DUMMY">
+                        
+                          <apex:commandLink onclick="callCommentCxKnowledge('{!feed.Id}', '{!feed.ParentId}')" reRender="DUMMY" oncomplete="jsCommentCxKnowledgeFeedElement();">
                             <i class="icon icon--caption"></i>
                           </apex:commandLink>
-                        </apex:actionRegion>
+                        
                       </div>
+                      </apex:actionRegion>
+                      </apex:outputPanel>
                     </div>
                   </div>
-
+                  
                 </article>
               </div>
 
@@ -759,7 +776,7 @@
           </div>
           </section>
         </div>
-
+        
         <div class="row is-standard" style="overflow-y: auto; margin-left: 3.5%; width: 36%">
         
           <apex:actionRegion >

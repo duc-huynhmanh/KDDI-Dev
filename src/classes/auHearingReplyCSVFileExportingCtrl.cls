@@ -115,7 +115,7 @@ global with sharing class auHearingReplyCSVFileExportingCtrl {
 				//system.debug('questions: ' + questions);
 
 				//head row
-				sTitle = '"支社","支店","作成者","ヒアリング件名","ヒアリング開始日","ヒアリング終了日","運用中フラグ","最終更新日","最終更新者","序列コード","組織名","社員番号","報告者名"';
+				sTitle = '"支社","支店","作成者","ヒアリング件名","ヒアリング開始日","ヒアリング終了日","運用中フラグ","最終更新日","最終更新者","序列コード","組織名","社員番号","報告者名","報告日時","返事済"';
 				for (saInquiryDetail__c q : questions) {
 					sTitle += ',"' + q.QuestionLabel__c + '"';
 				}
@@ -132,8 +132,8 @@ global with sharing class auHearingReplyCSVFileExportingCtrl {
         			fileName += '_To' + strTo.replace('/', '-');
         		}
         		fileName += '.csv';
-        		String validFrom = inq.ValidFromDatetime__c == null ? 'null' : inq.ValidFromDatetime__c.format('yyyy-MM-dd HH:mm:ss');
-        		String validTo = inq.ValidToDatetime__c == null ? 'null' : inq.ValidToDatetime__c.format('yyyy-MM-dd HH:mm:ss');
+        		String validFrom = inq.ValidFromDatetime__c == null ? '' : inq.ValidFromDatetime__c.format('yyyy-MM-dd HH:mm:ss');
+        		String validTo = inq.ValidToDatetime__c == null ? '' : inq.ValidToDatetime__c.format('yyyy-MM-dd HH:mm:ss');
         		String shisha = getShisha(inq.RegionalOfficeCode__c);
         		String shiten = getShiten(inq.BranchCode__c);
         		String createBy = inq.CreatedBy.Name;
@@ -146,7 +146,7 @@ global with sharing class auHearingReplyCSVFileExportingCtrl {
 				isProcess = lslsRow != null;
 				
 				if(isProcess){
-					Apexpages.currentPage().getHeaders().put('content-disposition', 'attachment; filename="' + EncodingUtil.urlEncode(fileName, 'UTF-8') + '"');
+					Apexpages.currentPage().getHeaders().put('content-disposition', 'attachment; filename="";filename*=UTF-8\'\'' + EncodingUtil.urlEncode(fileName, 'UTF-8'));
 				} else {
 					sTitle = '';
 					fileName = '';
@@ -166,7 +166,6 @@ global with sharing class auHearingReplyCSVFileExportingCtrl {
 		}
 
 		//system.debug('detailReplies: ' + detailReplies);
-		String previousRow = '';
 		Integer previousQuestionIndex = questionCount - 2;
 		Integer questionIndex = questionCount - 1;
 		String csvRow = '';
@@ -188,19 +187,20 @@ global with sharing class auHearingReplyCSVFileExportingCtrl {
         }
 
 		//content rows
-		for(saInquiryReplyDetail__c reply : [SELECT 
-			saInquiryReply__r.DailyReportDate__c,
-			saInquiryReply__r.User__r.UserRole.DeveloperName,
-			saInquiryReply__r.User__r.UserRole.Name,
-			saInquiryReply__r.saBusinessLocation__r.Code__c,
-			saInquiryReply__r.saBusinessLocation__r.BusinessLocationName__c,
-			saInquiryReply__r.saBusinessLocation__r.AgencyCode__c,
-			saInquiryReply__r.saBusinessLocation__r.AgencyName__c,
-			saInquiryReply__r.saBusinessLocation__r.SupervisorCode__c,
-			saInquiryReply__r.saBusinessLocation__r.SupervisorName__c,
-			saInquiryReply__r.User__r.KDDIEmployeeId__c,
-			saInquiryReply__r.User__r.DisplayedUsernameFormula__c,
-
+		for(saInquiryReply__c masterReply : [SELECT 
+			DailyReportDate__c,
+			User__r.UserRole.DeveloperName,
+			User__r.UserRole.Name,
+			saBusinessLocation__r.Code__c,
+			saBusinessLocation__r.BusinessLocationName__c,
+			saBusinessLocation__r.AgencyCode__c,
+			saBusinessLocation__r.AgencyName__c,
+			saBusinessLocation__r.SupervisorCode__c,
+			saBusinessLocation__r.SupervisorName__c,
+			User__r.KDDIEmployeeId__c,
+			User__r.DisplayedUsernameFormula__c,
+			ReplyDatetime__c,
+			(SELECT
 			saInquiryDetail__r.AnswerType__c,
 			saInquiryDetail__r.NumberPossibleReplies__c,
 
@@ -237,151 +237,162 @@ global with sharing class auHearingReplyCSVFileExportingCtrl {
 			ReplyRadioButton__c,
 			ReplyText__c
 			
-			FROM saInquiryReplyDetail__c
+			FROM saInquiryReplyDetail_md__r
 			WHERE saInquiryDetail__c IN :questionIds
-			AND saInquiryReply__r.saInquiry__c = :inquyryId
-			AND saInquiryReply__r.Status__c = :saConstantCmn.SA_REPORT_REPLY_STATUS_REPLYSENT
-			AND saInquiryReply__r.saInquiry__r.Type__c = 'AU_HEARING'
+			ORDER BY saInquiryDetail__r.SortNo__c, saInquiryDetail__r.Name
+			),
+			Status__c
+			FROM saInquiryReply__c
+
+			WHERE saInquiry__c = :inquyryId
+			//AND Status__c = :saConstantCmn.SA_REPORT_REPLY_STATUS_REPLYSENT
+			AND saInquiry__r.Type__c = 'AU_HEARING'
 			AND
 			(
-				saInquiryReply__r.ReplyDatetime__c = NULL 
+				ReplyDatetime__c = NULL 
 				OR 
 				(
-					DAY_ONLY(convertTimezone(saInquiryReply__r.ReplyDatetime__c)) >= :dDateMin 
+					DAY_ONLY(convertTimezone(ReplyDatetime__c)) >= :dDateMin 
 					AND 
-					DAY_ONLY(convertTimezone(saInquiryReply__r.ReplyDatetime__c)) <= :dDateMax
+					DAY_ONLY(convertTimezone(ReplyDatetime__c)) <= :dDateMax
 				)
-			)
-			
-			ORDER BY saInquiryReply__c, saInquiryDetail__r.SortNo__c, saInquiryDetail__r.Name]) {
+			)]) {
 			//system.debug('Limits.getCpuTime(): ' + Limits.getCpuTime());
 			if(Limits.getCpuTime() >= 9000) {
 			//if(Limits.getCpuTime() >= 10) {
 				return null;
 			}
-			//if meet a new saInquiryReply__c id, then start new row, in other cases, just adding answers to row
-			if(String.valueOf(reply.saInquiryReply__r.Id) != previousRow) {
-				previousRow = String.valueOf(reply.saInquiryReply__r.Id);
-				//filling in all questions which are not answered yet
-				//the reason put it here because we only know it finished a row when met a new saInquiryReply__c Id
-				for(Integer i = questionIndex; i < questionCount-1; i++){
+
+			//start new row
+			//支社
+			csvRow = '"' + shisha + '"';
+			//支店
+			csvRow += ',"' + shiten + '"';
+			//作成者
+			csvRow += ',"' + createBy + '"';
+			//ヒアリング件名
+			csvRow += ',"' + reportName + '"';
+			//ヒアリング開始日
+			csvRow += ',"' + validFrom + '"';
+			//ヒアリング終了日
+			csvRow += ',"' + validTo + '"';
+			//運用中フラグ
+			csvRow += ',"' + (isValid ? '○' : '') + '"';
+			//最終更新日
+			csvRow += ',"' + lastModifiedDate + '"';
+			//最終更新者
+			csvRow += ',"' + lastModifiedBy + '"';
+			//ユーザー情報
+			//序列コード
+			csvRow += ',"' + masterReply.User__r.UserRole.DeveloperName + '"';
+			//組織名
+			csvRow += ',"' + masterReply.User__r.UserRole.Name + '"';
+			//社員番号
+			csvRow += ',"' + masterReply.User__r.KDDIEmployeeId__c + '"';
+			//報告者名
+			csvRow += ',"' + masterReply.User__r.DisplayedUsernameFormula__c + '"';
+			//報告日時
+			csvRow += masterReply.ReplyDatetime__c == null ? ',""' : ',"' + masterReply.ReplyDatetime__c.format('yyyy-MM-dd HH:mm:ss') + '"';
+			//返事済
+			csvRow += (masterReply.Status__c == saConstantCmn.SA_REPORT_REPLY_STATUS_REPLYSENT ? ',"○"' : ',""');
+
+			// if the data is temporary saved, do not export the replies from the user (just put blank values for each question)
+			//
+			if(masterReply.Status__c == saConstantCmn.SA_REPORT_REPLY_STATUS_REPLYSAVED || masterReply.Status__c == saConstantCmn.SA_REPORT_REPLY_STATUS_WAITINGREPLY || masterReply.saInquiryReplyDetail_md__r == null || masterReply.saInquiryReplyDetail_md__r.size() == 0){
+				for(Integer i = 0; i < questionCount-1; i++){
 					csvRow += ',""';
 				}
 				//add content row into result
-
 				if (csvRow.length() > 0) {
-		            lsRow.add(csvRow);            
-	    	        iSize += 1;					
+				    lsRow.add(csvRow);            
+	    		    iSize += 1;					
 				}
 
-	            if (iSize == 1000) {
-	                lslsRow.add(lsRow);
-	                lsRow = new List<String>();
-	                iSize = 0;
-	            }
-				
-				//start new row
-				//支社
-				csvRow = '"' + shisha + '"';
-				//支店
-				csvRow += ',"' + shiten + '"';
-				//作成者
-				csvRow += ',"' + createBy + '"';
-				//ヒアリング件名
-				csvRow += ',"' + reportName + '"';
-				//ヒアリング開始日
-				csvRow += ',"' + validFrom + '"';
-				//ヒアリング終了日
-				csvRow += ',"' + validTo + '"';
-				//運用中フラグ
-				csvRow += ',"' + (isValid ? '○' : '') + '"';
-				//最終更新日
-				csvRow += ',"' + lastModifiedDate + '"';
-				//最終更新者
-				csvRow += ',"' + lastModifiedBy + '"';
-				//ユーザー情報
-				//序列コード
-				csvRow += ',"' + reply.saInquiryReply__r.User__r.UserRole.DeveloperName + '"';
-				//組織名
-				csvRow += ',"' + reply.saInquiryReply__r.User__r.UserRole.Name + '"';
-				//社員番号
-				csvRow += ',"' + reply.saInquiryReply__r.User__r.KDDIEmployeeId__c + '"';
-				//報告者名
-				csvRow += ',"' + reply.saInquiryReply__r.User__r.DisplayedUsernameFormula__c + '"';
-				previousQuestionIndex = -1;
+	    		if (iSize == 1000) {
+	    		    lslsRow.add(lsRow);
+	    		    lsRow = new List<String>();
+	    		    iSize = 0;
+	    		}
+	    		system.debug('csvRow 1: ' + csvRow);
+				continue;
 			}
+
+			previousQuestionIndex = -1;
 
 			//adding answer
-			questionIndex = questionOrders.get(reply.saInquiryDetail__r.Id);
+			for(saInquiryReplyDetail__c replyDetail : masterReply.saInquiryReplyDetail_md__r)
+			{
+				questionIndex = questionOrders.get(replyDetail.saInquiryDetail__r.Id);
 			
-			//filling in all previous questions which are not answered yet
-			for(Integer i = previousQuestionIndex + 1; i < questionIndex; i++) {
-				csvRow += ',""';
-			}
-			previousQuestionIndex = questionIndex;
-
-			if(reply.saInquiryDetail__r.AnswerType__c == 'CHECKBOX') {
-				csvRow += ',"';
-				for(Integer i = 0; i < Integer.valueOf(reply.saInquiryDetail__r.NumberPossibleReplies__c); i++) {
-					List<String> param = new List<String>{String.valueOf(i+1).leftPad(2, '0')};
-					if((Boolean)reply.get(String.format('ReplyCheckbox{0}__c', param))){
-						//csvRow += (String)reply.saInquiryDetail__r.get(String.format('Reply{0}Label__c', param)) + ', ';
-						csvRow += ((String[])mapReplies.get(reply.saInquiryDetail__r.Id))[i] + ', ';
-					}
-				}
-				csvRow = csvRow.removeEnd(', ');
-				csvRow += '"';
-			} else if (reply.saInquiryDetail__r.AnswerType__c == 'TEXT'){
-				csvRow += ',"' + reply.ReplyText__c + '"';
-			} else if (reply.saInquiryDetail__r.AnswerType__c == 'NUMBER'){
-				csvRow += ',"' + reply.ReplyNumber__c + '"';
-			} else if (reply.saInquiryDetail__r.AnswerType__c == 'DECIMAL'){
-				csvRow += ',"' + reply.ReplyDecimal__c + '"';
-			} else if (reply.saInquiryDetail__r.AnswerType__c == 'RADIO_BUTTON'){
-				if (String.isBlank(reply.ReplyRadioButton__c)) {
-					//返事無し;
+				//filling in all previous questions which are not answered yet
+				for(Integer i = previousQuestionIndex + 1; i < questionIndex; i++) {
 					csvRow += ',""';
-				} else {
-					/*List<String> param = new List<String>{reply.ReplyRadioButton__c.subString(6)};
-					csvRow += ',"' + (String)reply.saInquiryDetail__r.get(String.format('Reply{0}Label__c', param)) + '"';*/
-					Integer indexAnswer = Integer.valueOf(reply.ReplyRadioButton__c.subString(6));
-					csvRow += ',"' + ((String[])mapReplies.get(reply.saInquiryDetail__r.Id))[indexAnswer-1] + '"';
 				}
-			} else if (reply.saInquiryDetail__r.AnswerType__c == 'DATE'){
-				Date d = reply.ReplyDateStart__c;
-				csvRow += d == null ? ',""' : ',"' + d.year() + '-' + String.valueOf(d.month()).leftPad(2, '0') + '-' + String.valueOf(d.day()).leftPad(2, '0') + '"';
-				//csvRow += ',"' + reply.ReplyDateStart__c + '"';
-			} else if (reply.saInquiryDetail__r.AnswerType__c == 'PERIOD'){
-				Date d1 = reply.ReplyDateStart__c;
-				String strD1 = d1 == null ? 'null' : d1.year() + '-' + String.valueOf(d1.month()).leftPad(2, '0') + '-' + String.valueOf(d1.day()).leftPad(2, '0');
-				Date d2 = reply.ReplyDateEnd__c;
-				String strD2 = d2 == null ? 'null' : d2.year() + '-' + String.valueOf(d2.month()).leftPad(2, '0') + '-' + String.valueOf(d2.day()).leftPad(2, '0');
-				
-				csvRow += ',"' + strD1 + ' ~ ' + strD2 + '"';
-			} else if (reply.saInquiryDetail__r.AnswerType__c == 'LABEL'){
+				previousQuestionIndex = questionIndex;
+
+				if(replyDetail.saInquiryDetail__r.AnswerType__c == 'CHECKBOX') {
+					csvRow += ',"';
+					for(Integer i = 0; i < Integer.valueOf(replyDetail.saInquiryDetail__r.NumberPossibleReplies__c); i++) {
+						List<String> param = new List<String>{String.valueOf(i+1).leftPad(2, '0')};
+						if((Boolean)replyDetail.get(String.format('ReplyCheckbox{0}__c', param))){
+							//csvRow += (String)replyDetail.saInquiryDetail__r.get(String.format('Reply{0}Label__c', param)) + ', ';
+							csvRow += ((String[])mapReplies.get(replyDetail.saInquiryDetail__r.Id))[i] + ', ';
+						}
+					}
+					csvRow = csvRow.removeEnd(', ');
+					csvRow += '"';
+				} else if (replyDetail.saInquiryDetail__r.AnswerType__c == 'TEXT'){
+					csvRow += ',"' + (String.isEmpty(replyDetail.ReplyText__c) ? '' : replyDetail.ReplyText__c) + '"';
+				} else if (replyDetail.saInquiryDetail__r.AnswerType__c == 'NUMBER'){
+					csvRow += ',"' + replyDetail.ReplyNumber__c + '"';
+				} else if (replyDetail.saInquiryDetail__r.AnswerType__c == 'DECIMAL'){
+					csvRow += ',"' + replyDetail.ReplyDecimal__c + '"';
+				} else if (replyDetail.saInquiryDetail__r.AnswerType__c == 'RADIO_BUTTON'){
+					if (String.isBlank(replyDetail.ReplyRadioButton__c)) {
+						//返事無し;
+						csvRow += ',""';
+					} else {
+						/*List<String> param = new List<String>{replyDetail.ReplyRadioButton__c.subString(6)};
+						csvRow += ',"' + (String)replyDetail.saInquiryDetail__r.get(String.format('Reply{0}Label__c', param)) + '"';*/
+						Integer indexAnswer = Integer.valueOf(replyDetail.ReplyRadioButton__c.subString(6));
+						csvRow += ',"' + ((String[])mapReplies.get(replyDetail.saInquiryDetail__r.Id))[indexAnswer-1] + '"';
+					}
+				} else if (replyDetail.saInquiryDetail__r.AnswerType__c == 'DATE'){
+					Date d = replyDetail.ReplyDateStart__c;
+					csvRow += d == null ? ',""' : ',"' + d.year() + '-' + String.valueOf(d.month()).leftPad(2, '0') + '-' + String.valueOf(d.day()).leftPad(2, '0') + '"';
+					//csvRow += ',"' + replyDetail.ReplyDateStart__c + '"';
+				} else if (replyDetail.saInquiryDetail__r.AnswerType__c == 'PERIOD'){
+					Date d1 = replyDetail.ReplyDateStart__c;
+					String strD1 = d1 == null ? '' : d1.year() + '-' + String.valueOf(d1.month()).leftPad(2, '0') + '-' + String.valueOf(d1.day()).leftPad(2, '0');
+					Date d2 = replyDetail.ReplyDateEnd__c;
+					String strD2 = d2 == null ? '' : d2.year() + '-' + String.valueOf(d2.month()).leftPad(2, '0') + '-' + String.valueOf(d2.day()).leftPad(2, '0');
+					
+					csvRow += ',"' + strD1 + ' ~ ' + strD2 + '"';
+				} else if (replyDetail.saInquiryDetail__r.AnswerType__c == 'LABEL'){
+					csvRow += ',""';
+				}
+			}
+			//filling all questions which are not answered yet
+			for(Integer i = questionIndex; i < questionCount-1; i++){
 				csvRow += ',""';
 			}
-		}
+			system.debug('csvRow 3: ' + csvRow);
+			//add content row into result
 
-		for(Integer i = questionIndex; i < questionCount-1; i++){
-			csvRow += ',""';
-		}
-
-		/*if (csvRow.length() > 0) {
-            lsRow.add(csvRow);            
-            lslsRow.add(lsRow);
-		}*/
-		if (csvRow.length() > 0) {
-			if(iSize < 1000) {
-				lsRow.add(csvRow);
-			} else {
-				lslsRow.add(lsRow);
-				lsRow = new List<String>();
-				lsRow.add(csvRow);
+			if (csvRow.length() > 0) {
+			    lsRow.add(csvRow);            
+	    	    iSize += 1;					
 			}
-            lslsRow.add(lsRow);
-		}
 
+	    	if (iSize == 1000) {
+	    	    lslsRow.add(lsRow);
+	    	    lsRow = new List<String>();
+	    	    iSize = 0;
+	    	}
+		}
+		if(lsRow.size() > 0){
+			lslsRow.add(lsRow);
+		}
 		return lslsRow;
 	}
 }

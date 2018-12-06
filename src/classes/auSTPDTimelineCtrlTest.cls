@@ -52,7 +52,7 @@ private class auSTPDTimelineCtrlTest
       // props
       //----------------------------------------------------------------------------------------------------
   		Object obj = null;
-  		obj = ctrl.hqInfos;
+
 			obj = ctrl.lsEvents;
 			obj = ctrl.lsFeeds;
 			obj = ctrl.mpFeedData;

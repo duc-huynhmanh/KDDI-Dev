@@ -21,8 +21,8 @@ public with sharing class saTaskCSVFileExportingCtrl {
     private void createFileName(){
         String fileName = '';
         fileName = 'ToDoList_' + Datetime.now().format('yyyyMMdd') + '.csv';
-        sTitle = '"支社","支店","作成者","ToDo件名","ToDo開始日","ToDo終了日","運用中フラグ","最終更新日","最終更新者","リマインド回数","回答数/発信数","ToDoID"';
-        Apexpages.currentPage().getHeaders().put('content-disposition', 'attachment; filename="' + EncodingUtil.urlEncode(fileName, 'UTF-8') + '"');
+        sTitle = '"発信元支社","発信元支店","作成者","ToDo件名","ToDo開始日","ToDo終了日","運用中フラグ","最終更新日","最終更新者","リマインド回数","回答数/発信数","ToDoID"';
+        Apexpages.currentPage().getHeaders().put('content-disposition', 'attachment; filename="";filename*=UTF-8\'\'' + EncodingUtil.urlEncode(fileName, 'UTF-8'));
     }
 
     private String createQueryString(){
@@ -36,9 +36,9 @@ public with sharing class saTaskCSVFileExportingCtrl {
         }
         orderby = Apexpages.currentPage().getParameters().get('orderby');
         if(String.isBlank(orderby)){
-            orderby =  'LastModifiedDate desc';
+            orderby = ' ORDER BY LastModifiedDate desc';
         } 
-        queryStr += ' ORDER BY ' + orderby + (orderby.trim().endsWithIgnoreCase('desc') ? ' NULLS LAST' : '');
+        queryStr += orderby + (orderby.trim().endsWithIgnoreCase('desc') ? ' NULLS LAST' : '');
         system.debug('queryStr: ' + queryStr);
         return queryStr;
     }

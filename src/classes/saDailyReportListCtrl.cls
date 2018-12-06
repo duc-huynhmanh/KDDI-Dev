@@ -112,11 +112,11 @@ public with sharing class saDailyReportListCtrl {
                    myUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN ||
                    myUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP ||
                    myUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH ||
-                   myUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH_V2 ||
                    myUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE ||
-                   myUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2 ||
                    myUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS ||
-                   myUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS_V2;
+                   myUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA ||
+                   myUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 ||
+                   myUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2;
 
       dataLimit = 200;
 

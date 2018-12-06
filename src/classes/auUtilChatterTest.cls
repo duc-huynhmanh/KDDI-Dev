@@ -115,34 +115,43 @@ private class auUtilChatterTest
 		auUtilChatter.getListShisha(kddiUser);
 		auUtilChatter.getListShiten(kddiUser, NULL);
 		auUtilChatter.getListShiten(kddiUser, idShisha);
-		auUtilChatter.getListUneiHojin(kddiUser, NULL, NULL);
-		auUtilChatter.getListUneiHojin(kddiUser, idShisha, NULL);
-		auUtilChatter.getListUneiHojin(kddiUser, idShisha, idShiten);
-		auUtilChatter.getListShops(kddiUser, NULL, NULL, NULL);
-		auUtilChatter.getListShops(kddiUser, idShisha, NULL, NULL);
-		auUtilChatter.getListShops(kddiUser, idShisha, idShiten, NULL);
+		auUtilChatter.getListDairiten(kddiUser, NULL, NULL);
+		auUtilChatter.getListDairiten(kddiUser, idShisha, NULL);
+		auUtilChatter.getListDairiten(kddiUser, idShisha, idShiten);
+		auUtilChatter.getListUneiHojin(kddiUser, NULL, NULL, NULL);
+		auUtilChatter.getListUneiHojin(kddiUser, idShisha, NULL, NULL);
+		auUtilChatter.getListUneiHojin(kddiUser, idShisha, idShiten, NULL);
+		auUtilChatter.getListShops(kddiUser, NULL, NULL, NULL, NULL);
+		auUtilChatter.getListShops(kddiUser, idShisha, NULL, NULL, NULL);
+		auUtilChatter.getListShops(kddiUser, idShisha, idShiten, NULL, NULL);
 
 		auUtilChatter.getListShisha(shopUser);
 		auUtilChatter.getListShiten(shopUser, NULL);
 		auUtilChatter.getListShiten(shopUser, idShisha);
-		auUtilChatter.getListUneiHojin(shopUser, NULL, NULL);
-		auUtilChatter.getListUneiHojin(shopUser, idShisha, NULL);
-		auUtilChatter.getListUneiHojin(shopUser, idShisha, idShiten);
-		auUtilChatter.getListShops(shopUser, NULL, NULL, NULL);
-		auUtilChatter.getListShops(shopUser, idShisha, NULL, NULL);
-		auUtilChatter.getListShops(shopUser, idShisha, idShiten, NULL);
+		auUtilChatter.getListDairiten(shopUser, NULL, NULL);
+		auUtilChatter.getListDairiten(shopUser, idShisha, NULL);
+		auUtilChatter.getListDairiten(shopUser, idShisha, idShiten);
+		auUtilChatter.getListUneiHojin(shopUser, NULL, NULL, NULL);
+		auUtilChatter.getListUneiHojin(shopUser, idShisha, NULL, NULL);
+		auUtilChatter.getListUneiHojin(shopUser, idShisha, idShiten, NULL);
+		auUtilChatter.getListShops(shopUser, NULL, NULL, NULL, NULL);
+		auUtilChatter.getListShops(shopUser, idShisha, NULL, NULL, NULL);
+		auUtilChatter.getListShops(shopUser, idShisha, idShiten, NULL, NULL);
 
     	Test.stopTest();
 
 		auUtilChatter.getListShisha(honbuUser);
 		auUtilChatter.getListShiten(honbuUser, NULL);
 		auUtilChatter.getListShiten(honbuUser, idShisha);
-		auUtilChatter.getListUneiHojin(honbuUser, NULL, NULL);
-		auUtilChatter.getListUneiHojin(honbuUser, idShisha, NULL);
-		auUtilChatter.getListUneiHojin(honbuUser, idShisha, idShiten);
-		auUtilChatter.getListShops(honbuUser, NULL, NULL, NULL);
-		auUtilChatter.getListShops(honbuUser, idShisha, NULL, NULL);
-		auUtilChatter.getListShops(honbuUser, idShisha, idShiten, NULL);
+		auUtilChatter.getListDairiten(honbuUser, NULL, NULL);
+		auUtilChatter.getListDairiten(honbuUser, idShisha, NULL);
+		auUtilChatter.getListDairiten(honbuUser, idShisha, idShiten);
+		auUtilChatter.getListUneiHojin(honbuUser, NULL, NULL, NULL);
+		auUtilChatter.getListUneiHojin(honbuUser, idShisha, NULL, NULL);
+		auUtilChatter.getListUneiHojin(honbuUser, idShisha, idShiten, NULL);
+		auUtilChatter.getListShops(honbuUser, NULL, NULL, NULL, NULL);
+		auUtilChatter.getListShops(honbuUser, idShisha, NULL, NULL, NULL);
+		auUtilChatter.getListShops(honbuUser, idShisha, idShiten, NULL, NULL);
 
 	}
 

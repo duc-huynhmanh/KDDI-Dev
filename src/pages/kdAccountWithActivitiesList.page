@@ -426,6 +426,10 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
   .mdl-data-table__cell--non-numeric ul li.active a{
     pointer-events: none;
   }
+  .search-status__select {
+    width: auto;
+    height: 2.1rem;
+  }
 
   </style>
 
@@ -457,6 +461,8 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
         this.value = '';
       });
       $j('.filter-item input[type=checkbox]').prop('checked', false);
+      $j(".filter-select select").val("");
+      clearCookie();
     }
 
     function checkFileSize() {
@@ -548,6 +554,8 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
     <apex:inputText id="orderBy" styleClass="orderInput" value="{!orderBy}" style="display: none;" />
     <apex:inputText styleClass="errorMessageInput" value="{!errorMessage}" style="display: none;" />
     <apex:actionFunction name="changeOrder" action="{!changeOrder}" />
+    
+
     <apex:actionFunction name="addAccountNewAttachment" action="{!addAccountNewAttachment}" />
   </apex:outputPanel>
 
@@ -561,6 +569,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
               <div class="mdl-cell mdl-cell--12-col">
                 <div class="search-filter clearfix search_criteria_form" >
                   <apex:actionRegion id="area51f" renderRegionOnly="false">
+                  <apex:actionFunction name="clearCookie" action="{!clearCookie}" reRender="area51f" />
                     <div style="display: inline-block;">
 
                       <fieldset class="filter-item">
@@ -583,14 +592,19 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                         <apex:inputText value="{!filterMngCorpName}" styleclass="search-textfield" />
                       </fieldset>
 
-                      <fieldset class="filter-item">
+                      <fieldset class="filter-item filter-select">
                         <label >営業担当支社</label>
-                        <apex:inputText value="{!filterRegionalOffice}" styleclass="search-textfield" />
+                        <apex:selectList styleClass="search-status__select" value="{!filterRegionalOffice}" size="1" style="margin-left: 0.5rem">
+                          <apex:actionSupport event="onchange" action="{!refreshShiten}" reRender="filterShiten"/>
+                          <apex:selectOptions value="{!optShisha}" />
+                        </apex:selectList>
                       </fieldset>
 
-                      <fieldset class="filter-item">
+                      <fieldset class="filter-item filter-select">
                         <label >営業担当支店</label>
-                        <apex:inputText value="{!filterBranch}" styleclass="search-textfield" />
+                        <apex:selectList id="filterShiten" styleClass="search-status__select" value="{!filterBranch}" size="1" style="margin-left: 0.5rem">
+                          <apex:selectOptions value="{!optShiten}" />
+                        </apex:selectList>
                       </fieldset>
 
                       <fieldset class="filter-item">
@@ -604,8 +618,8 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                       </fieldset>
                        
                       <fieldset class="filter-button">
-                        <apex:commandLink styleClass="margin-right10 mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="クリアする" onclick="clearSearchCondition();" reRender="area51f"/>
-                        <apex:commandLink value="絞り込む/実行" styleClass="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="showWaitPanel();" action="{!doSearch}"/>
+                        <apex:commandLink value="絞り込む/実行" styleClass="margin-right10 mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="showWaitPanel();" action="{!doSearch}"/>
+                        <apex:commandLink styleClass="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="クリアする" onclick="clearSearchCondition();" reRender="area51f"/>
                       </fieldset>                                
                     </div>
                   </apex:actionRegion>

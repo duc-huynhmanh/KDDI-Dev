@@ -1,0 +1,894 @@
+38.0 APEX_CODE,FINEST;APEX_PROFILING,INFO;CALLOUT,INFO;DB,INFO;NBA,INFO;SYSTEM,DEBUG;VALIDATION,INFO;VISUALFORCE,INFO;WAVE,INFO;WORKFLOW,INFO
+18:51:06.0 (126677)|USER_INFO|[EXTERNAL]|005N00000057RPN|duc.huynhmanh+kddi-gwdev01@globalway.co.jp|日本標準時|GMT+09:00
+18:51:06.0 (199014)|EXECUTION_STARTED
+18:51:06.0 (207287)|CODE_UNIT_STARTED|[EXTERNAL]|066N0000000Lyeg|VF: /apex/kdKnowledgeListPage
+18:51:06.0 (839036)|VF_DESERIALIZE_VIEWSTATE_BEGIN|066N0000000Lyeg
+18:51:06.0 (5198236)|HEAP_ALLOCATE|[72]|Bytes:3
+18:51:06.0 (5248968)|HEAP_ALLOCATE|[77]|Bytes:152
+18:51:06.0 (5272180)|HEAP_ALLOCATE|[342]|Bytes:408
+18:51:06.0 (5285239)|HEAP_ALLOCATE|[355]|Bytes:408
+18:51:06.0 (5296511)|HEAP_ALLOCATE|[467]|Bytes:48
+18:51:06.0 (5331686)|HEAP_ALLOCATE|[139]|Bytes:6
+18:51:06.0 (5376586)|HEAP_ALLOCATE|[50]|Bytes:5
+18:51:06.0 (5401881)|HEAP_ALLOCATE|[56]|Bytes:5
+18:51:06.0 (5410584)|HEAP_ALLOCATE|[64]|Bytes:7
+18:51:06.0 (7179028)|VARIABLE_SCOPE_BEGIN|[21]|kdKnowledgeListCtrl.COOKIE_CREATEDBY|String|false|true
+18:51:06.0 (7193837)|VARIABLE_SCOPE_BEGIN|[37]|kdKnowledgeListCtrl.COOKIE_EXPIRATION_DATE|Integer|false|true
+18:51:06.0 (7201775)|VARIABLE_SCOPE_BEGIN|[33]|kdKnowledgeListCtrl.COOKIE_FREETEXT|String|false|true
+18:51:06.0 (7207562)|VARIABLE_SCOPE_BEGIN|[22]|kdKnowledgeListCtrl.COOKIE_HASMOVIE|String|false|true
+18:51:06.0 (7214199)|VARIABLE_SCOPE_BEGIN|[36]|kdKnowledgeListCtrl.COOKIE_LABEL_INIT_SEARCH_FLG|String|false|true
+18:51:06.0 (7222381)|VARIABLE_SCOPE_BEGIN|[23]|kdKnowledgeListCtrl.COOKIE_NEW|String|false|true
+18:51:06.0 (7228102)|VARIABLE_SCOPE_BEGIN|[15]|kdKnowledgeListCtrl.COOKIE_PREFIX|String|false|true
+18:51:06.0 (7233707)|VARIABLE_SCOPE_BEGIN|[16]|kdKnowledgeListCtrl.COOKIE_STATUS|String|false|true
+18:51:06.0 (7239311)|VARIABLE_SCOPE_BEGIN|[19]|kdKnowledgeListCtrl.COOKIE_SUBJECTDIVISION|String|false|true
+18:51:06.0 (7245012)|VARIABLE_SCOPE_BEGIN|[18]|kdKnowledgeListCtrl.COOKIE_THEMA|String|false|true
+18:51:06.0 (7250541)|VARIABLE_SCOPE_BEGIN|[20]|kdKnowledgeListCtrl.COOKIE_TITLE|String|false|true
+18:51:06.0 (7255821)|VARIABLE_SCOPE_BEGIN|[17]|kdKnowledgeListCtrl.COOKIE_TYPE|String|false|true
+18:51:06.0 (7263853)|VARIABLE_SCOPE_BEGIN|[24]|kdKnowledgeListCtrl.MOVIE_CONTENTTYPE|Set<String>|true|true
+18:51:06.0 (7278406)|VARIABLE_SCOPE_BEGIN|[3]|kdKnowledgeListCtrl.URL_PARAM_NAME_KNOWLEDGE_ID|String|false|true
+18:51:06.0 (7285923)|VARIABLE_SCOPE_BEGIN|[4]|kdKnowledgeListCtrl.URL_PARAM_NAME_SHOP_ID|String|false|true
+18:51:06.0 (8561279)|VARIABLE_SCOPE_BEGIN|[25]|auMainTopCompCtrl.TYPE_SCREEN_ACCOUNT_LIST|Integer|false|true
+18:51:06.0 (8573881)|VARIABLE_SCOPE_BEGIN|[26]|auMainTopCompCtrl.TYPE_SCREEN_ACTIVITY_LIST|Integer|false|true
+18:51:06.0 (8581259)|VARIABLE_SCOPE_BEGIN|[7]|auMainTopCompCtrl.TYPE_SCREEN_CX_SCREEN|Integer|false|true
+18:51:06.0 (8588174)|VARIABLE_SCOPE_BEGIN|[8]|auMainTopCompCtrl.TYPE_SCREEN_CX_TIMELINE|Integer|false|true
+18:51:06.0 (8595757)|VARIABLE_SCOPE_BEGIN|[9]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE|Integer|false|true
+18:51:06.0 (8602273)|VARIABLE_SCOPE_BEGIN|[10]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE_LIST|Integer|false|true
+18:51:06.0 (8610182)|VARIABLE_SCOPE_BEGIN|[27]|auMainTopCompCtrl.TYPE_SCREEN_FILE_LIST|Integer|false|true
+18:51:06.0 (8616122)|VARIABLE_SCOPE_BEGIN|[24]|auMainTopCompCtrl.TYPE_SCREEN_HONBU_DIRECT|Integer|false|true
+18:51:06.0 (8621697)|VARIABLE_SCOPE_BEGIN|[11]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_DASHBOARD|Integer|false|true
+18:51:06.0 (8627293)|VARIABLE_SCOPE_BEGIN|[12]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_LIST|Integer|false|true
+18:51:06.0 (8633452)|VARIABLE_SCOPE_BEGIN|[15]|auMainTopCompCtrl.TYPE_SCREEN_SA_CHATTER|Integer|false|true
+18:51:06.0 (8638911)|VARIABLE_SCOPE_BEGIN|[16]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORT|Integer|false|true
+18:51:06.0 (8644523)|VARIABLE_SCOPE_BEGIN|[22]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORTLIST|Integer|false|true
+18:51:06.0 (8651623)|VARIABLE_SCOPE_BEGIN|[18]|auMainTopCompCtrl.TYPE_SCREEN_SA_DOCUMENTS|Integer|false|true
+18:51:06.0 (8657306)|VARIABLE_SCOPE_BEGIN|[17]|auMainTopCompCtrl.TYPE_SCREEN_SA_ENQUETE|Integer|false|true
+18:51:06.0 (8663138)|VARIABLE_SCOPE_BEGIN|[20]|auMainTopCompCtrl.TYPE_SCREEN_SA_LINKS|Integer|false|true
+18:51:06.0 (8668855)|VARIABLE_SCOPE_BEGIN|[13]|auMainTopCompCtrl.TYPE_SCREEN_SA_MESSAGES|Integer|false|true
+18:51:06.0 (8674690)|VARIABLE_SCOPE_BEGIN|[19]|auMainTopCompCtrl.TYPE_SCREEN_SA_RANKING|Integer|false|true
+18:51:06.0 (8680484)|VARIABLE_SCOPE_BEGIN|[14]|auMainTopCompCtrl.TYPE_SCREEN_SA_REPORTS|Integer|false|true
+18:51:06.0 (8686477)|VARIABLE_SCOPE_BEGIN|[23]|auMainTopCompCtrl.TYPE_SCREEN_SA_TODO|Integer|false|true
+18:51:06.0 (8692520)|VARIABLE_SCOPE_BEGIN|[21]|auMainTopCompCtrl.TYPE_SCREEN_SA_USRSETTINGS|Integer|false|true
+18:51:06.0 (8698813)|VARIABLE_SCOPE_BEGIN|[4]|auMainTopCompCtrl.TYPE_SCREEN_STPD_EVENT|Integer|false|true
+18:51:06.0 (8704855)|VARIABLE_SCOPE_BEGIN|[6]|auMainTopCompCtrl.TYPE_SCREEN_STPD_SCREEN|Integer|false|true
+18:51:06.0 (8710943)|VARIABLE_SCOPE_BEGIN|[5]|auMainTopCompCtrl.TYPE_SCREEN_STPD_TIMELINE|Integer|false|true
+18:51:06.0 (8716896)|VARIABLE_SCOPE_BEGIN|[3]|auMainTopCompCtrl.TYPE_SCREEN_SWITCH|Integer|false|true
+18:51:06.0 (11869093)|VF_DESERIALIZE_VIEWSTATE_END
+18:51:06.0 (17017687)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (17090159)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:13
+18:51:06.0 (17114787)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:816
+18:51:06.0 (17121269)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:360
+18:51:06.0 (17126417)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:35
+18:51:06.0 (17131776)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:9
+18:51:06.0 (17164710)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_CREATEDBY|"CreatedBy"
+18:51:06.0 (17171844)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+18:51:06.0 (17179907)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_FREETEXT|"FreeText"
+18:51:06.0 (17184581)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+18:51:06.0 (17191316)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_HASMOVIE|"HasMovie"
+18:51:06.0 (17196018)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:13
+18:51:06.0 (17201715)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_LABEL_INIT_SEARCH_FLG|"initSearchFlg"
+18:51:06.0 (17206363)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+18:51:06.0 (17212992)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_NEW|"NewItems"
+18:51:06.0 (17217901)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:20
+18:51:06.0 (17224465)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_PREFIX|"kdKnowledgeListPage_"
+18:51:06.0 (17228611)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:6
+18:51:06.0 (17235503)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_STATUS|"Status"
+18:51:06.0 (17239868)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:15
+18:51:06.0 (17246201)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_SUBJECTDIVISION|"SubjectDivision"
+18:51:06.0 (17250940)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:5
+18:51:06.0 (17256804)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_THEMA|"Thema"
+18:51:06.0 (17260769)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:5
+18:51:06.0 (17273066)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_TITLE|"Title"
+18:51:06.0 (17277118)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:51:06.0 (17282928)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.COOKIE_TYPE|"Type"
+18:51:06.0 (17295963)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:9
+18:51:06.0 (17304178)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.URL_PARAM_NAME_KNOWLEDGE_ID|"knowledge"
+18:51:06.0 (17308588)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:51:06.0 (17315391)|VARIABLE_ASSIGNMENT|[EXTERNAL]|kdKnowledgeListCtrl.URL_PARAM_NAME_SHOP_ID|"shop"
+18:51:06.0 (17359185)|METHOD_ENTRY|[1]|01pN0000000a5VF|kdKnowledgeListCtrl.kdKnowledgeListCtrl()
+18:51:06.0 (17367096)|STATEMENT_EXECUTE|[1]
+18:51:06.0 (17373913)|STATEMENT_EXECUTE|[1]
+18:51:06.0 (17388758)|SYSTEM_MODE_ENTER|false
+18:51:06.0 (17410315)|HEAP_ALLOCATE|[24]|Bytes:5
+18:51:06.0 (17416258)|STATEMENT_EXECUTE|[24]
+18:51:06.0 (17466781)|METHOD_ENTRY|[24]|01pN0000000a5VF|kdKnowledgeListCtrl.getMovieContentType()
+18:51:06.0 (17516965)|HEAP_ALLOCATE|[127]|Bytes:5
+18:51:06.0 (17522867)|STATEMENT_EXECUTE|[126]
+18:51:06.0 (17524616)|STATEMENT_EXECUTE|[127]
+18:51:06.0 (17543837)|HEAP_ALLOCATE|[127]|Bytes:4
+18:51:06.0 (17608984)|VARIABLE_SCOPE_BEGIN|[127]|movies|Set<String>|true|false
+18:51:06.0 (17653285)|VARIABLE_ASSIGNMENT|[127]|movies|[]|0x6a05ad15
+18:51:06.0 (17659875)|STATEMENT_EXECUTE|[128]
+18:51:06.0 (17665995)|HEAP_ALLOCATE|[128]|Bytes:15
+18:51:06.0 (17707938)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:51:06.0 (17720017)|STATEMENT_EXECUTE|[129]
+18:51:06.0 (17723230)|HEAP_ALLOCATE|[129]|Bytes:9
+18:51:06.0 (17738035)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:51:06.0 (17744281)|STATEMENT_EXECUTE|[130]
+18:51:06.0 (17767778)|METHOD_EXIT|[24]|01pN0000000a5VF|kdKnowledgeListCtrl.getMovieContentType()
+18:51:06.0 (17793179)|VARIABLE_ASSIGNMENT|[24]|kdKnowledgeListCtrl.MOVIE_CONTENTTYPE|["video/quicktime","video/mp4"]|0x6a05ad15
+18:51:06.0 (17800715)|STATEMENT_EXECUTE|[37]
+18:51:06.0 (17806417)|HEAP_ALLOCATE|[37]|Bytes:4
+18:51:06.0 (17816805)|VARIABLE_ASSIGNMENT|[37]|kdKnowledgeListCtrl.COOKIE_EXPIRATION_DATE|-1
+18:51:06.0 (17822044)|STATEMENT_EXECUTE|[1111]
+18:51:06.0 (17827326)|SYSTEM_MODE_EXIT|false
+18:51:06.0 (17844148)|METHOD_EXIT|[1]|kdKnowledgeListCtrl
+18:51:06.0 (17851692)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:51:06.0 (17855936)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:188
+18:51:06.0 (18053900)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.kdKnowledgeUpdateId|"a0AN0000009y1QRMAY"|0x8818c00
+18:51:06.0 (18522561)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:188
+18:51:06.0 (18544914)|VARIABLE_SCOPE_BEGIN|[939]|this|kdKnowledgeListCtrl|true|false
+18:51:06.0 (18820083)|VARIABLE_ASSIGNMENT|[939]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":false,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x75519fce","kdKnowledgeUpdateDetailCopy":"0x1ebe2366","kdKnowledgeUpdateDetailLike":"0x5cb41215","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x31ae976b","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (18847105)|SYSTEM_MODE_ENTER|false
+18:51:06.0 (18855376)|HEAP_ALLOCATE|[941]|Bytes:5
+18:51:06.0 (18861647)|STATEMENT_EXECUTE|[939]
+18:51:06.0 (18863502)|STATEMENT_EXECUTE|[941]
+18:51:06.0 (18869215)|VARIABLE_SCOPE_BEGIN|[941]|fLikeFound|Boolean|false|false
+18:51:06.0 (18877011)|HEAP_ALLOCATE|[941]|Bytes:5
+18:51:06.0 (18883936)|VARIABLE_ASSIGNMENT|[941]|fLikeFound|false
+18:51:06.0 (18888704)|STATEMENT_EXECUTE|[942]
+18:51:06.0 (18890887)|VARIABLE_SCOPE_BEGIN|[942]|fCopyFound|Boolean|false|false
+18:51:06.0 (18897902)|HEAP_ALLOCATE|[942]|Bytes:5
+18:51:06.0 (18903043)|VARIABLE_ASSIGNMENT|[942]|fCopyFound|false
+18:51:06.0 (18907146)|STATEMENT_EXECUTE|[943]
+18:51:06.0 (18909046)|VARIABLE_SCOPE_BEGIN|[943]|fViewFound|Boolean|false|false
+18:51:06.0 (18915483)|HEAP_ALLOCATE|[943]|Bytes:5
+18:51:06.0 (18920778)|VARIABLE_ASSIGNMENT|[943]|fViewFound|false
+18:51:06.0 (18924040)|STATEMENT_EXECUTE|[944]
+18:51:06.0 (19149534)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":false,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x75519fce","kdKnowledgeUpdateDetailCopy":"0x1ebe2366","kdKnowledgeUpdateDetailLike":"0x5cb41215","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x31ae976b","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (19171440)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|false
+18:51:06.0 (19180255)|HEAP_ALLOCATE|[94]|Bytes:5
+18:51:06.0 (19191494)|VARIABLE_ASSIGNMENT|[94]|this.isUpdate|false|0x8818c00
+18:51:06.0 (19201959)|STATEMENT_EXECUTE|[946]
+18:51:06.0 (19206001)|HEAP_ALLOCATE|[946]|Bytes:517
+18:51:06.0 (19228824)|HEAP_ALLOCATE|[946]|Bytes:4
+18:51:06.0 (19241370)|HEAP_ALLOCATE|[946]|Bytes:7
+18:51:06.0 (19446023)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":false,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x75519fce","kdKnowledgeUpdateDetailCopy":"0x1ebe2366","kdKnowledgeUpdateDetailLike":"0x5cb41215","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x31ae976b","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (25065933)|SOQL_EXECUTE_BEGIN|[946]|Aggregations:2|SELECT Id, Name, AgencyLabel__c, Agency__c, CreatedBy__c, Description__c, SharedBy__c, SubjectDivision__c, Thema__c, Title__c, Type__c, MediumCategory__c, LastModifiedBy__c, CreatedBy__r.DisplayedUsernameFormula__c, Status__c, UserRecordAccess.HasEditAccess, UserRecordAccess.HasDeleteAccess, (SELECT User__r.DisplayedUsernameFormula__c, CommentLike__c FROM kdKnowledgeDetail_Like__r), (SELECT User__r.DisplayedUsernameFormula__c, CommentCopy__c FROM kdKnowledgeDetail_Copy__r) FROM kdKnowledge__c WHERE id = :tmpVar1
+18:51:06.0 (95474793)|SOQL_EXECUTE_END|[946]|Rows:1
+18:51:06.0 (95706376)|HEAP_ALLOCATE|[946]|Bytes:8
+18:51:06.0 (95744796)|HEAP_ALLOCATE|[946]|Bytes:838
+18:51:06.0 (95811387)|HEAP_ALLOCATE|[946]|Bytes:8
+18:51:06.0 (95840212)|HEAP_ALLOCATE|[946]|Bytes:40
+18:51:06.0 (95921601)|HEAP_ALLOCATE|[946]|Bytes:60
+18:51:06.0 (96306154)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":false,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x75519fce","kdKnowledgeUpdateDetailCopy":"0x1ebe2366","kdKnowledgeUpdateDetailLike":"0x5cb41215","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x31ae976b","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (96390631)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0AN0000009y1QRMAY","Name":"EK-00000239","CreatedBy__c":"005N00000057RPNIA2","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"new item 2","Type__c":"Value1","MediumCategory__c":"cate1","LastModifiedBy__c":"005N00000057RPNIA2","Status__c":"Saved","UserRecordAccess":{"HasDeleteAccess":true,"HasEditAccess":true},"kdKnowledgeDetail_Copy__r":[{"kdKnowledgeCopy__c":"a0AN0000009y1QRMAY","Id":"a0BN000000ED2oZMAT","User__c":"005N00000057RPNIA2","CommentCopy__c":"duc mane","User__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}],"kdKnowledgeDetail_Like__r":[{"kdKnowledgeLike__c":"a0AN0000009y1QRMAY","Id":"a0BN000000ED2oUMAT","User__c":"005N00000057RPNIA2","CommentLike__c":"like","User__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}],"CreatedBy__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}|0x74b372d7
+18:51:06.0 (96469078)|VARIABLE_ASSIGNMENT|[73]|this.kdKnowledgeUpdate|{"Id":"a0AN0000009y1QRMAY","Name":"EK-00000239","CreatedBy__c":"005N00000057RPNIA2","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"new item 2","Type__c":"Value1","MediumCategory__c":"cate1","LastModifiedBy__c":"005N00000057RPNIA2","Status__c":"Saved","UserRecordAccess":{"HasDeleteAccess":true,"HasEditAccess":true},"kdKnowledgeDetail_Copy__r":[{"kdKnowledgeCopy__c":"a0AN0000009y1QRMAY","Id":"a0BN000000ED2oZMAT","User__c":"005N00000057RPNIA2","CommentCopy__c":"duc mane","User__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}],"kdKnowledgeDetail_Like__r":[{"kdKnowledgeLike__c":"a0AN0000009y1QRMAY","Id":"a0BN000000ED2oUMAT","User__c":"005N00000057RPNIA2","CommentLike__c":"like","User__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}],"CreatedBy__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}|0x8818c00
+18:51:06.0 (96496384)|HEAP_ALLOCATE|[955]|Bytes:182
+18:51:06.0 (96520338)|HEAP_ALLOCATE|[955]|Bytes:4
+18:51:06.0 (96750574)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":false,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x74b372d7","kdKnowledgeUpdateDetailCopy":"0x1ebe2366","kdKnowledgeUpdateDetailLike":"0x5cb41215","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x31ae976b","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (96787554)|HEAP_ALLOCATE|[955]|Bytes:7
+18:51:06.0 (96858423)|HEAP_ALLOCATE|[958]|Bytes:93
+18:51:06.0 (96904669)|SYSTEM_METHOD_ENTRY|[1]|UserInfo.UserInfo()
+18:51:06.0 (96910923)|STATEMENT_EXECUTE|[1]
+18:51:06.0 (96923922)|SYSTEM_METHOD_EXIT|[1]|UserInfo
+18:51:06.0 (96938491)|METHOD_ENTRY|[958]||System.UserInfo.getUserId()
+18:51:06.0 (97001288)|METHOD_EXIT|[958]||System.UserInfo.getUserId()
+18:51:06.0 (97433939)|SOQL_EXECUTE_BEGIN|[955]|Aggregations:0|SELECT Id, kdKnowledge__c, User__c, IsLike__c, CommentLike__c, IsCopy__c, CommentCopy__c, IsView__c FROM kdKnowledgeDetail__c 
+18:51:06.0 (102189636)|SOQL_EXECUTE_END|[955]|Rows:3
+18:51:06.0 (102232458)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:16
+18:51:06.0 (102503522)|HEAP_ALLOCATE|[955]|Bytes:54
+18:51:06.0 (102513992)|HEAP_ALLOCATE|[955]|Bytes:8
+18:51:06.0 (102541470)|SYSTEM_METHOD_ENTRY|[7]|QueryLocatorIterator.QueryLocatorIterator()
+18:51:06.0 (102547560)|STATEMENT_EXECUTE|[7]
+18:51:06.0 (102561063)|SYSTEM_METHOD_EXIT|[7]|QueryLocatorIterator
+18:51:06.0 (102572693)|HEAP_ALLOCATE|[955]|Bytes:28
+18:51:06.0 (102657429)|HEAP_ALLOCATE|[955]|Bytes:16
+18:51:06.0 (102673127)|HEAP_ALLOCATE|[955]|Bytes:8
+18:51:06.0 (102677158)|HEAP_ALLOCATE|[955]|Bytes:8
+18:51:06.0 (102683934)|VARIABLE_SCOPE_BEGIN|[15]|this|Database.QueryLocatorIterator|true|false
+18:51:06.0 (102733590)|VARIABLE_ASSIGNMENT|[15]|this|{}|0x7d4b44fd
+18:51:06.0 (102741836)|VARIABLE_SCOPE_BEGIN|[15]|values|List<SObject>|true|false
+18:51:06.0 (102808195)|VARIABLE_ASSIGNMENT|[15]|values|[{"Id":"a0BN000000ED2oPMAT","kdKnowledge__c":"a0AN0000009y1QRMAY","User__c":"005N00000057RPNIA2","IsLike__c":false,"IsCopy__c":false,"IsView__c":true},{"Id":"a0BN000000ED2oUMAT","kdKnowledge__c":"a0AN0000009y1QRMAY","User__c":"005N00000057RPNIA2","IsLike__c":true,"CommentLike__c":"like","IsCopy__c":false,"IsView__c":false},{"Id":"a0BN000000ED2oZMAT","kdKnowledge__c":"a0AN0000009y1QRMAY","User__c":"005N00000057RPNIA2","IsLike__c":false,"IsCopy__c":true,"CommentCopy__c":"duc mane","IsView__c":false}]|0x2bbc3cfe
+18:51:06.0 (102821195)|VARIABLE_SCOPE_BEGIN|[15]|ql|Database.QueryLocator|true|false
+18:51:06.0 (102867303)|VARIABLE_ASSIGNMENT|[15]|ql|{"query":"SELECT Id, kdKnowled (162 more) ..."}|0x12beea93
+18:51:06.0 (102873945)|VARIABLE_SCOPE_BEGIN|[15]|totalNumRecords|Integer|false|false
+18:51:06.0 (102883199)|VARIABLE_ASSIGNMENT|[15]|totalNumRecords|3
+18:51:06.0 (102888363)|VARIABLE_SCOPE_BEGIN|[15]|queryMoreSize|Integer|false|false
+18:51:06.0 (102895607)|VARIABLE_ASSIGNMENT|[15]|queryMoreSize|49994
+18:51:06.0 (102999466)|HEAP_ALLOCATE|[955]|Bytes:28
+18:51:06.0 (103023591)|METHOD_ENTRY|[955]||Database.QueryLocatorIterator.hasNext()
+18:51:06.0 (103116277)|METHOD_EXIT|[955]||Database.QueryLocatorIterator.hasNext()
+18:51:06.0 (103125190)|METHOD_ENTRY|[955]||Database.QueryLocatorIterator.next()
+18:51:06.0 (103192758)|METHOD_EXIT|[955]||Database.QueryLocatorIterator.next()
+18:51:06.0 (103202760)|VARIABLE_SCOPE_BEGIN|[955]|kdd|kdKnowledgeDetail__c|true|false
+18:51:06.0 (103224449)|VARIABLE_ASSIGNMENT|[955]|kdd|{"Id":"a0BN000000ED2oPMAT","kdKnowledge__c":"a0AN0000009y1QRMAY","User__c":"005N00000057RPNIA2","IsLike__c":false,"IsCopy__c":false,"IsView__c":true}|0x48f40d5f
+18:51:06.0 (103234111)|STATEMENT_EXECUTE|[958]
+18:51:06.0 (103291385)|STATEMENT_EXECUTE|[965]
+18:51:06.0 (103293643)|STATEMENT_EXECUTE|[966]
+18:51:06.0 (103297528)|HEAP_ALLOCATE|[966]|Bytes:5
+18:51:06.0 (103306198)|VARIABLE_ASSIGNMENT|[966]|fViewFound|true
+18:51:06.0 (103315507)|METHOD_ENTRY|[955]||Database.QueryLocatorIterator.hasNext()
+18:51:06.0 (103333247)|METHOD_EXIT|[955]||Database.QueryLocatorIterator.hasNext()
+18:51:06.0 (103338043)|METHOD_ENTRY|[955]||Database.QueryLocatorIterator.next()
+18:51:06.0 (103375348)|METHOD_EXIT|[955]||Database.QueryLocatorIterator.next()
+18:51:06.0 (103380965)|VARIABLE_SCOPE_BEGIN|[955]|kdd|kdKnowledgeDetail__c|true|false
+18:51:06.0 (103401088)|VARIABLE_ASSIGNMENT|[955]|kdd|{"Id":"a0BN000000ED2oUMAT","kdKnowledge__c":"a0AN0000009y1QRMAY","User__c":"005N00000057RPNIA2","IsLike__c":true,"CommentLike__c":"like","IsCopy__c":false,"IsView__c":false}|0x2658373
+18:51:06.0 (103407732)|STATEMENT_EXECUTE|[958]
+18:51:06.0 (103414666)|STATEMENT_EXECUTE|[959]
+18:51:06.0 (103416551)|STATEMENT_EXECUTE|[960]
+18:51:06.0 (103752499)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":false,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x74b372d7","kdKnowledgeUpdateDetailCopy":"0x1ebe2366","kdKnowledgeUpdateDetailLike":"0x5cb41215","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x31ae976b","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (103783275)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0BN000000ED2oUMAT","kdKnowledge__c":"a0AN0000009y1QRMAY","User__c":"005N00000057RPNIA2","IsLike__c":true,"CommentLike__c":"like","IsCopy__c":false,"IsView__c":false}|0x2658373
+18:51:06.0 (103814287)|VARIABLE_ASSIGNMENT|[74]|this.kdKnowledgeUpdateDetailLike|{"Id":"a0BN000000ED2oUMAT","kdKnowledge__c":"a0AN0000009y1QRMAY","User__c":"005N00000057RPNIA2","IsLike__c":true,"CommentLike__c":"like","IsCopy__c":false,"IsView__c":false}|0x8818c00
+18:51:06.0 (103826171)|STATEMENT_EXECUTE|[961]
+18:51:06.0 (103831043)|HEAP_ALLOCATE|[961]|Bytes:5
+18:51:06.0 (103838920)|VARIABLE_ASSIGNMENT|[961]|fLikeFound|true
+18:51:06.0 (103847050)|METHOD_ENTRY|[955]||Database.QueryLocatorIterator.hasNext()
+18:51:06.0 (103865134)|METHOD_EXIT|[955]||Database.QueryLocatorIterator.hasNext()
+18:51:06.0 (103870150)|METHOD_ENTRY|[955]||Database.QueryLocatorIterator.next()
+18:51:06.0 (103909284)|METHOD_EXIT|[955]||Database.QueryLocatorIterator.next()
+18:51:06.0 (103915868)|VARIABLE_SCOPE_BEGIN|[955]|kdd|kdKnowledgeDetail__c|true|false
+18:51:06.0 (103934846)|VARIABLE_ASSIGNMENT|[955]|kdd|{"Id":"a0BN000000ED2oZMAT","kdKnowledge__c":"a0AN0000009y1QRMAY","User__c":"005N00000057RPNIA2","IsLike__c":false,"IsCopy__c":true,"CommentCopy__c":"duc mane","IsView__c":false}|0x764327d2
+18:51:06.0 (103941622)|STATEMENT_EXECUTE|[958]
+18:51:06.0 (103951436)|STATEMENT_EXECUTE|[962]
+18:51:06.0 (103953470)|STATEMENT_EXECUTE|[963]
+18:51:06.0 (104174738)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":false,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x74b372d7","kdKnowledgeUpdateDetailCopy":"0x1ebe2366","kdKnowledgeUpdateDetailLike":"0x2658373","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x31ae976b","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (104204933)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0BN000000ED2oZMAT","kdKnowledge__c":"a0AN0000009y1QRMAY","User__c":"005N00000057RPNIA2","IsLike__c":false,"IsCopy__c":true,"CommentCopy__c":"duc mane","IsView__c":false}|0x764327d2
+18:51:06.0 (104229697)|VARIABLE_ASSIGNMENT|[75]|this.kdKnowledgeUpdateDetailCopy|{"Id":"a0BN000000ED2oZMAT","kdKnowledge__c":"a0AN0000009y1QRMAY","User__c":"005N00000057RPNIA2","IsLike__c":false,"IsCopy__c":true,"CommentCopy__c":"duc mane","IsView__c":false}|0x8818c00
+18:51:06.0 (104240734)|STATEMENT_EXECUTE|[964]
+18:51:06.0 (104245499)|HEAP_ALLOCATE|[964]|Bytes:5
+18:51:06.0 (104252181)|VARIABLE_ASSIGNMENT|[964]|fCopyFound|true
+18:51:06.0 (104260023)|METHOD_ENTRY|[955]||Database.QueryLocatorIterator.hasNext()
+18:51:06.0 (104277427)|METHOD_EXIT|[955]||Database.QueryLocatorIterator.hasNext()
+18:51:06.0 (104285658)|VARIABLE_ASSIGNMENT|[955]|kdd|null|
+18:51:06.0 (104310915)|STATEMENT_EXECUTE|[970]
+18:51:06.0 (104313353)|STATEMENT_EXECUTE|[978]
+18:51:06.0 (104315425)|STATEMENT_EXECUTE|[986]
+18:51:06.0 (104317142)|STATEMENT_EXECUTE|[995]
+18:51:06.0 (104518767)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":false,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x74b372d7","kdKnowledgeUpdateDetailCopy":"0x764327d2","kdKnowledgeUpdateDetailLike":"0x2658373","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x31ae976b","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (104580453)|METHOD_ENTRY|[995]||System.UserInfo.getUserId()
+18:51:06.0 (104602540)|METHOD_EXIT|[995]||System.UserInfo.getUserId()
+18:51:06.0 (104621804)|HEAP_ALLOCATE|[995]|Bytes:4
+18:51:06.0 (104844353)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":false,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x74b372d7","kdKnowledgeUpdateDetailCopy":"0x764327d2","kdKnowledgeUpdateDetailLike":"0x2658373","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x31ae976b","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (104866383)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|true
+18:51:06.0 (104873930)|HEAP_ALLOCATE|[76]|Bytes:5
+18:51:06.0 (104885010)|VARIABLE_ASSIGNMENT|[76]|this.isCreator|true|0x8818c00
+18:51:06.0 (104894283)|STATEMENT_EXECUTE|[997]
+18:51:06.0 (105098329)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":true,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x74b372d7","kdKnowledgeUpdateDetailCopy":"0x764327d2","kdKnowledgeUpdateDetailLike":"0x2658373","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x31ae976b","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (105119206)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|false
+18:51:06.0 (105125458)|HEAP_ALLOCATE|[78]|Bytes:5
+18:51:06.0 (105134959)|VARIABLE_ASSIGNMENT|[78]|this.isNationalApprover|false|0x8818c00
+18:51:06.0 (105144804)|STATEMENT_EXECUTE|[999]
+18:51:06.0 (105346527)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":true,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x74b372d7","kdKnowledgeUpdateDetailCopy":"0x764327d2","kdKnowledgeUpdateDetailLike":"0x2658373","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x31ae976b","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (105367779)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|false
+18:51:06.0 (105373880)|HEAP_ALLOCATE|[77]|Bytes:5
+18:51:06.0 (105383156)|VARIABLE_ASSIGNMENT|[77]|this.isApprover|false|0x8818c00
+18:51:06.0 (105392141)|STATEMENT_EXECUTE|[1002]
+18:51:06.0 (105397785)|HEAP_ALLOCATE|[1002]|Bytes:120
+18:51:06.0 (105422022)|HEAP_ALLOCATE|[1002]|Bytes:4
+18:51:06.0 (105620753)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":true,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x74b372d7","kdKnowledgeUpdateDetailCopy":"0x764327d2","kdKnowledgeUpdateDetailLike":"0x2658373","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x31ae976b","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (106633524)|SOQL_EXECUTE_BEGIN|[1002]|Aggregations:0|SELECT id, Name, IsPrivate, OwnerId FROM Attachment WHERE ParentId = :tmpVar1 ORDER BY LastModifiedDate DESC NULLS FIRST
+18:51:06.0 (109410580)|SOQL_EXECUTE_END|[1002]|Rows:0
+18:51:06.0 (109462203)|HEAP_ALLOCATE|[1002]|Bytes:4
+18:51:06.0 (109476392)|HEAP_ALLOCATE|[1002]|Bytes:0
+18:51:06.0 (109523688)|HEAP_ALLOCATE|[1002]|Bytes:4
+18:51:06.0 (109794936)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":true,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x74b372d7","kdKnowledgeUpdateDetailCopy":"0x764327d2","kdKnowledgeUpdateDetailLike":"0x2658373","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x31ae976b","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (109825149)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|[]|0x1ad4bd17
+18:51:06.0 (109844280)|VARIABLE_ASSIGNMENT|[117]|this.lsKnowledgeUpdateAttachment|[]|0x8818c00
+18:51:06.0 (109862077)|SYSTEM_MODE_EXIT|false
+18:51:06.0 (136273745)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (136348549)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:284
+18:51:06.0 (136372612)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:160
+18:51:06.0 (136405089)|METHOD_ENTRY|[1]|01pN0000000Mill|auMainTopCompCtrl.auMainTopCompCtrl()
+18:51:06.0 (136413414)|STATEMENT_EXECUTE|[1]
+18:51:06.0 (136420851)|STATEMENT_EXECUTE|[1]
+18:51:06.0 (136422482)|STATEMENT_EXECUTE|[3]
+18:51:06.0 (136433527)|HEAP_ALLOCATE|[3]|Bytes:4
+18:51:06.0 (136456776)|VARIABLE_ASSIGNMENT|[3]|auMainTopCompCtrl.TYPE_SCREEN_SWITCH|0
+18:51:06.0 (136463092)|STATEMENT_EXECUTE|[4]
+18:51:06.0 (136466420)|HEAP_ALLOCATE|[4]|Bytes:4
+18:51:06.0 (136474594)|VARIABLE_ASSIGNMENT|[4]|auMainTopCompCtrl.TYPE_SCREEN_STPD_EVENT|11
+18:51:06.0 (136478929)|STATEMENT_EXECUTE|[5]
+18:51:06.0 (136481255)|HEAP_ALLOCATE|[5]|Bytes:4
+18:51:06.0 (136487986)|VARIABLE_ASSIGNMENT|[5]|auMainTopCompCtrl.TYPE_SCREEN_STPD_TIMELINE|12
+18:51:06.0 (136492555)|STATEMENT_EXECUTE|[6]
+18:51:06.0 (136494541)|HEAP_ALLOCATE|[6]|Bytes:4
+18:51:06.0 (136500855)|VARIABLE_ASSIGNMENT|[6]|auMainTopCompCtrl.TYPE_SCREEN_STPD_SCREEN|13
+18:51:06.0 (136505923)|STATEMENT_EXECUTE|[7]
+18:51:06.0 (136508123)|HEAP_ALLOCATE|[7]|Bytes:4
+18:51:06.0 (136513463)|VARIABLE_ASSIGNMENT|[7]|auMainTopCompCtrl.TYPE_SCREEN_CX_SCREEN|21
+18:51:06.0 (136517259)|STATEMENT_EXECUTE|[8]
+18:51:06.0 (136519318)|HEAP_ALLOCATE|[8]|Bytes:4
+18:51:06.0 (136524676)|VARIABLE_ASSIGNMENT|[8]|auMainTopCompCtrl.TYPE_SCREEN_CX_TIMELINE|22
+18:51:06.0 (136528592)|STATEMENT_EXECUTE|[9]
+18:51:06.0 (136530992)|HEAP_ALLOCATE|[9]|Bytes:4
+18:51:06.0 (136537395)|VARIABLE_ASSIGNMENT|[9]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE|31
+18:51:06.0 (136541520)|STATEMENT_EXECUTE|[10]
+18:51:06.0 (136543593)|HEAP_ALLOCATE|[10]|Bytes:4
+18:51:06.0 (136549609)|VARIABLE_ASSIGNMENT|[10]|auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE_LIST|32
+18:51:06.0 (136554127)|STATEMENT_EXECUTE|[11]
+18:51:06.0 (136556408)|HEAP_ALLOCATE|[11]|Bytes:4
+18:51:06.0 (136562543)|VARIABLE_ASSIGNMENT|[11]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_DASHBOARD|41
+18:51:06.0 (136566802)|STATEMENT_EXECUTE|[12]
+18:51:06.0 (136568897)|HEAP_ALLOCATE|[12]|Bytes:4
+18:51:06.0 (136574882)|VARIABLE_ASSIGNMENT|[12]|auMainTopCompCtrl.TYPE_SCREEN_KNOWLEDGE_LIST|42
+18:51:06.0 (136578559)|STATEMENT_EXECUTE|[13]
+18:51:06.0 (136580800)|HEAP_ALLOCATE|[13]|Bytes:4
+18:51:06.0 (136587557)|VARIABLE_ASSIGNMENT|[13]|auMainTopCompCtrl.TYPE_SCREEN_SA_MESSAGES|51
+18:51:06.0 (136591729)|STATEMENT_EXECUTE|[14]
+18:51:06.0 (136593988)|HEAP_ALLOCATE|[14]|Bytes:4
+18:51:06.0 (136599938)|VARIABLE_ASSIGNMENT|[14]|auMainTopCompCtrl.TYPE_SCREEN_SA_REPORTS|52
+18:51:06.0 (136603840)|STATEMENT_EXECUTE|[15]
+18:51:06.0 (136606140)|HEAP_ALLOCATE|[15]|Bytes:4
+18:51:06.0 (136612297)|VARIABLE_ASSIGNMENT|[15]|auMainTopCompCtrl.TYPE_SCREEN_SA_CHATTER|53
+18:51:06.0 (136616199)|STATEMENT_EXECUTE|[16]
+18:51:06.0 (136618314)|HEAP_ALLOCATE|[16]|Bytes:4
+18:51:06.0 (136624392)|VARIABLE_ASSIGNMENT|[16]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORT|54
+18:51:06.0 (136629043)|STATEMENT_EXECUTE|[17]
+18:51:06.0 (136631054)|HEAP_ALLOCATE|[17]|Bytes:4
+18:51:06.0 (136637340)|VARIABLE_ASSIGNMENT|[17]|auMainTopCompCtrl.TYPE_SCREEN_SA_ENQUETE|55
+18:51:06.0 (136641401)|STATEMENT_EXECUTE|[18]
+18:51:06.0 (136643381)|HEAP_ALLOCATE|[18]|Bytes:4
+18:51:06.0 (136649853)|VARIABLE_ASSIGNMENT|[18]|auMainTopCompCtrl.TYPE_SCREEN_SA_DOCUMENTS|56
+18:51:06.0 (136653843)|STATEMENT_EXECUTE|[19]
+18:51:06.0 (136656169)|HEAP_ALLOCATE|[19]|Bytes:4
+18:51:06.0 (136662987)|VARIABLE_ASSIGNMENT|[19]|auMainTopCompCtrl.TYPE_SCREEN_SA_RANKING|57
+18:51:06.0 (136666638)|STATEMENT_EXECUTE|[20]
+18:51:06.0 (136668597)|HEAP_ALLOCATE|[20]|Bytes:4
+18:51:06.0 (136674682)|VARIABLE_ASSIGNMENT|[20]|auMainTopCompCtrl.TYPE_SCREEN_SA_LINKS|58
+18:51:06.0 (136678766)|STATEMENT_EXECUTE|[21]
+18:51:06.0 (136680825)|HEAP_ALLOCATE|[21]|Bytes:4
+18:51:06.0 (136686880)|VARIABLE_ASSIGNMENT|[21]|auMainTopCompCtrl.TYPE_SCREEN_SA_USRSETTINGS|59
+18:51:06.0 (136691099)|STATEMENT_EXECUTE|[22]
+18:51:06.0 (136693005)|HEAP_ALLOCATE|[22]|Bytes:4
+18:51:06.0 (136698748)|VARIABLE_ASSIGNMENT|[22]|auMainTopCompCtrl.TYPE_SCREEN_SA_DAILYREPORTLIST|60
+18:51:06.0 (136702899)|STATEMENT_EXECUTE|[23]
+18:51:06.0 (136705159)|HEAP_ALLOCATE|[23]|Bytes:4
+18:51:06.0 (136711178)|VARIABLE_ASSIGNMENT|[23]|auMainTopCompCtrl.TYPE_SCREEN_SA_TODO|61
+18:51:06.0 (136715194)|STATEMENT_EXECUTE|[24]
+18:51:06.0 (136717562)|HEAP_ALLOCATE|[24]|Bytes:4
+18:51:06.0 (136723025)|VARIABLE_ASSIGNMENT|[24]|auMainTopCompCtrl.TYPE_SCREEN_HONBU_DIRECT|71
+18:51:06.0 (136727453)|STATEMENT_EXECUTE|[25]
+18:51:06.0 (136729832)|HEAP_ALLOCATE|[25]|Bytes:4
+18:51:06.0 (136735289)|VARIABLE_ASSIGNMENT|[25]|auMainTopCompCtrl.TYPE_SCREEN_ACCOUNT_LIST|81
+18:51:06.0 (136739022)|STATEMENT_EXECUTE|[26]
+18:51:06.0 (136740947)|HEAP_ALLOCATE|[26]|Bytes:4
+18:51:06.0 (136746847)|VARIABLE_ASSIGNMENT|[26]|auMainTopCompCtrl.TYPE_SCREEN_ACTIVITY_LIST|82
+18:51:06.0 (136751241)|STATEMENT_EXECUTE|[27]
+18:51:06.0 (136753674)|HEAP_ALLOCATE|[27]|Bytes:4
+18:51:06.0 (136759108)|VARIABLE_ASSIGNMENT|[27]|auMainTopCompCtrl.TYPE_SCREEN_FILE_LIST|83
+18:51:06.0 (136773386)|METHOD_EXIT|[1]|auMainTopCompCtrl
+18:51:06.0 (136781226)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+18:51:06.0 (136793260)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iCountComments|null|0x6982d61f
+18:51:06.0 (136869089)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (136888481)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+18:51:06.0 (136896285)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iCountLikes|null|0x6982d61f
+18:51:06.0 (137128584)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (137202077)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:188
+18:51:06.0 (137214272)|VARIABLE_SCOPE_BEGIN|[119]|this|kdKnowledgeListCtrl|true|false
+18:51:06.0 (137578830)|VARIABLE_ASSIGNMENT|[119]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":true,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x74b372d7","kdKnowledgeUpdateDetailCopy":"0x764327d2","kdKnowledgeUpdateDetailLike":"0x2658373","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x1ad4bd17","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (137608875)|SYSTEM_MODE_ENTER|false
+18:51:06.0 (137622584)|HEAP_ALLOCATE|[119]|Bytes:5
+18:51:06.0 (137628397)|STATEMENT_EXECUTE|[119]
+18:51:06.0 (137630276)|STATEMENT_EXECUTE|[119]
+18:51:06.0 (137639988)|SYSTEM_MODE_EXIT|false
+18:51:06.0 (137710664)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (137735548)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+18:51:06.0 (137739884)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+18:51:06.0 (137748113)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this.iTypeOfScreen|42|0x6982d61f
+18:51:06.0 (137919161)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (137961758)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+18:51:06.0 (137969532)|VARIABLE_SCOPE_BEGIN|[204]|this|auMainTopCompCtrl|true|false
+18:51:06.0 (138011755)|VARIABLE_ASSIGNMENT|[204]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (138023355)|STATEMENT_EXECUTE|[204]
+18:51:06.0 (138078719)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (138128113)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (138160807)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (138198994)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (138230595)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (138241471)|STATEMENT_EXECUTE|[213]
+18:51:06.0 (138243183)|STATEMENT_EXECUTE|[214]
+18:51:06.0 (138336654)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (138375480)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+18:51:06.0 (138383096)|VARIABLE_SCOPE_BEGIN|[218]|this|auMainTopCompCtrl|true|false
+18:51:06.0 (138419596)|VARIABLE_ASSIGNMENT|[218]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (138432275)|STATEMENT_EXECUTE|[218]
+18:51:06.0 (138469873)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (138510987)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (138542891)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (138576728)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (138607668)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (138618586)|STATEMENT_EXECUTE|[227]
+18:51:06.0 (138620250)|STATEMENT_EXECUTE|[228]
+18:51:06.0 (141741981)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (143631859)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (143689013)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+18:51:06.0 (143700215)|VARIABLE_SCOPE_BEGIN|[67]|this|auMainTopCompCtrl|true|false
+18:51:06.0 (143753299)|VARIABLE_ASSIGNMENT|[67]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (143768901)|STATEMENT_EXECUTE|[67]
+18:51:06.0 (143770797)|STATEMENT_EXECUTE|[68]
+18:51:06.0 (143814076)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (143859698)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (143897234)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (143917703)|HEAP_ALLOCATE|[68]|Bytes:5
+18:51:06.0 (143991273)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (144027345)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+18:51:06.0 (144035253)|VARIABLE_SCOPE_BEGIN|[73]|this|auMainTopCompCtrl|true|false
+18:51:06.0 (144065907)|VARIABLE_ASSIGNMENT|[73]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (144075831)|STATEMENT_EXECUTE|[73]
+18:51:06.0 (144077881)|STATEMENT_EXECUTE|[74]
+18:51:06.0 (144109534)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (144146730)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (144161041)|HEAP_ALLOCATE|[74]|Bytes:5
+18:51:06.0 (144223690)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (144255063)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+18:51:06.0 (144261952)|VARIABLE_SCOPE_BEGIN|[83]|this|auMainTopCompCtrl|true|false
+18:51:06.0 (144311929)|VARIABLE_ASSIGNMENT|[83]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (144321129)|STATEMENT_EXECUTE|[83]
+18:51:06.0 (144322856)|STATEMENT_EXECUTE|[84]
+18:51:06.0 (144355849)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (144394268)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (144409771)|HEAP_ALLOCATE|[84]|Bytes:5
+18:51:06.0 (144485725)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (144518323)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:44
+18:51:06.0 (144525168)|VARIABLE_SCOPE_BEGIN|[100]|this|auMainTopCompCtrl|true|false
+18:51:06.0 (144555467)|VARIABLE_ASSIGNMENT|[100]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (144565739)|STATEMENT_EXECUTE|[100]
+18:51:06.0 (144567886)|STATEMENT_EXECUTE|[101]
+18:51:06.0 (144599332)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (144638689)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (144673875)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"currentUser":"0x5bd72ffe","isSAUser":false,"iTypeOfScreen":42,"urlReportsSFA":"https://cs6.lightnin (84 more) ..."}|0x6982d61f
+18:51:06.0 (144687787)|HEAP_ALLOCATE|[101]|Bytes:5
+18:51:06.0 (144840591)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (144903368)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (145147213)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (145548206)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (145596612)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:188
+18:51:06.0 (145606014)|VARIABLE_SCOPE_BEGIN|[11]|this|kdKnowledgeListCtrl|true|false
+18:51:06.0 (145931789)|VARIABLE_ASSIGNMENT|[11]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":true,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x74b372d7","kdKnowledgeUpdateDetailCopy":"0x764327d2","kdKnowledgeUpdateDetailLike":"0x2658373","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x1ad4bd17","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (145959762)|SYSTEM_MODE_ENTER|false
+18:51:06.0 (145968230)|HEAP_ALLOCATE|[11]|Bytes:5
+18:51:06.0 (145973747)|STATEMENT_EXECUTE|[11]
+18:51:06.0 (145975626)|STATEMENT_EXECUTE|[11]
+18:51:06.0 (146241361)|VARIABLE_SCOPE_BEGIN|[138]|auConstantCmn.ACCESS_TYPE_KDDI|String|false|true
+18:51:06.0 (146253488)|VARIABLE_SCOPE_BEGIN|[137]|auConstantCmn.ACCESS_TYPE_SA|String|false|true
+18:51:06.0 (146261472)|VARIABLE_SCOPE_BEGIN|[139]|auConstantCmn.ACCESS_TYPE_SHOP|String|false|true
+18:51:06.0 (146274093)|VARIABLE_SCOPE_BEGIN|[58]|auConstantCmn.ACCOUNT_CHANNEL_DAIRITEN|String|false|true
+18:51:06.0 (146282195)|VARIABLE_SCOPE_BEGIN|[56]|auConstantCmn.ACCOUNT_CHANNEL_SHOP|String|false|true
+18:51:06.0 (146289718)|VARIABLE_SCOPE_BEGIN|[57]|auConstantCmn.ACCOUNT_CHANNEL_UNEIHOJIN|String|false|true
+18:51:06.0 (146298377)|VARIABLE_SCOPE_BEGIN|[113]|auConstantCmn.CX_KNOWLEDGE_SHARING_NATIONAL|String|false|true
+18:51:06.0 (146306148)|VARIABLE_SCOPE_BEGIN|[112]|auConstantCmn.CX_KNOWLEDGE_SHARING_REGIONAL_OFFICE|String|false|true
+18:51:06.0 (146312475)|VARIABLE_SCOPE_BEGIN|[118]|auConstantCmn.CX_KNOWLEDGE_STATUS_APPROVED|String|false|true
+18:51:06.0 (146319531)|VARIABLE_SCOPE_BEGIN|[119]|auConstantCmn.CX_KNOWLEDGE_STATUS_NATIONAL_APPROVED|String|false|true
+18:51:06.0 (146326552)|VARIABLE_SCOPE_BEGIN|[120]|auConstantCmn.CX_KNOWLEDGE_STATUS_REJECTED|String|false|true
+18:51:06.0 (146333027)|VARIABLE_SCOPE_BEGIN|[117]|auConstantCmn.CX_KNOWLEDGE_STATUS_SAVED|String|false|true
+18:51:06.0 (146339105)|VARIABLE_SCOPE_BEGIN|[116]|auConstantCmn.CX_KNOWLEDGE_STATUS_TEMPORARY_SAVED|String|false|true
+18:51:06.0 (146345533)|VARIABLE_SCOPE_BEGIN|[20]|auConstantCmn.FORGOT_PASSWORD_ERR_MESSAGE001|String|false|true
+18:51:06.0 (146352010)|VARIABLE_SCOPE_BEGIN|[21]|auConstantCmn.FORGOT_PASSWORD_ERR_MESSAGE002|String|false|true
+18:51:06.0 (146358545)|VARIABLE_SCOPE_BEGIN|[134]|auConstantCmn.HONBU_DIRECT_DETAIL_TYPE_FAVORITE|String|false|true
+18:51:06.0 (146364886)|VARIABLE_SCOPE_BEGIN|[133]|auConstantCmn.HONBU_DIRECT_DETAIL_TYPE_READ|String|false|true
+18:51:06.0 (146371106)|VARIABLE_SCOPE_BEGIN|[132]|auConstantCmn.HONBU_DIRECT_DETAIL_TYPE_VIEW|String|false|true
+18:51:06.0 (146377661)|VARIABLE_SCOPE_BEGIN|[124]|auConstantCmn.KDDI_KNOWLEDGE_STATUS_SAVED|String|false|true
+18:51:06.0 (146384773)|VARIABLE_SCOPE_BEGIN|[123]|auConstantCmn.KDDI_KNOWLEDGE_STATUS_TEMPORARY_SAVED|String|false|true
+18:51:06.0 (146391766)|VARIABLE_SCOPE_BEGIN|[14]|auConstantCmn.LOGIN_ERR_MESSAGE001|String|false|true
+18:51:06.0 (146398882)|VARIABLE_SCOPE_BEGIN|[15]|auConstantCmn.LOGIN_ERR_MESSAGE002|String|false|true
+18:51:06.0 (146405420)|VARIABLE_SCOPE_BEGIN|[16]|auConstantCmn.LOGIN_ERR_MESSAGE003|String|false|true
+18:51:06.0 (146412193)|VARIABLE_SCOPE_BEGIN|[17]|auConstantCmn.LOGIN_ERR_MESSAGE004|String|false|true
+18:51:06.0 (146419629)|VARIABLE_SCOPE_BEGIN|[99]|auConstantCmn.PAGE_ALIAS_SHOP_CX|String|false|true
+18:51:06.0 (146426810)|VARIABLE_SCOPE_BEGIN|[90]|auConstantCmn.PAGE_ALIAS_SHOP_EVENTS|String|false|true
+18:51:06.0 (146433842)|VARIABLE_SCOPE_BEGIN|[72]|auConstantCmn.PAGE_ALIAS_SHOP_FORGOTPW|String|false|true
+18:51:06.0 (146441034)|VARIABLE_SCOPE_BEGIN|[80]|auConstantCmn.PAGE_ALIAS_SHOP_FORGOTPWCOMP|String|false|true
+18:51:06.0 (146448485)|VARIABLE_SCOPE_BEGIN|[76]|auConstantCmn.PAGE_ALIAS_SHOP_FORGOTPWFORCE|String|false|true
+18:51:06.0 (146455244)|VARIABLE_SCOPE_BEGIN|[87]|auConstantCmn.PAGE_ALIAS_SHOP_HOME|String|false|true
+18:51:06.0 (146462258)|VARIABLE_SCOPE_BEGIN|[64]|auConstantCmn.PAGE_ALIAS_SHOP_LOGIN|String|false|true
+18:51:06.0 (146469199)|VARIABLE_SCOPE_BEGIN|[68]|auConstantCmn.PAGE_ALIAS_SHOP_LOGOUT|String|false|true
+18:51:06.0 (146476406)|VARIABLE_SCOPE_BEGIN|[84]|auConstantCmn.PAGE_ALIAS_SHOP_PASSWORDSIGNUP|String|false|true
+18:51:06.0 (146483449)|VARIABLE_SCOPE_BEGIN|[105]|auConstantCmn.PAGE_ALIAS_SHOP_SCHEDULE|String|false|true
+18:51:06.0 (146490948)|VARIABLE_SCOPE_BEGIN|[108]|auConstantCmn.PAGE_ALIAS_SHOP_SCHEDULE_LIST|String|false|true
+18:51:06.0 (146498058)|VARIABLE_SCOPE_BEGIN|[93]|auConstantCmn.PAGE_ALIAS_SHOP_STPD|String|false|true
+18:51:06.0 (146505346)|VARIABLE_SCOPE_BEGIN|[102]|auConstantCmn.PAGE_ALIAS_SHOP_TIMELINE_CX|String|false|true
+18:51:06.0 (146512433)|VARIABLE_SCOPE_BEGIN|[96]|auConstantCmn.PAGE_ALIAS_SHOP_TIMELINE_STPD|String|false|true
+18:51:06.0 (146519727)|VARIABLE_SCOPE_BEGIN|[98]|auConstantCmn.PAGE_VF_SHOP_CX|String|false|true
+18:51:06.0 (146527191)|VARIABLE_SCOPE_BEGIN|[89]|auConstantCmn.PAGE_VF_SHOP_EVENTS|String|false|true
+18:51:06.0 (146534561)|VARIABLE_SCOPE_BEGIN|[71]|auConstantCmn.PAGE_VF_SHOP_FORGOTPW|String|false|true
+18:51:06.0 (146542413)|VARIABLE_SCOPE_BEGIN|[79]|auConstantCmn.PAGE_VF_SHOP_FORGOTPWCOMP|String|false|true
+18:51:06.0 (146550222)|VARIABLE_SCOPE_BEGIN|[75]|auConstantCmn.PAGE_VF_SHOP_FORGOTPWFORCE|String|false|true
+18:51:06.0 (146557843)|VARIABLE_SCOPE_BEGIN|[86]|auConstantCmn.PAGE_VF_SHOP_HOME|String|false|true
+18:51:06.0 (146565734)|VARIABLE_SCOPE_BEGIN|[63]|auConstantCmn.PAGE_VF_SHOP_LOGIN|String|false|true
+18:51:06.0 (146573534)|VARIABLE_SCOPE_BEGIN|[67]|auConstantCmn.PAGE_VF_SHOP_LOGOUT|String|false|true
+18:51:06.0 (146581085)|VARIABLE_SCOPE_BEGIN|[83]|auConstantCmn.PAGE_VF_SHOP_PASSWORDSIGNUP|String|false|true
+18:51:06.0 (146588717)|VARIABLE_SCOPE_BEGIN|[104]|auConstantCmn.PAGE_VF_SHOP_SCHEDULE|String|false|true
+18:51:06.0 (146596491)|VARIABLE_SCOPE_BEGIN|[107]|auConstantCmn.PAGE_VF_SHOP_SCHEDULE_LIST|String|false|true
+18:51:06.0 (146604272)|VARIABLE_SCOPE_BEGIN|[92]|auConstantCmn.PAGE_VF_SHOP_STPD|String|false|true
+18:51:06.0 (146612429)|VARIABLE_SCOPE_BEGIN|[101]|auConstantCmn.PAGE_VF_SHOP_TIMELINE_CX|String|false|true
+18:51:06.0 (146620687)|VARIABLE_SCOPE_BEGIN|[95]|auConstantCmn.PAGE_VF_SHOP_TIMELINE_STPD|String|false|true
+18:51:06.0 (146628680)|VARIABLE_SCOPE_BEGIN|[29]|auConstantCmn.PASSWORD_SIGNUP_ERR_EXPIREDURL|String|false|true
+18:51:06.0 (146637252)|VARIABLE_SCOPE_BEGIN|[32]|auConstantCmn.PASSWORD_SIGNUP_ERR_INTERNAL|String|false|true
+18:51:06.0 (146645189)|VARIABLE_SCOPE_BEGIN|[30]|auConstantCmn.PASSWORD_SIGNUP_ERR_INVALIDURL|String|false|true
+18:51:06.0 (146652947)|VARIABLE_SCOPE_BEGIN|[24]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE001|String|false|true
+18:51:06.0 (146660828)|VARIABLE_SCOPE_BEGIN|[25]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE002|String|false|true
+18:51:06.0 (146668712)|VARIABLE_SCOPE_BEGIN|[26]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE003|String|false|true
+18:51:06.0 (146676473)|VARIABLE_SCOPE_BEGIN|[27]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE004|String|false|true
+18:51:06.0 (146684164)|VARIABLE_SCOPE_BEGIN|[28]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE005|String|false|true
+18:51:06.0 (146692534)|VARIABLE_SCOPE_BEGIN|[31]|auConstantCmn.PASSWORD_SIGNUP_ERR_OLDURL|String|false|true
+18:51:06.0 (146700656)|VARIABLE_SCOPE_BEGIN|[36]|auConstantCmn.PROFILE_COMMUNITY_MANAGEMENT|String|false|true
+18:51:06.0 (146709181)|VARIABLE_SCOPE_BEGIN|[37]|auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT|String|false|true
+18:51:06.0 (146718439)|VARIABLE_SCOPE_BEGIN|[35]|auConstantCmn.PROFILE_COMMUNITY_SHOP|String|false|true
+18:51:06.0 (146728494)|VARIABLE_SCOPE_BEGIN|[50]|auConstantCmn.PROFILE_EVOLVA_ADMIN_USER|String|false|true
+18:51:06.0 (146736765)|VARIABLE_SCOPE_BEGIN|[49]|auConstantCmn.PROFILE_EVOLVA_USER|String|false|true
+18:51:06.0 (146745065)|VARIABLE_SCOPE_BEGIN|[38]|auConstantCmn.PROFILE_KDDI_BRANCH|String|false|true
+18:51:06.0 (146753599)|VARIABLE_SCOPE_BEGIN|[40]|auConstantCmn.PROFILE_KDDI_HEADQUARTERS|String|false|true
+18:51:06.0 (146762573)|VARIABLE_SCOPE_BEGIN|[41]|auConstantCmn.PROFILE_KDDI_HEADQUARTERS_V2|String|false|true
+18:51:06.0 (146771625)|VARIABLE_SCOPE_BEGIN|[43]|auConstantCmn.PROFILE_KDDI_KNOWLEDGE_ACTIVITIES|String|false|true
+18:51:06.0 (146780497)|VARIABLE_SCOPE_BEGIN|[42]|auConstantCmn.PROFILE_KDDI_KNOWLEDGE_ONLY|String|false|true
+18:51:06.0 (146789260)|VARIABLE_SCOPE_BEGIN|[44]|auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA|String|false|true
+18:51:06.0 (146798830)|VARIABLE_SCOPE_BEGIN|[45]|auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1|String|false|true
+18:51:06.0 (146808394)|VARIABLE_SCOPE_BEGIN|[46]|auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2|String|false|true
+18:51:06.0 (146818030)|VARIABLE_SCOPE_BEGIN|[39]|auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE|String|false|true
+18:51:06.0 (146827168)|VARIABLE_SCOPE_BEGIN|[48]|auConstantCmn.PROFILE_SA_USER_CSA|String|false|true
+18:51:06.0 (146836012)|VARIABLE_SCOPE_BEGIN|[47]|auConstantCmn.PROFILE_SA_USER_SA|String|false|true
+18:51:06.0 (146844837)|VARIABLE_SCOPE_BEGIN|[51]|auConstantCmn.PROFILE_SYSADMIN_CUSTOM|String|false|true
+18:51:06.0 (146853714)|VARIABLE_SCOPE_BEGIN|[52]|auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN|String|false|true
+18:51:06.0 (146863648)|VARIABLE_SCOPE_BEGIN|[53]|auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP|String|false|true
+18:51:06.0 (146872643)|VARIABLE_SCOPE_BEGIN|[9]|auConstantCmn.ROLE_CODE_EVOLVA_HONBU|String|false|true
+18:51:06.0 (146882168)|VARIABLE_SCOPE_BEGIN|[10]|auConstantCmn.ROLE_CODE_EVOLVA_SHISHA|String|false|true
+18:51:06.0 (146891682)|VARIABLE_SCOPE_BEGIN|[11]|auConstantCmn.ROLE_CODE_EVOLVA_SHITEN|String|false|true
+18:51:06.0 (146901043)|VARIABLE_SCOPE_BEGIN|[7]|auConstantCmn.ROLE_CODE_HONBU|String|false|true
+18:51:06.0 (146911472)|VARIABLE_SCOPE_BEGIN|[8]|auConstantCmn.ROLE_CODE_SA_HONBU|String|false|true
+18:51:06.0 (146921717)|VARIABLE_SCOPE_BEGIN|[129]|auConstantCmn.USER_CLASSIFICATION_CONTRACTOR|String|false|true
+18:51:06.0 (146930911)|VARIABLE_SCOPE_BEGIN|[128]|auConstantCmn.USER_CLASSIFICATION_CSA|String|false|true
+18:51:06.0 (146941455)|VARIABLE_SCOPE_BEGIN|[127]|auConstantCmn.USER_CLASSIFICATION_SA|String|false|true
+18:51:06.0 (146956960)|HEAP_ALLOCATE|[11]|Bytes:11
+18:51:06.0 (146972946)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.ACCESS_TYPE_KDDI|"KDDI_ACCESS"
+18:51:06.0 (146978229)|HEAP_ALLOCATE|[11]|Bytes:9
+18:51:06.0 (146984753)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.ACCESS_TYPE_SA|"SA_ACCESS"
+18:51:06.0 (146988966)|HEAP_ALLOCATE|[11]|Bytes:11
+18:51:06.0 (146995880)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.ACCESS_TYPE_SHOP|"SHOP_ACCESS"
+18:51:06.0 (146999901)|HEAP_ALLOCATE|[11]|Bytes:5
+18:51:06.0 (147005351)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.ACCOUNT_CHANNEL_DAIRITEN|"一次代理店"
+18:51:06.0 (147010022)|HEAP_ALLOCATE|[11]|Bytes:6
+18:51:06.0 (147016188)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.ACCOUNT_CHANNEL_SHOP|"auショップ"
+18:51:06.0 (147020263)|HEAP_ALLOCATE|[11]|Bytes:4
+18:51:06.0 (147025794)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.ACCOUNT_CHANNEL_UNEIHOJIN|"運営法人"
+18:51:06.0 (147029976)|HEAP_ALLOCATE|[11]|Bytes:8
+18:51:06.0 (147035851)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.CX_KNOWLEDGE_SHARING_NATIONAL|"National"
+18:51:06.0 (147040109)|HEAP_ALLOCATE|[11]|Bytes:14
+18:51:06.0 (147046005)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.CX_KNOWLEDGE_SHARING_REGIONAL_OFFICE|"RegionalOffice"
+18:51:06.0 (147050380)|HEAP_ALLOCATE|[11]|Bytes:8
+18:51:06.0 (147056234)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.CX_KNOWLEDGE_STATUS_APPROVED|"Approved"
+18:51:06.0 (147061040)|HEAP_ALLOCATE|[11]|Bytes:16
+18:51:06.0 (147068009)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.CX_KNOWLEDGE_STATUS_NATIONAL_APPROVED|"NationalApproved"
+18:51:06.0 (147072404)|HEAP_ALLOCATE|[11]|Bytes:8
+18:51:06.0 (147078832)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.CX_KNOWLEDGE_STATUS_REJECTED|"Rejected"
+18:51:06.0 (147082650)|HEAP_ALLOCATE|[11]|Bytes:5
+18:51:06.0 (147088550)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.CX_KNOWLEDGE_STATUS_SAVED|"Saved"
+18:51:06.0 (147092846)|HEAP_ALLOCATE|[11]|Bytes:14
+18:51:06.0 (147098746)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.CX_KNOWLEDGE_STATUS_TEMPORARY_SAVED|"TemporarySaved"
+18:51:06.0 (147102705)|HEAP_ALLOCATE|[11]|Bytes:12
+18:51:06.0 (147109287)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.FORGOT_PASSWORD_ERR_MESSAGE001|"IDを入力してください。"
+18:51:06.0 (147113754)|HEAP_ALLOCATE|[11]|Bytes:35
+18:51:06.0 (147122227)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.FORGOT_PASSWORD_ERR_MESSAGE002|"入力されたIDは正しくありません。半角英 (15 more) ..."
+18:51:06.0 (147127942)|HEAP_ALLOCATE|[11]|Bytes:8
+18:51:06.0 (147134121)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.HONBU_DIRECT_DETAIL_TYPE_FAVORITE|"FAVORITE"
+18:51:06.0 (147138699)|HEAP_ALLOCATE|[11]|Bytes:4
+18:51:06.0 (147144864)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.HONBU_DIRECT_DETAIL_TYPE_READ|"READ"
+18:51:06.0 (147148671)|HEAP_ALLOCATE|[11]|Bytes:4
+18:51:06.0 (147155544)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.HONBU_DIRECT_DETAIL_TYPE_VIEW|"VIEW"
+18:51:06.0 (147159543)|HEAP_ALLOCATE|[11]|Bytes:5
+18:51:06.0 (147167211)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.KDDI_KNOWLEDGE_STATUS_SAVED|"Saved"
+18:51:06.0 (147171875)|HEAP_ALLOCATE|[11]|Bytes:14
+18:51:06.0 (147182829)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.KDDI_KNOWLEDGE_STATUS_TEMPORARY_SAVED|"TemporarySaved"
+18:51:06.0 (147188429)|HEAP_ALLOCATE|[11]|Bytes:15
+18:51:06.0 (147204539)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.LOGIN_ERR_MESSAGE001|"パスワードを入力してください。"
+18:51:06.0 (147209275)|HEAP_ALLOCATE|[11]|Bytes:27
+18:51:06.0 (147217933)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.LOGIN_ERR_MESSAGE002|"8文字以上の英数字混在のパスワードを指定 (7 more) ..."
+18:51:06.0 (147223029)|HEAP_ALLOCATE|[11]|Bytes:19
+18:51:06.0 (147230286)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.LOGIN_ERR_MESSAGE003|"ID或いはパスワードが間違っています。"
+18:51:06.0 (147234737)|HEAP_ALLOCATE|[11]|Bytes:46
+18:51:06.0 (147242364)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.LOGIN_ERR_MESSAGE004|"ログイン失敗回数を超えた為、ロックされま (26 more) ..."
+18:51:06.0 (147246662)|HEAP_ALLOCATE|[11]|Bytes:3
+18:51:06.0 (147253895)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_CX|"/CX"
+18:51:06.0 (147258032)|HEAP_ALLOCATE|[11]|Bytes:7
+18:51:06.0 (147268776)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_EVENTS|"/events"
+18:51:06.0 (147273577)|HEAP_ALLOCATE|[11]|Bytes:16
+18:51:06.0 (147281174)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_FORGOTPW|"/forgot-password"
+18:51:06.0 (147286005)|HEAP_ALLOCATE|[11]|Bytes:25
+18:51:06.0 (147294841)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_FORGOTPWCOMP|"/forgot-password-com (5 more) ..."
+18:51:06.0 (147299408)|HEAP_ALLOCATE|[11]|Bytes:22
+18:51:06.0 (147307924)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_FORGOTPWFORCE|"/forgot-password-for (2 more) ..."
+18:51:06.0 (147312849)|HEAP_ALLOCATE|[11]|Bytes:5
+18:51:06.0 (147319750)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_HOME|"/home"
+18:51:06.0 (147323923)|HEAP_ALLOCATE|[11]|Bytes:6
+18:51:06.0 (147330962)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_LOGIN|"/login"
+18:51:06.0 (147335014)|HEAP_ALLOCATE|[11]|Bytes:7
+18:51:06.0 (147341688)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_LOGOUT|"/logout"
+18:51:06.0 (147345778)|HEAP_ALLOCATE|[11]|Bytes:16
+18:51:06.0 (147353377)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_PASSWORDSIGNUP|"/password-signup"
+18:51:06.0 (147357289)|HEAP_ALLOCATE|[11]|Bytes:9
+18:51:06.0 (147364519)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_SCHEDULE|"/calendar"
+18:51:06.0 (147369174)|HEAP_ALLOCATE|[11]|Bytes:11
+18:51:06.0 (147376753)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_SCHEDULE_LIST|"/activities"
+18:51:06.0 (147380865)|HEAP_ALLOCATE|[11]|Bytes:5
+18:51:06.0 (147388145)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_STPD|"/STPD"
+18:51:06.0 (147392432)|HEAP_ALLOCATE|[11]|Bytes:11
+18:51:06.0 (147399441)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_TIMELINE_CX|"/timelineCX"
+18:51:06.0 (147403856)|HEAP_ALLOCATE|[11]|Bytes:13
+18:51:06.0 (147411221)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_ALIAS_SHOP_TIMELINE_STPD|"/timelineSTPD"
+18:51:06.0 (147415395)|HEAP_ALLOCATE|[11]|Bytes:27
+18:51:06.0 (147424039)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_CX|"/apex/auCXKnowledgeL (7 more) ..."
+18:51:06.0 (147428419)|HEAP_ALLOCATE|[11]|Bytes:22
+18:51:06.0 (147437153)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_EVENTS|"/apex/auEventsListPa (2 more) ..."
+18:51:06.0 (147442244)|HEAP_ALLOCATE|[11]|Bytes:21
+18:51:06.0 (147451069)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_FORGOTPW|"/auForgotPasswordPag (1 more) ..."
+18:51:06.0 (147456205)|HEAP_ALLOCATE|[11]|Bytes:29
+18:51:06.0 (147464725)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_FORGOTPWCOMP|"/auForgotPasswordCom (9 more) ..."
+18:51:06.0 (147469104)|HEAP_ALLOCATE|[11]|Bytes:26
+18:51:06.0 (147477805)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_FORGOTPWFORCE|"/auForgotPasswordFor (6 more) ..."
+18:51:06.0 (147482164)|HEAP_ALLOCATE|[11]|Bytes:24
+18:51:06.0 (147491808)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_HOME|"/apex/auSwitchScreen (4 more) ..."
+18:51:06.0 (147496065)|HEAP_ALLOCATE|[11]|Bytes:12
+18:51:06.0 (147503923)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_LOGIN|"/auLoginPage"
+18:51:06.0 (147508480)|HEAP_ALLOCATE|[11]|Bytes:13
+18:51:06.0 (147515972)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_LOGOUT|"/auLogoutPage"
+18:51:06.0 (147520340)|HEAP_ALLOCATE|[11]|Bytes:21
+18:51:06.0 (147529519)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_PASSWORDSIGNUP|"/auPasswordSignupPag (1 more) ..."
+18:51:06.0 (147534062)|HEAP_ALLOCATE|[11]|Bytes:16
+18:51:06.0 (147543111)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_SCHEDULE|"/apex/auSchedule"
+18:51:06.0 (147547275)|HEAP_ALLOCATE|[11]|Bytes:20
+18:51:06.0 (147554983)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_SCHEDULE_LIST|"/apex/auScheduleList"
+18:51:06.0 (147559861)|HEAP_ALLOCATE|[11]|Bytes:20
+18:51:06.0 (147567918)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_STPD|"/apex/auSTPDListPage"
+18:51:06.0 (147572016)|HEAP_ALLOCATE|[11]|Bytes:31
+18:51:06.0 (147581427)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_TIMELINE_CX|"/apex/auCxKnowledgeT (11 more) ..."
+18:51:06.0 (147585857)|HEAP_ALLOCATE|[11]|Bytes:24
+18:51:06.0 (147595106)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PAGE_VF_SHOP_TIMELINE_STPD|"/apex/auSTPDTimeline (4 more) ..."
+18:51:06.0 (147599477)|HEAP_ALLOCATE|[11]|Bytes:55
+18:51:06.0 (147609049)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PASSWORD_SIGNUP_ERR_EXPIREDURL|"パスワードリセットの有効期限が切れていま (35 more) ..."
+18:51:06.0 (147615041)|HEAP_ALLOCATE|[11]|Bytes:27
+18:51:06.0 (147624416)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PASSWORD_SIGNUP_ERR_INTERNAL|"内部エラーが発生しました。サイト管理者に (7 more) ..."
+18:51:06.0 (147629015)|HEAP_ALLOCATE|[11]|Bytes:51
+18:51:06.0 (147638295)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PASSWORD_SIGNUP_ERR_INVALIDURL|"不正なパスワードリセットURLです。<b (31 more) ..."
+18:51:06.0 (147642850)|HEAP_ALLOCATE|[11]|Bytes:15
+18:51:06.0 (147651807)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE001|"パスワードを入力してください。"
+18:51:06.0 (147656706)|HEAP_ALLOCATE|[11]|Bytes:19
+18:51:06.0 (147665902)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE002|"確認用のパスワードを入力してください。"
+18:51:06.0 (147669739)|HEAP_ALLOCATE|[11]|Bytes:27
+18:51:06.0 (147678439)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE003|"8文字以上の英数字混在のパスワードを指定 (7 more) ..."
+18:51:06.0 (147683647)|HEAP_ALLOCATE|[11]|Bytes:22
+18:51:06.0 (147692922)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE004|"パスワードと確認用のパスワードが不一致で (2 more) ..."
+18:51:06.0 (147698163)|HEAP_ALLOCATE|[11]|Bytes:21
+18:51:06.0 (147708113)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PASSWORD_SIGNUP_ERR_MESSAGE005|"以前利用したパスワードはご利用できません (1 more) ..."
+18:51:06.0 (147713201)|HEAP_ALLOCATE|[11]|Bytes:46
+18:51:06.0 (147722521)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PASSWORD_SIGNUP_ERR_OLDURL|"以前のパスワードリセットURLは利用でき (26 more) ..."
+18:51:06.0 (147727294)|HEAP_ALLOCATE|[11]|Bytes:14
+18:51:06.0 (147736217)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_COMMUNITY_MANAGEMENT|"au ショップ - 運営法人"
+18:51:06.0 (147740999)|HEAP_ALLOCATE|[11]|Bytes:15
+18:51:06.0 (147750494)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT|"au ショップ - 一次代理店"
+18:51:06.0 (147755363)|HEAP_ALLOCATE|[11]|Bytes:12
+18:51:06.0 (147764214)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_COMMUNITY_SHOP|"au ショップ - 店舗"
+18:51:06.0 (147768446)|HEAP_ALLOCATE|[11]|Bytes:17
+18:51:06.0 (147777303)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_EVOLVA_ADMIN_USER|"Evolva Admin User"
+18:51:06.0 (147781804)|HEAP_ALLOCATE|[11]|Bytes:11
+18:51:06.0 (147790724)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_EVOLVA_USER|"Evolva User"
+18:51:06.0 (147795613)|HEAP_ALLOCATE|[11]|Bytes:9
+18:51:06.0 (147804241)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_KDDI_BRANCH|"KDDI - 支店"
+18:51:06.0 (147808717)|HEAP_ALLOCATE|[11]|Bytes:9
+18:51:06.0 (147817647)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_KDDI_HEADQUARTERS|"KDDI - 本部"
+18:51:06.0 (147822171)|HEAP_ALLOCATE|[11]|Bytes:12
+18:51:06.0 (147830527)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_KDDI_HEADQUARTERS_V2|"KDDI - 本部 v2"
+18:51:06.0 (147835221)|HEAP_ALLOCATE|[11]|Bytes:29
+18:51:06.0 (147845235)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_KDDI_KNOWLEDGE_ACTIVITIES|"KDDI - Knowledge & A (9 more) ..."
+18:51:06.0 (147850124)|HEAP_ALLOCATE|[11]|Bytes:21
+18:51:06.0 (147860124)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_KDDI_KNOWLEDGE_ONLY|"KDDI - Knowledge onl (1 more) ..."
+18:51:06.0 (147864483)|HEAP_ALLOCATE|[11]|Bytes:13
+18:51:06.0 (147874026)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA|"KDDI - 支社（沖縄）"
+18:51:06.0 (147878905)|HEAP_ALLOCATE|[11]|Bytes:14
+18:51:06.0 (147888849)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1|"KDDI - 支店（沖縄1）"
+18:51:06.0 (147893290)|HEAP_ALLOCATE|[11]|Bytes:14
+18:51:06.0 (147902240)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2|"KDDI - 支店（沖縄2）"
+18:51:06.0 (147906711)|HEAP_ALLOCATE|[11]|Bytes:9
+18:51:06.0 (147916481)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE|"KDDI - 支社"
+18:51:06.0 (147921490)|HEAP_ALLOCATE|[11]|Bytes:13
+18:51:06.0 (147931123)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_SA_USER_CSA|"SA User - CSA"
+18:51:06.0 (147935243)|HEAP_ALLOCATE|[11]|Bytes:12
+18:51:06.0 (147944869)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_SA_USER_SA|"SA User - SA"
+18:51:06.0 (147948917)|HEAP_ALLOCATE|[11]|Bytes:12
+18:51:06.0 (147957836)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_SYSADMIN_CUSTOM|"System Admin"
+18:51:06.0 (147962271)|HEAP_ALLOCATE|[11]|Bytes:20
+18:51:06.0 (147972651)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN|"System Administrator"
+18:51:06.0 (147977537)|HEAP_ALLOCATE|[11]|Bytes:7
+18:51:06.0 (147987048)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP|"システム管理者"
+18:51:06.0 (147991156)|HEAP_ALLOCATE|[11]|Bytes:7
+18:51:06.0 (148001417)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.ROLE_CODE_EVOLVA_HONBU|"E000000"
+18:51:06.0 (148006183)|HEAP_ALLOCATE|[11]|Bytes:6
+18:51:06.0 (148015984)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.ROLE_CODE_EVOLVA_SHISHA|"EKEV01"
+18:51:06.0 (148020468)|HEAP_ALLOCATE|[11]|Bytes:8
+18:51:06.0 (148029421)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.ROLE_CODE_EVOLVA_SHITEN|"EKEV0101"
+18:51:06.0 (148034641)|HEAP_ALLOCATE|[11]|Bytes:7
+18:51:06.0 (148044790)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.ROLE_CODE_HONBU|"C000000"
+18:51:06.0 (148049900)|HEAP_ALLOCATE|[11]|Bytes:7
+18:51:06.0 (148059247)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.ROLE_CODE_SA_HONBU|"S000000"
+18:51:06.0 (148064195)|HEAP_ALLOCATE|[11]|Bytes:10
+18:51:06.0 (148074035)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.USER_CLASSIFICATION_CONTRACTOR|"CONTRACTOR"
+18:51:06.0 (148079360)|HEAP_ALLOCATE|[11]|Bytes:3
+18:51:06.0 (148089199)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.USER_CLASSIFICATION_CSA|"CSA"
+18:51:06.0 (148093520)|HEAP_ALLOCATE|[11]|Bytes:2
+18:51:06.0 (148102894)|VARIABLE_ASSIGNMENT|[11]|auConstantCmn.USER_CLASSIFICATION_SA|"SA"
+18:51:06.0 (148144989)|METHOD_ENTRY|[4]|01pN0000000Miks|auConstantCmn.auConstantCmn()
+18:51:06.0 (148153843)|STATEMENT_EXECUTE|[4]
+18:51:06.0 (148157281)|STATEMENT_EXECUTE|[4]
+18:51:06.0 (148165259)|HEAP_ALLOCATE|[11]|Bytes:5
+18:51:06.0 (148181787)|METHOD_EXIT|[4]|auConstantCmn
+18:51:06.0 (148191491)|SYSTEM_MODE_EXIT|false
+18:51:06.0 (151746741)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (153501840)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (153566942)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (153750066)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (153814490)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:188
+18:51:06.0 (153827529)|VARIABLE_SCOPE_BEGIN|[583]|this|kdKnowledgeListCtrl|true|false
+18:51:06.0 (154159024)|VARIABLE_ASSIGNMENT|[583]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":true,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x74b372d7","kdKnowledgeUpdateDetailCopy":"0x764327d2","kdKnowledgeUpdateDetailLike":"0x2658373","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x1ad4bd17","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (154194625)|SYSTEM_MODE_ENTER|false
+18:51:06.0 (154205626)|HEAP_ALLOCATE|[584]|Bytes:5
+18:51:06.0 (154211838)|STATEMENT_EXECUTE|[583]
+18:51:06.0 (154213797)|STATEMENT_EXECUTE|[584]
+18:51:06.0 (154332474)|HEAP_ALLOCATE|[584]|Bytes:4
+18:51:06.0 (154417170)|VARIABLE_SCOPE_BEGIN|[584]|recs|List<kdKnowledgeListCtrl.KnowledgeItem>|true|false
+18:51:06.0 (154436465)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:51:06.0 (154449002)|VARIABLE_ASSIGNMENT|[584]|recs|[]|0x4e935522
+18:51:06.0 (154684318)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":true,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x74b372d7","kdKnowledgeUpdateDetailCopy":"0x764327d2","kdKnowledgeUpdateDetailLike":"0x2658373","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x1ad4bd17","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (154711088)|STATEMENT_EXECUTE|[585]
+18:51:06.0 (154910001)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":true,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x74b372d7","kdKnowledgeUpdateDetailCopy":"0x764327d2","kdKnowledgeUpdateDetailLike":"0x2658373","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x1ad4bd17","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (155067604)|HEAP_ALLOCATE|[586]|Bytes:5
+18:51:06.0 (155105606)|HEAP_ALLOCATE|[586]|Bytes:80
+18:51:06.0 (155118184)|VARIABLE_SCOPE_BEGIN|[586]|knowledge|kdKnowledge__c|true|false
+18:51:06.0 (155342470)|VARIABLE_ASSIGNMENT|[586]|knowledge|{"Id":"a0AN0000009WoM6MAK","Name":"EK-00000073","CreatedBy__c":"005N00000057RPNIA2","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"duc created new","Type__c":"Value1","NbCopy__c":0,"NbLike__c":0,"NbView__c":5,"CreatedByDisplayedName__c":"Duc","LastModifiedDate__c":"2018-10-18T09:50:58.000Z","Status__c":"Saved","HasMovie__c":false,"MediumCategory__c":"cate1","LastModifiedBy__c":"005N00000057RPNIA2","LastModifiedByDisplayName__c":"Duc","UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}|0x1716289
+18:51:06.0 (155357189)|STATEMENT_EXECUTE|[586]
+18:51:06.0 (155359189)|STATEMENT_EXECUTE|[587]
+18:51:06.0 (155372616)|HEAP_ALLOCATE|[587]|Bytes:124
+18:51:06.0 (155380070)|HEAP_ALLOCATE|[587]|Bytes:9
+18:51:06.0 (155389459)|HEAP_ALLOCATE|[587]|Bytes:12
+18:51:06.0 (155422474)|CONSTRUCTOR_ENTRY|[587]|01pN0000000a5VF|<init>()|kdKnowledgeListCtrl.KnowledgeItem
+18:51:06.0 (155440962)|VARIABLE_SCOPE_BEGIN|[1111]|this|kdKnowledgeListCtrl.KnowledgeItem|true|false
+18:51:06.0 (155461129)|VARIABLE_ASSIGNMENT|[1111]|this|{}|0x551f0dc0
+18:51:06.0 (155486732)|STATEMENT_EXECUTE|[1111]
+18:51:06.0 (155489034)|STATEMENT_EXECUTE|[1112]
+18:51:06.0 (155490639)|STATEMENT_EXECUTE|[1113]
+18:51:06.0 (155508386)|CONSTRUCTOR_EXIT|[587]|01pN0000000a5VF|<init>()|kdKnowledgeListCtrl.KnowledgeItem
+18:51:06.0 (155517494)|VARIABLE_SCOPE_BEGIN|[587]|knowledgeItem|kdKnowledgeListCtrl.KnowledgeItem|true|false
+18:51:06.0 (155533219)|VARIABLE_ASSIGNMENT|[587]|knowledgeItem|{}|0x551f0dc0
+18:51:06.0 (155539618)|STATEMENT_EXECUTE|[588]
+18:51:06.0 (155567772)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{}|0x551f0dc0
+18:51:06.0 (155610863)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0AN0000009WoM6MAK","Name":"EK-00000073","CreatedBy__c":"005N00000057RPNIA2","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"duc created new","Type__c":"Value1","NbCopy__c":0,"NbLike__c":0,"NbView__c":5,"CreatedByDisplayedName__c":"Duc","LastModifiedDate__c":"2018-10-18T09:50:58.000Z","Status__c":"Saved","HasMovie__c":false,"MediumCategory__c":"cate1","LastModifiedBy__c":"005N00000057RPNIA2","LastModifiedByDisplayName__c":"Duc","UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}|0x1716289
+18:51:06.0 (155658276)|VARIABLE_ASSIGNMENT|[1112]|this.knowledge|{"Id":"a0AN0000009WoM6MAK","Name":"EK-00000073","CreatedBy__c":"005N00000057RPNIA2","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"duc created new","Type__c":"Value1","NbCopy__c":0,"NbLike__c":0,"NbView__c":5,"CreatedByDisplayedName__c":"Duc","LastModifiedDate__c":"2018-10-18T09:50:58.000Z","Status__c":"Saved","HasMovie__c":false,"MediumCategory__c":"cate1","LastModifiedBy__c":"005N00000057RPNIA2","LastModifiedByDisplayName__c":"Duc","UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}|0x551f0dc0
+18:51:06.0 (155674956)|STATEMENT_EXECUTE|[589]
+18:51:06.0 (155769973)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"knowledge":"0x1716289"}|0x551f0dc0
+18:51:06.0 (155780838)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|"CX・お客様満足度向上"
+18:51:06.0 (155791611)|VARIABLE_ASSIGNMENT|[1113]|this.themaLabel|"CX・お客様満足度向上"|0x551f0dc0
+18:51:06.0 (155800830)|STATEMENT_EXECUTE|[590]
+18:51:06.0 (155824968)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:51:06.0 (155841862)|HEAP_ALLOCATE|[586]|Bytes:5
+18:51:06.0 (155865698)|HEAP_ALLOCATE|[586]|Bytes:92
+18:51:06.0 (155874172)|VARIABLE_SCOPE_BEGIN|[586]|knowledge|kdKnowledge__c|true|false
+18:51:06.0 (155940296)|VARIABLE_ASSIGNMENT|[586]|knowledge|{"Id":"a0AN0000009Wn3ZMAS","Name":"EK-00000033","Agency__c":"001N00000147jSpIAI","CreatedBy__c":"005N00000057RPNIA2","Description__c":"使用量と大幅に異なることなどによる、消費 (128 more) ...","SubjectDivision__c":"V2","Thema__c":"Val8","Title__c":"duc test 20/3 5","Type__c":"Value1","NbCopy__c":1,"NbLike__c":0,"NbView__c":2,"CreatedByDisplayedName__c":"Duc","LastModifiedDate__c":"2018-10-18T09:24:44.000Z","Status__c":"Saved","HasMovie__c":false,"MediumCategory__c":"cate2","LastModifiedBy__c":"005N00000057RPNIA2","LastModifiedByDisplayName__c":"Duc","UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009Wn3ZMAS","Id":"00PN0000006svbeMAA","Name":"2018031333261022.zip"}],"CreatedBy__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}|0x4dde3115
+18:51:06.0 (155956708)|STATEMENT_EXECUTE|[586]
+18:51:06.0 (155958604)|STATEMENT_EXECUTE|[587]
+18:51:06.0 (155963172)|HEAP_ALLOCATE|[587]|Bytes:12
+18:51:06.0 (155969595)|CONSTRUCTOR_ENTRY|[587]|01pN0000000a5VF|<init>()|kdKnowledgeListCtrl.KnowledgeItem
+18:51:06.0 (155977064)|VARIABLE_SCOPE_BEGIN|[1111]|this|kdKnowledgeListCtrl.KnowledgeItem|true|false
+18:51:06.0 (155992069)|VARIABLE_ASSIGNMENT|[1111]|this|{}|0x47b1670d
+18:51:06.0 (156005924)|STATEMENT_EXECUTE|[1111]
+18:51:06.0 (156008275)|STATEMENT_EXECUTE|[1112]
+18:51:06.0 (156009781)|STATEMENT_EXECUTE|[1113]
+18:51:06.0 (156012799)|CONSTRUCTOR_EXIT|[587]|01pN0000000a5VF|<init>()|kdKnowledgeListCtrl.KnowledgeItem
+18:51:06.0 (156019004)|VARIABLE_SCOPE_BEGIN|[587]|knowledgeItem|kdKnowledgeListCtrl.KnowledgeItem|true|false
+18:51:06.0 (156031755)|VARIABLE_ASSIGNMENT|[587]|knowledgeItem|{}|0x47b1670d
+18:51:06.0 (156036875)|STATEMENT_EXECUTE|[588]
+18:51:06.0 (156047044)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{}|0x47b1670d
+18:51:06.0 (156096664)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0AN0000009Wn3ZMAS","Name":"EK-00000033","Agency__c":"001N00000147jSpIAI","CreatedBy__c":"005N00000057RPNIA2","Description__c":"使用量と大幅に異なることなどによる、消費 (128 more) ...","SubjectDivision__c":"V2","Thema__c":"Val8","Title__c":"duc test 20/3 5","Type__c":"Value1","NbCopy__c":1,"NbLike__c":0,"NbView__c":2,"CreatedByDisplayedName__c":"Duc","LastModifiedDate__c":"2018-10-18T09:24:44.000Z","Status__c":"Saved","HasMovie__c":false,"MediumCategory__c":"cate2","LastModifiedBy__c":"005N00000057RPNIA2","LastModifiedByDisplayName__c":"Duc","UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009Wn3ZMAS","Id":"00PN0000006svbeMAA","Name":"2018031333261022.zip"}],"CreatedBy__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}|0x4dde3115
+18:51:06.0 (156154275)|VARIABLE_ASSIGNMENT|[1112]|this.knowledge|{"Id":"a0AN0000009Wn3ZMAS","Name":"EK-00000033","Agency__c":"001N00000147jSpIAI","CreatedBy__c":"005N00000057RPNIA2","Description__c":"使用量と大幅に異なることなどによる、消費 (128 more) ...","SubjectDivision__c":"V2","Thema__c":"Val8","Title__c":"duc test 20/3 5","Type__c":"Value1","NbCopy__c":1,"NbLike__c":0,"NbView__c":2,"CreatedByDisplayedName__c":"Duc","LastModifiedDate__c":"2018-10-18T09:24:44.000Z","Status__c":"Saved","HasMovie__c":false,"MediumCategory__c":"cate2","LastModifiedBy__c":"005N00000057RPNIA2","LastModifiedByDisplayName__c":"Duc","UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009Wn3ZMAS","Id":"00PN0000006svbeMAA","Name":"2018031333261022.zip"}],"CreatedBy__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}|0x47b1670d
+18:51:06.0 (156172092)|STATEMENT_EXECUTE|[589]
+18:51:06.0 (156200305)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"knowledge":"0x4dde3115"}|0x47b1670d
+18:51:06.0 (156209396)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|"PLM・フロアオペレーション"
+18:51:06.0 (156217336)|VARIABLE_ASSIGNMENT|[1113]|this.themaLabel|"PLM・フロアオペレーション"|0x47b1670d
+18:51:06.0 (156224891)|STATEMENT_EXECUTE|[590]
+18:51:06.0 (156230484)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:51:06.0 (156242843)|HEAP_ALLOCATE|[586]|Bytes:5
+18:51:06.0 (156262269)|HEAP_ALLOCATE|[586]|Bytes:80
+18:51:06.0 (156285078)|VARIABLE_SCOPE_BEGIN|[586]|knowledge|kdKnowledge__c|true|false
+18:51:06.0 (156327913)|VARIABLE_ASSIGNMENT|[586]|knowledge|{"Id":"a0AN0000009y1QRMAY","Name":"EK-00000239","CreatedBy__c":"005N00000057RPNIA2","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"new item 2","Type__c":"Value1","NbCopy__c":1,"NbLike__c":1,"NbView__c":2,"CreatedByDisplayedName__c":"Duc","LastModifiedDate__c":"2018-10-18T09:16:17.000Z","Status__c":"Saved","HasMovie__c":false,"MediumCategory__c":"cate1","LastModifiedBy__c":"005N00000057RPNIA2","LastModifiedByDisplayName__c":"Duc","UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}|0x6aed0336
+18:51:06.0 (156339500)|STATEMENT_EXECUTE|[586]
+18:51:06.0 (156341188)|STATEMENT_EXECUTE|[587]
+18:51:06.0 (156344761)|HEAP_ALLOCATE|[587]|Bytes:12
+18:51:06.0 (156350156)|CONSTRUCTOR_ENTRY|[587]|01pN0000000a5VF|<init>()|kdKnowledgeListCtrl.KnowledgeItem
+18:51:06.0 (156356947)|VARIABLE_SCOPE_BEGIN|[1111]|this|kdKnowledgeListCtrl.KnowledgeItem|true|false
+18:51:06.0 (156369920)|VARIABLE_ASSIGNMENT|[1111]|this|{}|0x33d7751e
+18:51:06.0 (156383536)|STATEMENT_EXECUTE|[1111]
+18:51:06.0 (156385207)|STATEMENT_EXECUTE|[1112]
+18:51:06.0 (156387104)|STATEMENT_EXECUTE|[1113]
+18:51:06.0 (156389884)|CONSTRUCTOR_EXIT|[587]|01pN0000000a5VF|<init>()|kdKnowledgeListCtrl.KnowledgeItem
+18:51:06.0 (156396709)|VARIABLE_SCOPE_BEGIN|[587]|knowledgeItem|kdKnowledgeListCtrl.KnowledgeItem|true|false
+18:51:06.0 (156408321)|VARIABLE_ASSIGNMENT|[587]|knowledgeItem|{}|0x33d7751e
+18:51:06.0 (156413839)|STATEMENT_EXECUTE|[588]
+18:51:06.0 (156423722)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{}|0x33d7751e
+18:51:06.0 (156461567)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0AN0000009y1QRMAY","Name":"EK-00000239","CreatedBy__c":"005N00000057RPNIA2","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"new item 2","Type__c":"Value1","NbCopy__c":1,"NbLike__c":1,"NbView__c":2,"CreatedByDisplayedName__c":"Duc","LastModifiedDate__c":"2018-10-18T09:16:17.000Z","Status__c":"Saved","HasMovie__c":false,"MediumCategory__c":"cate1","LastModifiedBy__c":"005N00000057RPNIA2","LastModifiedByDisplayName__c":"Duc","UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}|0x6aed0336
+18:51:06.0 (156502699)|VARIABLE_ASSIGNMENT|[1112]|this.knowledge|{"Id":"a0AN0000009y1QRMAY","Name":"EK-00000239","CreatedBy__c":"005N00000057RPNIA2","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"new item 2","Type__c":"Value1","NbCopy__c":1,"NbLike__c":1,"NbView__c":2,"CreatedByDisplayedName__c":"Duc","LastModifiedDate__c":"2018-10-18T09:16:17.000Z","Status__c":"Saved","HasMovie__c":false,"MediumCategory__c":"cate1","LastModifiedBy__c":"005N00000057RPNIA2","LastModifiedByDisplayName__c":"Duc","UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}|0x33d7751e
+18:51:06.0 (156516069)|STATEMENT_EXECUTE|[589]
+18:51:06.0 (156540013)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"knowledge":"0x6aed0336"}|0x33d7751e
+18:51:06.0 (156549932)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|"CX・お客様満足度向上"
+18:51:06.0 (156557723)|VARIABLE_ASSIGNMENT|[1113]|this.themaLabel|"CX・お客様満足度向上"|0x33d7751e
+18:51:06.0 (156565289)|STATEMENT_EXECUTE|[590]
+18:51:06.0 (156570873)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:51:06.0 (156581955)|HEAP_ALLOCATE|[586]|Bytes:5
+18:51:06.0 (156599232)|HEAP_ALLOCATE|[586]|Bytes:80
+18:51:06.0 (156606315)|VARIABLE_SCOPE_BEGIN|[586]|knowledge|kdKnowledge__c|true|false
+18:51:06.0 (156649280)|VARIABLE_ASSIGNMENT|[586]|knowledge|{"Id":"a0AN0000009yAu9MAE","Name":"EK-00000240","CreatedBy__c":"005N00000057RPNIA2","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"duc tét 14092018","Type__c":"Value1","NbCopy__c":0,"NbLike__c":0,"NbView__c":1,"CreatedByDisplayedName__c":"Duc","LastModifiedDate__c":"2018-10-18T09:16:12.000Z","Status__c":"Saved","HasMovie__c":false,"MediumCategory__c":"cate1","LastModifiedBy__c":"005N00000057RPNIA2","LastModifiedByDisplayName__c":"Duc","UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}|0xfbdbce8
+18:51:06.0 (156662602)|STATEMENT_EXECUTE|[586]
+18:51:06.0 (156664292)|STATEMENT_EXECUTE|[587]
+18:51:06.0 (156667634)|HEAP_ALLOCATE|[587]|Bytes:12
+18:51:06.0 (156673463)|CONSTRUCTOR_ENTRY|[587]|01pN0000000a5VF|<init>()|kdKnowledgeListCtrl.KnowledgeItem
+18:51:06.0 (156679776)|VARIABLE_SCOPE_BEGIN|[1111]|this|kdKnowledgeListCtrl.KnowledgeItem|true|false
+18:51:06.0 (156693254)|VARIABLE_ASSIGNMENT|[1111]|this|{}|0x43783b1d
+18:51:06.0 (156705917)|STATEMENT_EXECUTE|[1111]
+18:51:06.0 (156707586)|STATEMENT_EXECUTE|[1112]
+18:51:06.0 (156709087)|STATEMENT_EXECUTE|[1113]
+18:51:06.0 (156711454)|CONSTRUCTOR_EXIT|[587]|01pN0000000a5VF|<init>()|kdKnowledgeListCtrl.KnowledgeItem
+18:51:06.0 (156718473)|VARIABLE_SCOPE_BEGIN|[587]|knowledgeItem|kdKnowledgeListCtrl.KnowledgeItem|true|false
+18:51:06.0 (156729817)|VARIABLE_ASSIGNMENT|[587]|knowledgeItem|{}|0x43783b1d
+18:51:06.0 (156735019)|STATEMENT_EXECUTE|[588]
+18:51:06.0 (156745217)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{}|0x43783b1d
+18:51:06.0 (156781788)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0AN0000009yAu9MAE","Name":"EK-00000240","CreatedBy__c":"005N00000057RPNIA2","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"duc tét 14092018","Type__c":"Value1","NbCopy__c":0,"NbLike__c":0,"NbView__c":1,"CreatedByDisplayedName__c":"Duc","LastModifiedDate__c":"2018-10-18T09:16:12.000Z","Status__c":"Saved","HasMovie__c":false,"MediumCategory__c":"cate1","LastModifiedBy__c":"005N00000057RPNIA2","LastModifiedByDisplayName__c":"Duc","UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}|0xfbdbce8
+18:51:06.0 (156824344)|VARIABLE_ASSIGNMENT|[1112]|this.knowledge|{"Id":"a0AN0000009yAu9MAE","Name":"EK-00000240","CreatedBy__c":"005N00000057RPNIA2","SubjectDivision__c":"V1","Thema__c":"Val1","Title__c":"duc tét 14092018","Type__c":"Value1","NbCopy__c":0,"NbLike__c":0,"NbView__c":1,"CreatedByDisplayedName__c":"Duc","LastModifiedDate__c":"2018-10-18T09:16:12.000Z","Status__c":"Saved","HasMovie__c":false,"MediumCategory__c":"cate1","LastModifiedBy__c":"005N00000057RPNIA2","LastModifiedByDisplayName__c":"Duc","UserRecordAccess":{"HasEditAccess":true},"CreatedBy__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}|0x43783b1d
+18:51:06.0 (156838646)|STATEMENT_EXECUTE|[589]
+18:51:06.0 (156862108)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"knowledge":"0xfbdbce8"}|0x43783b1d
+18:51:06.0 (156871346)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|"CX・お客様満足度向上"
+18:51:06.0 (156878565)|VARIABLE_ASSIGNMENT|[1113]|this.themaLabel|"CX・お客様満足度向上"|0x43783b1d
+18:51:06.0 (156886713)|STATEMENT_EXECUTE|[590]
+18:51:06.0 (156891742)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:51:06.0 (156903079)|HEAP_ALLOCATE|[586]|Bytes:5
+18:51:06.0 (156919694)|HEAP_ALLOCATE|[586]|Bytes:92
+18:51:06.0 (156927172)|VARIABLE_SCOPE_BEGIN|[586]|knowledge|kdKnowledge__c|true|false
+18:51:06.0 (156988315)|VARIABLE_ASSIGNMENT|[586]|knowledge|{"Id":"a0AN0000009Wn30MAC","Name":"EK-00000030","Agency__c":"001N0000017kz57IAA","CreatedBy__c":"005N00000057RPNIA2","Description__c":"て出てくる一番上段の商品がずっと変わらず (90 more) ...","SubjectDivision__c":"V3","Thema__c":"Val11","Title__c":"duc test 20/3 2","Type__c":"Value4","NbCopy__c":1,"NbLike__c":1,"NbView__c":1,"CreatedByDisplayedName__c":"Duc","LastModifiedDate__c":"2018-10-18T09:10:02.000Z","Status__c":"Saved","HasMovie__c":false,"MediumCategory__c":"cate3","LastModifiedBy__c":"005N00000057RPNIA2","LastModifiedByDisplayName__c":"Duc","UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009Wn30MAC","Id":"00PN0000006svbtMAA","Name":"165789984e908db.jpg"},{"ParentId":"a0AN0000009Wn30MAC","Id":"00PN0000007ElwSMAS","Name":"Screen Shot 2018-08- (18 more) ..."}],"CreatedBy__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}|0x410e74f7
+18:51:06.0 (157006829)|STATEMENT_EXECUTE|[586]
+18:51:06.0 (157009279)|STATEMENT_EXECUTE|[587]
+18:51:06.0 (157012524)|HEAP_ALLOCATE|[587]|Bytes:12
+18:51:06.0 (157018188)|CONSTRUCTOR_ENTRY|[587]|01pN0000000a5VF|<init>()|kdKnowledgeListCtrl.KnowledgeItem
+18:51:06.0 (157025040)|VARIABLE_SCOPE_BEGIN|[1111]|this|kdKnowledgeListCtrl.KnowledgeItem|true|false
+18:51:06.0 (157038322)|VARIABLE_ASSIGNMENT|[1111]|this|{}|0x49f9964d
+18:51:06.0 (157050179)|STATEMENT_EXECUTE|[1111]
+18:51:06.0 (157051889)|STATEMENT_EXECUTE|[1112]
+18:51:06.0 (157053464)|STATEMENT_EXECUTE|[1113]
+18:51:06.0 (157056021)|CONSTRUCTOR_EXIT|[587]|01pN0000000a5VF|<init>()|kdKnowledgeListCtrl.KnowledgeItem
+18:51:06.0 (157062846)|VARIABLE_SCOPE_BEGIN|[587]|knowledgeItem|kdKnowledgeListCtrl.KnowledgeItem|true|false
+18:51:06.0 (157074859)|VARIABLE_ASSIGNMENT|[587]|knowledgeItem|{}|0x49f9964d
+18:51:06.0 (157079417)|STATEMENT_EXECUTE|[588]
+18:51:06.0 (157089283)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{}|0x49f9964d
+18:51:06.0 (157147977)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|{"Id":"a0AN0000009Wn30MAC","Name":"EK-00000030","Agency__c":"001N0000017kz57IAA","CreatedBy__c":"005N00000057RPNIA2","Description__c":"て出てくる一番上段の商品がずっと変わらず (90 more) ...","SubjectDivision__c":"V3","Thema__c":"Val11","Title__c":"duc test 20/3 2","Type__c":"Value4","NbCopy__c":1,"NbLike__c":1,"NbView__c":1,"CreatedByDisplayedName__c":"Duc","LastModifiedDate__c":"2018-10-18T09:10:02.000Z","Status__c":"Saved","HasMovie__c":false,"MediumCategory__c":"cate3","LastModifiedBy__c":"005N00000057RPNIA2","LastModifiedByDisplayName__c":"Duc","UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009Wn30MAC","Id":"00PN0000006svbtMAA","Name":"165789984e908db.jpg"},{"ParentId":"a0AN0000009Wn30MAC","Id":"00PN0000007ElwSMAS","Name":"Screen Shot 2018-08- (18 more) ..."}],"CreatedBy__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}|0x410e74f7
+18:51:06.0 (157210363)|VARIABLE_ASSIGNMENT|[1112]|this.knowledge|{"Id":"a0AN0000009Wn30MAC","Name":"EK-00000030","Agency__c":"001N0000017kz57IAA","CreatedBy__c":"005N00000057RPNIA2","Description__c":"て出てくる一番上段の商品がずっと変わらず (90 more) ...","SubjectDivision__c":"V3","Thema__c":"Val11","Title__c":"duc test 20/3 2","Type__c":"Value4","NbCopy__c":1,"NbLike__c":1,"NbView__c":1,"CreatedByDisplayedName__c":"Duc","LastModifiedDate__c":"2018-10-18T09:10:02.000Z","Status__c":"Saved","HasMovie__c":false,"MediumCategory__c":"cate3","LastModifiedBy__c":"005N00000057RPNIA2","LastModifiedByDisplayName__c":"Duc","UserRecordAccess":{"HasEditAccess":true},"Attachments":[{"ParentId":"a0AN0000009Wn30MAC","Id":"00PN0000006svbtMAA","Name":"165789984e908db.jpg"},{"ParentId":"a0AN0000009Wn30MAC","Id":"00PN0000007ElwSMAS","Name":"Screen Shot 2018-08- (18 more) ..."}],"CreatedBy__r":{"DisplayedUsernameFormula__c":"Duc","Id":"005N00000057RPNIA2"}}|0x49f9964d
+18:51:06.0 (157230949)|STATEMENT_EXECUTE|[589]
+18:51:06.0 (157257268)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"knowledge":"0x410e74f7"}|0x49f9964d
+18:51:06.0 (157270802)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|"au WALLET Market"
+18:51:06.0 (157278841)|VARIABLE_ASSIGNMENT|[1113]|this.themaLabel|"au WALLET Market"|0x49f9964d
+18:51:06.0 (157285947)|STATEMENT_EXECUTE|[590]
+18:51:06.0 (157290930)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+18:51:06.0 (157303209)|HEAP_ALLOCATE|[586]|Bytes:5
+18:51:06.0 (157314838)|VARIABLE_ASSIGNMENT|[586]|knowledge|null|
+18:51:06.0 (157320982)|STATEMENT_EXECUTE|[593]
+18:51:06.0 (157560049)|VARIABLE_ASSIGNMENT|[EXTERNAL]|this|{"attachmentId":"","currentUser":"0x361e8ade","errorMessage":"","filterCreatedBy":"","filterDateFromStr":"","filterDateToStr":"","filterFreeText":"","filterHasMovie":false,"filterNew":true,"filterTitle":"","hasData":true,"initSearchFlg":"true","isApprover":false,"isCreator":true,"isHonbu":false,"isNationalApprover":false,"isRestrictedUser":false,"isShopUser":false,"isUpdate":false,"kdKnowledgeNew":"0x327bf191","kdKnowledgeUpdate":"0x74b372d7","kdKnowledgeUpdateDetailCopy":"0x764327d2","kdKnowledgeUpdateDetailLike":"0x2658373","kdKnowledgeUpdateId":"a0AN0000009y1QRMAY","lsKnowledgeUpdateAttachment":"0x1ad4bd17","orderBy":"LastModifiedDate__c DESC","pageNum":1,"pageSize":20,"recordsCount":5,"searchFilter":"","ssc":"0x48f8c17f","themaMap":"0x27b27e15","whereStr":" WHERE PostTime__c >= 2018-10-11T09:50:13Z"}|0x8818c00
+18:51:06.0 (157581666)|VARIABLE_ASSIGNMENT|[EXTERNAL]|value|true
+18:51:06.0 (157589168)|HEAP_ALLOCATE|[64]|Bytes:5
+18:51:06.0 (157602034)|VARIABLE_ASSIGNMENT|[64]|this.hasData|true|0x8818c00
+18:51:06.0 (157610602)|STATEMENT_EXECUTE|[594]
+18:51:06.0 (157616888)|SYSTEM_MODE_EXIT|false
+18:51:06.0 (160116692)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (162514589)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (163345676)|SYSTEM_MODE_ENTER|true
+18:51:06.0 (483601817)|VF_SERIALIZE_VIEWSTATE_BEGIN|066N0000000Lyeg
+18:51:06.0 (492644061)|VF_SERIALIZE_VIEWSTATE_END
+18:51:06.502 (502960479)|CUMULATIVE_LIMIT_USAGE
+18:51:06.502 (502960479)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 3 out of 100
+  Number of query rows: 6 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+18:51:06.502 (502960479)|CUMULATIVE_LIMIT_USAGE_END
+
+18:51:06.0 (503032415)|CODE_UNIT_FINISHED|VF: /apex/kdKnowledgeListPage
+18:51:06.0 (503898892)|EXECUTION_FINISHED

@@ -79,10 +79,10 @@ private class auCXKnowledgeListCtrlTest
         
 //        ctrl.addCxKnowledgeNewAttachment();
         ctrl.cxKnowledgeAttachmentPutInTop();
-        ctrl.cxKnowledgeAttachmentDelete();
+        //ctrl.cxKnowledgeAttachmentDelete();
 //        ctrl.doSaveDeleteCxKnowledge();
         ctrl.dummyFunc();
-        
+        Test.stopTest();
         // static
         auCXKnowledgeListCtrl.joinWhereConditions(null);
         List<String> conditions = new List<String>();
@@ -123,7 +123,7 @@ private class auCXKnowledgeListCtrlTest
   
         System.assertEquals(true, true);
         
-      Test.stopTest();
+      
     }
 
   }

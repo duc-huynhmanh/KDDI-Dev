@@ -19,7 +19,7 @@ public with sharing class kdEventListCSVFileExportingCtrl {
             FROM Account WHERE Id = :accId];
         fileName = 'EventsFromAccount_' + acc.Name + '.csv';
         sTitle = '"代理店コード","代理店名","運営法人コード","運営法人名","営業担当支社","営業担当支店","営業担当者名","CCPフラグ","訪問日","概要"';
-        Apexpages.currentPage().getHeaders().put('content-disposition', 'attachment; filename="' + EncodingUtil.urlEncode(fileName, 'UTF-8') + '"');
+        Apexpages.currentPage().getHeaders().put('content-disposition', 'attachment; filename="";filename*=UTF-8\'\'' + EncodingUtil.urlEncode(fileName, 'UTF-8'));
     }
 
     private String createQueryString(){

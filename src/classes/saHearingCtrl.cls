@@ -36,11 +36,11 @@ public with sharing class saHearingCtrl {
              myUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN ||
              myUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP ||
              myUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH ||
-             myUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH_V2 ||
              myUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE ||
-             myUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE_V2 ||
              myUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS ||
-             myUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS_V2 ||
+             myUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA ||
+             myUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 ||
+             myUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2 ||
              myUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_SHOP ||
              myUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_MANAGEMENT ||
              myUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT;
@@ -48,7 +48,7 @@ public with sharing class saHearingCtrl {
 
     public saHearingCtrl () {
 
-		system.debug('Run : saDailyReportCtrl');
+		system.debug('Run : saHearingCtrl');
       	
       messageError = '正しいデーターを入れてください。';
       messageQuestion = '';
@@ -82,10 +82,6 @@ public with sharing class saHearingCtrl {
       showInquiryNotReplied();
       currentHearingTitle = '';
 
-
-
-
-
       BusinessLocationName = '';
       currentInquiryReply = new saInquiryReply__c();
       currentClsInquiryReply = new clsInquiry(new saInquiryReply__c(), true);
@@ -104,12 +100,6 @@ public with sharing class saHearingCtrl {
 	    }
 
     }
-
-
-
-
-
-
 
     public User myUser {get;private set;}
 
@@ -146,8 +136,9 @@ public with sharing class saHearingCtrl {
 
 
     public void showInquiryNotReplied() {
+
       isAnswered = false;
-      List<saInquiryReply__c> lsReply = [SELECT Id, Status__c, saBusinessLocation__c, saInquiry__r.ReportName__c, saInquiry__r.ValidToDateFormula__c, saInquiry__r.Type__c, ReplyDatetime__c
+      List<saInquiryReply__c> lsReply = [SELECT Id, Status__c, saBusinessLocation__c, saInquiry__r.ReportName__c, saInquiry__r.ValidToDateFormula__c, saInquiry__r.DisplayedValidToDatetime__c, saInquiry__r.Type__c, ReplyDatetime__c
                                          FROM saInquiryReply__c
                                          WHERE saInquiry__r.Type__c IN (:saConstantCmn.SA_INQUIRY_TYPE_HEARING, :saConstantCmn.SA_INQUIRY_TYPE_AU_HEARING)
                                          AND saInquiry__r.Status__c = 'Saved'
@@ -157,16 +148,18 @@ public with sharing class saHearingCtrl {
                                          ORDER BY saInquiry__r.ValidTo__c ASC
                                          LIMIT 200];
 
+	  system.debug('UserInfo.getUserId() : '+UserInfo.getUserId());
       lsInquiry = new List<clsInquiry>();
       for (saInquiryReply__c inq : lsReply) {
         lsInquiry.add(new clsInquiry(inq, false));
       }
+
 system.debug('showInquiryNotReplied: ' + lsInquiry.size());
     }
 
     public void showInquiryReplied() {
       isAnswered = true;
-      List<saInquiryReply__c> lsReply = [SELECT Id, Status__c, saBusinessLocation__c, saInquiry__r.ReportName__c, saInquiry__r.ValidToDateFormula__c, saInquiry__r.Type__c, ReplyDatetime__c
+      List<saInquiryReply__c> lsReply = [SELECT Id, Status__c, saBusinessLocation__c, saInquiry__r.ReportName__c, saInquiry__r.ValidToDateFormula__c, saInquiry__r.DisplayedValidToDatetime__c, saInquiry__r.Type__c, ReplyDatetime__c
                                          FROM saInquiryReply__c
                                          WHERE saInquiry__r.Type__c IN (:saConstantCmn.SA_INQUIRY_TYPE_HEARING, :saConstantCmn.SA_INQUIRY_TYPE_AU_HEARING)
                                          AND saInquiry__r.Status__c = 'Saved'
@@ -185,7 +178,6 @@ system.debug('showInquiryNotReplied: ' + lsInquiry.size());
     public void showInquiry() {
 
 		system.debug('Run : showInquiry');
-		
       messageError = '';
       messageQuestion = '';
 
@@ -209,7 +201,7 @@ system.debug('showInquiryNotReplied: ' + lsInquiry.size());
 
         // TODO: Check if the 拠点 has already been entered and ask a message if so.
         List<saInquiryReply__c> lsInqRep = [SELECT Id, saBusinessLocation__c, Status__c, saInquiry__c, saInquiry__r.ReportName__c, ReplyDatetime__c,
-                                                   saInquiry__r.ValidToDateFormula__c, saInquiry__r.IssuerLabel__c, saInquiry__r.InquiryDescription__c
+                                                   saInquiry__r.ValidToDateFormula__c, saInquiry__r.DisplayedValidToDatetime__c, saInquiry__r.IssuerLabel__c, saInquiry__r.InquiryDescription__c
                                             FROM saInquiryReply__c
                                             WHERE Id = :idHearingReply];
         currentHearingTitle = lsInqRep[0].saInquiry__r.ReportName__c;
@@ -246,6 +238,7 @@ system.debug('showInquiryNotReplied: ' + lsInquiry.size());
                                      FROM saInquiryReplyDetail__c
                                      WHERE saInquiryReply__c = :currentInquiryReply.Id
                                      ORDER BY saInquiryDetail__r.SortNo__c];
+                                     
         for (saInquiryReplyDetail__c det : currentInquiryReplyDetail) {
           det.ReplyDateStartTechnical2__c = '';
           det.ReplyDateEndTechnical2__c = '';
@@ -483,6 +476,8 @@ system.debug('showInquiryNotReplied: ' + lsInquiry.size());
 
       try {
 
+		system.debug('Breakpoint 1');
+
         for (saInquiryReplyDetail__c ird : currentInquiryReplyDetail) {
 
           if (mpQuestions.get(ird.saInquiryDetail__c).AnswerType__c == 'NUMBER') {
@@ -546,14 +541,19 @@ system.debug('showInquiryNotReplied: ' + lsInquiry.size());
           }
         }
         
+        system.debug('Breakpoint 2');
         fIdWasNull = (currentInquiryReply.Id == NULL);
 
+		system.debug('Breakpoint 2-2');
         currentInquiryReply.Status__c = newStatus;
         if (newStatus == 'REPLY_SENT') {
+          system.debug('Breakpoint 2-2');
           currentInquiryReply.ReplyDatetime__c = DateTime.now();
         }
+        system.debug('Breakpoint 2-3');
         upsert currentInquiryReply;
 
+		system.debug('Breakpoint 3');
         for (saInquiryReplyDetail__c ird : currentInquiryReplyDetail) {
           if (ird.saInquiryReply__c == NULL) {
             ird.saInquiryReply__c = currentInquiryReply.Id;
@@ -561,6 +561,7 @@ system.debug('showInquiryNotReplied: ' + lsInquiry.size());
         }
         upsert currentInquiryReplyDetail;
 
+		system.debug('Breakpoint 4');
         showInquiryNotReplied();
         for (saInquiryReplyDetail__c ird : currentInquiryReplyDetail) {
           ird.ReplyDateStartTechnical2__c = '';
@@ -569,6 +570,8 @@ system.debug('showInquiryNotReplied: ' + lsInquiry.size());
 
       } catch (Exception e) {
 
+		system.debug('Breakpoint error'+e);
+		
         messageError = 'エラーが発生しました。' + e.getMessage();
         Database.rollback(sp);
         currentInquiryReply.Status__c = statusMemo;
@@ -618,7 +621,11 @@ system.debug('showInquiryNotReplied: ' + lsInquiry.size());
 
           if (!isInquiryAnswered) {
 
-            Date dDateMsg = inq.saInquiry__r.ValidToDateFormula__c;
+			Date dDateMsg=inq.saInquiry__r.ValidToDateFormula__c;
+			if(inq.saInquiry__r.DisplayedValidToDatetime__c!=null){
+				Datetime dT = inq.saInquiry__r.DisplayedValidToDatetime__c;
+            	dDateMsg = date.newinstance(dT.year(), dT.month(), dT.day());
+			}
 
             Integer iNbDays = Date.today().daysBetween(dDateMsg);
 

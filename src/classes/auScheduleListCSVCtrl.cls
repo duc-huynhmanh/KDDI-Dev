@@ -14,15 +14,13 @@ public without sharing class auScheduleListCSVCtrl {
     }
     
     Public auScheduleListCSVCtrl() {
-        Map<String, List<String>> accountMap = new Map<String, List<String>>();
-        List<Id> accIds = new List<Id>();
         initFieldFromCookie();
 
         String startDate = null;
         String endDate = null;
         String queryStr  = '';
         String selectStr = ' SELECT WhatId, Description, StartDateTime, EndDateTime, ' +
-                           '        What.Name, CSVExportPart1__c, CSVExportPart2__c';
+                           '        What.Name, CSVExportPart1__c, CSVExportPart2__c, CSVExportPart3__c';
         String fromStr   = ' FROM Event ';
         String whereStr  = '';
         String orderStr  = ' ORDER BY ActivityDate desc, Owner.Name, OwnerId, IsAllDayEvent desc, StartDateTime LIMIT 50000';
@@ -192,17 +190,6 @@ system.debug(endDate);
         List<Event> lsEvt = Database.Query(queryStr);
         integer iMaxSize = lsEvt.size();
 
-        for(Event e : lsEvt){
-            accIds.add(e.WhatId);
-        }
-
-        for(Account acc : [SELECT ManagementCorpCode__c, PartnerCode__c FROM Account WHERE Id IN :accIds]){
-            List<String> strList = new List<String>();
-            strList.add(acc.ManagementCorpCode__c);
-            strList.add(acc.PartnerCode__c);
-            accountMap.put(acc.Id, strList);
-        }
-
         for(Integer i = 0; i < iMaxSize; ++i){ 
             Event mcm = lsEvt[i];
 //            for (Event mcm : Database.Query(queryStr)) {
@@ -212,7 +199,6 @@ system.debug(endDate);
                 lsstrRowMCM = new List<String>();
                 iSize = 0;
             }
-            List<String> codeList = accountMap.get(mcm.WhatId);
             
             String sRow = '' +
                           FormatFieldDatetime(mcm.StartDateTime) + ',' +
@@ -221,8 +207,7 @@ system.debug(endDate);
                           FormatFieldTextArea(mcm.Description) + ',' +
                           mcm.CSVExportPart1__c +
                           FormatFieldText(mcm.What.Name) + ',' +
-                          FormatFieldText(codeList != null ? codeList[0] : '') + ',' +
-                          FormatFieldText(codeList != null ? codeList[1] : '');
+                          mcm.CSVExportPart3__c;
 
 /*
 
@@ -285,7 +270,8 @@ system.debug(endDate);
         return field==null ? '' : ('"' + field.replace('"', '""') + '"');
     }
     private String FormatFieldTextArea(String field) {
-        return field==null ? '' : ('"' + field.replaceAll('[\n\r]', ' ').replace('"', '""') + '"');
+        //return field==null ? '' : ('"' + field.replaceAll('[\n\r]', ' ').replace('"', '""') + '"');
+        return field==null ? '' : ('"' + field.replace('"', '""') + '"');
     }
 
     private String ConcatenateField(String strConcat, object field, boolean fFirstField) {    
