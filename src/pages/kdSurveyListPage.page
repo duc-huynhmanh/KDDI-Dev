@@ -1,0 +1,1621 @@
+<apex:page cache="false"
+           showHeader="false"
+           standardStylesheets="true"
+           applyHtmlTag="false"
+           applyBodyTag="false"
+           doctype="html-5.0"
+           controller="kdSurveyListCtrl">
+
+<html class="no-js" lang="en-GB">
+
+<c:auMainHeaderComp />
+
+<head>
+
+  <apex:stylesheet value="{!URLFOR($Resource.jQueryUIFull, 'jquery-ui-1.12.1/jquery-ui.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.jQueryUIFull, 'jquery-ui-1.12.1/jquery-ui.min.css')}"/>
+
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/external/jquery/jquery.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.datepicker-ja.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryMin)}"/>
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.min.js')}"/> 
+
+  <style>
+
+    .detailCell {
+      vertical-align: top;
+    }
+
+    .detailLabel {
+      margin: 0.5rem;
+      padding: 0.5rem;
+      margin-right: 0;
+      width: 8rem;
+      background-color: #E0EFF6;
+      display: inline-block;
+      text-align: right;
+      vertical-align: top;
+    }
+
+    .detailValue {
+      margin: 0.5rem;
+      padding: 0.5rem;
+      margin-left: 0;
+      width: calc(100% - 9rem);
+      width: -webkit-calc(100% - 9rem);
+      width: -moz-calc(100% - 9rem);
+      background-color: white;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .labelInTable{
+        margin-top: -15px;
+        color: white;
+        
+    }
+
+    .col1{
+      min-width: 100px;
+      max-width: 120px;
+      overflow-x: hidden;
+    }
+    .col2{
+      min-width: 100px;
+      max-width: 120px;
+    }
+    .col3{
+      min-width: 120px;
+      max-width: 140px;
+    }
+    .col4{
+      min-width: 80px;
+      max-width: 100px;
+      overflow-x: hidden;
+    }
+    .col5{
+      min-width: 145px;
+      overflow-x: hidden;
+    }
+    .col6{
+      min-width: 60px;
+      max-width: 80px;
+      overflow-x: hidden;
+    }
+
+    .col2 p,  .col3 p, .col8 p {
+      word-break: break-all;
+      word-wrap: break-word;
+      white-space: normal;
+    }
+
+	.scol5{
+		min-width: 20px;
+    	max-width: 30px;
+	}
+	.scol6{
+		min-width: 20px;
+    	max-width: 30px;
+	}
+	.scol7{
+		min-width: 40px;
+    	max-width: 80px;
+	}
+	.scol8{
+		min-width: 40px;
+    	max-width: 80px;
+	}
+	.sdcol1{
+		width: 35px;
+	}
+	.sdcol2{
+		min-width: 40px;
+    	max-width: 60px;
+    	overflow-x: hidden;
+	}
+	.sdcol3{
+		min-width: 40px;
+    	max-width: 60px;
+    	overflow-x: hidden;
+	}
+	.sdcol4{
+		min-width: 60px;
+		max-width: 120px;
+		overflow-x: hidden;
+	}
+	.sdcol5-1{
+		min-width: 10px;
+    	max-width: 20px;
+	}
+	.sdcol5-2{
+		min-width: 10px;
+    	max-width: 20px;
+	}
+	.sdcol6-1{
+		min-width: 10px;
+    	max-width: 20px;
+	}
+	.sdcol6-2{
+		min-width: 10px;
+    	max-width: 20px;
+	}
+	.sdcol7-1{
+		min-width: 10px;
+    	max-width: 20px;
+	}
+	.sdcol7-2{
+		min-width: 10px;
+    	max-width: 20px;
+	}
+	.sdcol7-3{
+		min-width: 10px;
+    	max-width: 20px;
+	}
+	.sdcol7-4{
+		min-width: 10px;
+    	max-width: 20px;
+	}
+	.sdcol8-1{
+		min-width: 10px;
+    	max-width: 20px;
+	}
+	.sdcol8-2{
+		min-width: 10px;
+    	max-width: 20px;
+	}
+	.sdcol8-3{
+		min-width: 10px;
+    	max-width: 20px;
+	}
+	.sdcol8-4{
+		min-width: 10px;
+    	max-width: 20px;
+	}
+
+    .content {
+      padding: 1em;
+    }
+
+    .selectDate {
+      width: 7.5rem;
+      margin-left: 1em;
+      height: 2.1rem;
+    }
+
+    .dataTables_scrollBody {
+/*      max-height: 50rem !IMPORTANT;*/
+    }
+    .theme {
+/*      height: 100vh !IMPORTANT;
+*/    }
+    .content.content--theme {
+/*      style="overflow-x: hidden;"
+*/    }
+
+    .button.button--update{
+      margin-right: 0.5rem;
+    }
+
+    .button.button--update.button--update--space{
+      margin-right: 5rem;
+    }
+
+    .no-arrow::before {
+      display: none;
+    }
+    .theme-desc-list-fullsize {
+      width: 100%;
+    }
+
+    .button--cancel {
+      cursor: pointer;
+      cursor: hand;
+    }
+
+    .popup-inner {
+      top: 45%;
+      max-height: 78%;
+    }
+
+    .icon--knowledge-letter {
+      height: 2rem;
+      width: 2rem;
+    }
+
+    .js-slide-width {
+/*      height: 495px !important;
+  */
+    }
+
+    .theme-desc__head_side {
+      height: 4.5rem;
+      max-height: 4.5rem;
+    }
+
+    .theme-desc__upload {
+      width: 100%;
+    }
+
+    .isLink {
+      cursor: pointer;
+      cursor: hand;      
+    }
+
+    .linkPutInTop {
+      float: right;
+      margin-right: 1rem
+    }
+
+    .theme-infoxxx {
+      overflow-y: scroll !important;
+    }
+
+    .theme-desc {
+      width: 100%;
+    }
+
+    .theme-info{
+      height: 100% !important;
+      z-index: 4;
+    }
+
+
+/* NEW CODE FOR CX */
+
+    .theme-list tbody {
+      height: auto !important;
+    }
+
+    .theme-list tbody td {
+      vertical-align: inherit;
+    }
+
+    .input-title {
+      height: 2.3rem !important;
+    }
+
+    .table--theme-info .is-middle {
+      width: 15rem;
+      margin-right: 1rem;
+    }
+
+    .theme-info__head.is-cx span{
+      color: #fff;
+    }
+
+    .popup{
+      z-index: 5 !important;
+    }
+
+    .popup--like textarea,
+    .popup--copy textarea {
+      width: 100%;
+      height: 20rem;
+    }
+
+    .popup--like .popup-inner,
+    .popup--copy .popup-inner {
+        width: 50%;
+        background-color: transparent;
+    }
+
+    .close-label {
+      font-size: 1.6rem;
+      line-height: 1.8 !important;
+    }
+
+    .popup__button-container {
+      bottom: 13rem;
+    }
+
+    .ui-datepicker {
+      z-index: 5 !important;
+    }
+
+    .thspanwithoutarrow {
+      top: auto !important;
+    }
+
+
+    .shopsItem, .categoryItem {
+        display: inline-block;
+        width: 240px;
+        float: left;
+        text-align: left;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin: 4px;
+        height: 1.8em;
+    }
+
+
+
+    .search-status__select {
+      width: auto;
+      height: 2.1rem;
+    }
+
+    .filter-category, .filter-daterange {
+      padding-left: 0 !important;
+      height: 44px;
+    }
+
+    .linkstyle {
+      text-decoration: underline;
+    }
+    .linkstyle:hover {
+      color: blue;
+    }
+    .linkstyle a:hover {
+      color: blue;
+    }
+
+    .highlightRow {
+      background-color: Cornsilk;
+    }
+    .dataTables_empty{
+      display: none;
+    }
+
+    ul li, ol li {
+      margin-left: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      display: inherit;
+    }
+
+    body a:hover {
+      text-decoration: none;
+    }
+
+.btn, .button, .formulaButton, .btnWhatsNew {
+    font-family: HelveticaNeueRoman,HelveticaNeue-Roman,Meiryo,Hiragino Kaku Gothic ProN,Kozuka Gothic Pr6N,Arial,Helvetica Neue Roman,HelveticaNeue,Helvetica Neue,TeXGyreHerosRegular,Helvetica,Tahoma,Geneva,sans-serif;
+    background-image: none;
+    background-repeat: no-repeat;
+    background-position: initial;
+    border-right: none;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    font-size: inherit;
+    color: #000;
+
+}
+
+body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .menuButton .menuButtonButton {
+    color: #333;
+    margin: auto;
+
+    padding: 0;
+    border: none;
+    background: unset;
+    font-weight: normal;
+    font-size: inherit;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+  .button--remove {
+    background-color: #999;
+  }
+
+  a{
+    font-weight: 500 !important;
+  }
+  .table--theme-info input, .table--theme-info select, .table--theme-info textarea {
+    padding: 0 0 0 0.5rem !important;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  #btn-dropdown{
+    width: 196px;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    width: 196px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .dropdown-content a:hover {background-color: #f1f1f1}
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .dropdown:hover .dropbtn {
+    background-color: #3F51B5;
+  }
+
+  .padding-top-50{
+    padding-top: 50px;
+  }
+  .background-transparent {
+    background-color: transparent;
+  }
+  .background-white{
+    background-color: #fff;
+  }
+  .max-height-100{
+    max-height: 100% !important;
+  }
+    .margin-right10{
+    margin-right: 10px;
+    }
+
+  .mdl-data-table th a {
+    font-weight: 700 !important;
+    color: rgba(0,0,0,.54);
+  }
+
+  .mdl-data-table th a .thspanwithoutarrow:hover {
+    text-decoration: underline;
+  }
+  
+  .header-color-1{
+    background-color: #333388;
+    color: white;
+    text-align: center;
+  }
+  
+  .header-color-2{
+    background-color: #883333;
+    color: white;
+    text-align: center;
+  }
+  
+  .header-color-3{
+    background-color: #8888DD;
+    color: white;
+    text-align: center;
+  }
+
+  textArea {
+    resize: none;
+    width: 100%;
+    height: -webkit-fill-available;
+  }
+
+  .survey-detail-table-header {
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+  }
+  
+  .rotatedtext {
+  	text-orientation: upright;
+    writing-mode: vertical-rl;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 15px;
+    vertical-align: text-top;
+    position: relative;
+  }
+  
+  .cellValueGrid {
+    background-color: white;
+    padding: 5px;
+  }
+  
+  .noDisplay {
+  	display: none;
+  }
+  </style>
+
+  <script>
+  var j$ = jQuery.noConflict();
+  j$(document).ready(function() {
+    var updateSvgCss = function() {
+       var tspan = j$('tspan');        
+       if (tspan.length > 0) {
+           tspan.each(function(){
+                if(j$(this).text()=='5' || j$(this).text()=='15' || j$(this).text()=='25' || j$(this).text()=='35' || j$(this).text()=='45'){
+                    j$(this).css('display', 'none');
+                }
+
+				if(j$(this).text()=='10' || j$(this).text()=='20' || j$(this).text()=='30' || j$(this).text()=='40' || j$(this).text()=='50'){
+                	j$(this).text(j$(this).text()/10);
+                }
+           });
+       } else {
+           // svg element appears to be dyamically inserted so poll for it
+           setTimeout(updateSvgCss, 10);
+       }
+    };
+    updateSvgCss();
+  });
+  </script>   
+
+  <script>
+
+    var $j = jQuery.noConflict();
+
+    /*
+    function callChangeOrder(key) {
+        var obj = $j('.orderInput');
+        obj.val(key);
+        changeOrder();
+    }*/
+
+    function getSurveyDetails(key) {
+        var obj = $j('.SurveyUpdateIdInput');
+        obj.val(key);
+        refreshSurveyEdit();
+    }
+
+    /*function updateCategory(cateId){
+      console.log('cateId: ' + cateId);
+      var cateObject = document.getElementById(cateId);
+      var cateOption = cateObject.getElementsByTagName('option')[1];
+      cateOption.selected = 'selected';
+    }
+    */
+
+    function callAddLike() {
+
+        var obj = $j('.LikeCommentInput');
+
+        /*if (obj.val().trim().length == 0) {
+          alert('コメントを入力してください。');
+        } else {*/
+          jsAddLike();
+        //}
+
+    }
+
+    function callRemoveLike() {
+        jsRemoveLike();
+    }
+
+    function callAddCopy() {
+
+        /*var obj = $j('.CopyCommentInput');
+
+        if (obj.val().trim().length == 0) {
+          alert('コメントを入力してください。');
+        } else {*/
+          jsAddCopy();
+        //}
+
+    }
+
+    function callRemoveCopy() {
+        jsRemoveCopy();
+    }
+
+    window.onload = function onLoadJS() {
+      if({!!hasData}){
+        console.log("no data");
+        $row = $('<td valign="top" colspan="8">マッチングデータ無し</td>');
+        $j('.dataTables_scrollBody > table > tbody > tr').append($row);
+      }
+      
+      var x = document.getElementsByClassName("dataTables_scrollBody");
+      x[0].style.maxHeight="CALC(" + x[0].style.maxHeight + " + 4rem)";      
+
+      // Send an alert if there is an error message (Attachment failed?)
+      var obj = $j('.errorMessageInput');
+      if (obj.val().length > 0) {
+        alert(obj.val());
+        obj.val('');        
+      }
+    }
+
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/amcharts/3.13.0/exporting/rgbcolor.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/amcharts/3.13.0/exporting/canvg.js"></script>   
+  <script>
+				
+           function renderChartToImg() {
+
+				
+			   var targetElem = document.getElementById('svgchart');
+               var nodesToRecover = []
+               var nodesToRemove = []
+               var svgs = $(targetElem).find('svg');
+               
+               svgs.each(function(index, node) {
+                   var parentNode = node.parentNode
+                   var svg = parentNode.innerHTML
+                   var canvas = document.createElement('canvas')
+                   xml = (new XMLSerializer()).serializeToString(node)
+                   xml = xml.replace(/xmlns=\"http:\/\/www\.w3\.org\/2000\/svg\"/, '')
+                   canvg(canvas, xml); // html to image
+                   alert(canvas);
+                   nodesToRecover.push({
+                       parent: parentNode,
+                       child: node
+                   })
+                   parentNode.removeChild(node)
+                   nodesToRemove.push({
+                       parent: parentNode,
+                       child: canvas
+                   })
+                   parentNode.appendChild(canvas)
+                   
+               })
+               
+               html2canvas(targetElem, {
+                   onrendered: function(canvas) {
+                       canvas.style.visibility = 'hidden'
+                       document.body.appendChild(canvas);
+                       var doc = new jsPDF('p', 'pt', [canvas.height,canvas.width]); // create pdf file
+                       doc.addHTML(canvas, {}, function() { // add image to pdf file
+                           sendEmail(btoa(doc.output()));
+                           document.body.removeChild(canvas)
+                       })
+                   }   
+                   
+               })         
+     
+           }
+
+       </script>
+
+</head>
+
+<body class="theme" >
+  <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+<apex:form id="thisForm">
+
+  <c:auMainTopComp typeOfScreen="{!typeOfScreen}" />
+
+  <apex:outputPanel >
+    <apex:inputText id="orderBy" styleClass="orderInput" value="{!orderBy}" style="display: none;" />
+    <apex:inputText styleClass="errorMessageInput" value="{!errorMessage}" style="display: none;" />
+    <apex:actionFunction name="changeOrder" action="{!changeOrder}" />
+  </apex:outputPanel>
+  
+  <div class="container js-get-height" id="container">
+    <main class="main main--theme clear" id="main" role="main">
+        <div class="theme-info js-slide-width is-cx">
+            <div class="theme-info-inner">
+                <div class="theme-info__top is-cx">
+                    <button class="button button--dropdown js-slide-info-close"></button>
+                    <div class="theme-info__head clearfix is-cx">
+                        <span class="close-label">閉じる</span>
+
+                        <apex:outputPanel id="editKnowledge2" styleclass="theme-info__edit is-cx">
+
+							<!-- a class="button button--update"
+                   				href="/kdSurveyDetailPage?surveyID={!surveyUpdateId}"
+                   				target="_blank">CSVで出力</a-->
+                   
+                            <apex:commandLink style="width: 6.667rem;height: 2.5rem;text-align: center;border-radius: 4px;line-height: 2.5;background-color: #fff; padding: 5px;" 
+                            	action="{!openDetailInNewTab}" target="_blank">
+                            	<apex:commandButton value="PDFで出力"/>
+                            </apex:commandLink>
+
+                        </apex:outputPanel>
+
+                    </div>
+
+                </div>
+
+                <div class="theme-detail clearfix">
+                    <div class="theme-desc is-cx is-top" style="height: 100%">
+                        <div class="theme-desc__inner" style="height: 100%">
+                        <!--Edit Area-->
+                            <apex:outputPanel id="editKnowledge1">
+
+                                <div id="svgchart" style="background-color: #fff; width: calc(100%);">
+                
+                					<table style="border-collapse: collapse; border: solid 1px #ccc; margin: 5px;">               
+                        
+                						<thead>
+                							<tr>
+                								<td style="border: solid 1px #ccc; padding-left: 5px;">
+                									{!$Label.kdSurvey_Type}
+                								</td>
+                								<td style="border: solid 1px #ccc; padding-left: 5px;">
+                									{!$Label.kdSurvey_Shisha}
+                								</td>
+                								<td style="border: solid 1px #ccc; padding-left: 5px;">
+                									{!$Label.kdSurvey_UnifiedAgencyBranch}
+                								</td>
+                								<td style="border: solid 1px #ccc; padding-left: 5px;">
+                									{!$Label.kdSurvey_BusinessLocationBranchGroup}
+                								</td>
+                								<td style="border: solid 1px #ccc; padding-left: 5px;">
+                									{!$Label.kdSurvey_UserName}
+                								</td>
+                								<td style="border: solid 1px #ccc; padding-left: 5px;">
+                									{!$Label.kdSurvey_FiscalYear}
+                								</td>
+                							</tr>
+                						</thead>
+                						
+                						<tr>
+                							<td style="border: solid 1px #ccc; padding-left: 5px;">
+                								{!surveyType}
+                							</td>
+                							<td style="border: solid 1px #ccc; padding-left: 5px;">
+                								{!surveyShisha}
+                							</td>
+                							<td style="border: solid 1px #ccc; padding-left: 5px;">
+                								{!surveyUnifiedAgencyBranch}
+                							</td>
+                							<td style="border: solid 1px #ccc; padding-left: 5px;">
+                								{!surveyBusinessLocationBranchGroup}
+                							</td>
+                							<td style="border: solid 1px #ccc; padding-left: 5px;">
+                								{!surveyUserName}
+                							</td>
+                							<td style="border: solid 1px #ccc; padding-left: 5px;">
+                								{!surveyFiscalYear}
+                							</td>
+                						</tr>
+                					</table>
+                						
+                                    <table style="width: 100%; border-spacing: 0.5rem 0 ; border-collapse: separate;">
+                						<tr>
+                							<td style="padding-left:5px; padding-top:10px; min-height: 50px;">
+                								<div>
+                									<div style="width: 100%;">
+	                									<span>本人：前回と今回の比較</span>
+	                									<div style="float: right;">
+	                										<span>{!lastYearLabel}</span>
+	                									</div>
+                									</div>
+                									<div style="float: right;">
+                										<span>{!thisYearLabel}</span>
+                									</div>
+                								</div>
+                							</td>
+                							<td style="padding-left:5px; padding-top:10px; min-height: 50px;">
+                								<div>
+                									<div style="width: 100%;">
+	                									<span>今回の本人とメンバーの比較</span>
+	                									<div style="float: right;">
+	                										<span>全メンバー</span>
+	                									</div>
+	                								</div>
+                									<div style="float: right;">
+                										<span>本人</span>
+                									</div>
+                								</div>
+                							</td>
+                							<td style="padding-left:5px; padding-top:10px; min-height: 50px;">
+                								<div>
+                									<div style="width: 100%;">
+	                									<span>今回の本人と支社平均の比較</span>
+	                									<div style="float: right;">
+	                										<span>支社平均</span>
+	                									</div>
+	                								</div>
+                									<div style="float: right;">
+                										<span>本人</span>
+                									</div>
+                								</div>
+                							</td>
+                						</tr>
+                                        <tr>
+                                            <td style="width: 33%" class="future Graph 1">
+                                                <div style="background-color: #fff; border: solid 1px #ccc; min-height: 17rem; margin-top: 5px; padding-top:30px;">
+                                            		<span></span>
+                                            		<apex:chart height="100%" width="100%" legend="false" data="{!data1}">
+													    <apex:axis type="Radial" position="radial" grid="true" maximum="50" dashSize="0.5"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue1" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue2" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue3" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue4" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue5" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue6" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue7" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    
+													    <apex:radarSeries xField="dataName" yField="dataValue2" opacity="0.4" fill="#fff" strokeColor="#36f" strokeWidth="2" tips="true"/>
+													    <apex:radarSeries xField="dataName" yField="dataValue1" opacity="0.6" fill="#fff" strokeColor="#f90" strokeWidth="3" tips="true"/>
+													 </apex:chart>
+                                                </div>
+                                            </td>
+                
+                                            <td style="width: 33%" class="future Graph 2">
+                                                <div style="background-color: #fff; border: solid 1px #ccc; min-height: 17rem; margin-top: 5px; padding-top:30px;">
+                 									<apex:chart height="100%" width="100%" legend="false" data="{!data2}">
+													    <apex:axis type="Radial" position="radial" grid="true" maximum="50" dashSize="0.5"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue1" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue2" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue3" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue4" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue5" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue6" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue7" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    
+													    <apex:radarSeries xField="dataName" yField="dataValue2" opacity="0.4" fill="#fff" strokeColor="#36f" strokeWidth="2" markerType="circle" markerFill="#33f" tips="true"/>
+													    <apex:radarSeries xField="dataName" yField="dataValue1" opacity="0.6" fill="#fff" strokeColor="#f90" strokeWidth="3" markerType="circle" markerFill="#a60" tips="true"/>  
+													 </apex:chart>
+                                                </div>
+                                            </td>
+                                        
+                                            <td style="width: 33%" class="future Graph 3">
+                                                <div style="background-color: #fff; border: solid 1px #ccc; min-height: 17rem; margin-top: 5px; padding-top:30px;">
+                									<apex:chart height="100%" width="100%" legend="false" data="{!data3}">
+													    <apex:axis type="Radial" position="radial" grid="true" maximum="50" dashSize="0.5"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue1" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue2" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue3" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue4" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue5" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue6" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue7" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    
+													    <apex:radarSeries xField="dataName" yField="dataValue2" opacity="0.4" fill="#36f" strokeColor="#029" strokeWidth="2" tips="true"/>
+													    <apex:radarSeries xField="dataName" yField="dataValue1" opacity="0.6" fill="#f90" strokeColor="#b60" strokeWidth="2" tips="true"/>
+													 </apex:chart>
+                                                </div>
+                                            </td>
+                                        </tr>
+                
+                                    </table>
+                                </div>
+
+                                <div style="background-color: #ccc; width: calc(100% - 1rem); margin: 0.5rem;">
+
+                                    <!-- table class="mdl-data-table mdl-js-data-table table table--theme js-table-data is-long" -->
+                                    <table>
+                                        <thead>
+                                            <tr style="height: 3rem;">
+                
+                								<!--  mdl-data-table__cell--non-numeric --> 
+                                                <th class="survey-detail-table-header sdcol1 header-color-1">
+                                                    <span class="labelInTable">項番</span>           
+                                                </th>
+
+												<!-- header-color-1 sdcol2 mdl-data-table__cell--non-numeric --> 
+                                                <th class="survey-detail-table-header sdcol2 header-color-1">
+                                                    <span class="labelInTable">大カテゴリ</span>                                   
+                                                </th>
+                  
+                  								<!-- header-color-1 sdcol3 mdl-data-table__cell--non-numeric --> 
+                                                <th class="survey-detail-table-header sdcol3 header-color-1">
+                                                    <span class="labelInTable">中カテゴリ</span>                                   
+                                                </th>
+                 
+                 								<!-- header-color-1 sdcol4 mdl-data-table__cell--non-numeric --> 
+                                                <th class="survey-detail-table-header sdcol4 header-color-1">
+                                                    <span class="labelInTable">設問</span>                                   
+                                                </th>
+                                                
+                                                <!-- header-color-1 scol5 mdl-data-table__cell--non-numeric --> 
+                                                <th colspan="2" class="survey-detail-table-header scol5 header-color-1">
+                                                    <span class="labelInTable">本人</span>                                   
+                                                </th>                                               
+                                                
+                                                <!-- header-color-1 scol6 mdl-data-table__cell--non-numeric --> 
+                                                <th colspan="2" class="survey-detail-table-header scol6 header-color-1">
+                                                    <span class="labelInTable">全メンバー</span>                                   
+                                                </th>                                               
+                                                
+                                                <!-- header-color-2 scol7 mdl-data-table__cell--non-numeric --> 
+                                                <th colspan="4" class="survey-detail-table-header scol7 header-color-2">
+                                                    <span class="labelInTable">支社平均</span>                                   
+                                                </th>                                               
+                                                
+                                                <!-- header-color-3 scol8 mdl-data-table__cell--non-numeric --> 
+                                                <th colspan="4" class="survey-detail-table-header scol8 header-color-3">
+                                                    <span class="labelInTable">全国平均</span>                                   
+                                                </th>                                               
+
+                                            </tr>
+                                            <tr style="height: 8rem;">
+                
+                                                <th class="survey-detail-table-header header-color-1 sdcol1 mdl-data-table__cell--non-numeric rotatedtext"/>
+                                                <th class="survey-detail-table-header header-color-1 sdcol2 mdl-data-table__cell--non-numeric rotatedtext"/>
+                                                <th class="survey-detail-table-header header-color-1 sdcol3 mdl-data-table__cell--non-numeric rotatedtext"/>
+                                                <th class="survey-detail-table-header header-color-1 sdcol4 mdl-data-table__cell--non-numeric rotatedtext"/>
+                                                
+                                                <th class="survey-detail-table-header header-color-1 sdcol5-1 mdl-data-table__cell--non-numeric rotatedtext">
+                                                	<div>
+                                                    	<span class="labelInTable rotatedtext">本人</span>    
+                                                    </div>                               
+                                                </th>                                               
+                                                <th class="survey-detail-table-header header-color-1 sdcol5-2 mdl-data-table__cell--non-numeric rotatedtext">
+                                                	<div>
+                                                    	<span class="labelInTable rotatedtext">前回比</span>   
+                                                    </div>                                
+                                                </th>
+                                                
+                                                <th class="survey-detail-table-header header-color-1 sdcol6-1 mdl-data-table__cell--non-numeric rotatedtext">
+                                                	<div>
+                                                    	<span class="labelInTable rotatedtext">全メンバー</span> 
+                                                    </div>	                                  
+                                                </th>                                               
+                                                <th class="survey-detail-table-header header-color-1 sdcol6-2 mdl-data-table__cell--non-numeric rotatedtext">
+                                                	<div>
+                                                    	<span class="labelInTable rotatedtext">前回比</span>   
+                                                    </div>                              
+                                                </th>   
+                                                                                            
+                                                <th class="survey-detail-table-header header-color-2 sdcol7-1 mdl-data-table__cell--non-numeric rotatedtext">
+                                                	<div>
+                                                    	<span class="labelInTable rotatedtext">支店長GL</span> 
+                                                    </div>                                
+                                                </th>                                               
+                                                <th class="survey-detail-table-header header-color-2 sdcol7-2 mdl-data-table__cell--non-numeric rotatedtext">
+                                                	<div>
+                                                    	<span class="labelInTable rotatedtext">前回比</span>   
+                                                    </div>                              
+                                                </th>                                               
+                                                <th class="survey-detail-table-header header-color-2 sdcol7-3 mdl-data-table__cell--non-numeric rotatedtext">
+                                                	<div>
+                                                    	<span class="labelInTable rotatedtext">全メンバー</span>
+                                                    </div>                                 
+                                                </th>                                               
+                                                <th class="survey-detail-table-header header-color-2 sdcol7-4 mdl-data-table__cell--non-numeric rotatedtext">
+                                                	<div>
+                                                    	<span class="labelInTable rotatedtext">前回比</span>  
+                                                    </div>                               
+                                                </th>
+                                                
+                                                <th class="survey-detail-table-header header-color-3 sdcol8-1 mdl-data-table__cell--non-numeric rotatedtext">
+                                                	<div>
+                                                    	<span class="labelInTable rotatedtext">支店長GL</span>  
+                                                    </div>                               
+                                                </th>                                               
+                                                <th class="survey-detail-table-header header-color-3 sdcol8-2 mdl-data-table__cell--non-numeric rotatedtext">
+                                                	<div>
+                                                    	<span class="labelInTable rotatedtext">前回比</span>   
+                                                    </div>                              
+                                                </th>                                               
+                                                <th class="survey-detail-table-header header-color-3 sdcol8-3 mdl-data-table__cell--non-numeric rotatedtext">
+                                                	<div>
+                                                    	<span class="labelInTable rotatedtext">全メンバー</span>
+                                                    </div>                                 
+                                                </th>                                               
+                                                <th class="survey-detail-table-header header-color-3 sdcol8-4 mdl-data-table__cell--non-numeric rotatedtext">
+                                                	<div>
+                                                    	<span class="labelInTable rotatedtext">前回比</span>  
+                                                    </div>                               
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:actionRegion id="area51abis" renderRegionOnly="false">
+                                                <apex:inputText styleClass="SurveyUpdateIdInput" value="{!surveyUpdateId}" style="display: none;" />
+                                                <apex:actionFunction name="refreshSurveyEdit" action="{!getSurveyDetails}" rerender="editKnowledge1, editKnowledge2" />
+                                            </apex:actionRegion>
+
+                                            <apex:repeat value="{!surveyDetails}" var="rec" >
+                                                <tr>
+                              
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol1" data-target=".theme-info" style="text-align: center;">
+                                                    <p>
+                                                      <apex:outputField value="{!rec.ItemNumber__c}" />
+                                                    </p>
+                                                  </td>
+
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol2">
+                                                    <p>
+                                                      <apex:outputField value="{!rec.MainCategory__c}" />
+                                                    </p>
+                                                  </td>    
+                                                  
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol3">
+                                                    <p>
+                                                      <apex:outputField value="{!rec.SubCategory__c}" />
+                                                    </p>
+                                                  </td> 
+
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol4">
+                                                    <p>
+                                                      <apex:outputField value="{!rec.Question__c}" />
+                                                    </p>
+                                                  </td>
+
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol5-1" style="text-align: center;">
+                                                    <p>
+                                                      <apex:outputField value="{!rec.Personal__c}" />
+                                                    </p>
+                                                  </td>
+
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol5-2" style="text-align: center;">
+                                                    <p>
+                                                      <apex:outputField value="{!rec.PreviousPersonalRatio__c}" />
+                                                    </p>
+                                                  </td>
+                                                  
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol6-1" style="text-align: center;">
+                                                    <p>
+                                                      <apex:outputField value="{!rec.AllMembers__c}" />
+                                                    </p>
+                                                  </td>
+
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol6-2" style="text-align: center;">
+                                                    <p>
+                                                      <apex:outputField value="{!rec.PreviousAllMembersRatio__c}" />
+                                                    </p>
+                                                  </td>    
+                                                  
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol7-1" style="text-align: center;">
+                                                    <p>
+                                                      <apex:outputField value="{!rec.BranchOfficeManager__c}" />
+                                                    </p>
+                                                  </td> 
+
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol7-2" style="text-align: center;">
+                                                    <p>
+                                                      <apex:outputField value="{!rec.PreviousBOManagerRatio__c}" />
+                                                    </p>
+                                                  </td>
+
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol7-3" style="text-align: center;">
+                                                    <p>
+                                                      <apex:outputField value="{!rec.AllBOMembers__c}" />
+                                                    </p>
+                                                  </td>
+
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol7-4" style="text-align: center;">
+                                                    <p>
+                                                      <apex:outputField value="{!rec.PreviousAllBOMembersRatio__c}" />
+                                                    </p>
+                                                  </td>
+                                                  
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol8-1" style="text-align: center;">
+                                                    <p>
+                                                      <apex:outputField value="{!rec.NationalBOManagers__c}" />
+                                                    </p>
+                                                  </td>
+
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol8-2" style="text-align: center;">
+                                                    <p>
+                                                      <apex:outputField value="{!rec.PreviousNationalBOManagersRatio__c}" />
+                                                    </p>
+                                                  </td>    
+                                                  
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol8-3" style="text-align: center;">
+                                                    <p>
+                                                      <apex:outputField value="{!rec.NationalMembers__c}" />
+                                                    </p>
+                                                  </td> 
+
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol8-4" style="text-align: center;">
+                                                    <p>
+                                                      <apex:outputField value="{!rec.PreviousNationalMembersRatio__c}" />
+                                                    </p>
+                                                  </td>
+                                                  
+                                                </tr>
+                                            </apex:repeat>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                  
+                                <!-- Future 19 20 -->
+                                <div style="background-color: #fff; border-color: #ccc; width: calc(100% - 1rem); margin: 0.5rem 0.5rem 0 0.5rem;">
+													 
+                                    <table style="width: 100%" class="{!IF(commentOnCause!='','','noDisplay')}">
+                                        <tr>
+                                            <td style="width: 100%" class="detailCell">
+                                                <div style="background-color: #fff; border: solid 1px #ccc; min-height: 8rem;" >
+                                                	<apex:inputTextarea value="{!commentOnCause}" readonly="true"/>
+												</div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
+                                    <table style="width: 100%" class="{!IF(commentOnCauseResponse!='','','noDisplay')}">
+                                        <tr>
+                                            <td style="width: 100%" class="detailCell">
+                                                <div style="background-color: #fff; border: solid 1px #ccc; min-height: 8rem;" >
+                                                	<apex:inputTextarea value="{!commentOnCauseResponse}" readonly="true"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
+                                    <table style="width: 100%" class="{!IF(commentOnDifficulties!='','','noDisplay')}">
+                                        <tr>
+                                            <td style="width: 100%" class="detailCell">
+                                                <div style="background-color: #fff; border: solid 1px #ccc; min-height: 8rem;" >
+                                                	<apex:inputTextarea value="{!commentOnDifficulties}" readonly="true"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
+                                    <table style="width: 100%" class="{!IF(commentOnDifficultiesResponse!='','','noDisplay')}">
+                                        <tr>
+                                            <td style="width: 100%" class="detailCell">
+                                                <div style="background-color: #fff; border: solid 1px #ccc; min-height: 8rem;" >
+                                                	<apex:inputTextarea value="{!commentOnDifficultiesResponse}" readonly="true"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      <div class="content content--theme" id="content">
+        <div class="content-header search-tools" >
+          <div class="content-header__top" style="margin-top: -0.5rem; margin-bottom: -0.5rem;">
+            <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--12-col">
+                <div class="search-filter clearfix search_criteria_form" >
+
+                  <apex:actionRegion id="area51f" renderRegionOnly="false">
+                    <apex:outputPanel id="aaa">
+
+                      <div style="display: inline-block;width: 100%;">
+                        <fieldset class="filter-category filter-text">
+                          <label>{!$Label.kdSurvey_Type}</label>
+                          <apex:selectList id="filterSurvey" styleClass="search-status__select" value="{!filterSurvey}" size="1" style="margin-left: 0.5rem">
+                            <apex:selectOptions value="{!surveyTypeOptions}" />
+                          </apex:selectList>
+                        </fieldset>
+
+                        <fieldset class="filter-category filter-text">
+                          <label>{!$Label.kdSurvey_Shisha}</label>
+                          <apex:inputText id="filterShisha" styleClass="search-status__select" value="{!filterShisha}" style="margin-left: 0.5rem; width:10rem;" />
+                          <!-- apex:selectList id="filterShisha" styleClass="search-status__select" value="{!filterShisha}" size="1" style="margin-left: 0.5rem">
+                            <apex:selectOptions value="{!ListShisha}" />
+                            <apex:actionSupport event="onchange" action="{!dummyAction}" rerender="filterShiten" />
+                          </apex:selectList -->
+                        </fieldset>
+
+                        <fieldset class="filter-category filter-text">
+                          <label>{!$Label.kdSurvey_UnifiedAgencyBranch}</label>
+                          <apex:inputText id="filterUnifiedAgencyBranch" styleClass="search-status__select" value="{!filterUnifiedAgencyBranch}" style="margin-left: 0.5rem; width:10rem;" />
+                        </fieldset>
+
+                        <fieldset class="filter-category filter-text">
+                          <label>{!$Label.kdSurvey_BusinessLocationBranchGroup}</label>
+                          <apex:inputText id="filterBusinessLocationBranchGroup" styleClass="search-status__select" value="{!filterBusinessLocationBranchGroup}" style="margin-left: 0.5rem; width:10rem;" />
+                        </fieldset>
+                      </div>
+                      
+                      <div style="display: inline-block;width: 100%;">
+                        <fieldset class="filter-category filter-text">
+                          <label>{!$Label.kdSurvey_UserName}</label>
+                          <apex:inputText id="filterUserName" styleClass="search-status__select" value="{!filterUserName}" style="margin-left: 0.5rem; width:10rem;" />
+                        </fieldset>
+
+                        <fieldset class="filter-category filter-text">
+                          <label>{!$Label.kdSurvey_FiscalYear}</label>
+                          <apex:inputText id="filterFiscalYear" styleClass="search-status__select" value="{!filterFiscalYear}" style="margin-left: 0.5rem; width:10rem;" />
+                        </fieldset>
+
+                        <apex:pageMessages id="error"/>
+                        <fieldset class="filter-button">
+                          <apex:commandLink value="絞り込む/実行" styleClass="margin-right10 mdl-button mdl-js-button mdl-button--raised mdl-button--colored" action="{!doSearch}" />
+                          <apex:commandLink styleClass="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                                            value="クリアする"
+                                            action="{!clearCookie}"
+                                            rerender="filterSurvey, filterShisha, filterUnifiedAgencyBranch, filterBusinessLocationBranchGroup, filterUserName, filterFiscalYear"/>
+
+                        </fieldset>  
+                      </div>
+
+                    </apex:outputPanel>
+                  </apex:actionRegion>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-header__bottom">
+            
+          </div>
+        </div>
+
+        <div class="mdl-grid">
+
+              <div class="mdl-cell mdl-cell--3-col">
+                  <apex:selectList styleclass="search-numbers__select" id="pageSize" value="{!pageSize}" size="1" disabled="{!recoRdscouNt < 5}" style="margin-top: 1rem; height: 2.5em;">
+                    <apex:actionSupport event="onchange" action="{!setSizeSaveCurrentPageSize}"/>
+                    <apex:selectOption itemValue="5" itemLabel="5 件表示"/>
+                    <apex:selectOption itemValue="10" itemLabel="10 件表示"/>
+                    <apex:selectOption itemValue="20" itemLabel="20 件表示"/>
+                    <apex:selectOption itemValue="50" itemLabel="50 件表示"/>
+                  </apex:selectList>
+              </div>
+              
+              <div class="mdl-cell mdl-cell--5-col search-pagination">                
+                <apex:outputPanel id="pnlPagination">
+                  <apex:outputPanel rendered="{!!(recordScount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1)}">
+                    <div style="height: 53px;" />
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!recordScount > 0 && FLOOR(((recordScount - 1) / pageSize) + 1) > 1}">
+
+                    <nav>
+
+                    <apex:panelGroup rendered="{!pageNum == 1}" style="display: inline-block; width: 27px;" />
+
+                      <ul class="pagination">
+                        <li>
+                          <apex:panelGroup rendered="{!pageNum > 1}" >
+                            <apex:outputLink value="javascript:void(0)">
+                              <apex:actionSupport event="onclick" action="{!goToPagePrev}" />
+                              <i class="material-icons">navigate_before</i>
+                            </apex:outputLink>
+                          </apex:panelGroup>
+                        </li>
+
+                        <!-- 1st button -->
+                        <li class="{!IF(pageNum == 1, 'active', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage1}" />
+                            <apex:outputText value="1" />
+                          </apex:outputLink>
+                        </li>
+
+
+                        <!-- 2nd button -->
+                        <li class="{!IF(pageNum == 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage2}" />
+                            <apex:outputText value="2" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 2 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4), 'hidden', '')}">
+                          <span>…</span>
+                        </li>
+
+
+                        <!-- 3rd button -->
+                        <li class="{!IF(pageNum == 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage3}" />
+                            <apex:outputText value="3" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPagePrev}" />
+                            <apex:outputText value="{!pageNum - 1}" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 3 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr5}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 5}" />
+                          </apex:outputLink>                          
+                        </li>
+
+
+                        <!-- 4th button -->
+                        <li class="{!IF(pageNum == 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage4}" />
+                            <apex:outputText value="4" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="active {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <a href="#">{!pageNum}</a>
+                        </li>
+
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr4}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 4}" />
+                          </apex:outputLink>                          
+                        </li>
+
+
+                        <!-- 5th button -->
+                        <li class="{!IF(pageNum == 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage5}" />
+                            <apex:outputText value="5" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageNext}" />
+                            <apex:outputText value="{!pageNum + 1}" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 3, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr3}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 3}" />
+                          </apex:outputLink>
+                        </li>
+
+
+
+                        <!-- 6th button -->
+                        <li class="{!IF(pageNum == 6, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage6}" />
+                            <apex:outputText value="6" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage2ndNext}" />
+                            <apex:outputText value="{!pageNum + 2}" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 2, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 6 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8 || pageNum <= 4) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr2}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 2}" />
+                          </apex:outputLink>
+                        </li>
+
+
+                        <!-- 7th button -->
+                        <li class="{!IF(pageNum == 7, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage7}" />
+                            <apex:outputText value="7" />
+                          </apex:outputLink>                          
+                        </li>
+
+                        <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
+                          <span>…</span>
+                        </li>
+
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1) - 1, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) > pageNum + 4), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLastBfr1}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 1}" />
+                          </apex:outputLink>
+                        </li>
+
+
+                        <!-- 8th button -->
+                        <li class="{!IF(pageNum == 8, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 8 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPage8}" />
+                            <apex:outputText value="8" />
+                          </apex:outputLink>                          
+                        </li>
+
+                        <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1), 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8), 'hidden', '')}">
+                          <apex:outputLink value="javascript:void(0)">
+                            <apex:actionSupport event="onclick" action="{!goToPageLast}" />
+                            <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1)}" />
+                          </apex:outputLink>
+                        </li>
+
+                        <li>
+                          <apex:panelGroup rendered="{!hasNext}" >
+                            <apex:outputLink value="javascript:void(0)">
+                              <apex:actionSupport event="onclick" action="{!goToPageNext}" />
+                              <i class="material-icons">navigate_next</i>
+                            </apex:outputLink>
+                          </apex:panelGroup>
+                        </li>
+                      </ul>
+                    </nav>
+
+                  </apex:outputPanel>
+                </apex:outputPanel>
+              </div>
+              <div class="mdl-cell mdl-cell--4-col search-numbers" style="position: absolute; right: 2rem;">
+                <apex:outputPanel id="pnlDataCount" style="display: inline-block; margin-top: 1rem; margin-right: 1rem;">
+                  <span class="search-numbers__total"><span>{!RecordsCountLabel}</span><small>件</small></span>
+                </apex:outputPanel>
+                <!-- fieldset class="filter-button dropdown">
+
+                      <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="/kdTelemarketingListCSV?where={!whereStrParam}&orderby={!orderBy}" target="_blank">PDFで出力</a>
+
+
+                </fieldset -->
+              </div>
+            </div>
+        <div class="theme-list">
+        <apex:outputPanel id="pnlGrid">
+            <table class="mdl-data-table mdl-js-data-table table table--theme js-table-data is-long">
+              <thead>
+                <tr style="height: 5rem;">
+                
+                  <th class="col1 mdl-data-table__cell--non-numeric sort">
+                    <span>
+                      <apex:outputPanel rendered="{!orderBy != 'RegionalOfficeName__c ASC NULLS LAST, BusinessLocationBranchGroup__c ASC'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('RegionalOfficeName__c ASC NULLS LAST, BusinessLocationBranchGroup__c ASC');">
+                          <span class="thspanwithoutarrow">アンケート種別{!IF(orderBy == 'RegionalOfficeName__c DESC, BusinessLocationBranchGroup__c DESC NULLS LAST', ' ▼', '')}</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <apex:outputPanel rendered="{!orderBy == 'RegionalOfficeName__c ASC NULLS LAST, BusinessLocationBranchGroup__c ASC'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('RegionalOfficeName__c DESC, BusinessLocationBranchGroup__c DESC NULLS LAST');">
+                          <span class="thspanwithoutarrow">アンケート種別 ▲</span>
+                        </a>
+                      </apex:outputPanel>
+                    </span>           
+                  </th>
+
+                  <th class="col2 mdl-data-table__cell--non-numeric sort">
+                    <span class="thspanwithoutarrow">
+                      <apex:outputPanel rendered="{!orderBy != 'ParentAgencyCode__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('ParentAgencyCode__c NULLS LAST');">
+                          <span class="thspanwithoutarrow">支社{!IF(orderBy == 'ParentAgencyCode__c DESC', ' ▼', '')}</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <apex:outputPanel rendered="{!orderBy == 'ParentAgencyCode__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('ParentAgencyCode__c DESC');">
+                          <span class="thspanwithoutarrow">支社 ▲</span>
+                        </a>
+                      </apex:outputPanel>                         
+                    </span>                                   
+                  </th>
+                  
+                  <th class="col3 mdl-data-table__cell--non-numeric sort">
+                    <span class="thspanwithoutarrow">
+                      <apex:outputPanel rendered="{!orderBy != 'BusinessLocationName__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('BusinessLocationName__c NULLS LAST');">
+                          <span class="thspanwithoutarrow">統括支店/部{!IF(orderBy == 'BusinessLocationName__c DESC', ' ▼', '')}</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <apex:outputPanel rendered="{!orderBy == 'BusinessLocationName__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('BusinessLocationName__c DESC');">
+                          <span class="thspanwithoutarrow">統括支店/部 ▲</span>
+                        </a>
+                      </apex:outputPanel>
+                    </span>                                   
+                  </th>
+                  
+                  <th class="col4 mdl-data-table__cell--non-numeric sort">
+                    <span class="thspanwithoutarrow">
+                      <apex:outputPanel rendered="{!orderBy != 'ReplyDate__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('ReplyDate__c NULLS LAST');">
+                          <span class="thspanwithoutarrow">支店/グループ{!IF(orderBy == 'ReplyDate__c DESC', ' ▼', '')}</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <apex:outputPanel rendered="{!orderBy == 'ReplyDate__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('ReplyDate__c DESC');">
+                          <span class="thspanwithoutarrow">支店/グループ ▲</span>
+                        </a>
+                      </apex:outputPanel>                                        
+                    </span>
+                  </th>
+
+                  <th class="col5 mdl-data-table__cell--non-numeric sort">
+                    <span class="thspanwithoutarrow">
+                      <apex:outputPanel rendered="{!orderBy != 'Q1_ShopRecommendationTime__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('Q1_ShopRecommendationTime__c NULLS LAST');">
+                          <span class="thspanwithoutarrow">対象者{!IF(orderBy == 'Q1_ShopRecommendationTime__c DESC', ' ▼', '')}</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <apex:outputPanel rendered="{!orderBy == 'Q1_ShopRecommendationTime__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('Q1_ShopRecommendationTime__c DESC');">
+                          <span class="thspanwithoutarrow">対象者 ▲</span>
+                        </a>
+                      </apex:outputPanel>                    
+                    </span>
+                  </th>
+
+                  <th class="col6 mdl-data-table__cell--non-numeric sort">
+                    <span class="thspanwithoutarrow">
+                      <apex:outputPanel rendered="{!orderBy != 'EvolutionDate__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('EvolutionDate__c NULLS LAST');">
+                          <span class="thspanwithoutarrow">対象年度{!IF(orderBy == 'EvolutionDate__c DESC', ' ▼', '')}</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <apex:outputPanel rendered="{!orderBy == 'EvolutionDate__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('EvolutionDate__c DESC');">
+                          <span class="thspanwithoutarrow">対象年度 ▲</span>
+                        </a>
+                      </apex:outputPanel>                    
+                    </span>
+                  </th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <apex:actionRegion id="area51a" renderRegionOnly="false">
+                    <apex:inputText styleClass="SurveyUpdateIdInput" value="{!surveyUpdateId}" style="display: none;" />
+                    <apex:actionFunction name="refreshSurveyEdit" action="{!getSurveyDetails}" rerender="editKnowledge1, editKnowledge2" />
+                </apex:actionRegion>
+
+                <apex:repeat value="{!Records}" var="rec" >
+                
+                    <!-- tr onclick="callTelemaUpdateId('{!rec.telema.Id}');" -->
+                    <tr onclick="getSurveyDetails('{!rec.surveyId__c}');" rerender="editKnowledge1">
+  
+                      <td class="js-slide-info-trigger base-info js-base-info col1" data-target=".theme-info">
+                        <p>
+                          <apex:outputField value="{!rec.SurveyType__c}" />
+                        </p>
+                      </td>
+
+                      <td class="col2">
+                        <p>
+                          <apex:outputField value="{!rec.RegionalOfficeName__c}" />
+                        </p>
+                      </td>    
+                      
+                      <td class="col3">
+                        <p>
+                          <apex:outputField value="{!rec.UnifiedAgencyBranch__c}" />
+                        </p>
+                      </td> 
+
+                      <td class="col4">
+                        <p>
+                          <apex:outputField value="{!rec.BusinessLocationBranchGroup__c}" />
+                        </p>
+                      </td>
+
+                      <td class="col5">
+                        <p>
+                          <apex:outputField value="{!rec.User__r.Name}" />
+                        </p>
+                      </td>
+
+                      <td class="col6">
+                        <p>
+                          <apex:outputField value="{!rec.FiscalYear__c}" />
+                        </p>
+                      </td>
+
+                    </tr>
+                </apex:repeat>
+
+              </tbody>
+            </table>
+        </apex:outputPanel>
+
+      
+    </div>
+
+
+      </div>
+    </main>
+
+
+
+  </div>
+
+          <script src="{!URLFOR($Resource.kdKnowledgeScript)}" type="text/javascript"></script>
+          
+          <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            
+            ga('create', 'UA-xxxxxx', 'auto');
+            ga('send', 'pageview');
+
+          </script> 
+
+</apex:form>
+
+</body>
+
+</html>
+
+
+</apex:page>
