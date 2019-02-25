@@ -182,7 +182,7 @@
 		</div>
 	</apex:outputPanel>
 
-	<apex:outputPanel rendered="{!!isCommunityUser}">
+	<!-- <apex:outputPanel rendered="{!!isCommunityUser}">
 		<div class="button--switch--container">
 			<a href="http://sales-spm-app.kddi.com/analytics">
 				<div class="button--switch--image">
@@ -192,7 +192,7 @@
 			    </div>
 			</a>
 		</div>
-	</apex:outputPanel>
+	</apex:outputPanel> -->
 
   <apex:outputPanel rendered="{!HasAccessAuChannelWithAdmin}">
 		<div class="button--switch--container dropdown">
@@ -296,6 +296,34 @@
 
 	</apex:outputPanel>
 
+  	<!-- <apex:outputPanel rendered="{!HasAccessTelema}">
+
+		<div class="button--switch--container">
+			<a href="/kdTelemarketingListPage">
+				<div class="button--switch--image">
+					<i class="icon icon--telema"></i>
+			    </div>
+			    <div class="button--switch--title">CXテレマ
+			    </div>
+			</a>
+		</div>
+
+	</apex:outputPanel>-->
+	
+	<apex:outputPanel rendered="{!HasAccessSurvey}">
+
+		<div class="button--switch--container">
+			<a href="/kdSurveyListPage">
+				<div class="button--switch--image">
+					<i class="icon icon--survey"></i>
+			    </div>
+			    <div class="button--switch--title">サーベイ
+			    </div>
+			</a>
+		</div>
+
+	</apex:outputPanel>
+	
   <br/>
   ※対象デバイス：PC / Orange Tab(LTE接続)
 <!--

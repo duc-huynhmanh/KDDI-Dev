@@ -73,6 +73,10 @@ public with sharing class auSTPDPrintCtrl {
 
     public String shopName { get; private set; }
     public String slogan { get; private set; }
+    public String sDate { get; private set; }
+    public String tDate { get; private set; }
+    public String pDate { get; private set; }
+    public String dDate { get; private set; }
 
     /**
      * 概要：コンストラクタ処理
@@ -89,6 +93,7 @@ public with sharing class auSTPDPrintCtrl {
                 Objective__c, // Objective
                 CreatedBy__r.Account.Slogan__c,
                 CreatedBy__r.DisplayedUsernameFormula__c,
+                S_FillingDate__c, T_FillingDate__c, P_FillingDate__c, D_FillingDate__c,
                 (select 
                     IsCompleteP__c,            // IsCompleteP
                     SortNo__c,                 // SortNo
@@ -123,6 +128,24 @@ public with sharing class auSTPDPrintCtrl {
                     D_Steady__c                // 定常化
                 from auSTPD_auSTPDDetail_Do__r) 
             from auSTPD__c where id=:strId];
+
+        sDate = '年　　月　　日';
+        tDate = '年　　月　　日';
+        pDate = '年　　月　　日';
+        dDate = '年　　月　　日';
+
+        if(auSTPD.S_FillingDate__c != null) {
+            sDate = String.format('{0}年　{1}月　{2}日', new List<String>{String.valueOf(auSTPD.S_FillingDate__c.year()), String.valueOf(auSTPD.S_FillingDate__c.month()).leftPad(2, '0'), String.valueOf(auSTPD.S_FillingDate__c.day()).leftPad(2, '0')});
+        }
+        if(auSTPD.T_FillingDate__c != null) {
+            tDate = String.format('{0}年　{1}月　{2}日', new List<String>{String.valueOf(auSTPD.T_FillingDate__c.year()), String.valueOf(auSTPD.T_FillingDate__c.month()).leftPad(2, '0'), String.valueOf(auSTPD.T_FillingDate__c.day()).leftPad(2, '0')});
+        }
+        if(auSTPD.P_FillingDate__c != null) {
+            pDate = String.format('{0}年　{1}月　{2}日', new List<String>{String.valueOf(auSTPD.P_FillingDate__c.year()), String.valueOf(auSTPD.P_FillingDate__c.month()).leftPad(2, '0'), String.valueOf(auSTPD.P_FillingDate__c.day()).leftPad(2, '0')});
+        }
+        if(auSTPD.D_FillingDate__c != null) {
+            dDate = String.format('{0}年　{1}月　{2}日', new List<String>{String.valueOf(auSTPD.D_FillingDate__c.year()), String.valueOf(auSTPD.D_FillingDate__c.month()).leftPad(2, '0'), String.valueOf(auSTPD.D_FillingDate__c.day()).leftPad(2, '0')});
+        }
 
         shopName = '';
         for (Integer i = 0; i < auSTPD.CreatedBy__r.DisplayedUsernameFormula__c.length(); i++) {

@@ -81,7 +81,12 @@ public with sharing class auCXKnowledgeListCtrl {
     public List<OptionDetail> ShopsOptions{get; set;}  //選択店舗
 
     public List<String> targetCategory{get; set;}
+    public List<String> targetCategoryEdit{get; set;}
+    public List<String> targetCategoryAdd{get; set;}
+
     public List<OptionDetail> categoryOptions{get; set;}
+    public List<OptionDetail> categoryOptionsEdit{get; set;}
+    public List<OptionDetail> categoryOptionsAdd{get; set;}
 
     public List<SelectOption> optShisha{get; set;}
     public List<SelectOption> optShiten{get; set;}
@@ -234,31 +239,9 @@ system.debug('Status: ' + filterStatus);
         this.shopsOptions = shopsOptions;
 
 
-
+        this.categoryOptions = getCategories(this.targetCategory);
         // カテゴリ項目設定
-        List<optionDetail> categoryOptions = new List<optionDetail>();
-        Set<String> category;
-        if (this.targetCategory != null) {
-            category = new Set<String>(this.targetCategory);
-        }
-
-        options = new List<SelectOption>();            
-        for( Schema.PicklistEntry f : auCXKnowledge__c.Category1__c.getDescribe().getPicklistValues()) {
-            options.add(new SelectOption(f.getValue(), f.getLabel()));
-        }       
-
-        for (SelectOption option: options) {
-            Boolean isSelected = false;
-            if (category != null) {
-                isSelected = category.contains(option.getValue());
-            }
-
-            if (option.getValue() <> '') {
-                categoryOptions.add(new OptionDetail(option, isSelected));
-            }
-        }
-
-        this.categoryOptions = categoryOptions;
+        
 
 
         cxKnowledgeUpdate = new auCXKnowledge__c();
@@ -286,6 +269,39 @@ system.debug('Status: ' + filterStatus);
 
         recordSearch();
 
+    }
+
+    public List<optionDetail> getCategories(List<String> targetCat){
+        List<optionDetail> categoryOptions = new List<optionDetail>();
+        Set<String> category;
+        if (targetCat != null && targetCat.size() > 0) {
+            category = new Set<String>(targetCat);
+        }
+
+        List<SelectOption> options = new List<SelectOption>();
+        for( Schema.PicklistEntry f : auCXKnowledge__c.Category1__c.getDescribe().getPicklistValues()) {
+            options.add(new SelectOption(f.getValue(), f.getLabel()));
+        }       
+
+        for (SelectOption option: options) {
+            Boolean isSelected = false;
+            if (category != null) {
+                isSelected = category.contains(option.getValue());
+            }
+
+            if (option.getValue() <> '') {
+                optionDetail optDetail = new OptionDetail(option, isSelected);
+                if(option.getValue().indexOf('-') >= 0){
+                    optDetail.level = 'cat-child';
+                } else {
+                    optDetail.level = 'cat-parent';
+                }
+                categoryOptions.add(optDetail);
+            }
+
+        }
+
+        return categoryOptions;
     }
 
     //cookie保存
@@ -524,6 +540,16 @@ system.debug('Status: ' + filterStatus);
             detail.cancel();
         }
     }
+    public void categorySelectCancelEdit() {
+        for (OptionDetail detail : categoryOptionsEdit) {
+            detail.cancel();
+        }
+    }
+    public void categorySelectCancelAdd() {
+        for (OptionDetail detail : categoryOptionsAdd) {
+            detail.cancel();
+        }
+    }
 
     //適用する
     public void categorySelectApply() {
@@ -537,7 +563,27 @@ system.debug('Status: ' + filterStatus);
         targetCategory = new List<String>(category);
     }
 
+    public void categorySelectApplyEdit() {
+        Set<String> category = new Set<String>();
+        for (OptionDetail detail : categoryOptionsEdit) {
+            detail.apply();
+            if (detail.isSelected) {
+                category.add(detail.option.getValue());
+            }
+        }
+        targetCategoryEdit = new List<String>(category);
+    }
 
+    public void categorySelectApplyAdd() {
+        Set<String> category = new Set<String>();
+        for (OptionDetail detail : categoryOptionsAdd) {
+            detail.apply();
+            if (detail.isSelected) {
+                category.add(detail.option.getValue());
+            }
+        }
+        targetCategoryAdd = new List<String>(category);
+    }
 
 
     private void clearNewCXKnowledge() {
@@ -547,6 +593,7 @@ system.debug('Status: ' + filterStatus);
                                         '②取組内容\n\n' + 
                                         '③結果(効果)\n\n' + 
                                         '④工夫点・まねポイント\n';
+        this.categoryOptionsAdd = getCategories(new List<String>());
         //TODO DUC
         newStaffNo1 = NULL;
         newStaffNo2 = NULL;
@@ -1116,6 +1163,15 @@ system.debug('Status: ' + filterStatus);
         cxKnowledgeNew.DisplayedDate__c = DateTime.now();
         //TODO DUC
         cxKnowledgeNew.Staff_No__c = createNewStaffNoString();
+        if(targetCategoryAdd != null && targetCategoryAdd.size() > 0){
+            cxKnowledgeNew.Category1__c = targetCategoryAdd[0];
+            if(targetCategoryAdd.size() > 1){
+                cxKnowledgeNew.Category2__c = targetCategoryAdd[1];
+                if(targetCategoryAdd.size() > 2){
+                    cxKnowledgeNew.Category3__c = targetCategoryAdd[2];
+                }
+            }
+        }
         Insert cxKnowledgeNew;
 
         if (askApproval) {
@@ -1260,6 +1316,20 @@ system.debug('Status: ' + filterStatus);
             cxKnowledgeUpdate.DisplayedDate__c = DateTime.now();
             //TODO DUC
             cxKnowledgeUpdate.Staff_No__c = createUpdateStaffNoString();
+            //update categories
+            cxKnowledgeUpdate.Category1__c = '';
+            cxKnowledgeUpdate.Category2__c = '';
+            cxKnowledgeUpdate.Category3__c = '';
+            system.debug('saving.. targetCategoryEdit: ' + targetCategoryEdit);
+            if(targetCategoryEdit != null && targetCategoryEdit.size() > 0){
+                cxKnowledgeUpdate.Category1__c = targetCategoryEdit[0];
+                if(targetCategoryEdit.size() > 1){
+                    cxKnowledgeUpdate.Category2__c = targetCategoryEdit[1];
+                    if(targetCategoryEdit.size() > 2){
+                        cxKnowledgeUpdate.Category3__c = targetCategoryEdit[2];
+                    }
+                }
+            }
 
             Update cxKnowledgeUpdate;
 
@@ -1476,6 +1546,19 @@ system.debug('Status: ' + filterStatus);
                                     (SELECT Id FROM CXKnowledgeFavorite_CXKnowledge__r WHERE User__c = :UserInfo.getUserId())
                              FROM auCXKnowledge__c
                              WHERE id = :cxKnowledgeUpdateId];
+        
+        targetCategoryEdit = new List<String>();
+        if(!String.isEmpty(cxKnowledgeUpdate.Category1__c)){
+            targetCategoryEdit.add(cxKnowledgeUpdate.Category1__c);
+        }
+        if(!String.isEmpty(cxKnowledgeUpdate.Category2__c)){
+            targetCategoryEdit.add(cxKnowledgeUpdate.Category2__c);
+        }
+        if(!String.isEmpty(cxKnowledgeUpdate.Category3__c)){
+            targetCategoryEdit.add(cxKnowledgeUpdate.Category3__c);
+        }
+        system.debug('targetCategoryEdit: ' + targetCategoryEdit);
+        this.categoryOptionsEdit = getCategories(this.targetCategoryEdit);
         //TODO DUC
         staffNoVisible = checkStaffNoVisibility(cxKnowledgeUpdate);
         cxKnowledgeUpdate.TechnicalFavorite__c = cxKnowledgeUpdate.CXKnowledgeFavorite_CXKnowledge__r != NULL && cxKnowledgeUpdate.CXKnowledgeFavorite_CXKnowledge__r.size() > 0;
@@ -1713,6 +1796,7 @@ system.debug('Status: ' + filterStatus);
     //オプション詳細クラス
     public class OptionDetail {
         public Boolean isSelected{get; set;}
+        public String level{get; set;}
         public Boolean beforeSelected{get; set;}
         public SelectOption option{get; set;}
         public String val{get; set;}

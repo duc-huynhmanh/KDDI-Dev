@@ -57,34 +57,43 @@
     }
 
     .col1{
-      min-width: 100px;
+      min-width: 120px;
+      width: 120PX;
       max-width: 120px;
       overflow-x: hidden;
     }
     .col2{
-      min-width: 100px;
-      max-width: 120px;
+      min-width: 150px;
+      width: 150PX;
+      max-width: 170px;
+      overflow-x: hidden;
     }
     .col3{
-      min-width: 120px;
-      max-width: 140px;
+      min-width: 150px;
+      width: 150PX;
+      max-width: 170px;
+      overflow-x: hidden;
     }
     .col4{
-      min-width: 80px;
-      max-width: 100px;
+      min-width: 150px;
+      width: 150PX;
+      max-width: 170px;
       overflow-x: hidden;
     }
     .col5{
-      min-width: 145px;
-      overflow-x: hidden;
-    }
-    .col6{
       min-width: 60px;
+      width: 60PX;
       max-width: 80px;
       overflow-x: hidden;
     }
+    .col6{
+      min-width: 50px;
+      width: 50PX;
+      max-width: 60px;
+      overflow-x: hidden;
+    }
 
-    .col2 p,  .col3 p, .col8 p {
+    .col2 p,  .col3 p, .col4 p {
       word-break: break-all;
       word-wrap: break-word;
       white-space: normal;
@@ -502,6 +511,8 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
   .rotatedtext {
   	text-orientation: upright;
     writing-mode: vertical-rl;
+    -ms-writing-mode: tb-rl;
+
     padding-left: 5px;
     padding-right: 5px;
     padding-top: 15px;
@@ -517,12 +528,27 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
   .noDisplay {
   	display: none;
   }
+  .questionArea fieldset{
+    border: 1px solid;
+    margin: 10px 0 10px;
+    padding-left: 10px;
+    border-radius: 10px;
+  }
+  .honninAnswer p, .memberAnswer p{
+    padding-left: 10px;
+    margin: 5px 0 10px;
+    font-weight: bold;
+    color: #214a7b;
+  }
   </style>
 
   <script>
   var j$ = jQuery.noConflict();
-  j$(document).ready(function() {
-    var updateSvgCss = function() {
+  /*j$(document).ready(function() {
+    refreshGraph()
+  });*/
+  
+  function refreshGraph(){
        var tspan = j$('tspan');        
        if (tspan.length > 0) {
            tspan.each(function(){
@@ -536,11 +562,9 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
            });
        } else {
            // svg element appears to be dyamically inserted so poll for it
-           setTimeout(updateSvgCss, 10);
+           setTimeout(refreshGraph, 10);
        }
-    };
-    updateSvgCss();
-  });
+  }
   </script>   
 
   <script>
@@ -558,6 +582,8 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
         var obj = $j('.SurveyUpdateIdInput');
         obj.val(key);
         refreshSurveyEdit();
+        $('.theme-info').width('100%');
+        //refreshGraph();
     }
 
     /*function updateCategory(cateId){
@@ -707,7 +733,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                    
                             <apex:commandLink style="width: 6.667rem;height: 2.5rem;text-align: center;border-radius: 4px;line-height: 2.5;background-color: #fff; padding: 5px;" 
                             	action="{!openDetailInNewTab}" target="_blank">
-                            	<apex:commandButton value="PDFで出力"/>
+                            	<apex:commandButton style="width: 5rem" value="印刷"/>
                             </apex:commandLink>
 
                         </apex:outputPanel>
@@ -723,53 +749,29 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                             <apex:outputPanel id="editKnowledge1">
 
                                 <div id="svgchart" style="background-color: #fff; width: calc(100%);">
-                
-                					<table style="border-collapse: collapse; border: solid 1px #ccc; margin: 5px;">               
-                        
-                						<thead>
-                							<tr>
-                								<td style="border: solid 1px #ccc; padding-left: 5px;">
-                									{!$Label.kdSurvey_Type}
-                								</td>
-                								<td style="border: solid 1px #ccc; padding-left: 5px;">
-                									{!$Label.kdSurvey_Shisha}
-                								</td>
-                								<td style="border: solid 1px #ccc; padding-left: 5px;">
-                									{!$Label.kdSurvey_UnifiedAgencyBranch}
-                								</td>
-                								<td style="border: solid 1px #ccc; padding-left: 5px;">
-                									{!$Label.kdSurvey_BusinessLocationBranchGroup}
-                								</td>
-                								<td style="border: solid 1px #ccc; padding-left: 5px;">
-                									{!$Label.kdSurvey_UserName}
-                								</td>
-                								<td style="border: solid 1px #ccc; padding-left: 5px;">
-                									{!$Label.kdSurvey_FiscalYear}
-                								</td>
-                							</tr>
-                						</thead>
-                						
-                						<tr>
-                							<td style="border: solid 1px #ccc; padding-left: 5px;">
-                								{!surveyType}
-                							</td>
-                							<td style="border: solid 1px #ccc; padding-left: 5px;">
-                								{!surveyShisha}
-                							</td>
-                							<td style="border: solid 1px #ccc; padding-left: 5px;">
-                								{!surveyUnifiedAgencyBranch}
-                							</td>
-                							<td style="border: solid 1px #ccc; padding-left: 5px;">
-                								{!surveyBusinessLocationBranchGroup}
-                							</td>
-                							<td style="border: solid 1px #ccc; padding-left: 5px;">
-                								{!surveyUserName}
-                							</td>
-                							<td style="border: solid 1px #ccc; padding-left: 5px;">
-                								{!surveyFiscalYear}
-                							</td>
-                						</tr>
-                					</table>
+
+                					<span style="padding-left: 20px; font-size: 20px; font-weight: bold">
+                						{!surveyFiscalYear}
+                					</span>
+                					<span style="padding-left: 20px; font-size: 20px; font-weight: bold">
+                						{!surveyType}
+                					</span>
+			                   		<span style="padding-left: 20px; font-size: 20px; font-weight: bold">
+			                     		{!surveyTitle}
+			                      	</span>
+			                      	<br/>
+			                     	<span style="padding-left: 20px; font-size: 20px; font-weight: bold">
+			                        	{!surveyShisha}
+			                       	</span>
+                					<span style="padding-left: 20px; font-size: 20px; font-weight: bold">
+                						{!surveyUnifiedAgencyBranch}
+                					</span>
+                					<span style="padding-left: 20px; font-size: 20px; font-weight: bold">
+                						{!surveyBusinessLocationBranchGroup}
+                					</span>
+                					<span style="padding-left: 20px; font-size: 20px; font-weight: bold">
+                						{!surveyUserName}
+                					</span>
                 						
                                     <table style="width: 100%; border-spacing: 0.5rem 0 ; border-collapse: separate;">
                 						<tr>
@@ -778,24 +780,24 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                 									<div style="width: 100%;">
 	                									<span>本人：前回と今回の比較</span>
 	                									<div style="float: right;">
-	                										<span>{!lastYearLabel}</span>
+	                										<span style="color: #00c">{!lastYearLabel}：青</span>
 	                									</div>
                 									</div>
                 									<div style="float: right;">
-                										<span>{!thisYearLabel}</span>
+                										<span style="color: #f90">{!thisYearLabel}：橙</span>
                 									</div>
                 								</div>
                 							</td>
                 							<td style="padding-left:5px; padding-top:10px; min-height: 50px;">
                 								<div>
                 									<div style="width: 100%;">
-	                									<span>今回の本人とメンバーの比較</span>
+	                									<span>{!IF(surveyType == '営業担当アンケート', '今回の本人と全国平均の比較', '')}{!IF(surveyType == 'CSAアンケート', '今回の本人と所属平均の比較', '')}{!IF(surveyType == '職場サーベイ', '今回の本人と全メンバーの比較', '')}</span>
 	                									<div style="float: right;">
-	                										<span>全メンバー</span>
+	                										<span style="color: #00c">{!IF(surveyType == '営業担当アンケート', '全国平均', '')}{!IF(surveyType == 'CSAアンケート', '所属平均', '')}{!IF(surveyType == '職場サーベイ', '全メンバー', '')}：青</span>
 	                									</div>
 	                								</div>
                 									<div style="float: right;">
-                										<span>本人</span>
+                										<span style="color: #f90">本人：橙</span>
                 									</div>
                 								</div>
                 							</td>
@@ -804,11 +806,11 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                 									<div style="width: 100%;">
 	                									<span>今回の本人と支社平均の比較</span>
 	                									<div style="float: right;">
-	                										<span>支社平均</span>
+	                										<span style="color: #00c">支社平均：青</span>
 	                									</div>
 	                								</div>
                 									<div style="float: right;">
-                										<span>本人</span>
+                										<span style="color: #f90">本人：橙</span>
                 									</div>
                 								</div>
                 							</td>
@@ -817,18 +819,20 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                                             <td style="width: 33%" class="future Graph 1">
                                                 <div style="background-color: #fff; border: solid 1px #ccc; min-height: 17rem; margin-top: 5px; padding-top:30px;">
                                             		<span></span>
-                                            		<apex:chart height="100%" width="100%" legend="false" data="{!data1}">
+                            						<apex:chart id="chart1" height="100%" width="100%" legend="false" data="{!data1}">
 													    <apex:axis type="Radial" position="radial" grid="true" maximum="50" dashSize="0.5"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue1" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue2" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue3" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue4" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue5" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue6" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue7" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
+													    	
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue1" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue2" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue3" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue4" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue5" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue6" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue7" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
 													    
-													    <apex:radarSeries xField="dataName" yField="dataValue2" opacity="0.4" fill="#fff" strokeColor="#36f" strokeWidth="2" tips="true"/>
-													    <apex:radarSeries xField="dataName" yField="dataValue1" opacity="0.6" fill="#fff" strokeColor="#f90" strokeWidth="3" tips="true"/>
+													    <apex:radarSeries xField="dataName" yField="dataValue2" opacity="0.4" fill="#fff" strokeColor="#00c" strokeWidth="2" markerType="circle" markerFill="#006" tips="true"/>
+													    <apex:radarSeries xField="dataName" yField="dataValue1" opacity="0.6" fill="#fff" strokeColor="#f90" strokeWidth="3" markerType="circle" markerFill="#a60" tips="true"/>
+													    
 													 </apex:chart>
                                                 </div>
                                             </td>
@@ -837,16 +841,18 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                                                 <div style="background-color: #fff; border: solid 1px #ccc; min-height: 17rem; margin-top: 5px; padding-top:30px;">
                  									<apex:chart height="100%" width="100%" legend="false" data="{!data2}">
 													    <apex:axis type="Radial" position="radial" grid="true" maximum="50" dashSize="0.5"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue1" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue2" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue3" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue4" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue5" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue6" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue7" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
 													    
-													    <apex:radarSeries xField="dataName" yField="dataValue2" opacity="0.4" fill="#fff" strokeColor="#36f" strokeWidth="2" markerType="circle" markerFill="#33f" tips="true"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue1" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue2" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue3" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue4" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue5" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue6" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue7" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    
+													    <apex:radarSeries xField="dataName" yField="dataValue2" opacity="0.4" fill="#fff" strokeColor="#00c" strokeWidth="2" markerType="circle" markerFill="#006" tips="true"/>
 													    <apex:radarSeries xField="dataName" yField="dataValue1" opacity="0.6" fill="#fff" strokeColor="#f90" strokeWidth="3" markerType="circle" markerFill="#a60" tips="true"/>  
+													 
 													 </apex:chart>
                                                 </div>
                                             </td>
@@ -855,16 +861,18 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                                                 <div style="background-color: #fff; border: solid 1px #ccc; min-height: 17rem; margin-top: 5px; padding-top:30px;">
                 									<apex:chart height="100%" width="100%" legend="false" data="{!data3}">
 													    <apex:axis type="Radial" position="radial" grid="true" maximum="50" dashSize="0.5"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue1" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue2" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue3" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue4" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue5" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue6" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
-													    <apex:radarSeries xField="dataName" yField="dataDrawingValue7" opacity="0.2" fill="#fff" strokeColor="#aaa" strokeWidth="1" tips="false"/>
 													    
-													    <apex:radarSeries xField="dataName" yField="dataValue2" opacity="0.4" fill="#36f" strokeColor="#029" strokeWidth="2" tips="true"/>
-													    <apex:radarSeries xField="dataName" yField="dataValue1" opacity="0.6" fill="#f90" strokeColor="#b60" strokeWidth="2" tips="true"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue1" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue2" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue3" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue4" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue5" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue6" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    <apex:radarSeries xField="dataName" yField="dataDrawingValue7" opacity="0.4" fill="#fff" strokeColor="#000" strokeWidth="1" tips="false"/>
+													    
+													    <apex:radarSeries xField="dataName" yField="dataValue2" opacity="0.4" fill="#fff" strokeColor="#00c" strokeWidth="2" markerType="circle" markerFill="#006" tips="true"/>
+													    <apex:radarSeries xField="dataName" yField="dataValue1" opacity="0.6" fill="#fff" strokeColor="#f90" strokeWidth="3" markerType="circle" markerFill="#a60" tips="true"/>
+													 
 													 </apex:chart>
                                                 </div>
                                             </td>
@@ -900,95 +908,162 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                                                     <span class="labelInTable">設問</span>                                   
                                                 </th>
                                                 
+                                                <!--職場サーベイ-->
                                                 <!-- header-color-1 scol5 mdl-data-table__cell--non-numeric --> 
-                                                <th colspan="2" class="survey-detail-table-header scol5 header-color-1">
+                                                <th colspan="2" class="survey-detail-table-header scol5 header-color-1" style="display: {!IF(surveyType == '職場サーベイ', '', 'none')}">
                                                     <span class="labelInTable">本人</span>                                   
                                                 </th>                                               
                                                 
                                                 <!-- header-color-1 scol6 mdl-data-table__cell--non-numeric --> 
-                                                <th colspan="2" class="survey-detail-table-header scol6 header-color-1">
+                                                <th colspan="2" class="survey-detail-table-header scol6 header-color-1" style="display: {!IF(surveyType == '職場サーベイ', '', 'none')}">
                                                     <span class="labelInTable">全メンバー</span>                                   
                                                 </th>                                               
                                                 
                                                 <!-- header-color-2 scol7 mdl-data-table__cell--non-numeric --> 
-                                                <th colspan="4" class="survey-detail-table-header scol7 header-color-2">
+                                                <th colspan="4" class="survey-detail-table-header scol7 header-color-2" style="display: {!IF(surveyType == '職場サーベイ', '', 'none')}">
                                                     <span class="labelInTable">支社平均</span>                                   
                                                 </th>                                               
                                                 
                                                 <!-- header-color-3 scol8 mdl-data-table__cell--non-numeric --> 
-                                                <th colspan="4" class="survey-detail-table-header scol8 header-color-3">
+                                                <th colspan="4" class="survey-detail-table-header scol8 header-color-3" style="display: {!IF(surveyType == '職場サーベイ', '', 'none')}">
                                                     <span class="labelInTable">全国平均</span>                                   
+                                                </th>  
+
+
+                                                <!--CSAアンケート-->
+                                                <th colspan="2" class="survey-detail-table-header scol5 header-color-1" style="display: {!IF(surveyType == 'CSAアンケート', '', 'none')}">
+                                                    <span class="labelInTable">本人</span>                                   
                                                 </th>                                               
+                                                
+                                                <!-- header-color-1 scol6 mdl-data-table__cell--non-numeric --> 
+                                                <th colspan="2" class="survey-detail-table-header scol6 header-color-1" style="display: {!IF(surveyType == 'CSAアンケート', '', 'none')}">
+                                                    <span class="labelInTable">全メンバー</span>                                   
+                                                </th>                                               
+                                                
+                                                <!-- header-color-2 scol7 mdl-data-table__cell--non-numeric --> 
+                                                <th colspan="4" class="survey-detail-table-header scol7 header-color-2" style="display: {!IF(surveyType == 'CSAアンケート', '', 'none')}">
+                                                    <span class="labelInTable">所属平均</span>                                   
+                                                </th>                                               
+                                                
+                                                <!-- header-color-3 scol8 mdl-data-table__cell--non-numeric --> 
+                                                <th colspan="4" class="survey-detail-table-header scol8 header-color-3" style="display: {!IF(surveyType == 'CSAアンケート', '', 'none')}">
+                                                    <span class="labelInTable">全国平均</span>                                   
+                                                </th>
+
+
+                                                <!--営業担当アンケート-->
+                                                <th colspan="2" class="survey-detail-table-header scol5 header-color-1" style="display: {!IF(surveyType == '営業担当アンケート', '', 'none')}">
+                                                    <span class="labelInTable">本人</span>                                   
+                                                </th>                                               
+                                                
+                                                <!-- header-color-1 scol6 mdl-data-table__cell--non-numeric --> 
+                                                <th colspan="2" class="survey-detail-table-header scol6 header-color-1" style="display: {!IF(surveyType == '営業担当アンケート', '', 'none')}">
+                                                    <span class="labelInTable">全国</span>                                   
+                                                </th>                                               
+                                                
+                                                <!-- header-color-2 scol7 mdl-data-table__cell--non-numeric --> 
+                                                <th colspan="8" class="survey-detail-table-header scol7 header-color-2" style="display: {!IF(surveyType == '営業担当アンケート', '', 'none')}">
+                                                    <span class="labelInTable">支社平均</span>                                   
+                                                </th>                                               
+                                                
+                                                <!-- header-color-3 scol8 mdl-data-table__cell--non-numeric --> 
+                                                <!--th colspan="4" class="survey-detail-table-header scol8 header-color-3" style="display: {!IF(surveyType == '営業担当アンケート', '', 'none')}">
+                                                    <span class="labelInTable">全国平均</span>                                   
+                                                </th-->                                             
 
                                             </tr>
                                             <tr style="height: 8rem;">
                 
-                                                <th class="survey-detail-table-header header-color-1 sdcol1 mdl-data-table__cell--non-numeric rotatedtext"/>
-                                                <th class="survey-detail-table-header header-color-1 sdcol2 mdl-data-table__cell--non-numeric rotatedtext"/>
-                                                <th class="survey-detail-table-header header-color-1 sdcol3 mdl-data-table__cell--non-numeric rotatedtext"/>
-                                                <th class="survey-detail-table-header header-color-1 sdcol4 mdl-data-table__cell--non-numeric rotatedtext"/>
+                                                <th class="survey-detail-table-header header-color-1 sdcol1 mdl-data-table__cell--non-numeric "/>
+                                                <th class="survey-detail-table-header header-color-1 sdcol2 mdl-data-table__cell--non-numeric "/>
+                                                <th class="survey-detail-table-header header-color-1 sdcol3 mdl-data-table__cell--non-numeric "/>
+                                                <th class="survey-detail-table-header header-color-1 sdcol4 mdl-data-table__cell--non-numeric "/>
                                                 
-                                                <th class="survey-detail-table-header header-color-1 sdcol5-1 mdl-data-table__cell--non-numeric rotatedtext">
+                                                <th class="survey-detail-table-header header-color-1 sdcol5-1 mdl-data-table__cell--non-numeric ">
                                                 	<div>
-                                                    	<span class="labelInTable rotatedtext">本人</span>    
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '営業担当アンケート', '', 'none')}">本人</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '職場サーベイ', '', 'none')}">本人</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == 'CSAアンケート', '', 'none')}">本人</span>
                                                     </div>                               
                                                 </th>                                               
-                                                <th class="survey-detail-table-header header-color-1 sdcol5-2 mdl-data-table__cell--non-numeric rotatedtext">
+                                                <th class="survey-detail-table-header header-color-1 sdcol5-2 mdl-data-table__cell--non-numeric ">
                                                 	<div>
-                                                    	<span class="labelInTable rotatedtext">前回比</span>   
+                                                    	<span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '営業担当アンケート', '', 'none')}">前回</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '職場サーベイ', '', 'none')}">前回</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == 'CSAアンケート', '', 'none')}">前回</span>
                                                     </div>                                
                                                 </th>
                                                 
-                                                <th class="survey-detail-table-header header-color-1 sdcol6-1 mdl-data-table__cell--non-numeric rotatedtext">
+                                                <th class="survey-detail-table-header header-color-1 sdcol6-1 mdl-data-table__cell--non-numeric ">
                                                 	<div>
-                                                    	<span class="labelInTable rotatedtext">全メンバー</span> 
+                                                    	<span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '営業担当アンケート', '', 'none')}">全国</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '職場サーベイ', '', 'none')}">全メンバー</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == 'CSAアンケート', '', 'none')}">全メンバー</span>
                                                     </div>	                                  
                                                 </th>                                               
-                                                <th class="survey-detail-table-header header-color-1 sdcol6-2 mdl-data-table__cell--non-numeric rotatedtext">
+                                                <th class="survey-detail-table-header header-color-1 sdcol6-2 mdl-data-table__cell--non-numeric ">
                                                 	<div>
-                                                    	<span class="labelInTable rotatedtext">前回比</span>   
+                                                    	<span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '営業担当アンケート', '', 'none')}">前回</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '職場サーベイ', '', 'none')}">前回</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == 'CSAアンケート', '', 'none')}">前回</span>
                                                     </div>                              
                                                 </th>   
                                                                                             
-                                                <th class="survey-detail-table-header header-color-2 sdcol7-1 mdl-data-table__cell--non-numeric rotatedtext">
+                                                <th class="survey-detail-table-header header-color-2 sdcol7-1 mdl-data-table__cell--non-numeric ">
                                                 	<div>
-                                                    	<span class="labelInTable rotatedtext">支店長GL</span> 
+                                                    	<span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '営業担当アンケート', '', 'none')}">支社</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '職場サーベイ', '', 'none')}">支店長GL</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == 'CSAアンケート', '', 'none')}">CSA平均</span>
                                                     </div>                                
                                                 </th>                                               
-                                                <th class="survey-detail-table-header header-color-2 sdcol7-2 mdl-data-table__cell--non-numeric rotatedtext">
+                                                <th class="survey-detail-table-header header-color-2 sdcol7-2 mdl-data-table__cell--non-numeric ">
                                                 	<div>
-                                                    	<span class="labelInTable rotatedtext">前回比</span>   
+                                                    	<span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '営業担当アンケート', '', 'none')}">前回</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '職場サーベイ', '', 'none')}">前回</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == 'CSAアンケート', '', 'none')}">前回</span>
                                                     </div>                              
                                                 </th>                                               
-                                                <th class="survey-detail-table-header header-color-2 sdcol7-3 mdl-data-table__cell--non-numeric rotatedtext">
+                                                <th class="survey-detail-table-header header-color-2 sdcol7-3 mdl-data-table__cell--non-numeric ">
                                                 	<div>
-                                                    	<span class="labelInTable rotatedtext">全メンバー</span>
+                                                    	<span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '営業担当アンケート', '', 'none')}">支店</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '職場サーベイ', '', 'none')}">全メンバー</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == 'CSAアンケート', '', 'none')}">SA平均</span>
                                                     </div>                                 
                                                 </th>                                               
-                                                <th class="survey-detail-table-header header-color-2 sdcol7-4 mdl-data-table__cell--non-numeric rotatedtext">
+                                                <th class="survey-detail-table-header header-color-2 sdcol7-4 mdl-data-table__cell--non-numeric ">
                                                 	<div>
-                                                    	<span class="labelInTable rotatedtext">前回比</span>  
+                                                    	<span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '営業担当アンケート', '', 'none')}">前回</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '職場サーベイ', '', 'none')}">前回</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == 'CSAアンケート', '', 'none')}">前回</span>
                                                     </div>                               
                                                 </th>
                                                 
-                                                <th class="survey-detail-table-header header-color-3 sdcol8-1 mdl-data-table__cell--non-numeric rotatedtext">
+                                                <th class="survey-detail-table-header {!IF(surveyType == '営業担当アンケート', 'header-color-2', 'header-color-3')} sdcol8-1 mdl-data-table__cell--non-numeric ">
                                                 	<div>
-                                                    	<span class="labelInTable rotatedtext">支店長GL</span>  
+                                                    	<span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '営業担当アンケート', '', 'none')}">グループ</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '職場サーベイ', '', 'none')}">支店長GL</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == 'CSAアンケート', '', 'none')}">CSA平均</span>
                                                     </div>                               
                                                 </th>                                               
-                                                <th class="survey-detail-table-header header-color-3 sdcol8-2 mdl-data-table__cell--non-numeric rotatedtext">
+                                                <th class="survey-detail-table-header {!IF(surveyType == '営業担当アンケート', 'header-color-2', 'header-color-3')} sdcol8-2 mdl-data-table__cell--non-numeric ">
                                                 	<div>
-                                                    	<span class="labelInTable rotatedtext">前回比</span>   
+                                                    	<span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '営業担当アンケート', '', 'none')}">前回</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '職場サーベイ', '', 'none')}">前回</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == 'CSAアンケート', '', 'none')}">前回</span>
                                                     </div>                              
                                                 </th>                                               
-                                                <th class="survey-detail-table-header header-color-3 sdcol8-3 mdl-data-table__cell--non-numeric rotatedtext">
+                                                <th class="survey-detail-table-header {!IF(surveyType == '営業担当アンケート', 'header-color-2', 'header-color-3')} sdcol8-3 mdl-data-table__cell--non-numeric ">
                                                 	<div>
-                                                    	<span class="labelInTable rotatedtext">全メンバー</span>
+                                                    	<span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '営業担当アンケート', '', 'none')}"></span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '職場サーベイ', '', 'none')}">全メンバー</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == 'CSAアンケート', '', 'none')}">SA平均</span>
                                                     </div>                                 
                                                 </th>                                               
-                                                <th class="survey-detail-table-header header-color-3 sdcol8-4 mdl-data-table__cell--non-numeric rotatedtext">
+                                                <th class="survey-detail-table-header {!IF(surveyType == '営業担当アンケート', 'header-color-2', 'header-color-3')} sdcol8-4 mdl-data-table__cell--non-numeric ">
                                                 	<div>
-                                                    	<span class="labelInTable rotatedtext">前回比</span>  
+                                                    	<span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '営業担当アンケート', '', 'none')}"></span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == '職場サーベイ', '', 'none')}">前回</span>
+                                                      <span class="labelInTable rotatedtext" style="display: {!IF(surveyType == 'CSAアンケート', '', 'none')}">前回</span> 
                                                     </div>                               
                                                 </th>
                                             </tr>
@@ -1001,100 +1076,118 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
 
                                             <apex:repeat value="{!surveyDetails}" var="rec" >
                                                 <tr>
-                              
-                                                  <td class="cellValueGrid survey-detail-table-header sdcol1" data-target=".theme-info" style="text-align: center;">
+                                                  
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol1" data-target=".theme-info" style="text-align: center; display: {!IF(rec.ItemNumber__c == 999, 'none', '')}">
                                                     <p>
                                                       <apex:outputField value="{!rec.ItemNumber__c}" />
                                                     </p>
                                                   </td>
 
-                                                  <td class="cellValueGrid survey-detail-table-header sdcol2">
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol2" style="display: {!IF(rec.ItemNumber__c == 999, 'none', '')}">
                                                     <p>
-                                                      <apex:outputField value="{!rec.MainCategory__c}" />
+                                                      <apex:outputField value="{!rec.MainCategory__c}" style="display: {!IF(rec.ItemNumber__c == 999, 'none', '')}"/>
                                                     </p>
                                                   </td>    
                                                   
-                                                  <td class="cellValueGrid survey-detail-table-header sdcol3">
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol3" style="display: {!IF(rec.ItemNumber__c == 999, 'none', '')}">
                                                     <p>
                                                       <apex:outputField value="{!rec.SubCategory__c}" />
                                                     </p>
                                                   </td> 
 
-                                                  <td class="cellValueGrid survey-detail-table-header sdcol4">
+                                                  <td class="cellValueGrid survey-detail-table-header sdcol4" style="display: {!IF(rec.ItemNumber__c == 999, 'none', '')}">
                                                     <p>
                                                       <apex:outputField value="{!rec.Question__c}" />
                                                     </p>
                                                   </td>
 
+                                                  <td colspan="4" class="cellValueGrid survey-detail-table-header" style="display: {!IF(rec.ItemNumber__c == 999, '', 'none')}; text-align: right; border: 0;">
+                                                    <p style="font-weight: 900">
+                                                      総合平均
+                                                    </p>
+                                                  </td>
+
                                                   <td class="cellValueGrid survey-detail-table-header sdcol5-1" style="text-align: center;">
-                                                    <p>
-                                                      <apex:outputField value="{!rec.Personal__c}" />
+                                                    <p style="font-weight: {!IF(rec.ItemNumber__c == 999, '900', '400')}">
+                                                      <apex:outputField value="{!rec.Personal__c}" rendered="{!rec.Personal__c != null}"/>
+                                                      <apex:outputPanel rendered="{!rec.Personal__c == null}">-</apex:outputPanel>
                                                     </p>
                                                   </td>
 
                                                   <td class="cellValueGrid survey-detail-table-header sdcol5-2" style="text-align: center;">
-                                                    <p>
-                                                      <apex:outputField value="{!rec.PreviousPersonalRatio__c}" />
+                                                    <p style="font-weight: {!IF(rec.ItemNumber__c == 999, '900', '400')}">
+                                                      <apex:outputField value="{!rec.PreviousPersonalRatio__c}" rendered="{!rec.PreviousPersonalRatio__c != null}"/>
+                                                      <apex:outputPanel rendered="{!rec.PreviousPersonalRatio__c == null}">-</apex:outputPanel>
                                                     </p>
                                                   </td>
                                                   
                                                   <td class="cellValueGrid survey-detail-table-header sdcol6-1" style="text-align: center;">
-                                                    <p>
-                                                      <apex:outputField value="{!rec.AllMembers__c}" />
+                                                    <p style="font-weight: {!IF(rec.ItemNumber__c == 999, '900', '400')}">
+                                                      <apex:outputField value="{!rec.AllMembers__c}" rendered="{!rec.AllMembers__c != null}"/>
+                                                      <apex:outputPanel rendered="{!rec.AllMembers__c == null}">-</apex:outputPanel>
                                                     </p>
                                                   </td>
 
                                                   <td class="cellValueGrid survey-detail-table-header sdcol6-2" style="text-align: center;">
-                                                    <p>
-                                                      <apex:outputField value="{!rec.PreviousAllMembersRatio__c}" />
+                                                    <p style="font-weight: {!IF(rec.ItemNumber__c == 999, '900', '400')}">
+                                                      <apex:outputField value="{!rec.PreviousAllMembersRatio__c}" rendered="{!rec.PreviousAllMembersRatio__c != null}"/>
+                                                      <apex:outputPanel rendered="{!rec.PreviousAllMembersRatio__c == null}">-</apex:outputPanel>
                                                     </p>
                                                   </td>    
                                                   
                                                   <td class="cellValueGrid survey-detail-table-header sdcol7-1" style="text-align: center;">
-                                                    <p>
-                                                      <apex:outputField value="{!rec.BranchOfficeManager__c}" />
+                                                    <p style="font-weight: {!IF(rec.ItemNumber__c == 999, '900', '400')}">
+                                                      <apex:outputField value="{!rec.BranchOfficeManager__c}" rendered="{!rec.BranchOfficeManager__c != null}"/>
+                                                      <apex:outputPanel rendered="{!rec.BranchOfficeManager__c == null}">-</apex:outputPanel>
                                                     </p>
                                                   </td> 
 
                                                   <td class="cellValueGrid survey-detail-table-header sdcol7-2" style="text-align: center;">
-                                                    <p>
-                                                      <apex:outputField value="{!rec.PreviousBOManagerRatio__c}" />
+                                                    <p style="font-weight: {!IF(rec.ItemNumber__c == 999, '900', '400')}">
+                                                      <apex:outputField value="{!rec.PreviousBOManagerRatio__c}" rendered="{!rec.PreviousBOManagerRatio__c != null}"/>
+                                                      <apex:outputPanel rendered="{!rec.PreviousBOManagerRatio__c == null}">-</apex:outputPanel>
                                                     </p>
                                                   </td>
 
                                                   <td class="cellValueGrid survey-detail-table-header sdcol7-3" style="text-align: center;">
-                                                    <p>
-                                                      <apex:outputField value="{!rec.AllBOMembers__c}" />
+                                                    <p style="font-weight: {!IF(rec.ItemNumber__c == 999, '900', '400')}">
+                                                      <apex:outputField value="{!rec.AllBOMembers__c}" rendered="{!rec.AllBOMembers__c != null}"/>
+                                                      <apex:outputPanel rendered="{!rec.AllBOMembers__c == null}">-</apex:outputPanel>
                                                     </p>
                                                   </td>
 
                                                   <td class="cellValueGrid survey-detail-table-header sdcol7-4" style="text-align: center;">
-                                                    <p>
-                                                      <apex:outputField value="{!rec.PreviousAllBOMembersRatio__c}" />
+                                                    <p style="font-weight: {!IF(rec.ItemNumber__c == 999, '900', '400')}">
+                                                      <apex:outputField value="{!rec.PreviousAllBOMembersRatio__c}" rendered="{!rec.PreviousAllBOMembersRatio__c != null}"/>
+                                                      <apex:outputPanel rendered="{!rec.PreviousAllBOMembersRatio__c == null}">-</apex:outputPanel>
                                                     </p>
                                                   </td>
                                                   
                                                   <td class="cellValueGrid survey-detail-table-header sdcol8-1" style="text-align: center;">
-                                                    <p>
-                                                      <apex:outputField value="{!rec.NationalBOManagers__c}" />
+                                                    <p style="font-weight: {!IF(rec.ItemNumber__c == 999, '900', '400')}">
+                                                      <apex:outputField value="{!rec.NationalBOManagers__c}" rendered="{!rec.NationalBOManagers__c != null}"/>
+                                                      <apex:outputPanel rendered="{!rec.NationalBOManagers__c == null}">-</apex:outputPanel>
                                                     </p>
                                                   </td>
 
                                                   <td class="cellValueGrid survey-detail-table-header sdcol8-2" style="text-align: center;">
-                                                    <p>
-                                                      <apex:outputField value="{!rec.PreviousNationalBOManagersRatio__c}" />
+                                                    <p style="font-weight: {!IF(rec.ItemNumber__c == 999, '900', '400')}">
+                                                      <apex:outputField value="{!rec.PreviousNationalBOManagersRatio__c}" rendered="{!rec.PreviousNationalBOManagersRatio__c != null}"/>
+                                                      <apex:outputPanel rendered="{!rec.PreviousNationalBOManagersRatio__c == null}">-</apex:outputPanel>
                                                     </p>
                                                   </td>    
                                                   
                                                   <td class="cellValueGrid survey-detail-table-header sdcol8-3" style="text-align: center;">
-                                                    <p>
-                                                      <apex:outputField value="{!rec.NationalMembers__c}" />
+                                                    <p style="font-weight: {!IF(rec.ItemNumber__c == 999, '900', '400')}">
+                                                      <apex:outputField value="{!rec.NationalMembers__c}" rendered="{!rec.NationalMembers__c != null}"/>
+                                                      <apex:outputPanel rendered="{!rec.NationalMembers__c == null}">-</apex:outputPanel>
                                                     </p>
                                                   </td> 
 
                                                   <td class="cellValueGrid survey-detail-table-header sdcol8-4" style="text-align: center;">
-                                                    <p>
-                                                      <apex:outputField value="{!rec.PreviousNationalMembersRatio__c}" />
+                                                    <p style="font-weight: {!IF(rec.ItemNumber__c == 999, '900', '400')}">
+                                                      <apex:outputField value="{!rec.PreviousNationalMembersRatio__c}" rendered="{!rec.Personal__c != null}"/>
+                                                      <apex:outputPanel rendered="{!rec.PreviousNationalMembersRatio__c == null}">-</apex:outputPanel>
                                                     </p>
                                                   </td>
                                                   
@@ -1107,47 +1200,23 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                   
                                 <!-- Future 19 20 -->
                                 <div style="background-color: #fff; border-color: #ccc; width: calc(100% - 1rem); margin: 0.5rem 0.5rem 0 0.5rem;">
-													 
-                                    <table style="width: 100%" class="{!IF(commentOnCause!='','','noDisplay')}">
-                                        <tr>
-                                            <td style="width: 100%" class="detailCell">
-                                                <div style="background-color: #fff; border: solid 1px #ccc; min-height: 8rem;" >
-                                                	<apex:inputTextarea value="{!commentOnCause}" readonly="true"/>
-												</div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    
-                                    <table style="width: 100%" class="{!IF(commentOnCauseResponse!='','','noDisplay')}">
-                                        <tr>
-                                            <td style="width: 100%" class="detailCell">
-                                                <div style="background-color: #fff; border: solid 1px #ccc; min-height: 8rem;" >
-                                                	<apex:inputTextarea value="{!commentOnCauseResponse}" readonly="true"/>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    
-                                    <table style="width: 100%" class="{!IF(commentOnDifficulties!='','','noDisplay')}">
-                                        <tr>
-                                            <td style="width: 100%" class="detailCell">
-                                                <div style="background-color: #fff; border: solid 1px #ccc; min-height: 8rem;" >
-                                                	<apex:inputTextarea value="{!commentOnDifficulties}" readonly="true"/>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    
-                                    <table style="width: 100%" class="{!IF(commentOnDifficultiesResponse!='','','noDisplay')}">
-                                        <tr>
-                                            <td style="width: 100%" class="detailCell">
-                                                <div style="background-color: #fff; border: solid 1px #ccc; min-height: 8rem;" >
-                                                	<apex:inputTextarea value="{!commentOnDifficultiesResponse}" readonly="true"/>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    
+													         <apex:repeat value="{!questions}" var="q">
+                                    <div class="questionArea">
+                                      <fieldset>
+                                        <legend>{!q}（{!answerType[q]}）</legend>
+                                        <div class="honninAnswer">
+                                          <apex:repeat value="{!honninReply[q]}" var="honnin">
+                                            <p>・{!honnin}</p>
+                                          </apex:repeat>
+                                        </div>
+                                        <div class="memberAnswer">
+                                          <apex:repeat value="{!memberReply[q]}" var="member">
+                                            <p>・{!member}</p>
+                                          </apex:repeat>
+                                        </div>
+                                      </fieldset>
+                                    </div>
+                                   </apex:repeat>
                                 </div>
                             </apex:outputPanel>
                         </div>
@@ -1175,21 +1244,26 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
 
                         <fieldset class="filter-category filter-text">
                           <label>{!$Label.kdSurvey_Shisha}</label>
-                          <apex:inputText id="filterShisha" styleClass="search-status__select" value="{!filterShisha}" style="margin-left: 0.5rem; width:10rem;" />
-                          <!-- apex:selectList id="filterShisha" styleClass="search-status__select" value="{!filterShisha}" size="1" style="margin-left: 0.5rem">
-                            <apex:selectOptions value="{!ListShisha}" />
-                            <apex:actionSupport event="onchange" action="{!dummyAction}" rerender="filterShiten" />
-                          </apex:selectList -->
+                          <apex:selectList id="filterShisha" styleClass="search-status__select" value="{!filterShisha}" size="1" style="margin-left: 0.5rem">
+                            <apex:actionSupport event="onchange" action="{!refreshShiten}" reRender="filterUnifiedAgencyBranch, filterBusinessLocationBranchGroup"/>
+                            <apex:selectOptions value="{!optShisha}" />
+                          </apex:selectList>
                         </fieldset>
 
                         <fieldset class="filter-category filter-text">
                           <label>{!$Label.kdSurvey_UnifiedAgencyBranch}</label>
-                          <apex:inputText id="filterUnifiedAgencyBranch" styleClass="search-status__select" value="{!filterUnifiedAgencyBranch}" style="margin-left: 0.5rem; width:10rem;" />
+                          <apex:selectList id="filterUnifiedAgencyBranch" styleClass="search-status__select" value="{!filterUnifiedAgencyBranch}" size="1" style="margin-left: 0.5rem">
+                            <apex:actionSupport event="onchange" action="{!refreshGroup}" reRender="filterBusinessLocationBranchGroup"/>
+                            <apex:selectOptions value="{!optShiten}" />
+                          </apex:selectList>
                         </fieldset>
 
                         <fieldset class="filter-category filter-text">
                           <label>{!$Label.kdSurvey_BusinessLocationBranchGroup}</label>
-                          <apex:inputText id="filterBusinessLocationBranchGroup" styleClass="search-status__select" value="{!filterBusinessLocationBranchGroup}" style="margin-left: 0.5rem; width:10rem;" />
+                          <apex:selectList id="filterBusinessLocationBranchGroup" styleClass="search-status__select" value="{!filterBusinessLocationBranchGroup}" size="1" style="margin-left: 0.5rem">
+                            <apex:actionSupport event="onchange" reRender="filterShiten, filterDairiten, filterUneiHojin, SelectedShops, shopsSelectPanel"/>
+                            <apex:selectOptions value="{!optGroup}" />
+                          </apex:selectList>
                         </fieldset>
                       </div>
                       
@@ -1442,92 +1516,38 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                 <tr style="height: 5rem;">
                 
                   <th class="col1 mdl-data-table__cell--non-numeric sort">
-                    <span>
-                      <apex:outputPanel rendered="{!orderBy != 'RegionalOfficeName__c ASC NULLS LAST, BusinessLocationBranchGroup__c ASC'}">
-                        <a href="javascript:void(0);" onclick="callChangeOrder('RegionalOfficeName__c ASC NULLS LAST, BusinessLocationBranchGroup__c ASC');">
-                          <span class="thspanwithoutarrow">アンケート種別{!IF(orderBy == 'RegionalOfficeName__c DESC, BusinessLocationBranchGroup__c DESC NULLS LAST', ' ▼', '')}</span>
-                        </a>
-                      </apex:outputPanel>                    
-                      <apex:outputPanel rendered="{!orderBy == 'RegionalOfficeName__c ASC NULLS LAST, BusinessLocationBranchGroup__c ASC'}">
-                        <a href="javascript:void(0);" onclick="callChangeOrder('RegionalOfficeName__c DESC, BusinessLocationBranchGroup__c DESC NULLS LAST');">
-                          <span class="thspanwithoutarrow">アンケート種別 ▲</span>
-                        </a>
-                      </apex:outputPanel>
+                    <span class="thspanwithoutarrow">
+                          <span class="thspanwithoutarrow">アンケート種別</span>
                     </span>           
                   </th>
 
                   <th class="col2 mdl-data-table__cell--non-numeric sort">
                     <span class="thspanwithoutarrow">
-                      <apex:outputPanel rendered="{!orderBy != 'ParentAgencyCode__c NULLS LAST'}">
-                        <a href="javascript:void(0);" onclick="callChangeOrder('ParentAgencyCode__c NULLS LAST');">
-                          <span class="thspanwithoutarrow">支社{!IF(orderBy == 'ParentAgencyCode__c DESC', ' ▼', '')}</span>
-                        </a>
-                      </apex:outputPanel>                    
-                      <apex:outputPanel rendered="{!orderBy == 'ParentAgencyCode__c NULLS LAST'}">
-                        <a href="javascript:void(0);" onclick="callChangeOrder('ParentAgencyCode__c DESC');">
-                          <span class="thspanwithoutarrow">支社 ▲</span>
-                        </a>
-                      </apex:outputPanel>                         
+                      <span class="thspanwithoutarrow">支社</span>                      
                     </span>                                   
                   </th>
                   
                   <th class="col3 mdl-data-table__cell--non-numeric sort">
                     <span class="thspanwithoutarrow">
-                      <apex:outputPanel rendered="{!orderBy != 'BusinessLocationName__c NULLS LAST'}">
-                        <a href="javascript:void(0);" onclick="callChangeOrder('BusinessLocationName__c NULLS LAST');">
-                          <span class="thspanwithoutarrow">統括支店/部{!IF(orderBy == 'BusinessLocationName__c DESC', ' ▼', '')}</span>
-                        </a>
-                      </apex:outputPanel>                    
-                      <apex:outputPanel rendered="{!orderBy == 'BusinessLocationName__c NULLS LAST'}">
-                        <a href="javascript:void(0);" onclick="callChangeOrder('BusinessLocationName__c DESC');">
-                          <span class="thspanwithoutarrow">統括支店/部 ▲</span>
-                        </a>
-                      </apex:outputPanel>
+                      <span class="thspanwithoutarrow">統括支店/部</span>
                     </span>                                   
                   </th>
                   
                   <th class="col4 mdl-data-table__cell--non-numeric sort">
                     <span class="thspanwithoutarrow">
-                      <apex:outputPanel rendered="{!orderBy != 'ReplyDate__c NULLS LAST'}">
-                        <a href="javascript:void(0);" onclick="callChangeOrder('ReplyDate__c NULLS LAST');">
-                          <span class="thspanwithoutarrow">支店/グループ{!IF(orderBy == 'ReplyDate__c DESC', ' ▼', '')}</span>
-                        </a>
-                      </apex:outputPanel>                    
-                      <apex:outputPanel rendered="{!orderBy == 'ReplyDate__c NULLS LAST'}">
-                        <a href="javascript:void(0);" onclick="callChangeOrder('ReplyDate__c DESC');">
-                          <span class="thspanwithoutarrow">支店/グループ ▲</span>
-                        </a>
-                      </apex:outputPanel>                                        
+                      <span class="thspanwithoutarrow">支店/グループ</span>                 
                     </span>
                   </th>
 
                   <th class="col5 mdl-data-table__cell--non-numeric sort">
                     <span class="thspanwithoutarrow">
-                      <apex:outputPanel rendered="{!orderBy != 'Q1_ShopRecommendationTime__c NULLS LAST'}">
-                        <a href="javascript:void(0);" onclick="callChangeOrder('Q1_ShopRecommendationTime__c NULLS LAST');">
-                          <span class="thspanwithoutarrow">対象者{!IF(orderBy == 'Q1_ShopRecommendationTime__c DESC', ' ▼', '')}</span>
-                        </a>
-                      </apex:outputPanel>                    
-                      <apex:outputPanel rendered="{!orderBy == 'Q1_ShopRecommendationTime__c NULLS LAST'}">
-                        <a href="javascript:void(0);" onclick="callChangeOrder('Q1_ShopRecommendationTime__c DESC');">
-                          <span class="thspanwithoutarrow">対象者 ▲</span>
-                        </a>
-                      </apex:outputPanel>                    
+                       <span class="thspanwithoutarrow">対象者</span>                  
                     </span>
                   </th>
 
                   <th class="col6 mdl-data-table__cell--non-numeric sort">
                     <span class="thspanwithoutarrow">
-                      <apex:outputPanel rendered="{!orderBy != 'EvolutionDate__c NULLS LAST'}">
-                        <a href="javascript:void(0);" onclick="callChangeOrder('EvolutionDate__c NULLS LAST');">
-                          <span class="thspanwithoutarrow">対象年度{!IF(orderBy == 'EvolutionDate__c DESC', ' ▼', '')}</span>
-                        </a>
-                      </apex:outputPanel>                    
-                      <apex:outputPanel rendered="{!orderBy == 'EvolutionDate__c NULLS LAST'}">
-                        <a href="javascript:void(0);" onclick="callChangeOrder('EvolutionDate__c DESC');">
-                          <span class="thspanwithoutarrow">対象年度 ▲</span>
-                        </a>
-                      </apex:outputPanel>                    
+                      <span class="thspanwithoutarrow">対象年度</span>                   
                     </span>
                   </th>
 
@@ -1536,7 +1556,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
               <tbody>
                 <apex:actionRegion id="area51a" renderRegionOnly="false">
                     <apex:inputText styleClass="SurveyUpdateIdInput" value="{!surveyUpdateId}" style="display: none;" />
-                    <apex:actionFunction name="refreshSurveyEdit" action="{!getSurveyDetails}" rerender="editKnowledge1, editKnowledge2" />
+                    <apex:actionFunction name="refreshSurveyEdit" action="{!getSurveyDetails}" rerender="editKnowledge1, editKnowledge2" onComplete="refreshGraph();"/>
                 </apex:actionRegion>
 
                 <apex:repeat value="{!Records}" var="rec" >
@@ -1552,19 +1572,19 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
 
                       <td class="col2">
                         <p>
-                          <apex:outputField value="{!rec.RegionalOfficeName__c}" />
+                          <apex:outputField value="{!rec.User__r.Hierarchical_Label_3__c}" />
                         </p>
                       </td>    
                       
                       <td class="col3">
                         <p>
-                          <apex:outputField value="{!rec.UnifiedAgencyBranch__c}" />
+                          <apex:outputField value="{!rec.User__r.Hierarchical_Label_4__c}" />
                         </p>
                       </td> 
 
                       <td class="col4">
                         <p>
-                          <apex:outputField value="{!rec.BusinessLocationBranchGroup__c}" />
+                          <apex:outputField value="{!rec.User__r.Hierarchical_Label_5__c}" />
                         </p>
                       </td>
 

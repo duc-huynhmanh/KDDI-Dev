@@ -18,8 +18,6 @@ public with sharing class saHomeCtrl {
     public String rankingName {get;set;}
     public Integer idRanking {get;set;}
 
-    public List<saDocuments__c> lsDocs {get;set;}
-    public List<ContentVersion> lsContentVersion {get;set;}
     public String categoryName {get;set;}
     public String idDocumentCategory {get;set;}
 
@@ -85,13 +83,6 @@ public with sharing class saHomeCtrl {
 
       rankingName ='';
       lsRankingResults = new List<clsRankingResult>();
-
-      lsDocs = [SELECT Id, Category__c, 
-                       (SELECT Id, ContentDocumentId FROM ContentDocumentLinks)
-                FROM saDocuments__c
-                ORDER BY SortNo__c, Category__c];
-
-      lsContentVersion = new List<ContentVersion>();
       categoryName ='';
 
 	  currentMostSeenLimit=3;
@@ -262,34 +253,6 @@ public with sharing class saHomeCtrl {
       lsRankingResults.add(new clsRankingResult(8, 'Result Name 8', 'Result Description 8'));
       lsRankingResults.add(new clsRankingResult(9, 'Result Name 9', 'Result Description 9'));
       lsRankingResults.add(new clsRankingResult(10, 'Result Name 10', 'Result Description 10'));
-
-    }
-
-    public void showCategoryDetail() {
-
-      List<Id> lsDocId = new List<Id>();
-System.debug('Document ID: ' +idDocumentCategory);
-
-      for (saDocuments__c doc : lsDocs) {
-        if (doc.Id == idDocumentCategory) {
-          categoryName = doc.Category__c;
-          for (ContentDocumentLink cdl : doc.ContentDocumentLinks) {
-            lsDocId.add(cdl.ContentDocumentId);
-System.debug('Content Document ID: ' +cdl.ContentDocumentId);
-          }
-          break;
-        }
-      }
-
-      lsContentVersion = new List<ContentVersion>();
-      if (lsDocId != NULL && lsDocId.size() > 0) {
-          lsContentVersion = [SELECT Id, ContentDocumentId, Title, FileType
-                              FROM ContentVersion
-                              WHERE ContentDocumentId IN :lsDocId
-                              ORDER BY Title];
-      }
-
-System.debug('Nb files: ' +lsContentVersion.size());
 
     }
 

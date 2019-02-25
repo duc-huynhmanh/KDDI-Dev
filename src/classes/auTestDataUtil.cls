@@ -133,6 +133,9 @@ public class auTestDataUtil {
 		u.LanguageLocaleKey = 'ja';
 		u.KDDIEmployeeId__c = name;
 		u.ReceiveApprovalRequestEmail__c = true;
+		u.Hierarchical_Code_1__c='Test01';
+		u.Hierarchical_Code_2__c='01';
+		u.Hierarchical_Code_3__c='AB';
 		insert u;
 		return u;
 	}

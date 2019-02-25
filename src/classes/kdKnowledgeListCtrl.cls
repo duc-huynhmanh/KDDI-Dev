@@ -394,7 +394,7 @@ public with sharing class kdKnowledgeListCtrl {
     public void recordSearch() {
         this.initSearchFlg = 'true';  // 画面起動時検索フラグON
         String queryStr = 'SELECT id, Name, AgencyLabel__c, Agency__c, CreatedBy__c, Description__c, SharedBy__c, SubjectDivision__c, ' +
-                    'Thema__c, Title__c, Type__c, NbCopy__c, NbLike__c, NbView__c, CreatedByDisplayedName__c, LastModifiedDate__c, PostTime__c, ' + 
+                    'Thema__c, Title__c, Type__c, NbCopy__c, NbLike__c, NbView__c, CreatedByDisplayedName__c, LastModifiedDate__c, PostTime__c, PostTimeDateFormula__c, ' + 
                     'CreatedBy__r.DisplayedUsernameFormula__c, Status__c, HasMovie__c, MediumCategory__c, TechnicalFavorite__c, ' +
                     'UserRecordAccess.HasEditAccess, LastModifiedBy__c, LastModifiedByDisplayName__c, ' +
                     '(select id, Name from Attachments) ' +
@@ -557,7 +557,7 @@ public with sharing class kdKnowledgeListCtrl {
             }
 
             if (this.filterNew != NULL && this.filterNew) {
-                strList.add('PostTime__c >= ' + DateTime.now().addDays(-7).formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\''));
+                strList.add('PostTimeDateFormula__c >= ' + DateTime.now().addDays(-7));
             }
 
             if (this.filterFavorite != NULL && this.filterFavorite) {
@@ -566,10 +566,10 @@ public with sharing class kdKnowledgeListCtrl {
 
             // Modification Date
             if (this.filterDateFrom != null) {
-                strList.add('PostTime__c >= ' + String.valueOf(this.filterDateFrom));
+                strList.add('PostTimeDateFormula__c >= ' + String.valueOf(this.filterDateFrom));
             }
             if (this.filterDateTo != null) {
-                strList.add('PostTime__c <= ' + String.valueOf(this.filterDateTo));
+                strList.add('PostTimeDateFormula__c <= ' + String.valueOf(this.filterDateTo));
             }
 
         }
@@ -1028,7 +1028,7 @@ public with sharing class kdKnowledgeListCtrl {
         isUpdate = false;
 
         kdKnowledgeUpdate = [SELECT Id, Name, AgencyLabel__c, Agency__c, Agency__r.Name, CreatedBy__c, Description__c, SharedBy__c, SubjectDivision__c,
-                                    Thema__c, Title__c, Type__c, MediumCategory__c, LastModifiedBy__c, PostTime__c, 
+                                    Thema__c, Title__c, Type__c, MediumCategory__c, LastModifiedBy__c, PostTime__c, PostTimeDateFormula__c, 
                                     CreatedBy__r.DisplayedUsernameFormula__c, Status__c, TechnicalFavorite__c, 
                                     UserRecordAccess.HasEditAccess, UserRecordAccess.HasDeleteAccess,
                                     (SELECT User__r.DisplayedUsernameFormula__c, CommentLike__c FROM kdKnowledgeDetail_Like__r),

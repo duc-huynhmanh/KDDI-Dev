@@ -1199,6 +1199,99 @@
         a .quotation-reply-userName:hover {
           text-decoration: underline;
         }
+
+        .ui-dialog[aria-describedby="group-dialog"] { 
+          z-index: 1100;
+        }
+        #group-dialog{
+          display: none;
+          margin-top: 5px;
+        }
+        #saveGroup-dialog{
+          display: none;
+          margin-top: 5px;
+        }
+        .patternList{
+          display: block;
+          width: 250px;
+          float: left;
+        }
+        .userList{
+          display: block;
+          float: left;
+          height: 300px;
+          overflow-y: auto;
+          width: 440px;
+          border: 1px solid #aaa;
+          margin-left: 20px;
+        }
+        .userGroupList{
+          display: block;
+          float: left;
+          height: 300px;
+          overflow-y: auto;
+          width: 440px;
+          border: 1px solid #aaa;
+          margin-right: 20px;
+        }
+
+        .pattern-item{
+          height: 50px;
+          width: 250px;
+          line-height: 48px;
+          border: 1px solid #7e9bc1;
+          border-radius: 15px;
+          text-align: center;
+          overflow: auto;
+          overflow-x: hidden;
+          direction:rtl;
+          position: relative;
+        }
+
+        .pattern-item::-webkit-scrollbar {
+            width: 0px;  /* remove scrollbar space */
+            background: transparent;  /* optional: just make scrollbar invisible */
+        }
+
+        /* optional: show position indicator in red */
+        .pattern-item::-webkit-scrollbar-thumb {
+            background: #FF0000;
+        }
+        .pattern-item-1, .pattern-item-2, .pattern-item-3, .pattern-item-4{
+          margin: 0 0 14px;
+        }
+        .pattern-item-deactive{
+          cursor: hand;
+          cursor: pointer;
+          background-color: #f2f5f8;
+        }
+        .pattern-item-active{
+          background-color: #becde0;
+        }
+        .editIcon{
+          position: absolute;
+          top: 2px;
+          right: 2px;
+        }
+        .editIcon-active{
+          cursor: hand;
+          cursor: pointer;
+          opacity: 1;
+        }
+        .editIcon-deactive{
+          pointer-events: none;
+          cursor: none;
+          opacity: 0.3;
+        }
+        .groupText{
+          display: none;
+          background-color: #becde0;
+          border: none;
+          width: 200px;
+          height: 45px;
+          outline: none;
+          direction:ltr;
+        }
         
       </style>
       <apex:includeScript value="{!URLFOR($Resource.JQuery)}" />
@@ -1213,6 +1306,8 @@
         var makeSafetyCheck2 = true;
         var isMouseDown = false;
         var isRemoveMode = true;
+        var selectFromGroupDialog;
+        var saveToGroupDialog;
 
         $j(function(){
 
@@ -1288,7 +1383,206 @@
                 }
             });
             contentInit();
+            selectFromGroupDialog = $j( "#group-dialog" ).dialog({
+              autoOpen: false,
+              height: 441,
+              width: 750,
+              modal: true,
+              buttons: {
+                
+                "グループを選ぶ": confirmGroup,
+                "cancel": {
+                  text:'キャンセル',
+                  click: function() {
+                    selectFromGroupDialog.dialog( "close" );
+                  }
+                }
+              },
+              close: function() {
+                
+              }
+            });
+            saveToGroupDialog = $j("#saveGroup-dialog").dialog({
+              autoOpen: false,
+              height: 441,
+              width: 750,
+              modal: true,
+              buttons: {
+                
+                "保存": callSaveToGroup,
+                "cancel": {
+                  text:'キャンセル',
+                  click: function() {
+                    saveToGroupDialog.dialog( "close" );
+                  }
+                }
+              },
+              close: function() {
+                var table = $j('#userGroupList table tbody');
+                table.empty();
+                table.append('<tr><th width="250">組織</th><th width="150">社員名</th></tr>');
+              }
+            });
         });
+
+        function openSelectFromGroupDialog(){
+        selectFromGroupDialog.dialog( "open" );
+        //default loading for dialog
+        groupSelect('1');
+        loadUser('1');
+      }
+
+      function openSaveToGroupDialog(){
+        var count = $j('.quotation-detail-list .quotation-detail-item').size();
+        if (count > 1000){
+          showAlert('グループ保存のユーザ数の上限は1000件になります。\n※現在のユーザ数' + count + '件', true);
+          return;
+        }
+        saveToGroupDialog.dialog( "open" );
+        saveGroupSelect('0');
+        //default loading for dialog
+        loadUserList();
+      }
+
+      function loadUserList(){
+        var table = $j('#userGroupList table tbody');
+        $j('.quotation-detail-list .quotation-detail-item').each(function(index){
+          var userRoleName = $j(this).find(".quotation-reply-userRole").text();
+          var userName = $j(this).find(".quotation-reply-userName").text();
+          var id = $j(this).find("input.quotation-reply-userId").val();
+          var html = '<tr class="userInfo"><td class="roleName" width="250">' + userRoleName + '</td><td class="userName" width="150">' + userName + '<input class="id" name="id" type="hidden" value="' + id + '"> </td></tr>';
+          table.append(html);
+        });
+      }
+
+
+      function groupSelect(group){
+        if(!$j('.pattern-item-' + group).hasClass("pattern-item-active")){
+          $j('.pattern-item-' + group).addClass("pattern-item-active");
+        }
+        if($j('.pattern-item-' + group).hasClass("pattern-item-deactive")){
+          $j('.pattern-item-' + group).removeClass("pattern-item-deactive");
+        }
+        
+        for(i = 1; i<6; i++){
+          if(i.toString() != group){
+            if(!$j('.pattern-item-' + i.toString()).hasClass("pattern-item-deactive")){
+              $j('.pattern-item-' + i.toString()).addClass("pattern-item-deactive");
+            }
+            if($j('.pattern-item-' + i.toString()).hasClass("pattern-item-active")){
+              $j('.pattern-item-' + i.toString()).removeClass("pattern-item-active");
+            }
+          }
+        }
+      }
+
+      function saveGroupSelect(group){
+        if(group != '0'){
+          if(!$j('.pattern-item-' + group).hasClass("pattern-item-active")){
+            $j('.pattern-item-' + group).addClass("pattern-item-active");
+          }
+          if($j('.pattern-item-' + group).hasClass("pattern-item-deactive")){
+            $j('.pattern-item-' + group).removeClass("pattern-item-deactive");
+          }
+          if(!$j('.editIcon-' + group).hasClass("editIcon-active")){
+            $j('.editIcon-' + group).addClass("editIcon-active");
+          }
+          if($j('.editIcon-' + group).hasClass("editIcon-deactive")){
+            $j('.editIcon-' + group).removeClass("editIcon-deactive");
+          }
+        }
+        
+        for(i = 1; i<6; i++){
+          if(i.toString() != group){
+            if(!$j('.pattern-item-' + i.toString()).hasClass("pattern-item-deactive")){
+              $j('.pattern-item-' + i.toString()).addClass("pattern-item-deactive");
+            }
+            if($j('.pattern-item-' + i.toString()).hasClass("pattern-item-active")){
+              $j('.pattern-item-' + i.toString()).removeClass("pattern-item-active");
+            }
+            if(!$j('.editIcon-' + i.toString()).hasClass("editIcon-deactive")){
+              $j('.editIcon-' + i.toString()).addClass("editIcon-deactive");
+            }
+            if($j('.editIcon-' + i.toString()).hasClass("editIcon-active")){
+              $j('.editIcon-' + i.toString()).removeClass("editIcon-active");
+            }
+            $j('.groupLabel-' + i.toString()).show();
+            $j('.groupText-' + i.toString()).val('');
+            $j('.groupText-' + i.toString()).hide();
+            
+          }
+        }
+      }
+
+      function enableEditting(group){
+        $j('.groupLabel-' + group).hide();
+        $j('.groupText-' + group).show();
+        $j('.groupText-' + group).focus();
+      }
+
+      function confirmGroup(){
+        deleteAllExistingUsers();
+      }
+
+      function insertUsersFromGroup(){
+        items = [];
+        $j( ".userInfo" ).each(function( index ) {
+          var values = [];
+          var userRoleName = $j(this).children(".roleName").text();
+          var userName = $j(this).children(".userName").text();
+          var profile = $j(this).find("input.profile").val();
+          var id = $j(this).find("input.id").val();
+          var roleDevName = $j(this).find("input.roleDevName").val();
+          var department = $j(this).find("input.department").val();
+          var technical = $j(this).find("input[name=technical]").val();
+
+          values.push('"UserRole.Name":"' + userRoleName + '"');
+          values.push('"UserRole.DeveloperName":"' + roleDevName + '"');
+          values.push('"Profile.Name":"' + profile + '"');
+          values.push('"Name":"' + userName + '"');
+          values.push('"Id":"' + id + '"');
+          values.push('"TechnicalString__c":"' + technical + '"');
+          items.push('{' + values.join(',') + '}');
+        });
+        var jsonText = '{' + 
+                            '"sortNo":"0",' +
+                            '"items":[' + items.join(',') +']' +
+                        '}';
+        createSelectedInquiryReplySA(jsonText);
+        console.log('jsonText: ' + jsonText);
+        
+        selectFromGroupDialog.dialog( "close" );
+      }
+
+      function callSaveToGroup(){
+        for(i = 1; i<6; i++){
+          if($j('.pattern-item-' + i.toString()).hasClass("pattern-item-active")){
+            var groupName = $j('.groupLabel-' + i.toString()).text();
+            if($j('.groupLabel-' + i.toString()).css('display') == 'none') {
+              if($j('.groupText-' + i.toString()).val() != ''){
+                groupName = $j('.groupText-' + i.toString()).val();
+              } else {
+                showAlert('新グループ名をご記入ください！', true);
+                return;
+              }
+            }
+            saveToGroup(groupName, i.toString());
+            saveToGroupDialog.dialog( "close" );
+            return;
+          }
+        }
+        showAlert('グループをお選ぶください！', true);
+        
+      }
+
+      function notifyCompleted(){
+        var $error = getErrorArea();
+        var $children = $error.children();
+        if ($children.length > 0) {
+          return;
+        }
+        showAlert('グループを保存するのが完了しました。', false);
+      }
 
         function deleteMultipleRows() {
 
@@ -2259,6 +2553,7 @@
               <apex:inputHidden html-class="lastSearchUserKddiEmployeeNo" value="{!idm.lastSearchUserKddiEmployeeNo}" />
               <apex:inputHidden html-class="lastSearchUserKddiDepartment" value="{!idm.lastSearchUserKddiDepartment}" />
 
+              <apex:actionFunction name="deleteAllExistingUsers"  action="{!idm.removeExistingUsers}" rerender="dummy" oncomplete="insertUsersFromGroup();"/>
               <apex:actionFunction name="createSelectedInquiryReplySA"  action="{!idm.createSelectedInquiryReplySA}" rerender="pnlGridReply, modalListViewDel, apexMessage" status="ajaxStatus2" >
                 <apex:param value="" name="jsonText" assignTo="{!idm.createdItemInfosSA}" />
               </apex:actionFunction>
@@ -2271,6 +2566,15 @@
 
               <apex:actionFunction name="inquiryDelete" action="{!deleteAction}" />
               <apex:actionFunction name="inquiryResendPushNotification" action="{!resendPushNotificationsAction}" />
+
+              <apex:actionFunction name="loadUser"  action="{!loadUserList}" rerender="userList" >
+                <apex:param value="" name="groupOrder" assignTo="{!patternDataToSend}" />
+              </apex:actionFunction>
+
+              <apex:actionFunction name="saveToGroup"  action="{!saveToGroup}" rerender="selectDialog, saveDialog, apexMessage" oncomplete="notifyCompleted();">
+                <apex:param value="" name="groupName" assignTo="{!groupName}" />
+                <apex:param value="" name="groupOrder" assignTo="{!patternDataToSend}" />
+              </apex:actionFunction>
 
               <div class="section button-area base-width" >
                 <div class="section-body clearfix">
@@ -2520,6 +2824,31 @@
                           </div>
                         </apex:outputPanel>
 
+                        <!-- <apex:outputPanel styleClass="field" style="display: block; min-width: 650px;" rendered="{!isUserAdministrator || isOwner}">
+                          <apex:outputLabel value="非公開" for="privateCheckbox"
+                                            styleClass="field-label" />
+                          <apex:inputCheckbox id="privateCheckbox" styleClass="field-value" value="{!idm.parentRec.PrivacySetting__c}" disabled="{!isReadonly}"/>
+                        </apex:outputPanel> -->
+                        
+                        <div style="width:100%;">
+	                        <apex:outputPanel styleClass="field" style="display: block" rendered="{!isUserAdministrator || isOwner}">
+								<apex:outputLabel value="公開設定" for="privateCheckbox" styleClass="field-label" />
+								<apex:selectList id="inputPrivacy"
+	                                           styleClass="field-value"
+	                                           value="{!idm.parentRec.PrivacySetting__c}"
+	                                           size="1"
+	                                           disabled="{!isReadonly}">
+	                            	<apex:selectOptions value="{!privacyOptions}" />
+	                          	</apex:selectList>
+							</apex:outputPanel>
+						</div>
+						
+						<div style="width:100%;padding-top:0.5em;padding-left:125px;" class="field-value">
+							<apex:outputPanel rendered="{!isUserAdministrator || isOwner}">
+								<span>※管理画面の一覧における、公開/非公開設定です。</span>
+							</apex:outputPanel>
+						</div>
+
                       </div>
                     </div>
                     
@@ -2592,7 +2921,7 @@
                               <div class="field" style="overflow-x: hidden;" >
                                 <div class="indent-wrap" >
 
-                                  <apex:outputLink value="{!'/' + itemReply.usrId}" 
+                                  <apex:outputLink value="{!'/' + itemReply.replyId}" 
                                                    rendered="{!itemReply.isTaskDone}">
                                     <apex:outputText styleClass="field-value quotation-reply-userName"
                                                      value="{!itemReply.usrName}" />
@@ -2602,6 +2931,8 @@
                                                    value="{!itemReply.usrName}" />
                                 </div>
                               </div>
+
+                              <input type="hidden" class="quotation-reply-userId" value="{!itemReply.usrId}" />
 
 							  <!-- div class="field" style="overflow-x: hidden;" >
                                 <div class="indent-wrap" >
@@ -2643,7 +2974,7 @@
                     </apex:outputPanel>
 
 
-                    <div class="quotation-item create-action-area" >
+                    <div class="quotation-item create-action-area" style="width: 100%;">
                       <div class="quotation-item-body clearfix" >
                         <div class="{!IF(isReadOnly,'hidden','field clearfix top')}" data-type="dropdown">
 
@@ -2661,6 +2992,16 @@
                                             style="display: inline-block; margin-left: 1rem;"
                                             html-data-toggle="modal"
                                             html-data-target="#detailUserKDDIView">KDDIユーザー追加</apex:commandLink>
+
+                          <button type="button"
+                              class="customButton"
+                              style="display: inline-block; margin-left: 1rem;"
+                              onclick="openSelectFromGroupDialog();">グループを選択</button>
+
+                          <button type="button"
+                              class="customButton"
+                              style="display: inline-block; margin-left: 1rem;"
+                              onclick="openSaveToGroupDialog();">グループを保存</button>
 
                         </div>
                       </div>
@@ -2696,7 +3037,7 @@
                 border: 2px solid #e34b4b; 
               }
               #multiDeleteView .modal-dialog {width: 822px;}
-              .modal-dialog .modal-content .modal-header {
+              .modal-dialog .modal-content .modal-header, .ui-dialog[aria-describedby="group-dialog"] .ui-widget-header, .ui-dialog[aria-describedby="saveGroup-dialog"] .ui-widget-header {
                 background: #5e82b2;
                 background: -moz-linear-gradient(top,  #5e82b2 0%, #5575a1 100%);
                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5e82b2), color-stop(100%,#5575a1));
@@ -3532,7 +3873,57 @@ $j(function () {
             </div>
 
 
+            <!--DUC-->
+            <div id="group-dialog" title="グループを選ぶ">
+              <apex:outputPanel styleClass="patternList" id="selectDialog">
+                <apex:repeat value="{!SelectPattern}" var="pattern">
+                  <div class="pattern-item pattern-item-{!pattern.value}" onclick="groupSelect('{!pattern.value}');loadUser('{!pattern.value}');">{!pattern.label}</div>
+                </apex:repeat>
 
+              </apex:outputPanel>
+
+              <apex:outputPanel id="userList" styleClass="userList">
+                <table>
+                    <tr>
+                      <th width="250">組織</th>
+                      <th width="150">社員名</th>
+                    </tr>
+                <apex:repeat value="{!groupUsers}" var="user">
+                  <tr class="userInfo">
+                    <td width="250" class="roleName">{!user.UserRole.Name}</td>
+                    <td width="150" class="userName">{!user.Name}<input type="hidden" name="profile" class="profile" value="{!user.Profile.Name}" />
+                    <input type="hidden" name="id" class="id" value="{!user.Id}" />
+                    <input type="hidden" name="roleDevName" class="roleDevName" value="{!user.UserRole.DeveloperName}" />
+                    <input type="hidden" name="department" class="department" value="{!user.Department}" />
+                    <input type="hidden" name="technical" class="technical" value="{!user.TechnicalString__c}" /></td>
+                    
+                  </tr>
+                </apex:repeat>
+              </table>
+              </apex:outputPanel>
+            </div>
+
+            <div id="saveGroup-dialog" title="グループを保存する">
+              <div id="userGroupList" class="userGroupList">
+                <table>
+                    <tr>
+                      <th width="250">組織</th>
+                      <th width="150">社員名</th>
+                    </tr>
+                </table>
+              </div>
+              <apex:outputPanel styleClass="patternList" id="saveDialog">
+                <apex:repeat value="{!SelectPattern}" var="pattern">
+                  <div class="pattern-item pattern-item-{!pattern.value}" onclick="saveGroupSelect('{!pattern.value}');">
+                    <span class="groupLabel groupLabel-{!pattern.value}">{!pattern.label}</span>
+                    <input type="text" class="groupText groupText-{!pattern.value}"/>
+                    <img src="https://cdn2.iconfinder.com/data/icons/interface-outline-9/512/interface_-_web_-_site-27-512.png" class="editIcon editIcon-{!pattern.value}" onclick="enableEditting('{!pattern.value}');" width="25px"/></div>
+                  
+                </apex:repeat>
+
+              </apex:outputPanel>
+
+            </div>
 
             <div class="modal fade" id="detailUserKDDIView" data-tab-target="userKDDISearch" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="detailUserKDDI" aria-hidden="true">
               <div class="modal-dialog">

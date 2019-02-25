@@ -11,6 +11,19 @@ public with sharing class auSwitchScreenCtrl {
     private Boolean isOkinawaFull;
     private Boolean isOkinawaRestricted;
 
+	private Boolean hasChannelWithAdminPermissionSet;
+	private Boolean hasChannelWithoutAdminPermissionSet;
+	private Boolean hasToDoPermissionSet;
+	private Boolean hasSanxPermissionSet;
+	private Boolean hasKnowledgePermissionSet;
+	private Boolean hasCXKnowledgePermissionSet;
+	private Boolean hasHearingPermissionSet;
+	private Boolean hasCCPPlusPermissionSet;
+	private Boolean hasSBariPermissionSet;
+	private Boolean hasSTPDPermissionSet;
+	private Boolean hasTelemaPermissionSet;
+	private Boolean hasSurveyPermissionSet;		
+	
     public Integer getTypeOfScreen(){return auMainTopCompCtrl.TYPE_SCREEN_SWITCH;}
 
     public auSwitchScreenCtrl() {
@@ -20,7 +33,56 @@ public with sharing class auSwitchScreenCtrl {
 
         User currentUser = [SELECT Profile.Name
                             FROM User
-                            WHERE User.ID = :UserInfo.getUserId()];
+                            WHERE User.ID = :UserInfo.getUserId()];							
+							
+		/* TODO: PermSet Code */              
+        List<PermissionSetAssignment> permissionSet = [select PermissionSet.Name from PermissionSetAssignment where Assignee.Id = :currentUser.Id order by PermissionSet.Name];
+		
+		hasChannelWithAdminPermissionSet = false;
+		hasChannelWithoutAdminPermissionSet = false;
+		hasToDoPermissionSet = false;
+		hasSanxPermissionSet = false;
+		hasKnowledgePermissionSet = false;
+		hasCXKnowledgePermissionSet = false;
+		hasHearingPermissionSet = false;
+		hasCCPPlusPermissionSet = false;
+		hasSBariPermissionSet = false;
+		hasSTPDPermissionSet = false;
+		hasTelemaPermissionSet = false;
+		hasSurveyPermissionSet = false;
+		
+		for(PermissionSetAssignment psa : permissionSet){
+			PermissionSet currentPermissionSet = psa.PermissionSet;
+			if(currentPermissionSet.Name == auConstantCmn.PERMISSIONSET_ACCESS_TO_CHANNEL_WITH_ADMIN){
+				hasChannelWithAdminPermissionSet = true;
+			}else if(currentPermissionSet.Name == auConstantCmn.PERMISSIONSET_ACCESS_TO_CHANNEL_WITHOUT_ADMIN){
+				hasChannelWithoutAdminPermissionSet = true;
+			}else if(currentPermissionSet.Name == auConstantCmn.PERMISSIONSET_ACCESS_TO_TODO){
+				hasToDoPermissionSet = true;
+			}else if(currentPermissionSet.Name == auConstantCmn.PERMISSIONSET_ACCESS_TO_SANX){
+				hasSanxPermissionSet = true;
+			}else if(currentPermissionSet.Name == auConstantCmn.PERMISSIONSET_ACCESS_TO_KNOWLEDGE){
+				hasKnowledgePermissionSet = true;
+			}else if(currentPermissionSet.Name == auConstantCmn.PERMISSIONSET_ACCESS_TO_CXKNOWLEDGE){
+				hasCXKnowledgePermissionSet = true;
+			}else if(currentPermissionSet.Name == auConstantCmn.PERMISSIONSET_ACCESS_TO_HEARING){
+				hasHearingPermissionSet = true;
+			}else if(currentPermissionSet.Name == auConstantCmn.PERMISSIONSET_ACCESS_TO_CCP){
+				hasCCPPlusPermissionSet = true;
+			}else if(currentPermissionSet.Name == auConstantCmn.PERMISSIONSET_ACCESS_TO_SBARI){
+				hasSBariPermissionSet = true;
+			}else if(currentPermissionSet.Name == auConstantCmn.PERMISSIONSET_ACCESS_TO_STPD){
+				hasSTPDPermissionSet = true;
+			}else if(currentPermissionSet.Name == auConstantCmn.PERMISSIONSET_ACCESS_TO_TELEMA){
+				hasTelemaPermissionSet = true;
+			}else if(currentPermissionSet.Name == auConstantCmn.PERMISSIONSET_ACCESS_TO_SURVEY){
+				hasSurveyPermissionSet = true;
+			}
+		}
+		
+		/* --- */
+		
+		//contains('Access_To_Channel');
 
         isCommunityUser = currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_SHOP ||
                           currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_MANAGEMENT ||
@@ -55,6 +117,8 @@ public with sharing class auSwitchScreenCtrl {
             urlSFDCHome = auCommunityCustomSettings__c.getOrgDefaults().MainDomainUrl__c;
             urlSingleSignOn = auCommunityCustomSettings__c.getOrgDefaults().URLSingleSignOn__c;
         }*/
+		
+		
     }
 
     public PageReference redirectIfNecessary(){
@@ -78,61 +142,73 @@ public with sharing class auSwitchScreenCtrl {
 
     public boolean getHasAccessCalendar() {
 
-      return isKDDIUser || isKDDIKnowledgeActivities || isOkinawaFull || isOkinawaRestricted;
+      return /* isKDDIUser */isSystemAdministrator || hasSBariPermissionSet || isKDDIKnowledgeActivities || isOkinawaFull || isOkinawaRestricted;
 
     }
 
     public boolean getHasAccessCCP() {
 
-      return (isKDDIUser || isOkinawaFull) && !isIPhone;
+      return (/* isKDDIUser */isSystemAdministrator || hasCCPPlusPermissionSet || isOkinawaFull) && !isIPhone;
 
     }
 
     public boolean getHasAccessKdKnowledge() {
 
-      return (isKDDIUser || isKDDIKnowledgeOnly || isKDDIKnowledgeActivities || isOkinawaFull) && !isIPhone;
+      return (/* isKDDIUser */isSystemAdministrator || hasKnowledgePermissionSet || isKDDIKnowledgeOnly || isKDDIKnowledgeActivities || isOkinawaFull) && !isIPhone;
 
     }
 
     public boolean getHasAccessSANX() {
 
-      return isKDDIUser || isOkinawaFull || isOkinawaRestricted;
+      return /* isKDDIUser */isSystemAdministrator || hasSanxPermissionSet || isOkinawaFull || isOkinawaRestricted;
 
     }
 
     public boolean getHasAccessAuChannelWithAdmin() {
 
-      return isKDDIUser;// || isOkinawaRestricted;
+      return /* isKDDIUser */isSystemAdministrator || hasChannelWithAdminPermissionSet;// || isOkinawaRestricted;
 
     }
 
     public boolean getHasAccessAuChannelWithoutAdmin() {
 
-      return isCommunityUser;
+      return isCommunityUser || hasChannelWithoutAdminPermissionSet;
 
     }
 
     public boolean getHasAccessToDo() {
 
-      return isKDDIUser;
+      return /* isKDDIUser */isSystemAdministrator || hasToDoPermissionSet;
 
     }
 
     public boolean getHasAccessHearing() {
 
-      return isKDDIUser;
+      return /* isKDDIUser */isSystemAdministrator || hasHearingPermissionSet;
 
     }
 
     public boolean getHasAccessCxKnowledge() {
 
-      return (isKDDIUser || isCommunityUser || isOkinawaFull) && !isIPhone;
+      return (/* isKDDIUser */isSystemAdministrator || hasCXKnowledgePermissionSet || isCommunityUser || isOkinawaFull) && !isIPhone;
 
     }
 
     public boolean getHasAccessStpd() {
 
-      return (isKDDIUser || isCommunityUser || isOkinawaFull) && !isIPhone;
+      return (/* isKDDIUser */isSystemAdministrator || hasSTPDPermissionSet || isCommunityUser || isOkinawaFull) && !isIPhone;
+
+    }
+
+    public boolean getHasAccessTelema() {
+
+      return /*isKDDIUser*/ (isSystemAdministrator || hasTelemaPermissionSet) && !isIPhone;
+
+    }
+    
+    public boolean getHasAccessSurvey() {
+
+      return /*isKDDIUser*/ (isSystemAdministrator || hasSurveyPermissionSet) && !isIPhone;
 
     }
 

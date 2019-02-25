@@ -19,6 +19,8 @@ public without sharing class kdActivityListCtrl {
     public String evalDescription {get;set;}
     public String evalTarget {get;set;}
     public String evalResult {get;set;}
+    public String evalMonth {get;set;}
+    public String evalYear {get;set;}
     public String evalType {get;set;}
     public String evalMonthInput {get;set;}
     public String evalYearInput {get;set;}
@@ -140,7 +142,7 @@ public without sharing class kdActivityListCtrl {
     public List<SelectOption> getListYear() {
         list<SelectOption> options = new list<SelectOption>();
         Integer thisYear = Date.today().year();
-        options.add(new SelectOption('', ''));
+        //options.add(new SelectOption('', ''));
         for (Integer i = thisYear-10; i < thisYear+10; i++) {
             options.add(new SelectOption(String.valueOf(i), String.valueOf(i) + '年'));
         }       
@@ -148,7 +150,7 @@ public without sharing class kdActivityListCtrl {
     }
     public List<SelectOption> getListMonth() {
         list<SelectOption> options = new list<SelectOption>();
-        options.add(new SelectOption('', ''));
+        //options.add(new SelectOption('', ''));
         for (Integer i = 1; i < 13; i++) {
             options.add(new SelectOption(String.valueOf(i).leftPad(2, '0'), String.valueOf(i) + '月'));
         }       
@@ -207,6 +209,7 @@ public without sharing class kdActivityListCtrl {
             evalResult = tempEval.Result__c;
             evalTarget = tempEval.Target__c;
         }
+
         initEvaluation();
 
         eventUpdate = new Event();
@@ -268,6 +271,7 @@ public without sharing class kdActivityListCtrl {
 
     //first load when open popup
     public void refreshEvaluation(){
+        system.debug('into refreshEvaluation');
         if(String.isBlank(filterMonth) || String.isBlank(filterYear)){
             eval.Month__c = Date.today().month();
             eval.Year__c = Date.today().year();
@@ -277,7 +281,19 @@ public without sharing class kdActivityListCtrl {
         }
         
         evalType = '目標';
+        evalYear = String.valueOf(eval.Year__c).leftPad(2,'0');
+        evalMonth = String.valueOf(eval.Month__c).leftPad(2,'0');
+
+        evalMonthInput = evalMonth;
+        evalYearInput = evalYear;
+
         evalTypeInput = '目標';
+        system.debug('evalMonth: ' + evalMonth);
+        system.debug('evalYear: ' + evalYear);
+        system.debug('evalMonthInput: ' + evalMonthInput);
+        system.debug('evalYearInput: ' + evalYearInput);
+        system.debug('evalTypeInput: ' + evalTypeInput);
+        
         List<Evaluation__c> tempEvals = [SELECT Target__c, Result__c, Month__c, Year__c FROM Evaluation__c WHERE Month__c = :eval.Month__c AND Year__c = :eval.Year__c AND Account__c = :parentAcc.Id];
         //if there is data already
         if(tempEvals != null && tempEvals.size() > 0){
@@ -297,6 +313,15 @@ public without sharing class kdActivityListCtrl {
     }
 
     public void callDoSaveEvaluation(){
+        system.debug('into callDoSaveEvaluation');
+        system.debug('evalMonth: ' + evalMonth);
+        system.debug('evalYear: ' + evalYear);
+        system.debug('evalMonthInput: ' + evalMonthInput);
+        system.debug('evalYearInput: ' + evalYearInput);
+        system.debug('evalTypeInput: ' + evalTypeInput);
+
+        eval.Month__c = Integer.valueOf(evalMonth);
+        eval.Year__c = Integer.valueOf(evalYear);
         if(evalTypeInput == '目標'){
             eval.Target__c = evalDescription;
         } else {
@@ -308,9 +333,17 @@ public without sharing class kdActivityListCtrl {
     }
 
     public void reloadDescription(){
-        //TODO: eval variable is not binded, so using string variables instead of
+        system.debug('into reloadDescription');
+        //eval variable is not binded, so using string variables instead of
         Integer month = Integer.valueOf(evalMonthInput);
         Integer year = Integer.valueOf(evalYearInput);
+
+        system.debug('evalMonth: ' + evalMonth);
+        system.debug('evalYear: ' + evalYear);
+        system.debug('evalMonthInput: ' + evalMonthInput);
+        system.debug('evalYearInput: ' + evalYearInput);
+        system.debug('evalTypeInput: ' + evalTypeInput);
+        
 
         List<Evaluation__c> tempEvals = [SELECT Target__c, Result__c, Month__c, Year__c FROM Evaluation__c WHERE Month__c = :month AND Year__c = :year AND Account__c = :parentAcc.Id];
         //if there is data already
@@ -343,6 +376,7 @@ public without sharing class kdActivityListCtrl {
         newEvent.EndDateTime = Datetime.newInstance(iYear, iMonth, iDay, endHr, endMn, 0);
         newEvent.Subject = newEventSubject;
         newEvent.WhatId = parentAcc.Id;
+        newEvent.Account__c = parentAcc.Id;
         newEvent.Type__c = '社外';
         newEvent.Category__c = '代理店商談';
         newEvent.OwnerId =  adminUser.Id;

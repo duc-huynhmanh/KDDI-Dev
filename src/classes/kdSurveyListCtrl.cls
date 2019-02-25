@@ -12,7 +12,8 @@ public with sharing class kdSurveyListCtrl {
 	public String surveyUnifiedAgencyBranch {get; set;}
 	public String surveyBusinessLocationBranchGroup {get; set;}
 	public String surveyUserName {get; set;}
-	public String surveyFiscalYear {get; set;}
+    public String surveyFiscalYear {get; set;}
+	public String surveyTitle {get; set;}
 
 	public String errorMessage {get; set;}
 	public String whereStr {get;set;}
@@ -23,11 +24,15 @@ public with sharing class kdSurveyListCtrl {
 	public List<RadarData> data1 {get; set;}
 	public List<RadarData> data2 {get; set;}
 	public List<RadarData> data3 {get; set;}
+
+    public List<SelectOption> optShisha{get; set;}
+    public List<SelectOption> optShiten{get; set;}
+    public List<SelectOption> optGroup{get; set;}
 	
-	public String commentOnCause {get; set;}
-	public String commentOnCauseResponse {get; set;}
-	public String commentOnDifficulties {get; set;}
-	public String commentOnDifficultiesResponse {get; set;}
+	public Map<String,List<String>> honninReply {get; set;}
+    public Map<String,List<String>> memberReply {get; set;}
+    public List<String> questions {get; set;}
+	public Map<String, String> answerType {get; set;}
 	
 	public String lastYearLabel{get{return auConstantCmn.LAST_YEAR_LABEL;}}
 	public String thisYearLabel{get{return auConstantCmn.THIS_YEAR_LABEL;}}
@@ -167,7 +172,7 @@ public with sharing class kdSurveyListCtrl {
         system.debug('constructor: auSurveyListCtrl');
         pageNum = 1;
         pageSize = 20;
-        //orderBy = 'CreatedDate DESC NULLS LAST';
+        orderBy = 'SurveyType__c NULLS LAST, User__r.Hierarchical_Code_3__c NULLS LAST, User__r.Hierarchical_Code_4__c NULLS LAST, User__r.Hierarchical_Code_5__c NULLS LAST, User__r.KDDIEmployeeId__c NULLS LAST';
         errorMessage = '';
 
         Map<String, String> params = Apexpages.currentPage().getParameters();
@@ -195,10 +200,98 @@ public with sharing class kdSurveyListCtrl {
         	surveyTypeOptions.add(new SelectOption(f.getLabel(),f.getValue()));
         }
 
+        optShisha = new List<SelectOption>();
+        optShisha.add(new SelectOption('',''));
+        Set<String> optList = new Set<String>();
+        for(User u : [SELECT Hierarchical_Label_3__c FROM User WHERE Hierarchical_Label_3__c != '' ORDER BY Hierarchical_Code_3__c]){
+            if(!optList.contains(u.Hierarchical_Label_3__c)){
+                optList.add(u.Hierarchical_Label_3__c);
+            }
+        }
+        for(String str : optList){
+            optShisha.add(new SelectOption(str,str));
+        }
+
+        optShiten = new List<SelectOption>();
+        optShiten.add(new SelectOption('',''));
+        optList = new Set<String>();
+        for(User u : [SELECT Hierarchical_Label_4__c FROM User WHERE Hierarchical_Label_4__c != '' ORDER BY Hierarchical_Code_4__c]){
+            if(!optList.contains(u.Hierarchical_Label_4__c)){
+                optList.add(u.Hierarchical_Label_4__c);
+            }
+        }
+        for(String str : optList){
+            optShiten.add(new SelectOption(str,str));
+        }
+
+        optGroup = new List<SelectOption>();
+        optGroup.add(new SelectOption('',''));
+        optList = new Set<String>();
+        for(User u : [SELECT Hierarchical_Label_5__c FROM User WHERE Hierarchical_Label_5__c != '' ORDER BY Hierarchical_Code_5__c]){
+            if(!optList.contains(u.Hierarchical_Label_5__c)){
+                optList.add(u.Hierarchical_Label_5__c);
+            }
+        }
+        for(String str : optList){
+            optGroup.add(new SelectOption(str,str));
+        }
+
 		recordsCount = 0;
 	
         Boolean hasSearchValue = initFieldFromCookie();//保持項目有無チェック
         //recordsearch();
+    }
+
+    public void refreshShiten() {
+        optShiten = new List<SelectOption>();
+        optShiten.add(new SelectOption('',''));
+        filterUnifiedAgencyBranch = '';
+        Set<String> optList = new Set<String>();
+        for(User u : [SELECT Hierarchical_Label_4__c FROM User WHERE Hierarchical_Label_4__c != '' AND Hierarchical_Label_3__c = :filterShisha ORDER BY Hierarchical_Code_4__c]){
+            if(!optList.contains(u.Hierarchical_Label_4__c)){
+                optList.add(u.Hierarchical_Label_4__c);
+            }
+        }
+        for(String str : optList){
+            optShiten.add(new SelectOption(str,str));
+        }
+
+        refreshGroup();
+    }
+
+    public void refreshGroup() {
+        optGroup = new List<SelectOption>();
+        optGroup.add(new SelectOption('',''));
+        filterBusinessLocationBranchGroup = '';
+        Set<String> optList = new Set<String>();
+        //if only shisha has value
+        if(!String.isEmpty(filterShisha) && String.isEmpty(filterUnifiedAgencyBranch)){
+            for(User u : [SELECT Hierarchical_Label_5__c FROM User WHERE Hierarchical_Label_5__c != '' AND Hierarchical_Label_3__c = :filterShisha ORDER BY Hierarchical_Code_5__c]){
+                if(!optList.contains(u.Hierarchical_Label_5__c)){
+                    optList.add(u.Hierarchical_Label_5__c);
+                }
+            }
+        }
+        //if both have value 
+        else if(!String.isEmpty(filterShisha) && !String.isEmpty(filterUnifiedAgencyBranch)){
+            for(User u : [SELECT Hierarchical_Label_5__c FROM User WHERE Hierarchical_Label_5__c != '' AND Hierarchical_Label_4__c = :filterUnifiedAgencyBranch AND Hierarchical_Label_3__c = :filterShisha ORDER BY Hierarchical_Code_5__c]){
+                if(!optList.contains(u.Hierarchical_Label_5__c)){
+                    optList.add(u.Hierarchical_Label_5__c);
+                }
+            }
+        }
+        //if only shiten has value 
+        else if(String.isEmpty(filterShisha) && !String.isEmpty(filterUnifiedAgencyBranch)){
+            for(User u : [SELECT Hierarchical_Label_5__c FROM User WHERE Hierarchical_Label_5__c != '' AND Hierarchical_Label_4__c = :filterUnifiedAgencyBranch ORDER BY Hierarchical_Code_5__c]){
+                if(!optList.contains(u.Hierarchical_Label_5__c)){
+                    optList.add(u.Hierarchical_Label_5__c);
+                }
+            }
+        }
+
+        for(String str : optList){
+            optGroup.add(new SelectOption(str,str));
+        }
     }
 
     //cookie保存
@@ -287,7 +380,7 @@ public with sharing class kdSurveyListCtrl {
         this.initSearchFlg = 'true';  // 画面起動時検索フラグON
 
         String queryStr = ' SELECT surveyId__c,FiscalYear__c, Period__c, SurveyType__c, User__r.Id, User__r.KDDIEmployeeId__c, User__r.Name, '
-        				+ ' Title__c, RegionalOfficeName__c, BusinessLocationBranchGroup__c,  UnifiedAgencyBranch__c ' 
+        				+ ' Title__c, User__r.Hierarchical_Label_3__c, User__r.Hierarchical_Label_4__c, User__r.Hierarchical_Label_5__c ' 
                         + ' FROM auSurvey__c';
 
         system.debug('recordsearch() -> whereStr: ' + whereStr);
@@ -304,7 +397,7 @@ public with sharing class kdSurveyListCtrl {
 
 		//String groupStr = ' GROUP BY FiscalYear__c, Period__c, SurveyType__c, User__r.KDDIEmployeeId__c, User__r.Name, Title__c, RegionalOfficeName__c, BranchOfficeManager__c,  UnifiedAgencyBranch__c ';
         //queryStr += groupStr;
-        /*queryStr += ' ORDER BY ' + orderBy;*/
+        queryStr += ' ORDER BY ' + orderBy;
 
 		String countQueryStr = '';
 		if(whereStr!=''){
@@ -355,15 +448,15 @@ public with sharing class kdSurveyListCtrl {
         }
 
         if (this.filterShisha != NULL && this.filterShisha.length() > 0) {
-            strList.add(auUtilCmn.appendLikeText('RegionalOfficeName__c', this.filterShisha));
+            strList.add(auUtilCmn.appendLikeText('User__r.Hierarchical_Label_3__c', this.filterShisha));
         }
 
 		if (this.filterUnifiedAgencyBranch != NULL && this.filterUnifiedAgencyBranch.length() > 0) {
-            strList.add(auUtilCmn.appendLikeText('UnifiedAgencyBranch__c', this.filterUnifiedAgencyBranch));
+            strList.add(auUtilCmn.appendLikeText('User__r.Hierarchical_Label_4__c', this.filterUnifiedAgencyBranch));
         }
 
         if (this.filterBusinessLocationBranchGroup != NULL && this.filterBusinessLocationBranchGroup.length() > 0) {
-            strList.add(auUtilCmn.appendLikeText('BusinessLocationBranchGroup__c', this.filterBusinessLocationBranchGroup));
+            strList.add(auUtilCmn.appendLikeText('User__r.Hierarchical_Label_5__c', this.filterBusinessLocationBranchGroup));
         }
 
         if (this.filterUserName != NULL && this.filterUserName.length() > 0) {
@@ -630,11 +723,6 @@ public with sharing class kdSurveyListCtrl {
         return tz.getOffset(DateTime.now()) / (1000 * 3600 * 24.0);
     }}
 
-    public class telemaItem {
-        public saTelemarketing__c telema {get;set;}
-    }
-
-
 	/**
      * Get record detail.
      * 
@@ -653,8 +741,8 @@ public with sharing class kdSurveyListCtrl {
 		
 		List<AggregateResult> countCategory = database.query(countQuery);
 		
-		String queryStr = 'Select surveyId__c,FiscalYear__c,Period__c,SurveyType__c,Title__c,RegionalOfficeName__c,UnifiedAgencyBranch__c,'
-						+ 'BusinessLocationBranchGroup__c,User__r.Id, User__r.KDDIEmployeeId__c, User__r.Name,ItemNumber__c,DisplayOrder__c,'
+		String queryStr = 'Select surveyId__c,FiscalYear__c,Period__c,SurveyType__c,Title__c,User__r.Hierarchical_Label_3__c,User__r.Hierarchical_Label_4__c,'
+						+ 'User__r.Hierarchical_Label_5__c,User__r.Id, User__r.KDDIEmployeeId__c, User__r.Name,ItemNumber__c,DisplayOrder__c,'
 						+ 'MainCategory__c,SubCategory__c,Question__c,Personal__c,PreviousPersonalRatio__c,AllMembers__c,	PreviousAllMembersRatio__c,'
 						+ 'BranchOfficeManager__c,PreviousBOManagerRatio__c,AllBOMembers__c,PreviousAllBOMembersRatio__c,NationalBOManagers__c,'
 						+ 'PreviousNationalBOManagersRatio__c,NationalMembers__c,PreviousNationalMembersRatio__c,'
@@ -667,7 +755,7 @@ public with sharing class kdSurveyListCtrl {
 		
 		surveyDetails = database.query(queryStr);
 
-		String commentQueryStr = 'Select surveyId__c,ItemNumber__c,PersonalReply__c,MembersReply__c '
+		String commentQueryStr = 'Select surveyId__c, Question__c, ItemNumber__c, PersonalReply__c, MembersReply__c '
 						+ 'from auSurvey__c '
 						+ 'where surveyId__c=\'' + surveyUpdateId + '\' and IsComment__c=true '
 						+ 'order by ItemNumber__c,DisplayOrder__c asc';
@@ -692,10 +780,10 @@ public with sharing class kdSurveyListCtrl {
         Decimal sumCategory5 = 0;
         Decimal sumCategory6 = 0;
         
-        commentOnCause='';
-		commentOnCauseResponse='';
-		commentOnDifficulties='';
-		commentOnDifficultiesResponse='';
+        honninReply = new Map<String,List<String>>();
+        memberReply = new Map<String,List<String>>();
+        questions = new List<String>();
+        answerType = new Map<String, String>();
 		
 		Integer numberOfIteration=0;
 		
@@ -714,35 +802,36 @@ public with sharing class kdSurveyListCtrl {
 				
 				if(fFirstData){
 					surveyType=auSurDet.SurveyType__c;
-					surveyShisha=auSurDet.RegionalOfficeName__c;
-					surveyUnifiedAgencyBranch=auSurDet.UnifiedAgencyBranch__c;
-					surveyBusinessLocationBranchGroup=auSurDet.BusinessLocationBranchGroup__c;
+					surveyShisha=auSurDet.User__r.Hierarchical_Label_3__c;
+					surveyUnifiedAgencyBranch=auSurDet.User__r.Hierarchical_Label_4__c;
+					surveyBusinessLocationBranchGroup=auSurDet.User__r.Hierarchical_Label_5__c;
 					surveyUserName=auSurDet.User__r.Name;
 					surveyFiscalYear=auSurDet.FiscalYear__c;
+                    surveyTitle=auSurDet.Title__c;
 					fFirstData=false;
 				}
 				
 				if(auSurDet.MainCategory__c==auCategory.get('MainCategory__c')){
 					if(auSurDet.Personal__c!=null){
 						sumCategory+=auSurDet.Personal__c;
-					}else{
+					}/*else{
 						sumCategory+=0;
-					}
+					}*/
 					if(auSurDet.PreviousPersonalRatio__c!=null){
         				sumCategoryLY+=auSurDet.PreviousPersonalRatio__c;
-        			}else{
+        			}/*else{
 						sumCategoryLY+=0;
-					}
+					}*/
 					if(auSurDet.AllMembers__c!=null){
         				sumCategoryAM+=auSurDet.AllMembers__c;
-        			}else{
+        			}/*else{
 						sumCategoryAM+=0;
-					}	
+					}*/	
         			if(auSurDet.BranchOfficeManager__c!=null){
         				sumCategoryM+=auSurDet.BranchOfficeManager__c;
-        			}else{
+        			}/*else{
 						sumCategoryM+=0;
-					}		
+					}*/
 				}
 			}
 			
@@ -756,47 +845,58 @@ public with sharing class kdSurveyListCtrl {
 	        	data3.add(new RadarData(String.valueOf(auCategory.get('MainCategory__c')), (sumCategory/Integer.valueOf(auCategory.get('numberOfItem')))*10, (sumCategoryM/Integer.valueOf(auCategory.get('numberOfItem')))*10, 50, 40, 30, 20, 10, 50, 0));
 			}
 		}
+        String honnin = '';
+        String member = '';
+
+        if (surveyType == '職場サーベイ') {
+            honnin = '本人';
+            member = 'メンバー';
+        } else if (surveyType == '営業担当アンケート'){
+            honnin = 'フリーコメント';
+            member = 'フリーコメント1';
+        } else if (surveyType == 'CSAアンケート'){
+            honnin = 'CSA本人回答';
+            member = 'SA回答';
+        }
 
 		if(surveyComment.size()>0){
-        Decimal lowerItemNumber = surveyComment[0].ItemNumber__c;					
 	        for(auSurvey__c auSurCom : surveyComment){
-	        	if(auSurCom.ItemNumber__c==lowerItemNumber){
-	        		system.debug('Personal Reply : ' + auSurCom.PersonalReply__c);
-	        		if(auSurCom.PersonalReply__c!='' && auSurCom.PersonalReply__c!=null){
-	        			if(commentOnCause!=''){
-	        				commentOnCause=commentOnCause + '\\n' + auSurCom.PersonalReply__c;
-	        			}else{
-	        				commentOnCause=auSurCom.PersonalReply__c;
-	        			}
-	        		}
-	        		system.debug('Cause : ' + auSurCom.MembersReply__c);
-	        		if(auSurCom.MembersReply__c!='' && auSurCom.PersonalReply__c!=null){
-	        			if(commentOnCauseResponse!=''){
-	        				commentOnCauseResponse=commentOnCauseResponse + '\\n' + auSurCom.MembersReply__c;
-	        			}else{
-	        				commentOnCauseResponse=auSurCom.MembersReply__c;
-	        			}
-	        		}
-	        	}else{
-	        		system.debug('Difficulties : ' + auSurCom.PersonalReply__c);
-	        		if(auSurCom.PersonalReply__c!='' && auSurCom.PersonalReply__c!=null){
-	        			if(commentOnDifficulties!=''){
-	        				commentOnDifficulties=commentOnDifficulties + '\\n' + auSurCom.PersonalReply__c;
-	        			}else{
-	        				commentOnDifficulties=auSurCom.PersonalReply__c;
-	        			}
-	        		}
-	        		system.debug('Response on difficulties : ' + auSurCom.MembersReply__c);
-	        		if(auSurCom.MembersReply__c!='' && auSurCom.PersonalReply__c!=null){
-	        			if(commentOnDifficultiesResponse!=''){
-	        				commentOnDifficultiesResponse=commentOnDifficultiesResponse + '\\n' + auSurCom.MembersReply__c;
-	        			}else{
-	        				commentOnDifficultiesResponse=auSurCom.MembersReply__c;
-	        			}
-	        		}
-	        	}
-	        	
+                if(!String.isBlank(auSurCom.PersonalReply__c)){
+                    List<String> replies;
+                    if(honninReply.containsKey(auSurCom.Question__c)){
+                        replies = honninReply.get(auSurCom.Question__c);
+                    } else {
+                        replies = new List<String>();
+                        answerType.put(auSurCom.Question__c, honnin);
+                    }
+                    replies.add(auSurCom.PersonalReply__c);
+                    honninReply.put(auSurCom.Question__c, replies);
+                }
+
+	        	if(!String.isBlank(auSurCom.MembersReply__c)){
+                    List<String> replies;
+                    if(memberReply.containsKey(auSurCom.Question__c)){
+                        replies = memberReply.get(auSurCom.Question__c);
+                    } else {
+                        replies = new List<String>();
+                        answerType.put(auSurCom.Question__c, member);
+                    }
+                    replies.add(auSurCom.MembersReply__c);
+                    memberReply.put(auSurCom.Question__c, replies);
+                }
 	        }
+            Set<String> tempQ = new Set<String>();
+            tempQ.addAll(honninReply.keySet());
+            tempQ.addAll(memberReply.keySet());
+            questions = new List<String>(tempQ);
+            for(String q : questions){
+                if(!honninReply.containsKey(q)){
+                    honninReply.put(q, new List<String>());
+                }
+                if(!memberReply.containsKey(q)){
+                    memberReply.put(q, new List<String>());
+                }
+            }
 		}
     }
     

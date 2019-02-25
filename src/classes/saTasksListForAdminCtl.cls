@@ -79,6 +79,11 @@ public with sharing class saTasksListForAdminCtl {
         return currentUser.Profile.Name == auConstantCmn.PROFILE_EVOLVA_USER ||
                currentUser.Profile.Name == auConstantCmn.PROFILE_EVOLVA_ADMIN_USER;
     }
+
+    private Boolean isUserAdministrator() {
+    return (currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN || 
+            currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP);
+    }
     
     //検索方法のオプション表示(ラジオボタン)
     public static List<SelectOption> targetRecordsOption{get; set;}
@@ -223,6 +228,10 @@ public with sharing class saTasksListForAdminCtl {
     private String getConditions() {
         errFlg = false;
         List<String> conditions = new List<String>();
+        //if current user is admin, then no need to check view private records permission
+        if(!isUserAdministrator()){
+            conditions.add('((PrivacySetting__c = \'PUBLIC\') OR (PrivacySetting__c = \'PRIVATE\' AND OwnerId = \'' + currentUser.Id + '\'))');
+        }
 
         conditions.add('IsEvolva__c = ' + isUserProfileEvolva());
         conditions.add('Type__c = \'' + saConstantCmn.SA_MESSAGE_TYPE_TASK + '\'');

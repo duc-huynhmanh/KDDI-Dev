@@ -1021,6 +1021,7 @@ public without sharing class auUtilChatter
                                               FROM auOrganization__c
                                               WHERE Category__c = '支店'
                                               AND RegionalOfficeCode__c = :shishaCode
+                                              AND (DeactivateDate__c = NULL OR DeactivateDate__c > TODAY)
                                               ORDER BY BranchName__c]) {
                     options.add(new SelectOption(org.Id, org.BranchName__c));
                 }
@@ -1033,6 +1034,7 @@ public without sharing class auUtilChatter
                     for (auOrganization__c org : [SELECT id, name, Category__c, RegionalOfficeCode__c, DepartmentCode__c, BranchCode__c, BranchName__c 
                                                   FROM auOrganization__c
                                                   WHERE Category__c = '支店'
+                                                  AND (DeactivateDate__c = NULL OR DeactivateDate__c > TODAY)
                                                   ORDER BY BranchName__c]) {
                         options.add(new SelectOption(org.Id, org.BranchName__c));
                     }
@@ -1055,6 +1057,7 @@ public without sharing class auUtilChatter
                         for (auOrganization__c org : [SELECT RegionalOfficeCode__c
                                                       FROM auOrganization__c
                                                       WHERE Category__c = '支店'
+                                                      AND (DeactivateDate__c = NULL OR DeactivateDate__c > TODAY)
                                                       AND DepartmentCode__c in (:dpt1, :dpt2)]) {
                             sHonshaDepartmentCode = org.RegionalOfficeCode__c;
                         }
@@ -1067,6 +1070,7 @@ public without sharing class auUtilChatter
                     for (auOrganization__c org : [SELECT id, name, Category__c, RegionalOfficeCode__c, DepartmentCode__c, BranchCode__c, BranchName__c 
                                                   FROM auOrganization__c
                                                   WHERE Category__c = '支店'
+                                                  AND (DeactivateDate__c = NULL OR DeactivateDate__c > TODAY)
                                                   AND RegionalOfficeCode__c = :sHonshaDepartmentCode
                                                   ORDER BY BranchName__c]) {
                         options.add(new SelectOption(org.Id, org.BranchName__c));
@@ -1592,6 +1596,153 @@ public without sharing class auUtilChatter
         }
         delete lsHDDToRemove;
       }
+
+    }
+    
+    //auSurvey
+    public static void shareDataPermissionsSurvey(auSurvey__c SurveyToShare) {
+
+
+        // Firstly, remove the sharing existing
+        List<auSurvey__share> lsPermissionsToRemove = [SELECT id
+														FROM auSurvey__share
+                                                     	WHERE ParentId = :SurveyToShare.Id
+                                                     	And RowCause = 'Manual'
+                                                    	];
+       
+		if(lsPermissionsToRemove.size()>0){
+            Delete lsPermissionsToRemove;
+        }
+
+        List<auSurvey__share> lsPermissions = new List<auSurvey__share>();
+
+        // Get the CreatedUser, the parent (運営法人) and the grand-parent (一次)
+        Id ConcernedUserId = SurveyToShare.User__c;
+        if (ConcernedUserId == NULL) {
+            // Error
+        }
+
+
+		//param Name to Change
+        User concernedUser = [SELECT id, Name, KDDIEmployeeId__c, Hierarchical_Code_1__c, Hierarchical_Code_2__c, Hierarchical_Code_3__c, Hierarchical_Code_4__c, 
+        						Hierarchical_Code_5__c, Hierarchical_Code_6__c, Hierarchical_Code_7__c, Hierarchical_Code_8__c, Position__c
+                           		FROM User
+                           		WHERE Id = :ConcernedUserId
+                          ];
+           
+        //Identify the level of the concerned User               
+        /*Integer UserLevel = 0;
+        String requestWhereString = '';
+        if(concernedUser.Hierarchical_Code_8__c!=NULL && concernedUser.Hierarchical_Code_8__c!=''){
+        	UserLevel = 8;
+        }else if(concernedUser.Hierarchical_Code_7__c!=NULL && concernedUser.Hierarchical_Code_7__c!=''){
+        	UserLevel =7;
+        }else if(concernedUser.Hierarchical_Code_6__c!=NULL && concernedUser.Hierarchical_Code_6__c!=''){
+        	UserLevel = 6;
+        }else if(concernedUser.Hierarchical_Code_5__c!=NULL && concernedUser.Hierarchical_Code_5__c!=''){
+        	UserLevel = 5;
+        }else if(concernedUser.Hierarchical_Code_4__c!=NULL && concernedUser.Hierarchical_Code_4__c!=''){
+        	UserLevel = 4;
+        }else if(concernedUser.Hierarchical_Code_3__c!=NULL && concernedUser.Hierarchical_Code_3__c!=''){
+        	UserLevel = 3;
+        }else if(concernedUser.Hierarchical_Code_2__c!=NULL && concernedUser.Hierarchical_Code_2__c!=''){
+        	UserLevel = 2;
+        }else if(concernedUser.Hierarchical_Code_1__c!=NULL && concernedUser.Hierarchical_Code_1__c!=''){
+        	UserLevel = 1;
+        }
+ 
+        //Build the request to identify the users where sharing is necessary 
+        String requestListUserBase = 'SELECT id, Name, KDDIEmployeeId__c, Hierarchical_Code_Aggregated__c FROM User ';
+                               
+        String requestListUserWhere = 'WHERE IsActive = True AND (KDDIEmployeeId__c=\''+concernedUser.Hierarchical_Code_1__c+'\' ';
+        
+        if(UserLevel>=8){
+            requestListUserWhere = ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+concernedUser.Hierarchical_Code_7__c+'\'';
+        }
+        if(UserLevel>=7){
+            requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+'\'';
+        }
+        if(UserLevel>=6){
+            requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+'\'';
+        }
+        if(UserLevel>=5){
+            requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c = \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+'\'';
+        }
+        if(UserLevel>=4){
+            requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+'\'';
+        }
+        if(UserLevel>=3){
+            requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+'\'';
+        }
+        if(UserLevel>=2){
+            requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+'\'';
+        }
+        requestListUserWhere+=')';*/
+        
+        //Build the request to identify the users where sharing is necessary 
+        String requestListUserBase = 'SELECT id, Name, KDDIEmployeeId__c, Hierarchical_Code_Aggregated__c FROM User ';                      
+        String requestListUserWhere = 'WHERE IsActive = True AND (KDDIEmployeeId__c=\''+concernedUser.KDDIEmployeeId__c+'\' ';
+        
+        //For the same level
+	    if(concernedUser.Hierarchical_Code_8__c!=NULL && concernedUser.Hierarchical_Code_8__c!=''){
+	        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+concernedUser.Hierarchical_Code_7__c+concernedUser.Hierarchical_Code_8__c+'\' and Position__c!=\'\' and Position__c!=null) ';
+	    }else if(concernedUser.Hierarchical_Code_7__c!=NULL && concernedUser.Hierarchical_Code_7__c!=''){
+	        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+concernedUser.Hierarchical_Code_7__c+'\' and Position__c!=\'\' and Position__c!=null) ';
+	    }else if(concernedUser.Hierarchical_Code_6__c!=NULL && concernedUser.Hierarchical_Code_6__c!=''){
+	        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+'\' and Position__c!=\'\' and Position__c!=null) ';
+	    }else if(concernedUser.Hierarchical_Code_5__c!=NULL && concernedUser.Hierarchical_Code_5__c!=''){
+	        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c = \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+'\' and Position__c!=\'\' and Position__c!=null) ';
+	    }else if(concernedUser.Hierarchical_Code_4__c!=NULL && concernedUser.Hierarchical_Code_4__c!=''){
+	        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+'\' and Position__c!=\'\' and Position__c!=null) ';
+	    }else if(concernedUser.Hierarchical_Code_3__c!=NULL && concernedUser.Hierarchical_Code_3__c!=''){
+	        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+'\' and Position__c!=\'\' and Position__c!=null) ';
+	    }else if(concernedUser.Hierarchical_Code_2__c!=NULL && concernedUser.Hierarchical_Code_2__c!=''){
+	        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+'\' and Position__c!=\'\' and Position__c!=null) ';
+	    }else if(concernedUser.Hierarchical_Code_1__c!=NULL && concernedUser.Hierarchical_Code_1__c!=''){
+	        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+'\' and Position__c!=\'\' and Position__c!=null) ';
+	    }
+	     
+	    //For all the higher level  
+        if(concernedUser.Hierarchical_Code_8__c!=NULL && concernedUser.Hierarchical_Code_8__c!=''){
+	    	requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+concernedUser.Hierarchical_Code_7__c+'\'';
+	    }
+	    if(concernedUser.Hierarchical_Code_7__c!=NULL && concernedUser.Hierarchical_Code_7__c!=''){
+	        requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+'\'';
+	    }
+	    if(concernedUser.Hierarchical_Code_6__c!=NULL && concernedUser.Hierarchical_Code_6__c!=''){
+	        requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+'\'';
+	    }
+	    if(concernedUser.Hierarchical_Code_5__c!=NULL && concernedUser.Hierarchical_Code_5__c!=''){
+	        requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c = \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+'\'';
+	    }
+	    if(concernedUser.Hierarchical_Code_4__c!=NULL && concernedUser.Hierarchical_Code_4__c!=''){
+	        requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+'\'';
+	    }
+	    if(concernedUser.Hierarchical_Code_3__c!=NULL && concernedUser.Hierarchical_Code_3__c!=''){
+	        requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+'\'';
+	    }
+	    if(concernedUser.Hierarchical_Code_2__c!=NULL && concernedUser.Hierarchical_Code_2__c!=''){
+	        requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+'\'';
+	    }
+
+        requestListUserWhere+=')';
+		
+        // Get the list of the users where sharing is necessary
+        List<User> lsUsers = database.query(requestListUserBase+requestListUserWhere);
+        
+        
+        for (User usrToShare : lsUsers) {
+        	auSurvey__share perm = new auSurvey__share();
+        	perm.ParentId = SurveyToShare.Id;
+        	perm.userOrGroupId = usrToShare.id;
+        	perm.RowCause = 'Manual';
+        	perm.AccessLevel = 'Read';
+        	lsPermissions.add(perm);
+        }
+
+        if (lsPermissions.size() > 0) {
+            Insert lsPermissions;    
+        }
 
     }
     

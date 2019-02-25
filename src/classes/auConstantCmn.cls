@@ -45,7 +45,6 @@ public with sharing  class auConstantCmn
     public static final String PROFILE_KDDI_OKINAWA_SHITEN_1     = 'KDDI - 支店（沖縄1）';
     public static final String PROFILE_KDDI_OKINAWA_SHITEN_2     = 'KDDI - 支店（沖縄2）';
     public static final String PROFILE_KDDI_OKINAWA_SHITEN_UQ    = 'KDDI - 支店（UQ沖縄）';
-    
     public static final String PROFILE_SA_USER_SA                = 'SA User - SA';
     public static final String PROFILE_SA_USER_CSA               = 'SA User - CSA';
     public static final String PROFILE_EVOLVA_USER               = 'Evolva User';
@@ -53,7 +52,21 @@ public with sharing  class auConstantCmn
     public static final String PROFILE_SYSADMIN_CUSTOM           = 'System Admin';
     public static final String PROFILE_SYSADMIN_DEFAULT_EN       = 'System Administrator';
     public static final String PROFILE_SYSADMIN_DEFAULT_JP       = 'システム管理者';
-
+    
+    // Profiles Names
+    public static final String PERMISSIONSET_ACCESS_TO_CHANNEL_WITH_ADMIN         = 'Access_To_Channel_With_Admin';
+    public static final String PERMISSIONSET_ACCESS_TO_CHANNEL_WITHOUT_ADMIN          = 'Access_To_Channel_Without_Admin';
+    public static final String PERMISSIONSET_ACCESS_TO_TODO      		= 'Access_To_ToDo';
+    public static final String PERMISSIONSET_ACCESS_TO_SANX   			= 'Access_To_SANX';
+    public static final String PERMISSIONSET_ACCESS_TO_KNOWLEDGE        = 'Access_To_SalesKnowledge';
+    public static final String PERMISSIONSET_ACCESS_TO_CXKNOWLEDGE      = 'Access_To_CXKnowledge';
+    public static final String PERMISSIONSET_ACCESS_TO_HEARING         	= 'Access_To_Hearing';
+    public static final String PERMISSIONSET_ACCESS_TO_CCP      	= 'Access_To_CCP'; // TO DELETE AFTER RELEASE OF kdKnowledgeListCtrl
+    public static final String PERMISSIONSET_ACCESS_TO_SBARI       		= 'Access_To_SBari';
+    public static final String PERMISSIONSET_ACCESS_TO_STPD       		= 'Access_To_STPD';
+	public static final String PERMISSIONSET_ACCESS_TO_TELEMA       		= 'Access_To_Telema';
+    public static final String PERMISSIONSET_ACCESS_TO_SURVEY      		= 'Access_To_Survey';
+    
     // Account Channel
     public static final String ACCOUNT_CHANNEL_SHOP      = 'auショップ';
     public static final String ACCOUNT_CHANNEL_UNEIHOJIN = '運営法人';
@@ -109,7 +122,8 @@ public with sharing  class auConstantCmn
     public static final String PAGE_VF_SHOP_SCHEDULE_LIST    = '/apex/auScheduleList';
     public static final String PAGE_ALIAS_SHOP_SCHEDULE_LIST = '/activities';
 
-
+	public static final String PAGE_VF_SURVEY_DETAIL    = '/apex/kdSurveyDetailPage';
+	
     // CX KNOWLEDGE - SCOPE SHARING VALUES (auCxKnowledge__r.ScopeSharing__c)
     public static final String CX_KNOWLEDGE_SHARING_REGIONAL_OFFICE = 'RegionalOffice';
     public static final String CX_KNOWLEDGE_SHARING_NATIONAL        = 'National';
@@ -139,4 +153,12 @@ public with sharing  class auConstantCmn
 	public static final String ACCESS_TYPE_SA='SA_ACCESS';
     public static final String ACCESS_TYPE_KDDI='KDDI_ACCESS';
     public static final String ACCESS_TYPE_SHOP='SHOP_ACCESS';
+    
+    //Label for Survey
+    public static final String LAST_YEAR_LABEL = '前回';
+    public static final String THIS_YEAR_LABEL = '今回';
+    
+    //Type of Privacy
+    public static final String PRIVACY_SETTING_PRIVATE = 'PRIVATE';
+    public static final String PRIVACY_SETTING_PUBLIC = 'PUBLIC';
 }

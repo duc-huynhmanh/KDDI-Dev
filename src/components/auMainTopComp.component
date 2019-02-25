@@ -68,6 +68,9 @@
     opacity: 1;
   }
   
+  .survey-sin{
+  	font-size: x-small;
+  }
 
   </style>
 
@@ -358,7 +361,7 @@
           <!-- TELEMA LIST -->
           <li class="navigation__item">
             <a href="/apex/kdTelemarketingListPage" class="{!IF(isTelemaList, 'menu--active', 'telema')}">
-              <i class="icon icon--home"></i>
+              <i class="icon icon--telema--small"></i>
               <span>テレマ<br/>リスト</span>
             </a>
           </li>
@@ -376,6 +379,35 @@
             <a href="http://sigma.kddi.com/sgmWebApp/jsp/sgmC/SgmCGCA1000.jsp" class="telema" target="blank">
               <i class="icon icon--sigma"></i>
               <span>SIGMA</span>
+            </a>
+          </li>
+
+          <!-- BACK -->
+          <li class="navigation__item">
+            <a href="/home">
+              <i class="icon icon--back"></i>
+              <span>auポータル<br/>トップ</span>
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+    </aside>
+  </apex:outputPanel>
+  
+  <apex:outputPanel rendered="{!IsShowAsideSurvey}">
+    <aside class="sidebar" role="sidebar">
+
+      <p class="sidebar__item-name survey-sin">サーベイ</p>
+
+      <nav class="navigation">
+        <ul>
+
+          <!-- SURVEY LIST -->
+          <li class="navigation__item">
+            <a href="/apex/kdSurveyListPage" class="{!IF(isSurveyList, 'menu--active', 'survey')}">
+              <!--i class="icon icon--telema--small"></i-->
+              <span>結果<br/>表示</span>
             </a>
           </li>
 

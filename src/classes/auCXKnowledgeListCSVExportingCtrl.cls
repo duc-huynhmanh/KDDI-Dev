@@ -124,9 +124,9 @@ public with sharing class auCXKnowledgeListCSVExportingCtrl {
 
         for(auCXKnowledge__c k : ssc) {
             //支社名
-            String csvRow1 = '"' + (String.isBlank(k.CreatedBy__r.Account.BranchId__r.Name) ? (String.isBlank(k.CreatedBy__r.Account.Branch2Id__r.Name) ? '' : k.CreatedBy__r.Account.Branch2Id__r.Name) : k.CreatedBy__r.Account.BranchId__r.Name) + '"';
+            String csvRow1 = '"' + (String.isBlank(k.CreatedBy__r.Account.RegionalOfficeId__r.Name) ? (String.isBlank(k.CreatedBy__r.Account.RegionalOffice2Id__r.Name) ? '' : k.CreatedBy__r.Account.RegionalOffice2Id__r.Name) : k.CreatedBy__r.Account.RegionalOfficeId__r.Name) + '"';
             //支店名
-            csvRow1 += ',"' + (String.isBlank(k.CreatedBy__r.Account.RegionalOfficeId__r.Name) ? (String.isBlank(k.CreatedBy__r.Account.RegionalOffice2Id__r.Name) ? '' : k.CreatedBy__r.Account.RegionalOffice2Id__r.Name) : k.CreatedBy__r.Account.RegionalOfficeId__r.Name) + '"';
+            csvRow1 += ',"' + (String.isBlank(k.CreatedBy__r.Account.BranchId__r.Name) ? (String.isBlank(k.CreatedBy__r.Account.Branch2Id__r.Name) ? '' : k.CreatedBy__r.Account.Branch2Id__r.Name) : k.CreatedBy__r.Account.BranchId__r.Name) + '"';
             //拠点コード + ショップ名
             csvRow1 += ',"' + (k.CreatedBy__r.Account.Channel__c == 'auショップ' ? convertString(k.CreatedBy__r.Account.PartnerCode__c) + '","' + k.CreatedBy__r.Account.Name : '","') + '"';
             //作成日

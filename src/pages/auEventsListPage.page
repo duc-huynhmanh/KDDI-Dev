@@ -106,12 +106,19 @@
     .linkdate {
       font-size: 1.4rem;
       margin-top: 1rem;
+      width: 80px;
+      text-align: center;
     }
 
     .linkdate-active {
+      font-weight: bold;
+      background-color: #dddddd;
+      border-radius: 15px;
+
+    }
+    .linkdate-deactive{
       cursor: pointer;
       cursor: hand;
-      text-decoration: underline;
     }
 
     .icon--knowledge-letter {
@@ -365,23 +372,23 @@
           <header class="content-header search-tools">
             <div class="content-header__top" style="margin-top: -1.5rem; margin-bottom: -0.5rem;">
               <div class="mdl-grid" style="height: 4.5em; padding-bottom: 0;">
-                <div class="mdl-cell mdl-cell--2-col">
-                  <apex:outputPanel rendered="{!(!isRestrictedUser && isShopUser)}">
+                
+                  <apex:outputPanel rendered="{!(!isRestrictedUser && isShopUser)}" styleClass="mdl-cell mdl-cell--2-col" style="display: block;">
                     <div class="u-buttons-container search-buttons" style="padding-top: 0.5em">
                       <a class="js-popup-trigger" data-popup=".popup--event" style="float: left;margin-left: 0;"><i class="icon icon--pen"></i>新規イベント登録</a>
                     </div>
                   </apex:outputPanel>
-                </div>
-                <div class="mdl-cell mdl-cell--2-col">
+                
+                <div class="mdl-cell mdl-cell--3-col">
   
                   <apex:outputPanel rendered="{!!(isOldData == 0)}">
-                      <a onclick="callShowOldData();" class="linkdate linkdate-active" style="float: left;margin-left: 3rem;">予定</a>
-                      <a class="linkdate" style="float: left;margin-left: 1rem;">実施済</a>
+                      <a onclick="callShowOldData();" class="linkdate linkdate-deactive" style="float: left;margin-left: 3rem;">予定</a>
+                      <a class="linkdate linkdate-active" style="float: left;margin-left: 0.5rem;">実施済</a>
                   </apex:outputPanel>
 
                   <apex:outputPanel rendered="{!(isOldData == 0)}">
-                      <a class="linkdate" style="float: left;margin-left: 3rem;">予定</a>
-                      <a class="linkdate linkdate-active" onclick="callShowOldData();" style="float: left;margin-left: 1rem;">実施済</a>
+                      <a class="linkdate linkdate-active" style="float: left;margin-left: 3rem;">予定</a>
+                      <a class="linkdate linkdate-deactive" onclick="callShowOldData();" style="float: left;margin-left: 0.5rem;">実施済</a>
                   </apex:outputPanel>
 
                 </div>

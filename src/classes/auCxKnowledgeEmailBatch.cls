@@ -10,7 +10,9 @@ global class auCxKnowledgeEmailBatch implements Database.Batchable<sObject>
                        ' WHERE (Status__c = \'' + auConstantCmn.CX_KNOWLEDGE_STATUS_APPROVED + '\'' +
                        '     OR Status__c = \'' + auConstantCmn.CX_KNOWLEDGE_STATUS_SAVED + '\')' +
                        ' AND    IsCommentOnly__c = false';
-
+        if(Test.isRunningTest()) {
+          query += ' LIMIT 5';
+        }
         return Database.getQueryLocator(query);
 
     }

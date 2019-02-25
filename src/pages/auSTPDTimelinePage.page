@@ -608,7 +608,7 @@
                                                      att.ContentType == 'image/jpg'}"
                                          target="_blank">
 
-                          <apex:image style="max-width: 15rem;max-height: 15rem;margin-left: 1rem;margin-top: 1rem;" 
+                          <apex:image style="max-width: 15rem;max-height: 15rem;margin-left: 1rem;margin-top: 1rem;image-orientation: from-image;" 
                               url="/servlet/servlet.FileDownload?file={!att.Id}"
                               rendered="{!att.ContentType == 'image/jpeg' || 
                                           att.ContentType == 'image/png' ||

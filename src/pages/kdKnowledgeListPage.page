@@ -119,7 +119,7 @@
     }
 
     .popup-inner {
-      top: 45%;
+      top: 50%;
       max-height: 78%;
     }
 
@@ -1308,8 +1308,8 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
   
                       <td class="js-slide-info-trigger base-info js-base-info col1" data-target=".theme-info">
                         <p>
-                          <apex:outputLabel styleClass="newItem" rendered="{!IF(rec.knowledge.PostTime__c == null || rec.knowledge.PostTime__c < NOW() - 7, false, true)}" value="New"/>
-                          <span class="u-sub-colour"><apex:outputText value="{0,date,yyyy.MM.dd}"> <apex:param value="{!rec.knowledge.PostTime__c}" /> </apex:outputText></span>
+                          <apex:outputLabel styleClass="newItem" rendered="{!IF(rec.knowledge.PostTime__c == null || rec.knowledge.PostTimeDateFormula__c < TODAY() - 7, false, true)}" value="New"/>
+                          <span class="u-sub-colour"><apex:outputText value="{0,date,yyyy.MM.dd}"> <apex:param value="{!rec.knowledge.PostTimeDateFormula__c}" /> </apex:outputText></span>
                           <br/>
 
                           <apex:outputField value="{!rec.knowledge.Status__c}"/>

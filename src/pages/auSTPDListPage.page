@@ -136,8 +136,8 @@
     }
 
     .theme-desc__head_side {
-      height: 4.5rem;
-      max-height: 4.5rem;
+      height: 7.5rem;
+      max-height: 7.5rem;
     }
 
     .theme-desc__upload {
@@ -192,7 +192,7 @@
     }
 
     .ui-datepicker {
-      z-index: 5 !important;
+      z-index: 10 !important;
     }
 
     .thspanwithoutarrow {
@@ -271,6 +271,19 @@
     .theme-info__icon--t, .theme-info__icon--s, .theme-info__icon--p, .theme-info__icon--d, .theme-info__icon--upload{
       /*height: 100% !important;*/
     }
+    .popup--comment{
+      z-index: 10;
+    }
+
+    .popup--comment textarea {
+      width: 100%;
+      height: 20rem;
+    }
+
+    .popup--comment .popup-inner {
+        width: 50%;
+        background-color: transparent;
+    }
 
   </style>
 
@@ -279,9 +292,14 @@
 
     var $j = jQuery.noConflict();
 
-    $( function() {
-      $.datepicker.setDefaults($.datepicker.regional['ja']);
-      $( ".datepicker" ).datepicker({ dateFormat: 'yy/mm/dd' });
+    function initDatepicker(){
+      //console.log('call initDatepicker');
+      $j.datepicker.setDefaults($j.datepicker.regional['ja']);
+      $j(".datepicker").datepicker({ dateFormat: 'yy/mm/dd' });
+    }
+
+    $j( function() {
+      initDatepicker();
     } );
 
 
@@ -413,6 +431,24 @@
       $j('.theme-info__icon--p').height(height);
       $j('.theme-info__icon--d').height(height);
       $j('.theme-info__icon--upload').height(height);
+
+    }
+
+    function callLikeSTPD() {
+        jsLikeSTPDFeedElement();
+    }
+    function callRemoveLikeSTPD(){
+        jsRemoveLikeSTPDFeedElement();
+    }
+
+    function callAddComment() {
+      console.log('start comment');
+        var obj = $j('.CopyCommentInput');
+        if (obj.val().trim().length == 0) {
+          alert('コメントを入力してください。');
+        } else {
+          jsAddCopy();
+        }
     }
 
   </script>
@@ -438,6 +474,8 @@
       <apex:inputText id="attachmentId" styleClass="AttachmentIdInput" value="{!attachmentId}" style="display: none;" />
       <apex:actionFunction name="jsStpdAttachmentDelete" action="{!stpdAttachmentDelete}" rerender="editSTPD14" />
       <apex:actionFunction name="jsStpdAttachmentPutInTop" action="{!stpdAttachmentPutInTop}" rerender="editSTPD14" />
+      <apex:actionFunction name="jsLikeSTPDFeedElement" action="{!likeSTPDFeedElement}" reRender="editSTPD15"/>
+      <apex:actionFunction name="jsRemoveLikeSTPDFeedElement" action="{!removeLikeSTPDFeedElement}" reRender="editSTPD15"/>
     </apex:actionRegion>
 
     <apex:actionFunction name="jsDoSaveNewSTPDTemporary" action="{!doSaveNewSTPDTemporary}" />
@@ -462,11 +500,25 @@
                         <div class="theme-info__head clearfix">
                           <span class="close-label">閉じる</span> 
                           <div class="theme-info__edit">
+                            <apex:outputPanel id="editSTPD15">
 
+                            <!--apex:outputPanel rendered="{!likeId != NULL && stpdUpdateFeedId != NULL}">
+                              <a href="javascript:void(0)" onclick="callRemoveLikeSTPD();" class="button button--update">いいねの削除</a>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!likeId == NULL && stpdUpdateFeedId != NULL}">
+                              <a href="javascript:void(0)" onclick="callLikeSTPD();" class="button button--update">いいね</a>
+                            </apex:outputPanel>
+                            <apex:actionRegion renderRegionOnly="false">
+                            <apex:commandLink rendered="{!stpdUpdateFeedId != NULL}"
+                                      styleClass="button button--update js-popup-trigger"
+                                      html-data-popup=".popup--comment"
+                                      reRender="DUMMY"
+                                      value="コメント" />
+                            </apex:actionRegion-->
 
                             <apex:commandLink value="印刷" id="editSTPD10" styleClass="button button--update {!IF(stpdUpdate.UserRecordAccess.HasEditAccess, 'button--update--space', '')}" onclick="window.open('{!PrintUrl}?id={!stpdUpdateId}','_blank','width=960,height=600,resizable=no,toolbar=no,location=no,menubar=no,status=no,scrollbars=yes');" />
 
-                            <apex:outputPanel id="editSTPD15">
+                            
                               
                               <apex:commandLink rendered="{!stpdUpdate.UserRecordAccess.HasEditAccess && stpdUpdate.Status__c == 'TemporarySaved'}" value="一時保存" styleClass="button button--update" action="{!doSaveUpdateSTPD}" />
                               <apex:commandLink rendered="{!stpdUpdate.UserRecordAccess.HasEditAccess && stpdUpdate.Status__c != 'TemporarySaved'}" value="上書き保存" styleClass="button button--update" action="{!doSaveUpdateSTPD}" />
@@ -484,7 +536,11 @@
                         <div class="theme-desc is-top">
                           <div class="theme-desc__head theme-desc__head_side">
                             <apex:outputPanel id="editSTPD1">
-                              <apex:inputField value="{!stpdUpdate.Thema__c}" html-placeholder="活動テーマを入力する..." rendered="{!stpdUpdate.UserRecordAccess.HasEditAccess}" style="height: 3.5rem; margin-top: -0.5rem;"/>
+                              <script type="text/script">
+                                initDatepicker();
+                              </script>
+                              <label >記入日</label> <apex:input value="{!SFillingDate}" disabled="{!IF(stpdUpdate.S_FillingDate__c != null, 'true', 'false')}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd"/>
+                              <apex:inputField value="{!stpdUpdate.Thema__c}" html-placeholder="活動テーマを入力する..." rendered="{!stpdUpdate.UserRecordAccess.HasEditAccess}" style="height: 3.5rem; margin-top: 0.5rem;"/>
                               <apex:outputPanel rendered="{!!stpdUpdate.UserRecordAccess.HasEditAccess}" >
                                 <div style="height: 3.5rem; margin-top: -0.5rem;padding: 2px;border: 1px solid black;overflow:hidden;">
                                   <apex:outputField value="{!stpdUpdate.Thema__c}" />
@@ -509,27 +565,35 @@
                             <div class="theme-detail theme-detail--t is-lower active clearfix">
                               <span class="theme-info__icon theme-info__icon--t" data-target=".theme-detail--t"><i class="icon--symbol is-t"></i><br/><strong>Think</strong></span> 
                               <div class="theme-desc is-lower js-theme-slide-menu clearfix">
-                                <ul class="theme-desc-list" style="width: -webkit-calc(70% - 1rem); width: calc(70% - 1rem)">
+                                <apex:outputPanel id="editSTPD2" style="display: block;">
+                                <script type="text/script">
+                                  initDatepicker();
+                                </script>
+                                <div style="float: left; height: 2.5rem;">
+                                  <label >記入日</label> <apex:input value="{!TFillingDate}" disabled="{!IF(stpdUpdate.T_FillingDate__c != null, 'true', 'false')}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd"/>
+                                </div>
+                                <ul class="theme-desc-list" style="clear: both; width: -webkit-calc(50% - 1rem); width: calc(50% - 1rem)">
                                   <apex:repeat value="{!sptdUpdateItemsT}" var="itmUpdateT">
                                     <li class="no-arrow">
                                       <div class="theme-desc-list__head">
                                         <div class="u-center-vertical u-text-center"> <span class="theme-desc-list__title">原因</span><br/> <span class="theme-desc-list__number">{!itmUpdateT.SortNo__c}</span> </div>
                                       </div>
-                                      <apex:inputField value="{!itmUpdateT.T_Theme__c}" styleclass="theme-desc__text" id="editSTPD2" />
+                                      <apex:inputField value="{!itmUpdateT.T_Theme__c}" styleclass="theme-desc__text" />
                                     </li>
                                   </apex:repeat>
                                 </ul>
 
-                                <ul class="theme-desc-list" style="width: -webkit-calc(30% - 1rem); width: calc(30% - 1rem)">
+                                <ul class="theme-desc-list" style="width: -webkit-calc(50% - 1rem); width: calc(50% - 1rem)">
                                   <apex:repeat value="{!sptdUpdateItemsT}" var="itmUpdateT">
                                     <li>
                                       <div class="theme-desc-list__head">
                                         <div class="u-center-vertical u-text-center"> <span class="theme-desc-list__title">課題</span><br/> <span class="theme-desc-list__number">{!itmUpdateT.SortNo__c}</span> </div>
                                       </div>
-                                      <apex:inputField value="{!itmUpdateT.T_Cause__c}" styleclass="theme-desc__text" id="editSTPD3" />
+                                      <apex:inputField value="{!itmUpdateT.T_Cause__c}" styleclass="theme-desc__text" />
                                     </li>
                                   </apex:repeat>
-                                </ul>                 
+                                </ul> 
+                                </apex:outputPanel>                
                               </div>
                             </div>
 
@@ -537,13 +601,20 @@
                             <div class="theme-detail theme-detail--p is-lower clearfix">
                               <span class="theme-info__icon theme-info__icon--p" data-target=".theme-detail--p"><i class="icon--symbol is-p"></i><br/><strong>Plan</strong></span> 
                               <div class="theme-desc is-lower js-theme-slide-menu clearfix">
-                                <ul class="theme-desc-list">
+                                <apex:outputPanel id="editSTPD4" style="display: block;">
+                                <script type="text/script">
+                                  initDatepicker();
+                                </script>
+                                <div style="float: left; height: 2.5rem;">
+                                  <label >記入日</label> <apex:input value="{!pFillingDate}" disabled="{!IF(stpdUpdate.P_FillingDate__c != null, 'true', 'false')}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd"/>
+                                </div>
+                                <ul class="theme-desc-list" style="clear: both;">
                                   <apex:repeat value="{!sptdUpdateItemsP}" var="itmUpdateP">
                                     <li>
                                       <div class="theme-desc-list__head">
                                         <div class="u-center-vertical u-text-center"> <span class="theme-desc-list__title">解決策</span><br/> <span class="theme-desc-list__number">{!itmUpdateP.SortNo__c}</span> </div>
                                       </div>
-                                      <apex:inputField value="{!itmUpdateP.P_Solution__c}" styleclass="theme-desc__text" id="editSTPD4" />
+                                      <apex:inputField value="{!itmUpdateP.P_Solution__c}" styleclass="theme-desc__text" />
                                     </li>
                                   </apex:repeat>
                                 </ul>
@@ -553,10 +624,11 @@
                                       <div class="theme-desc-list__head">
                                         <div class="u-center-vertical u-text-center"> <span class="theme-desc-list__title">実行計画</span><br/> <span class="theme-desc-list__number">{!itmUpdateP.SortNo__c}</span> </div>
                                       </div>
-                                      <apex:inputField value="{!itmUpdateP.P_ExecutionPlan__c}" styleclass="theme-desc__text" id="editSTPD5" />
+                                      <apex:inputField value="{!itmUpdateP.P_ExecutionPlan__c}" styleclass="theme-desc__text" />
                                     </li>
                                   </apex:repeat>
                                 </ul>
+                                </apex:outputPanel>
                               </div>
                             </div>
 
@@ -564,13 +636,20 @@
                             <div class="theme-detail theme-detail--d is-lower clearfix">
                               <span class="theme-info__icon theme-info__icon--d" data-target=".theme-detail--d"><i class="icon--symbol is-d"></i><br/><strong>Do</strong></span> 
                               <div class="theme-desc is-lower js-theme-slide-menu clearfix">
-                                <ul class="theme-desc-list">
+                                <apex:outputPanel id="editSTPD6" style="display: block;">
+                                <script type="text/script">
+                                  initDatepicker();
+                                </script>
+                                <div style="float: left; height: 2.5rem;">
+                                  <label >記入日</label> <apex:input value="{!dFillingDate}" disabled="{!IF(stpdUpdate.D_FillingDate__c != null, 'true', 'false')}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd"/>
+                                </div>
+                                <ul class="theme-desc-list" style="clear: both">
                                   <apex:repeat value="{!sptdUpdateItemsD}" var="itmUpdateD">
                                     <li>
                                       <div class="theme-desc-list__head">
                                         <div class="u-center-vertical u-text-center"> <span class="theme-desc-list__title">結果</span><br/> <span class="theme-desc-list__number">{!itmUpdateD.SortNo__c}</span> </div>
                                       </div>
-                                      <apex:inputField value="{!itmUpdateD.D_Result__c}" styleclass="theme-desc__text" id="editSTPD6" />
+                                      <apex:inputField value="{!itmUpdateD.D_Result__c}" styleclass="theme-desc__text"/>
                                     </li>
                                   </apex:repeat>
                                 </ul>
@@ -592,11 +671,12 @@
                                           <span style="margin-left: 1rem;"><apex:inputField value="{!itmUpdateD.D_ContinuedImprovement__c}" id="editSTPD12" /><label style="margin-left: 0.3rem;">継続改善</label></span>
                                           <span style="margin-left: 1rem;"><apex:inputField value="{!itmUpdateD.D_Finished__c}" id="editSTPD13" /><label style="margin-left: 0.3rem;">終了</label></span>
                                         </div>
-                                        <p><apex:inputField value="{!itmUpdateD.D_NextIssue__c}" id="editSTPD7" /></p>
+                                        <p><apex:inputField value="{!itmUpdateD.D_NextIssue__c}"/></p>
                                       </div>
                                     </li>
                                   </apex:repeat>
                                 </ul>
+                                </apex:outputPanel>
                               </div>
                             </div>
 
@@ -773,32 +853,12 @@
 </apex:actionRegion>
           </apex:outputPanel>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
           <div class="content-header__bottom">
             <div class="mdl-grid">
 
               <div class="mdl-cell mdl-cell--2-col">
                 <apex:outputPanel rendered="{!(!isRestrictedUser && isShopUser)}">
+                <!--apex:outputPanel-->
                   <div class="u-buttons-container search-buttons" style="padding-top: 0.5em"><a class="js-popup-trigger" data-popup=".popup--theme" style="float: left;margin-left: 0;"><i class="icon icon--pen"></i>新規投稿</a></div>
                 </apex:outputPanel>
               </div>
@@ -1090,7 +1150,7 @@
     <apex:inputText id="stpdUpdateId" styleClass="STPDUpdateIdInput" value="{!stpdUpdateId}" style="display: none;" />
 
 
-    <apex:actionFunction name="refreshSTPDEdit" action="{!refreshSTPDEdit}" rerender="editSTPD1, editSTPD2, editSTPD3, editSTPD4, editSTPD5, editSTPD6, editSTPD7, editSTPD8, editSTPD9, editSTPD10, editSTPD11, editSTPD12, editSTPD13, editSTPD14, editSTPD15" />
+    <apex:actionFunction name="refreshSTPDEdit" action="{!refreshSTPDEdit}" rerender="editSTPD1, editSTPD2, editSTPD4, editSTPD6, editSTPD8, editSTPD9, editSTPD10, editSTPD11, editSTPD12, editSTPD13, editSTPD14, editSTPD15" />
 </apex:actionRegion>
 
                 <apex:repeat value="{!Records}" var="rec" >
@@ -1183,7 +1243,11 @@
                     <span class="theme-info__icon theme-info__icon--s active" data-target=".theme-detail--s"><i class="icon--symbol is-s"></i><br/><strong>See</strong></span> 
                     <div class="theme-desc is-top" style="height:44.7rem !important;">
                       <div class="theme-desc__head">
-                        <apex:inputField value="{!stpdNew.Thema__c}" html-placeholder="活動テーマを入力する..." />
+                        <script type="text/script">
+                          initDatepicker();
+                        </script>
+                        <label >記入日</label> <apex:input value="{!newSFillingDate}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd"/>
+                        <apex:inputField value="{!stpdNew.Thema__c}" html-placeholder="活動テーマを入力する..." style="margin-top: 0.5rem;"/>
                       </div>
                       <div class="theme-desc__inner clearfix u-mt1rem">
                         <div class="theme-detail theme-detail--s is-lower active clearfix">
@@ -1202,6 +1266,12 @@
                         <div class="theme-detail theme-detail--t is-lower clearfix" >
                           <span class="theme-info__icon theme-info__icon--t" data-target=".theme-detail--t"><i class="icon--symbol is-t"></i><br/><strong>Think</strong></span> 
                           <div class="theme-desc is-lower js-theme-slide-menu clearfix">
+                            <script type="text/script">
+                              initDatepicker();
+                            </script>
+                            <div style="float: left; height: 2.5rem;">
+                              <label >記入日</label> <apex:input value="{!newTFillingDate}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd"/>
+                            </div>
                             <ul class="theme-desc-list theme-desc-list-fullsize">
                               <apex:repeat value="{!sptdNewItemsT}" var="itmNewT" >
                                 <li class="no-arrow">
@@ -1231,7 +1301,13 @@
                         <div class="theme-detail theme-detail--p is-lower clearfix">
                           <span class="theme-info__icon theme-info__icon--p" data-target=".theme-detail--p"><i class="icon--symbol is-p"></i><br/><strong>Plan</strong></span> 
                           <div class="theme-desc is-lower js-theme-slide-menu clearfix">
-                            <ul class="theme-desc-list">
+                            <script type="text/script">
+                              initDatepicker();
+                            </script>
+                            <div style="float: left; height: 2.5rem;">
+                              <label >記入日</label> <apex:input value="{!newPFillingDate}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd"/>
+                            </div>
+                            <ul class="theme-desc-list" style="clear: both;">
                               <apex:repeat value="{!sptdNewItemsP}" var="itmNewP" >
                                 <li>
                                   <div class="theme-desc-list__head">
@@ -1258,7 +1334,13 @@
                         <div class="theme-detail theme-detail--d is-lower clearfix">
                           <span class="theme-info__icon theme-info__icon--d" data-target=".theme-detail--d"><i class="icon--symbol is-d"></i><br/><strong>Do</strong></span> 
                           <div class="theme-desc is-lower js-theme-slide-menu clearfix">
-                            <ul class="theme-desc-list">
+                            <script type="text/script">
+                              initDatepicker();
+                            </script>
+                            <div style="float: left; height: 2.5rem;">
+                              <label >記入日</label> <apex:input value="{!newDFillingDate}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd"/>
+                            </div>
+                            <ul class="theme-desc-list" style="clear: both;">
                               <apex:repeat value="{!sptdNewItemsD}" var="itmNewD" >
                                 <li>
                                   <div class="theme-desc-list__head">
@@ -1320,6 +1402,31 @@
               </apex:outputPanel>
 
             </div>
+
+            <!-- POPUP Comment -->
+            <apex:actionRegion renderRegionOnly="false">
+              <apex:outputPanel id="pnlPopupComment">
+                <div class="popup popup--comment">
+                  <div class="popup-inner">
+                    <div class="publification-form">
+                      <p>
+                        <apex:inputTextarea styleclass="CopyCommentInput" 
+                                         html-placeholder="コメントをご記入ください！"
+                                         value="{!newComment}" />
+                        <apex:actionFunction name="jsAddCopy" action="{!commentStpdFeedElement}" reRender="pnlPopupComment"/>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="popup__button-container u-text-center">
+                    <a href="" class="button button--cancel button--cancel--copy js-popup-close">キャンセル</a>
+                    <apex:commandLink value="コメント"
+                                      styleClass="button button--post"
+                                      onclick="callAddComment();"
+                                      reRender="DUMMY"/>
+                  </div>
+                </div>
+              </apex:outputPanel>
+            </apex:actionRegion>
   </div>
 
 

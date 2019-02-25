@@ -30,6 +30,7 @@ global with sharing class saMessagesEditorForAdminCtl {
   public List<SelectOption> role8Options{get; set;}
   public List<SelectOption> roleKddi5Options{get; set;}
   public List<SelectOption> roleKddi6Options{get; set;}
+  public List<SelectOption> privacyOptions{get; set;}
 
   public String filterRole5Option{get; set;}
   public String filterRole6Option{get; set;}
@@ -38,11 +39,28 @@ global with sharing class saMessagesEditorForAdminCtl {
   public String filterRoleKddi5Option{get; set;}
   public String filterRoleKddi6Option{get; set;}
 
+   // パターン１
+   private static final String DISPLAY_PATTERN_1 = 'パターン１';
+   // パターン２
+   private static final String DISPLAY_PATTERN_2 = 'パターン２';
+   // パターン３
+   private static final String DISPLAY_PATTERN_3 = 'パターン３';
+   // パターン４
+   private static final String DISPLAY_PATTERN_4 = 'パターン４';
+   // パターン５
+   private static final String DISPLAY_PATTERN_5 = 'パターン５';
+
   public String callType{get; set;}
 
   public String getMessageDetailTypeDone() {return saConstantCmn.SA_MESSAGEDETAIL_TYPE_DONE;}
 
-  private User currentUser = [SELECT Id, Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
+  public String patternDataToSend {get;set;}
+  public String groupName {get;set;}
+  public List<User> groupUsers {get;set;}
+
+  private User currentUser = [SELECT Profile.Name, MailAddressMemory6__c, MailAddressMemory7__c, MailAddressMemory8__c, MailAddressMemory9__c, MailAddressMemory10__c,
+              UserRole.DeveloperName, UserRole.ParentRoleId, Department, Signature, EmailHeader__c FROM User WHERE Id = :UserInfo.getUserId()];
+
   private Boolean isUserProfileEvolva(){
     return currentUser.Profile.Name == auConstantCmn.PROFILE_EVOLVA_USER ||
            currentUser.Profile.Name == auConstantCmn.PROFILE_EVOLVA_ADMIN_USER;
@@ -51,6 +69,10 @@ global with sharing class saMessagesEditorForAdminCtl {
   public Boolean getIsUserAdministrator() {
     return (currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN || 
             currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP);
+  }
+
+  public Boolean getIsOwner() {
+    return (idm.parentRec.Id == null || idm.parentRec.OwnerId == UserInfo.getUserId());
   }
 
   public Boolean getIsEvolva(){
@@ -179,6 +201,12 @@ global with sharing class saMessagesEditorForAdminCtl {
           mpShitenOptions.put(so.getValue(), so.getLabel());
         }
 
+		//Privacy Option
+	  	privacyOptions = new List<SelectOption>();
+	  	for(Schema.PicklistEntry pv : saMessage__c.PrivacySetting__c.getDescribe().getPicklistValues()){
+	 		privacyOptions.add(new SelectOption(pv.getValue(), pv.getLabel()));
+	  	}
+
       } catch (Exception e) {
         Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, '不正な操作が行われました。' + e.getMessage()));
         return;
@@ -298,7 +326,7 @@ global with sharing class saMessagesEditorForAdminCtl {
 
   private saMessage__c getTargetRecord(String targetId) {
     saMessage__c targetaRecord = null;
-    List<saMessage__c> recs = [SELECT id, Owner.Id, name, IsEvolva__c, Type__c, Status__c, Title__c, Description__c, PushNotificationResendCount__c,
+    List<saMessage__c> recs = [SELECT id, Owner.Id, name, IsEvolva__c, Type__c, Status__c, Title__c, Description__c, PushNotificationResendCount__c, PrivacySetting__c, OwnerId, 
                                       PublishedDatetime__c, TechnicalPublishedDate__c, TechnicalPublishedTime__c, DeadlineDatetime__c, TechnicalDeadlineDate__c, TechnicalDeadlineTime__c,
                                       IssuerLabel__c, IsPublished__c, RegionalOfficeCode__c, BranchCode__c,
                                       UserRecordAccess.HasEditAccess, CreatedById
@@ -307,6 +335,13 @@ global with sharing class saMessagesEditorForAdminCtl {
 
     if (recs != null && recs.size() > 0) {
       targetaRecord = recs.get(0);
+      if(targetaRecord.PrivacySetting__c==auConstantCmn.PRIVACY_SETTING_PRIVATE){
+        //there is no permission to view record
+        if(targetaRecord.OwnerId != currentUser.Id && !getIsUserAdministrator()){
+          targetaRecord = null;
+          throw new KDDIException('不正な操作が行われました。');
+        }
+      }
       if (targetaRecord.PushNotificationResendCount__c == NULL) {
         targetaRecord.PushNotificationResendCount__c = 0;
       }
@@ -948,7 +983,7 @@ global with sharing class saMessagesEditorForAdminCtl {
 
             List<User> lsUsr = [SELECT Id, Profile.Name
                                 FROM User
-                                WHERE Id IN :lsUsrToShareStep1];
+                                WHERE Id IN :lsUsrToShareStep1 AND isActive = true];
 
             List<Id> lsUsrToShare = new List<Id>();
             for (User usr : lsUsr) {
@@ -976,6 +1011,160 @@ global with sharing class saMessagesEditorForAdminCtl {
     }
 
     public void dummyAction() {}
+
+       /**
+     *　パターン名の設定
+     * @param tempStr　テンプレートの文字列
+     * @param memoryStr 保存した文字列
+     **/
+     public String settingPatternName (String tempStr, String memoryStr) {
+        String returnStr = tempStr;
+        if (memoryStr != null) {
+            // 保存した文字列が１桁以上且つ開始文字が[TO]以外
+            if (memoryStr.length()>0 && !memoryStr.startsWith('[TO]')) {
+                // 保存した文字列に[TO]が含まれている場合
+                if (memoryStr.indexOf('[TO]') >= 0){
+                    returnStr = memoryStr.subString(0,memoryStr.indexOf('[TO]'));
+                // 含まれていない場合、パターン名しか記憶していない
+                } else {
+                    returnStr = memoryStr;
+                }
+            }
+        }
+        return returnStr;
+     }
+
+    // パターンのセレクトボックス
+    public List<SelectOption> getSelectPattern() {
+        List<SelectOption> options = new List<Selectoption>();
+
+        // テンプレートの'テンプレートn'又は保存した文字列をセット
+        options.add(new SelectOption('1', settingPatternName(DISPLAY_PATTERN_1, currentUser.MailAddressMemory6__c)));
+        options.add(new SelectOption('2', settingPatternName(DISPLAY_PATTERN_2, currentUser.MailAddressMemory7__c)));
+        options.add(new SelectOption('3', settingPatternName(DISPLAY_PATTERN_3, currentUser.MailAddressMemory8__c)));
+        options.add(new SelectOption('4', settingPatternName(DISPLAY_PATTERN_4, currentUser.MailAddressMemory9__c)));
+        options.add(new SelectOption('5', settingPatternName(DISPLAY_PATTERN_5, currentUser.MailAddressMemory10__c)));
+
+        return options;
+    }
+
+    public List<Id> getUserList (String memoryStr) {
+        List<Id> lsUsrID = new List<ID>();
+        //[TO][CC][BCC]の合計数１３以下の場合、空なためクリアした状態上書き
+        if (memoryStr!=null) {
+            // [TO]を含めたtoアドレス末尾までの件数
+            Integer toCount = memoryStr.indexOf('[TO]');
+            // [TO]を含めたtoアドレス末尾までの件数
+            Integer ccCount = memoryStr.indexOf('[CC]');
+            // [TO][CC]を含めたtoアドレス+CCアドレス末尾までの件数
+            Integer bccCount = memoryStr.indexOf('[BCC]');
+
+            String memoryToStr = memoryStr.subString(toCount+4,ccCount); //[TO]=4文字から[CC]を含まない範囲を抜出
+            String memoryCCStr = memoryStr.subString(ccCount+4,bccCount); //上記+[CC]=4文字から[BCC]を含まない範囲を抜出
+            String memoryBCCStr = memoryStr.subString(bccCount+5,memoryStr.length()); //上記+[BCC]=5文字から末尾まで抜出
+            
+            system.debug(memoryToStr);
+            system.debug(memoryCCStr);
+            system.debug(memoryBCCStr);
+            // To,CC,BCC事にリストを分ける
+            List<String> inputToList = memoryToStr.split(',', 0);
+            List<String> inputCcList = memoryCCStr.split(',', 0);
+            List<String> inputBccList = memoryBCCStr.split(',', 0);
+
+            // Get the list of all users ID
+            
+            if (memoryToStr.length() > 0) {
+                for (String to : inputToList) {
+                    if (!to.startsWith('手入力')) {
+                        lsUsrID.add(to);
+                    }
+                }
+            }
+            if (memoryCCStr.length() > 0) {
+                for (String to : inputCcList) {
+                    if (!to.startsWith('手入力')) {
+                        lsUsrID.add(to);
+                    }
+                }
+            }
+            if (memoryBCCStr.length() > 0) {
+                for (String to : inputBccList) {
+                    if (!to.startsWith('手入力')) {
+                        lsUsrID.add(to);
+                    }
+                }
+            }
+        }
+        return lsUsrID;
+    }
+
+    public void loadUserList(){
+        List<Id> userIDs;
+        
+        if(patternDataToSend=='1'){
+	    	userIDs = getUserList(currentUser.MailAddressMemory6__c);
+	    }else if(patternDataToSend=='2'){
+	    	userIDs = getUserList(currentUser.MailAddressMemory7__c);
+	    }else if(patternDataToSend=='3'){
+	    	userIDs = getUserList(currentUser.MailAddressMemory8__c);
+	    }else if(patternDataToSend=='4'){
+	    	userIDs = getUserList(currentUser.MailAddressMemory9__c);
+	    }else if(patternDataToSend=='5'){
+	    	userIDs = getUserList(currentUser.MailAddressMemory10__c);
+	    }
+	    
+        groupUsers = [SELECT Name, UserRole.Name, Profile.Name, UserRole.DeveloperName, TechnicalString__c, Department, (Select BusinessLocation__r.BusinessLocationName__c from saBusinessLocationDetail_user__r order by Type__c Nulls Last) FROM User WHERE Id IN :userIDs];
+        
+        for(User u : groupUsers){
+          List<String> BusinessLocationNameList = new List<String>(); 
+          List<saBusinessLocationMembers__c> BusinessLocationMembersList = u.saBusinessLocationDetail_user__r;
+    
+          for(saBusinessLocationMembers__c blName : BusinessLocationMembersList){
+            BusinessLocationNameList.add(blName.BusinessLocation__r.BusinessLocationName__c);
+          }
+        
+          u.TechnicalString__c = String.join(BusinessLocationNameList,' , ');
+        }
+    }
+
+    public void saveToGroup(){
+      List<InquiryReplyItem> lsReplies = idm.getItemsReply();
+      String joinToAddress = '';
+      for(InquiryReplyItem item : lsReplies){
+        joinToAddress += ',' + item.usrId;
+      }
+      if(joinToAddress.length() > 0){
+        joinToAddress = joinToAddress.removeStart(',');
+      }
+      String memoryStr = '';
+      memoryStr = groupName + '[TO]'+ joinToAddress + '[CC][BCC]';
+      //  テキスト最大桁数の131072を超える場合エラー
+      if (memoryStr.length() > 131072) {
+          //メールアドレスの桁数が多すぎて登録できません。
+          ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,System.Label.auSendEventMail_MSG_06));
+      } else {
+      	
+	  	if(patternDataToSend=='1'){
+	  		currentUser.MailAddressMemory6__c = memoryStr;
+		}else if(patternDataToSend=='2'){
+	    	currentUser.MailAddressMemory7__c = memoryStr;
+	 	}else if(patternDataToSend=='3'){
+	   		currentUser.MailAddressMemory8__c = memoryStr;
+	  	}else if(patternDataToSend=='4'){
+	    	currentUser.MailAddressMemory9__c = memoryStr;
+	   	}else if(patternDataToSend=='5'){
+	   		currentUser.MailAddressMemory10__c = memoryStr;
+	  	}	
+	      	
+    	try {
+        	update currentUser;
+     	} catch (Exception e) {
+        	system.debug(e.getMessage());
+        	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'システムエラーが発生しました。システム管理者にお問い合わせください。'));
+      	}
+      	
+      }
+    }
 
     public class MessageManage {
         private List<InquiryReplyItem> itemsReply = new List<InquiryReplyItem>();
@@ -1172,6 +1361,13 @@ global with sharing class saMessagesEditorForAdminCtl {
             mergeList(newDetails);
         }
 
+        public void removeExistingUsers(){
+          For (InquiryReplyItem det : this.itemsReply) {
+            det.isDeleted = true;
+          }
+          refresh();
+        }
+
         public void createListFromUserList(String userType){
             List<User> lsUsr;
             if(userType == 'KDDI') { 
@@ -1193,6 +1389,7 @@ global with sharing class saMessagesEditorForAdminCtl {
                                              lastSearchUserSACertification);
                 //system.debug('end query user: ' + Limits.getCpuTime());
             }
+            system.debug('lsUsr : '+lsUsr);
             Set<InquiryReplyItem> newDetails = new Set<InquiryReplyItem>();
             //system.debug('done querying list SA user: ' + Limits.getCpuTime());
             //init new list from lsUsr
@@ -1205,6 +1402,19 @@ global with sharing class saMessagesEditorForAdminCtl {
               newDetails.add(reply);
             }
             //system.debug('done creating list new Details: ' + newDetails.size() + ' ' + Limits.getCpuTime());
+            
+    		/*For (InquiryReplyItem det : this.itemsReply) {
+      			det.isDeleted = true;
+    		}
+    		
+            Set<InquiryReplyItem> newSet = new Set<InquiryReplyItem>();
+            newSet.addAll(newDetails);
+            this.itemsReply = new List<InquiryReplyItem>(newSet);
+            this.itemsReply.sort();
+            
+            refresh();*/
+            
+            //old method by Duc
             //merge old & new list
             mergeList(newDetails);
         }
@@ -1236,6 +1446,7 @@ global with sharing class saMessagesEditorForAdminCtl {
         public string usrRoleName{get; set;}
         public string usrRoleCode{get; set;}
         //public string technicalString{get; set;}
+        public string replyId{get; set;}
         public Boolean isTaskDone{get; set;}
         public Boolean isDeleted{get; set;}
         //public string IdxRow{get; set;}
@@ -1255,6 +1466,7 @@ global with sharing class saMessagesEditorForAdminCtl {
         public InquiryReplyItem(){
             this.isDeleted = false;
             this.isTaskDone = false;
+            this.replyId = NULL;
         }
 
         public InquiryReplyItem (saMessageDetail__c target){
@@ -1263,6 +1475,7 @@ global with sharing class saMessagesEditorForAdminCtl {
             this.usrName = target.User__r.Name;
             this.usrRoleName = target.User__r.UserRole.Name;
             this.usrRoleCode = target.User__r.UserRole.DeveloperName;
+            this.replyId = target.Id;
             this.isTaskDone = (target.Type__c == saConstantCmn.SA_MESSAGEDETAIL_TYPE_DONE);
             this.isDeleted = false;
             /*

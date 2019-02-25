@@ -8,6 +8,16 @@ global with sharing class saDailyReportEditorForAdminCtl {
   private static final String CALL_TYPE_DAILYREPORT  = '1';
   private static final String CALL_TYPE_SANX_HEARING = '2';
   private static final String CALL_TYPE_AU_HEARING   = '3';
+  // パターン１
+  private static final String DISPLAY_PATTERN_1 = 'パターン１';
+  // パターン２
+  private static final String DISPLAY_PATTERN_2 = 'パターン２';
+  // パターン３
+  private static final String DISPLAY_PATTERN_3 = 'パターン３';
+  // パターン４
+  private static final String DISPLAY_PATTERN_4 = 'パターン４';
+  // パターン５
+  private static final String DISPLAY_PATTERN_5 = 'パターン５';
 
   public static final String USER_BASE_QUERY = ' SELECT id, Name, Profile.Name, UserRole.Name, UserRole.DeveloperName, TechnicalString__c, Department FROM User ';
   public static final String USER_BASE_QUERY_SA = ' SELECT id, (Select BusinessLocation__r.BusinessLocationName__c from saBusinessLocationDetail_user__r order by Type__c Nulls Last), Name, Profile.Name, UserRole.Name, UserRole.DeveloperName, TechnicalString__c FROM User ';
@@ -33,6 +43,7 @@ global with sharing class saDailyReportEditorForAdminCtl {
   public List<SelectOption> SARole6Options{get; set;}
   public List<SelectOption> SARole7Options{get; set;}
   public List<SelectOption> SARole8Options{get; set;}
+  public List<SelectOption> privacyOptions{get; set;}
 
   public List<SelectOption> KDDIRole5Options{get; set;}
   public List<SelectOption> KDDIRole6Options{get; set;}
@@ -55,8 +66,13 @@ global with sharing class saDailyReportEditorForAdminCtl {
 
   public Boolean isTypeSanxHearing{get; set;}
   public Boolean isTypeAuHearing{get; set;}
+
+  public String patternDataToSend {get;set;}
+  public String groupName {get;set;}
+  public List<User> groupUsers {get;set;}
 	
-  private User currentUser = [SELECT Id, Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
+  private User currentUser = [SELECT Profile.Name, MailAddressMemory6__c, MailAddressMemory7__c, MailAddressMemory8__c, MailAddressMemory9__c, MailAddressMemory10__c, 
+              UserRole.DeveloperName, UserRole.ParentRoleId, Department, Signature, EmailHeader__c FROM User WHERE Id = :UserInfo.getUserId()];
   private Boolean isUserProfileEvolva(){
     return currentUser.Profile.Name == auConstantCmn.PROFILE_EVOLVA_USER ||
            currentUser.Profile.Name == auConstantCmn.PROFILE_EVOLVA_ADMIN_USER;
@@ -67,6 +83,9 @@ global with sharing class saDailyReportEditorForAdminCtl {
             currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP);
   }
 
+  public Boolean getIsOwner() {
+    return (idm.parentRec.Id == null || idm.parentRec.OwnerId == UserInfo.getUserId());
+  }
 
   public Boolean getIsEvolva(){
     return isUserProfileEvolva();
@@ -235,6 +254,12 @@ global with sharing class saDailyReportEditorForAdminCtl {
         mpShitenOptions.put(so.getValue(), so.getLabel());
       }
 
+	  //Privacy Option
+	  privacyOptions = new List<SelectOption>();
+	  for(Schema.PicklistEntry pv : saInquiry__c.PrivacySetting__c.getDescribe().getPicklistValues()){
+	 	privacyOptions.add(new SelectOption(pv.getValue(), pv.getLabel()));
+	  }
+	  
 	  } catch (Exception e) {
       Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, '不正な操作が行われました。' + e.getMessage()));
       return;
@@ -421,13 +446,20 @@ global with sharing class saDailyReportEditorForAdminCtl {
   	
     saInquiry__c targetaRecord = null;
     List<saInquiry__c> recs = [SELECT id, name, IsEvolva__c, ReportName__c, IssuerLabel__c, Status__c, Type__c, RegionalOfficeCode__c, BranchCode__c, 
-                                      ValidFrom__c, ValidFromDatetime__c, ValidTo__c, ValidToDatetime__c, DisplayedValidToDatetime__c, IsValid__c, 
+                                      ValidFrom__c, ValidFromDatetime__c, ValidTo__c, ValidToDatetime__c, DisplayedValidToDatetime__c, IsValid__c, PrivacySetting__c, OwnerId, 
                                       PushNotificationResendCount__c, InquiryDescription__c, CreatedById
 										           FROM saInquiry__c
 										           WHERE Id =: targetId];
 
     if (recs != null && recs.size() > 0) {
       targetaRecord = recs.get(0);
+      if(targetaRecord.PrivacySetting__c==auConstantCmn.PRIVACY_SETTING_PRIVATE){
+        //there is no permission to view record
+        if(targetaRecord.OwnerId != currentUser.Id && !getIsUserAdministrator()){
+          targetaRecord = null;
+          throw new KDDIException('不正な操作が行われました。');
+        }
+      }
       if (targetaRecord.PushNotificationResendCount__c == NULL) {
         targetaRecord.PushNotificationResendCount__c = 0;
       }
@@ -1326,26 +1358,30 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
             ref.getParameters().put(SCROLL_TOP, String.valueOf(currentScrollValue));
             
             //Brut way to update all users
-            List<saInquiryReply__c> recsReply = [SELECT id, TechnicalFieldForEmail__c FROM saInquiryReply__c WHERE saInquiry__c =: parentRec.Id];
-            system.debug('Number of saInquiryReply__c to update : '+recsReply.size());
-            List<saInquiryReply__c> allReplies = new List<saInquiryReply__c>();
-            String dt = string.valueOfGmt(Datetime.now()); 
-            
-            if(idm.parentRec.Status__c == 'Saved'){
-	            for (saInquiryReply__c itemToUpdate : recsReply) {
-	            	itemToUpdate.TechnicalFieldForEmail__c = true;
-	            	allReplies.add(itemToUpdate);
-	            }
-            }else{
-            	for (saInquiryReply__c itemToUpdate : recsReply) {
-	            	itemToUpdate.TechnicalFieldForEmail__c = false;
-	            	allReplies.add(itemToUpdate);
-	            }
-            }
+            if (callType != CALL_TYPE_DAILYREPORT) {
+              List<saInquiryReply__c> recsReply = [SELECT id, TechnicalFieldForEmail__c FROM saInquiryReply__c WHERE saInquiry__c =: parentRec.Id];
+              system.debug('Number of saInquiryReply__c to update : '+recsReply.size());
+              List<saInquiryReply__c> allReplies = new List<saInquiryReply__c>();
+              String dt = string.valueOfGmt(Datetime.now()); 
+              
+              if(idm.parentRec.Status__c == 'Saved'){
+                for (saInquiryReply__c itemToUpdate : recsReply) {
+                  itemToUpdate.TechnicalFieldForEmail__c = true;
+                  allReplies.add(itemToUpdate);                    
+                }
+              }else{
+                for (saInquiryReply__c itemToUpdate : recsReply) {
+                  itemToUpdate.TechnicalFieldForEmail__c = false;
+                  allReplies.add(itemToUpdate);
+                }
+              }
 
-            system.debug('Values to update'+allReplies);
-            upsert(allReplies);
-            //End Add
+              if (allReplies != NULL && allReplies.size() > 0) {
+                system.debug('Values to update'+allReplies);
+                upsert(allReplies);
+              }
+            }
+            //End Add              
             
             ref.setRedirect(true);
         } catch(Exception e) {
@@ -1381,6 +1417,160 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
     	pageRef.getParameters().put('src',saConstantCmn.SOURCE_PREVIEW+'-'+currentInquiryId);
       
       	return PageRef;
+    }
+
+       /**
+     *　パターン名の設定
+     * @param tempStr　テンプレートの文字列
+     * @param memoryStr 保存した文字列
+     **/
+     public String settingPatternName (String tempStr, String memoryStr) {
+        String returnStr = tempStr;
+        if (memoryStr != null) {
+            // 保存した文字列が１桁以上且つ開始文字が[TO]以外
+            if (memoryStr.length()>0 && !memoryStr.startsWith('[TO]')) {
+                // 保存した文字列に[TO]が含まれている場合
+                if (memoryStr.indexOf('[TO]') >= 0){
+                    returnStr = memoryStr.subString(0,memoryStr.indexOf('[TO]'));
+                // 含まれていない場合、パターン名しか記憶していない
+                } else {
+                    returnStr = memoryStr;
+                }
+            }
+        }
+        return returnStr;
+     }
+
+    // パターンのセレクトボックス
+    public List<SelectOption> getSelectPattern() {
+        List<SelectOption> options = new List<Selectoption>();
+
+        // テンプレートの'テンプレートn'又は保存した文字列をセット
+        options.add(new SelectOption('1', settingPatternName(DISPLAY_PATTERN_1, currentUser.MailAddressMemory6__c)));
+        options.add(new SelectOption('2', settingPatternName(DISPLAY_PATTERN_2, currentUser.MailAddressMemory7__c)));
+        options.add(new SelectOption('3', settingPatternName(DISPLAY_PATTERN_3, currentUser.MailAddressMemory8__c)));
+        options.add(new SelectOption('4', settingPatternName(DISPLAY_PATTERN_4, currentUser.MailAddressMemory9__c)));
+        options.add(new SelectOption('5', settingPatternName(DISPLAY_PATTERN_5, currentUser.MailAddressMemory10__c)));
+
+        return options;
+    }
+
+    public List<Id> getUserList (String memoryStr) {
+        List<Id> lsUsrID = new List<ID>();
+        //[TO][CC][BCC]の合計数１３以下の場合、空なためクリアした状態上書き
+        if (memoryStr!=null) {
+            // [TO]を含めたtoアドレス末尾までの件数
+            Integer toCount = memoryStr.indexOf('[TO]');
+            // [TO]を含めたtoアドレス末尾までの件数
+            Integer ccCount = memoryStr.indexOf('[CC]');
+            // [TO][CC]を含めたtoアドレス+CCアドレス末尾までの件数
+            Integer bccCount = memoryStr.indexOf('[BCC]');
+
+            String memoryToStr = memoryStr.subString(toCount+4,ccCount); //[TO]=4文字から[CC]を含まない範囲を抜出
+            String memoryCCStr = memoryStr.subString(ccCount+4,bccCount); //上記+[CC]=4文字から[BCC]を含まない範囲を抜出
+            String memoryBCCStr = memoryStr.subString(bccCount+5,memoryStr.length()); //上記+[BCC]=5文字から末尾まで抜出
+            
+            system.debug(memoryToStr);
+            system.debug(memoryCCStr);
+            system.debug(memoryBCCStr);
+            // To,CC,BCC事にリストを分ける
+            List<String> inputToList = memoryToStr.split(',', 0);
+            List<String> inputCcList = memoryCCStr.split(',', 0);
+            List<String> inputBccList = memoryBCCStr.split(',', 0);
+
+            // Get the list of all users ID
+            
+            if (memoryToStr.length() > 0) {
+                for (String to : inputToList) {
+                    if (!to.startsWith('手入力')) {
+                        lsUsrID.add(to);
+                    }
+                }
+            }
+            if (memoryCCStr.length() > 0) {
+                for (String to : inputCcList) {
+                    if (!to.startsWith('手入力')) {
+                        lsUsrID.add(to);
+                    }
+                }
+            }
+            if (memoryBCCStr.length() > 0) {
+                for (String to : inputBccList) {
+                    if (!to.startsWith('手入力')) {
+                        lsUsrID.add(to);
+                    }
+                }
+            }
+        }
+        return lsUsrID;
+    }
+
+    public void loadUserList(){
+        List<Id> userIDs;
+        
+        if(patternDataToSend=='1'){
+	    	userIDs = getUserList(currentUser.MailAddressMemory6__c);
+	    }else if(patternDataToSend=='2'){
+	    	userIDs = getUserList(currentUser.MailAddressMemory7__c);
+	    }else if(patternDataToSend=='3'){
+	    	userIDs = getUserList(currentUser.MailAddressMemory8__c);
+	    }else if(patternDataToSend=='4'){
+	    	userIDs = getUserList(currentUser.MailAddressMemory9__c);
+	    }else if(patternDataToSend=='5'){
+	    	userIDs = getUserList(currentUser.MailAddressMemory10__c);
+	    }
+	      	
+        groupUsers = [SELECT Name, UserRole.Name, Profile.Name, UserRole.DeveloperName, TechnicalString__c, Department, (Select BusinessLocation__r.BusinessLocationName__c from saBusinessLocationDetail_user__r order by Type__c Nulls Last) FROM User WHERE Id IN :userIDs];
+        
+        for(User u : groupUsers){
+          List<String> BusinessLocationNameList = new List<String>(); 
+          List<saBusinessLocationMembers__c> BusinessLocationMembersList = u.saBusinessLocationDetail_user__r;
+    
+          for(saBusinessLocationMembers__c blName : BusinessLocationMembersList){
+            BusinessLocationNameList.add(blName.BusinessLocation__r.BusinessLocationName__c);
+          }
+        
+          u.TechnicalString__c = String.join(BusinessLocationNameList,' , ');
+        }
+    }
+
+    public void saveToGroup(){
+      List<InquiryReplyItem> lsReplies = idm.getItemsReply();
+      String joinToAddress = '';
+      for(InquiryReplyItem item : lsReplies){
+        joinToAddress += ',' + item.usrId;
+      }
+      if(joinToAddress.length() > 0){
+        joinToAddress = joinToAddress.removeStart(',');
+      }
+      String memoryStr = '';
+      memoryStr = groupName + '[TO]'+ joinToAddress + '[CC][BCC]';
+      //  テキスト最大桁数の131072を超える場合エラー
+      if (memoryStr.length() > 131072) {
+          //メールアドレスの桁数が多すぎて登録できません。
+          ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,System.Label.auSendEventMail_MSG_06));
+      } else {
+      	
+      	if(patternDataToSend=='1'){
+	    	currentUser.MailAddressMemory6__c = memoryStr;
+		}else if(patternDataToSend=='2'){
+	    	currentUser.MailAddressMemory7__c = memoryStr;
+	 	}else if(patternDataToSend=='3'){
+	   		currentUser.MailAddressMemory8__c = memoryStr;
+	  	}else if(patternDataToSend=='4'){
+	    	currentUser.MailAddressMemory9__c = memoryStr;
+	   	}else if(patternDataToSend=='5'){
+	   		currentUser.MailAddressMemory10__c = memoryStr;
+	  	}
+       
+   		try {
+        	update currentUser;
+       	} catch (Exception e) {
+        	system.debug(e.getMessage());
+        	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'システムエラーが発生しました。システム管理者にお問い合わせください。'));
+    	}
+    	
+      }
     }
 
     public class InquiryManage {
@@ -1727,6 +1917,15 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
             }
             //merge old & new list
             mergeList(newDetails);
+        }
+
+        public void removeExistingUsers(){
+          For (InquiryReplyItem det : this.itemsReply) {
+            if(det.replyId != null) {
+              this.itemsReplyDelete.add(det.replyId);  
+            }
+          }
+          this.itemsReply.clear();
         }
 
         public void createSelectedInquiryReplyKDDI() {

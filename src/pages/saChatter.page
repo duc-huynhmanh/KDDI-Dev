@@ -326,7 +326,7 @@
                                                        mpFiles[post.RelatedRecordId].FileType == 'JPG'}"
                                            target="_blank">
 
-                            <apex:image style="max-height:200px;max-width:400px;width: expression(this.width > 400 ? 400: true);" 
+                            <apex:image style="image-orientation: from-image;max-height:200px;max-width:400px;width: expression(this.width > 400 ? 400: true);" 
                                 url="/sfc/servlet.shepherd/version/download/{!post.RelatedRecordId}"
                                 rendered="{!mpFiles[post.RelatedRecordId].FileType == 'BMP' ||
                                             mpFiles[post.RelatedRecordId].FileType == 'JPEG' ||

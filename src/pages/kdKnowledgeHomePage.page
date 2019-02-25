@@ -24,9 +24,19 @@
     }
 
     .menu-item-inside{/* kawada追加 ;*/
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+      /*white-space: nowrap;
+      overflow: hidden;*/
+      text-overflow: ellipsis;
+      height: 40px;
+      vertical-align: middle;
+    }
+    .menu-item-inside  img{
+      margin-top: 5px;
+    }
+    .menu-item-inside p {
+      /*word-break: break-all;*/
+      word-wrap: break-word;
+      width: 100%
     }
     .menu-item-inside:hover{/* kawada追加 ;*/
       background: #f5f5f5;
@@ -313,9 +323,10 @@
     background: white; /*kawada added*/
   }
   .left-menu ul li{
-    height: 35px;
+    height: 100%;
     vertical-align: middle;
     margin-left: 2px;
+    margin-bottom: 5px;
   }
   .item-title{
     height: 28px;
@@ -471,11 +482,14 @@
   }
 
   .seasonal-item img{ 
-    filter: grayscale(100%) contrast(99999%) invert(100%); 
     margin-top: -4px; 
     height: 30px; 
     width: 30px; 
     margin-right: 1.5%; 
+  }
+  .seasonal-img-invert img{
+    filter: grayscale(100%) contrast(99999%) invert(100%);
+    -ms-filter: invert(1);
   }
 
   .seasonal-message{
@@ -489,9 +503,11 @@
     padding: 1px 10px 1px;
   }
   .seasonal-message .message-content{
-    font-size: 20px;
+    font-size: 17px;
     font-weight: bold; 
     background-color: #FFFED1;
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
     word-break: break-all;
   }
 </style>
@@ -528,6 +544,11 @@
           reorderThema3();
         }
       });
+
+      /*$( "seasonal-img-invert img" ).each(function() {
+          $(this).style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(invert=1)';
+      });*/
+
 
       $(function() {
           $('.seasonal-message textarea').each(function() {
@@ -632,7 +653,12 @@
                 <li class="{!IF(menuItem.index == 0, 'margin-top-15', '')}">
                   <a href="/kdKnowledgeListPage?thema={!menuItem.apiName}" title="{!menuItem.displayLabel} ({!menuItem.count})">
                     <div class="menu-item-inside">
-                      <apex:image alt="{!menuItem.displayLabel}" value="{!URLFOR($Resource.kdKnowledgeHomePage_icons,'gray/'+menuItem.apiName+'.svg')}" width="20" height="20"/> {!menuItem.displayLabel} ({!menuItem.count})
+                      <div style="float: left; margin-right: 5px;">
+                        <apex:image alt="{!menuItem.displayLabel}" value="{!URLFOR($Resource.kdKnowledgeHomePage_icons,'gray/'+menuItem.iconName)}" width="30" height="30"/>
+                      </div> 
+                      <span style="display: table;">
+                        <p style="vertical-align: middle; height: 40px; line-height: 20px; display: table-cell;">{!menuItem.displayLabel} ({!menuItem.count})</p>
+                      </span>
                     </div>
                   </a>
                 </li>
@@ -691,7 +717,8 @@
         <apex:outputPanel id="itemDisplay" styleClass="item-display slds-scope" rendered="{!totalItem > 0}">
           <div class="slds-section slds-is-open" id="web-content-section">
             <apex:outputPanel styleClass="seasonal-message" rendered="{!seasonalMessage != ''}">
-              <pre class="message-content" style="text-align: {!textAlign}">{!seasonalMessage}</pre>
+              <!--pre class="message-content" style="text-align: {!textAlign}">{!seasonalMessage}</pre-->
+              <pre class="message-content" style="text-align: left">{!seasonalMessage}</pre>
             </apex:outputPanel>
             <h3 class="slds-section__title">
               <button aria-controls="web-content" aria-expanded="true" class="slds-button slds-section__title-action" onclick="return toggleSection('web-content-section');">
@@ -780,7 +807,7 @@
                 <ul class="seasonal-list">
                 <apex:repeat value="{!seasonalThemas}" var="thema">
                   <li class="thema-item {!IF(thema.index < seasonalThemas.size / 2, 'left', 'right')}" category="cat-{!thema.count}">
-                    <span class="seasonal-item"><apex:image value="{!URLFOR($Resource.kdKnowledgeHomePage_icons,'orange/'+thema.apiName+'.svg')}" width="20" height="20"/>{!thema.displayLabel}</span>
+                    <span class="seasonal-item seasonal-img-invert"><apex:image value="{!URLFOR($Resource.kdKnowledgeHomePage_icons,'orange/'+thema.iconName)}" width="20" height="20"/>{!thema.displayLabel}</span>
                   </li>
                 </apex:repeat>
                 </ul>
@@ -808,7 +835,7 @@
                 </div>
                 <div id="cat-{!menuItem.index}" class="item-title">
                   <a style="color: inherit"  href="/kdKnowledgeListPage?thema={!themaItem.strKey}">
-                  <apex:image value="{!URLFOR($Resource.kdKnowledgeHomePage_icons,'orange/'+menuItem.apiName+'.svg')}" width="20" height="20"/> {!themaItem.themaLabel}
+                  <apex:image value="{!URLFOR($Resource.kdKnowledgeHomePage_icons,'orange/'+menuItem.iconName)}" width="20" height="20"/> {!themaItem.themaLabel}
                   </a>
                   <span style="float: right; cursor: pointer; cursor: hand;" onclick="backToTop();">
                     <apex:image title="トップへ戻る" alt="トップへ戻る" value="{!URLFOR($Resource.auStyling,'/images/img-to-top.png')}" width="20" height="20"/>

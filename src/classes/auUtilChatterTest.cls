@@ -17,11 +17,17 @@ private class auUtilChatterTest
 	    Id idShiten;
 		auSTPD__c stpdToShare = new auSTPD__c();
 		auEvent__c eventToShare = new auEvent__c();
+		//auSurvey__c surveyToShare = new auSurvey__c();
 		auCxKnowledge__c cxKnowledgeToShare = new auCxKnowledge__c();
 
     	User honbuUser = auTestDataUtil.createHonbuUser('honbu');
 
     	User kddiUser = auTestDataUtil.createKDDIUser('kddi');
+    	
+    	//ConcernedUser
+		//User kddiConcernedUser1 = auTestDataUtil.createKDDIUser('kddi1');
+		//User kddiConcernedUser2 = auTestDataUtil.createKDDIUser('kddi2');
+			
 		System.runAs(kddiUser) {
 	        acParPar = auTestDataUtil.createAccount(null, null);
 	    	conParPar = auTestDataUtil.createContact(acParPar.Id, '1');
@@ -78,6 +84,15 @@ private class auUtilChatterTest
 
 			eventToShare.CreatedBy__c = shopUser.Id;
 			insert eventToShare;
+			
+			//ConcernedUser
+			
+			/*surveyToShare.FiscalYear__c = '2018';
+			surveyToShare.ItemNumber__c = 998;
+			surveyToShare.Period__c = 2;
+			surveyToShare.Title__c = 'Test';
+			surveyToShare.User__c = kddiConcernedUser1.Id;
+			insert surveyToShare;*/
 
 			cxKnowledgeToShare.CreatedBy__c = shopUser.Id;
 			insert cxKnowledgeToShare;
@@ -92,6 +107,7 @@ private class auUtilChatterTest
 			auUtilChatter.lsCXBestRanking3Months();
 			auUtilChatter.shareDataPermissionsSTPD(stpdToShare);
 			auUtilChatter.shareDataPermissionsEvent(eventToShare);
+			//auUtilChatter.shareDataPermissionsSurvey(surveyToShare);
 			auUtilChatter.shareDataPermissionsCxKnowledge(cxKnowledgeToShare);
 			cxKnowledgeToShare.Status__c = 'Saved';
 			cxKnowledgeToShare.IsCommentOnly__c = true;
@@ -125,33 +141,69 @@ private class auUtilChatterTest
 		auUtilChatter.getListShops(kddiUser, idShisha, NULL, NULL, NULL);
 		auUtilChatter.getListShops(kddiUser, idShisha, idShiten, NULL, NULL);
 
-		auUtilChatter.getListShisha(shopUser);
-		auUtilChatter.getListShiten(shopUser, NULL);
+		//auUtilChatter.getListShisha(shopUser);
+		//auUtilChatter.getListShiten(shopUser, NULL);
 		auUtilChatter.getListShiten(shopUser, idShisha);
-		auUtilChatter.getListDairiten(shopUser, NULL, NULL);
-		auUtilChatter.getListDairiten(shopUser, idShisha, NULL);
+		//auUtilChatter.getListDairiten(shopUser, NULL, NULL);
+		//auUtilChatter.getListDairiten(shopUser, idShisha, NULL);
 		auUtilChatter.getListDairiten(shopUser, idShisha, idShiten);
-		auUtilChatter.getListUneiHojin(shopUser, NULL, NULL, NULL);
-		auUtilChatter.getListUneiHojin(shopUser, idShisha, NULL, NULL);
+		//auUtilChatter.getListUneiHojin(shopUser, NULL, NULL, NULL);
+		//auUtilChatter.getListUneiHojin(shopUser, idShisha, NULL, NULL);
 		auUtilChatter.getListUneiHojin(shopUser, idShisha, idShiten, NULL);
-		auUtilChatter.getListShops(shopUser, NULL, NULL, NULL, NULL);
-		auUtilChatter.getListShops(shopUser, idShisha, NULL, NULL, NULL);
+		//auUtilChatter.getListShops(shopUser, NULL, NULL, NULL, NULL);
+		//auUtilChatter.getListShops(shopUser, idShisha, NULL, NULL, NULL);
 		auUtilChatter.getListShops(shopUser, idShisha, idShiten, NULL, NULL);
 
     	Test.stopTest();
 
-		auUtilChatter.getListShisha(honbuUser);
-		auUtilChatter.getListShiten(honbuUser, NULL);
+		//auUtilChatter.getListShisha(honbuUser);
+		//auUtilChatter.getListShiten(honbuUser, NULL);
 		auUtilChatter.getListShiten(honbuUser, idShisha);
-		auUtilChatter.getListDairiten(honbuUser, NULL, NULL);
-		auUtilChatter.getListDairiten(honbuUser, idShisha, NULL);
+		//auUtilChatter.getListDairiten(honbuUser, NULL, NULL);
+		//auUtilChatter.getListDairiten(honbuUser, idShisha, NULL);
 		auUtilChatter.getListDairiten(honbuUser, idShisha, idShiten);
-		auUtilChatter.getListUneiHojin(honbuUser, NULL, NULL, NULL);
-		auUtilChatter.getListUneiHojin(honbuUser, idShisha, NULL, NULL);
+		//auUtilChatter.getListUneiHojin(honbuUser, NULL, NULL, NULL);
+		//auUtilChatter.getListUneiHojin(honbuUser, idShisha, NULL, NULL);
 		auUtilChatter.getListUneiHojin(honbuUser, idShisha, idShiten, NULL);
-		auUtilChatter.getListShops(honbuUser, NULL, NULL, NULL, NULL);
-		auUtilChatter.getListShops(honbuUser, idShisha, NULL, NULL, NULL);
+		//auUtilChatter.getListShops(honbuUser, NULL, NULL, NULL, NULL);
+		//auUtilChatter.getListShops(honbuUser, idShisha, NULL, NULL, NULL);
 		auUtilChatter.getListShops(honbuUser, idShisha, idShiten, NULL, NULL);
+
+	}
+
+	@isTest(SeeAllData=true)
+	static void surveyDummyTest() {
+
+		auSurvey__c surveyToShare = new auSurvey__c();
+
+    	User honbuUser = auTestDataUtil.createHonbuUser('honbu');
+
+    	User kddiUser = auTestDataUtil.createKDDIUser('kddi');
+
+		User kddiConcernedUser1 = auTestDataUtil.createKDDIUser('kddi1');
+		User kddiConcernedUser2 = auTestDataUtil.createKDDIUser('kddi2');
+			
+		System.runAs(kddiUser) {
+
+		}
+		
+		Test.startTest();
+
+		System.runAs(kddiUser) {
+			
+			surveyToShare.FiscalYear__c = '2018';
+			surveyToShare.ItemNumber__c = 998;
+			surveyToShare.Period__c = 2;
+			surveyToShare.Title__c = 'Test';
+			surveyToShare.User__c = kddiConcernedUser1.Id;
+			insert surveyToShare;
+
+			auUtilChatter.shareDataPermissionsSurvey(surveyToShare);
+
+		}
+
+
+    	Test.stopTest();
 
 	}
 

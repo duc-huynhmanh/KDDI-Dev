@@ -266,7 +266,7 @@
                             <apex:image url="{!URLFOR($Resource.auPrintShapes,'image/image1.png')}" />
                           </td>
                           <td align="left" valign="middle">
-                            &nbsp;&nbsp;&nbsp;&nbsp;<b>取り組むテーマを決めよう！</b>（記入日　　年　　月　　日)
+                            &nbsp;&nbsp;&nbsp;&nbsp;<b>取り組むテーマを決めよう！</b>（記入日　　{!sDate})
                           </td>
                       </tr>
                     </table>
@@ -370,8 +370,8 @@
           <td style="width:45%;" class="td-cssTableArea">
             <table border="0" cellpadding="0" cellspacing="0" style="height:100%;width:100%;font-size:9pt;table-layout:fixed;">
               <colgroup>
-                  <col width="90%"/>
-                  <col width="10%"/>
+                  <col width="50%"/>
+                  <col width="50%"/>
               </colgroup>
               <tbody>
                 <tr>
@@ -382,7 +382,7 @@
                                 <apex:image url="{!URLFOR($Resource.auPrintShapes,'image/image2.png')}" />
                               </td>
                               <td align="left" valign="middle">
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>できていない原因を考えよう!</b>（記入日　　年　　月　　日)
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>できていない原因を考えよう!</b>（記入日　　{!tDate})
                               </td>
                           </tr>
                         </table>
@@ -392,8 +392,8 @@
                   <td>&nbsp;</td>
                 </tr>
                 <tr class="tr-cssHeader3">
-                  <td class="td-cssLeftLineNoneBlack" width="90%" align="center" valign="middle">原因&nbsp;（改善マップを参考にして考える）</td>
-                  <td class="td-cssRightLineNoneBlack" align="center" valign="middle">原因の番号</td>
+                  <td class="td-cssLeftLineNoneBlack" width="50%" align="center" valign="middle">原因&nbsp;（改善マップを参考にして考える）</td>
+                  <td class="td-cssRightLineNoneBlack" align="center" valign="middle">課題</td>
                 </tr>
                 <tr>
                   <td class="td-cssData21" align="left" valign="middle">1</td>
@@ -476,7 +476,7 @@
                             <apex:image url="{!URLFOR($Resource.auPrintShapes,'image/image3.png')}" />
                           </td>
                           <td align="left" valign="middle">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>解決策を考えよう！</b>（記入日　　年　　月　　日)
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>解決策を考えよう！</b>（記入日　　{!pDate})
                           </td>
                       </tr>
                     </table>
@@ -612,7 +612,7 @@
                             <apex:image url="{!URLFOR($Resource.auPrintShapes,'image/image4.png')}" />
                           </td>
                           <td align="left" valign="middle">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>やったことを振り返ろう!</b>（記入日　　年　　月　　日)
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>やったことを振り返ろう!</b>（記入日　　{!dDate})
                           </td>
                       </tr>
                     </table>

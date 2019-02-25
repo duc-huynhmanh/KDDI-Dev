@@ -380,7 +380,7 @@ public with sharing class kdTelemarketingListCtrl {
 
         this.initSearchFlg = 'true';  // 画面起動時検索フラグON
 
-        String queryStr = ' SELECT id, CreatedDate, Name, RegionalOfficeName__c, BusinessLocationBranchGroup__c, ParentAgencyCode__c, ParentAgencyName__c, ' +
+        String queryStr = ' SELECT id, CreatedDate, Name, RegionalOfficeName__c, BusinessLocationBranchGroup__c, ParentAgencyCode__c, ParentAgencyName__c, ManagementCorpName__c,' +
                           ' BusinessLocationName__c, BusinessLocationResponsible__c, ReplyDate__c, OrderDate__c, EvolutionDate__c, CorrespondenceDate__c, ' +
                           ' CorrespondenceCompletionDate__c, Q1_ShopRecommendationTime__c, ' +
                           ' (SELECT Id, StatusShortLabel__c FROM saTelemarketingReply__r ORDER BY ReceptionDatetime__c DESC LIMIT 1) ' +

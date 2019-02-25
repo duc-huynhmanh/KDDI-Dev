@@ -53,39 +53,52 @@
 
 
     .col1{
-      width: 155px;
+      min-width: 110px !important;
+      width: 110px !important;
+      max-width: 110px !important;
       overflow-x: hidden;
     }
     .col2{
-      min-width: 80px;
+      min-width: 170px !important;
+      width: 170px !important;
+      max-width: 200px !important;
+      overflow-x: hidden;
     }
     .col3{
-      min-width: 90px;
-      max-width: 300px;
+      min-width: 170px !important;
+      width: 170px !important;
+      max-width: 200px !important;
+      overflow-x: hidden;
     }
     .col4{
-      min-width: 70px;
-      max-width: 80px;
+      min-width: 60px !important;
+      width: 70px !important;
+      max-width: 70px !important;
       overflow-x: hidden;
     }
     .col5{
-      min-width: 50px;
-      max-width: 60px;
+      min-width: 50px !important;
+      width: 50px !important;
+      max-width: 50px !important;
       overflow-x: hidden;
     }
     .col6{
-      min-width: 55px;
-      max-width: 65px;
+      min-width: 60px !important;
+      width: 70px !important;
+      max-width: 70px !important;
       overflow-x: hidden;
     }
     .col7{
-      min-width: 85px;
-      max-width: 95px;
+      min-width: 90px !important;
+      width: 100px !important;
+      max-width: 100px !important;
       overflow-x: hidden;
     }
     .col8{
-      min-width: 80px;
-      max-width: 90px;
+      min-width: 80px !important;
+      width: 80px !important;
+      max-width: 90px !important;
+      overflow-x: hidden;
     }
 
     .col2 p,  .col3 p, .col8 p {
@@ -482,7 +495,19 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
       }
       
       var x = document.getElementsByClassName("dataTables_scrollBody");
-      x[0].style.maxHeight="CALC(" + x[0].style.maxHeight + " + 4rem)";      
+      var y = $j('#accountInfo').height();
+      console.log('y: ' + y + ', max: ' + x[0].style.maxHeight);
+      if(x[0].style.maxHeight == '') {
+        console.log('empty y: ' + y);
+        x[0].style.maxHeight = y + 'px';
+      } else {
+        var currentMax = parseInt(x[0].style.maxHeight.replace('px',''), 10);
+        console.log('current: ' + currentMax);
+        if(currentMax < 250)  {
+          console.log('<250');
+          x[0].style.maxHeight="CALC(" + x[0].style.maxHeight + " + " + y + "px)";  
+        }
+      }     
 
       // Send an alert if there is an error message (Attachment failed?)
       var obj = $j('.errorMessageInput');
@@ -490,6 +515,17 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
         alert(obj.val());
         obj.val('');        
       }
+    }
+
+    function hideSearchCriteriaPanel() {
+        $j("#open_icon").show();
+        $j("#close_icon").hide();
+        $j("#accountInfo").slideUp(500);
+    }
+    function showSearchCriteriaPanel() {
+        $j("#open_icon").hide();
+        $j("#close_icon").show();
+        $j("#accountInfo").slideDown(500);
     }
 
   </script>
@@ -924,6 +960,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
       </div>
       <div class="content content--theme" id="content">
         <div class="content-header search-tools" >
+          <div id="accountInfo">
           <div class="content-header__top" style="margin-top: -0.5rem; margin-bottom: -0.5rem;">
             <div class="mdl-grid">
               <div class="mdl-cell mdl-cell--12-col">
@@ -1038,7 +1075,8 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                                             rerender="filterShisha, filterShiten, filterDairitenResp, filterUnifiedAgencyResponsible, filterBusinessLocationResponsible, filterParentAgency, filterUnifiedAgency, filterManagementCorpName, filterBusinessLocation, filterReplyDateFromStr, filterReplyDateToStr, filterReplyMonth, filterOrderDateFromStr, filterOrderDateToStr, filterEvolutionDateFromStr, filterEvolutionDateToStr, filterCorrespondenceDateFromStr, filterCorrespondenceDateToStr"
                                             oncomplete="initDatePickers();"/>
 
-                        </fieldset>                                
+                        </fieldset>   
+                                                  
 
                       </div>
 
@@ -1063,8 +1101,16 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
 -->
           </div>
         </div>
-
-        <div class="mdl-grid">
+        </div>
+        <fieldset style=" width: 10em; cursor: hand; cursor: pointer; position: absolute; right: 0; padding: 5px 2.5em 20px 0;">
+            <span id="close_icon" onclick="hideSearchCriteriaPanel()">
+              <img src="{!URLFOR($Resource.auStyling,'/images/icon-burret-black-top.png')}" width="20px"/>折りたたむ
+            </span>
+            <span id="open_icon" style="display:none;" onclick="showSearchCriteriaPanel()">
+              <img src="{!URLFOR($Resource.auStyling, '/images/icon-burret-black-bottom.png')}" width="20px"/>&nbsp;&nbsp;広げる
+            </span>
+        </fieldset>   
+        <div class="mdl-grid" style="margin-top: 15px;">
 <!--
               <div class="mdl-cell mdl-cell--2-col">
                 <apex:outputPanel >
@@ -1281,7 +1327,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
         <apex:outputPanel id="pnlGrid">
             <table class="mdl-data-table mdl-js-data-table table table--theme js-table-data is-long">
               <thead>
-                <tr style="height: 4rem;">
+                <tr style="height: 5rem;">
                   <th class="col1 mdl-data-table__cell--non-numeric sort">
                     <span>
 
@@ -1325,6 +1371,17 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                       <apex:outputPanel rendered="{!orderBy == 'ParentAgencyName__c NULLS LAST'}">
                         <a href="javascript:void(0);" onclick="callChangeOrder('ParentAgencyName__c DESC');">
                           <span class="thspanwithoutarrow">代理店名 ▲</span>
+                        </a>
+                      </apex:outputPanel>       
+                      <br/>
+                      <apex:outputPanel rendered="{!orderBy != 'ManagementCorpName__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('ManagementCorpName__c NULLS LAST');">
+                          <span class="thspanwithoutarrow">運営法人名{!IF(orderBy == 'ManagementCorpName__c DESC', ' ▼', '')}</span>
+                        </a>
+                      </apex:outputPanel>                    
+                      <apex:outputPanel rendered="{!orderBy == 'ManagementCorpName__c NULLS LAST'}">
+                        <a href="javascript:void(0);" onclick="callChangeOrder('ManagementCorpName__c DESC');">
+                          <span class="thspanwithoutarrow">運営法人名 ▲</span>
                         </a>
                       </apex:outputPanel>       
                     </span>                                   
@@ -1472,6 +1529,8 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                           <apex:outputField value="{!rec.telema.ParentAgencyCode__c}" />
                           <br/>
                           <apex:outputField value="{!rec.telema.ParentAgencyName__c}" />
+                          <br/>
+                          <apex:outputField value="{!rec.telema.ManagementCorpName__c}" />
                         </p>
                       </td>    
                       

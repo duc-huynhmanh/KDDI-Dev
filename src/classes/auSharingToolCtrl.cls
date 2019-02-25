@@ -4,13 +4,15 @@ public with sharing class auSharingToolCtrl {
 
         Integer sharingVersion = (Integer)(auCommunityCustomSettings__c.getOrgDefaults().dataSharingVersion__c == NULL ? 0 : auCommunityCustomSettings__c.getOrgDefaults().dataSharingVersion__c);
         Integer nbFutureMethods = 50;
+        Integer nbUpdatedRecordsByJob = (Integer)(auCommunityCustomSettings__c.getOrgDefaults().dataLimitForSharing__c == NULL ? 10 : auCommunityCustomSettings__c.getOrgDefaults().dataLimitForSharing__c);
+        //Integer nbUpdatedRecordsByJob = 15;
         
         List<auCxKnowledge__c> lsCX = [SELECT Id, RecalculateSharingVersion__c FROM auCxKnowledge__c WHERE RecalculateSharingVersion__c = NULL OR RecalculateSharingVersion__c < :sharingVersion];
         List<Id> lsId = new List<Id>();
 
         for (auCxKnowledge__c cx : lsCX) {
 
-            if (lsId.size() == 15 && nbFutureMethods > 0) {
+            if (lsId.size() == nbUpdatedRecordsByJob && nbFutureMethods > 0) {
                 shareCxKnowledge(lsId, sharingVersion);
                 lsId = new List<Id>();
                 nbFutureMethods--;
@@ -31,7 +33,7 @@ public with sharing class auSharingToolCtrl {
 
         for (auSTPD__c stpd : lsSTPD) {
 
-            if (lsId.size() == 15 && nbFutureMethods > 0) {
+            if (lsId.size() == nbUpdatedRecordsByJob && nbFutureMethods > 0) {
                 shareSTPD(lsId, sharingVersion);
                 lsId = new List<Id>();
                 nbFutureMethods--;
@@ -52,7 +54,7 @@ public with sharing class auSharingToolCtrl {
 
         for (auEvent__c evt : lsEvt) {
 
-            if (lsId.size() == 15 && nbFutureMethods > 0) {
+            if (lsId.size() == nbUpdatedRecordsByJob && nbFutureMethods > 0) {
                 shareEvent(lsId, sharingVersion);
                 lsId = new List<Id>();
                 nbFutureMethods--;
@@ -67,6 +69,57 @@ public with sharing class auSharingToolCtrl {
             nbFutureMethods--;
         }
             
+    }
+    
+    public static void shareSurvey() {
+    	
+    	Integer sharingVersion = (Integer)(auCommunityCustomSettings__c.getOrgDefaults().dataSharingVersion__c == NULL ? 0 : auCommunityCustomSettings__c.getOrgDefaults().dataSharingVersion__c);
+    	Integer nbFutureMethods = 50;
+        Integer nbUpdatedRecordsByJob = (Integer)(auCommunityCustomSettings__c.getOrgDefaults().dataLimitForSharing__c == NULL ? 10 : auCommunityCustomSettings__c.getOrgDefaults().dataLimitForSharing__c);
+        
+    	//For Survey Resharing
+        List<auSurvey__c> lsSurvey = [SELECT Id, RecalculateSharingVersion__c FROM auSurvey__c WHERE RecalculateSharingVersion__c = NULL OR RecalculateSharingVersion__c < :sharingVersion];
+        List<Id> lsId = new List<Id>();
+
+        for (auSurvey__c s : lsSurvey) {
+
+            if (lsId.size() == nbUpdatedRecordsByJob && nbFutureMethods > 0) {
+                shareSurvey(lsId, sharingVersion);
+                lsId = new List<Id>();
+                nbFutureMethods--;
+            }
+            lsId.add(s.Id);
+
+        }
+
+        if (lsId.size() > 0 && nbFutureMethods > 0) {
+            shareSurvey(lsId, sharingVersion);
+            lsId = new List<Id>();
+            nbFutureMethods--;
+        }
+    }
+    
+    public static void deletePermissionSet() {
+    	//For PermissionSet Deletion
+    	List<PermissionSetAssignment> lsPermSetAssignToDel = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name like 'Access_To_%'];
+		Integer nbFutureMethods = 50;
+
+    	List<id> lsPermissionSetAssignmentId = new List<Id>();
+
+        for (PermissionSetAssignment s : lsPermSetAssignToDel) {
+
+			lsPermissionSetAssignmentId.add(s.Id);
+            if (lsPermissionSetAssignmentId.size() == 250 && nbFutureMethods > 0) {
+                executeDeletePermSetAssignement(lsPermissionSetAssignmentId);
+                lsPermissionSetAssignmentId = new List<Id>();
+                nbFutureMethods--;
+            }
+
+        }
+
+        if (lsPermissionSetAssignmentId.size() > 0 && nbFutureMethods > 0) {
+            executeDeletePermSetAssignement(lsPermissionSetAssignmentId);
+        }
     }
     
     public static @future void shareCxKnowledge(List<id> lsId, Integer newSharingVersion) {
@@ -99,4 +152,20 @@ public with sharing class auSharingToolCtrl {
             
     }
     
+    public static @future void shareSurvey(List<id> lsId, Integer newSharingVersion) {
+    
+        List<auSurvey__c> lsSurvey = [SELECT Id, RecalculateSharingVersion__c FROM auSurvey__c WHERE Id IN :lsId];
+        for (auSurvey__c s : lsSurvey) {
+            s.RecalculateSharingVersion__c = newSharingVersion;
+        }
+        Update lsSurvey;
+            
+    }
+    
+    public static @future void executeDeletePermSetAssignement(List<Id> lsPermissionSetAssignmentId) {
+    
+    	List<PermissionSetAssignment> lsPermissionSetAssignment = [SELECT Id FROM PermissionSetAssignment WHERE Id IN :lsPermissionSetAssignmentId];
+        Delete lsPermissionSetAssignment;
+            
+    }
 }

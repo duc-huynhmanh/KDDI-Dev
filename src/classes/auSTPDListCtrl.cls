@@ -55,6 +55,20 @@ public with sharing class auSTPDListCtrl {
     public Boolean isShiten {get; set;}
     public Boolean isRestrictedUser {get; set;}
 
+    public Id stpdUpdateFeedId {get; set;}
+    public Id likeId{get;set;}
+    public String newComment{get;set;}
+
+    public String sFillingDate{get;set;}
+    public String tFillingDate{get;set;}
+    public String pFillingDate{get;set;}
+    public String dFillingDate{get;set;}
+
+    public String newSFillingDate{get;set;}
+    public String newTFillingDate{get;set;}
+    public String newPFillingDate{get;set;}
+    public String newDFillingDate{get;set;}
+
     public Boolean getIsVisibleFilterShiten() {
         return isHonbuOrAdmin || isShisha || isShiten;
     }
@@ -125,6 +139,8 @@ public with sharing class auSTPDListCtrl {
         isShiten = (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2);
         isRestrictedUser = currentUser.IsRestrictedUser__c;
 
+        stpdUpdateFeedId = NULL;
+
         // 支店
         optShisha = auUtilChatter.getListShisha(currentUser);
         optShiten = auUtilChatter.getListShiten(currentUser, filterShisha);
@@ -194,6 +210,33 @@ public with sharing class auSTPDListCtrl {
 
     }
 
+    private Date getConvertedDate(String strDate) {
+        Date returnValue = null;
+        
+        if (strDate == NULL
+             || strDate.length() != 10
+             || strDate.substring(4, 5) != '/'
+             || strDate.substring(7, 8) != '/') {
+            return null;
+        } else {
+            try {
+                Integer iYear = Integer.valueOf(strDate.substring(0, 4));
+                Integer iMonth = Integer.valueOf(strDate.substring(5, 7));
+                Integer iDay = Integer.valueOf(strDate.substring(8));
+                if (iYear < 1700) {
+                    returnValue = Date.newInstance(1700, 1, 1);
+                } else if (iYear > 4000) {
+                    returnValue = Date.newInstance(4000, 12, 31);
+                } else {
+                    returnValue = Date.newInstance(iYear, iMonth, iDay);                    
+                }
+            } catch (Exception ex) {
+                return null;
+            }
+        }
+
+        return returnValue;
+    }
 
     //cookie保存
     private void saveInputValues() {
@@ -357,6 +400,11 @@ public with sharing class auSTPDListCtrl {
         sptdNewItemsT = new List<auSTPDItems__c>();
         sptdNewItemsP = new List<auSTPDItems__c>();
         sptdNewItemsD = new List<auSTPDItems__c>();
+
+        newSFillingDate = '';
+        newTFillingDate = '';
+        newPFillingDate = '';
+        newDFillingDate = '';
 
         for (Integer iType=0; iType<3; iType++) {
             for (Integer i=0; i<3; i++) {
@@ -917,6 +965,19 @@ system.debug(filterDateFromStr);
     public void doSaveNewSTPDReal(Boolean createFeed) {
         
         stpdNew.DisplayedDate__c = Datetime.now();
+
+        if(!String.isEmpty(newSFillingDate)){
+                stpdNew.S_FillingDate__c = getConvertedDate(newSFillingDate);    
+            }
+            if(!String.isEmpty(newTFillingDate)){
+                stpdNew.T_FillingDate__c = getConvertedDate(newTFillingDate);    
+            }
+            if(!String.isEmpty(newPFillingDate)){
+                stpdNew.P_FillingDate__c = getConvertedDate(newPFillingDate);    
+            }
+            if(!String.isEmpty(newDFillingDate)){
+                stpdNew.D_FillingDate__c = getConvertedDate(newDFillingDate);    
+            }
         Insert stpdNew;
 
         List<auSTPDItems__c> sptdNewItems = new List<auSTPDItems__c>();
@@ -972,6 +1033,19 @@ system.debug(filterDateFromStr);
         
         if (stpdUpdate.id != null) {
             stpdUpdate.DisplayedDate__c = Datetime.now();
+            if(stpdUpdate.S_FillingDate__c == null && !String.isEmpty(sFillingDate)){
+                stpdUpdate.S_FillingDate__c = getConvertedDate(sFillingDate);    
+            }
+            if(stpdUpdate.T_FillingDate__c == null && !String.isEmpty(tFillingDate)){
+                stpdUpdate.T_FillingDate__c = getConvertedDate(tFillingDate);    
+            }
+            if(stpdUpdate.P_FillingDate__c == null && !String.isEmpty(pFillingDate)){
+                stpdUpdate.P_FillingDate__c = getConvertedDate(pFillingDate);    
+            }
+            if(stpdUpdate.D_FillingDate__c == null && !String.isEmpty(dFillingDate)){
+                stpdUpdate.D_FillingDate__c = getConvertedDate(dFillingDate);    
+            }
+            
             Update stpdUpdate;
         }
 
@@ -993,6 +1067,8 @@ system.debug(filterDateFromStr);
         }
 
         recordSearch();
+
+        stpdUpdateFeedId = NULL;
 
         stpdUpdate = new auSTPD__c();
         sptdUpdateItemsT = new List<auSTPDItems__c>();
@@ -1023,6 +1099,7 @@ system.debug(filterDateFromStr);
 
         recordSearch();
 
+        stpdUpdateFeedId = NULL;
         stpdUpdate = new auSTPD__c();
         sptdUpdateItemsT = new List<auSTPDItems__c>();
         sptdUpdateItemsP = new List<auSTPDItems__c>();
@@ -1048,9 +1125,63 @@ system.debug(filterDateFromStr);
     public void doCloseUpdateSTPD() {
     }
 
-    public void refreshSTPDEdit() {
+    public void likeSTPDFeedElement() {
+        if(stpdUpdateFeedId != null){
+            ConnectApi.ChatterLike chatterLike = ConnectApi.ChatterFeeds.likeFeedElement(null, stpdUpdateFeedId);
+            likeId = chatterLike.Id;
+        }
+    }
 
-        stpdUpdate = [SELECT Id, Thema__c, ThemaShortDisplayed__c, Memo__c, Objective__c, UserRecordAccess.HasEditAccess, UserRecordAccess.HasDeleteAccess, Status__c, DisplayedDate__c FROM auSTPD__c WHERE id = :stpdUpdateId];
+    public void removeLikeSTPDFeedElement(){
+        ConnectApi.ChatterFeeds.deleteLike(null, likeId);
+        likeId = null;
+    }
+
+    public void commentStpdFeedElement() {
+        system.debug('start commentStpdFeedElement');
+        if(stpdUpdateFeedId != null){
+            auUtilChatter.postCommentToFeedElement(stpdUpdateFeedId, newComment);
+            newComment = null;
+        }
+    }
+
+    public void refreshSTPDEdit() {
+        likeId = null;
+        stpdUpdate = [SELECT Id, Thema__c, S_FillingDate__c, T_FillingDate__c, P_FillingDate__c, D_FillingDate__c, ThemaShortDisplayed__c, Memo__c, Objective__c, UserRecordAccess.HasEditAccess, UserRecordAccess.HasDeleteAccess, Status__c, DisplayedDate__c,
+                        (SELECT Id FROM Feeds)
+                            FROM auSTPD__c 
+                            WHERE id = :stpdUpdateId];
+
+        if (stpdUpdate.Feeds != NULL && stpdUpdate.Feeds.size() > 0) {
+            stpdUpdateFeedId = stpdUpdate.Feeds[0].Id;
+            List<auSTPD__Feed> feeds = [SELECT id, (SELECT Id FROM FeedLikes WHERE InsertedById = :currentUser.Id)
+                                         FROM auSTPD__Feed 
+                                         WHERE id = :stpdUpdateFeedId
+                                         LIMIT 1];
+            //check whether liked or not
+            if(feeds[0].FeedLikes != null && feeds[0].FeedLikes.size() > 0){
+                likeId = feeds[0].FeedLikes[0].Id;
+            }
+        } else {
+            stpdUpdateFeedId = NULL;
+        }
+        sFillingDate = '';
+        tFillingDate = '';
+        pFillingDate = '';
+        dFillingDate = '';
+
+        if(stpdUpdate.S_FillingDate__c != null) {
+            sFillingDate = String.valueOf(stpdUpdate.S_FillingDate__c.year()) + '/' + String.valueOf(stpdUpdate.S_FillingDate__c.month()).leftPad(2, '0') + '/' + String.valueOf(stpdUpdate.S_FillingDate__c.day()).leftPad(2, '0');
+        }
+        if(stpdUpdate.T_FillingDate__c != null) {
+            tFillingDate = String.valueOf(stpdUpdate.T_FillingDate__c.year()) + '/' + String.valueOf(stpdUpdate.T_FillingDate__c.month()).leftPad(2, '0') + '/' + String.valueOf(stpdUpdate.T_FillingDate__c.day()).leftPad(2, '0');
+        }
+        if(stpdUpdate.P_FillingDate__c != null) {
+            pFillingDate = String.valueOf(stpdUpdate.P_FillingDate__c.year()) + '/' + String.valueOf(stpdUpdate.P_FillingDate__c.month()).leftPad(2, '0') + '/' + String.valueOf(stpdUpdate.P_FillingDate__c.day()).leftPad(2, '0');
+        }
+        if(stpdUpdate.D_FillingDate__c != null) {
+            dFillingDate = String.valueOf(stpdUpdate.D_FillingDate__c.year()) + '/' + String.valueOf(stpdUpdate.D_FillingDate__c.month()).leftPad(2, '0') + '/' + String.valueOf(stpdUpdate.D_FillingDate__c.day()).leftPad(2, '0');
+        }
 
         for (Integer i = 0; i < 3; i++) {
             sptdUpdateItemsT[i] = new auSTPDItems__c();

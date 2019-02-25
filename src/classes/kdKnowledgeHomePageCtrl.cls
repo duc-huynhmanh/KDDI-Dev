@@ -62,6 +62,11 @@ public with sharing class kdKnowledgeHomePageCtrl {
 			if(String.isBlank(t) || !themaMap.containsKey(t)) continue;
 			MenuItemData item = new MenuItemData();
 			item.apiName = t;
+			if(t == 'Val29'){
+        		item.iconName = 'Val29.png';
+        	} else {
+        		item.iconName = t + '.svg';
+        	}
 			item.displayLabel = themaMap.get(t);
 			item.index = index++;
 			for(MenuItemData menuItem : menuItemList){
@@ -83,6 +88,7 @@ public with sharing class kdKnowledgeHomePageCtrl {
         		MenuItemData item = new MenuItemData();
         		item.displayLabel = f.getLabel();
         		item.apiName = f.getValue();
+        		item.iconName = f.getValue() + '.svg';
         		item.index = index++;
         		item.count = mapKnowledgeCountItem.get('Thema' + f.getValue());
         		if (item.count == null) {
@@ -97,9 +103,16 @@ public with sharing class kdKnowledgeHomePageCtrl {
         	if(f.getValue() == 'Val20'){
         		continue;
         	}
+
         	MenuItemData item = new MenuItemData();
         	item.displayLabel = f.getLabel();
         	item.apiName = f.getValue();
+        	//set icon for Wowma!
+        	if(f.getValue() == 'Val29'){
+        		item.iconName = 'Val29.png';
+        	} else {
+        		item.iconName = f.getValue() + '.svg';
+        	}
         	item.index = index++;
         	item.count = mapKnowledgeCountItem.get('Thema' + f.getValue());
         	if (item.count == null) {
@@ -264,6 +277,7 @@ public with sharing class kdKnowledgeHomePageCtrl {
         // List property
         public String displayLabel		{get;set;}
         public String apiName			{get;set;}
+        public String iconName			{get;set;}
         public Integer index			{get;set;}
         public Integer count			{get;set;}
     }

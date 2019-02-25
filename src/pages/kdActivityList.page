@@ -18,7 +18,7 @@
   <style>
     .col1{
       min-width: 110px !important;
-      width: 130px !important;
+      width: 110px !important;
       max-width: 130px !important;
       overflow-x: hidden;
     }
@@ -36,18 +36,19 @@
     }
     .col4{
       min-width: 130px !important;
-      width: 150px !important;
+      width: 130px !important;
       max-width: 150px !important;
       overflow-x: hidden;
     }
     .col5{
       min-width: 300px !important;
-      max-width: 700px !important;
+      width: 400px;
+      max-width: 500px !important;
       overflow-x: hidden;
     }
     .col6{
-      min-width: 120px !important;
-      width: 120px !important;
+      min-width: 110px !important;
+      width: 110px !important;
       max-width: 110px !important;
       overflow-x: hidden;
       text-align: center !important;
@@ -62,7 +63,7 @@
       padding: 0 !important;
     }
 
-    .col1 p, .col2 p, .col3 p, .col4 p, .col5 p, .col6 p{
+    .col1 span, .col2 span, .col3 span, .col4 span, .col5 span, .col6 span{
       word-break: break-all;
       word-wrap: break-word;
       white-space: normal;
@@ -109,18 +110,9 @@
     }
 
     .popup-inner {
-      top: 45%;
+      top: 50%;
       max-height: 78%;
     }
-
-    .attachInput {
-      display: none;
-      position: absolute;
-      left: 0.5rem;
-      opacity: 0;
-      overflow: hidden;
-      margin-top: -2rem;
-   }
 
     .icon-attach {
       height: 4rem;
@@ -129,9 +121,19 @@
       left: 0.5rem;
       margin-top: -2rem;
     }
+
+    .attachInput {
+      height: 4rem;
+      width: 4rem;
+      margin: -1rem 0 0 2rem;
+      position: absolute;
+      opacity: 0;
+      overflow: hidden;
+   }
     .icon-upload{
       height: 2rem;
       width: 2rem;
+      pointer-events: none;
       /*position: absolute;
       left: 0.5rem;
       margin-top: -1rem;*/
@@ -274,7 +276,7 @@
     }
 
     .mdl-grid {
-      padding-bottom: 22px;
+      padding: 0 0 10px;
     }
 
     .search-textfield, .search-checkboxfield {
@@ -436,18 +438,18 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
     height: 50px;
   }
   .output-evaluation{
-    max-height: 11rem;
+    max-height: 5rem;
   }
   .output-evaluation textarea {
     border: none;
     background-color: rgb(255, 255, 255);
     resize: none;
     margin-left: 0.5rem; 
-    height: 9rem; 
+    height: 5rem; 
     width: calc(100% - 1rem);
   }
   .evaluation-box{
-    min-height: 12rem; 
+    min-height: 6rem; 
     border: 2px solid #555; 
     width: 49%; 
     display: inline; 
@@ -455,6 +457,9 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
     border-radius: 5px; 
     -webkit-border-radius: 5px;
     background-color: rgb(255, 255, 255);
+  }
+  .paging-area{
+    margin-top: 15px;
   }
 
   </style>
@@ -610,7 +615,30 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
       }
       
       var x = document.getElementsByClassName("dataTables_scrollBody");
-      x[0].style.maxHeight="CALC(" + x[0].style.maxHeight + " + 4rem)";   
+      var y = $j('#accountInfo').height();
+      console.log('y: ' + y + ', max: ' + x[0].style.maxHeight);
+      if(x[0].style.maxHeight == '') {
+        console.log('empty y: ' + y);
+        x[0].style.maxHeight = y + 'px';
+      } else {
+        var currentMax = parseInt(x[0].style.maxHeight.replace('px',''), 10);
+        console.log('current: ' + currentMax);
+        if(currentMax < 250)  {
+          console.log('<250');
+          x[0].style.maxHeight="CALC(" + x[0].style.maxHeight + " + " + y + "px)";  
+        }
+      }
+       
+      console.log('max: ' + x[0].style.maxHeight);
+
+      /*if(x[0].style.maxHeight == ''){
+        var winHeight = window.screen.availHeight;
+        var headerHeight = $j('.header').height();
+        var pagingHeight = $j('.paging-area').height();
+        var scrollHeadHeight = $j('.dataTables_scrollHead').height();
+        x[0].style.maxHeight = (winHeight - headerHeight - pagingHeight - 200) + "px";   
+      }*/
+
       var xHead = document.getElementsByClassName("dataTables_scrollHeadInner");
       var xBody = document.getElementById("DataTables_Table_0");       
       xBody.style.width = xHead[0].style.width;
@@ -649,7 +677,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
             alert('開始時間をご記入ください！');
       } else if(endHour.value == '' || endMin.value == '') {
             alert('終了時間をご記入ください！');
-      } else if(endHour.value*60 + endMin.value < startHour.value*60 + startMin.value){
+      } else if(parseInt(endHour.value*60) + parseInt(endMin.value) < parseInt(startHour.value*60) + parseInt(startMin.value)){
             alert('開始時間過ぎに終了時間をご設定ください！');
       } else jsDoSaveNewEvent();
     }
@@ -799,6 +827,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
         
         <!--Search criteria area-->
         <header class="content-header search-tools" >
+          <div id="accountInfo">
           <div class="content-header__top" style="margin-top: -0.5rem; margin-bottom: -0.5rem;">
             <div class="mdl-grid">
               <div class="mdl-cell mdl-cell--12-col">
@@ -806,7 +835,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                   <apex:actionRegion id="area51f" renderRegionOnly="false">
                   <apex:actionFunction name="clearCookie" action="{!clearCookie}" reRender="area51f" />
                     <div style="display: inline-block; position: relative; min-height: 20px; width: 100%">
-                      <div id="accountInfo">
+                      
                       <fieldset class="filter-item">
                         <label >代理店コード</label>
                         <apex:outputText value="{!IF(parentAcc.Channel__c == '運営法人', parentAcc.ParentAgencyId__r.PartnerCode__c, parentAcc.PartnerCode__c)}" styleclass="search-textfield" />
@@ -846,11 +875,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                         <apex:outputLabel rendered="{!accAttachmentId == null}" value="CCP＋カルテ無し"/>
                         <apex:outputLabel styleClass="isLink linkstyle" rendered="{!accAttachmentId != null}" value="CCP＋カルテ有り" onclick="window.open('{!URLFOR($Action.Attachment.Download, accAttachmentId)}','_blank');"/>
                       </fieldset>
-                      </div>
-                      <fieldset style="cursor: hand; cursor: pointer; position: absolute; right: 0; bottom: 0; margin: 0; padding: 0 5px 0 0;">
-                          <img id="close_icon" src="{!URLFOR($Resource.auStyling,'/images/icon-burret-black-top.png')}" width="20px" onclick="hideSearchCriteriaPanel()" />
-                          <img id="open_icon" src="{!URLFOR($Resource.auStyling, '/images/icon-burret-black-bottom.png')}" width="20px" onclick="showSearchCriteriaPanel()" style="display:none;"/>
-                      </fieldset>
+                      
                     </div>
                   </apex:actionRegion>
 
@@ -902,7 +927,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
               </div>
             </div>
           </div>
-
+          
           <div class="content-header__bottom">
             <div class="u-buttons-container search-buttons" style="padding-top: 0.5em;"><a class="js-popup-trigger" data-popup=".popup--evaluation" onclick="refreshEvaluation();" style="margin-left: 0; width: 12rem;"><i class="icon icon--pen"></i>目標・結果入力</a></div>
             <div style="clear: both;"/>
@@ -926,8 +951,17 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
               </div>
             </div>
           </div>
+          </div>
+          <fieldset style=" width: 10em; cursor: hand; cursor: pointer; margin: 0 0 10px 0; position: absolute; right: 0; padding: 0 2.5em 0 0;">
+              <span id="close_icon" onclick="hideSearchCriteriaPanel()">
+                <img src="{!URLFOR($Resource.auStyling,'/images/icon-burret-black-top.png')}" width="20px"/>折りたたむ
+              </span>
+              <span id="open_icon" style="display:none;" onclick="showSearchCriteriaPanel()">
+                <img src="{!URLFOR($Resource.auStyling, '/images/icon-burret-black-bottom.png')}" width="20px"/>&nbsp;&nbsp;広げる
+              </span>
+          </fieldset>
         </header>
-        <div class="mdl-grid">
+        <div class="mdl-grid paging-area">
               <div class="mdl-cell" style=" width: 12rem;">
                 <apex:outputPanel >
                   <div class="u-buttons-container search-buttons" style="padding-top: 0.5em;"><a class="js-popup-trigger" data-popup=".popup--theme" style="float: left;margin-left: 0;"><i class="icon icon--pen"></i>新規活動</a></div>
@@ -1206,11 +1240,11 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                       </td>
                       <!--Category-->
                       <td class="col4">
-                        <p>{!rec.category}</p>
+                        <apex:outputText value="{!rec.category}"/>
                       </td>
                       <!--Description-->
                       <td class="col5">
-                        <apex:outputText style="white-space: pre" escape="false" value="{!rec.description}" />
+                        <apex:outputText escape="false" value="{!rec.description}" />
                       </td>
                       <td class="col6" style="text-align: center;">
                         <apex:outputLabel >
@@ -1253,11 +1287,11 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
           <tr>
             <th>月</th>
             <td class="">
-              <apex:selectList id="evalYear" styleClass="" value="{!eval.Year__c}" size="1" onchange="reloadData();">
+              <apex:selectList id="evalYear" styleClass="" value="{!evalYear}" size="1" onchange="reloadData();">
                 <apex:selectOption itemValue="" itemLabel=""/>
                 <apex:selectOptions value="{!ListYear}" />
               </apex:selectList>
-              <apex:selectList id="evalMonth" styleClass="" value="{!eval.Month__c}" size="1" style="margin-left: 0.5rem" onchange="reloadData();">
+              <apex:selectList id="evalMonth" styleClass="" value="{!evalMonth}" size="1" style="margin-left: 0.5rem" onchange="reloadData();">
                 <apex:selectOption itemValue="" itemLabel=""/>
                 <apex:selectOptions value="{!ListMonth}" />
               </apex:selectList>
