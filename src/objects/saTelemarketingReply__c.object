@@ -149,9 +149,10 @@
         <fullName>StatusShortLabel__c</fullName>
         <externalId>false</externalId>
         <formula>CASE(Status__c, 
-&quot;T0&quot;, &quot;１回目不出：架電中&quot;, 
-&quot;T2&quot;, &quot;２回目不出：架電中&quot;, 
-&quot;T3&quot;, &quot;３回目不出：不出完了&quot;, 
+&quot;T0&quot;, &quot;対応中&quot;, 
+&quot;T1&quot;, &quot;１回目不出&quot;, 
+&quot;T2&quot;, &quot;２回目不出&quot;, 
+&quot;T3&quot;, &quot;不出完了&quot;, 
 &quot;T4&quot;, &quot;聴取不可完了&quot;, 
 &quot;T5&quot;, &quot;聴取完了&quot;, 
 &quot;T6&quot;, &quot;架電せず&quot;, 
@@ -170,6 +171,10 @@ TEXT(Status__c))</formula>
         <picklist>
             <picklistValues>
                 <fullName>T0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>T1</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>

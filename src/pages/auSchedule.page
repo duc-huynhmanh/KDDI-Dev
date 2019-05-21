@@ -79,6 +79,37 @@
       jsCtrlDeleteEvent(param1);
     }
 
+	function jsCCPCopyConfirm() {
+		console.log('category: ' + $j(".currentEvent").find("h3").find(".checkbox-label").text());
+		console.log('shop-name: ' + $j(".currentEvent").parent().find(".related-shops").find(".shop-name").find("input").val());
+		console.log('reflect-on-ccp-checkbox: ' + $j(".currentEvent").parent().find(".reflect-on-ccp-checkbox").is(':checked'));
+		if($j(".currentEvent").find("h3").find(".checkbox-label").text() == "代理店商談" && 
+			$j(".currentEvent").parent().find(".related-shops").find(".shop-name").find("input").val() != "000000000000000" &&
+			$j(".currentEvent").parent().find(".reflect-on-ccp-checkbox").is(':checked')) {
+			//if user confirms OK, set CCP+に反映 to true. Otherwise, false.
+			if(confirm('CCP＋にコピー（上書き）される活動が含まれていますがよろしいですか？')){
+				//$j(".currentEvent").parent().find(".reflect-on-ccp-checkbox").attr("checked", true);
+			}else{
+				//$j(".currentEvent").parent().find(".reflect-on-ccp-checkbox").removeAttr("checked");
+			}
+		}
+		
+	}
+	
+	function jsBeforeDayEventsSave() {
+        var result = true;
+        if($j(".currentEvent").find("h3").find(".checkbox-label").text() == "代理店商談"){
+			if (!$j(".currentEvent").parent().find(".normal-meeting-checkbox").is(':checked') && 
+				!$j(".currentEvent").parent().find(".ccp-meeting-checkbox").is(':checked')){
+					alert('どちらか、もしくは双方のチェックがないと保存できない。');
+					result = false;
+			}else{
+				jsCCPCopyConfirm();
+			}
+        }
+		return result;
+	}
+	
     function jsAfterDayEventsSave() {
 
         if ($j('.message-error').val().length > 0) {
@@ -142,6 +173,11 @@
       $j('.truncate').trunk8();
     }
 
+    function setupAutogrow(){
+      $j('.autogrow').attr("rows", "7");  
+      autosize(document.querySelectorAll('.autogrow'));   
+    }
+
   </script>
 
   <style type="text/css">
@@ -156,7 +192,14 @@
     .isNotEvent .event-list {
       display: none;
     }
-
+	/* meetings, basic-meeting-items, reflect-on-ccp, ccp-meeting-items */
+    .isAvailable {
+      display: block;
+    }
+    .isNotAvailable {
+      display: none;
+    }
+    
     ul li, ol li {
       margin-left: 0;
     }
@@ -200,6 +243,97 @@
       vertical-align: middle;
     }
 
+
+  .dailyreport-item-body .meetings {
+    margin-bottom: 10px;
+    padding: 0 20px;
+  }
+  .dailyreport-item-body .meetings input {
+    width: 20px;
+    height: 18px;
+    box-sizing: border-box;
+    padding: 0 5px;
+    border-radius: 3px;
+    -webkit-appearance:none;
+
+    font-size: 12px; font-size: 1.2rem;
+  }
+  .dailyreport-item-body .meetings label {
+    margin: 5px 0;
+    font-size: 12px; font-size: 1.2rem;
+    font-weight: normal;
+  }
+  .dailyreport-item-body .basic-meeting-items {
+    margin-bottom: 10px;
+    padding: 0 20px;
+  }
+  .dailyreport-item-body .basic-meeting-items textarea {
+    width: 100%;
+    height: 110px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 5px;
+
+    resize: none;
+
+    border: 1px solid #b3b3b3;
+    border-radius: 3px;
+    -webkit-appearance:none;
+
+    font-size: 12px; font-size: 1.2rem;
+  }
+  .dailyreport-item-body .basic-meeting-items .title {
+    margin: 5px 0;
+    
+    font-size: 12px; font-size: 1.2rem;
+    font-weight: normal;
+  }
+
+  .dailyreport-item-body .reflect-on-ccp {
+    margin-bottom: 10px;
+    padding: 0 20px;
+  }
+  .dailyreport-item-body .reflect-on-ccp input {
+    width: 20px;
+    height: 18px;
+    box-sizing: border-box;
+    padding: 0 5px;
+    border-radius: 3px;
+    -webkit-appearance:none;
+
+    font-size: 12px; font-size: 1.2rem;
+  }
+  .dailyreport-item-body .reflect-on-ccp label {
+    margin: 5px 0;
+    font-size: 12px; font-size: 1.2rem;
+    font-weight: normal;
+  }
+  .dailyreport-item-body .ccp-meeting-items {
+    margin-bottom: 10px;
+    padding: 0 20px;
+  }
+  .dailyreport-item-body .ccp-meeting-items textarea {
+    width: 100%;
+    height: 110px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 5px;
+
+    resize: none;
+
+    border: 1px solid #b3b3b3;
+    border-radius: 3px;
+    -webkit-appearance:none;
+
+    font-size: 12px; font-size: 1.2rem;
+  }
+  .dailyreport-item-body .ccp-meeting-items .title {
+    margin: 5px 0;
+    
+    font-size: 12px; font-size: 1.2rem;
+    font-weight: normal;
+  }
+
     .dailyreport-entry-form.confirm .confirm-send-to {
       padding-top: 2px;
       padding-bottom: 10px;
@@ -216,14 +350,51 @@
       overflow: scroll;
     }
 
+	.dailyreport-entry-form footer .btn-save {
+/*	    position: absolute;
+	    left: 0;
+	    top: 0;
+	    width: 80px;
+	    height: 100%;*/
+	    position: absolute;
+	    left: 0;
+	    top: 0;
+	    width: 50%;
+	    height: 50%;
+	}
+	
+	.dailyreport-entry-form footer .btn-save a {
+		display: block;
+
+		width: 100%;
+		height: 100%;
+
+		box-sizing: border-box;
+
+	    line-height: 70px;
+	
+	    padding-top: 2px;
+	    padding-left: 38px;
+	
+	    /* background-image: url(../images/calender/btn-save.png); */
+	    background-repeat: no-repeat;
+	    background-position: left top;
+
+	    font-size: 13px; font-size: 1.3rem;
+	    overflow: hidden;
+  	}
+	
     .dailyreport-entry-form footer .btn-send {
       width: 152px;
+      /* width: 50%; */
     }
     .dailyreport-entry-form footer .btn-setting-send-to {
       right: 155px;
+      /* right: 10px; */
     }
     .dailyreport-send-to {
       padding-right: 200px;
+      /* padding-right: 50px; */
     }
 
     .email-title-title {
@@ -393,7 +564,12 @@
     .select-category {
     height: 570px;
     }
+    
+    .autogrow {
+		-ms-overflow-y: hidden !important;    
+    }
 
+	
   </style>
 
 </head>
@@ -962,7 +1138,6 @@
           <!-- #View 01-01-02(typ.) -->
           <section class="daily-description hide">
             <header>
-              <div class="btn-save ui-color-1 disable"><a href="#">保存</a></div>
               <div class="email-title"><!--<input type="text" value="" placeholder="日報送信タイトル入力欄"></input>--></div>
               <div class="btn-close"><a href="#">閉じる</a></div>
             </header>
@@ -972,13 +1147,14 @@
           <section class="dailyreport-entry-form edit hide">
             <div class="todoform">
               <header>
+				<!-- save button original location -->
                 <div class="btn-save ui-color-1">
                   <apex:commandLink value="保存"
                                     action="{!saveDayEventsWithRefresh}"
                                     rerender="messageError, lkupShops"
+                                    onclick="if(!jsBeforeDayEventsSave()) return false;"
                                     oncomplete="jsAfterDayEventsSave();" />
                 </div>
-
                 <div class="email-title"><!--<input type="text" value="" placeholder="日報送信タイトル入力欄"></input>--></div>
                 <div class="btn-close"><a href="#">閉じる</a></div>
               </header>
@@ -1037,7 +1213,7 @@
                           </div>
 
                           <div class="description">
-                            <apex:inputTextarea value="{!varEvent.description}" />
+                            <apex:inputTextarea value="{!varEvent.description}" styleClass="autogrow" onfocus="setupAutogrow();"/>
                           </div>
 
                           <ul class="event-list">
@@ -1205,7 +1381,6 @@
                             </apex:outputPanel>
                           </div>
 
-
                           <div class="related-files">
 
                             <apex:repeat value="{!varEvent.evt.Attachments}" var="att">
@@ -1219,8 +1394,148 @@
                               </ul>
                             </apex:repeat>
 
-
                           </div>
+
+                          <div class="meetings {!IF(varEvent.categoryNm == '代理店商談', 'isAvailable', 'isNotAvailable')} ">
+                          	<span class="normal-meeting">
+                          	  <apex:outputLabel value="通常商談" for="NormalMeeting"/>
+                              <apex:inputCheckbox value="{!varEvent.evt.NormalMeeting__c}"
+                              					  id="NormalMeeting"
+                                                  styleclass="normal-meeting-checkbox" />
+                          	</span>
+								&nbsp;&nbsp;&nbsp;&nbsp;
+							<span class="ccp-meeting">
+							  <apex:outputLabel value="CCP商談" for="CCPMeeting"/>
+                              <apex:inputCheckbox value="{!varEvent.evt.CCPMeeting__c}"
+                              					id="CCPMeeting"
+                                                  styleclass="ccp-meeting-checkbox" />							
+							</span>
+                          </div>
+                          
+						<div class="basic-meeting-items {!IF(varEvent.categoryNm == '代理店商談' || varEvent.categoryNm == '拠点フォロー', 'isAvailable', 'isNotAvailable')} " >
+                          <div class="purpose">
+                          	<h4 class="title">目的</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventPurpose__c}" html-placeholder="目的" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+                          <div class="interviewer">
+                          	<h4 class="title">相談者</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventInterviewer__c}" html-placeholder="相談者" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+                          <div class="remarks">
+                          	<h4 class="title">備考</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventRemarks__c}" html-placeholder="備考" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+						</div>
+
+                        <div class="reflect-on-ccp {!IF(varEvent.categoryNm == '代理店商談', 'isAvailable', 'isNotAvailable')}">
+                        	<apex:outputLabel value="CCP+に反映" for="ReflectOnCCP"/>
+                            <apex:inputCheckbox value="{!varEvent.evt.ReflectOnCCP__c}"
+                            					id="ReflectOnCCP"
+                                                  styleclass="reflect-on-ccp-checkbox" />
+                        </div>
+                        
+						<div class="ccp-meeting-items {!IF(varEvent.categoryNm == '代理店商談', 'isAvailable', 'isNotAvailable')}">
+                          <div class="organization">
+                          	<h4 class="title">代理店の組織・体制</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventOrganization__c}" html-placeholder="代理店の組織・体制" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+
+                          <div class="managed-customers-count">
+                          	<h4 class="title">管理顧客数</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventManagedCustomersCount__c}" html-placeholder="管理顧客数" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+
+                          <div class="staff-count">
+                          	<h4 class="title">スタッフ数</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventStaff__c}" html-placeholder="スタッフ数" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+
+                          <div class="qualification-rate">
+                          	<h4 class="title">資格保有率</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventQualificationRate__c}" html-placeholder="資格保有率" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+                          <div class="turnover">
+                          	<h4 class="title">離職率</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventTurnover__c}" html-placeholder="離職率" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+
+                          <div class="regular-employees-percent">
+                          	<h4 class="title">正社員比率</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventRegularEmployeesPercent__c}" html-placeholder="正社員比率" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+
+                          <div class="staff-es">
+                          	<h4 class="title">スタッフＥＳ</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventStaffES__c}" html-placeholder="スタッフＥＳ" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+
+                          <div class="management-ability-evaluation">
+                          	<h4 class="title">運営法人運営力評価</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventManagementAbilityEvaluation__c}" html-placeholder="運営法人運営力評価" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+                          <div class="au-comprehensive-index">
+                          	<h4 class="title">auショップ総合指標</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventauComprehensiveIndex__c}" html-placeholder="auショップ総合指標" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+
+                          <div class="nps">
+                          	<h4 class="title">NPS</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventNPS__c}" html-placeholder="NPS" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+
+                          <div class="corp-philosophy-vision">
+                          	<h4 class="title">企業理念・ビジョン</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventCorpPhilosophyVision__c}" html-placeholder="企業理念・ビジョン" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+
+                          <div class="business-plan">
+                          	<h4 class="title">事業戦略・事業計画</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventBusinessPlan__c}" html-placeholder="事業戦略・事業計画" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+                          <div class="store-strategy">
+                          	<h4 class="title">店舗戦略</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventStoreStrategy__c}" html-placeholder="店舗戦略" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+                          <div class="policy-planning">
+                          	<h4 class="title">計画・施策立案</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventPolicyPlanning__c}" html-placeholder="計画・施策立案" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+
+                          <div class="progress-management-reporting">
+                          	<h4 class="title">進捗管理・報告</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventProgressManagementReporting__c}" html-placeholder="進捗管理・報告" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+
+                          <div class="personnel-system">
+                          	<h4 class="title">人員体制</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventPersonnelSystem__c}" html-placeholder="人員体制" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+                          <div class="decision-rule">
+                          	<h4 class="title">意志決定ルール</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventDecisionRule__c}" html-placeholder="意志決定ルール" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+
+                          <div class="evaluation">
+                          	<h4 class="title">評価</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventEvaluation__c}" html-placeholder="評価" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+
+                          <div class="recruitment">
+                          	<h4 class="title">採用</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventRecruitment__c}" html-placeholder="採用" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+
+                          <div class="cultivation-establishment">
+                          	<h4 class="title">育成・定着</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventCultivationEstablishment__c}" html-placeholder="育成・定着" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+                          
+                          <div class="communication-place">
+                          	<h4 class="title">コミュニケーションの場</h4>
+                            <apex:inputTextarea value="{!varEvent.auActivity.EventCommunicationPlace__c}" html-placeholder="コミュニケーションの場" styleClass="autogrow" onfocus="setupAutogrow();"/>
+                          </div>
+						</div>
+
                         </div>
                       </li>
                     </apex:repeat>                
@@ -1237,12 +1552,22 @@
                   </apex:selectList>
                 </div>
                 <div class="btn-setting-send-to"><a href="#">送信先設定</a></div>
-                <div class="btn-send ui-color-1">
-                  <apex:commandLink value="送信プレビュー"
-                                    action="{!confirmEmail}"
-                                    rerender="messageError, lkupShops, pnlConfirmEmail, pnlConfirmEmailTitle"
-                                    oncomplete="jsAfterPrepareConfirm();autosize(document.querySelectorAll('.autogrow'));" />
-                </div>
+
+	                <div class="btn-save ui-color-1" style="display: none;">
+	                  <apex:commandLink value="一時保存"
+	                                    action="{!saveDayEventsWithRefresh}"
+	                                    rerender="messageError, lkupShops"
+	                                    onclick="if(!jsBeforeDayEventsSave()) return false;"
+	                                    oncomplete="jsAfterDayEventsSave();" />
+	                </div>
+	                <div class="btn-send ui-color-1">
+	                  <apex:commandLink value="送信プレビュー"
+	                                    action="{!confirmEmail}"
+	                                    rerender="messageError, lkupShops, pnlConfirmEmail, pnlConfirmEmailTitle"
+	                                    onclick="jsCCPCopyConfirm();"
+	                                    oncomplete="jsAfterPrepareConfirm();autosize(document.querySelectorAll('.autogrow'));" />
+	                </div>                
+
               </footer>
             </div>
           </section>
@@ -1300,15 +1625,15 @@
                   <div class="dailyreport-items">
                     <apex:inputTextarea value="{!emailHeader}"
                                         style="font-size: 11px;"
-                                        styleClass="autogrow force-border" />
+                                        styleClass="autogrow force-border" onfocus="setupAutogrow();"/>
 
                     <apex:inputTextarea value="{!resultTextArea}"
                                         style="font-size: 11px;"
-                                        styleClass="autogrow force-border" />
+                                        styleClass="autogrow force-border" onfocus="setupAutogrow();" />
 
                     <apex:inputTextarea value="{!emailSignature}"
                                         style="font-size: 11px;"
-                                        styleClass="autogrow force-border" />
+                                        styleClass="autogrow force-border" onfocus="setupAutogrow();" />
                   </div>
                 </apex:outputPanel>                
               </div>
@@ -1558,6 +1883,10 @@
 
         $j(".currentEvent").parent().find(".dailyreport-item-body").removeClass("isEvent isNotEvent").addClass("isNotEvent");
         $j(".currentEvent").parent().find(".event-item-value").find("input").val("");
+        $j(".currentEvent").parent().find(".meetings").removeClass("isAvailable isNotAvailable").addClass("isNotAvailable");
+        $j(".currentEvent").parent().find(".basic-meeting-items").removeClass("isAvailable isNotAvailable").addClass("isNotAvailable");
+        $j(".currentEvent").parent().find(".reflect-on-ccp").removeClass("isAvailable isNotAvailable").addClass("isNotAvailable");
+        $j(".currentEvent").parent().find(".ccp-meeting-items").removeClass("isAvailable isNotAvailable").addClass("isNotAvailable");
 
         $j(".currentEvent").find("h3").removeClass("category0 category1 category2 category3 category4 category5");
         $j(".sortNo_" + $j(".currentEvent").attr("sortNo")).removeClass("category0 category1 category2 category3 category4 category5");
@@ -1569,11 +1898,25 @@
 
           if($j(this).find("span.icon1").length !== 0) {
             $j(".currentEvent").find("h3").find(".checkbox-label").text("拠点フォロー");
-            $j(".currentEvent").parent().find(".description").find("textarea").text("【訪問先】\n【目的】\n【内容】\n【面談者】");          
+            $j(".currentEvent").parent().find(".description").find("textarea").text("【訪問先】\n【目的】\n【内容】\n【面談者】");
+            //display 相談 items
+            $j(".currentEvent").parent().find(".basic-meeting-items").removeClass("isAvailable isNotAvailable").addClass("isAvailable");
           }
           if($j(this).find("span.icon2").length !== 0) {
             $j(".currentEvent").find("h3").find(".checkbox-label").text("代理店商談");
-            $j(".currentEvent").parent().find(".description").find("textarea").text("【訪問先】\n【目的】\n【内容】\n【面談者】");          
+            $j(".currentEvent").parent().find(".description").find("textarea").text("【訪問先】\n【目的】\n【内容】\n【面談者】");
+            //display 相談 items
+            $j(".currentEvent").parent().find(".meetings").removeClass("isAvailable isNotAvailable").addClass("isAvailable");
+            $j(".currentEvent").parent().find(".basic-meeting-items").removeClass("isAvailable isNotAvailable").addClass("isAvailable");
+            $j(".currentEvent").parent().find(".reflect-on-ccp").removeClass("isAvailable isNotAvailable").addClass("isAvailable");
+            //set CCP商談 logic event
+		    $j(".currentEvent").parent().find(".ccp-meeting").on("click", function (e) {
+		    	if ($j(".currentEvent").parent().find(".ccp-meeting-checkbox").is(':checked')){
+			      $j(".currentEvent").parent().find(".ccp-meeting-items").removeClass("isAvailable isNotAvailable").addClass("isAvailable");		    	
+		    	}else{
+			      $j(".currentEvent").parent().find(".ccp-meeting-items").removeClass("isAvailable isNotAvailable").addClass("isNotAvailable");		    	
+		    	}
+		    });
           }
           if($j(this).find("span.icon3").length !== 0) {
             $j(".currentEvent").find("h3").find(".checkbox-label").text("イベント対応");

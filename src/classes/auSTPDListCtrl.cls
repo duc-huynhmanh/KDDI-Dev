@@ -35,10 +35,16 @@ public with sharing class auSTPDListCtrl {
     public String filterShisha {get; set;}
     public String filterDairiten {get; set;}
     public String filterUneiHojin {get; set;}
+
     public auSTPD__c stpdNew {get; set;}
     public auSTPD__c stpdUpdate {get; set;}
     public Id stpdUpdateId {get; set;}
+    public Id idCurrentFeedElement {get; set;}
+    public Id idCurrentSTPD {get; set;}
 
+    public auSTPD__Feed stpdUpdateFeed{get;set;}
+    public Id likeId{get;set;}
+    public String newComment{get;set;}
     public Id attachmentId {get; set;}
 
     public List<String> targetShops{get; set;}         //店舗
@@ -54,10 +60,6 @@ public with sharing class auSTPDListCtrl {
     public Boolean isShisha {get; set;}
     public Boolean isShiten {get; set;}
     public Boolean isRestrictedUser {get; set;}
-
-    public Id stpdUpdateFeedId {get; set;}
-    public Id likeId{get;set;}
-    public String newComment{get;set;}
 
     public String sFillingDate{get;set;}
     public String tFillingDate{get;set;}
@@ -125,6 +127,22 @@ public with sharing class auSTPDListCtrl {
      * @author Bertrand Polus
      * Created on 2017/01/15
      */
+
+    public Double offset{
+        get {
+            TimeZone tz = UserInfo.getTimeZone();
+            //Milliseconds to Day
+            return tz.getOffset(DateTime.now()) / (1000 * 3600 * 24.0);
+        }
+    }
+
+    public String urlUserPhoto;
+    public String getUrlUserPhoto() {
+        if (urlUserPhoto == NULL) {
+            urlUserPhoto = [SELECT SmallPhotoUrl FROM User WHERE User.ID = :UserInfo.getUserId()].SmallPhotoUrl;
+        }
+        return urlUserPhoto;
+    }
     public auSTPDListCtrl() {    
         
         pageSize = 20;
@@ -139,7 +157,7 @@ public with sharing class auSTPDListCtrl {
         isShiten = (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 || currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2);
         isRestrictedUser = currentUser.IsRestrictedUser__c;
 
-        stpdUpdateFeedId = NULL;
+        stpdUpdateFeed = NULL;
 
         // 支店
         optShisha = auUtilChatter.getListShisha(currentUser);
@@ -1068,7 +1086,7 @@ system.debug(filterDateFromStr);
 
         recordSearch();
 
-        stpdUpdateFeedId = NULL;
+        stpdUpdateFeed = NULL;
 
         stpdUpdate = new auSTPD__c();
         sptdUpdateItemsT = new List<auSTPDItems__c>();
@@ -1099,7 +1117,7 @@ system.debug(filterDateFromStr);
 
         recordSearch();
 
-        stpdUpdateFeedId = NULL;
+        stpdUpdateFeed = NULL;
         stpdUpdate = new auSTPD__c();
         sptdUpdateItemsT = new List<auSTPDItems__c>();
         sptdUpdateItemsP = new List<auSTPDItems__c>();
@@ -1126,8 +1144,8 @@ system.debug(filterDateFromStr);
     }
 
     public void likeSTPDFeedElement() {
-        if(stpdUpdateFeedId != null){
-            ConnectApi.ChatterLike chatterLike = ConnectApi.ChatterFeeds.likeFeedElement(null, stpdUpdateFeedId);
+        if(stpdUpdateFeed != null){
+            ConnectApi.ChatterLike chatterLike = ConnectApi.ChatterFeeds.likeFeedElement(null, stpdUpdateFeed.Id);
             likeId = chatterLike.Id;
         }
     }
@@ -1137,33 +1155,41 @@ system.debug(filterDateFromStr);
         likeId = null;
     }
 
-    public void commentStpdFeedElement() {
+    /*public void commentStpdFeedElement() {
         system.debug('start commentStpdFeedElement');
-        if(stpdUpdateFeedId != null){
-            auUtilChatter.postCommentToFeedElement(stpdUpdateFeedId, newComment);
+        if(stpdUpdateFeed != null){
+            auUtilChatter.postCommentToFeedElement(stpdUpdateFeed.Id, newComment);
             newComment = null;
         }
-    }
+    }*/
 
     public void refreshSTPDEdit() {
         likeId = null;
-        stpdUpdate = [SELECT Id, Thema__c, S_FillingDate__c, T_FillingDate__c, P_FillingDate__c, D_FillingDate__c, ThemaShortDisplayed__c, Memo__c, Objective__c, UserRecordAccess.HasEditAccess, UserRecordAccess.HasDeleteAccess, Status__c, DisplayedDate__c,
+        stpdUpdate = [SELECT Id, Thema__c, S_FillingDate__c, T_FillingDate__c, P_FillingDate__c, D_FillingDate__c, 
+                            ThemaShortDisplayed__c, Memo__c, Objective__c, UserRecordAccess.HasEditAccess, UserRecordAccess.HasDeleteAccess, Status__c, 
+                            DisplayedDate__c, TechnicalAlwaysBlank__c, CreatedBy__r.Account.Name, CreatedBy__r.Account.Parent.Name, 
                         (SELECT Id FROM Feeds)
                             FROM auSTPD__c 
                             WHERE id = :stpdUpdateId];
 
         if (stpdUpdate.Feeds != NULL && stpdUpdate.Feeds.size() > 0) {
-            stpdUpdateFeedId = stpdUpdate.Feeds[0].Id;
-            List<auSTPD__Feed> feeds = [SELECT id, (SELECT Id FROM FeedLikes WHERE InsertedById = :currentUser.Id)
+            stpdUpdateFeed = stpdUpdate.Feeds[0];
+            List<auSTPD__Feed> feeds = [SELECT id, 
+                                            (SELECT Id FROM FeedLikes WHERE InsertedById = :currentUser.Id),
+                                            (SELECT CommentBody, InsertedById, InsertedBy.DisplayedUsernameFormula__c, InsertedBy.SmallPhotoUrl, CreatedDate FROM FeedComments ORDER BY CreatedDate DESC)
                                          FROM auSTPD__Feed 
-                                         WHERE id = :stpdUpdateFeedId
+                                         WHERE id = :stpdUpdateFeed.Id
                                          LIMIT 1];
             //check whether liked or not
             if(feeds[0].FeedLikes != null && feeds[0].FeedLikes.size() > 0){
                 likeId = feeds[0].FeedLikes[0].Id;
             }
+
+            stpdUpdateFeed = feeds[0];
+            system.debug('stpdUpdateFeed: ' + stpdUpdateFeed.FeedComments.size());
+
         } else {
-            stpdUpdateFeedId = NULL;
+            stpdUpdateFeed = NULL;
         }
         sFillingDate = '';
         tFillingDate = '';
@@ -1253,7 +1279,21 @@ system.debug(filterDateFromStr);
     }
 
 
+    public void deleteCommentStpdFeedElement() {
+        auUtilChatter.deleteComment(idCurrentFeedElement);
+        //recordSearch();
+        refreshSTPDEdit();
+    }
 
+    public void commentSTPDFeedElement() {
+        system.debug('newComment1: ' + newComment);
+
+        if (!String.isBlank(newComment)) {
+            auUtilChatter.postCommentToFeedElement(stpdUpdateFeed.Id, newComment);
+            //recordSearch();
+            refreshSTPDEdit();
+        }
+    }
 
     public void stpdAttachmentDelete() {
 

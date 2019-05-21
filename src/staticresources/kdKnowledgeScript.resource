@@ -91,8 +91,10 @@
                     })
                 },
                 infoHeight: function() {
+                if(t(".theme-list").length){
                     var e = t(".theme-list").offset().top;
                     t(".theme-info").css("height", h - f + d)
+                }
                 },
                 popup: function() {
                     t(document).on(c, ".js-popup-trigger", function(e) {

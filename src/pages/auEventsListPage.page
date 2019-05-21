@@ -82,6 +82,7 @@
     }
     .event-icons-desc {
       font-size: 1.2rem;       
+      float: right;
     }
 
     .icon--date.is-announcing {
@@ -222,6 +223,16 @@
     .scrollDiv .section-inner:first-child{
       margin-top: 0;
     }
+    .search-status__select {
+      width: auto;
+      height: 2.1rem;
+    }
+    a{
+      font-weight: 500 !important;
+    }
+    .margin-right10{
+      margin-right: 10px;
+    }
   </style>
 
   <script>
@@ -320,6 +331,15 @@
       }
     }
 
+    function clearSearchCondition(){
+      $j('.filter-text input[type=text]').each(function(){
+        this.value = '';
+      });
+      $j('.filter-checkbox input[type=checkbox]').prop('checked', false);
+      $j(".filter-select select").val("");
+      $j(".filter-select-1 select").val("0");
+    }
+
   </script>
 
 </head>
@@ -359,7 +379,7 @@
       <apex:actionFunction name="refreshEventJunctionDeleteEdit" action="{!refreshEventJunctionDelete}" rerender="editEvent1, editEvent2, editEvent3, editEvent4, editEvent5, editEvent6, editEvent7, editEvent8, editEvent9, editEvent10, editEvent11" oncomplete="addDatePickerComponent();"/>
       </apex:actionRegion>
 
-      <apex:inputText id="oldData" styleClass="OldDataInput" value="{!isOldData}" style="display: none;" />
+      <!-- <apex:inputText id="oldData" styleClass="OldDataInput" value="{!isOldData}" style="display: none;" /> -->
       <apex:actionFunction name="refreshData" action="{!refreshPage}" />
 
     </apex:outputPanel>
@@ -371,6 +391,85 @@
 
           <header class="content-header search-tools">
             <div class="content-header__top" style="margin-top: -1.5rem; margin-bottom: -0.5rem;">
+
+              <!--Search criteria area-->
+              <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--12-col">
+                <div class="search-filter clearfix search_criteria_form" >
+                  <apex:actionRegion id="area51f" renderRegionOnly="false">
+                    <div style="display: inline-block; width: 100%">
+
+                      <apex:outputPanel rendered="{!(!isManagementUser && !isAgentUser && !isShopUser)}">
+                        <fieldset class="filter-category filter-select">
+                          <label>支社名</label>
+                          <apex:selectList styleClass="search-status__select" value="{!filterShisha}" size="1" style="margin-left: 0.5rem">
+                            <apex:actionSupport event="onchange" action="{!refreshShiten}" reRender="filterShiten, filterDairiten, filterUneiHojin, filterShop"/>
+                            <apex:selectOptions value="{!optShisha}" />
+                          </apex:selectList>
+                        </fieldset>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!(!isManagementUser && !isAgentUser && !isShopUser)}">
+                        <fieldset class="filter-category filter-select">
+                          <label>支店名</label>
+                          <apex:selectList id="filterShiten" styleClass="search-status__select" value="{!filterShiten}" size="1" style="margin-left: 0.5rem">
+                            <apex:actionSupport event="onchange" action="{!refreshDairitenFilter}" reRender="filterDairiten, filterUneiHojin, filterShop"/>
+                            <apex:selectOptions value="{!optShiten}" />
+                          </apex:selectList>
+                        </fieldset>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!(!isManagementUser && !isAgentUser && !isShopUser)}">
+                        <fieldset class="filter-category filter-select">
+                          <label>代理店</label>
+                          <apex:selectList id="filterDairiten" styleClass="search-status__select" value="{!filterDairiten}" size="1" style="margin-left: 0.5rem">
+                            <apex:actionSupport event="onchange" action="{!refreshUneiHojinFilter}" reRender="filterUneiHojin, filterShop"/>
+                            <apex:selectOptions value="{!optDairiten}" />
+                          </apex:selectList>
+                        </fieldset>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel rendered="{!(!isManagementUser && !isShopUser)}">
+                        <fieldset class="filter-category filter-select">
+                          <label>運営法人</label>
+                          <apex:selectList id="filterUneiHojin" styleClass="search-status__select" value="{!filterUneiHojin}" size="1" style="margin-left: 0.5rem">
+                            <apex:actionSupport event="onchange" action="{!refreshShopFilter}" reRender="filterShop"/>
+                            <apex:selectOptions value="{!optUneiHojin}" />
+                          </apex:selectList>
+                        </fieldset>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel >
+                        <fieldset class="filter-category filter-select">
+                          <label>店舗</label>
+                          <apex:selectList id="filterShop" styleClass="search-status__select" value="{!filterShop}" size="1" style="margin-left: 0.5rem">
+                            <apex:selectOptions value="{!optShop}" />
+                          </apex:selectList>
+                        </fieldset>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel >
+                        <fieldset class="filter-category filter-select-1">
+                          <label>タイプ</label>
+                          <apex:selectList id="filterType" styleClass="search-status__select" value="{!isOldData}" size="1" style="margin-left: 0.5rem">
+                            <apex:selectOption itemValue="0" itemLabel="予定"/>
+                            <apex:selectOption itemValue="1" itemLabel="実施済"/>
+                          </apex:selectList>
+                        </fieldset>
+                      </apex:outputPanel>
+                       
+                      <fieldset class="filter-button">
+                        <apex:commandLink value="絞り込む/実行" styleClass="margin-right10 mdl-button mdl-js-button mdl-button--raised mdl-button--colored" action="{!doSearch}"/>
+                        <apex:commandLink styleClass="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="クリアする" onclick="clearSearchCondition();" reRender="area51f"/>
+                      </fieldset>                                
+                    </div>
+                  </apex:actionRegion>
+
+                </div>
+              </div>
+            </div>
+
+
               <div class="mdl-grid" style="height: 4.5em; padding-bottom: 0;">
                 
                   <apex:outputPanel rendered="{!(!isRestrictedUser && isShopUser)}" styleClass="mdl-cell mdl-cell--2-col" style="display: block;">
@@ -380,20 +479,10 @@
                   </apex:outputPanel>
                 
                 <div class="mdl-cell mdl-cell--3-col">
-  
-                  <apex:outputPanel rendered="{!!(isOldData == 0)}">
-                      <a onclick="callShowOldData();" class="linkdate linkdate-deactive" style="float: left;margin-left: 3rem;">予定</a>
-                      <a class="linkdate linkdate-active" style="float: left;margin-left: 0.5rem;">実施済</a>
-                  </apex:outputPanel>
-
-                  <apex:outputPanel rendered="{!(isOldData == 0)}">
-                      <a class="linkdate linkdate-active" style="float: left;margin-left: 3rem;">予定</a>
-                      <a class="linkdate linkdate-deactive" onclick="callShowOldData();" style="float: left;margin-left: 0.5rem;">実施済</a>
-                  </apex:outputPanel>
 
                 </div>
 
-                <div class="mdl-cell mdl-cell--8-col">
+                <div class="mdl-cell" style="width: 100%">
                   <ul class="event-icons-desc">
                     <li> <i class="icon icon--date is-kickoff"></i><span>キックオフ会</span> </li>
                     <li> <i class="icon icon--date is-kai"></i><span>CXチーム会</span> </li>

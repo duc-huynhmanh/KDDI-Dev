@@ -8,9 +8,9 @@ public with sharing class kdSurveyListCtrl {
 	public String filterFiscalYear {get; set;}
 
 	public String surveyType {get; set;}
-	public String surveyShisha {get; set;}
-	public String surveyUnifiedAgencyBranch {get; set;}
-	public String surveyBusinessLocationBranchGroup {get; set;}
+	public String hierarchicalLabel3 {get; set;}
+	public String hierarchicalLabel4 {get; set;}
+	public String hierarchicalLabel5 {get; set;}
 	public String surveyUserName {get; set;}
     public String surveyFiscalYear {get; set;}
 	public String surveyTitle {get; set;}
@@ -239,7 +239,7 @@ public with sharing class kdSurveyListCtrl {
 		recordsCount = 0;
 	
         Boolean hasSearchValue = initFieldFromCookie();//保持項目有無チェック
-        //recordsearch();
+        recordsearch();
     }
 
     public void refreshShiten() {
@@ -421,9 +421,7 @@ public with sharing class kdSurveyListCtrl {
             this.ssc = new List<auSurvey__c>();
         }
 
-        /*if (forcedKnowledgeId == NULL && forcedShopId == NULL) {
-            saveInputValues();//cookie保存
-        }*/
+        saveInputValues();    
     }
 
     /**
@@ -713,15 +711,15 @@ public with sharing class kdSurveyListCtrl {
     }
 
 
-    public void dummyAction() {
+    /*public void dummyAction() {
 
-    }
+    }*/
 
-    public Double offset{get{
+    /*public Double offset{get{
         TimeZone tz = UserInfo.getTimeZone();
         //Milliseconds to Day
         return tz.getOffset(DateTime.now()) / (1000 * 3600 * 24.0);
-    }}
+    }}*/
 
 	/**
      * Get record detail.
@@ -740,6 +738,8 @@ public with sharing class kdSurveyListCtrl {
 		system.debug('recordsearch() -> countQuery: ' + countQuery);
 		
 		List<AggregateResult> countCategory = database.query(countQuery);
+		
+		system.debug('countCategory: ' + countCategory);
 		
 		String queryStr = 'Select surveyId__c,FiscalYear__c,Period__c,SurveyType__c,Title__c,User__r.Hierarchical_Label_3__c,User__r.Hierarchical_Label_4__c,'
 						+ 'User__r.Hierarchical_Label_5__c,User__r.Id, User__r.KDDIEmployeeId__c, User__r.Name,ItemNumber__c,DisplayOrder__c,'
@@ -763,6 +763,8 @@ public with sharing class kdSurveyListCtrl {
 		system.debug('recordsearch() -> commentQuery: ' + commentQueryStr);
 		
 		List<auSurvey__c> surveyComment = database.query(commentQueryStr);
+		
+		system.debug('surveyComment: ' + surveyComment);
 		
 		data1 = new List<RadarData>();
 		data2 = new List<RadarData>();
@@ -802,9 +804,9 @@ public with sharing class kdSurveyListCtrl {
 				
 				if(fFirstData){
 					surveyType=auSurDet.SurveyType__c;
-					surveyShisha=auSurDet.User__r.Hierarchical_Label_3__c;
-					surveyUnifiedAgencyBranch=auSurDet.User__r.Hierarchical_Label_4__c;
-					surveyBusinessLocationBranchGroup=auSurDet.User__r.Hierarchical_Label_5__c;
+					hierarchicalLabel3=auSurDet.User__r.Hierarchical_Label_3__c;
+					hierarchicalLabel4=auSurDet.User__r.Hierarchical_Label_4__c;
+					hierarchicalLabel5=auSurDet.User__r.Hierarchical_Label_5__c;
 					surveyUserName=auSurDet.User__r.Name;
 					surveyFiscalYear=auSurDet.FiscalYear__c;
                     surveyTitle=auSurDet.Title__c;

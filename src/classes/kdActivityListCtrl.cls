@@ -15,6 +15,9 @@ public without sharing class kdActivityListCtrl {
 
     private User adminUser;
 
+    public Integer accountNewAttachmentSize {get; set;}
+    public Attachment accountNewAttachment {get;set;}
+
     public Evaluation__c eval {get;set;}
     public String evalDescription {get;set;}
     public String evalTarget {get;set;}
@@ -25,6 +28,7 @@ public without sharing class kdActivityListCtrl {
     public String evalMonthInput {get;set;}
     public String evalYearInput {get;set;}
     public String evalTypeInput {get;set;}
+    public Integer invoiceCount{get;set;}
 
     public String whereStr {get;set;}
     public String getWhereStrParam(){
@@ -48,6 +52,11 @@ public without sharing class kdActivityListCtrl {
     }
 
     public Id attachmentId {get; set;}
+
+    public Id invoiceAttachmentId{get;set;}
+    public List<Attachment> oldInvoices {get; set;}
+    public List<Attachment> oldPlans {get; set;}
+    public Id planId {get; set;}
 
     public List<Attachment> lsEventUpdateAttachment {get; set;}
     public Event eventUpdate {get;set;}
@@ -168,6 +177,7 @@ public without sharing class kdActivityListCtrl {
         DateTime endMonth = startMonth.addMonths(1).addDays(-1);
         filterDateFromStr = startMonth.format('yyyy/MM/dd');
         filterDateToStr = endMonth.format('yyyy/MM/dd');
+        accountNewAttachment = new Attachment();
 
         pageNum = 1; 
         pageSize = 20;
@@ -194,14 +204,7 @@ public without sharing class kdActivityListCtrl {
             }
             
             if(!String.isBlank(accId)){
-                try{
-                    parentAcc = [SELECT PartnerCode__c, Name, ParentAgencyId__r.Name, ParentAgencyId__r.PartnerCode__c, ManagementCorpCode__c, RegionalOfficeId__r.Name, 
-                            BranchId__r.Name, KDDISalesUserId__r.DisplayedUsernameFormula__c, Channel__c, 
-                            (SELECT Id, Name from Attachments ORDER BY CreatedDate DESC LIMIT 1)
-                            FROM Account WHERE Id = :accId];
-                } catch (Exception ex) {
-                    parentAcc = null;
-                }
+                reloadAccAttachment(accId);
             }
         }
 
@@ -214,14 +217,62 @@ public without sharing class kdActivityListCtrl {
 
         eventUpdate = new Event();
         lsEventUpdateAttachment = new List<Attachment>();
+        if(parentAcc != null) {
+            recordSearch(); 
+        }
+    }
+
+    private void reloadAccAttachment(String accId){
+        try{
+            parentAcc = [SELECT PartnerCode__c, Name, ParentAgencyId__r.Name, ParentAgencyId__r.PartnerCode__c, ManagementCorpCode__c, RegionalOfficeId__r.Name, 
+                    BranchId__r.Name, KDDISalesUserId__r.DisplayedUsernameFormula__c, Channel__c, UserRecordAccess.HasEditAccess,  
+                    (SELECT Id, Name, CreatedDate from Attachments ORDER BY CreatedDate DESC)
+                    FROM Account WHERE Id = :accId];
+        } catch (Exception ex) {
+            parentAcc = null;
+        }
 
         accAttachmentId = null;
+        oldInvoices = new List<Attachment>();
+
         if(parentAcc != null) {
             if(parentAcc.Attachments != null && parentAcc.Attachments.size() > 0){
                 accAttachmentId = parentAcc.Attachments[0].Id;
+                for(Integer i = 1; i < parentAcc.Attachments.size(); i++){
+                    oldInvoices.add(parentAcc.Attachments[i]);
+                }
             }
-            recordSearch(); 
         }
+        invoiceCount = oldInvoices.size();
+    }
+
+    public Pagereference addAccountNewAttachment() {
+      accountNewAttachment.OwnerId = UserInfo.getUserId();
+      accountNewAttachment.ParentId = parentAcc.Id; // the record the file is attached to
+      accountNewAttachment.IsPrivate = False;
+      system.debug('into addAccountNewAttachment: ' + accountNewAttachmentSize);
+      try {
+        if (accountNewAttachmentSize == NULL) {
+            errorMessage = 'ファイルは大きすぎです。25Moまでのファイルを選択してください。';
+        } else {
+            insert accountNewAttachment;
+            system.debug('inserted successfully: ' + accAttachmentId);
+            String accId = String.valueOf(parentAcc.Id);
+            For (Account acc : [SELECT Id FROM Account WHERE Id = :accId]) {
+                Update acc;
+            }
+            reloadAccAttachment(accId);
+        }
+      } catch (DMLException e) {
+        errorMessage = 'エラーが発生しました：' + e.getMessage();
+        ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error uploading attachment'));
+        return null;
+      } finally {
+        accountNewAttachment = new Attachment();
+      }
+
+      ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'Attachment uploaded successfully'));
+      return null;
     }
 
     //update content in 2 textbox in listing page
@@ -759,6 +810,12 @@ public without sharing class kdActivityListCtrl {
 
       ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'Attachment uploaded successfully'));
       return null;
+    }
+
+    public void invoiceAttachmentDelete(){
+        Attachment att = [SELECT id FROM Attachment WHERE id = :invoiceAttachmentId];
+        Delete att;
+        reloadAccAttachment(String.valueOf(parentAcc.Id));
     }
 
     public void kdKnowledgeAttachmentDelete() {

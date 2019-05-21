@@ -148,6 +148,14 @@ C事業本部 : Sector
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>OldOrganization__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>旧組織フラグ</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>RegionalOfficeCode__c</fullName>
         <externalId>true</externalId>
         <label>支社コード</label>
@@ -168,13 +176,25 @@ C事業本部 : Sector
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ShitenSortNo__c</fullName>
+        <externalId>false</externalId>
+        <label>支店順番</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>SortNo__c</fullName>
         <externalId>false</externalId>
-        <label>順番</label>
-        <length>10</length>
+        <label>支社順番</label>
+        <precision>10</precision>
         <required>false</required>
+        <scale>0</scale>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
+        <type>Number</type>
         <unique>false</unique>
     </fields>
     <label>組織マスタ</label>
@@ -186,6 +206,9 @@ C事業本部 : Sector
         <columns>RegionalOfficeName__c</columns>
         <columns>BranchName__c</columns>
         <columns>DeactivateDate__c</columns>
+        <columns>SortNo__c</columns>
+        <columns>ShitenSortNo__c</columns>
+        <columns>OldOrganization__c</columns>
         <filterScope>Everything</filterScope>
         <label>すべて選択</label>
         <language>ja</language>

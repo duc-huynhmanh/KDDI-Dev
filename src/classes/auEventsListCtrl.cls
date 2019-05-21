@@ -22,7 +22,6 @@ public with sharing class auEventsListCtrl {
     public id evtJunctionDeleteId {get; set;}
 
     public List<clsEvent> lsPeriods {get; set;}
-    public List<auSTPD__c> lsSTPD {get; set;}
 
     public Integer isOldData {get; set;}
 
@@ -43,6 +42,22 @@ public with sharing class auEventsListCtrl {
     public id dataId{get; set;}
     public Boolean isRestrictedUser {get; set;}
     public Boolean isShopUser {get; set;}
+    public Boolean isAgentUser {get; set;}
+    public Boolean isManagementUser {get; set;}
+
+    public String filterShisha {get; set;}
+    public String filterShiten {get; set;}
+    public String filterDairiten {get; set;}
+    public String filterUneiHojin {get; set;}
+    public String filterShop {get; set;}
+
+    public List<SelectOption> optShisha{get; set;}
+    public List<SelectOption> optShiten{get; set;}
+    public List<SelectOption> optDairiten{get; set;}
+    public List<SelectOption> optUneiHojin{get; set;}
+    public List<SelectOption> optShop{get; set;}
+
+    private String whereStr;
 
     // Page properties
     public Integer pageNum{get;set;}
@@ -85,6 +100,102 @@ system.debug('evtid :' + evt.id);
 
     }
 
+    public void refreshShiten() {
+        optShiten = auUtilChatter.getListShiten(currentUser, filterShisha);
+
+        // Initialize Shiten if no more selectable
+        if (filterShiten != NULL && filterShiten.length() > 0) {
+            Boolean fShitenFound = false;
+            for (SelectOption opt : optShiten) {
+                if (opt.getValue() == filterShiten) {
+                    fShitenFound = true;
+                    break;
+                }
+            }
+            if (!fShitenFound) {
+                filterShiten = NULL;
+            }
+
+        }
+
+        refreshDairitenFilter();
+    }
+
+    public void refreshDairitenFilter() {
+        optDairiten = auUtilChatter.getListDairiten(currentUser, filterShisha, filterShiten);
+
+        // Initialize Dairiten if no more selectable
+        if (filterDairiten != NULL && filterDairiten.length() > 0) {
+            Boolean fDairitenFound = false;
+            for (SelectOption opt : optDairiten) {
+                if (opt.getValue() == filterDairiten) {
+                    fDairitenFound = true;
+                    break;
+                }
+            }
+            if (!fDairitenFound) {
+                filterDairiten = NULL;
+            }
+
+        }
+
+        refreshUneiHojinFilter();
+    }
+
+    public void refreshUneiHojinFilter() {
+        optUneiHojin = auUtilChatter.getListUneiHojin(currentUser, filterShisha, filterShiten, filterDairiten);
+
+        // Initialize Uneihojin if no more selectable
+        if (filterUneiHojin != NULL && filterUneiHojin.length() > 0) {
+            Boolean fUneiHojinFound = false;
+            for (SelectOption opt : optUneiHojin) {
+                if (opt.getValue() == filterUneiHojin) {
+                    fUneiHojinFound = true;
+                    break;
+                }
+            }
+            if (!fUneiHojinFound) {
+                filterUneiHojin = NULL;
+            }
+
+        }
+
+        refreshShopFilter();
+    }
+
+    public void refreshShopFilter() {
+
+        optShop = new List<SelectOption>();
+        optShop.add(new SelectOption('', '全て'));
+        optShop.addAll(auUtilChatter.getListShops(currentUser, filterShisha, filterShiten, filterDairiten, filterUneiHojin));
+        if(optShop.size() > 1000){
+            for(Integer i = 1000; i<optShop.size(); i++){
+                optShop.remove(i);
+            }
+        }
+        // Initialize Uneihojin if no more selectable
+        if (filterShop != NULL && filterShop.length() > 0) {
+            Boolean fShopFound = false;
+            for (SelectOption opt : optShop) {
+                if (opt.getValue() == filterShop) {
+                    fShopFound = true;
+                    break;
+                }
+            }
+            if (!fShopFound) {
+                filterShop = NULL;
+            }
+
+        }
+
+    }
+
+    public void doSearch() {
+        whereStr = '';
+        this.pageNum = 1;
+        recordSearch();
+    }
+
 
     public Integer getTypeOfScreen(){return auMainTopCompCtrl.TYPE_SCREEN_STPD_EVENT;}
     
@@ -95,20 +206,38 @@ system.debug('evtid :' + evt.id);
      * Created on 2017/01/15
      */
     public auEventsListCtrl() {    
+
+        // 支店
+        optShisha = auUtilChatter.getListShisha(currentUser);
+        optShiten = auUtilChatter.getListShiten(currentUser, filterShisha);
+        optDairiten = auUtilChatter.getListDairiten(currentUser, filterShisha, filterShiten);
+        optUneiHojin = auUtilChatter.getListUneiHojin(currentUser, filterShisha, filterShiten, filterDairiten);
+        optShop = new List<SelectOption>();
+        optShop.add(new SelectOption('', '全て'));
+        optShop.addAll(auUtilChatter.getListShops(currentUser, filterShisha, filterShiten, filterDairiten, filterUneiHojin));
+        if(optShop.size() > 1000){
+            for(Integer i = 1000; i<optShop.size(); i++){
+                optShop.remove(i);
+            }
+        }
         pageSize = 20;
         pageNum = 1;
         errorMessage = '';
         isRestrictedUser = currentUser.IsRestrictedUser__c;
         isShopUser = (currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_SHOP);
+        isAgentUser = (currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT);
+        isManagementUser = (currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_MANAGEMENT);
         lsEventUpdateAttachment = new List<Attachment>();
         isOldData = 0;
         clearNewEvt();
         clearUpdateEvt();
 
+
+
         dataLimit = (Integer)(auCommunityCustomSettings__c.getOrgDefaults().dataLimitEvent__c == NULL ? 200 : auCommunityCustomSettings__c.getOrgDefaults().dataLimitEvent__c);
         dataLimitSTPD = (Integer)(auCommunityCustomSettings__c.getOrgDefaults().dataLimitEventSTPD__c == NULL ? 200 : auCommunityCustomSettings__c.getOrgDefaults().dataLimitEventSTPD__c);
         recordSearch();
-
+        
     }
 
     private void clearNewEvt() {
@@ -204,6 +333,33 @@ system.debug('evtid :' + evt.id);
         recordSearch();
     }
 
+    private List<String> getWhereStrList() {
+        List<String> strList = new List<String>();
+        if (isOldData != NULL && isOldData != 1) {
+            strList.add('(IsFinished__c = False)');
+        }
+
+        if (filterShop != null && this.filterShop.length() > 0) {
+            strList.add(auUtilCmn.appendInText('CreatedBy__r.AccountId', new List<String>{this.filterShop}));
+        } else if (this.filterUneiHojin != null && this.filterUneiHojin.length() > 0) {
+            strList.add('(CreatedBy__r.AccountId = \'' + filterUneiHojin + '\' OR ' +
+                        ' CreatedBy__r.Account.ParentId = \'' + filterUneiHojin + '\')');                
+        } else if (this.filterDairiten != null && this.filterDairiten.length() > 0) {
+            strList.add('(CreatedBy__r.AccountId = \'' + filterDairiten + '\' OR ' +
+                        ' CreatedBy__r.Account.ParentId = \'' + filterDairiten + '\' OR ' +
+                        ' CreatedBy__r.Account.Parent.ParentId = \'' + filterDairiten + '\')');                
+        } else if (this.filterShiten != null && this.filterShiten.length() > 0) {
+            // Filter on Shiten is used only if UneiHojin and shops have not been selected
+            strList.add('(CreatedBy__r.Account.BranchId__c = \'' + filterShiten + '\' OR ' +
+                        ' CreatedBy__r.Account.Branch2Id__c = \'' + filterShiten + '\')');                
+        } else if (this.filterShisha != null && this.filterShisha.length() > 0) {
+            // Filter on Shisha is used only if UneiHojin and shops have not been selected
+            strList.add('(CreatedBy__r.Account.RegionalOfficeId__c = \'' + filterShisha + '\' OR ' +
+                        ' CreatedBy__r.Account.RegionalOffice2Id__c = \'' + filterShisha + '\')');                
+        }
+        return strList;
+    }
+
     /**
      * Get the records to be shown.
      * 
@@ -234,9 +390,13 @@ system.debug('recordSearch');
                         ORDER BY EventDate__c DESC, EventTimeStart__c, EventTimeEnd__c, CreatedDate
                         LIMIT :dataLimit];
         }*/
-
-        String countQueryStr = 'SELECT COUNT() FROM auEvent__c WHERE IsFinished__c = ' + (isOldData != 1 ? 'False' : 'True');
+        if(String.isBlank(whereStr)) {
+            List<String> whereStrElems = getWhereStrList();
+            whereStr = joinWhereConditions(whereStrElems);
+        }
         
+        String countQueryStr = 'SELECT COUNT() FROM auEvent__c ' + whereStr;
+        system.debug('countQueryStr: ' + countQueryStr);
 
         recordsCount = database.countQuery(countQueryStr);
         if(recordsCount > 2000) {
@@ -244,12 +404,17 @@ system.debug('recordSearch');
         }
         system.debug('recordsCount: ' + recordsCount);
         if(recordsCount > 0){
+
+            String orderby = ' ORDER BY ' + (isOldData != 1 ? 'EventDate__c, ' : 'EventDate__c DESC, ') + 'EventTimeStart__c, EventTimeEnd__c, CreatedDate';
+
+            
+
             String queryStr = 'SELECT id, EventName__c, CreatedBy__r.DisplayedUsernameFormula__c, Type__c, Location__c, Members__c, EventDate__c, EventDateFormatted__c, EventTimeStart__c, TechnicalTimeFormatted__c, ' +
                                 'IsFinished__c, UserRecordAccess.HasEditAccess, ' +
                                 '(select id from Attachments) ' + 
-                                'FROM auEvent__c ' +
-                              'WHERE IsFinished__c = ' + (isOldData != 1 ? 'False ORDER BY EventDate__c, ' : 'True ORDER BY EventDate__c DESC, ') +
-                              'EventTimeStart__c, EventTimeEnd__c, CreatedDate';
+                                'FROM auEvent__c ' + whereStr + orderby;
+            
+            
             if(math.floor((recordsCount-1) / pageSize) + 1 < pageNum) {
                 pageNum = (Integer)math.floor((recordsCount-1) / pageSize) + 1;
             }

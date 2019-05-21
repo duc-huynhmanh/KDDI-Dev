@@ -63,7 +63,7 @@
       position: absolute;
       bottom: 15px;
       right: 0;
-      font-size: .833rem;      
+      font-size: .833rem;
     }
 
     .timeline__title a {
@@ -79,24 +79,24 @@
       background-color: #eee;
     }
     .timeline__comment__infos {
-      color: #999; 
+      color: #999;
       width: 100%;
       font-size: 0.833rem;
     }
     .timeline__comment__infos_date {
       font-size: 0.833rem;
-      color: #ed5500; 
+      color: #ed5500;
       float:right;
       text-align: right;
     }
     .timeline__comment__infos_date_delete {
-      color: #000; 
+      color: #000;
     }
 
     .comment-section {
       overflow-y: auto;
     }
-    
+
     .linkstyle {
       text-decoration: underline;
     }
@@ -185,7 +185,7 @@
 
       var obj2 = $j('.CxKnowledgeIdInput');
       obj2.val(key2);
-    
+
     }
 
     function callDeleteCommentCxKnowledge(key) {
@@ -196,7 +196,7 @@
         obj.val(key);
 
         jsDeleteCommentCxKnowledgeFeedElement();
-      
+
       }
     }
 
@@ -210,7 +210,7 @@
         jsDeleteCommentOnlyCxKnowledge();
 
       }
-    
+
     }
 
     function checkFileSize() {
@@ -224,12 +224,12 @@
                         getIEFileSize(file)
                         :
                         file.fileSize || file.size;
-     
+
                 goodSize = 65 * 1024 * 1024 > size;
                 if(!goodSize) {
                     alert('ファイルは大きすぎです。65Moまでのファイルを選択してください。');
                 }
-     
+
                 return goodSize;
             }
         });
@@ -237,12 +237,12 @@
     }
 
     function setupAutogrow(){
-      $j('.autogrow').attr("rows", "1");    
-      autosize(document.querySelectorAll('.autogrow'));   
+      $j('.autogrow').attr("rows", "1");
+      autosize(document.querySelectorAll('.autogrow'));
     }
 
-    window.onload = function onLoadJS() {   
-      setupAutogrow();  
+    window.onload = function onLoadJS() {
+      setupAutogrow();
     }
 
   </script>
@@ -256,7 +256,7 @@
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 <apex:form >
-           
+
 
   <c:auMainTopComp typeOfScreen="{!typeOfScreen}" />
 
@@ -367,7 +367,7 @@
                           <apex:outputLink value="javascript:void(0)">
                             <apex:actionSupport event="onclick" action="{!goToPageLastBfr5}" />
                             <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 5}" />
-                          </apex:outputLink>                          
+                          </apex:outputLink>
                         </li>
                         <!-- 4th button -->
                         <li class="{!IF(pageNum == 4, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 4 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
@@ -383,7 +383,7 @@
                           <apex:outputLink value="javascript:void(0)">
                             <apex:actionSupport event="onclick" action="{!goToPageLastBfr4}" />
                             <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 4}" />
-                          </apex:outputLink>                          
+                          </apex:outputLink>
                         </li>
                         <!-- 5th button -->
                         <li class="{!IF(pageNum == 5, 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 5 || (FLOOR(((recordScount - 1) / pageSize) + 1) > 8 && pageNum > 4), 'hidden', '')}">
@@ -428,7 +428,7 @@
                           <apex:outputLink value="javascript:void(0)">
                             <apex:actionSupport event="onclick" action="{!goToPage7}"/>
                             <apex:outputText value="7" />
-                          </apex:outputLink>                          
+                          </apex:outputLink>
                         </li>
                         <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
                           <span>…</span>
@@ -444,7 +444,7 @@
                           <apex:outputLink value="javascript:void(0)">
                             <apex:actionSupport event="onclick" action="{!goToPage8}" />
                             <apex:outputText value="8" />
-                          </apex:outputLink>                          
+                          </apex:outputLink>
                         </li>
                         <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1), 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8), 'hidden', '')}">
                           <apex:outputLink value="javascript:void(0)">
@@ -490,7 +490,7 @@
                     </div>
                  </div>
 
- 
+
                 </div>
 
               </div>
@@ -503,9 +503,9 @@
                     </span>
                     <div class="timeline__info">
 
-<!--                      
+<!--
                       <p class="timeline__title">
-                        
+
                         <apex:outputText value="コメント" rendered="{!mpFeedData[feed.ParentId].IsCommentOnly__c}" />
 
                         <apex:outputLink value="/cx" rendered="{!!mpFeedData[feed.ParentId].IsCommentOnly__c}">
@@ -526,7 +526,7 @@
                         <apex:param name="shop" value="{!mpFeedData[feed.ParentId].CreatedBy__c}" />
                         <p class="timeline__location linkstyle">{!mpFeedData[feed.ParentId].CreatedBy__r.DisplayedUsernameFormula__c}</p>
                       </apex:outputLink>
-                      
+
                       <span class="timeline__date">
                         <apex:outputText value="{0,date,yyyy.MM.dd}">
                           <apex:param value="{!mpFeedData[feed.ParentId].LastModifiedDateValue__c}" />
@@ -535,8 +535,12 @@
                     </div>
                   </div>
 
+                  <div class="timeline__Name">
+                      	<apex:outputText value="{!mpFeedData[feed.ParentId].Name}"/>
+                  </div>
+
                   <div class="timeline__detail">
-                    
+
                     <p>
                       <apex:outputPanel rendered="{!!mpFeedData[feed.ParentId].IsCommentOnly__c}">
                         <apex:outputLink value="/cx" rendered="{!!mpFeedData[feed.ParentId].IsCommentOnly__c}">
@@ -555,11 +559,11 @@
                         <br/>
                       </apex:outputPanel>
 
-                     
+
                       <apex:repeat value="{!mpFeedData[feed.ParentId].Attachments}" var="att" >
 
 
-                        <apex:outputPanel rendered="{!att.ContentType == 'video/mp4' || 
+                        <apex:outputPanel rendered="{!att.ContentType == 'video/mp4' ||
                                                       att.ContentType == 'video/mpeg' ||
                                                       att.ContentType == 'video/quicktime' ||
                                                       att.ContentType == 'video/x-m4v' ||
@@ -567,9 +571,9 @@
                                                       att.ContentType == 'video/x-msvideo'}">
                           <video style="max-width: 15rem;max-height: 15rem;margin-left: 1rem;margin-top: 1rem;"  controls="controls">
                                 <source src="/servlet/servlet.FileDownload?file={!att.Id}"
-                                        type="video/mp4" />        
+                                        type="video/mp4" />
                                 Your browser does not support the video tag.
-                          </video> 
+                          </video>
                         </apex:outputPanel>
 
                         <apex:outputLink value="/servlet/servlet.FileDownload?file={!att.Id}"
@@ -580,16 +584,16 @@
                                                      att.ContentType == 'image/jpg'}"
                                          target="_blank">
 
-                          <apex:image style="max-width: 15rem;max-height: 15rem;margin-left: 1rem;margin-top: 1rem;image-orientation: from-image;" 
+                          <apex:image style="max-width: 15rem;max-height: 15rem;margin-left: 1rem;margin-top: 1rem;image-orientation: from-image;"
                               url="/servlet/servlet.FileDownload?file={!att.Id}"
-                              rendered="{!att.ContentType == 'image/jpeg' || 
+                              rendered="{!att.ContentType == 'image/jpeg' ||
                                           att.ContentType == 'image/png' ||
                                           att.ContentType == 'image/gif' ||
                                           att.ContentType == 'image/jpg'}"/>
 
-                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;" 
+                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;"
                               url="{!URLFOR($Resource.auResources,'icons/Pdf-icon.png')}"
-                              rendered="{!att.ContentType == 'application/pdf'}"/> 
+                              rendered="{!att.ContentType == 'application/pdf'}"/>
 
                         </apex:outputLink>
 
@@ -606,29 +610,29 @@
                                                      att.ContentType != 'image/gif' &&
                                                      att.ContentType != 'image/jpg'}">
 
-                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;" 
+                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;"
                               url="{!URLFOR($Resource.auResources,'icons/Excel-icon.png')}"
-                              rendered="{!att.ContentType == 'application/vnd.ms-excel' || 
+                              rendered="{!att.ContentType == 'application/vnd.ms-excel' ||
                                           att.ContentType == 'application/vnd.ms-excel.sheet.macroEnabled.12' ||
                                           att.ContentType == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
                                           att.ContentType == 'text/csv'}"/>
 
-                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;" 
+                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;"
                               url="{!URLFOR($Resource.auResources,'icons/Word-icon.png')}"
                               rendered="{!att.ContentType == 'application/msword' ||
                                           att.ContentType == 'application/vnd.ms-word.document.macroEnabled.12' ||
                                           att.ContentType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}"/>
 
-                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;" 
+                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;"
                               url="{!URLFOR($Resource.auResources,'icons/PowerPoint-icon.png')}"
                               rendered="{!att.ContentType == 'application/vnd.google-apps.presentation' ||
                                           att.ContentType == 'application/vnd.ms-powerpoint' ||
                                           att.ContentType == 'application/vnd.ms-powerpoint.presentation.macroEnabled.12' ||
                                           att.ContentType == 'application/vnd.openxmlformats-officedocument.presentationml.presentation'}"/>
 
-                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;" 
+                          <apex:image style="max-width: 5rem;max-height: 5rem;margin-left: 1rem;margin-top: 1rem;"
                               url="{!URLFOR($Resource.auResources,'icons/File-icon.png')}"
-                              rendered="{!att.ContentType != 'image/jpeg' && 
+                              rendered="{!att.ContentType != 'image/jpeg' &&
                                           att.ContentType != 'image/png' &&
                                           att.ContentType != 'image/gif' &&
                                           att.ContentType != 'image/jpg' &&
@@ -688,14 +692,14 @@
                             <apex:commandLink styleClass="linkstyle"
                                               onclick="callAddFavoriteCxKnowledge('{!feed.ParentId}')"
                                               rendered="{!mpFeedData[feed.ParentId].CXKnowledgeFavorite_CXKnowledge__r == null || mpFeedData[feed.ParentId].CXKnowledgeFavorite_CXKnowledge__r.size == 0}"
-                                              reRender="DUMMY">                        
+                                              reRender="DUMMY">
                               <i class="icon icon--favorite--off" style="margin-top: -3px;"></i>
                             </apex:commandLink>
 
                             <apex:commandLink styleClass="linkstyle"
                                               onclick="callRemoveFavoriteCxKnowledge('{!feed.ParentId}')"
                                               rendered="{!mpFeedData[feed.ParentId].CXKnowledgeFavorite_CXKnowledge__r != null && mpFeedData[feed.ParentId].CXKnowledgeFavorite_CXKnowledge__r.size > 0}"
-                                              reRender="DUMMY">                        
+                                              reRender="DUMMY">
                               <i class="icon icon--favorite--on" style="margin-top: -3px;"></i>
                             </apex:commandLink>
                           </apex:actionRegion>
@@ -726,8 +730,8 @@
                               <apex:outputPanel rendered="{!feedCmt.InsertedById == $User.Id}"><br/>
                                 <apex:actionRegion renderRegionOnly="false">
                                   <apex:commandLink styleclass="timeline__comment__infos_date_delete linkstyle"
-                                                    value="削除" 
-                                                    onclick="callDeleteCommentCxKnowledge('{!feedCmt.Id}');" 
+                                                    value="削除"
+                                                    onclick="callDeleteCommentCxKnowledge('{!feedCmt.Id}');"
                                                     reRender="DUMMY" />
                                 </apex:actionRegion>
                               </apex:outputPanel>
@@ -742,7 +746,7 @@
                     </apex:repeat>
                   </div>
                   </apex:outputPanel>
-                  
+
                   <div class="timeline__post">
                     <span class="icon-container" style="line-height: 0;border-width: 0;">
 <!--                      <i class="icon icon--user is-large"></i>
@@ -751,24 +755,24 @@
                     <div class="post-section">
                       <apex:outputPanel id="commentNew">
                       <apex:actionRegion renderRegionOnly="false">
-                      
-                      <apex:inputField value="{!mpFeedData[feed.ParentId].TechnicalAlwaysBlank__c}"
+
+                      <apex:inputField value="{!mpFeedData[feed.ParentId].TechnicalAlwaysBlank__c}" onfocus="setupAutogrow();"
                                        html-placeholder="コメントする…"
                                        styleClass="autogrow"/>
-                      
+
                       <div class="post-section__buttons">
-                        <!-- <a href=""><i class="icon icon--camera"></i></a> --> 
-                        
+                        <!-- <a href=""><i class="icon icon--camera"></i></a> -->
+
                           <apex:commandLink onclick="callCommentCxKnowledge('{!feed.Id}', '{!feed.ParentId}')" reRender="DUMMY" oncomplete="jsCommentCxKnowledgeFeedElement();">
                             <i class="icon icon--caption"></i>
                           </apex:commandLink>
-                        
+
                       </div>
                       </apex:actionRegion>
                       </apex:outputPanel>
                     </div>
                   </div>
-                  
+
                 </article>
               </div>
 
@@ -776,9 +780,9 @@
           </div>
           </section>
         </div>
-        
+
         <div class="row is-standard" style="overflow-y: auto; margin-left: 3.5%; width: 36%">
-        
+
           <apex:actionRegion >
             <apex:outputPanel id="pnlRanking">
               <section class="section section--info">
@@ -811,11 +815,11 @@
                       </li>
                     </apex:repeat>
                   </ul>
-                </div>            
+                </div>
               </section>
           </apex:outputPanel>
         </apex:actionRegion>
-            
+
 
 
           <section class="section section--knowledge addspace">
@@ -879,7 +883,7 @@
                                     style="width: 5rem; height: 2.3rem; line-height: 2.3rem; margin-top: 0.5rem; margin-right: 0; float: right;"
                                     reRender="pnlReceiveApprovalRequestEmail"/>
 
-                  <apex:commandLink value="編集" styleClass="button button--post" action="{!editReceiveApprovalRequestEmail}" 
+                  <apex:commandLink value="編集" styleClass="button button--post" action="{!editReceiveApprovalRequestEmail}"
                                     rendered="{!!isReceiveApprovalRequestEmailEdit}"
                                     style="width: 5rem; height: 2.3rem; line-height: 2.3rem; margin-top: 0.5rem; margin-right: 0; float: right;"
                                     reRender="pnlReceiveApprovalRequestEmail" />
@@ -887,8 +891,8 @@
               </section>
 
             </apex:outputPanel>
-          </apex:actionRegion>    
-          
+          </apex:actionRegion>
+
 
         </div>
 

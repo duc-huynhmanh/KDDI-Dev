@@ -4,8 +4,6 @@ public with sharing class auCXKnowledgeListCSVExportingCtrl {
     private String orderby;
     private Map<String, String> statusMap;
     private Map<String, String> cat1Map;
-    private Map<String, String> cat2Map;
-    private Map<String, String> cat3Map;
 
     private User currentUser = [SELECT DisplayedUsernameFormula__c, Profile.Name, Account.ParentId, AccountId, Account.Name, UserRole.DeveloperName, IsRestrictedUser__c FROM User WHERE Id = :UserInfo.getUserId()];
 
@@ -13,19 +11,11 @@ public with sharing class auCXKnowledgeListCSVExportingCtrl {
         lslsRow = new List<List<String>>();
         statusMap = new Map<String, String>();
         cat1Map = new Map<String, String>();
-        cat2Map = new Map<String, String>();
-        cat3Map = new Map<String, String>();
         for (Schema.PicklistEntry f : auCXKnowledge__c.Status__c.getDescribe().getPicklistValues()) {
             statusMap.put(f.getValue(), f.getLabel());
         }
         for (Schema.PicklistEntry f : auCXKnowledge__c.Category1__c.getDescribe().getPicklistValues()) {
             cat1Map.put(f.getValue(), f.getLabel());
-        }
-        for (Schema.PicklistEntry f : auCXKnowledge__c.Category2__c.getDescribe().getPicklistValues()) {
-            cat2Map.put(f.getValue(), f.getLabel());
-        }
-        for (Schema.PicklistEntry f : auCXKnowledge__c.Category3__c.getDescribe().getPicklistValues()) {
-            cat3Map.put(f.getValue(), f.getLabel());
         }
         createFileName();
         queryData();
@@ -45,7 +35,7 @@ public with sharing class auCXKnowledgeListCSVExportingCtrl {
 
     private void createFileName(){
         String fileName = 'auCxKnowledgeList_' + Datetime.now().format('yyyyMMdd') + '.csv';
-        sTitle = '"支社名","支店名","拠点コード","ショップ名","作成日","公開日","CXナレッジID","公開済み等","タイトル","投稿内容","添付有無","公開範囲","いいね!数","承認コメント","公開承認コメント","コメント数","コメントした人","コメント内容","Category1","Category2","Category3","スタッフNo","CXナレッジへのリンク"';
+        sTitle = '"支社名","支店名","拠点コード","ショップ名","作成日","公開日","CXナレッジID","公開済み等","タイトル","投稿内容","添付有無","公開範囲","いいね!数","承認コメント","公開承認コメント","コメント数","コメントした人","コメント内容","Category1","Category2","Category3","Category4","Category5","auエキスパートレポート フラグ","スタッフNo","CXナレッジへのリンク"';
         Apexpages.currentPage().getHeaders().put('content-disposition', 'attachment; filename="";filename*=UTF-8\'\'' + EncodingUtil.urlEncode(fileName, 'UTF-8'));
     }
 
@@ -59,7 +49,7 @@ public with sharing class auCXKnowledgeListCSVExportingCtrl {
                     '        CreatedBy__r.Account.RegionalOfficeId__r.Name, CreatedBy__r.Account.RegionalOffice2Id__r.Name, ' +
                     '        CreatedBy__r.Account.Channel__c, CreatedBy__r.Account.PartnerCode__c, CreatedBy__r.Account.Name, ' +
                     '        CreatedDate, LastModifiedDateValue__c, Name, Status__c, Title__c, Contribution__c, ScopeSharing__c, ' +
-                    '        AcceptComment__c, NationalAcceptComment__c, Category1__c, Category2__c, Category3__c, ' +
+                    '        AcceptComment__c, NationalAcceptComment__c, Category1__c, hasExpertCategory__c, ' +
                     '        (select LikeCount, CommentCount, CreatedDate from Feeds), ' +
                     '        (select Name from Attachments)' +
                     ' FROM auCXKnowledge__c';
@@ -143,6 +133,8 @@ public with sharing class auCXKnowledgeListCSVExportingCtrl {
             csvRow1 += ',"' + convertString(k.Contribution__c) + '"';
             //添付有無
             csvRow1 += ',"' + (k.Attachments.size() > 0 ? '○' : '') + '"';
+            
+            
             //公開範囲
             csvRow1 += ',"' + convertString(k.ScopeSharing__c) + '"';
             //いいね!数
@@ -153,13 +145,23 @@ public with sharing class auCXKnowledgeListCSVExportingCtrl {
             csvRow1 += ',"' + convertString(k.NationalAcceptComment__c) + '"';
             //コメント数
             csvRow1 += ',"' + (k.Feeds != null && k.Feeds.size() > 0 ? k.Feeds[0].CommentCount : 0) + '"';
-            
+
+            List<String> cats = new List<String>();
+            if(!String.isEmpty(k.Category1__c)){
+                cats = k.Category1__c.split(';');
+            }
             //Category1
-            String csvRow2 = ',"' + (String.isBlank(k.Category1__c) ? '' : cat1Map.get(convertString(k.Category1__c))) + '"';
+            String csvRow2 = ',"' + (cats.size() >= 1 ? cat1Map.get(convertString(cats[0])) : '') + '"';
             //Category2
-            csvRow2 += ',"' + (String.isBlank(k.Category2__c) ? '' : cat2Map.get(convertString(k.Category2__c))) + '"';
+            csvRow2 += ',"' + (cats.size() >= 2 ? cat1Map.get(convertString(cats[1])) : '') + '"';
             //Category3
-            csvRow2 += ',"' + (String.isBlank(k.Category3__c) ? '' : cat3Map.get(convertString(k.Category3__c))) + '"';
+            csvRow2 += ',"' + (cats.size() >= 3 ? cat1Map.get(convertString(cats[2])) : '') + '"';
+            //Category4
+            csvRow2 += ',"' + (cats.size() >= 4 ? cat1Map.get(convertString(cats[3])) : '') + '"';
+            //Category5
+            csvRow2 += ',"' + (cats.size() >= 5 ? cat1Map.get(convertString(cats[4])) : '') + '"';
+            //auエキスパートレポートが選択されている
+            csvRow2 += ',"' + (k.hasExpertCategory__c ? '○' : '') + '"';
             //スタッフNo
             csvRow2 += ',"' + ((!String.isBlank(k.Staff_No__c) && checkStaffNoVisibility(k)) ? convertString(k.Staff_No__c) : '') + '"';
 

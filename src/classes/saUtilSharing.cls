@@ -130,7 +130,7 @@ public without sharing class saUtilSharing
     }
 
 
-    public static List<User> getMessageSharedUsers(Id messageId) {
+    /*public static List<User> getMessageSharedUsers(Id messageId) {
 
       List<saMessage__share> lsMsgShare = [SELECT id, userOrGroupId
                                            FROM saMessage__share
@@ -148,19 +148,19 @@ public without sharing class saUtilSharing
               FROM User
               WHERE Id in:lsUsrId];
 
-    }
+    }*/
 
 
     public static void setMessageSharedUsers(Id messageId, List<Id> usrToShare, String msgType) {
 
-      List<saMessage__share> lsPermissionsToRemove = [SELECT id
+      /*List<saMessage__share> lsPermissionsToRemove = [SELECT id
                                                       FROM saMessage__share
                                                       WHERE ParentId = :messageId
                                                       AND RowCause IN (:Schema.saMessage__share.RowCause.IndividualUserFromAdmin__c,
                                                                        :Schema.saMessage__share.RowCause.OtherAdmin__c)
                                                      ];
 
-      delete lsPermissionsToRemove;
+      delete lsPermissionsToRemove;*/
 
       List<saMessageDetail__c> lsDetailToRemove = [SELECT id
                                                    FROM saMessageDetail__c
@@ -170,17 +170,17 @@ public without sharing class saUtilSharing
 
       delete lsDetailToRemove;
 
-      List<saMessage__share> lsPermissions = new List<saMessage__share>();
+      //List<saMessage__share> lsPermissions = new List<saMessage__share>();
       List<saMessageDetail__c> lsDetails = new List<saMessageDetail__c>();
 
       // Share the list of approvers
       for(Id idUsr : usrToShare){
-          saMessage__share perm = new saMessage__share();
+          /*saMessage__share perm = new saMessage__share();
           perm.ParentId = messageId;
           perm.userOrGroupId = idUsr;
           perm.RowCause = Schema.saMessage__share.RowCause.IndividualUserFromAdmin__c;
           perm.AccessLevel = 'read';
-          lsPermissions.add(perm);  
+          lsPermissions.add(perm);  */
 
           saMessageDetail__c det = new saMessageDetail__c();
           det.saMessage__c = messageId;
@@ -190,7 +190,7 @@ public without sharing class saUtilSharing
       }
 
       // Share with other admins
-      if (msgType == saConstantCmn.SA_MESSAGE_TYPE_TASK) {
+      /*if (msgType == saConstantCmn.SA_MESSAGE_TYPE_TASK) {
           List<UserRole> lsUsrRole = [Select Id From UserRole Where DeveloperName = :auConstantCmn.ROLE_CODE_HONBU];
           List<Group> lsGrpRole = [SELECT id FROM Group WHERE Type = 'RoleAndSubordinates' and RelatedId in :lsUsrRole];
           for (Group grp : lsGrpRole) {
@@ -205,7 +205,7 @@ public without sharing class saUtilSharing
 
       if (lsPermissions.size() > 0) {
           Insert lsPermissions;    
-      }
+      }*/
       if (lsDetails.size() > 0) {
           Insert lsDetails;    
       }

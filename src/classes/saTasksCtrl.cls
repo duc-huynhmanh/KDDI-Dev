@@ -9,17 +9,17 @@ public with sharing class saTasksCtrl {
     public String idMessage {get;set;}
     public String currentMessageId {get;set;}
 
-    public String replyComment {get;set;}
+    //public String replyComment {get;set;}
 
     public User myUser {get;private set;}
 
-    public Integer getTypeOfScreen(){return auMainTopCompCtrl.TYPE_SCREEN_SA_TODO;}
+    //public Integer getTypeOfScreen(){return auMainTopCompCtrl.TYPE_SCREEN_SA_TODO;}
 
-    public List<saDocuments__c> lsDocs {get;set;}
-    public List<ContentVersion> lsContentVersion {get;set;}
+    //public List<saDocuments__c> lsDocs {get;set;}
+    //public List<ContentVersion> lsContentVersion {get;set;}
 
-    public String categoryName {get;set;}
-    public String idDocumentCategory {get;set;}
+    //public String categoryName {get;set;}
+    //public String idDocumentCategory {get;set;}
 
     public Integer cxKnowledgeNewAttachmentSize {get; set;}
     Transient Attachment cxKnowledgeNewAttachmentLocal;
@@ -29,6 +29,13 @@ public with sharing class saTasksCtrl {
             cxKnowledgeNewAttachmentLocal = new Attachment();
         return cxKnowledgeNewAttachmentLocal;
     }
+
+    private User currentUser = [SELECT Id, Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
+    //Not used
+    /*private Boolean isUserAdministrator() {
+      return (currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN || 
+            currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP);
+    }*/
 
 
     public boolean isTabMsgRead {get; set;}
@@ -62,7 +69,7 @@ public with sharing class saTasksCtrl {
       system.debug('Step 2'); 
       cxKnowledgeNewAttachmentLocal.IsPrivate = False;
 	  system.debug('Step 3'); 
-
+	  system.debug('Current Message Id ' + currentMessage.msg.Id); 
       try {
         if (cxKnowledgeNewAttachmentSize == NULL) {
             messageError = 'ファイルは大きすぎです。65Moまでのファイルを選択してください。';
@@ -71,6 +78,7 @@ public with sharing class saTasksCtrl {
         }
 
 		system.debug('Step 4'); 
+		system.debug('Current Message Id ' + currentMessage.msg.Id);
         // Refresh the list of attachments
         currentMessage.refreshMessageDetail();
 
@@ -93,6 +101,7 @@ public with sharing class saTasksCtrl {
     public void dummyAction() {
     }
 
+	//Not used?
     public PageReference redirectIfNecessaryDesktop(){
         auUtilPushNotifications.resetPushtNotificationTodo();
         return null;
@@ -144,6 +153,7 @@ public with sharing class saTasksCtrl {
                                        AND Type__c = :saConstantcmn.SA_MESSAGE_TYPE_TASK
                                        ORDER BY DeadlineDatetime__c DESC NULLS LAST, PublishedDatetime__c ASC
                                        LIMIT 200];
+      
       lsMsg = new List<clsMessage>();
       for (saMessage__c msg : lsMessages) {
         lsMsg.add(new clsMessage(msg, false));

@@ -19,11 +19,11 @@ global with sharing class saDailyReportEditorForAdminCtl {
   // パターン５
   private static final String DISPLAY_PATTERN_5 = 'パターン５';
 
-  public static final String USER_BASE_QUERY = ' SELECT id, Name, Profile.Name, UserRole.Name, UserRole.DeveloperName, TechnicalString__c, Department FROM User ';
-  public static final String USER_BASE_QUERY_SA = ' SELECT id, (Select BusinessLocation__r.BusinessLocationName__c from saBusinessLocationDetail_user__r order by Type__c Nulls Last), Name, Profile.Name, UserRole.Name, UserRole.DeveloperName, TechnicalString__c FROM User ';
-    
-  public String previewURL{get; set;} 
-  public String currentInquiryId{get; set;} 
+  public static final String USER_BASE_QUERY = ' SELECT id, Name, Profile.Name, UserRole.Name, UserRole.DeveloperName, TechnicalString__c, Department, SAUserId__c FROM User ';
+  public static final String USER_BASE_QUERY_SA = ' SELECT id, (Select BusinessLocation__r.BusinessLocationName__c from saBusinessLocationDetail_user__r order by Type__c Nulls Last), Name, Profile.Name, UserRole.Name, UserRole.DeveloperName, TechnicalString__c, SAUserId__c FROM User ';
+
+  public String previewURL{get; set;}
+  public String currentInquiryId{get; set;}
   public Boolean isReadOnly{get; set;}
   public Boolean isReadOnlyUsers{get; set;}
   public Boolean isCopy{get; set;}
@@ -44,13 +44,14 @@ global with sharing class saDailyReportEditorForAdminCtl {
   public List<SelectOption> SARole7Options{get; set;}
   public List<SelectOption> SARole8Options{get; set;}
   public List<SelectOption> privacyOptions{get; set;}
+  public Integer numberOfUsers{get{return idm.itemsReply.size();}}
 
   public List<SelectOption> KDDIRole5Options{get; set;}
   public List<SelectOption> KDDIRole6Options{get; set;}
 
   public List<SelectOption> ShopRole5Options{get; set;}
   public List<SelectOption> ShopRole6Options{get; set;}
-  
+
   public String filterSARole5Option{get; set;}
   public String filterSARole6Option{get; set;}
   public String filterSARole7Option{get; set;}
@@ -70,8 +71,8 @@ global with sharing class saDailyReportEditorForAdminCtl {
   public String patternDataToSend {get;set;}
   public String groupName {get;set;}
   public List<User> groupUsers {get;set;}
-	
-  private User currentUser = [SELECT Profile.Name, MailAddressMemory6__c, MailAddressMemory7__c, MailAddressMemory8__c, MailAddressMemory9__c, MailAddressMemory10__c, 
+
+  private User currentUser = [SELECT Profile.Name, MailAddressMemory6__c, MailAddressMemory7__c, MailAddressMemory8__c, MailAddressMemory9__c, MailAddressMemory10__c,
               UserRole.DeveloperName, UserRole.ParentRoleId, Department, Signature, EmailHeader__c FROM User WHERE Id = :UserInfo.getUserId()];
   private Boolean isUserProfileEvolva(){
     return currentUser.Profile.Name == auConstantCmn.PROFILE_EVOLVA_USER ||
@@ -79,7 +80,7 @@ global with sharing class saDailyReportEditorForAdminCtl {
   }
 
   public Boolean getIsUserAdministrator() {
-    return (currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN || 
+    return (currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN ||
             currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP);
   }
 
@@ -103,7 +104,7 @@ global with sharing class saDailyReportEditorForAdminCtl {
     if (count == NULL) {
       count = 0;
     }
-    
+
     return '' + count;
 
   }
@@ -112,6 +113,15 @@ global with sharing class saDailyReportEditorForAdminCtl {
                                 FROM UserRole
                                 WHERE PortalType <> 'CustomerPortal'
                                 ORDER BY DeveloperName];
+
+  /**
+  * @description
+  * @param
+  * @return
+  *
+  */
+
+
 
 	public saDailyReportEditorForAdminCtl() {
 
@@ -129,7 +139,7 @@ global with sharing class saDailyReportEditorForAdminCtl {
 	    if (params.containsKey(SCROLL_TOP)) {
 	      scrollTopValue = double.valueof(params.get(SCROLL_TOP));
 	    }
-      
+
       callType = CALL_TYPE_DAILYREPORT;
       if (params.containsKey(URL_PARAM_NAME_CALLTYPE)) {
         callType = params.get(URL_PARAM_NAME_CALLTYPE);
@@ -142,8 +152,8 @@ global with sharing class saDailyReportEditorForAdminCtl {
       mpAnswerType = new Map<String, String>();
       for (Schema.PicklistEntry f : saInquiryDetail__c.AnswerType__c.getDescribe().getPicklistValues()) {
         mpAnswerType.put(f.getValue(), f.getLabel());
-      }       
- 
+      }
+
       if (params.containsKey(PARAM_ID)) {
         String targetId = params.get(PARAM_ID);
         rec = getTargetRecord(targetId);
@@ -165,7 +175,7 @@ global with sharing class saDailyReportEditorForAdminCtl {
       } else {
         rec = createNewRecord();
         this.isNew = true;
-      }      
+      }
 
       isTypeSanxHearing = (callType == CALL_TYPE_SANX_HEARING);
       isTypeAuHearing = (callType == CALL_TYPE_AU_HEARING);
@@ -188,10 +198,10 @@ global with sharing class saDailyReportEditorForAdminCtl {
 	  }else{
 	  		this.previewURL='';
 	  }
-	  
-	  
 
-      idm = new InquiryManage(rec, isCopy); 
+
+
+      idm = new InquiryManage(rec, isCopy);
 
       this.isCopy = isCopy;
       this.isValid = true;
@@ -219,8 +229,8 @@ global with sharing class saDailyReportEditorForAdminCtl {
       String branchRoleMemo = idm.parentRec.BranchCode__c;
       inputRoleShisha();
       idm.parentRec.BranchCode__c = branchRoleMemo;
-	  
-	     SARole5Options = getSAShishaOptions();  
+
+	     SARole5Options = getSAShishaOptions();
       if (SARole5Options.size() == 2) {
         filterSARole5Option = SARole5Options[1].getValue();
         inputSARole5Option();
@@ -259,7 +269,7 @@ global with sharing class saDailyReportEditorForAdminCtl {
 	  for(Schema.PicklistEntry pv : saInquiry__c.PrivacySetting__c.getDescribe().getPicklistValues()){
 	 	privacyOptions.add(new SelectOption(pv.getValue(), pv.getLabel()));
 	  }
-	  
+
 	  } catch (Exception e) {
       Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, '不正な操作が行われました。' + e.getMessage()));
       return;
@@ -267,6 +277,10 @@ global with sharing class saDailyReportEditorForAdminCtl {
 
 	}
 
+  /**
+  * @description this method is called when select pulldown of "組織1"(screen of "SAユーザー選択" from "SAユーザー追加" button).
+  *              pass the information of "組織1" which is selected and change the contents in "組織2" pulldown.
+  */
   public void inputSARole5Option() {
 
     SARole6Options = new List<SelectOption>();
@@ -295,6 +309,10 @@ global with sharing class saDailyReportEditorForAdminCtl {
 
   }
 
+ /**
+  * @description this method is called when select pulldown of "組織2"(screen of "SAユーザー選択" from "SAユーザー追加" button).
+  *              pass the information of "組織1" which is selected and change the contents in "組織3" pulldown.
+  */
   public void inputSARole6Option() {
 
     SARole7Options = new List<SelectOption>();
@@ -321,7 +339,10 @@ global with sharing class saDailyReportEditorForAdminCtl {
 
   }
 
-
+  /**
+   * @description this method is called when select pulldown of "組織3"(screen of "SAユーザー選択" from "SAユーザー追加" button).
+   *              pass the information of "組織4" which is selected and change the contents in "組織2" pulldown.
+   */
   public void inputSARole7Option() {
 
     SARole8Options = new List<SelectOption>();
@@ -345,6 +366,10 @@ global with sharing class saDailyReportEditorForAdminCtl {
 
   }
 
+  /**
+   * @description this method is called when select pulldown of "組織1"(screen of "KDDIユーザー選択" from "KDDIユーザー追加" button) at"ヒアリング"page.
+   *              pass the information of "組織1" which is selected and change the contents in "組織2" pulldown.
+   */
   public void inputKDDIRole5Option() {
 
     KDDIRole6Options = new List<SelectOption>();
@@ -367,7 +392,9 @@ global with sharing class saDailyReportEditorForAdminCtl {
     }
 
   }
-
+  /**
+   * @description can't find the screen which this method is used.
+   */
   public void inputShopRole5Option() {
 
     ShopRole6Options = new List<SelectOption>();
@@ -400,12 +427,16 @@ global with sharing class saDailyReportEditorForAdminCtl {
 
   }
 
+  /**
+   * @description this method is called when select pulldown of "支社" at "ヒアリング"page.
+   *              pass the information of "支社" which is selected and change the contents in "支店" pulldown.
+   */
   public void inputRoleShisha() {
 
 	system.debug('inputRoleShisha');
 
     roleShitenDisplayedOptions = new List<SelectOption>();
-    
+
     idm.parentRec.BranchCode__c = '';
 
     if (idm.parentRec.RegionalOfficeCode__c != NULL && idm.parentRec.RegionalOfficeCode__c != '' && idm.parentRec.RegionalOfficeCode__c != auConstantCmn.ROLE_CODE_HONBU) {
@@ -422,10 +453,10 @@ global with sharing class saDailyReportEditorForAdminCtl {
 
   }
 
-  
+
   private saInquiry__c createNewRecord() {
   	system.debug('createNewRecord');
-  	
+
     saInquiry__c newRecord = new saInquiry__c();
     newRecord.IsEvolva__c = isUserProfileEvolva();
 
@@ -443,10 +474,10 @@ global with sharing class saDailyReportEditorForAdminCtl {
 
   private saInquiry__c getTargetRecord(String targetId) {
   	system.debug('getTargetRecord');
-  	
+
     saInquiry__c targetaRecord = null;
-    List<saInquiry__c> recs = [SELECT id, name, IsEvolva__c, ReportName__c, IssuerLabel__c, Status__c, Type__c, RegionalOfficeCode__c, BranchCode__c, 
-                                      ValidFrom__c, ValidFromDatetime__c, ValidTo__c, ValidToDatetime__c, DisplayedValidToDatetime__c, IsValid__c, PrivacySetting__c, OwnerId, 
+    List<saInquiry__c> recs = [SELECT id, name, IsEvolva__c, ReportName__c, IssuerLabel__c, Status__c, Type__c, RegionalOfficeCode__c, BranchCode__c,
+                                      ValidFrom__c, ValidFromDatetime__c, ValidTo__c, ValidToDatetime__c, DisplayedValidToDatetime__c, IsValid__c, PrivacySetting__c, OwnerId,
                                       PushNotificationResendCount__c, InquiryDescription__c, CreatedById
 										           FROM saInquiry__c
 										           WHERE Id =: targetId];
@@ -469,9 +500,13 @@ global with sharing class saDailyReportEditorForAdminCtl {
     return targetaRecord;
   }
 
+   /**
+    * @description when click the "コピー" bottun at form detail page,
+    * make a new form with information which is copied.
+    */
 	public Pagereference inquiryCopy() {
-	  system.debug('inquiryCopy');	
-		
+	  system.debug('inquiryCopy');
+
 	  Pagereference ref = Page.saDailyReportEditorForAdmin;
 	  ref.setRedirect(true);
 	  Map<String, String> params = ref.getParameters();
@@ -480,25 +515,33 @@ global with sharing class saDailyReportEditorForAdminCtl {
 	  return ref;
 	}
 
+	/**
+	 * @description when click the "×" button, delete an action which did before.
+	 */
 	public Pagereference deleteAction() {
-	  system.debug('deleteAction');	
-		
+	  system.debug('deleteAction');
+
 	  saInquiry__c parentRec = idm.parentRec;
 	  delete parentRec;
 	  return callType == CALL_TYPE_DAILYREPORT ? Page.saDailyReportListForAdmin : Page.saHearingListForAdmin;
 	}
 
+	/**
+	* @description when click the "全てのユーザーを削除" button, delete all users which is selected.
+	*/
   public void deleteAllUsers() {
-  	system.debug('deleteAllUsers');	
-  	
+  	system.debug('deleteAllUsers');
+
     For (InquiryReplyItem det : idm.itemsReply) {
       if(det.replyId != null) {
-        idm.itemsReplyDelete.add(det.replyId);  
+        idm.itemsReplyDelete.add(det.replyId);
       }
     }
     idm.itemsReply.clear();
   }
-
+   /**
+	* @description get datetime to display at "新規フォーム作成" page.
+	*/
   public DateTime getValidFromDatetime() {
     return idm.parentRec.ValidFromDatetime__c;
   }
@@ -508,12 +551,14 @@ global with sharing class saDailyReportEditorForAdminCtl {
   public DateTime getDisplayedValidToDatetime() {
     return idm.parentRec.DisplayedValidToDatetime__c;
   }
-
+	/**
+	* @description get SAclassification(社員区分) imformation which is "SA", "一般社員" and "設定無し" to display at "SAユーザーの選択" page.
+	*/
   public static List<SelectOption> getSAClassificationOptions() {
-  	system.debug('getSAClassificationOptions');	
-  	
+  	system.debug('getSAClassificationOptions');
+
 	  List<SelectOption> options = new List<SelectOption>();
-              
+
 	  for( Schema.PicklistEntry f : User.SAClassification__c.getDescribe().getPicklistValues()) {
 	    options.add(new SelectOption(f.getValue(), f.getLabel()));
 	  }
@@ -522,12 +567,15 @@ global with sharing class saDailyReportEditorForAdminCtl {
 	  return options;
 
 	}
-
+  /**
+   * @description get SACertificationOptions(資格) imformation which is "無", "ベーシック", "アドバンス", "CSA" and "設定無し"
+   * to display at "SAユーザーの選択" page.
+   */
   public static List<SelectOption> getSACertificationOptions() {
-	system.debug('getSACertificationOptions');	
-	
+	system.debug('getSACertificationOptions');
+
 	  List<SelectOption> options = new List<SelectOption>();
-              
+
 	  for( Schema.PicklistEntry f : User.SACertification__c.getDescribe().getPicklistValues()) {
 	    options.add(new SelectOption(f.getValue(), f.getLabel()));
 	  }
@@ -537,9 +585,12 @@ global with sharing class saDailyReportEditorForAdminCtl {
 
 	}
 
+   /**
+    * @description add number of answer when select "複数選択質問" pulldown at "新規フォーム作成" page.
+    */
     public List<SelectOption> getNumberRepliesOptions() {
-		system.debug('getNumberRepliesOptions');	
-		
+		system.debug('getNumberRepliesOptions');
+
     	List<SelectOption> lsReturn = new List<SelectOption>();
     	lsReturn.add(new SelectOption('1', '1'));
     	lsReturn.add(new SelectOption('2', '2'));
@@ -583,7 +634,7 @@ global with sharing class saDailyReportEditorForAdminCtl {
 
 	private List<SelectOption> getKDDIShishaOptions() {
 		system.debug('getKDDIShishaOptions');
-		
+
         List<SelectOption> lsReturn = new List<SelectOption>();
         lsReturn.add(new SelectOption('', ''));
         for (UserRole ur : auUtilCmn.getChildRoles(lsRolesFull, auConstantCmn.ROLE_CODE_HONBU, false, false)) {
@@ -595,7 +646,7 @@ global with sharing class saDailyReportEditorForAdminCtl {
 
 	private List<SelectOption> getShopShishaOptions() {
 		system.debug('getShopShishaOptions');
-		
+
         List<SelectOption> lsReturn = new List<SelectOption>();
         lsReturn.add(new SelectOption('', ''));
 
@@ -614,8 +665,8 @@ global with sharing class saDailyReportEditorForAdminCtl {
     }
 
 	private List<SelectOption> getDisplayedShishaOptions() {
-	  system.debug('getDisplayedShishaOptions');	
-		
+	  system.debug('getDisplayedShishaOptions');
+
       List<SelectOption> lsReturn = new List<SelectOption>();
       lsReturn.add(new SelectOption('', ''));
 
@@ -627,11 +678,11 @@ global with sharing class saDailyReportEditorForAdminCtl {
         if (callType != CALL_TYPE_AU_HEARING) {
           for (UserRole ur : auUtilCmn.getChildRoles(NULL, auConstantCmn.ROLE_CODE_SA_HONBU, false, false)) {
             lsReturn.add(new SelectOption(ur.DeveloperName, ur.Name));
-          }          
+          }
         } else {
           for (UserRole ur : auUtilCmn.getChildRoles(NULL, auConstantCmn.ROLE_CODE_HONBU, true, false)) {
             lsReturn.add(new SelectOption(ur.DeveloperName, ur.Name));
-          }                    
+          }
         }
       }
 
@@ -641,11 +692,11 @@ global with sharing class saDailyReportEditorForAdminCtl {
     @RemoteAction
     global static List<User> getUserSAList(Map<String, String> values) {
     	system.debug('getUserSAList');
-    	
+
         List<String> conditions = new List<String>();
 
         User usr = [SELECT Id, Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
-      
+
         String roleDvlperName = (usr.Profile.Name == auConstantCmn.PROFILE_EVOLVA_USER ||
                                  usr.Profile.Name == auConstantCmn.PROFILE_EVOLVA_ADMIN_USER
                                     ? auConstantCmn.ROLE_CODE_EVOLVA_HONBU
@@ -725,32 +776,37 @@ global with sharing class saDailyReportEditorForAdminCtl {
     List<saBusinessLocationMembers__c> BusinessLocationMembersList;
       List<String> BusinessLocationNameList;
       system.debug('List of users : '+lsUsers);
-      
+
       //system.debug(lsUsers[0].get('saBusinessLocationDetail_user__r'));
       for(User retrievedUsr: lsUsers){
-        
-        BusinessLocationNameList = new List<String>(); 
+
+        BusinessLocationNameList = new List<String>();
         BusinessLocationMembersList = retrievedUsr.saBusinessLocationDetail_user__r;
-  
+
         for(saBusinessLocationMembers__c blName : BusinessLocationMembersList){
           BusinessLocationNameList.add(blName.BusinessLocation__r.BusinessLocationName__c);
         }
-      
+
         retrievedUsr.TechnicalString__c=String.join(BusinessLocationNameList,' , ');
         system.debug('List of BusinessLocationName : '+BusinessLocationMembersList);
-      }            
-        
+      }
+
         return lsUsers;
     }
 
-
+    /**
+     * @description get SAuser list which satisfy the selected conditions.
+     * @param role5DeveloperName:組織1, role6DeveloperName:組織2, role7DeveloperName:組織3, role8DeveloperName:組織4, userName:氏名,
+     *        businessLocationName:拠点名, staffUserId:教育用スタッフID, listClassif:社員区分, listCertif:資格.
+     * @return SAuser list which satisfy the selected conditions.
+     */
     public static List<User> getUserSAList(String role5DeveloperName, String role6DeveloperName, String role7DeveloperName, String role8DeveloperName, String userName, String businessLocationName, String staffUserId, String listClassif, String listCertif) {
 		system.debug('getUserSAList');
 
         List<String> conditions = new List<String>();
-      
+
         User usr = [SELECT Id, Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
-          
+
         String roleDvlperName = '';
 
         if (role8DeveloperName.length() > 0) {
@@ -788,7 +844,7 @@ global with sharing class saDailyReportEditorForAdminCtl {
             }
             sCond += ')';
             conditions.add(sCond);
-        }      
+        }
 
         if (listClassif.length() > 0) {
                 conditions.add('SAClassification__c IN (' + listClassif.replace('BLANK', '') + ')');
@@ -814,7 +870,7 @@ global with sharing class saDailyReportEditorForAdminCtl {
         conditions.add('IsActive = true');
 
 system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
-            
+
         List<User> lsUsers = Database.query(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
         return lsUsers;
     }
@@ -822,10 +878,10 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
 
     @RemoteAction
     global static List<User>  getUserKDDIList(Map<String, String> values) {
-      system.debug('getUserKDDIList');	
-    	
+      system.debug('getUserKDDIList');
+
       List<String> conditions = new List<String>();
-    
+
       // Filters by role
       String roleDvlperName = auConstantCmn.ROLE_CODE_HONBU;
       if (values.containsKey('kddiRole8DeveloperName') && String.isNotBlank(values.get('kddiRole8DeveloperName'))) {
@@ -868,7 +924,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
       if (values.containsKey('kddiEmployeeNo') && String.isNotBlank(values.get('kddiEmployeeNo'))) {
         conditions.add('KDDIEmployeeId__c like \'%' + values.get('kddiEmployeeNo') + '%\'');
       }
-      
+
       if (values.containsKey('kddiDepartment') && String.isNotBlank(values.get('kddiDepartment'))) {
         conditions.add('Department like \'%' + values.get('kddiDepartment') + '%\'');
       }
@@ -878,14 +934,18 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
       system.debug(USER_BASE_QUERY + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
 
       return Database.query(USER_BASE_QUERY + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
-   
-    }
 
+    }
+    /**
+     * @description get KDDIuser list which satisfy the selected conditions.
+     * @param role5DeveloperName:組織1, role6DeveloperName:組織2, userName:氏名, employeeNo:社員番号, department:部署名.
+     * @return KDDIuser list which satisfy the selected conditions.
+     */
     public static List<User> getUserKDDIList(String role5DeveloperName, String role6DeveloperName, String userName, String employeeNo, String department) {
         system.debug('getUserKDDIList');
-        
+
         List<String> conditions = new List<String>();
-      
+
         String roleDvlperName = '';
 
         if (role6DeveloperName.length() > 0) {
@@ -916,7 +976,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
             }
             sCond += ')';
             conditions.add(sCond);
-        }      
+        }
 
         if (userName.length() > 0) {
           conditions.add('Name like \'%' + userName + '%\'');
@@ -932,7 +992,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
 
         conditions.add('IsActive = true');
 
-        system.debug(USER_BASE_QUERY + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');    
+        system.debug(USER_BASE_QUERY + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
         return Database.query(USER_BASE_QUERY + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
     }
 
@@ -971,7 +1031,12 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
 
     }
 
-
+    /**
+     * can't find where this method is used on the page.
+     * @description get SHOPuser list which satisfy the selected conditions.
+     * @param role5DeveloperName:組織1, role6DeveloperName:組織2, userName:氏名, employeeNo:社員番号.
+     * @return SHOPuser list which satisfy the selected conditions.
+     */
     public static List<User> getUserShopList(String role5DeveloperName, String role6DeveloperName, String userName, String employeeNo) {
 	  system.debug('getUserShopList');
 
@@ -1003,10 +1068,12 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
 
     }
 
-
+    /**
+     * @description delete multiple list rows which are selected at "複数ユーザーを削除" screen.
+     */
     public void deleteMultiRows() {
     	system.debug('deleteMultiRows');
-    	
+
         if (listRowToDel == null || listRowToDel.length() == 0) {
             return;
         }
@@ -1022,6 +1089,11 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
         }
     }
 
+    	/**
+    	 * @description check whether the required items are completed or not.
+    	 * @param true(save):check all required items. false(temporarysave):check only report name.
+    	 * @return true:done save action. false:error message is displayed.
+    	 */
 		public boolean confirmData(boolean isDefinitive) {
 
     	if (idm.parentRec.ReportName__c == NULL || idm.parentRec.ReportName__c.trim().length() == 0) {
@@ -1032,214 +1104,218 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
 
 	  	if (isDefinitive) {
 
-        if (idm.parentRec.RegionalOfficeCode__c == NULL || idm.parentRec.RegionalOfficeCode__c.trim().length() == 0) {
-          String sMsg = '支社が必須です。';
-          Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
-          return false;
-        }
+	        if (idm.parentRec.RegionalOfficeCode__c == NULL || idm.parentRec.RegionalOfficeCode__c.trim().length() == 0) {
+	          String sMsg = '支社が必須です。';
+	          Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
+	          return false;
+	        }
 
-        if ((callType == CALL_TYPE_DAILYREPORT && idm.parentRec.ValidFrom__c == NULL) ||
-            (callType != CALL_TYPE_DAILYREPORT && idm.parentRec.ValidFromDatetime__c == NULL)) {
-	    		String sMsg = '運用Fromが必須です。';
-					Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
-		    	return false;
+	        if ((callType == CALL_TYPE_DAILYREPORT && idm.parentRec.ValidFrom__c == NULL) ||
+	            (callType != CALL_TYPE_DAILYREPORT && idm.parentRec.ValidFromDatetime__c == NULL)) {
+		    		String sMsg = '運用Fromが必須です。';
+						Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
+			    	return false;
+			  	}
+
+	        if ((callType == CALL_TYPE_DAILYREPORT && idm.parentRec.ValidTo__c == NULL) ||
+	            (callType != CALL_TYPE_DAILYREPORT && idm.parentRec.ValidToDatetime__c == NULL)) {
+	          String sMsg = '運用Toが必須です。';
+	          Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
+	          return false;
+	        }
+
+			if (callType != CALL_TYPE_DAILYREPORT && idm.parentRec.DisplayedValidToDatetime__c == NULL) {
+	          String sMsg = '回答期限が必須です。';
+	          Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
+	          return false;
+	        }
+
+	        if ((callType == CALL_TYPE_DAILYREPORT && idm.parentRec.ValidTo__c < idm.parentRec.ValidFrom__c) ||
+	            (callType != CALL_TYPE_DAILYREPORT && idm.parentRec.ValidToDatetime__c < idm.parentRec.ValidFromDatetime__c)) {
+	          String sMsg = '運用Toが運用Fromより前です。';
+	          Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
+	          return false;
+	        }
+
+	        //Error if DisplayedValidToDatetime__c is inferior to ValidFromDatetime__c
+	        if (callType != CALL_TYPE_DAILYREPORT && idm.parentRec.DisplayedValidToDatetime__c < idm.parentRec.ValidFromDatetime__c) {
+	          String sMsg = '回答期限が運用Fromより前です。';
+	          Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
+	          return false;
+	        }
+
+	        //Error if DisplayedValidToDatetime__c is superior to ValidToDatetime__c
+	        if (callType != CALL_TYPE_DAILYREPORT && idm.parentRec.ValidToDatetime__c < idm.parentRec.DisplayedValidToDatetime__c) {
+	          String sMsg = '運用Toが回答期限より前です。';
+	          Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
+	          return false;
+	        }
+
+		  	if (idm.itemsDetail == NULL || idm.itemsDetail.size() == 0) {
+		    	String sMsg = '質問を追加してください。';
+				Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
+			    return false;
 		  	}
 
-        if ((callType == CALL_TYPE_DAILYREPORT && idm.parentRec.ValidTo__c == NULL) ||
-            (callType != CALL_TYPE_DAILYREPORT && idm.parentRec.ValidToDatetime__c == NULL)) {
-          String sMsg = '運用Toが必須です。';
-          Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
-          return false;
-        }
+	        Integer iIdxRowProblem = 0;
 
-		if (callType != CALL_TYPE_DAILYREPORT && idm.parentRec.DisplayedValidToDatetime__c == NULL) {
-          String sMsg = '回答期限が必須です。';
-          Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
-          return false;
-        }
+	        for (InquiryDetailItem item : idm.itemsDetail) {
 
-        if ((callType == CALL_TYPE_DAILYREPORT && idm.parentRec.ValidTo__c < idm.parentRec.ValidFrom__c) ||
-            (callType != CALL_TYPE_DAILYREPORT && idm.parentRec.ValidToDatetime__c < idm.parentRec.ValidFromDatetime__c)) {
-          String sMsg = '運用Toが運用Fromより前です。';
-          Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
-          return false;
-        }
-        
-        //Error if DisplayedValidToDatetime__c is inferior to ValidFromDatetime__c
-        if (callType != CALL_TYPE_DAILYREPORT && idm.parentRec.DisplayedValidToDatetime__c < idm.parentRec.ValidFromDatetime__c) {
-          String sMsg = '回答期限が運用Fromより前です。';
-          Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
-          return false;
-        }
-        
-        //Error if DisplayedValidToDatetime__c is superior to ValidToDatetime__c
-        if (callType != CALL_TYPE_DAILYREPORT && idm.parentRec.ValidToDatetime__c < idm.parentRec.DisplayedValidToDatetime__c) {
-          String sMsg = '運用Toが回答期限より前です。';
-          Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
-          return false;
-        }
-        
-	  	if (idm.itemsDetail == NULL || idm.itemsDetail.size() == 0) {
-	    	String sMsg = '質問を追加してください。';
-			Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
-		    return false;
-	  	}
-
-        Integer iIdxRowProblem = 0;
-
-        for (InquiryDetailItem item : idm.itemsDetail) {
-
-            iIdxRowProblem++;
-						if (item.rec.QuestionLabel__c == NULL || item.rec.QuestionLabel__c.trim().length() == 0) {
-			    		String sMsg = '質問タイトルが必須です。（行' + iIdxRowProblem + '）';
-							Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
-				    	return false;
-            }
-
-            if (item.rec.AnswerType__c == 'CHECKBOX' || item.rec.AnswerType__c == 'RADIO_BUTTON') {
-
-            	if ((item.rec.NumberPossibleReplies__c >= 1 && (item.rec.Reply01Label__c == NULL || item.rec.Reply01Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 2 && (item.rec.Reply02Label__c == NULL || item.rec.Reply02Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 3 && (item.rec.Reply03Label__c == NULL || item.rec.Reply03Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 4 && (item.rec.Reply04Label__c == NULL || item.rec.Reply04Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 5 && (item.rec.Reply05Label__c == NULL || item.rec.Reply05Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 6 && (item.rec.Reply06Label__c == NULL || item.rec.Reply06Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 7 && (item.rec.Reply07Label__c == NULL || item.rec.Reply07Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 8 && (item.rec.Reply08Label__c == NULL || item.rec.Reply08Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 9 && (item.rec.Reply09Label__c == NULL || item.rec.Reply09Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 10 && (item.rec.Reply10Label__c == NULL || item.rec.Reply10Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 11 && (item.rec.Reply11Label__c == NULL || item.rec.Reply11Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 12 && (item.rec.Reply12Label__c == NULL || item.rec.Reply12Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 13 && (item.rec.Reply13Label__c == NULL || item.rec.Reply13Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 14 && (item.rec.Reply14Label__c == NULL || item.rec.Reply14Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 15 && (item.rec.Reply15Label__c == NULL || item.rec.Reply15Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 16 && (item.rec.Reply16Label__c == NULL || item.rec.Reply16Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 17 && (item.rec.Reply17Label__c == NULL || item.rec.Reply17Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 18 && (item.rec.Reply18Label__c == NULL || item.rec.Reply18Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 19 && (item.rec.Reply19Label__c == NULL || item.rec.Reply19Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 20 && (item.rec.Reply20Label__c == NULL || item.rec.Reply20Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 21 && (item.rec.Reply21Label__c == NULL || item.rec.Reply21Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 22 && (item.rec.Reply22Label__c == NULL || item.rec.Reply22Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 23 && (item.rec.Reply23Label__c == NULL || item.rec.Reply23Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 24 && (item.rec.Reply24Label__c == NULL || item.rec.Reply24Label__c.trim().length() == 0)) ||
-            	    (item.rec.NumberPossibleReplies__c >= 25 && (item.rec.Reply25Label__c == NULL || item.rec.Reply25Label__c.trim().length() == 0)) 
-            	    ) {
-				    		String sMsg = '質問の答えのラベルが必須です。（行' + iIdxRowProblem + '）';
+	            iIdxRowProblem++;
+							if (item.rec.QuestionLabel__c == NULL || item.rec.QuestionLabel__c.trim().length() == 0) {
+				    		String sMsg = '質問タイトルが必須です。（行' + iIdxRowProblem + '）';
 								Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
-					    	return false;            		
-            	} 
+					    	return false;
+	            }
 
-            	if (item.rec.NumberPossibleReplies__c < 2) {
-            		item.rec.Reply02Label__c = '';
-            	}
+	            if (item.rec.AnswerType__c == 'CHECKBOX' || item.rec.AnswerType__c == 'RADIO_BUTTON') {
 
-            	if (item.rec.NumberPossibleReplies__c < 3) {
-            		item.rec.Reply03Label__c = '';
-            	}
+	            	if ((item.rec.NumberPossibleReplies__c >= 1 && (item.rec.Reply01Label__c == NULL || item.rec.Reply01Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 2 && (item.rec.Reply02Label__c == NULL || item.rec.Reply02Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 3 && (item.rec.Reply03Label__c == NULL || item.rec.Reply03Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 4 && (item.rec.Reply04Label__c == NULL || item.rec.Reply04Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 5 && (item.rec.Reply05Label__c == NULL || item.rec.Reply05Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 6 && (item.rec.Reply06Label__c == NULL || item.rec.Reply06Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 7 && (item.rec.Reply07Label__c == NULL || item.rec.Reply07Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 8 && (item.rec.Reply08Label__c == NULL || item.rec.Reply08Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 9 && (item.rec.Reply09Label__c == NULL || item.rec.Reply09Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 10 && (item.rec.Reply10Label__c == NULL || item.rec.Reply10Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 11 && (item.rec.Reply11Label__c == NULL || item.rec.Reply11Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 12 && (item.rec.Reply12Label__c == NULL || item.rec.Reply12Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 13 && (item.rec.Reply13Label__c == NULL || item.rec.Reply13Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 14 && (item.rec.Reply14Label__c == NULL || item.rec.Reply14Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 15 && (item.rec.Reply15Label__c == NULL || item.rec.Reply15Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 16 && (item.rec.Reply16Label__c == NULL || item.rec.Reply16Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 17 && (item.rec.Reply17Label__c == NULL || item.rec.Reply17Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 18 && (item.rec.Reply18Label__c == NULL || item.rec.Reply18Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 19 && (item.rec.Reply19Label__c == NULL || item.rec.Reply19Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 20 && (item.rec.Reply20Label__c == NULL || item.rec.Reply20Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 21 && (item.rec.Reply21Label__c == NULL || item.rec.Reply21Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 22 && (item.rec.Reply22Label__c == NULL || item.rec.Reply22Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 23 && (item.rec.Reply23Label__c == NULL || item.rec.Reply23Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 24 && (item.rec.Reply24Label__c == NULL || item.rec.Reply24Label__c.trim().length() == 0)) ||
+	            	    (item.rec.NumberPossibleReplies__c >= 25 && (item.rec.Reply25Label__c == NULL || item.rec.Reply25Label__c.trim().length() == 0))
+	            	    ) {
+					    		String sMsg = '質問の答えのラベルが必須です。（行' + iIdxRowProblem + '）';
+									Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
+						    	return false;
+	            	}
 
-            	if (item.rec.NumberPossibleReplies__c < 4) {
-            		item.rec.Reply04Label__c = '';
-            	}
+	            	if (item.rec.NumberPossibleReplies__c < 2) {
+	            		item.rec.Reply02Label__c = '';
+	            	}
 
-            	if (item.rec.NumberPossibleReplies__c < 5) {
-            		item.rec.Reply05Label__c = '';
-            	}
+	            	if (item.rec.NumberPossibleReplies__c < 3) {
+	            		item.rec.Reply03Label__c = '';
+	            	}
 
-            	if (item.rec.NumberPossibleReplies__c < 6) {
-            		item.rec.Reply06Label__c = '';
-            	}
+	            	if (item.rec.NumberPossibleReplies__c < 4) {
+	            		item.rec.Reply04Label__c = '';
+	            	}
 
-            	if (item.rec.NumberPossibleReplies__c < 7) {
-            		item.rec.Reply07Label__c = '';
-            	}
+	            	if (item.rec.NumberPossibleReplies__c < 5) {
+	            		item.rec.Reply05Label__c = '';
+	            	}
 
-            	if (item.rec.NumberPossibleReplies__c < 8) {
-            		item.rec.Reply08Label__c = '';
-            	}
+	            	if (item.rec.NumberPossibleReplies__c < 6) {
+	            		item.rec.Reply06Label__c = '';
+	            	}
 
-            	if (item.rec.NumberPossibleReplies__c < 9) {
-            		item.rec.Reply09Label__c = '';
-            	}
+	            	if (item.rec.NumberPossibleReplies__c < 7) {
+	            		item.rec.Reply07Label__c = '';
+	            	}
 
-            	if (item.rec.NumberPossibleReplies__c < 10) {
-            		item.rec.Reply10Label__c = '';
-            	}
-            	
-            	if (item.rec.NumberPossibleReplies__c < 11) {
-            		item.rec.Reply11Label__c = '';
-            	}
-            	
-            	if (item.rec.NumberPossibleReplies__c < 12) {
-            		item.rec.Reply12Label__c = '';
-            	}
+	            	if (item.rec.NumberPossibleReplies__c < 8) {
+	            		item.rec.Reply08Label__c = '';
+	            	}
 
-            	if (item.rec.NumberPossibleReplies__c < 13) {
-            		item.rec.Reply13Label__c = '';
-            	}
+	            	if (item.rec.NumberPossibleReplies__c < 9) {
+	            		item.rec.Reply09Label__c = '';
+	            	}
 
-            	if (item.rec.NumberPossibleReplies__c < 14) {
-            		item.rec.Reply14Label__c = '';
-            	}
+	            	if (item.rec.NumberPossibleReplies__c < 10) {
+	            		item.rec.Reply10Label__c = '';
+	            	}
 
-            	if (item.rec.NumberPossibleReplies__c < 15) {
-            		item.rec.Reply15Label__c = '';
-            	}
+	            	if (item.rec.NumberPossibleReplies__c < 11) {
+	            		item.rec.Reply11Label__c = '';
+	            	}
 
-            	if (item.rec.NumberPossibleReplies__c < 16) {
-            		item.rec.Reply16Label__c = '';
-            	}
+	            	if (item.rec.NumberPossibleReplies__c < 12) {
+	            		item.rec.Reply12Label__c = '';
+	            	}
 
-            	if (item.rec.NumberPossibleReplies__c < 17) {
-            		item.rec.Reply17Label__c = '';
-            	}
+	            	if (item.rec.NumberPossibleReplies__c < 13) {
+	            		item.rec.Reply13Label__c = '';
+	            	}
 
-            	if (item.rec.NumberPossibleReplies__c < 18) {
-            		item.rec.Reply18Label__c = '';
-            	}
+	            	if (item.rec.NumberPossibleReplies__c < 14) {
+	            		item.rec.Reply14Label__c = '';
+	            	}
 
-            	if (item.rec.NumberPossibleReplies__c < 19) {
-            		item.rec.Reply19Label__c = '';
-            	}
+	            	if (item.rec.NumberPossibleReplies__c < 15) {
+	            		item.rec.Reply15Label__c = '';
+	            	}
 
-            	if (item.rec.NumberPossibleReplies__c < 20) {
-            		item.rec.Reply20Label__c = '';
-            	}
-            	
-            	if (item.rec.NumberPossibleReplies__c < 21) {
-            		item.rec.Reply21Label__c = '';
-            	}
-            	
-            	if (item.rec.NumberPossibleReplies__c < 22) {
-            		item.rec.Reply22Label__c = '';
-            	}
+	            	if (item.rec.NumberPossibleReplies__c < 16) {
+	            		item.rec.Reply16Label__c = '';
+	            	}
 
-            	if (item.rec.NumberPossibleReplies__c < 23) {
-            		item.rec.Reply23Label__c = '';
-            	}
+	            	if (item.rec.NumberPossibleReplies__c < 17) {
+	            		item.rec.Reply17Label__c = '';
+	            	}
 
-            	if (item.rec.NumberPossibleReplies__c < 24) {
-            		item.rec.Reply24Label__c = '';
-            	}
+	            	if (item.rec.NumberPossibleReplies__c < 18) {
+	            		item.rec.Reply18Label__c = '';
+	            	}
 
-            	if (item.rec.NumberPossibleReplies__c < 25) {
-            		item.rec.Reply25Label__c = '';
-            	}
+	            	if (item.rec.NumberPossibleReplies__c < 19) {
+	            		item.rec.Reply19Label__c = '';
+	            	}
 
-            }
-        }
+	            	if (item.rec.NumberPossibleReplies__c < 20) {
+	            		item.rec.Reply20Label__c = '';
+	            	}
 
-	  		if (idm.itemsReply == NULL || idm.itemsReply.size() == 0) {
-	    		String sMsg = 'ユーザーを追加してください。';
-					Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
-		    	return false;
-	  		}
+	            	if (item.rec.NumberPossibleReplies__c < 21) {
+	            		item.rec.Reply21Label__c = '';
+	            	}
+
+	            	if (item.rec.NumberPossibleReplies__c < 22) {
+	            		item.rec.Reply22Label__c = '';
+	            	}
+
+	            	if (item.rec.NumberPossibleReplies__c < 23) {
+	            		item.rec.Reply23Label__c = '';
+	            	}
+
+	            	if (item.rec.NumberPossibleReplies__c < 24) {
+	            		item.rec.Reply24Label__c = '';
+	            	}
+
+	            	if (item.rec.NumberPossibleReplies__c < 25) {
+	            		item.rec.Reply25Label__c = '';
+	            	}
+
+	            }
+	        }
+
+		  		if (idm.itemsReply == NULL || idm.itemsReply.size() == 0) {
+		    		String sMsg = 'ユーザーを追加してください。';
+						Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, sMsg));
+			    	return false;
+		  		}
 
 	  	}
 
 			return true;
-  
-		}
 
+		}
+    /**
+    * @description check whether the required items are completed or not by confirmData method.
+    *              confirmData(false) is check only report name.
+    * @return true:done save action. false:error message is displayed.
+    */
     public Pagereference saveAction() {
 		system.debug('saveAction');
 
@@ -1251,6 +1327,11 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
     	return privateSave();
     }
 
+    /**
+    * @description check whether the required items are completed or not by confirmData method.
+    *              confirmData(true) is check all required items. false:
+    * @return true:done save action. false:error message is displayed.
+    */
     public Pagereference definitiveSaveAction() {
 		system.debug('definitiveSaveAction');
 
@@ -1259,10 +1340,14 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
     	}
 
 		idm.parentRec.Status__c = 'Saved';
-			
+
     	return privateSave();
     }
-
+    /**
+    * @description this method is called when click "編集" buttom
+    *              and jump to editing screen with information of report which selected.
+    *              if there are answer from user, it can't edit any more and error message is displayed.
+    */
     public Pagereference recallAction() {
 	  system.debug('recallAction');
 
@@ -1282,7 +1367,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
 
     private Pagereference privateSave() {
     	system.debug('privateSave');
-    
+
         scrollTopValue = 0;
         Pagereference ref = null;
         Savepoint sp = Database.setSavepoint();
@@ -1290,7 +1375,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
         try {
             idm.refresh();
 
-            saInquiry__c parentRec = idm.parentRec;         
+            saInquiry__c parentRec = idm.parentRec;
             upsert parentRec;
 
             List<saInquiryDetail__c> details = new List<saInquiryDetail__c>();
@@ -1301,7 +1386,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
                 }
                 details.add(rec);
             }
-    
+
             List<saInquiryDetail__c> deleteTargetsDetail = new List<saInquiryDetail__c>();
             for (InquiryDetailItem item: idm.baseItemsDetail) {
                 if (item.isDeleted) {
@@ -1316,8 +1401,8 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
             }
 
 			List<saInquiryReply__c> replies = new List<saInquiryReply__c>();
-            for (InquiryReplyItem item : idm.itemsReply) { 
-                //don't need to check whether profileName exist or not because users always come with profile name            
+            for (InquiryReplyItem item : idm.itemsReply) {
+                //don't need to check whether profileName exist or not because users always come with profile name
                 //if (!String.isBlank(item.usrProfileName)) {
                   // Concerns only data copied or saved previously (for data added in this session, it will be NULL)
                   // Note: if all users have been moved to Evolva, there is a chance we saved definitively a data without any user selected
@@ -1326,7 +1411,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
                   if ((parentRec.IsEvolva__c && (item.usrProfileName == auConstantCmn.PROFILE_EVOLVA_ADMIN_USER || item.usrProfileName == auConstantCmn.PROFILE_EVOLVA_USER)) ||
                       (!parentRec.IsEvolva__c && (item.usrProfileName != auConstantCmn.PROFILE_EVOLVA_ADMIN_USER && item.usrProfileName != auConstantCmn.PROFILE_EVOLVA_USER))) {
                       // only add if it's new user
-                      
+
                       if(item.replyId == null) {
 	                  	saInquiryReply__c rec = new saInquiryReply__c();
 	                  	rec.saInquiry__c = parentRec.id;
@@ -1340,12 +1425,12 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
                       	idm.itemsReplyDelete.add(item.replyId);
                       }
                   }
-                  
+
                 //} else {
                   //never enter into this area because reply item always include profile name
                 //}
             }
-    
+
             if (replies.size() > 0) {
                 upsert replies;
             }
@@ -1356,18 +1441,18 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
             ref = Page.saDailyReportEditorForAdmin;
             ref.getParameters().put(PARAM_ID, parentRec.id);
             ref.getParameters().put(SCROLL_TOP, String.valueOf(currentScrollValue));
-            
+
             //Brut way to update all users
             if (callType != CALL_TYPE_DAILYREPORT) {
               List<saInquiryReply__c> recsReply = [SELECT id, TechnicalFieldForEmail__c FROM saInquiryReply__c WHERE saInquiry__c =: parentRec.Id];
               system.debug('Number of saInquiryReply__c to update : '+recsReply.size());
               List<saInquiryReply__c> allReplies = new List<saInquiryReply__c>();
-              String dt = string.valueOfGmt(Datetime.now()); 
-              
+              String dt = string.valueOfGmt(Datetime.now());
+
               if(idm.parentRec.Status__c == 'Saved'){
                 for (saInquiryReply__c itemToUpdate : recsReply) {
                   itemToUpdate.TechnicalFieldForEmail__c = true;
-                  allReplies.add(itemToUpdate);                    
+                  allReplies.add(itemToUpdate);
                 }
               }else{
                 for (saInquiryReply__c itemToUpdate : recsReply) {
@@ -1381,8 +1466,8 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
                 upsert(allReplies);
               }
             }
-            //End Add              
-            
+            //End Add
+
             ref.setRedirect(true);
         } catch(Exception e) {
             String message = e.getMessage();
@@ -1395,8 +1480,11 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
 
     public void dummyAction() {}
 
+      /**
+      * @description when click the URL of "回答者画面プレビュー", jump to preview screen.
+      */
 	  public PageReference redirectToPreview(){
-	  	
+
     	system.debug('run: redirectToPreview');
     	system.debug('callType: ' + callType);
     	system.debug('Page.saDailyReport : '+Page.saDailyReport.getUrl());
@@ -1411,11 +1499,11 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
     		pageRef = new PageReference(auCommunityCustomSettings__c.getOrgDefaults().CommunityDomainUrl__c + Page.saHearing.getUrl());
     		//pageRef = Page.saHearing;
     	}else{
-    		pageRef = null; 
+    		pageRef = null;
     	}
     	pageRef.setRedirect(true);
     	pageRef.getParameters().put('src',saConstantCmn.SOURCE_PREVIEW+'-'+currentInquiryId);
-      
+
       	return PageRef;
     }
 
@@ -1425,7 +1513,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
      * @param memoryStr 保存した文字列
      **/
      public String settingPatternName (String tempStr, String memoryStr) {
-        String returnStr = tempStr;
+    	 String returnStr = tempStr;
         if (memoryStr != null) {
             // 保存した文字列が１桁以上且つ開始文字が[TO]以外
             if (memoryStr.length()>0 && !memoryStr.startsWith('[TO]')) {
@@ -1455,6 +1543,9 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
         return options;
     }
 
+    /**
+    * @description this method is called in oadUserList(). separate address by [TO][CC][BCC] and put in lsUsrID.
+    */
     public List<Id> getUserList (String memoryStr) {
         List<Id> lsUsrID = new List<ID>();
         //[TO][CC][BCC]の合計数１３以下の場合、空なためクリアした状態上書き
@@ -1469,7 +1560,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
             String memoryToStr = memoryStr.subString(toCount+4,ccCount); //[TO]=4文字から[CC]を含まない範囲を抜出
             String memoryCCStr = memoryStr.subString(ccCount+4,bccCount); //上記+[CC]=4文字から[BCC]を含まない範囲を抜出
             String memoryBCCStr = memoryStr.subString(bccCount+5,memoryStr.length()); //上記+[BCC]=5文字から末尾まで抜出
-            
+
             system.debug(memoryToStr);
             system.debug(memoryCCStr);
             system.debug(memoryBCCStr);
@@ -1479,7 +1570,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
             List<String> inputBccList = memoryBCCStr.split(',', 0);
 
             // Get the list of all users ID
-            
+
             if (memoryToStr.length() > 0) {
                 for (String to : inputToList) {
                     if (!to.startsWith('手入力')) {
@@ -1505,9 +1596,12 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
         return lsUsrID;
     }
 
+    /**
+    * @description put user list data by getUserList() in userIDs every group which is selected.
+    */
     public void loadUserList(){
         List<Id> userIDs;
-        
+
         if(patternDataToSend=='1'){
 	    	userIDs = getUserList(currentUser.MailAddressMemory6__c);
 	    }else if(patternDataToSend=='2'){
@@ -1519,21 +1613,24 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
 	    }else if(patternDataToSend=='5'){
 	    	userIDs = getUserList(currentUser.MailAddressMemory10__c);
 	    }
-	      	
-        groupUsers = [SELECT Name, UserRole.Name, Profile.Name, UserRole.DeveloperName, TechnicalString__c, Department, (Select BusinessLocation__r.BusinessLocationName__c from saBusinessLocationDetail_user__r order by Type__c Nulls Last) FROM User WHERE Id IN :userIDs];
-        
+
+        groupUsers = [SELECT Name, SAUserId__c, UserRole.Name, Profile.Name, UserRole.DeveloperName, TechnicalString__c, Department, (Select BusinessLocation__r.BusinessLocationName__c from saBusinessLocationDetail_user__r order by Type__c Nulls Last) FROM User WHERE Id IN :userIDs];
+
         for(User u : groupUsers){
-          List<String> BusinessLocationNameList = new List<String>(); 
+          List<String> BusinessLocationNameList = new List<String>();
           List<saBusinessLocationMembers__c> BusinessLocationMembersList = u.saBusinessLocationDetail_user__r;
-    
+
           for(saBusinessLocationMembers__c blName : BusinessLocationMembersList){
             BusinessLocationNameList.add(blName.BusinessLocation__r.BusinessLocationName__c);
           }
-        
+
           u.TechnicalString__c = String.join(BusinessLocationNameList,' , ');
         }
     }
 
+    /**
+    * @description put user list data in group which is selected.
+    */
     public void saveToGroup(){
       List<InquiryReplyItem> lsReplies = idm.getItemsReply();
       String joinToAddress = '';
@@ -1550,7 +1647,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
           //メールアドレスの桁数が多すぎて登録できません。
           ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,System.Label.auSendEventMail_MSG_06));
       } else {
-      	
+
       	if(patternDataToSend=='1'){
 	    	currentUser.MailAddressMemory6__c = memoryStr;
 		}else if(patternDataToSend=='2'){
@@ -1562,14 +1659,14 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
 	   	}else if(patternDataToSend=='5'){
 	   		currentUser.MailAddressMemory10__c = memoryStr;
 	  	}
-       
+
    		try {
         	update currentUser;
        	} catch (Exception e) {
         	system.debug(e.getMessage());
         	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'システムエラーが発生しました。システム管理者にお問い合わせください。'));
     	}
-    	
+
       }
     }
 
@@ -1612,9 +1709,12 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
         public String targetAccountId{get; set;}
         //public Map<String, String> userBusinessLocation{get; set;}
 
+        /**
+         * @description
+         */
         public InquiryManage(saInquiry__c parentRec) {
             this(parentRec, false);
-            
+
         }
         public InquiryManage(saInquiry__c parentRec, Boolean isCopy) {
 			system.debug('InquiryManage');
@@ -1663,7 +1763,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
             this.itemsReply.sort();
 
             if (isCopy) {
-                parentRec = parentRec.clone(false,true,false,false);                
+                parentRec = parentRec.clone(false,true,false,false);
                 parentRec.PushNotificationResendCount__c = 0;
                 // It seems the OwnerId is preserved when cloning in saMessage
                 // It was not the case here but for safety, we need to reinitialize it
@@ -1671,7 +1771,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
             } else {
                 this.baseItemsDetail = localItemsDetail.clone();
             }
-            
+
             this.parentRec = parentRec;
             this.baseParentRec =  this.parentRec.clone(true);
 
@@ -1680,7 +1780,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
 
 		    private List<saInquiryDetail__c> getDetailRecs(Id parentId) {
 		    	system.debug('getDetailRecs');
-		    	
+
 			    return [SELECT id, name, AnswerType__c, SortNo__c, NumberPossibleReplies__c, QuestionLabel__c,
 			    							 IsRequired__c, saInquiry__c,
 			    							 Reply01Label__c, Reply02Label__c, Reply03Label__c, Reply04Label__c, Reply05Label__c,
@@ -1688,15 +1788,15 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
 			    							 Reply11Label__c, Reply12Label__c, Reply13Label__c, Reply14Label__c, Reply15Label__c,
 			    							 Reply16Label__c, Reply17Label__c, Reply18Label__c, Reply19Label__c, Reply20Label__c,
 			    							 Reply21Label__c, Reply22Label__c, Reply23Label__c, Reply24Label__c, Reply25Label__c
-			            FROM saInquiryDetail__c 
-			            WHERE saInquiry__c =: parentId 
+			            FROM saInquiryDetail__c
+			            WHERE saInquiry__c =: parentId
 			            ORDER BY SortNo__c];
 		    }
 
 		private List<saInquiryReply__c> getReplyRecs(Id parentId) {
-          return [SELECT id, name, User__c, User__r.Name, User__r.UserRole.Name, User__r.isActive, User__r.Profile.Name, User__r.UserRole.DeveloperName, saInquiry__c, Status__c
-                  FROM saInquiryReply__c 
-                  WHERE saInquiry__c =: parentId 
+          return [SELECT id, name, User__c, User__r.Name, User__r.SAUserId__c, User__r.UserRole.Name, User__r.isActive, User__r.Profile.Name, User__r.UserRole.DeveloperName, saInquiry__c, Status__c
+                  FROM saInquiryReply__c
+                  WHERE saInquiry__c =: parentId
                   AND DailyReportDate__c = NULL
                   ORDER BY Name];
 		    }
@@ -1719,7 +1819,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
 
         public List<List<InquiryReplyItem>> getLsLsItemsReply() {
         	system.debug('getLsLsItemsReply');
-        	
+
             refresh();
 
             List<List<InquiryReplyItem>> lsLsReturn = new List<List<InquiryReplyItem>>();
@@ -1741,7 +1841,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
         	system.debug('deleteReplyRecord');
             InquiryReplyItem deletedItem = this.itemsReply.remove(index);
             if(deletedItem.replyId != null) {
-              this.itemsReplyDelete.add(deletedItem.replyId);  
+              this.itemsReplyDelete.add(deletedItem.replyId);
             }
         }
 
@@ -1873,6 +1973,10 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
             //system.debug('done sorting list: ' + this.itemsReply.size() + ' ' + Limits.getCpuTime());
         }
 
+        /**
+         * @description creating user list which is satisfy condition of "SAユーザーの選択" or "KDDIユーザーの選択" screen.
+         * @return userType:SA user or KDDI user.
+         */
         public void createListFromInfoData(String userType){
         	system.debug('createListFromInfoData');
             Map<String, Object> infoData;
@@ -1889,8 +1993,8 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
             }
             List<Object> selectedItems = (List<Object>)infoData.get('items');
             Set<InquiryReplyItem> newDetails = new Set<InquiryReplyItem>();
-  
-            //init new list 
+
+            //init new list
             for (Integer i = 0; i < selectedItems.size(); i++) {
               Map<String, Object> item = (Map<String, Object>)selectedItems[i];
               InquiryReplyItem reply = new InquiryReplyItem();
@@ -1913,6 +2017,9 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
               if (item.containsKey('UserRole.DeveloperName')) {
                 reply.usrRoleCode = (String)item.get('UserRole.DeveloperName');
               }
+              if (item.containsKey('SAUserId__c')) {
+                  reply.usrSAUserId = (String)item.get('SAUserId__c');
+                }
               newDetails.add(reply);
             }
             //merge old & new list
@@ -1922,7 +2029,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
         public void removeExistingUsers(){
           For (InquiryReplyItem det : this.itemsReply) {
             if(det.replyId != null) {
-              this.itemsReplyDelete.add(det.replyId);  
+              this.itemsReplyDelete.add(det.replyId);
             }
           }
           this.itemsReply.clear();
@@ -1941,6 +2048,11 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
             createListFromInfoData('SA');
         }
 
+        /**
+         * @description creating user list with all users who are satisfied conditions.
+         * It is calld when clicking "全部を選択" button at "SAユーザーの選択" or "KDDIユーザーの選択" screen.
+         * @return userType:SA user or KDDI user.
+         */
         public void createListFromUserList(String userType){
         	system.debug('createListFromUserList');
             List<User> lsUsr;
@@ -1951,7 +2063,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
                                                lastSearchUserKddiEmployeeNo,
                                                lastSearchUserKddiDepartment);
 
-            } else if(userType == 'SHOP') { 
+            } else if(userType == 'SHOP') {
                 lsUsr = getUserShopList(lastSearchUserShopRole5Filter,
                                                lastSearchUserShopRole6Filter,
                                                lastSearchUserShopUserName,
@@ -1976,6 +2088,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
               /*reply.department = usr.Department;*/
               reply.usrRoleName = usr.UserRole.Name;
               reply.usrRoleCode = usr.UserRole.DeveloperName;
+              reply.usrSAUserId = usr.SAUserId__c;
               reply.usrProfileName = usr.Profile.Name;
               newDetails.add(reply);
             }
@@ -1995,6 +2108,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
         public void userSASearchAndCreateSelectedInquiryReply() {
             createListFromUserList('SA');
         }
+        
     }
 
 
@@ -2009,7 +2123,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
             this.rec = target;
             this.isDeleted = false;
             this.isCopy = false;
-            
+
             Blob b = Crypto.GenerateAESKey(128);
             String h = EncodingUtil.ConvertTohex(b);
             this.IdxRow = h.SubString(0,8)+ '-' + h.SubString(8,12) + '-' + h.SubString(12,16) + '-' + h.SubString(16,20) + '-' + h.substring(20);
@@ -2036,7 +2150,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
         	system.debug('getDetailType');
             return this.rec.AnswerType__c;
         }
-        
+
         public Integer compareTo(Object compareTo) {
             InquiryDetailItem compareTarget = (InquiryDetailItem)compareTo;
             Integer returnValue = 0;
@@ -2055,6 +2169,7 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
         public string usrName{get; set;}
         public string usrRoleName{get; set;}
         public string usrRoleCode{get; set;}
+        public string usrSAUserId{get; set;}
         public string usrProfileName{get; set;}
         //public string department{get; set;}
         public Boolean isInquiryDone{get; set;}
@@ -2082,10 +2197,11 @@ system.debug(USER_BASE_QUERY_SA + joinWhereConditions(conditions) + ' ORDER BY U
             //this.department = target.User__r.Department;
             this.usrRoleName = target.User__r.UserRole.Name;
             this.usrRoleCode = target.User__r.UserRole.DeveloperName;
+            this.usrSAUserId = target.User__r.SAUserId__c;
             this.usrProfileName = target.User__r.Profile.Name;
             this.isInquiryDone = (target.Status__c == saConstantCmn.SA_REPORT_REPLY_STATUS_REPLYSENT);
         }
-        
+
         public Integer compareTo(Object compareTo) {
             InquiryReplyItem compareTarget = (InquiryReplyItem)compareTo;
             Integer returnValue = 0;

@@ -57,6 +57,35 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
     <fields>
+        <fullName>Category_CCP__c</fullName>
+        <description>CCP+でどのカテゴリに表示するかの判別項目</description>
+        <externalId>false</externalId>
+        <label>Category(CCP+)</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Category_1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Category_2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Category_3</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Category_4</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Category__c</fullName>
         <externalId>false</externalId>
         <label>Category</label>
@@ -65,6 +94,101 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Category_large__c</fullName>
+        <externalId>false</externalId>
+        <label>Category(large)</label>
+        <picklist>
+            <picklistValues>
+                <fullName>LargeCat1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LargeCat2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LargeCat3</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LargeCat4</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Category_small__c</fullName>
+        <externalId>false</externalId>
+        <label>Category(small)</label>
+        <picklist>
+            <controllingField>Category_large__c</controllingField>
+            <picklistValues>
+                <fullName>SmallCat1_1</fullName>
+                <default>false</default>
+                <controllingFieldValues>LargeCat1</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SmallCat1_2</fullName>
+                <default>false</default>
+                <controllingFieldValues>LargeCat1</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SmallCat1_3</fullName>
+                <default>false</default>
+                <controllingFieldValues>LargeCat1</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SmallCat2_1</fullName>
+                <default>false</default>
+                <controllingFieldValues>LargeCat2</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SmallCat2_2</fullName>
+                <default>false</default>
+                <controllingFieldValues>LargeCat2</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SmallCat2_3</fullName>
+                <default>false</default>
+                <controllingFieldValues>LargeCat2</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SmallCat3_1</fullName>
+                <default>false</default>
+                <controllingFieldValues>LargeCat3</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SmallCat3_2</fullName>
+                <default>false</default>
+                <controllingFieldValues>LargeCat3</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SmallCat3_3</fullName>
+                <default>false</default>
+                <controllingFieldValues>LargeCat3</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SmallCat3_4</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>小カテゴリー4_1</fullName>
+                <default>false</default>
+                <controllingFieldValues>LargeCat4</controllingFieldValues>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>SortNo__c</fullName>
@@ -80,14 +204,178 @@
     <label>書類</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>SortNo__c</columns>
+        <columns>Category_CCP__c</columns>
+        <columns>Category__c</columns>
+        <columns>Category_large__c</columns>
+        <columns>Category_small__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>ja</language>
     </listViews>
     <nameField>
         <displayFormat>DOC-{00000000}</displayFormat>
         <label>saDocuments Name</label>
         <type>AutoNumber</type>
     </nameField>
+    <recordTypes>
+        <fullName>CCP</fullName>
+        <active>true</active>
+        <label>CCP+</label>
+        <picklistValues>
+            <picklist>Category_CCP__c</picklist>
+            <values>
+                <fullName>01 ガイド</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>02 CCP関連</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>03 CX関連</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 その他</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Category_large__c</picklist>
+            <values>
+                <fullName>大カテゴリー1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>大カテゴリー2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>大カテゴリー3</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Category_small__c</picklist>
+            <values>
+                <fullName>小カテゴリー1_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>小カテゴリー1_3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>小カテゴリー2_1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>小カテゴリー2_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>小カテゴリー2_3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>小カテゴリー3_1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>小カテゴリー3_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>小カテゴリー3_3</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>SANX</fullName>
+        <active>true</active>
+        <label>SANX</label>
+        <picklistValues>
+            <picklist>Category_CCP__c</picklist>
+            <values>
+                <fullName>02 CCP関連</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>03 CX関連</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Category_large__c</picklist>
+            <values>
+                <fullName>大カテゴリー1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>大カテゴリー2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>大カテゴリー3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>大カテゴリー4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Category_small__c</picklist>
+            <values>
+                <fullName>小カテゴリー1_1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>小カテゴリー1_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>小カテゴリー1_3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>小カテゴリー2_1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>小カテゴリー2_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>小カテゴリー2_3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>小カテゴリー3_1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>小カテゴリー3_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>小カテゴリー3_3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>小カテゴリー3_4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>小カテゴリー4_1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>Private</sharingModel>
 </CustomObject>

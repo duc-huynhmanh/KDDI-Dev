@@ -181,6 +181,15 @@ TEXT(DAY(EventDate__c)) + &apos;日（&apos; + CASE( MOD( EventDate__c - DATE(19
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>STPDCount__c</fullName>
+        <externalId>false</externalId>
+        <label>STPDシート数</label>
+        <summaryForeignKey>auEventJunction__c.Event__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>TechnicalTimeFormatted__c</fullName>
         <description>Technical field used to format the StartTime in a readable format, in the timezone of the user.</description>
         <externalId>false</externalId>

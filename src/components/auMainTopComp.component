@@ -77,7 +77,8 @@
   <script>
 
     var $j = jQuery.noConflict();
-
+	var header='{!headerColor}';
+	
     function callAddNewPicture() {
         if (checkFileSize()) {
           addNewPicture();          
@@ -108,14 +109,20 @@
 
         return goodSize;
     }
+    
+    window.onload = setTimeout(function onLoadJS() {
+        if (header != null && header != '') {
+    		document.getElementById("topMenuBarHeader").style.backgroundColor = header;
+		}
+    })
 
   </script>
 
-
+  <!-- apex:inputHidden id="header" value="{!headerColor}" /-->
   <apex:actionFunction name="addNewPicture" action="{!addNewPicture}" />
 
   <!-- TOP MENU BAR -->
-  <header class="header clear">
+  <header id="topMenuBarHeader" class="header clear">
 
     <h1 class="header__logo">
       <a href="/home">

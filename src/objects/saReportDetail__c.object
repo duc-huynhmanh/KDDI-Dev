@@ -99,6 +99,21 @@
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>FiscalYear__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+MONTH(DATEVALUE(CreatedDate__c))&gt;=4,Year(DATEVALUE(CreatedDate__c)),Year(DATEVALUE(CreatedDate__c))-1
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FiscalYear</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Type__c</fullName>
         <externalId>false</externalId>
         <label>Type</label>
@@ -133,8 +148,12 @@
     <label>saReportDetail</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>CreatedDate__c</columns>
+        <columns>FiscalYear__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>SA_Detail-{00000000}</displayFormat>

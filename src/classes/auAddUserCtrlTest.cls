@@ -71,7 +71,7 @@ private class auAddUserCtrlTest {
       
       		Map<String, String> values = new Map<String, String>();
       		values.put('remotePageType',auConstantCmn.ACCESS_TYPE_KDDI);
-      		values.put('channelName', 'auショップ');
+      		//values.put('channelName', 'auショップ');
       		List<User> lstUser = auAddUserCtrl.getUserList(values);
       		
       		String lstSelectedUser = '';
@@ -83,6 +83,12 @@ private class auAddUserCtrlTest {
       		
       		List<auHonbuDirectDetail__c> lstHDDetails = [select user__c from auHonbuDirectDetail__c where auHonbuDirect__c = :source.id];
 			System.assertEquals(lstHDDetails.size(),1);
+			
+			constructor.listUserId='';
+			constructor.addAllCorrespondingUsers();
+			
+			constructor.filterRole5Option = constructor.role5Options[1].getValue();
+        	constructor.inputRole5Option();
     	}
     	
     	Test.stopTest();

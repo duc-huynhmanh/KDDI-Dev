@@ -8,7 +8,7 @@
   <meta charset="utf-8" />
   <title>auポータル</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  
+
   <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/sanitize.css')}"/>
   <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/common.css')}"/>
   <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css_sp/style-documents.css')}"/>
@@ -16,14 +16,14 @@
   <apex:stylesheet value="{!URLFOR($Resource.auResPortalSA,'css/flatpickr.min.css')}"/>
 
   <!-- libraries -->
-  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/jquery-3.2.1.min.js')}"/> 
-  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/flatpickr.js')}"/> 
-  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/ja.js')}"/> 
-  
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/jquery-3.2.1.min.js')}"/>
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/flatpickr.js')}"/>
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/ja.js')}"/>
+
   <!-- scripts -->
-  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_check_ua.js')}"/> 
-  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_fitting.js')}"/> 
-  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_sp.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_check_ua.js')}"/>
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_fitting.js')}"/>
+  <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_sp.js')}"/>
 
   <script>
     var $j = jQuery.noConflict();
@@ -134,7 +134,7 @@
 
 
 <body class="page-documents">
-  
+
   <apex:inputHidden id="messageError" html-class="message-error" value="{!messageError}" />
   <apex:inputHidden id="messageQuestion" html-class="message-question" value="{!messageQuestion}" />
   <apex:inputHidden html-class="idDocumentCategory" value="{!idDocumentCategory}" />
@@ -148,7 +148,7 @@
   <c:saMainTopComp typeOfScreen="{!typeOfScreen}" />
 
   <div class="protect-screen-bis hide"></div>
-  
+
   <!-- template-popup -->
   <div class="modal-dialog hide"><p>ダイアログメッセージ</p><div class="btn-cancel"><a href="#">キャンセル</a></div><div class="btn-ok"><a href="#">OK</a></div></div>
 
@@ -174,20 +174,21 @@
 
             <apex:repeat value="{!lsDocs}" var="doc">
               <li class="group-list-item" docId="{!doc.Id}">
-                <apex:commandLink value="{!doc.Category__c}"
+                <apex:commandLink value="{!doc.Category_small__c}a"
                                   action="{!dummyAction}"
-                                  reRender="dummy" />       
-              </li>       
+                                  reRender="dummy" />
+              </li>
             </apex:repeat>
 
           </ul>
+
 
         </div>
 
         <footer class="document-category-list-section-footer"></footer>
       </section>
 
-        
+
       <!-- #View 06-01-02(typ.) -->
       <section class="documents-section  documents-section-detail hide">
         <header class="document-list-section-header">
@@ -202,7 +203,7 @@
             <!-- #DynamicItem -->
             <ul class="document-list">
 
-              <apex:repeat value="{!lsContentVersion}" var="cv">
+               <apex:repeat value="{!lsContentVersion}" var="cv">
 
                 <li>
 
@@ -277,14 +278,14 @@
                                                cv.FileType != 'GIF' &&
                                                cv.FileType != 'JPG' &&
                                                cv.FileType != 'EXCEL' &&
-                                               cv.FileType != 'EXCEL_X' && 
+                                               cv.FileType != 'EXCEL_X' &&
                                                cv.FileType != 'CSV' &&
-                                               cv.FileType != 'WORD' && 
-                                               cv.FileType != 'WORD_X' && 
+                                               cv.FileType != 'WORD' &&
+                                               cv.FileType != 'WORD_X' &&
                                                cv.FileType != 'RTF' &&
-                                               cv.FileType != 'TEXT' && 
-                                               cv.FileType != 'POWER_POINT' && 
-                                               cv.FileType != 'POWER_POINT_X' && 
+                                               cv.FileType != 'TEXT' &&
+                                               cv.FileType != 'POWER_POINT' &&
+                                               cv.FileType != 'POWER_POINT_X' &&
                                                cv.FileType != 'PPS' &&
                                                cv.FileType != 'PPSX'}"
                                    target="_blank">
@@ -299,13 +300,13 @@
 
             </ul>
 
-          </apex:outputPanel>
+      </apex:outputPanel>
 
         </div>
 
         <footer class="document-list-section-footer"></footer>
       </section>
-   
+
     </div>
     <footer class="document-footer"></footer>
   </div>
@@ -322,7 +323,7 @@
 
     function setView_06_01_01_logic() {
 
-      $j(".group-list-item").off("click");  
+      $j(".group-list-item").off("click");
       $j(".group-list-item").on("click", function (e) {
 
         $j('.idDocumentCategory').val($j(this).attr('docId'));
@@ -348,7 +349,7 @@
       $j(".btn-back").on("click", function (e) {
         setView_06_01_01();
       });
-      
+
     }
 
     $j(document).ready(function () {

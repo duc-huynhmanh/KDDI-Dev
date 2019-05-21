@@ -9,11 +9,11 @@
   <apex:stylesheet value="{!URLFOR($Resource.jQueryUIFull, 'jquery-ui-1.12.1/jquery-ui.css')}"/>
   <apex:stylesheet value="{!URLFOR($Resource.jQueryUIFull, 'jquery-ui-1.12.1/jquery-ui.min.css')}"/>
 
-  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/external/jquery/jquery.js')}"/> 
-  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.js')}"/> 
-  <apex:includescript value="{!URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.datepicker-ja.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/external/jquery/jquery.js')}"/>
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.js')}"/>
+  <apex:includescript value="{!URLFOR($Resource.jQueryUI,'jquery-ui-1.12.1.custom/jquery-ui.datepicker-ja.js')}"/>
   <apex:includescript value="{!URLFOR($Resource.jQueryMin)}"/>
-  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.min.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.min.js')}"/>
 
   <style>
       .col1{
@@ -60,7 +60,7 @@
       word-wrap: break-word;
       white-space: normal;
     }
-      
+
     .content {
       padding: 1em;
     }
@@ -102,7 +102,7 @@
     }
 
     .popup-inner {
-      top: 45%;
+      top: 40%;
       max-height: 78%;
     }
 
@@ -159,7 +159,7 @@ margin-top: -2rem;
 
     .isLink {
       cursor: pointer;
-      cursor: hand;      
+      cursor: hand;
     }
 
     .linkPutInTop {
@@ -256,7 +256,7 @@ margin-top: -2rem;
     }
 
     .popup__button-container {
-      bottom: 13rem;
+      bottom: 18%;
     }
 
     .ui-datepicker {
@@ -383,13 +383,13 @@ margin-top: -2rem;
       display: flex;
       -webkit-flex-flow: wrap column; /* Safari 6.1+ */
       flex-flow: wrap column;
-      max-height: 120px; 
+      height: 130px;
     }
     .cat-group-3{
-      
+
     }
     .cat-group-4{
-      
+
     }
 
     .cat-item-2{
@@ -405,7 +405,7 @@ margin-top: -2rem;
     .cat-parent{
       margin-top: 15px;
     }
-    
+
     .cat-child{
       margin-left: 15px;
     }
@@ -415,7 +415,7 @@ margin-top: -2rem;
     .categorySelectAdd{
       display: none;
     }
-    
+
   </style>
 
   <script>
@@ -509,17 +509,17 @@ margin-top: -2rem;
     }
 
     function callDoSaveNewCxKnowledgeTemporary() {
-
-      alert('ファイルを添付する際は、遷移後の一覧画面よりクリップマークをクリックしてください。');
-      jsDoSaveNewCxKnowledgeTemporary();
-
+      if(validateData()){
+        alert('ファイルを添付する際は、遷移後の一覧画面よりクリップマークをクリックしてください。');
+        jsDoSaveNewCxKnowledgeTemporary();
+      }
     }
 
     function callDoSaveNewCxKnowledge() {
-
-      alert('ファイルを添付する際は、遷移後の一覧画面よりクリップマークをクリックしてください。');
-      jsDoSaveNewCxKnowledge();
-
+      if(validateData()){
+        alert('ファイルを添付する際は、遷移後の一覧画面よりクリップマークをクリックしてください。');
+        jsDoSaveNewCxKnowledge();
+      }
     }
 
     function radioButtonSelected() {
@@ -550,12 +550,12 @@ margin-top: -2rem;
                         getIEFileSize(file)
                         :
                         file.fileSize || file.size;
-     
+
                 goodSize = 65 * 1024 * 1024 > size;
                 if(!goodSize) {
                     alert('ファイルは大きすぎです。65Moまでのファイルを選択してください。');
                 }
-     
+
                 return goodSize;
             }
         });
@@ -621,7 +621,7 @@ margin-top: -2rem;
                 closeOnEscape: false,
                 closeText: 'hide',
                 draggable: true,
-                modal: false,
+                modal: true,
                 resizable: true,
                 title: 'カテゴリ選択',
                 width: 840,
@@ -645,7 +645,7 @@ margin-top: -2rem;
                 closeOnEscape: false,
                 closeText: 'hide',
                 draggable: true,
-                modal: false,
+                modal: true,
                 resizable: true,
                 title: 'カテゴリ選択',
                 width: 840,
@@ -667,7 +667,7 @@ margin-top: -2rem;
     }
 
     function checkCateEditCount(){
-      if($j('.catCheckboxEdit').filter(':checked').length >=3){
+      if($j('.catCheckboxEdit').filter(':checked').length >=5){
         $j('input.catCheckboxEdit:checkbox:not(":checked")').attr("disabled", true);
       } else {
         $j('input.catCheckboxEdit:checkbox:not(":checked")').removeAttr("disabled");
@@ -675,7 +675,7 @@ margin-top: -2rem;
     }
 
     function checkCateAddCount(){
-      if($j('.catCheckboxAdd').filter(':checked').length >=3){
+      if($j('.catCheckboxAdd').filter(':checked').length >=5){
         $j('input.catCheckboxAdd:checkbox:not(":checked")').attr("disabled", true);
       } else {
         $j('input.catCheckboxAdd:checkbox:not(":checked")').removeAttr("disabled");
@@ -741,15 +741,144 @@ margin-top: -2rem;
       clearCookie();
     }
 
+    function validateData(){
+      var valid = true;
+      $('.staff .textarea-container').each(function(){
+        if ($(this).val() == '' || /[A-z][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/.test($(this).val()) || /[A-z][A-z][0-9][0-9][0-9][0-9][0-9][0-9]/.test($(this).val())) {
+        } else {
+          valid = false;
+          alert('赤枠になっているスタッフNoをご確認ください。\n' +
+                  'スタッフNoの入力は半角のみ有効です。');
+          return valid;
+        }
+      })
+      return valid;
+    }
+    function validateData1(){
+      if(validateData()){
+        callSaveUpdateCxKnowledge();
+      }
+    }
+    function validateData2(){
+      if(validateData()){
+        callSaveUpdateCxKnowledgeWithChangeStatusToSaved();
+      }
+    }
+
+    function checkExpertEdit(){
+      var before = $('.beforeSelectedEdit').text();
+      console.log('before: ' + before);
+      var after = ($('.catCheckboxEdit.cxcat9:checkbox:checked').length > 0).toString();
+      console.log('after: ' + after);
+
+      if(before == 'false' && after == 'true'){
+        if (confirm('auエキスパートレポートが選択されました。\n投稿内容をauエキスパートレポートのテンプレートに変更しますか。')) {
+          //todo: update default value
+          $j('.processNow').fadeIn();
+          var defaultTitle = '【auエキスパートレポート】';
+          var defaultText = '①取組きっかけ\n' +
+                        '②取組内容\n' +
+                        '【See】\n' +
+                        '【Think】\n' +
+                        '【Plan】\n' +
+                        '【Do】\n' +
+                        '③結果(効果)\n' +
+                        '④工夫点・まねポイント\n' +
+                        '【CXまねポイント】';
+          $j('.textarea-content-edit').text(defaultText);
+          $j('.title-content-edit').text(defaultTitle);
+          callCategorySelectApplyEdit();
+        } else {
+            $j('.processNow').fadeIn();
+            callCategorySelectApplyEdit();
+        }
+      } else {
+        $j('.processNow').fadeIn();
+        callCategorySelectApplyEdit();
+      }
+
+    }
+
+    function checkExpertAdd(){
+      var after = ($('.catCheckboxAdd.cxcat9:checkbox:checked').length > 0).toString();
+      console.log('after: ' + after);
+
+      if(after == 'true'){
+        if (confirm('auエキスパートレポートが選択されました。\n投稿内容をauエキスパートレポートのテンプレートに変更しますか。')) {
+          //todo: update default value
+          $j('.processNow').fadeIn();
+          var defaultTitle = '【auエキスパートレポート】';
+          var defaultText = '①取組きっかけ\n' +
+                        '②取組内容\n' +
+                        '【See】\n' +
+                        '【Think】\n' +
+                        '【Plan】\n' +
+                        '【Do】\n' +
+                        '③結果(効果)\n' +
+                        '④工夫点・まねポイント\n' +
+                        '【CXまねポイント】';
+          $j('.textarea-content-add').text(defaultText);
+          $j('.title-content-add').text(defaultTitle);
+          callCategorySelectApplyAdd();
+        } else {
+            $j('.processNow').fadeIn();
+            callCategorySelectApplyAdd();
+        }
+      } else {
+        $j('.processNow').fadeIn();
+        callCategorySelectApplyAdd();
+      }
+    }
+
+
+
+    function showCat(count, id, thisElement){
+      if(count == '2' || count == '1') return false;
+      console.log('id: ' + '.selectedCat-' + id);
+      thisElement.style.fontWeight = "Bold";
+      var target = $j('.selectedCat-' + id);
+      target.dialog({
+          autoOpen: false,
+          closeOnEscape: false,
+          closeText: 'hide',
+          draggable: false,
+          modal: false,
+          resizable: false,
+          title: '',
+          width: 350,
+          position:{my: "left top", at: "left bottom", of: thisElement},
+          open: function(){$j(".ui-dialog-titlebar").hide();}
+      });
+      target.dialog('open');
+    }
+
+    function hideCat(count, id, thisElement){
+      if(count == '2' || count == '1') return false;
+      thisElement.style.fontWeight = "Normal";
+      var target = $j('.selectedCat-' + id);
+      /*target.dialog({
+          autoOpen: false,
+          closeOnEscape: false,
+          closeText: 'hide',
+          draggable: false,
+          modal: false,
+          resizable: false,
+          title: '',
+          width: 400,
+          open: function(){$j(".ui-dialog-titlebar").hide();}
+      });*/
+      target.dialog('close');
+    }
+
     window.onload = function onLoadJS() {
       var x = document.getElementsByClassName("dataTables_scrollBody");
-      x[0].style.maxHeight="CALC(" + x[0].style.maxHeight + " + 4rem)";      
+      x[0].style.maxHeight="CALC(" + x[0].style.maxHeight + " + 4rem)";
 
       // Send an alert if there is an error message (Attachment failed?)
       var obj = $j('.errorMessageInput');
       if (obj.val().length > 0) {
         alert(obj.val());
-        obj.val('');        
+        obj.val('');
       }
     }
 
@@ -825,23 +954,23 @@ margin-top: -2rem;
 
                   <apex:actionRegion renderRegionOnly="false">
 
-                    <apex:commandLink rendered="{!isApprover && cxKnowledgeUpdate.Status__c == statusSaved}" 
-                                      styleClass="button button--publification js-popup-trigger" 
-                                      html-data-popup=".popup--publification" 
+                    <apex:commandLink rendered="{!isApprover && cxKnowledgeUpdate.Status__c == statusSaved}"
+                                      styleClass="button button--publification js-popup-trigger"
+                                      html-data-popup=".popup--publification"
                                       reRender="DUMMY">
                       <i class="icon icon--circle"></i>承認
                     </apex:commandLink>
 
                     <apex:commandLink rendered="{!isApprover && cxKnowledgeUpdate.Status__c == statusSaved}"
-                                      styleClass="button button--denial js-popup-trigger" 
-                                      html-data-popup=".popup--denial" 
+                                      styleClass="button button--denial js-popup-trigger"
+                                      html-data-popup=".popup--denial"
                                       reRender="DUMMY">
                       <i class="icon icon--denial"></i>否認
                     </apex:commandLink>
 
-                    <apex:commandLink rendered="{!isNationalApprover && cxKnowledgeUpdate.Status__c == statusApproved}" 
-                                      styleClass="button button--publification js-popup-trigger" 
-                                      html-data-popup=".popup--publification-national" 
+                    <apex:commandLink rendered="{!isNationalApprover && cxKnowledgeUpdate.Status__c == statusApproved}"
+                                      styleClass="button button--publification js-popup-trigger"
+                                      html-data-popup=".popup--publification-national"
                                       reRender="DUMMY">
                       <i class="icon icon--circle"></i>承認
                     </apex:commandLink>
@@ -870,33 +999,35 @@ margin-top: -2rem;
 
               <apex:outputPanel id="editCxKnowledge15" styleclass="theme-info__edit is-cx">
 
-                <apex:commandLink rendered="{!cxKnowledgeUpdate.UserRecordAccess.HasEditAccess && 
+                <apex:outputPanel rendered="{!cxKnowledgeUpdate.UserRecordAccess.HasEditAccess &&
                                               (cxKnowledgeUpdate.Status__c == statusTemporarySaved ||
-                                               cxKnowledgeUpdate.Status__c == statusRejected)}" 
-                                  value="一時保存" 
-                                  styleClass="button button--update" 
-                                  action="{!doSaveUpdateCxKnowledge}" />
+                                               cxKnowledgeUpdate.Status__c == statusRejected)}" >
+                                  <a href="javascript:void(0)" class="button button--update" onclick="validateData1();">一時保存</a>
+                </apex:outputPanel>
+                                  <!--action="{!doSaveUpdateCxKnowledge}" /-->
 
-                <apex:commandLink rendered="{!cxKnowledgeUpdate.UserRecordAccess.HasEditAccess && 
+                <apex:outputPanel rendered="{!cxKnowledgeUpdate.UserRecordAccess.HasEditAccess &&
                                               cxKnowledgeUpdate.Status__c != statusTemporarySaved &&
-                                              cxKnowledgeUpdate.Status__c != statusRejected}" 
-                                  value="更新" 
-                                  styleClass="button button--update button--update--space" 
-                                  action="{!doSaveUpdateCxKnowledge}" />
+                                              cxKnowledgeUpdate.Status__c != statusRejected}" >
+                                  <a href="javascript:void(0)" class="button button--update button--update--space" onclick="validateData1();">更新</a>
+                </apex:outputPanel>
+                                  <!--action="{!doSaveUpdateCxKnowledge}" /-->
+                <apex:actionFunction name="callSaveUpdateCxKnowledge" action="{!doSaveUpdateCxKnowledge}"/>
 
-                <apex:commandLink rendered="{!cxKnowledgeUpdate.UserRecordAccess.HasEditAccess && 
+                <apex:outputPanel rendered="{!cxKnowledgeUpdate.UserRecordAccess.HasEditAccess &&
                                               (cxKnowledgeUpdate.Status__c == statusTemporarySaved ||
-                                               cxKnowledgeUpdate.Status__c == statusRejected)}" 
-                                  value="更新して登録"
-                                  styleClass="button button--update button--update--space" 
-                                  action="{!doSaveUpdateCxKnowledgeWithChangeStatusToSaved}" />
+                                               cxKnowledgeUpdate.Status__c == statusRejected)}" >
+                                  <a href="javascript:void(0)" class="button button--update button--update--space" onclick="validateData2();">更新して登録</a>
+                </apex:outputPanel>
+                                  <!--action="{!doSaveUpdateCxKnowledgeWithChangeStatusToSaved}" /-->
+                <apex:actionFunction name="callSaveUpdateCxKnowledgeWithChangeStatusToSaved" action="{!doSaveUpdateCxKnowledgeWithChangeStatusToSaved}"/>
 
-                <apex:commandLink rendered="{!cxKnowledgeUpdate.UserRecordAccess.HasEditAccess && 
-                                              isCreator && 
-                                              cxKnowledgeUpdate.Status__c != statusNationalApproved}" 
-                                  value="削除" 
-                                  styleClass="button button--delete" 
-                                  onclick="return confirm('このデータを削除してよろしいですか？');" 
+                <apex:commandLink rendered="{!cxKnowledgeUpdate.UserRecordAccess.HasEditAccess &&
+                                              isCreator &&
+                                              cxKnowledgeUpdate.Status__c != statusNationalApproved}"
+                                  value="削除"
+                                  styleClass="button button--delete"
+                                  onclick="return confirm('このデータを削除してよろしいですか？');"
                                   action="{!doSaveDeleteCxKnowledge}" />
 
               </apex:outputPanel>
@@ -910,6 +1041,18 @@ margin-top: -2rem;
 
                 <apex:outputPanel id="editCxKnowledge1">
 
+                <script type="text/javascript">
+                  $( function() {
+                    $('.staff .textarea-container').on('change', function() {
+                      if ($(this).val() == '' || /[A-z][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/.test($(this).val()) || /[A-z][A-z][0-9][0-9][0-9][0-9][0-9][0-9]/.test($(this).val())) {
+                          $(this).css({"border-color": "#ccc"});
+                      } else {
+                          $(this).css({"border-color": "red"});
+                      }
+                    });
+                  } );
+                </script>
+
                   <table class="table--theme-info" style="height: 100%">
 
                       <tr style="{!IF(!cxKnowledgeUpdate.IsCommentOnly__c, 'display: none;', '')}">
@@ -918,21 +1061,32 @@ margin-top: -2rem;
                           <apex:inputField styleclass="input-title" value="{!cxKnowledgeUpdate.CommentOnly__c}" />
                         </td>
                       </tr>
-
                       <tr style="{!IF(cxKnowledgeUpdate.IsCommentOnly__c, 'display: none;', '')}">
-                        <th>タイトル</th>
-                        <td class="u-mt32">
-                          <apex:inputField styleclass="input-title" value="{!cxKnowledgeUpdate.Title__c}" />
+                        <th>CXナレッジID</th>
+                        <td>
+                          <apex:outputText styleclass="is-middle" value="{!cxKnowledgeUpdate.Name}" />
                         </td>
                       </tr>
-                      
                       <tr style="{!IF(cxKnowledgeUpdate.IsCommentOnly__c, 'display: none;', '')}">
                         <th>カテゴリ</th>
                         <td>
                           <apex:actionRegion renderRegionOnly="false">
                             <apex:actionFunction name="categorySelectEdit" oncomplete="showCategorySelectEdit();" rerender="categorySelectPanelEdit" />
-                            <input id="categorySelectButtonEdit" onclick="categorySelectEdit();" type="button" class="btn input" value="選択する" style="height: 2.1rem; width: 7rem; padding: 0px 0px;" />
+                            <apex:outputPanel id="selectedCatsEdit">
+                            <apex:repeat value="{!categoryOptionsEdit}" var="selected">
+                              <apex:outputPanel rendered="{!selected.isSelected}">
+                              <!--p-->・<apex:outputText value="{!selected.option.Label}" style="margin-left: 10px; margin-top:10px !important;"/><!--/p-->
+                              </apex:outputPanel>
+                            </apex:repeat>
+                            </apex:outputPanel>
+                            <p style="margin-top: 5px;"><input id="categorySelectButtonEdit" onclick="categorySelectEdit();" type="button" class="btn input" value="選択する" style="height: 2.1rem; width: 7rem; padding: 0px 0px;" /></p>
                         </apex:actionRegion>
+                        </td>
+                      </tr>
+                      <tr style="{!IF(cxKnowledgeUpdate.IsCommentOnly__c, 'display: none;', '')}">
+                        <th>タイトル</th>
+                        <td class="u-mt32">
+                          <apex:inputField styleclass="input-title title-content-edit" value="{!cxKnowledgeUpdate.Title__c}" />
                         </td>
                       </tr>
                       <!--TODO DUC-->
@@ -1001,7 +1155,7 @@ margin-top: -2rem;
                           </div>
                         </td>
                       </tr>
-                      
+
                       <tr style="{!IF(cxKnowledgeUpdate.IsCommentOnly__c, 'display: none;', '')}">
                         <th>ステータス</th>
                         <td>
@@ -1011,11 +1165,11 @@ margin-top: -2rem;
                           </apex:outputPanel>
                         </td>
                       </tr>
-                      
+
                       <tr style="{!IF(cxKnowledgeUpdate.IsCommentOnly__c, 'display: none;', '')}">
                         <th>投稿内容</th>
                         <td>
-                          <apex:inputField styleclass="textarea-container" value="{!cxKnowledgeUpdate.Contribution__c}" />
+                          <apex:inputField styleclass="textarea-container textarea-content-edit" value="{!cxKnowledgeUpdate.Contribution__c}" />
                         </td>
                       </tr>
 
@@ -1031,9 +1185,9 @@ margin-top: -2rem;
                                   &nbsp;&nbsp;&nbsp;{!att.Name}
 
                                   <apex:outputPanel rendered="{!cxKnowledgeUpdate.UserRecordAccess.HasEditAccess}">
-                                    <a class="button button--delete-list linkstyle" onclick="callCxKnowledgeDeleteAttachment('{!att.ID}');">削除<i class="icon icon--close"></i></a> 
+                                    <a class="button button--delete-list linkstyle" onclick="callCxKnowledgeDeleteAttachment('{!att.ID}');">削除<i class="icon icon--close"></i></a>
 
-                                    <a onclick="callCxKnowledgePutInTopAttachment('{!att.ID}');" class="isLink linkPutInTop linkstyle">先頭へ</a> 
+                                    <a onclick="callCxKnowledgePutInTopAttachment('{!att.ID}');" class="isLink linkPutInTop linkstyle">先頭へ</a>
                                   </apex:outputPanel>
 
                                 </li>
@@ -1057,8 +1211,8 @@ margin-top: -2rem;
                       </td>
                     </tr>
 
-                    <tr style="{!IF(cxKnowledgeUpdate.IsCommentOnly__c || 
-                                    cxKnowledgeUpdate.ScopeRecommendation__c == NULL || 
+                    <tr style="{!IF(cxKnowledgeUpdate.IsCommentOnly__c ||
+                                    cxKnowledgeUpdate.ScopeRecommendation__c == NULL ||
                                     cxKnowledgeUpdate.ScopeRecommendation__c == '', 'display: none;', '')}">
                       <th>二次承認者への<br/>申し送り事項</th>
                       <td>
@@ -1124,13 +1278,13 @@ margin-top: -2rem;
 
                               <apex:commandLink onclick="callChangeFavoriteStatus()"
                                                 rendered="{!!cxKnowledgeUpdate.TechnicalFavorite__c}"
-                                                reRender="DUMMY">                        
+                                                reRender="DUMMY">
                                 <i class="icon icon--favorite--off"></i>
                               </apex:commandLink>
 
                               <apex:commandLink onclick="callChangeFavoriteStatus()"
                                                 rendered="{!cxKnowledgeUpdate.TechnicalFavorite__c}"
-                                                reRender="DUMMY">                        
+                                                reRender="DUMMY">
                                 <i class="icon icon--favorite--on"></i>
                               </apex:commandLink>
 
@@ -1159,12 +1313,17 @@ margin-top: -2rem;
                     <div style="display: inline-block;">
 
                       <fieldset class="filter-daterange filter-text">
-                        <label >最終更新日</label>
+                        <label >更新日</label>
                         <apex:input value="{!filterDateFromStr}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd" />
                         <label style="margin-left: 0.5em;">></label>
                         <apex:input value="{!filterDateToStr}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd" />
                       </fieldset>
-                      
+
+                      <fieldset class="filter-category filter-text">
+                        <label>ID検索</label>
+                        <apex:inputText styleClass="search-status__select" value="{!filterName}" style="margin-left: 0.5rem; width:10rem;" />
+                      </fieldset>
+
                       <fieldset class="filter-category filter-select">
                         <label>ステータス</label>
                         <apex:selectList styleClass="search-status__select" value="{!filterStatus}" size="1" style="margin-left: 0.5rem">
@@ -1187,24 +1346,24 @@ margin-top: -2rem;
                             <apex:actionFunction name="categorySelect" oncomplete="showCategorySelect();" rerender="categorySelectPanel" />
                             <input id="categorySelectButton" onclick="categorySelect();" type="button" class="btn input" value="選択する" style="height: 2.1rem; width: 7rem; padding: 0px 0px; margin-left: 1rem;" />
 
-                            <apex:outputLabel value="選択" styleClass="field-label" style="margin-left: 1rem;"/>
-                            <apex:outputText styleClass="filter-selected-category" value="{!SelectedCategory}" id="SelectedCategory" style="overflow: hidden; white-space: nowrap; width: 35px; display: inline-flex;margin-left: 1rem;"/>
+                            <!--apex:outputLabel value="選択" styleClass="field-label" style="margin-left: 1rem;"/>
+                            <apex:outputText styleClass="filter-selected-category" value="{!SelectedCategory}" id="SelectedCategory" style="overflow: hidden; white-space: nowrap; width: 35px; display: inline-flex;margin-left: 1rem;"/-->
                         </apex:actionRegion>
+                      </fieldset>
+
+                      <fieldset class="filter-category filter-checkbox">
+                        <apex:outputLabel for="favoriteCheckbox" value="お気に入り" />
+                        <apex:inputCheckbox id="favoriteCheckbox" styleClass="search-status__select" value="{!filterFavorite}" style="margin-left: 0.5rem; vertical-align: middle;" />
+                      </fieldset>
+
+                      <fieldset class="filter-category filter-checkbox">
+                        <apex:outputLabel for="attachmentCheckbox" value="添付有" />
+                        <apex:inputCheckbox id="attachmentCheckbox" value="{!filterHasAttachment}" style="width: auto; height: 2.1rem; margin-left: 0.5rem; vertical-align: middle;" />
                       </fieldset>
 
                       <fieldset class="filter-category filter-text">
                         <label>フリー検索</label>
                         <apex:inputText styleClass="search-status__select" value="{!filterFreeText}" style="margin-left: 0.5rem; width:10rem;" />
-                      </fieldset>
-
-                      <fieldset class="filter-category filter-checkbox">
-                        <apex:outputLabel for="favoriteCheckbox" value="お気に入りのみ" />
-                        <apex:inputCheckbox id="favoriteCheckbox" styleClass="search-status__select" value="{!filterFavorite}" style="margin-left: 0.5rem; vertical-align: middle;" />
-                      </fieldset>
-                      
-                      <fieldset class="filter-category filter-checkbox">
-                        <apex:outputLabel for="attachmentCheckbox" value="添付有" />
-                        <apex:inputCheckbox id="attachmentCheckbox" value="{!filterHasAttachment}" style="width: auto; height: 2.1rem; margin-left: 0.5rem; vertical-align: middle;" />
                       </fieldset>
 
                       <apex:outputPanel rendered="{!isVisibleFilterShisha}">
@@ -1246,7 +1405,7 @@ margin-top: -2rem;
                           </apex:selectList>
                         </fieldset>
                       </apex:outputPanel>
-                    
+
                       <fieldset class="filter-status">
                         <apex:actionRegion id="area51d" renderRegionOnly="false">
                             <apex:outputLabel value="傘下店舗" for="shops" html-data-type="label" styleClass="field-label" />
@@ -1254,22 +1413,25 @@ margin-top: -2rem;
                             <input id="shopsSelectButton" onclick="shopsSelect();" type="button" class="btn input" value="選択する" style="height: 2.1rem; width: 7rem; padding: 0px 0px; margin-left: 1rem;" />
                         </apex:actionRegion>
                       </fieldset>
-                    
+
+                      <fieldset class="filter-button">
+                        <apex:commandLink value="絞り込む/実行" styleClass="margin-right10 mdl-button mdl-js-button mdl-button--raised mdl-button--colored" action="{!doSearch}" />
+                         <apex:commandLink styleClass="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="クリアする" onclick="clearSearchCondition();" action="{!clearSerchFilter}" reRender="area51g, categorySelectPanel"/>
+                      </fieldset>
+
+
                     </div>
 
-                    <div style="display: inline-block; ">
+                    <!--div style="display: inline-block; ">
                       <fieldset class="filter-category" style="border-right: 0;margin-bottom: 0;">
                         <div class="field" >
                             <apex:outputLabel value="選択店舗" styleClass="field-label" style="margin-left: 1rem;"/>
                             <apex:outputText styleClass="filter-selected-shop" value="{!SelectedShops}" id="SelectedShops" style="overflow: hidden; white-space: nowrap; width: 675px; display: inline-flex;margin-left: 1rem;"/>
                         </div>
                       </fieldset>
-                    </div>
+                    </div-->
 
-                    <fieldset class="filter-button">
-                      <apex:commandLink value="絞り込む/実行" styleClass="margin-right10 mdl-button mdl-js-button mdl-button--raised mdl-button--colored" action="{!doSearch}" />
-                      <apex:commandLink styleClass="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="クリアする" onclick="clearSearchCondition();" reRender="area51g"/>
-                   </fieldset>
+
                   </apex:actionRegion>
 
                 </div>
@@ -1369,7 +1531,7 @@ margin-top: -2rem;
           <apex:outputPanel styleClass="categorySelectEdit" layout="block">
             <apex:actionRegion renderRegionOnly="false">
             <apex:outputPanel layout="block" styleClass="categorySelect-header">
-              <h2>カテゴリを選択してください</h2>
+              <h2>カテゴリを選択してください(最大5個まで)</h2>
             </apex:outputPanel>
             <apex:outputPanel layout="block" styleClass="clearfix" style="margin: 8px 0 8px 0; padding: 0 0 8px 0; border-bottom: 1px solid #ccc;">
               <apex:outputPanel styleClass="processNow" layout="block" style="display: inline-block; margin: 0 8px 0 0; float: right; display: none;">
@@ -1406,16 +1568,19 @@ margin-top: -2rem;
               <div class="cat-group-4">
               <apex:repeat value="{!CategoryOptionsEdit}" var="seriesComp" first="24" rows="3">
                   <div class= "cat-item-3 {!seriesComp.level}">
-                    <apex:inputCheckBox id="selectTarget" value="{!seriesComp.isSelected}" onchange="checkCateEditCount();" styleClass="catCheckboxEdit"/>
+                    <apex:inputCheckBox id="selectTarget" value="{!seriesComp.isSelected}" onchange="checkCateEditCount();" styleClass="catCheckboxEdit {!seriesComp.option.Value}"/>
                     <apex:outputLabel for="selectTarget" value="{!seriesComp.option.Label}" />
                   </div>
               </apex:repeat>
               </div>
             </apex:outputPanel>
+            <apex:outputLabel id="beforeSelectedEdit" styleClass="beforeSelectedEdit" value="{!beforeSelectedEdit}" style="display: none"/>
 
             <apex:outputPanel styleClass="selectButtons clearfix" layout="block" style="margin: 12px 0 0 0; border-top: 1px solid #ccc; font-weight: bold;text-align: right;padding-top: 0.6rem;">
               <apex:commandlink styleClass="categorySelect-button" value="キャンセル" action="{!categorySelectCancelEdit}" onclick="$j('.processNow').fadeIn();" oncomplete="$j('.categorySelectEdit').dialog('close');$j('.processNow').hide();$j('#categorySelectButtonEdit').blur();" rerender="categorySelectPanelEdit" style="background-color: rgb(192, 192, 192);color=#ccc;"/>
-              <apex:commandlink styleClass="categorySelect-button" value="適用する" action="{!categorySelectApplyEdit}" style="color: white;" onclick="$j('.processNow').fadeIn();" oncomplete="$j('.categorySelectEdit').dialog('close');$j('.processNow').hide();$j('#categorySelectButtonEdit').blur();" rerender="categorySelectPanelEdit, SelectedCategory" />
+              <a href="javascript:void(0)" class="categorySelect-button" style="color: white;" onclick="checkExpertEdit();">適用する</a>
+
+              <apex:actionFunction name="callCategorySelectApplyEdit" action="{!categorySelectApplyEdit}" oncomplete="$j('.categorySelectEdit').dialog('close');$j('.processNow').hide();$j('#categorySelectButtonEdit').blur();" rerender="categorySelectPanelEdit, SelectedCategory, selectedCatsEdit" />
             </apex:outputPanel>
 </apex:actionRegion>
           </apex:outputPanel>
@@ -1424,7 +1589,7 @@ margin-top: -2rem;
           <apex:outputPanel styleClass="categorySelectAdd" layout="block">
 <apex:actionRegion renderRegionOnly="false">
             <apex:outputPanel layout="block" styleClass="categorySelect-header">
-              <h2>カテゴリを選択してください</h2>
+              <h2>カテゴリを選択してください(最大5個まで)</h2>
             </apex:outputPanel>
             <apex:outputPanel layout="block" styleClass="clearfix" style="margin: 8px 0 8px 0; padding: 0 0 8px 0; border-bottom: 1px solid #ccc;">
               <apex:outputPanel styleClass="processNow" layout="block" style="display: inline-block; margin: 0 8px 0 0; float: right; display: none;">
@@ -1461,7 +1626,7 @@ margin-top: -2rem;
               <div class="cat-group-4">
               <apex:repeat value="{!CategoryOptionsAdd}" var="seriesComp" first="24" rows="3">
                   <div class= "cat-item-3 {!seriesComp.level}">
-                    <apex:inputCheckBox id="selectTarget" value="{!seriesComp.isSelected}" onchange="checkCateAddCount();" styleClass="catCheckboxAdd"/>
+                    <apex:inputCheckBox id="selectTarget" value="{!seriesComp.isSelected}" onchange="checkCateAddCount();" styleClass="catCheckboxAdd {!seriesComp.option.Value}"/>
                     <apex:outputLabel for="selectTarget" value="{!seriesComp.option.Label}" />
                   </div>
               </apex:repeat>
@@ -1470,7 +1635,10 @@ margin-top: -2rem;
 
             <apex:outputPanel styleClass="selectButtons clearfix" layout="block" style="margin: 12px 0 0 0; border-top: 1px solid #ccc; font-weight: bold;text-align: right;padding-top: 0.6rem;">
               <apex:commandlink styleClass="categorySelect-button" value="キャンセル" action="{!categorySelectCancelAdd}" onclick="$j('.processNow').fadeIn();" oncomplete="$j('.categorySelectAdd').dialog('close');$j('.processNow').hide();$j('#categorySelectButtonAdd').blur();" rerender="categorySelectPanelAdd" style="background-color: rgb(192, 192, 192);color=#ccc;"/>
-              <apex:commandlink styleClass="categorySelect-button" value="適用する" action="{!categorySelectApplyAdd}" style="color: white;" onclick="$j('.processNow').fadeIn();" oncomplete="$j('.categorySelectAdd').dialog('close');$j('.processNow').hide();$j('#categorySelectButtonAdd').blur();" rerender="categorySelectPanelAdd, SelectedCategory" />
+              <!--apex:commandlink styleClass="categorySelect-button" value="適用する" action="{!categorySelectApplyAdd}" style="color: white;" onclick="$j('.processNow').fadeIn();" oncomplete="$j('.categorySelectAdd').dialog('close');$j('.processNow').hide();$j('#categorySelectButtonAdd').blur();" rerender="categorySelectPanelAdd, SelectedCategory, selectedCatsAdd" /-->
+              <a href="javascript:void(0)" class="categorySelect-button" style="color: white;" onclick="checkExpertAdd();">適用する</a>
+
+              <apex:actionFunction name="callCategorySelectApplyAdd" action="{!categorySelectApplyAdd}" oncomplete="$j('.categorySelectAdd').dialog('close');$j('.processNow').hide();$j('#categorySelectButtonAdd').blur();" rerender="categorySelectPanelAdd, SelectedCategory, selectedCatsAdd" />
             </apex:outputPanel>
 </apex:actionRegion>
           </apex:outputPanel>
@@ -1480,7 +1648,7 @@ margin-top: -2rem;
 
               <div class="mdl-cell mdl-cell--2-col">
                 <apex:outputPanel rendered="{!(!isRestrictedUser && isShopUser)}">
-                <!--apex:outputPanel-->
+                <!--apex:outputPanel -->
                   <div class="u-buttons-container search-buttons" style="padding-top: 0.5em"><a class="js-popup-trigger" data-popup=".popup--theme" style="float: left;margin-left: 0;"><i class="icon icon--pen"></i>新規投稿</a></div>
                 </apex:outputPanel>
               </div>
@@ -1560,7 +1728,7 @@ margin-top: -2rem;
                           <apex:outputLink value="javascript:void(0)">
                             <apex:actionSupport event="onclick" action="{!goToPageLastBfr5}" />
                             <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 5}" />
-                          </apex:outputLink>                          
+                          </apex:outputLink>
                         </li>
 
 
@@ -1580,7 +1748,7 @@ margin-top: -2rem;
                           <apex:outputLink value="javascript:void(0)">
                             <apex:actionSupport event="onclick" action="{!goToPageLastBfr4}" />
                             <apex:outputText value="{!FLOOR(((recordScount - 1) / pageSize) + 1) - 4}" />
-                          </apex:outputLink>                          
+                          </apex:outputLink>
                         </li>
 
 
@@ -1636,7 +1804,7 @@ margin-top: -2rem;
                           <apex:outputLink value="javascript:void(0)">
                             <apex:actionSupport event="onclick" action="{!goToPage7}" />
                             <apex:outputText value="7" />
-                          </apex:outputLink>                          
+                          </apex:outputLink>
                         </li>
 
                         <li class="{!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8) || (FLOOR(((recordScount - 1) / pageSize) + 1) <= pageNum + 4), 'hidden', '')}">
@@ -1656,7 +1824,7 @@ margin-top: -2rem;
                           <apex:outputLink value="javascript:void(0)">
                             <apex:actionSupport event="onclick" action="{!goToPage8}" />
                             <apex:outputText value="8" />
-                          </apex:outputLink>                          
+                          </apex:outputLink>
                         </li>
 
                         <li class="{!IF(pageNum == FLOOR(((recordScount - 1) / pageSize) + 1), 'active', '')} {!IF(FLOOR(((recordScount - 1) / pageSize) + 1) < 7 || (FLOOR(((recordScount - 1) / pageSize) + 1) <= 8), 'hidden', '')}">
@@ -1769,15 +1937,17 @@ margin-top: -2rem;
     <apex:inputText id="cxKnowledgeUpdateId" styleClass="cxKnowledgeUpdateIdInput" value="{!cxKnowledgeUpdateId}" style="display: none;" />
 
 
-    <apex:actionFunction name="refreshCxKnowledgeEdit" action="{!refreshCxKnowledgeEdit}" rerender="editCxKnowledge1, editCxKnowledge2, editCxKnowledge3, editCxKnowledge4, editCxKnowledge5, editCxKnowledge6, editCxKnowledge7, editCxKnowledge8, editCxKnowledge9, editCxKnowledge9b, editCxKnowledge10, editCxKnowledge11, editCxKnowledge12, editCxKnowledge13, editCxKnowledge14, editCxKnowledge15, editCxKnowledge16" />
+    <apex:actionFunction name="refreshCxKnowledgeEdit" action="{!refreshCxKnowledgeEdit}" rerender="editCxKnowledge1, editCxKnowledge2, editCxKnowledge3, editCxKnowledge4, editCxKnowledge5, editCxKnowledge6, editCxKnowledge7, editCxKnowledge8, editCxKnowledge9, editCxKnowledge9b, editCxKnowledge10, editCxKnowledge11, editCxKnowledge12, editCxKnowledge13, editCxKnowledge14, editCxKnowledge15, editCxKnowledge16, beforeSelectedEdit" />
 </apex:actionRegion>
                 <apex:outputPanel layout="block" id="recordList">
                 <apex:repeat value="{!Records}" var="rec">
 
-                    <tr onclick="callCxKnowledgeUpdateId('{!rec.Id}');" class="{!IF(rec.CreatedBy__r.AccountId == currentUser.AccountId, 'highlightRow', '')}">
+                    <tr onclick="callCxKnowledgeUpdateId('{!rec.Id}');" class="row-{!rec.Id} {!IF(rec.CreatedBy__r.AccountId == currentUser.AccountId, 'highlightRow', '')}">
                       <td class="js-slide-info-trigger base-info js-base-info col1" data-target=".theme-info">
                         <p>
                           <span class="u-sub-colour"><apex:outputText value="{0,date,yyyy.MM.dd}"> <apex:param value="{!rec.LastModifiedDateValue__c}" /> </apex:outputText></span>
+                          <br/>
+                          <apex:outputText value="{!rec.Name}"/>
                           <br/>
                           <apex:outputField value="{!rec.Status__c}"/>
                           <apex:outputPanel rendered="{!rec.Status__c == StatusNationalApproved}">
@@ -1796,14 +1966,20 @@ margin-top: -2rem;
 
 
                       <td class="col3">
-                        <apex:outputPanel rendered="{!rec.Category1__c != NULL}">
-                          <p><apex:outputField value="{!rec.Category1__c}"/></p>
-                        </apex:outputPanel>
-                        <apex:outputPanel rendered="{!rec.Category2__c != NULL}">
-                          <p><apex:outputField value="{!rec.Category2__c}"/></p>
-                        </apex:outputPanel>
-                        <apex:outputPanel rendered="{!rec.Category3__c != NULL}">
-                          <p><apex:outputField value="{!rec.Category3__c}"/></p>
+                        <apex:outputPanel rendered="{!rec.Category1__c != NULL}" >
+                          <div onmouseover="showCat('{!categoryMap[rec.Id][0]}', '{!rec.Id}', this);" onmouseout="hideCat('{!categoryMap[rec.Id][0]}', '{!rec.Id}', this);">
+                            <apex:repeat value="{!categoryMap[rec.Id]}" var="cat" first="1" rows="2">
+                              <p><apex:outputText value="{!cat} "/></p>
+                            </apex:repeat>
+                            <apex:outputPanel rendered="{!categoryMap[rec.Id][0] != '1' && categoryMap[rec.Id][0] != '2'}">
+                               <p>・他</p>
+                            </apex:outputPanel>
+                          </div>
+                          <div class="selectedCat-{!rec.Id}" style="display: none;">
+                          <apex:repeat value="{!categoryMap[rec.Id]}" var="cat" first="1">
+                            <p><apex:outputText value="{!cat} "/></p>
+                          </apex:repeat>
+                          </div>
                         </apex:outputPanel>
                       </td>
 
@@ -1815,7 +1991,7 @@ margin-top: -2rem;
 
                       <td class="col5">
 
-                        <apex:inputFile disabled="{!!rec.UserRecordAccess.HasEditAccess}" id="upload--file" styleclass="attachInput" value="{!cxKnowledgeNewAttachment.body}" filename="{!cxKnowledgeNewAttachment.name}" contentType="{!cxKnowledgeNewAttachment.contentType}" 
+                        <apex:inputFile disabled="{!!rec.UserRecordAccess.HasEditAccess}" id="upload--file" styleclass="attachInput" value="{!cxKnowledgeNewAttachment.body}" filename="{!cxKnowledgeNewAttachment.name}" contentType="{!cxKnowledgeNewAttachment.contentType}"
                                         filesize="{!cxKnowledgeNewAttachmentSize}"
                                         onchange="callAddCxKnowledgeNewAttachmentId('{!rec.Id}');" />
 
@@ -1859,7 +2035,7 @@ margin-top: -2rem;
 
 
 
-      
+
 
 
 
@@ -1877,23 +2053,30 @@ margin-top: -2rem;
 
 
 
-
+<!--Add new-->
 <div class="popup popup--theme">
   <div class="popup-inner">
     <table class="table--theme-info">
-      <tr>
-        <th>タイトル</th>
-        <td class="u-mt32">
-          <apex:inputField styleclass="input-title" value="{!cxKnowledgeNew.Title__c}" />
-        </td>
-      </tr>
       <tr>
         <th>カテゴリ</th>
         <td>
           <apex:actionRegion renderRegionOnly="false">
               <apex:actionFunction name="categorySelectAdd" oncomplete="showCategorySelectAdd();" rerender="categorySelectPanelAdd" />
-              <input id="categorySelectButtonAdd" onclick="categorySelectAdd();" type="button" class="btn input" value="選択する" style="height: 2.1rem; width: 7rem; padding: 0px 0px;" />
+              <apex:outputPanel id="selectedCatsAdd">
+              <apex:repeat value="{!categoryOptionsAdd}" var="selected">
+                <apex:outputPanel rendered="{!selected.isSelected}">
+                ・<apex:outputText value="{!selected.option.Label}" style="margin-left: 10px; margin-top: 10px;"/>
+                </apex:outputPanel>
+              </apex:repeat>
+              </apex:outputPanel>
+              <p><input id="categorySelectButtonAdd" onclick="categorySelectAdd();" type="button" class="btn input" value="選択する" style="margin-top: 5px; height: 2.1rem; width: 7rem; padding: 0px 0px;" /></p>
           </apex:actionRegion>
+        </td>
+      </tr>
+      <tr>
+        <th>タイトル</th>
+        <td class="u-mt32">
+          <apex:inputField styleclass="input-title title-content-add" value="{!cxKnowledgeNew.Title__c}" />
         </td>
       </tr>
       <!--TODO DUC-->
@@ -1966,7 +2149,7 @@ margin-top: -2rem;
       <tr>
         <th>投稿内容</th>
         <td class="last-child">
-          <apex:inputField styleclass="textarea-container" value="{!cxKnowledgeNew.Contribution__c}" />
+          <apex:inputField styleclass="textarea-container textarea-content-add" value="{!cxKnowledgeNew.Contribution__c}" />
         </td>
       </tr>
     </table>
@@ -1975,18 +2158,18 @@ margin-top: -2rem;
   <div class="popup__button-container u-text-center">
     <a href="" class="button button--cancel js-popup-close">キャンセル</a>
 
-    <apex:actionRegion renderRegionOnly="false">   
+    <apex:actionRegion renderRegionOnly="false">
 
-      <apex:commandLink value="一時保存" 
+      <apex:commandLink value="一時保存"
                         styleClass="button button--post"
                         onclick="callDoSaveNewCxKnowledgeTemporary();" reRender="DUMMY"
-                        /> 
+                        />
 
-      <apex:commandLink value="投稿する" 
+      <apex:commandLink value="投稿する"
                         styleClass="button button--post"
                         onclick="callDoSaveNewCxKnowledge();" reRender="DUMMY"
-                        /> 
-  
+                        />
+
     </apex:actionRegion>
 
   </div>
@@ -1998,7 +2181,7 @@ margin-top: -2rem;
     <div class="publification-form">
       <p>
         <apex:inputField id="editCxKnowledge5"
-                         styleclass="AcceptCommentInput" 
+                         styleclass="AcceptCommentInput"
                          html-placeholder="店舗への称賛コメントをご記入ください！"
                          value="{!cxKnowledgeUpdate.AcceptComment__c}" />
       </p>
@@ -2010,7 +2193,7 @@ margin-top: -2rem;
       <p>
         <apex:inputField id="editCxKnowledge6"
                          html-placeholder="二次承認者への申し送り事項をご記入ください！"
-                         style="width: 100% !important; height: 5.6rem;" 
+                         style="width: 100% !important; height: 5.6rem;"
                          value="{!cxKnowledgeUpdate.ScopeRecommendation__c}" />
 <!--
         <apex:selectRadio id="editCxKnowledge6" style="width: 70% !important;" value="{!cxKnowledgeUpdate.PublishAlsoAttachments__c}">
@@ -2022,7 +2205,7 @@ margin-top: -2rem;
   </div>
   <div class="popup__button-container u-text-center">
     <a href="" class="button button--cancel js-popup-close">キャンセル</a>
-    <apex:actionRegion renderRegionOnly="false">   
+    <apex:actionRegion renderRegionOnly="false">
       <apex:commandLink value="承認する" styleClass="button button--post"
                         onclick="callAcceptCxKnowledge();" reRender="DUMMY"/> <!-- action="{!doApproveCxKnowledge}" -->
     </apex:actionRegion>
@@ -2033,13 +2216,13 @@ margin-top: -2rem;
   <div class="popup-inner">
     <div class="publification-form">
       <p>
-        <apex:inputField id="editCxKnowledge7" 
+        <apex:inputField id="editCxKnowledge7"
                          styleclass="NationalAcceptCommentInput"
                          html-placeholder="店舗への称賛コメントをご記入ください！"
                          value="{!cxKnowledgeUpdate.NationalAcceptComment__c}" />
       </p>
       <p>
-        <apex:inputHidden id="editCxKnowledge9b" html-class="editCxKnowledge9b" value="{!cxKnowledgeAttachSharing}" /> 
+        <apex:inputHidden id="editCxKnowledge9b" html-class="editCxKnowledge9b" value="{!cxKnowledgeAttachSharing}" />
         <apex:selectRadio id="editCxKnowledge9" styleclass="optionsharingattach" style="width: 70% !important;color: #fff;" value="{!cxKnowledgeUpdate.PublishAlsoAttachmentsList__c}" onchange="radioButtonSelected()">
           <apex:selectOptions value="{!optionPublishAttachments}" />
         </apex:selectRadio>
@@ -2048,7 +2231,7 @@ margin-top: -2rem;
   </div>
   <div class="popup__button-container u-text-center">
     <a href="" class="button button--cancel js-popup-close">キャンセル</a>
-    <apex:actionRegion renderRegionOnly="false">   
+    <apex:actionRegion renderRegionOnly="false">
       <apex:commandLink value="承認する（支社のみ）" styleClass="button button--post"
                         onclick="callAcceptNationalCxKnowledge(1);" reRender="DUMMY"/> <!-- action="{!doNationalApproveCxKnowledge}" -->
       <apex:commandLink value="承認する（全国）" styleClass="button button--post"
@@ -2071,7 +2254,7 @@ margin-top: -2rem;
 
   <div class="popup__button-container u-text-center">
     <a href="" class="button button--cancel js-popup-close">キャンセル</a>
-    <apex:actionRegion renderRegionOnly="false">   
+    <apex:actionRegion renderRegionOnly="false">
       <apex:commandLink value="否認する" styleClass="button button--post"
                         onclick="callRejectCxKnowledge();" reRender="DUMMY"/> <!-- action="{!doRejectCxKnowledge}" -->
     </apex:actionRegion>
@@ -2092,8 +2275,8 @@ margin-top: -2rem;
 
   <div class="popup__button-container u-text-center">
     <a href="" class="button button--cancel js-popup-close">キャンセル</a>
-    <apex:actionRegion renderRegionOnly="false">   
-      <apex:commandLink value="否認する" styleClass="button button--post" 
+    <apex:actionRegion renderRegionOnly="false">
+      <apex:commandLink value="否認する" styleClass="button button--post"
                         onclick="callRejectNationalCxKnowledge();" reRender="DUMMY"/> <!-- action="{!doNationalRejectCxKnowledge}" -->
     </apex:actionRegion>
   </div>
@@ -2106,7 +2289,7 @@ margin-top: -2rem;
       <div class="popup-inner">
         <div class="publification-form">
           <p>
-            <apex:inputTextarea styleclass="CopyCommentInput" 
+            <apex:inputTextarea styleclass="CopyCommentInput"
                              html-placeholder="コメントをご記入ください！"
                              value="{!newComment}" />
             <apex:actionFunction name="jsAddCopy" action="{!commentCxKnowledgeFeedElement}" reRender="editCxKnowledgeComment, pnlPopupComment, commentCell"/>
@@ -2128,17 +2311,17 @@ margin-top: -2rem;
   </div>
 
           <script src="{!URLFOR($Resource.auStyling,'/js/scripts.min.js')}" type="text/javascript"></script>
-          
+
           <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
             m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
             })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-            
+
             ga('create', 'UA-xxxxxx', 'auto');
             ga('send', 'pageview');
 
-          </script> 
+          </script>
 
 </apex:form>
 

@@ -410,6 +410,7 @@ public with sharing class saReportCtrl {
                     this.selectedReportName=this.selectedReport.Name;
                     this.createdReportId = selectedReportName;
 
+					//Added for Mail 14/05/2019 : [pj-kddi] [Password] 【調査・改修依頼】SANXレポートにおける、添付ファイルの不具合 
                     lsAttachments = [SELECT Id, Name
                                      FROM Attachment
                                      WHERE ParentId = :reportId
@@ -538,9 +539,16 @@ public with sharing class saReportCtrl {
                                               FROM saReport__c
                                               WHERE Id= :reportID];
         
+        lsAttachments = [SELECT Id, Name
+                      	FROM Attachment
+                      	WHERE ParentId = :reportId
+                      	ORDER BY LastModifiedDate DESC];
+        
         if (lsSelectedReport != NULL && lsSelectedReport.size() > 0) {
             this.selectedReport = lsSelectedReport[0];
         }
+        
+        
         
     }
     /**
@@ -2324,6 +2332,12 @@ public with sharing class saReportCtrl {
             return;
         }
         this.selectedReport = selectedReportList.get(0);
+        
+        //Added for Mail 14/05/2019 : [pj-kddi] [Password] 【調査・改修依頼】SANXレポートにおける、添付ファイルの不具合 
+        lsAttachments = [SELECT Id, Name
+                         FROM Attachment
+                         WHERE ParentId = :selectedReportList.get(0).Id
+                         ORDER BY LastModifiedDate DESC];
         
         //Get the concerned report views
         getReportDetailPageViews();

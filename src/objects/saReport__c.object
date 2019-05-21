@@ -143,6 +143,21 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>FiscalYear__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+MONTH(DATEVALUE(CreatedDate))&gt;=4,Year(DATEVALUE(CreatedDate)),Year(DATEVALUE(CreatedDate))-1
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FiscalYear</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>HasAttachments__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -444,6 +459,9 @@
         <columns>Category__c</columns>
         <columns>Report_body__c</columns>
         <columns>Subject__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CreatedDate__c</columns>
+        <columns>FiscalYear__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>

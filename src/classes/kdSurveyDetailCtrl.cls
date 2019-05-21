@@ -8,9 +8,9 @@ public with sharing class kdSurveyDetailCtrl {
 	public String filterFiscalYear {get; set;}
 
 	public String surveyType {get; set;}
-	public String surveyShisha {get; set;}
-	public String surveyUnifiedAgencyBranch {get; set;}
-	public String surveyBusinessLocationBranchGroup {get; set;}
+	public String hierarchicalLabel3 {get; set;}
+	public String hierarchicalLabel4 {get; set;}
+	public String hierarchicalLabel5 {get; set;}
 	public String surveyUserName {get; set;}
 	public String surveyFiscalYear {get; set;}
 	public String surveyTitle {get; set;}
@@ -133,7 +133,8 @@ public with sharing class kdSurveyDetailCtrl {
 		
 		List<AggregateResult> countCategory = database.query(countQuery);
 		
-		String queryStr = 'Select surveyId__c,FiscalYear__c,Period__c,SurveyType__c,Title__c,RegionalOfficeName__c,UnifiedAgencyBranch__c,'
+		String queryStr = 'Select surveyId__c,FiscalYear__c,Period__c,SurveyType__c,Title__c,User__r.Hierarchical_Label_3__c,User__r.Hierarchical_Label_4__c,'
+						+ 'User__r.Hierarchical_Label_5__c,RegionalOfficeName__c,UnifiedAgencyBranch__c,'
 						+ 'BusinessLocationBranchGroup__c,User__r.Id, User__r.KDDIEmployeeId__c, User__r.Name,ItemNumber__c,DisplayOrder__c,'
 						+ 'MainCategory__c,SubCategory__c,Question__c,Personal__c,PreviousPersonalRatio__c,AllMembers__c,	PreviousAllMembersRatio__c,'
 						+ 'BranchOfficeManager__c,PreviousBOManagerRatio__c,AllBOMembers__c,PreviousAllBOMembersRatio__c,NationalBOManagers__c,'
@@ -194,9 +195,9 @@ public with sharing class kdSurveyDetailCtrl {
 				
 				if(fFirstData){
 					surveyType=auSurDet.SurveyType__c;
-					surveyShisha=auSurDet.RegionalOfficeName__c;
-					surveyUnifiedAgencyBranch=auSurDet.UnifiedAgencyBranch__c;
-					surveyBusinessLocationBranchGroup=auSurDet.BusinessLocationBranchGroup__c;
+					hierarchicalLabel3=auSurDet.User__r.Hierarchical_Label_3__c;
+					hierarchicalLabel4=auSurDet.User__r.Hierarchical_Label_4__c;
+					hierarchicalLabel5=auSurDet.User__r.Hierarchical_Label_5__c;
 					surveyUserName=auSurDet.User__r.Name;
 					surveyFiscalYear=auSurDet.FiscalYear__c;
 					surveyTitle=auSurDet.Title__c;

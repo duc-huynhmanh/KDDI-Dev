@@ -1,11 +1,14 @@
 trigger AttachmentTrigger on Attachment (after insert, before delete) {
 	List<auCXKnowledge__c> cxKnowledges = new List<auCXKnowledge__c>();
 	List<Account> accs = new List<Account>();
+	List<auSTPD__c> auSTPDs = new List<auSTPD__c>();
+
 
 	Set<Id> cxIds = new Set<Id>();
 	Set<Id> ccpEventRelatedIds = new Set<Id>();
 	Map<Id, List<Id>> mapEventIds = new Map<Id, List<Id>>();
 	Set<Id> accIds = new Set<Id>();
+	Set<Id> auSTPDIds = new Set<Id>();
 
 	//INSERT
 	if(Trigger.isInsert){
@@ -14,6 +17,9 @@ trigger AttachmentTrigger on Attachment (after insert, before delete) {
 			if(att.ParentId.getSobjectType() == auCXKnowledge__c.SobjectType){
 				//get all aucxKnowledge which attachment was inserted to
 				cxIds.add(att.ParentId);
+			} else if (att.ParentId.getSobjectType() == auSTPD__c.SobjectType){
+				//get all ccp auSTPD related object which attachment was inserted to
+				auSTPDIds.add(att.ParentId);
 			} else if (att.ParentId.getSobjectType() == auActivityRelated__c.SobjectType){
 				//get all ccp event related object which attachment was inserted to
 				ccpEventRelatedIds.add(att.ParentId);
@@ -37,7 +43,7 @@ trigger AttachmentTrigger on Attachment (after insert, before delete) {
 		if(cxIds.size() > 0){
 			//get all aucxKnowledge which there is no attachment before (need to be updated)
 			List<auCXKnowledge__c> updateList = [SELECT HasAttachment__c FROM auCXKnowledge__c WHERE Id IN :cxIds AND HasAttachment__c = false];
-			
+
 			//if there are more than 14 records then must run batch
 			if(updateList.size() > 14) {
 				String listId = '\'';
@@ -64,6 +70,25 @@ trigger AttachmentTrigger on Attachment (after insert, before delete) {
 			}
 		}
 
+		//case of auSTPD
+		if(auSTPDIds.size() > 0){
+			//get all auSTPD which there is no attachment before (need to be updated)
+			List<auSTPD__c> updateList = [SELECT HasAttachment__c FROM auSTPD__c WHERE Id IN :auSTPDIds AND HasAttachment__c = false];
+
+
+			for(auSTPD__c auSTPD : updateList){
+					auSTPD.HasAttachment__c = true;
+       		}
+
+       		if(updateList.size() > 0) {
+       		  try{
+       		    update updateList;
+       		  } catch(Exception ex) {
+       		    system.debug('Exception: ' + ex);
+       		  }
+			}
+		 }
+
 		//case of Event
 		List<Id> eventIds = new List<Id> (mapEventIds.keySet());
 		if(eventIds.size() > 0){
@@ -76,7 +101,7 @@ trigger AttachmentTrigger on Attachment (after insert, before delete) {
        		    e.EventHasAttachment__c = true;
        		}
        		List<auActivityRelated__c> relatedObjects = [SELECT AttachmentsFromEvent__c, IsHaveAttachmentFromEvent__c FROM auActivityRelated__c WHERE Id IN :mapRelatedIds.keySet()];
-       		
+
        		for (auActivityRelated__c record :  relatedObjects){
     			record.AttachmentsFromEvent__c = (String.isBlank(record.AttachmentsFromEvent__c) ? '' : record.AttachmentsFromEvent__c  + ';') + String.join(mapEventIds.get(mapRelatedIds.get(record.Id)),';');
     			record.IsHaveAttachmentFromEvent__c = !String.isBlank(record.AttachmentsFromEvent__c);
@@ -97,11 +122,11 @@ trigger AttachmentTrigger on Attachment (after insert, before delete) {
 		if(ccpEventRelatedIds.size() > 0){
 			//get all auActivityRelated__c which there is no attachment before (need to be updated)
 			List<auActivityRelated__c> updateList = [SELECT HasAttachment__c FROM auActivityRelated__c WHERE Id IN :ccpEventRelatedIds AND HasAttachment__c = false];
-				
+
 			for (auActivityRelated__c act : updateList) {
        		    act.HasAttachment__c = true;
        		}
-       		
+
        		if(updateList.size() > 0) {
        		  try{
        		    update updateList;
@@ -114,11 +139,11 @@ trigger AttachmentTrigger on Attachment (after insert, before delete) {
 		//case of Account
 		if(accIds.size() > 0){
 			List<Account> updateList = [SELECT karteLastModifiedDate__c FROM Account WHERE Id IN :accIds];
-				
+
 			for (Account acc : updateList) {
        		    acc.karteLastModifiedDate__c = Datetime.now();
        		}
-       		
+
        		if(updateList.size() > 0) {
        		  try{
        		    update updateList;
@@ -135,6 +160,9 @@ trigger AttachmentTrigger on Attachment (after insert, before delete) {
 			if(att.ParentId.getSobjectType() == auCXKnowledge__c.SobjectType){
 				//get all aucxKnowledge which attachment was deleted from
 				cxIds.add(att.ParentId);
+			} else if (att.ParentId.getSobjectType() == auSTPD__c.SobjectType){
+				//get all ccp event related object which attachment was deleted from
+				auSTPDIds.add(att.ParentId);
 			} else if (att.ParentId.getSobjectType() == auActivityRelated__c.SobjectType){
 				//get all ccp event related object which attachment was deleted from
 				ccpEventRelatedIds.add(att.ParentId);
@@ -165,7 +193,7 @@ trigger AttachmentTrigger on Attachment (after insert, before delete) {
 			for (Event e : updateList) {
 				mapRelatedIds.put(e.auActivityRelated__c, e.Id);
        		    //e.EventHasAttachment__c = e.Attachments != null && e.Attachments.size() > 0;
-       		    
+
        		    Set<Id> eventAttachments = (new Map<Id, Attachment> (e.Attachments)).keySet();
 				system.debug('before eventAttachments: ' + eventAttachments);
 				Set<Id> deletedAtts = Trigger.oldMap.keySet();
@@ -176,13 +204,13 @@ trigger AttachmentTrigger on Attachment (after insert, before delete) {
        		}
 
        		List<auActivityRelated__c> relatedObjects = [SELECT AttachmentsFromEvent__c, IsHaveAttachmentFromEvent__c FROM auActivityRelated__c WHERE Id IN :mapRelatedIds.keySet()];
-       		
+
        		for (auActivityRelated__c record :  relatedObjects){
     			List<String> atts = mapEventIds.get(mapRelatedIds.get(record.Id));
     			for(String att : atts){
     				record.AttachmentsFromEvent__c = String.isBlank(record.AttachmentsFromEvent__c) ? '' : record.AttachmentsFromEvent__c.remove(';' + att).remove(att + ';').remove(att);
     			}
-    			
+
     			record.IsHaveAttachmentFromEvent__c = !String.isBlank(record.AttachmentsFromEvent__c);
     			system.debug('record.AttachmentsFromEvent__c: ' + record.AttachmentsFromEvent__c);
 			}
@@ -213,7 +241,33 @@ trigger AttachmentTrigger on Attachment (after insert, before delete) {
        		    act.HasAttachment__c = relatedAttachments.size() > 0;
        		    system.debug('act: ' + act);
        		}
-       		
+
+       		if(updateList.size() > 0) {
+       		  try{
+       		    update updateList;
+       		  } catch(Exception ex) {
+       		    system.debug('Exception: ' + ex);
+       		  }
+       		}
+		}
+
+		//case of auSTPD__c
+		if(auSTPDIds.size() > 0){
+			//get all auSTPD__c delete attachment from (need to be updated)
+			List<auSTPD__c> updateList = [SELECT HasAttachment__c, (SELECT Id FROM Attachments) FROM auSTPD__c WHERE Id IN :auSTPDIds];
+
+			system.debug('updateList: ' + updateList);
+			for (auSTPD__c auSTPD : updateList) {
+				Set<Id> auSTPDAttachments = (new Map<Id, Attachment> (auSTPD.Attachments)).keySet();
+				system.debug('before auSTPDAttachments: ' + auSTPDAttachments);
+				Set<Id> deletedAtts = Trigger.oldMap.keySet();
+				system.debug('deletedAtts: ' + deletedAtts);
+				auSTPDAttachments.removeAll(deletedAtts);
+				system.debug('after auSTPDAttachments: ' + auSTPDAttachments);
+       		    auSTPD.HasAttachment__c = auSTPDAttachments.size() > 0;
+       		    system.debug('auSTPD: ' + auSTPD);
+       		}
+
        		if(updateList.size() > 0) {
        		  try{
        		    update updateList;
@@ -239,7 +293,7 @@ trigger AttachmentTrigger on Attachment (after insert, before delete) {
        		    cx.HasAttachment__c = cxAttachments.size() > 0;
        		    system.debug('cx: ' + cx);
        		}
-       		
+
        		if(updateList.size() > 0) {
        		  try{
        		    update updateList;
@@ -250,5 +304,5 @@ trigger AttachmentTrigger on Attachment (after insert, before delete) {
 		}
 
 	}
-	
+
 }

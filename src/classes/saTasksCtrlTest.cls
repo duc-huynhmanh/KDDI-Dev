@@ -86,7 +86,59 @@ private class saTasksCtrlTest {
     	Test.stopTest();
     }
     
-    /*
+    @isTest
+    static void test_showReadUnread1() {
+    	
+    	Test.startTest();
+    	
+		User adminUser = auTestDataUtil.createAdminUser('admin');
+
+    	System.runAs(adminUser) {
+
+    		Test.setCurrentPageReference(new PageReference('Page.saTasks'));
+    		ApexPages.currentPage().getHeaders().put('USER-AGENT', '... internet explorer ...');
+
+    		saTasksCtrl ctrl = new saTasksCtrl();
+            	
+            //Initial Message Number
+            ctrl.showMessagesUnreadList();
+            Integer initialUnreadNumber = ctrl.lsMsg.size();
+            system.debug('Initial Unread Message Number : '+initialUnreadNumber);
+            ctrl.showMessagesReadList();
+            Integer initialReadNumber = ctrl.lsMsg.size();
+            system.debug('Initial Read Message Number : '+initialReadNumber);
+
+			saMessage__c message;
+			saMessageDetail__c messageDetail;
+			Integer newUnreadNumber;
+			Integer newReadNumber;
+			//New Unread Number
+			message = createMessageWithDeadLine(0);
+			messageDetail = createMessageDetail(message.Id,saConstantcmn.SA_MESSAGEDETAIL_TYPE_SHARED,adminUser.Id);	
+			ctrl.showMessagesUnreadList();
+			message = createMessageWithDeadLine(1);
+			messageDetail = createMessageDetail(message.Id,saConstantcmn.SA_MESSAGEDETAIL_TYPE_SHARED,adminUser.Id);	
+			ctrl.showMessagesUnreadList();
+			message = createMessageWithDeadLine(-1);
+			messageDetail = createMessageDetail(message.Id,saConstantcmn.SA_MESSAGEDETAIL_TYPE_SHARED,adminUser.Id);	
+			ctrl.showMessagesUnreadList();
+			message = createMessageWithDeadLine(-7);
+			messageDetail = createMessageDetail(message.Id,saConstantcmn.SA_MESSAGEDETAIL_TYPE_SHARED,adminUser.Id);	
+			ctrl.showMessagesUnreadList();
+			message = createMessageWithDeadLine(6);
+			messageDetail = createMessageDetail(message.Id,saConstantcmn.SA_MESSAGEDETAIL_TYPE_SHARED,adminUser.Id);	
+			ctrl.showMessagesUnreadList();
+			message = createMessageWithDeadLine(14);
+			messageDetail = createMessageDetail(message.Id,saConstantcmn.SA_MESSAGEDETAIL_TYPE_SHARED,adminUser.Id);	
+			ctrl.showMessagesUnreadList();
+			
+			ctrl.redirectIfNecessaryDesktop();
+			ctrl.redirectIfNecessaryMobile();
+    	}
+    	
+    	Test.stopTest();
+    }
+    
     @isTest
     static void test_attachment() {
     	
@@ -100,33 +152,57 @@ private class saTasksCtrlTest {
     		ApexPages.currentPage().getHeaders().put('USER-AGENT', '... internet explorer ...');
 
     		saTasksCtrl ctrl = new saTasksCtrl();
+    		
 			saMessage__c message = createMessage();    		
     		ctrl.currentMessageId = message.Id;
+    		
     		saMessageDetail__c messageDetail = createMessageDetail(message.Id,saConstantcmn.SA_MESSAGEDETAIL_TYPE_SHARED,adminUser.Id);
 			saMessageDetail__c messageRead = createMessageDetail(message.Id,saConstantcmn.SA_MESSAGEDETAIL_TYPE_READ,adminUser.Id);
     		
             Attachment att1 = createAttachment(adminUser.Id, message.Id);
     		ctrl.getCxKnowledgeNewAttachment();
     		
+    		//Define the clsMessage
+    		ctrl.currentMessage.msg = message;
+    		ctrl.currentMessage.attachmentId = att1.Id;
+    		ctrl.lsMsg.add(ctrl.currentMessage);
+    		system.debug('Message Deadline' + ctrl.currentMessage.msg.DeadlineDatetime__c);
+    		
     		//ctrl.attachmentId = att1.Id;
     		ctrl.confirmCurrentPost();
-    		system.debug('Before Add attachment');    		
+    		system.debug('Before Add attachment');
+    		system.debug('Id of the message ' + ctrl.currentMessageId);    		
     		ctrl.addCxKnowledgeNewAttachment();
     		system.debug('Before Put In Top'); 
 			ctrl.lsMsg[0].attachmentPutInTop();
 			system.debug('Before Delete'); 
 			ctrl.lsMsg[0].attachmentDelete();
+			ctrl.dummyAction();
+			Double testOffset = ctrl.offset;
     	}
     	
     	Test.stopTest();
     }
-    */
+    
     
     private static saMessage__c createMessage() {
     	saMessage__c message = new saMessage__c();
     	
     	message.Title__c='Test';
     	message.Description__c='Test';
+    	message.PublishedDatetime__c = datetime.now();
+    	message.Type__c = saConstantcmn.SA_MESSAGE_TYPE_TASK;
+    	
+    	insert message;
+    	return message;
+    }
+
+	private static saMessage__c createMessageWithDeadLine(Integer day) {
+    	saMessage__c message = new saMessage__c();
+    	
+    	message.Title__c='Test';
+    	message.Description__c='Test';
+    	message.DeadlineDatetime__c = datetime.now().addDays(day);
     	message.PublishedDatetime__c = datetime.now();
     	message.Type__c = saConstantcmn.SA_MESSAGE_TYPE_TASK;
     	

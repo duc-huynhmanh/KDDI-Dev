@@ -7,6 +7,8 @@ public class auSwitchScreenBtmCompCtrl {
     public String urlExternalAuChannelManual {get; set;}
     public String urlInternalAuChannelManual {get; set;}
     public Boolean isCommunityUser {get; set;}
+    public Boolean isKDDIUser {get; set;}
+    private Boolean isSystemAdministrator {get; set;}
     public String urlSingleSignOn {get; set;}
 
     public auSwitchScreenBtmCompCtrl(){
@@ -21,9 +23,18 @@ public class auSwitchScreenBtmCompCtrl {
                             FROM User
                             WHERE User.ID = :UserInfo.getUserId()];
 
+		isSystemAdministrator = currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_CUSTOM ||
+                                currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN ||
+                                currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP;
+
         isCommunityUser = currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_SHOP ||
                           currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_MANAGEMENT ||
                           currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT;
+
+		isKDDIUser = isSystemAdministrator ||
+                     currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH ||
+                     currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE ||
+                     currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_HEADQUARTERS;
 
         urlSFDCHome = '';
         if (!isCommunityUser) {

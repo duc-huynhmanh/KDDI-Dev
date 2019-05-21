@@ -71,26 +71,29 @@ public with sharing class auScheduleCtrl {
     public String currentMailList{get; set;} // Indicates which mail list (To / Cc / Bcc) we are currenly using
     public List<Attachment> lsAttachment {get; set;}
     public String urlReportsSFA {get; set;}
-    
+
 
     public Integer getTypeOfScreen(){return auMainTopCompCtrl.TYPE_SCREEN_EVENT_SCHEDULE;}
 
-    public List<String> lsOrganization {
+    /*public List<String> lsOrganization {
         get {
             return new List<String> {
-                'X101', 
-                'X201', 
-                'X001', 
-                'X004', 
-                'X401', 
-                'X501', 
-                'X701', 
-                'X801', 
-                'X010', 
-                'X011',
-                'X012', 
-                'X999', 
-                'C000000'
+            	'C000000',
+            	'X011',
+            	'X012',
+            	'X010',
+            	'X014',
+            	'X013',
+                'X101',
+                'X201',
+                'X001',
+                'X004',
+                'X401',
+                'X501',
+                'X701',
+                'X801',
+                'X999'
+
             };
         }
         set;
@@ -99,24 +102,45 @@ public with sharing class auScheduleCtrl {
     public Map<String,String> mpOrganization {
         get {
             return new Map<String, String> {
-                'X101' => '北海道支社', 
-                'X201' => '東北支社', 
-                'X001' => '関東支社', 
-                'X004' => '中部北陸支社', 
-                'X401' => '関西支社', 
-                'X501' => '中国四国支社', 
-                'X701' => '九州支社', 
-                'X801' => '沖縄セルラー電話', 
-                'X010' => '広域量販統括部', 
-                'X011' => '特販営業統括部',
-                'X012' => 'トヨタ営業部', 
-                'X999' => '研修用支社', 
-                'C000000' => '本部'
+            	'C000000' => '本部',
+            	'X011' => '特販営業統括部',
+            	'X012' => 'トヨタ営業部',
+            	'X010' => '広域量販統括部',
+            	'X014' => '広域代理店統括1部',
+            	'X013' => '広域代理店統括2部',
+                'X101' => '北海道支社',
+                'X201' => '東北支社',
+                'X001' => '関東支社',
+                'X004' => '中部北陸支社',
+                'X401' => '関西支社',
+                'X501' => '中国四国支社',
+                'X701' => '九州支社',
+                'X801' => '沖縄セルラー電話',
+                'X999' => '研修用支社'
+
             };
+        }
+        set;
+    }*/
+    
+	public List<String> lsOrganization {
+        get {
+            return organizationBuildList;
         }
         set;
     }
 
+    public Map<String,String> mpOrganization {
+        get {
+            return organizationBuildMap;
+        }
+        set;
+    }
+
+	/*Dynamic Organization List*/
+	private Map<String, String> organizationBuildMap;
+	private List<String> organizationBuildList;
+	
     public auScheduleCtrl () {
 
       messageError = '正しいデーターを入れてください。';
@@ -146,6 +170,26 @@ public with sharing class auScheduleCtrl {
 
       emailSignature = myUser.Signature;
       emailHeader = myUser.EmailHeader__c;
+
+      /*Dynamic Organization List*/
+      List<auOrganization__c> organizationList = [SELECT id, RegionalOfficeCode__c, RegionalOfficeName__c
+                                          FROM auOrganization__c
+                                          WHERE Category__c = '支社'
+                                          AND (DeactivateDate__c = NULL OR DeactivateDate__c > TODAY)
+                                          ORDER BY RegionalOfficeCode__c asc];
+                                          
+      organizationBuildList = new List<String>();
+      organizationBuildList.add('C000000'); 
+      organizationBuildMap = new Map<String, String>();
+      organizationBuildMap.put('C000000','本部'); 
+      
+      for(auOrganization__c org : organizationList){
+      	organizationBuildList.add('X'+org.RegionalOfficeCode__c);
+      	organizationBuildMap.put('X'+org.RegionalOfficeCode__c,org.RegionalOfficeName__c); 
+      }                                
+
+	  system.debug('organizationBuildList : '+organizationBuildList);
+	  system.debug('organizationBuildMap : '+organizationBuildMap);
 
       if (myUser.UserRole.DeveloperName == auConstantCmn.ROLE_CODE_HONBU) {
         // 本部 Users
@@ -197,7 +241,7 @@ public with sharing class auScheduleCtrl {
                          WHERE UserRole.DeveloperName IN :lsShitenShisha
                          AND IsActive = true
                          AND Alias != 'gwadmin'
-                         ORDER BY UserRole.DeveloperName, DisplayedUsernameFormula__c]; 
+                         ORDER BY UserRole.DeveloperName, DisplayedUsernameFormula__c];
       }
 
       lsUsrOtherGroup = new List<User>();
@@ -233,14 +277,14 @@ system.debug('refreshOtherDepartment: ' + otherDepartmentCode);
                              FROM User
                              WHERE UserRole.DeveloperName IN :lsShitenShisha
                              AND IsActive = true
-                             ORDER BY Profile.Name, UserRole.DeveloperName, DisplayedUsernameFormula__c];    
+                             ORDER BY Profile.Name, UserRole.DeveloperName, DisplayedUsernameFormula__c];
         } else {
           lsUsrOtherGroup = [SELECT Id, Name, Email, TechnicalAlwaysFalse__c, DisplayedUsernameFormula__c, KDDIEmployeeId__c
                              FROM User
                              WHERE UserRole.DeveloperName IN :lsShitenShisha
                              AND IsActive = true
                              AND Alias != 'gwadmin'
-                             ORDER BY UserRole.DeveloperName, DisplayedUsernameFormula__c];    
+                             ORDER BY UserRole.DeveloperName, DisplayedUsernameFormula__c];
         }
       }
     }
@@ -302,7 +346,7 @@ system.debug('refreshOtherDepartment: ' + otherDepartmentCode);
             } else {
               mailToAddressListConfirm = new List<MailAddress>();
               mailCcAddressListConfirm = new List<MailAddress>();
-              mailBccAddressListConfirm = new List<MailAddress>();              
+              mailBccAddressListConfirm = new List<MailAddress>();
             }
 
         //[TO][CC][BCC]の合計数１３以下の場合、空なためクリアした状態上書き
@@ -365,7 +409,7 @@ system.debug('refreshOtherDepartment: ' + otherDepartmentCode);
                       if (!isConfirmation) {
                         mailToAddressList.add(new MailAddress(null,'手入力',to.substring(3, to.length())));
                       } else {
-                        mailToAddressListConfirm.add(new MailAddress(null,'手入力',to.substring(3, to.length())));                        
+                        mailToAddressListConfirm.add(new MailAddress(null,'手入力',to.substring(3, to.length())));
                       }
                     //アドレス欄の先頭に手入力の文字がない場合
                     } else {
@@ -376,8 +420,8 @@ system.debug('refreshOtherDepartment: ' + otherDepartmentCode);
                         if (!isConfirmation) {
                           mailToAddressList.add(new MailAddress(to,nameEmailList[0],nameEmailList[1]));
                         } else {
-                          mailToAddressListConfirm.add(new MailAddress(to,nameEmailList[0],nameEmailList[1]));                          
-                        }                        
+                          mailToAddressListConfirm.add(new MailAddress(to,nameEmailList[0],nameEmailList[1]));
+                        }
                       }
                     }
                 }
@@ -385,7 +429,7 @@ system.debug('refreshOtherDepartment: ' + otherDepartmentCode);
               if (!isConfirmation) {
                 mailToAddressList = new List<MailAddress>();
               } else {
-                mailToAddressListConfirm = new List<MailAddress>();      
+                mailToAddressListConfirm = new List<MailAddress>();
               }
             }
             // CCアドレス欄に入力があった場合
@@ -407,7 +451,7 @@ system.debug('refreshOtherDepartment: ' + otherDepartmentCode);
                         if (!isConfirmation) {
                           mailCcAddressList.add(new MailAddress(to,nameEmailList[0],nameEmailList[1]));
                         } else {
-                          mailCcAddressListConfirm.add(new MailAddress(to,nameEmailList[0],nameEmailList[1]));                        
+                          mailCcAddressListConfirm.add(new MailAddress(to,nameEmailList[0],nameEmailList[1]));
                         }
                       }
                     }
@@ -416,7 +460,7 @@ system.debug('refreshOtherDepartment: ' + otherDepartmentCode);
               if (!isConfirmation) {
                 mailCcAddressList = new List<MailAddress>();
               } else {
-                mailCcAddressListConfirm = new List<MailAddress>();                
+                mailCcAddressListConfirm = new List<MailAddress>();
               }
             }
             // BCCアドレス欄に入力があった場合
@@ -427,7 +471,7 @@ system.debug('refreshOtherDepartment: ' + otherDepartmentCode);
                       if (!isConfirmation) {
                         mailBccAddressList.add(new MailAddress(null,'手入力',to.substring(3, to.length())));
                       } else {
-                        mailBccAddressListConfirm.add(new MailAddress(null,'手入力',to.substring(3, to.length())));                        
+                        mailBccAddressListConfirm.add(new MailAddress(null,'手入力',to.substring(3, to.length())));
                       }
                     //アドレス欄の先頭に手入力の文字がない場合
                     } else {
@@ -438,7 +482,7 @@ system.debug('refreshOtherDepartment: ' + otherDepartmentCode);
                         if (!isConfirmation) {
                           mailBccAddressList.add(new MailAddress(to,nameEmailList[0],nameEmailList[1]));
                         } else {
-                          mailBccAddressListConfirm.add(new MailAddress(to,nameEmailList[0],nameEmailList[1]));                        
+                          mailBccAddressListConfirm.add(new MailAddress(to,nameEmailList[0],nameEmailList[1]));
                         }
                       }
                     }
@@ -447,7 +491,7 @@ system.debug('refreshOtherDepartment: ' + otherDepartmentCode);
               if (!isConfirmation) {
                 mailBccAddressList = new List<MailAddress>();
               } else {
-                mailBccAddressListConfirm = new List<MailAddress>();                
+                mailBccAddressListConfirm = new List<MailAddress>();
               }
             }
 
@@ -577,9 +621,9 @@ system.debug('createEventParam2 :' + createEventParam2);
           endHr++;
         }
 
-        newEvt.StartDateTime = Datetime.newInstance(dCurrentDay.year(), dCurrentDay.month(), dCurrentDay.day(), 
+        newEvt.StartDateTime = Datetime.newInstance(dCurrentDay.year(), dCurrentDay.month(), dCurrentDay.day(),
                                                     startHr, startMn, 0);
-        newEvt.EndDateTime = Datetime.newInstance(dCurrentDay.year(), dCurrentDay.month(), dCurrentDay.day(), 
+        newEvt.EndDateTime = Datetime.newInstance(dCurrentDay.year(), dCurrentDay.month(), dCurrentDay.day(),
                                                   endHr, endMn, 0);
         newEvt.Description = '';
 
@@ -610,7 +654,7 @@ system.debug('createEventParam2 :' + createEventParam2);
         if (evt.ActivityReportSent__c) {
           isCurrentDaySent = true;
         }
-        clsDayCurrentDay.add(evtTmp);        
+        clsDayCurrentDay.add(evtTmp);
       }
 
       for (List<clsDay> lsClsDayTmp : lsDaysOfMonth) {
@@ -620,7 +664,7 @@ system.debug('createEventParam2 :' + createEventParam2);
             clsDayTmp.isSelected = true;
 //          clsDayCurrentDay = clsDayTmp;
           } else {
-            clsDayTmp.isSelected = false;              
+            clsDayTmp.isSelected = false;
           }
         }
       }
@@ -638,10 +682,10 @@ system.debug('createEventParam2 :' + createEventParam2);
         clsEvt.eventGroupNo = 0;
         clsEvt.simultaneousEvent = 0;
         clsEvt.simultaneousEventGroup = 0;
-        clsEvt.positionInsideGroup = 0;        
+        clsEvt.positionInsideGroup = 0;
       }
 
-      // Step 1. Group independant events together 
+      // Step 1. Group independant events together
       integer countAllDayEvent = 0;
 
       // Step 1a. Count All Days Events (They should appear in 1st but due to recurring events, it is not always the case)
@@ -673,7 +717,7 @@ system.debug('createEventParam2 :' + createEventParam2);
             clsEvt.eventGroupNo = currentGroupNo;
             if (maxEndDatetime == NULL || clsEvt.getEndDateTimeDisplayed() > maxEndDatetime) {
               maxEndDatetime = clsEvt.getEndDateTimeDisplayed();
-            }            
+            }
           }
         }
         iMaxGroupNo = currentGroupNo;
@@ -718,7 +762,7 @@ system.debug('createEventParam2 :' + createEventParam2);
               if (clsEvtLoop.eventGroupNo == currentEvt.eventGroupNo && clsEvtLoop.positionInsideGroup == iIdx) {
                 if (clsEvtLoop.evt.IsAllDayEvent || currentEvt.evt.IsAllDayEvent || clsEvtLoop.getEndDateTimeDisplayed() > currentEvt.evt.StartDateTime) {
                   fNotUsedFound = false;
-                  break;                
+                  break;
                 }
               }
             }
@@ -743,9 +787,9 @@ system.debug('createEventParam2 :' + createEventParam2);
       }
 
       for (clsEventCurrentDay clsEvtLoop : clsDayCurrentDay) {
-        if (!clsEvtLoop.evt.IsAllDayEvent && 
-            !clsEvtLoop.isDeleted && 
-            clsEvtLoop.evt.StartDateTime < clsEvt.getEndDateTimeDisplayed() && 
+        if (!clsEvtLoop.evt.IsAllDayEvent &&
+            !clsEvtLoop.isDeleted &&
+            clsEvtLoop.evt.StartDateTime < clsEvt.getEndDateTimeDisplayed() &&
             clsEvt.evt.StartDateTime < clsEvtLoop.getEndDateTimeDisplayed()) {
           Datetime dCurrentDatetimeLoop = clsEvtLoop.evt.StartDateTime;
           while (dCurrentDatetimeLoop < clsEvtLoop.getEndDateTimeDisplayed()) {
@@ -821,15 +865,31 @@ system.debug('confirmEmail');
           if (resultTextArea.length() != 0) {
             resultTextArea += '\n';
           }
+          //開始日時　終了日時
           if (!clsEvt.evt.IsAllDayEvent) {
             resultTextArea += clsEvt.evt.StartDateTime.format('yyyy-MM-dd HH:mm') + ' ～ ' + clsEvt.evt.EndDateTime.format('yyyy-MM-dd HH:mm') + '\n';
           } else {
             resultTextArea += clsEvt.evt.StartDateTime.format('yyyy-MM-dd') + ' ～ ' + clsEvt.evt.EndDateTime.format('yyyy-MM-dd') + '\n';
           }
-          resultTextArea += (clsEvt.evt.Subject == NULL ? '' : clsEvt.evt.Subject) + '\n';
+
+          //選択カテゴリ
+          resultTextArea += (clsEvt.evt.Category__c == NULL ? '' : ('【カテゴリ】' + clsEvt.evt.Category__c)) + '\n';
+
+          //タイトル
+          resultTextArea += (clsEvt.evt.Subject == NULL ? '' : ('【件名】' + clsEvt.evt.Subject)) + '\n';
+
+          //本文
           if (clsEvt.evt.Description != NULL && clsEvt.evt.Description.trim().length() > 0) {
             resultTextArea += clsEvt.evt.Description + '\n';
           }
+
+          //代理店名
+          String accName = '';
+          if(clsEvt.evt.Account__c != null){
+            Account acc = [SELECT Name FROM Account WHERE Id = :clsEvt.evt.Account__c LIMIT 1];
+            accName = '【代理店/店舗】' + acc.Name;
+          }
+          resultTextArea += (accName + '\n');
 
           if (clsEvt.evt.AuNewMNP__c != NULL || clsEvt.evt.AuNewTablet__c != NULL || clsEvt.evt.AuNewRooter__c != NULL || clsEvt.evt.AuModelChange__c != NULL || clsEvt.evt.AuTotal__c != NULL) {
             resultTextArea += '＜au＞' + '\n';
@@ -882,7 +942,110 @@ system.debug('confirmEmail');
           if (clsEvt.evt.WaterServer__c != NULL) {
             resultTextArea += '  ウォーターサーバー - ' + clsEvt.evt.WaterServer__c + '件' + '\n';
           }
+          
+          if(clsEvt.evt.Category__c == '代理店商談'){
+	          if (clsEvt.evt.NormalMeeting__c != NULL) {
+	          	if(clsEvt.evt.NormalMeeting__c == true){
+	          		resultTextArea += '【通常商談】チェックあり' + '\n';
+	          	}else{
+	          		resultTextArea += '【通常商談】チェックなし' + '\n';
+	          	}
+	          }
+	          if (clsEvt.evt.CCPMeeting__c != NULL) {
+	          	if(clsEvt.evt.CCPMeeting__c == true){
+	          		resultTextArea += '【CCP商談】チェックあり' + '\n';
+	          	}else{
+	          		resultTextArea += '【CCP商談】チェックなし' + '\n';
+	          	}
+	          }
+          }
+          
+          if(clsEvt.evt.Category__c == '代理店商談' || clsEvt.evt.Category__c == '拠点フォロー') {
+	          if (clsEvt.auActivity.EventPurpose__c != NULL && clsEvt.auActivity.EventPurpose__c != '') {
+	            resultTextArea += '【目的】' + clsEvt.auActivity.EventPurpose__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventInterviewer__c != NULL && clsEvt.auActivity.EventInterviewer__c != '') {
+	            resultTextArea += '【面談者】' + clsEvt.auActivity.EventInterviewer__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventRemarks__c != NULL && clsEvt.auActivity.EventRemarks__c != '') {
+	            resultTextArea += '【備考】' + clsEvt.auActivity.EventRemarks__c + '\n';
+	          }          
+          }
 
+          if(clsEvt.evt.Category__c == '代理店商談'){
+	          if (clsEvt.evt.ReflectOnCCP__c != NULL) {
+	          	if(clsEvt.evt.ReflectOnCCP__c == true){
+	          		resultTextArea += '【CCP+に反映】チェックあり' + '\n';
+	          	}else{
+	          		resultTextArea += '【CCP+に反映】チェックなし' + '\n';
+	          	}
+	          }
+	          if (clsEvt.auActivity.EventOrganization__c != NULL && clsEvt.auActivity.EventOrganization__c != '') {
+	            resultTextArea += '  【代理店の組織・体制】' + clsEvt.auActivity.EventOrganization__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventManagedCustomersCount__c != NULL && clsEvt.auActivity.EventManagedCustomersCount__c != '') {
+	            resultTextArea += '  【管理顧客数】' + clsEvt.auActivity.EventManagedCustomersCount__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventStaff__c != NULL && clsEvt.auActivity.EventStaff__c != '') {
+	            resultTextArea += '  【スタッフ数】' + clsEvt.auActivity.EventStaff__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventQualificationRate__c != NULL && clsEvt.auActivity.EventQualificationRate__c != '') {
+	            resultTextArea += '  【資格保有率】' + clsEvt.auActivity.EventQualificationRate__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventTurnover__c != NULL && clsEvt.auActivity.EventTurnover__c != '') {
+	            resultTextArea += '  【離職率】' + clsEvt.auActivity.EventTurnover__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventRegularEmployeesPercent__c != NULL && clsEvt.auActivity.EventRegularEmployeesPercent__c != '') {
+	            resultTextArea += '  【正社員比率】' + clsEvt.auActivity.EventRegularEmployeesPercent__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventStaffES__c != NULL && clsEvt.auActivity.EventStaffES__c != '') {
+	            resultTextArea += '  【スタッフＥＳ】' + clsEvt.auActivity.EventStaffES__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventManagementAbilityEvaluation__c != NULL && clsEvt.auActivity.EventManagementAbilityEvaluation__c != '') {
+	            resultTextArea += '  【運営法人運営力評価】' + clsEvt.auActivity.EventManagementAbilityEvaluation__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventauComprehensiveIndex__c != NULL && clsEvt.auActivity.EventauComprehensiveIndex__c != '') {
+	            resultTextArea += '  【auショップ総合指標】' + clsEvt.auActivity.EventauComprehensiveIndex__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventNPS__c != NULL && clsEvt.auActivity.EventNPS__c != '') {
+	            resultTextArea += '  【NPS】' + clsEvt.auActivity.EventNPS__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventCorpPhilosophyVision__c != NULL && clsEvt.auActivity.EventCorpPhilosophyVision__c != '') {
+	            resultTextArea += '  【企業理念・ビジョン】' + clsEvt.auActivity.EventCorpPhilosophyVision__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventBusinessPlan__c != NULL && clsEvt.auActivity.EventBusinessPlan__c != '') {
+	            resultTextArea += '  【事業戦略・事業計画】' + clsEvt.auActivity.EventBusinessPlan__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventStoreStrategy__c != NULL && clsEvt.auActivity.EventStoreStrategy__c != '') {
+	            resultTextArea += '  【店舗戦略】' + clsEvt.auActivity.EventStoreStrategy__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventPolicyPlanning__c != NULL && clsEvt.auActivity.EventPolicyPlanning__c != '') {
+	            resultTextArea += '  【計画・施策立案】' + clsEvt.auActivity.EventPolicyPlanning__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventProgressManagementReporting__c != NULL && clsEvt.auActivity.EventProgressManagementReporting__c != '') {
+	            resultTextArea += '  【進捗管理・報告】' + clsEvt.auActivity.EventProgressManagementReporting__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventPersonnelSystem__c != NULL && clsEvt.auActivity.EventPersonnelSystem__c != '') {
+	            resultTextArea += '  【人員体制】' + clsEvt.auActivity.EventPersonnelSystem__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventDecisionRule__c != NULL && clsEvt.auActivity.EventDecisionRule__c != '') {
+	            resultTextArea += '  【意志決定ルール】' + clsEvt.auActivity.EventDecisionRule__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventEvaluation__c != NULL && clsEvt.auActivity.EventEvaluation__c != '') {
+	            resultTextArea += '  【評価】' + clsEvt.auActivity.EventEvaluation__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventRecruitment__c != NULL && clsEvt.auActivity.EventRecruitment__c != '') {
+	            resultTextArea += '  【採用】' + clsEvt.auActivity.EventRecruitment__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventCultivationEstablishment__c != NULL && clsEvt.auActivity.EventCultivationEstablishment__c != '') {
+	            resultTextArea += '  【育成・定着】' + clsEvt.auActivity.EventCultivationEstablishment__c + '\n';
+	          }
+	          if (clsEvt.auActivity.EventCommunicationPlace__c != NULL && clsEvt.auActivity.EventCommunicationPlace__c != '') {
+	            resultTextArea += '  【コミュニケーションの場】' + clsEvt.auActivity.EventCommunicationPlace__c + '\n';
+	          }
+          }
+
+          
           if (clsEvt.evt.ContentDocumentLinks != NULL && clsEvt.evt.ContentDocumentLinks.size() > 0) {
             for (ContentDocumentLink cdl : clsEvt.evt.ContentDocumentLinks) {
               if (mpContentVersion.containsKey(cdl.ContentDocumentId)) {
@@ -896,6 +1059,8 @@ system.debug('confirmEmail');
               resultTextArea += '□ ' + auCommunityCustomSettings__c.getOrgDefaults().DownloadAttachUrl__c + att.Id + '\n';
             }
           }
+
+
 
         }
       }
@@ -915,6 +1080,7 @@ system.debug('confirmEmail');
 
             List<Event> lsEvtToUpsert = new List<Event>();
             List<Event> lsEvtToDelete = new List<Event>();
+            List<auActivityRelated__c> lsEvtRelatedToUpsert = new List<auActivityRelated__c>();
 
             for (clsEventCurrentDay clsEvt : clsDayCurrentDay) {
 system.debug('saveDayEvents - isDeleted:' + clsEvt.isDeleted);
@@ -947,9 +1113,9 @@ system.debug('saveDayEvents - Id:' + clsEvt.evt.Id);
                             return;
                         }
 
-                        evt.StartDateTime = Datetime.newInstance(dCurrentDay.year(), dCurrentDay.month(), dCurrentDay.day(), 
+                        evt.StartDateTime = Datetime.newInstance(dCurrentDay.year(), dCurrentDay.month(), dCurrentDay.day(),
                                                                  Integer.valueOf(partsStart[0]), Integer.valueOf(partsStart[1]), 0);
-                        evt.EndDateTime = Datetime.newInstance(dCurrentDay.year(), dCurrentDay.month(), dCurrentDay.day(), 
+                        evt.EndDateTime = Datetime.newInstance(dCurrentDay.year(), dCurrentDay.month(), dCurrentDay.day(),
                                                                Integer.valueOf(partsEnd[0]), Integer.valueOf(partsEnd[1]), 0);
 
                         evt.DurationInMinutes = 60 * (Integer.valueOf(partsEnd[0]) - Integer.valueOf(partsStart[0])) + (Integer.valueOf(partsEnd[1]) - Integer.valueOf(partsStart[1]));
@@ -980,7 +1146,12 @@ system.debug('saveDayEvents - Id:' + clsEvt.evt.Id);
                     } else if (evt.Account__c != NULL) {
                       evt.WhatId = evt.Account__c;
                     }
-
+					
+					if(evt.auActivityRelated__c == NULL){
+						evt.auActivityRelated__c = clsEvt.auActivity.id;
+					}
+					lsEvtRelatedToUpsert.add(clsEvt.auActivity);
+					
                     lsEvtToUpsert.add(evt);
 
                 }
@@ -990,7 +1161,7 @@ system.debug('saveDayEvents - loop finished');
 
             if (withRefresh) {
               clsDayCurrentDay = new List<clsEventCurrentDay>();
-              lsDaysOfMonth = new List<List<clsDay>>();              
+              lsDaysOfMonth = new List<List<clsDay>>();
             }
 
 
@@ -998,6 +1169,11 @@ system.debug('saveDayEvents - loop finished');
 system.debug('saveDayEvents - before upsert');
                 upsert lsEvtToUpsert;
 system.debug('saveDayEvents - adter upsert');
+            }
+            if (lsEvtRelatedToUpsert != NULL && lsEvtRelatedToUpsert.size() > 0) {
+system.debug('saveDayEventsRelated - before upsert');
+                upsert lsEvtRelatedToUpsert;
+system.debug('saveDayEventsRelated - after upsert');
             }
             if (lsEvtToDelete != NULL && lsEvtToDelete.size() > 0) {
 system.debug('saveDayEvents - before delete');
@@ -1034,7 +1210,15 @@ system.debug('messageError:' + messageError);
         String queryStr  = '';
         String selectStr = ' SELECT Id, Subject, Description, StartDateTime, EndDateTime, IsAllDayEvent, DurationInMinutes, ActivityDate, (SELECT Id, ContentDocumentId FROM ContentDocumentLinks), ' +
                            '        AuNewMNP__c, AuNewTablet__c, AuNewRooter__c, AuModelChange__c, AuTotal__c, BBCHikari__c, BBCCableTosu__c, UQ_2__c, UQ_3__c, auDenki__c, ' +
-                           '        WALLET_Market__c, WaterServer__c, Type__c, Category__c, WhatId, Account__c, ActivityReportSent__c, IsPrivate, (SELECT id, Name, IsPrivate, OwnerId FROM Attachments) ';
+                           '        WALLET_Market__c, WaterServer__c, Type__c, Category__c, WhatId, Account__c, Account__r.Name, ActivityReportSent__c, IsPrivate, (SELECT id, Name, IsPrivate, OwnerId FROM Attachments), ' +
+                           '        NormalMeeting__c, CCPMeeting__c, ReflectOnCCP__c, ' +
+                           '        auActivityRelated__c, auActivityRelated__r.EventPurpose__c, auActivityRelated__r.EventInterviewer__c, auActivityRelated__r.EventRemarks__c, ' +
+                           '        auActivityRelated__r.EventOrganization__c, auActivityRelated__r.EventManagedCustomersCount__c, auActivityRelated__r.EventStaff__c, auActivityRelated__r.EventQualificationRate__c, ' + 
+                           '		auActivityRelated__r.EventTurnover__c, auActivityRelated__r.EventRegularEmployeesPercent__c, auActivityRelated__r.EventStaffES__c, auActivityRelated__r.EventManagementAbilityEvaluation__c, ' + 
+                           '		auActivityRelated__r.EventauComprehensiveIndex__c, auActivityRelated__r.EventNPS__c, auActivityRelated__r.EventCorpPhilosophyVision__c, auActivityRelated__r.EventBusinessPlan__c, ' + 
+                           '	 	auActivityRelated__r.EventStoreStrategy__c, auActivityRelated__r.EventPolicyPlanning__c, auActivityRelated__r.EventProgressManagementReporting__c, auActivityRelated__r.EventPersonnelSystem__c, ' + 
+                           '		auActivityRelated__r.EventDecisionRule__c, auActivityRelated__r.EventEvaluation__c, auActivityRelated__r.EventRecruitment__c, auActivityRelated__r.EventCultivationEstablishment__c, ' + 
+                           '		auActivityRelated__r.EventCommunicationPlace__c ';
         String fromStr   = ' FROM Event ';
         String whereStr  = ' WHERE ownerId = \'' + UserInfo.getUserId() + '\'' +
                            ' AND IsRecurrence = False' ;
@@ -1143,7 +1327,7 @@ system.debug('messageError:' + messageError);
 
         public Event evt {get;set;}
         public boolean isSelected {get;set;}
-        public String startTime {get;set;}        
+        public String startTime {get;set;}
         public String endTime {get;set;}
         public String evtTitle {get;set;}
         public String description {get;set;}
@@ -1241,7 +1425,7 @@ system.debug('messageError:' + messageError);
         public Integer compareTo(Object compareTo) {
             // Cast argument to clsEvent
             clsEvent compareToEvt = (clsEvent)compareTo;
-             
+
             if (evt.IsAllDayEvent && !compareToEvt.evt.IsAllDayEvent) {
                 return -1;
             } else if (!evt.IsAllDayEvent && compareToEvt.evt.IsAllDayEvent) {
@@ -1267,8 +1451,8 @@ system.debug('messageError:' + messageError);
             } else if (sortNo < compareToEvt.sortNo) {
                 return -1;
             }
-             
-            return 0;      
+
+            return 0;
         }
 */
 
@@ -1277,8 +1461,9 @@ system.debug('messageError:' + messageError);
     public class clsEventCurrentDay implements Comparable {
 
         public Event evt {get;set;}
+        public auActivityRelated__c auActivity {get;set;}
         public boolean isSelected {get;set;}
-        public String startTime {get;set;}        
+        public String startTime {get;set;}
         public String endTime {get;set;}
         public String evtTitle {get;set;}
         public String description {get;set;}
@@ -1394,6 +1579,27 @@ system.debug('messageError:' + messageError);
             this.isSelected = true;
             this.evtTitle = evt.Subject;
             this.description = evt.Description;
+            system.debug('evt.auActivityRelated__r: ' + evt.auActivityRelated__r);
+            if(paramEvt.auActivityRelated__c == null){
+            	auActivityRelated__c auRelated = new auActivityRelated__c();
+            	insert auRelated;
+            	this.auActivity = auRelated;
+            	this.evt.auActivityRelated__c = auRelated.Id;
+            	system.debug('new auActivityRelated__c');
+            }else{
+            	this.auActivity = [SELECT Id, EventPurpose__c, EventInterviewer__c, EventRemarks__c,
+									EventOrganization__c, EventManagedCustomersCount__c, EventStaff__c,
+									EventQualificationRate__c, EventTurnover__c, EventRegularEmployeesPercent__c,
+									EventStaffES__c, EventManagementAbilityEvaluation__c, EventauComprehensiveIndex__c,
+									EventNPS__c, EventCorpPhilosophyVision__c, EventBusinessPlan__c,
+									EventStoreStrategy__c, EventPolicyPlanning__c, EventProgressManagementReporting__c,
+									EventPersonnelSystem__c, EventDecisionRule__c, EventEvaluation__c,
+									EventRecruitment__c, EventCultivationEstablishment__c, EventCommunicationPlace__c
+            						 FROM auActivityRelated__c WHERE Id = :paramEvt.auActivityRelated__c];
+            	system.debug('existing auActivityRelated__c');
+            }
+            system.debug('this.auActivity: ' + this.auActivity);
+            
             if (!evt.IsAllDayEvent) {
                 this.startTime = '' + evt.StartDateTime.hour() + ':' + ('0' + evt.StartDateTime.minute()).right(2);
                 this.endTime = '' + evt.EndDateTime.hour() + ':' + ('0' + evt.EndDateTime.minute()).right(2);
@@ -1427,7 +1633,7 @@ system.debug('messageError:' + messageError);
 
             } else if (evt.Type__c == '社内') {
                 categoryClsNm = 'category2';
-                
+
                 if (evt.Category__c == '【old】店長会議') {
                     this.setIconClsNm('icon1');
                 } else if (evt.Category__c == '会議・ミーティング') {
@@ -1461,7 +1667,7 @@ system.debug('messageError:' + messageError);
         public Integer compareTo(Object compareTo) {
             // Cast argument to clsEvent
             clsEventCurrentDay compareToEvt = (clsEventCurrentDay)compareTo;
-             
+
             if (evt.IsAllDayEvent && !compareToEvt.evt.IsAllDayEvent) {
                 return -1;
             } else if (!evt.IsAllDayEvent && compareToEvt.evt.IsAllDayEvent) {
@@ -1499,8 +1705,8 @@ system.debug('messageError:' + messageError);
             } else if (sortNo < compareToEvt.sortNo) {
                 return -1;
             }
-             
-            return 0;      
+
+            return 0;
         }
 
     }
@@ -1540,9 +1746,9 @@ system.debug('messageError:' + messageError);
 
     private static Boolean validateEmail(String email) {
 
-        Boolean res = true;                    
+        Boolean res = true;
         String emailRegex = '^[a-zA-Z0-9._|\\\\%#~`=?&/$^*!}{+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$'; // source: http://www.regular-expressions.info/email.html
-        if (!Pattern.compile(emailRegex).matcher(email).matches()) 
+        if (!Pattern.compile(emailRegex).matcher(email).matches())
             res = false;
 
         if(email.indexof('@') < 0 ||
@@ -1555,7 +1761,7 @@ system.debug('messageError:' + messageError);
           res = false;
         }
 
-        return res; 
+        return res;
 
     }
 
@@ -2049,7 +2255,7 @@ system.debug('usrToAdd: ' + usrToAdd.Name + ' - ' + usrToAdd.TechnicalAlwaysFals
                 }
             }
             cls.createTOCCBCCSendMessage(null, String.valueOf(onlyToUserId),
-                                         mailToStrList, mailCcStrList, mailBccStrList, 
+                                         mailToStrList, mailCcStrList, mailBccStrList,
                                          mailTitle, bodyStr, onlyToFlg);
 
             List<auSendEmailUtil.SendResponse> lsResp = cls.sendMail();
@@ -2091,11 +2297,11 @@ system.debug('usrToAdd: ' + usrToAdd.Name + ' - ' + usrToAdd.TechnicalAlwaysFals
               evt.ActivityReportSent__c = True;
             }
             if (lsEvtSent != NULL && lsEvtSent.size() > 0) {
-              Upsert lsEvtSent;              
+              Upsert lsEvtSent;
             }
 
             clsDayCurrentDay = new List<clsEventCurrentDay>();
-            lsDaysOfMonth = new List<List<clsDay>>();              
+            lsDaysOfMonth = new List<List<clsDay>>();
             refreshMonth();
             showDay();
 

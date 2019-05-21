@@ -8,8 +8,8 @@ global with sharing class saMessagesEditorForAdminCtl {
   public static final String CALL_TYPE_MESSAGES = '1';
   public static final String CALL_TYPE_TASKS    = '2';
 
-  public static final String USER_BASE_QUERY = ' SELECT id, (Select BusinessLocation__r.BusinessLocationName__c from saBusinessLocationDetail_user__r order by Type__c Nulls Last), Name, Department, UserRole.Name, UserRole.DeveloperName FROM User ';
-   
+  public static final String USER_BASE_QUERY = ' SELECT id, (Select BusinessLocation__r.BusinessLocationName__c from saBusinessLocationDetail_user__r order by Type__c Nulls Last), Name, Department, UserRole.Name, UserRole.DeveloperName, SAUserId__c FROM User ';
+
   public Boolean isReadOnly{get; set;}
   public Boolean isTypeTask{get; set;}
   public Boolean isCopy{get; set;}
@@ -31,7 +31,8 @@ global with sharing class saMessagesEditorForAdminCtl {
   public List<SelectOption> roleKddi5Options{get; set;}
   public List<SelectOption> roleKddi6Options{get; set;}
   public List<SelectOption> privacyOptions{get; set;}
-
+  public Integer numberOfUsers{get{return idm.itemsReply.size();}}
+  
   public String filterRole5Option{get; set;}
   public String filterRole6Option{get; set;}
   public String filterRole7Option{get; set;}
@@ -67,7 +68,7 @@ global with sharing class saMessagesEditorForAdminCtl {
   }
 
   public Boolean getIsUserAdministrator() {
-    return (currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN || 
+    return (currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN ||
             currentUser.Profile.Name == auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP);
   }
 
@@ -92,7 +93,7 @@ global with sharing class saMessagesEditorForAdminCtl {
     if (count == NULL) {
       count = 0;
     }
-    
+
     return '' + count;
 
   }
@@ -129,7 +130,7 @@ global with sharing class saMessagesEditorForAdminCtl {
           String targetId = params.get(PARAM_ID);
           rec = getTargetRecord(targetId);
           callType = (rec.Type__c == NULL || rec.Type__c == '' || rec.Type__c == 'MESSAGE' ? CALL_TYPE_MESSAGES : CALL_TYPE_TASKS);
-         
+
           if (params.containsKey(URL_PARAM_NAME_ISCOPY) && params.get(URL_PARAM_NAME_ISCOPY) == 'true') {
             isCopy = true;
             this.isNew = true;
@@ -139,7 +140,7 @@ global with sharing class saMessagesEditorForAdminCtl {
         } else {
           rec = createNewRecord();
           this.isNew = true;
-        }      
+        }
 
         if (!this.isNew) {
           if (rec != null && (rec.Status__c == NULL || rec.Status__c == '' || rec.Status__c == 'Saved' || !rec.UserRecordAccess.HasEditAccess)) {
@@ -149,7 +150,7 @@ global with sharing class saMessagesEditorForAdminCtl {
 
         }
 
-        idm = new MessageManage(rec, isCopy); 
+        idm = new MessageManage(rec, isCopy);
         this.isCopy = isCopy;
         this.isValid = true;
 
@@ -201,11 +202,11 @@ global with sharing class saMessagesEditorForAdminCtl {
           mpShitenOptions.put(so.getValue(), so.getLabel());
         }
 
-		//Privacy Option
-	  	privacyOptions = new List<SelectOption>();
-	  	for(Schema.PicklistEntry pv : saMessage__c.PrivacySetting__c.getDescribe().getPicklistValues()){
-	 		privacyOptions.add(new SelectOption(pv.getValue(), pv.getLabel()));
-	  	}
+        //Privacy Option
+        privacyOptions = new List<SelectOption>();
+        for(Schema.PicklistEntry pv : saMessage__c.PrivacySetting__c.getDescribe().getPicklistValues()){
+            privacyOptions.add(new SelectOption(pv.getValue(), pv.getLabel()));
+        }
 
       } catch (Exception e) {
         Apexpages.addMessage(new Apexpages.Message(ApexPages.Severity.ERROR, '不正な操作が行われました。' + e.getMessage()));
@@ -214,7 +215,10 @@ global with sharing class saMessagesEditorForAdminCtl {
 
     }
 
-
+   /**
+   * @description this method is called when select pulldown of "組織1"(screen of "SAユーザー選択" from "SAユーザー追加" button).
+   *              pass the information of "組織1" which is selected and change the contents in "組織2" pulldown.
+   */
   public void inputRole5Option() {
 
     role6Options = new List<SelectOption>();
@@ -243,11 +247,15 @@ global with sharing class saMessagesEditorForAdminCtl {
 
   }
 
+  /**
+  * @description this method is called when select pulldown of "組織1"(screen of "KDDIユーザー選択" from "KDDIユーザー追加" button).
+  *              pass the information of "組織1" which is selected and change the contents in "組織2" pulldown.
+  */
   public void inputRoleKddi5Option() {
 
     roleKddi6Options = new List<SelectOption>();
     filterRoleKddi6Option = '';
-    
+
     if (filterRoleKddi5Option != NULL) {
 
       List<SelectOption> lsReturn = new List<SelectOption>();
@@ -266,6 +274,10 @@ global with sharing class saMessagesEditorForAdminCtl {
 
   }
 
+  /**
+  * @description this method is called when select pulldown of "組織1"(screen of "SAユーザー選択" from "SAユーザー追加" button).
+  *              pass the information of "組織2" which is selected and change the contents in "組織3" pulldown.
+  */
   public void inputRole6Option() {
 
     role7Options = new List<SelectOption>();
@@ -292,7 +304,10 @@ global with sharing class saMessagesEditorForAdminCtl {
 
   }
 
-
+  /**
+  * @description this method is called when select pulldown of "組織1"(screen of "SAユーザー選択" from "SAユーザー追加" button).
+  *              pass the information of "組織3" which is selected and change the contents in "組織4" pulldown.
+  */
   public void inputRole7Option() {
 
     role8Options = new List<SelectOption>();
@@ -326,7 +341,7 @@ global with sharing class saMessagesEditorForAdminCtl {
 
   private saMessage__c getTargetRecord(String targetId) {
     saMessage__c targetaRecord = null;
-    List<saMessage__c> recs = [SELECT id, Owner.Id, name, IsEvolva__c, Type__c, Status__c, Title__c, Description__c, PushNotificationResendCount__c, PrivacySetting__c, OwnerId, 
+    List<saMessage__c> recs = [SELECT id, Owner.Id, name, IsEvolva__c, Type__c, Status__c, Title__c, Description__c, PushNotificationResendCount__c, PrivacySetting__c, OwnerId,
                                       PublishedDatetime__c, TechnicalPublishedDate__c, TechnicalPublishedTime__c, DeadlineDatetime__c, TechnicalDeadlineDate__c, TechnicalDeadlineTime__c,
                                       IssuerLabel__c, IsPublished__c, RegionalOfficeCode__c, BranchCode__c,
                                       UserRecordAccess.HasEditAccess, CreatedById
@@ -359,7 +374,10 @@ global with sharing class saMessagesEditorForAdminCtl {
     return targetaRecord;
   }
 
-
+  /**
+   * @description when click the "コピー" bottun at form detail page,
+   * make a new form with information which is copied.
+   */
   public Pagereference messageCopy() {
     Pagereference ref = Page.saMessagesEditorForAdmin;
     ref.setRedirect(true);
@@ -369,28 +387,40 @@ global with sharing class saMessagesEditorForAdminCtl {
     return ref;
   }
 
+	/**
+	 * @description when click the "×" button, delete an action which did before.
+	 */
   public Pagereference deleteAction() {
     saMessage__c parentRec = idm.parentRec;
     delete parentRec;
     return callType == CALL_TYPE_MESSAGES ? Page.saMessagesListForAdmin : Page.saTasksListForAdmin;
   }
 
+	/**
+	 * @description when click the "再送する" button from "リマインド通知" button, resend push notification to userd who haven't reply yet.
+	 */
   public void resendPushNotificationsAction() {
     saMessage__c msg = [SELECT Id, PushNotificationStatus__c FROM saMessage__c WHERE Id = :idm.parentRec.id];
     msg.PushNotificationStatus__c = saConstantCmn.PUSH_NOTIFICATION_STATUS_RESENDING;
     upsert msg;
   }
 
+	/**
+	* @description when click the "全てのユーザーを削除" button, delete all users which is selected.
+	*/
   public void deleteAllUsers() {
     For (InquiryReplyItem det : idm.itemsReply) {
       det.isDeleted = true;
     }
   }
 
+	/**
+	* @description get SAclassification(社員区分) imformation which is "SA", "一般社員" and "設定無し" to display at "SAユーザーの選択" page.
+	*/
   public static List<SelectOption> getSAClassificationOptions() {
 
       List<SelectOption> options = new List<SelectOption>();
-              
+
       for( Schema.PicklistEntry f : User.SAClassification__c.getDescribe().getPicklistValues()) {
         options.add(new SelectOption(f.getValue(), f.getLabel()));
       }
@@ -400,10 +430,14 @@ global with sharing class saMessagesEditorForAdminCtl {
 
     }
 
+  /**
+   * @description get SACertificationOptions(資格) imformation which is "無", "ベーシック", "アドバンス", "CSA" and "設定無し"
+   * to display at "SAユーザーの選択" page.
+   */
   public static List<SelectOption> getSACertificationOptions() {
 
       List<SelectOption> options = new List<SelectOption>();
-              
+
       for( Schema.PicklistEntry f : User.SACertification__c.getDescribe().getPicklistValues()) {
         options.add(new SelectOption(f.getValue(), f.getLabel()));
       }
@@ -413,6 +447,9 @@ global with sharing class saMessagesEditorForAdminCtl {
 
     }
 
+  /**
+   * @description add number of answer when select "複数選択質問" pulldown at "新規フォーム作成" page.
+   */
     public List<SelectOption> getNumberRepliesOptions() {
 
         List<SelectOption> lsReturn = new List<SelectOption>();
@@ -469,10 +506,14 @@ global with sharing class saMessagesEditorForAdminCtl {
       return lsReturn;
     }
 
+    /**
+     * @description this method is called when select pulldown of "発信元支社" at "ToDo" page.
+     *              pass the information of "発信元支社" which is selected and change the contents in "発信元支店" pulldown.
+     */
     public void inputRoleShisha() {
 
       roleShitenDisplayedOptions = new List<SelectOption>();
-      
+
       idm.parentRec.BranchCode__c = '';
 
       if (idm.parentRec.RegionalOfficeCode__c != NULL && idm.parentRec.RegionalOfficeCode__c != '' && idm.parentRec.RegionalOfficeCode__c != auConstantCmn.ROLE_CODE_HONBU) {
@@ -494,7 +535,7 @@ global with sharing class saMessagesEditorForAdminCtl {
   public List<UserRole> getEvolvaChildRole(List<UserRole> lsRolesMemo, String parentRoleDeveloperName, boolean includeParentRole, boolean includeAllDescendants) {
 
     //system.debug('call getEvolvaChildRole');
-    
+
     String shitenRole=parentRoleDeveloperName;
 
     List<UserRole> lsRoles = NULL;
@@ -506,7 +547,7 @@ global with sharing class saMessagesEditorForAdminCtl {
                    FROM UserRole
                    WHERE PortalType <> 'CustomerPortal'
                    ORDER BY DeveloperName];
-      
+
       //Get Shiten Role Id
       for (UserRole pur : lsRoles) {
         if (pur.DeveloperName == shitenRole) {
@@ -527,7 +568,7 @@ global with sharing class saMessagesEditorForAdminCtl {
               }
           }
           }
-        }       
+        }
       }
 
       return lsUserRoleReturn;
@@ -538,7 +579,7 @@ global with sharing class saMessagesEditorForAdminCtl {
 
         List<String> conditions = new List<String>();
         User usr = [SELECT Id, Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
-      
+
         // Filters by role
         String roleDvlperName = auConstantCmn.ROLE_CODE_HONBU;
         if (values.containsKey('kddiRole8DeveloperName') && String.isNotBlank(values.get('kddiRole8DeveloperName'))) {
@@ -583,7 +624,7 @@ global with sharing class saMessagesEditorForAdminCtl {
           conditions.add('KDDIEmployeeId__c like \'%' + values.get('kddiEmployeeNo') + '%\'');
         }
 
-		if (values.containsKey('kddiDepartment') && String.isNotBlank(values.get('kddiDepartment'))) {
+        if (values.containsKey('kddiDepartment') && String.isNotBlank(values.get('kddiDepartment'))) {
           conditions.add('Department like \'%' + values.get('kddiDepartment') + '%\'');
         }
 
@@ -596,27 +637,32 @@ global with sharing class saMessagesEditorForAdminCtl {
     List<saBusinessLocationMembers__c> BusinessLocationMembersList;
       List<String> BusinessLocationNameList;
       //system.debug('List of users : '+lsUsers);
-      
+
       //system.debug(lsUsers[0].get('saBusinessLocationDetail_user__r'));
       for(User retrievedUsr: lsUsers){
-        
-        BusinessLocationNameList = new List<String>(); 
+
+        BusinessLocationNameList = new List<String>();
         BusinessLocationMembersList = retrievedUsr.saBusinessLocationDetail_user__r;
-  
+
         for(saBusinessLocationMembers__c blName : BusinessLocationMembersList){
           BusinessLocationNameList.add(blName.BusinessLocation__r.BusinessLocationName__c);
         }
-      
+
         retrievedUsr.TechnicalString__c=String.join(BusinessLocationNameList,' , ');
         //system.debug('List of BusinessLocationName : '+BusinessLocationMembersList);
-      }            
+      }
         return lsUsers;
     }
 
+    /**
+     * @description get KDDIuser list which satisfy the selected conditions.
+     * @param role5DeveloperName:組織1, role6DeveloperName:組織2, userName:氏名, employeeNo:社員番号, department:部署名.
+     * @return KDDIuser list which satisfy the selected conditions.
+     */
     public static List<User> getUserKDDIList(String role5DeveloperName, String role6DeveloperName, String userName, String employeeNo, String department) {
 
         List<String> conditions = new List<String>();
-      
+
         String roleDvlperName = '';
 
         if (role6DeveloperName.length() > 0) {
@@ -647,8 +693,8 @@ global with sharing class saMessagesEditorForAdminCtl {
             }
             sCond += ')';
             conditions.add(sCond);
-        }      
-
+        }
+System.debug(userName);
         if (userName.length() > 0) {
           conditions.add('Name like \'%' + userName + '%\'');
         }
@@ -656,7 +702,7 @@ global with sharing class saMessagesEditorForAdminCtl {
         if (employeeNo.length() > 0) {
           conditions.add('KDDIEmployeeId__c like \'%' + employeeNo + '%\'');
         }
-        
+
         if (department.length() > 0) {
           conditions.add('Department like \'%' + department + '%\'');
         }
@@ -664,7 +710,7 @@ global with sharing class saMessagesEditorForAdminCtl {
         conditions.add('IsActive = true');
 
         //system.debug(USER_BASE_QUERY + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
-            
+
         List<User> lsUsers = Database.query(USER_BASE_QUERY + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
         return lsUsers;
     }
@@ -679,7 +725,7 @@ global with sharing class saMessagesEditorForAdminCtl {
         List<String> conditions = new List<String>();
 
         User usr = [SELECT Id, Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
-      
+
         String roleDvlperName = (usr.Profile.Name == auConstantCmn.PROFILE_EVOLVA_USER ||
                                  usr.Profile.Name == auConstantCmn.PROFILE_EVOLVA_ADMIN_USER
                                     ? auConstantCmn.ROLE_CODE_EVOLVA_HONBU
@@ -752,37 +798,43 @@ global with sharing class saMessagesEditorForAdminCtl {
 
         conditions.add('IsActive = true');
 
-		//system.debug(USER_BASE_QUERY + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
+        //system.debug(USER_BASE_QUERY + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
 
-		List<User> lsUsers = Database.query(USER_BASE_QUERY + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
+        List<User> lsUsers = Database.query(USER_BASE_QUERY + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
 
-		List<saBusinessLocationMembers__c> BusinessLocationMembersList;
-	    List<String> BusinessLocationNameList;
-	    //system.debug('List of users : '+lsUsers);
-	    
-	    //system.debug(lsUsers[0].get('saBusinessLocationDetail_user__r'));
-	    for(User retrievedUsr: lsUsers){
-	      
-	      BusinessLocationNameList = new List<String>(); 
-	      BusinessLocationMembersList = retrievedUsr.saBusinessLocationDetail_user__r;
-	
-	      for(saBusinessLocationMembers__c blName : BusinessLocationMembersList){
-	        BusinessLocationNameList.add(blName.BusinessLocation__r.BusinessLocationName__c);
-	      }
-	    
-	      retrievedUsr.TechnicalString__c=String.join(BusinessLocationNameList,' , ');
-	      //system.debug('List of BusinessLocationName : '+BusinessLocationMembersList);
-	    }            
-        
+        List<saBusinessLocationMembers__c> BusinessLocationMembersList;
+        List<String> BusinessLocationNameList;
+        //system.debug('List of users : '+lsUsers);
+
+        //system.debug(lsUsers[0].get('saBusinessLocationDetail_user__r'));
+        for(User retrievedUsr: lsUsers){
+
+          BusinessLocationNameList = new List<String>();
+          BusinessLocationMembersList = retrievedUsr.saBusinessLocationDetail_user__r;
+
+          for(saBusinessLocationMembers__c blName : BusinessLocationMembersList){
+            BusinessLocationNameList.add(blName.BusinessLocation__r.BusinessLocationName__c);
+          }
+
+          retrievedUsr.TechnicalString__c=String.join(BusinessLocationNameList,' , ');
+          //system.debug('List of BusinessLocationName : '+BusinessLocationMembersList);
+        }
+
         return lsUsers;
     }
 
+    /**
+     * @description get SAuser list which satisfy the selected conditions.
+     * @param role5DeveloperName:組織1, role6DeveloperName:組織2, role7DeveloperName:組織3, role8DeveloperName:組織4, userName:氏名,
+     *        businessLocationName:拠点名, staffUserId:教育用スタッフID, listClassif:社員区分, listCertif:資格.
+     * @return SAuser list which satisfy the selected conditions.
+     */
     public static List<User> getUserSAList(String role5DeveloperName, String role6DeveloperName, String role7DeveloperName, String role8DeveloperName, String userName, String businessLocationName, String staffUserId, String listClassif, String listCertif) {
 
         List<String> conditions = new List<String>();
-      
+
         User usr = [SELECT Id, Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
-          
+
         String roleDvlperName = '';
 
         if (role8DeveloperName.length() > 0) {
@@ -822,7 +874,7 @@ global with sharing class saMessagesEditorForAdminCtl {
             }
             sCond += ')';
             conditions.add(sCond);
-        }      
+        }
 
         if (listClassif.length() > 0) {
                 conditions.add('SAClassification__c IN (' + listClassif.replace('BLANK', '') + ')');
@@ -847,11 +899,14 @@ global with sharing class saMessagesEditorForAdminCtl {
         conditions.add('IsActive = true');
 
         //system.debug(USER_BASE_QUERY + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
-            
+
         List<User> lsUsers = Database.query(USER_BASE_QUERY + joinWhereConditions(conditions) + ' ORDER BY UserRole.DeveloperName, Name LIMIT 10000');
         return lsUsers;
     }
 
+    /**
+     * @description delete multiple list rows which are selected at "複数ユーザーを削除" screen.
+     */
     public void deleteMultiRows() {
         if (listRowToDel == null || listRowToDel.length() == 0) {
             return;
@@ -863,6 +918,11 @@ global with sharing class saMessagesEditorForAdminCtl {
         }
     }
 
+	/**
+	 * @description check whether the required items are completed or not.
+	 * @param true(save):check all required items. false(temporarysave):check except Shisha and adding user.
+	 * @return true:done save action. false:error message is displayed.
+	 */
     boolean confirmData(boolean isDefinitive) {
 
       if (idm.parentRec.TechnicalPublishedDate__c == NULL) {
@@ -926,9 +986,14 @@ global with sharing class saMessagesEditorForAdminCtl {
 
     }
 
+    /**
+    * @description check whether the required items are completed or not by confirmData method.
+    *              confirmData(false) is check except Shisha and adding user.
+    * @return true:done save action. false:error message is displayed.
+    */
     public Pagereference saveAction() {
-
-        if (!confirmData(false)) {
+        if (! confirmData(false) ) {
+        	System.debug('★');/*trueの時(エラーなし)通る*/
                 return null;
         }
 
@@ -936,6 +1001,11 @@ global with sharing class saMessagesEditorForAdminCtl {
         return privateSave();
     }
 
+    /**
+    * @description check whether the required items are completed or not by confirmData method.
+    *              confirmData(true) is check all required items. false:
+    * @return true:done save action. false:error message is displayed.
+    */
     public Pagereference definitiveSaveAction() {
 
       if (!confirmData(true)) {
@@ -946,6 +1016,11 @@ global with sharing class saMessagesEditorForAdminCtl {
       return privateSave();
     }
 
+    /**
+    * @description this method is called when click "編集" buttom
+    *              and jump to editing screen with information of report which selected.
+    *              if there are answer from user, it can't edit any more and error message is displayed.
+    */
     public Pagereference recallAction() {
       List<saMessageDetail__c> lsReplyFinished = [SELECT Id
                                                   FROM   saMessageDetail__c
@@ -962,7 +1037,7 @@ global with sharing class saMessagesEditorForAdminCtl {
     }
 
     private Pagereference privateSave() {
-    
+
         scrollTopValue = 0;
         Pagereference ref = null;
         Savepoint sp = Database.setSavepoint();
@@ -991,7 +1066,7 @@ global with sharing class saMessagesEditorForAdminCtl {
                   (!parentRec.IsEvolva__c && (usr.Profile.Name != auConstantCmn.PROFILE_EVOLVA_ADMIN_USER && usr.Profile.Name != auConstantCmn.PROFILE_EVOLVA_USER))) {
                 //system.debug('IsEvolva__c: ' + parentRec.IsEvolva__c + ', Profile.Name: ' + usr.Profile.Name);
                 lsUsrToShare.add(usr.Id);
-              } 
+              }
             }
 
             saUtilSharing.setMessageSharedUsers(parentRec.id, lsUsrToShare, callType == CALL_TYPE_MESSAGES ? saConstantCmn.SA_MESSAGE_TYPE_MESSAGE : saConstantCmn.SA_MESSAGE_TYPE_TASK);
@@ -999,7 +1074,7 @@ global with sharing class saMessagesEditorForAdminCtl {
             ref = Page.saMessagesEditorForAdmin;
             ref.getParameters().put(PARAM_ID, parentRec.id);
             ref.getParameters().put(SCROLL_TOP, String.valueOf(currentScrollValue));
-            
+
             ref.setRedirect(true);
         } catch(Exception e) {
             String message = e.getMessage();
@@ -1052,6 +1127,7 @@ global with sharing class saMessagesEditorForAdminCtl {
         List<Id> lsUsrID = new List<ID>();
         //[TO][CC][BCC]の合計数１３以下の場合、空なためクリアした状態上書き
         if (memoryStr!=null) {
+            system.debug(memoryStr);
             // [TO]を含めたtoアドレス末尾までの件数
             Integer toCount = memoryStr.indexOf('[TO]');
             // [TO]を含めたtoアドレス末尾までの件数
@@ -1062,7 +1138,7 @@ global with sharing class saMessagesEditorForAdminCtl {
             String memoryToStr = memoryStr.subString(toCount+4,ccCount); //[TO]=4文字から[CC]を含まない範囲を抜出
             String memoryCCStr = memoryStr.subString(ccCount+4,bccCount); //上記+[CC]=4文字から[BCC]を含まない範囲を抜出
             String memoryBCCStr = memoryStr.subString(bccCount+5,memoryStr.length()); //上記+[BCC]=5文字から末尾まで抜出
-            
+
             system.debug(memoryToStr);
             system.debug(memoryCCStr);
             system.debug(memoryBCCStr);
@@ -1072,7 +1148,7 @@ global with sharing class saMessagesEditorForAdminCtl {
             List<String> inputBccList = memoryBCCStr.split(',', 0);
 
             // Get the list of all users ID
-            
+
             if (memoryToStr.length() > 0) {
                 for (String to : inputToList) {
                     if (!to.startsWith('手入力')) {
@@ -1098,35 +1174,41 @@ global with sharing class saMessagesEditorForAdminCtl {
         return lsUsrID;
     }
 
+    /**
+    * @description put user list data by getUserList() in userIDs every group which is selected.
+    */
     public void loadUserList(){
         List<Id> userIDs;
-        
+
         if(patternDataToSend=='1'){
-	    	userIDs = getUserList(currentUser.MailAddressMemory6__c);
-	    }else if(patternDataToSend=='2'){
-	    	userIDs = getUserList(currentUser.MailAddressMemory7__c);
-	    }else if(patternDataToSend=='3'){
-	    	userIDs = getUserList(currentUser.MailAddressMemory8__c);
-	    }else if(patternDataToSend=='4'){
-	    	userIDs = getUserList(currentUser.MailAddressMemory9__c);
-	    }else if(patternDataToSend=='5'){
-	    	userIDs = getUserList(currentUser.MailAddressMemory10__c);
-	    }
-	    
-        groupUsers = [SELECT Name, UserRole.Name, Profile.Name, UserRole.DeveloperName, TechnicalString__c, Department, (Select BusinessLocation__r.BusinessLocationName__c from saBusinessLocationDetail_user__r order by Type__c Nulls Last) FROM User WHERE Id IN :userIDs];
-        
+            userIDs = getUserList(currentUser.MailAddressMemory6__c);
+        }else if(patternDataToSend=='2'){
+            userIDs = getUserList(currentUser.MailAddressMemory7__c);
+        }else if(patternDataToSend=='3'){
+            userIDs = getUserList(currentUser.MailAddressMemory8__c);
+        }else if(patternDataToSend=='4'){
+            userIDs = getUserList(currentUser.MailAddressMemory9__c);
+        }else if(patternDataToSend=='5'){
+            userIDs = getUserList(currentUser.MailAddressMemory10__c);
+        }
+
+        groupUsers = [SELECT Name, 	SAUserId__c, UserRole.Name, Profile.Name, UserRole.DeveloperName, TechnicalString__c, Department, (Select BusinessLocation__r.BusinessLocationName__c from saBusinessLocationDetail_user__r order by Type__c Nulls Last) FROM User WHERE Id IN :userIDs];
+
         for(User u : groupUsers){
-          List<String> BusinessLocationNameList = new List<String>(); 
+          List<String> BusinessLocationNameList = new List<String>();
           List<saBusinessLocationMembers__c> BusinessLocationMembersList = u.saBusinessLocationDetail_user__r;
-    
+
           for(saBusinessLocationMembers__c blName : BusinessLocationMembersList){
             BusinessLocationNameList.add(blName.BusinessLocation__r.BusinessLocationName__c);
           }
-        
+
           u.TechnicalString__c = String.join(BusinessLocationNameList,' , ');
         }
     }
 
+    /**
+    * @description put user list data in group which is selected.
+    */
     public void saveToGroup(){
       List<InquiryReplyItem> lsReplies = idm.getItemsReply();
       String joinToAddress = '';
@@ -1143,26 +1225,26 @@ global with sharing class saMessagesEditorForAdminCtl {
           //メールアドレスの桁数が多すぎて登録できません。
           ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,System.Label.auSendEventMail_MSG_06));
       } else {
-      	
-	  	if(patternDataToSend=='1'){
-	  		currentUser.MailAddressMemory6__c = memoryStr;
-		}else if(patternDataToSend=='2'){
-	    	currentUser.MailAddressMemory7__c = memoryStr;
-	 	}else if(patternDataToSend=='3'){
-	   		currentUser.MailAddressMemory8__c = memoryStr;
-	  	}else if(patternDataToSend=='4'){
-	    	currentUser.MailAddressMemory9__c = memoryStr;
-	   	}else if(patternDataToSend=='5'){
-	   		currentUser.MailAddressMemory10__c = memoryStr;
-	  	}	
-	      	
-    	try {
-        	update currentUser;
-     	} catch (Exception e) {
-        	system.debug(e.getMessage());
-        	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'システムエラーが発生しました。システム管理者にお問い合わせください。'));
-      	}
-      	
+
+        if(patternDataToSend=='1'){
+            currentUser.MailAddressMemory6__c = memoryStr;
+        }else if(patternDataToSend=='2'){
+            currentUser.MailAddressMemory7__c = memoryStr;
+        }else if(patternDataToSend=='3'){
+            currentUser.MailAddressMemory8__c = memoryStr;
+        }else if(patternDataToSend=='4'){
+            currentUser.MailAddressMemory9__c = memoryStr;
+        }else if(patternDataToSend=='5'){
+            currentUser.MailAddressMemory10__c = memoryStr;
+        }
+
+        try {
+            update currentUser;
+        } catch (Exception e) {
+            system.debug(e.getMessage());
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'システムエラーが発生しました。システム管理者にお問い合わせください。'));
+        }
+
       }
     }
 
@@ -1192,7 +1274,7 @@ global with sharing class saMessagesEditorForAdminCtl {
         public String lastSearchUserKddiDepartment{get; set;}
 
         public String targetAccountId{get; set;}
-        
+
         public String PublishedDatetimeFormatted;
         public String getPublishedDatetimeFormatted() {
             return parentRec.PublishedDatetime__c.format('yyyy/MM/dd HH:mm');
@@ -1200,7 +1282,7 @@ global with sharing class saMessagesEditorForAdminCtl {
 
         public String DeadlineDatetimeFormatted;
         public String getDeadlineDatetimeFormatted() {
-          if (parentRec.DeadlineDatetime__c != NULL) {            
+          if (parentRec.DeadlineDatetime__c != NULL) {
             return parentRec.DeadlineDatetime__c.format('yyyy/MM/dd HH:mm');
           } else {
             return '';
@@ -1224,14 +1306,14 @@ global with sharing class saMessagesEditorForAdminCtl {
             List<InquiryReplyItem> localItemsReply = this.itemsReply;
             for (saMessageDetail__c rec: recsReply) {
                 if (isCopy) {
-                	if(rec.User__r.isActive){
-                    	rec = rec.clone(false,true,false,false);
-                    	InquiryReplyItem item = new InquiryReplyItem(rec);
-                		localItemsReply.add(item);
-                	}
+                    if(rec.User__r.isActive){
+                        rec = rec.clone(false,true,false,false);
+                        InquiryReplyItem item = new InquiryReplyItem(rec);
+                        localItemsReply.add(item);
+                    }
                 }else{
-                	InquiryReplyItem item = new InquiryReplyItem(rec);
-                	localItemsReply.add(item);
+                    InquiryReplyItem item = new InquiryReplyItem(rec);
+                    localItemsReply.add(item);
                 }
             }
             if (isCopy) {
@@ -1251,20 +1333,20 @@ global with sharing class saMessagesEditorForAdminCtl {
 
           List<saMessageDetail__c> lsReturn = new List<saMessageDetail__c>();
 
-          List<saMessageDetail__c> lsAllDetails = [SELECT Id, User__c, User__r.Name, User__r.DisplayedUsernameFormula__c, User__r.isActive, User__r.UserRole.Name, User__r.UserRole.DeveloperName, Type__c
+          List<saMessageDetail__c> lsAllDetails = [SELECT Id, User__r.SAUserId__c, User__c, User__r.Name, User__r.DisplayedUsernameFormula__c, User__r.isActive, User__r.UserRole.Name, User__r.UserRole.DeveloperName, Type__c
                                                    FROM   saMessageDetail__c
                                                    WHERE  saMessage__c = :parentId
                                                    AND    Type__c IN (:saConstantCmn.SA_MESSAGEDETAIL_TYPE_SHARED, :saConstantCmn.SA_MESSAGEDETAIL_TYPE_DONE)
                                                    ORDER BY User__c];
 
-          Id idPreviousUsr = NULL; 
+          Id idPreviousUsr = NULL;
           for (saMessageDetail__c msgDet : lsAllDetails) {
             if (msgDet.User__c != idPreviousUsr) {
               lsReturn.add(msgDet);
             } else if (msgDet.Type__c == saConstantCmn.SA_MESSAGEDETAIL_TYPE_DONE) {
               lsReturn.set(lsReturn.size() - 1, msgDet);
             }
-            idPreviousUsr = msgDet.User__c;            
+            idPreviousUsr = msgDet.User__c;
           }
           return lsReturn;
         }
@@ -1326,6 +1408,10 @@ global with sharing class saMessagesEditorForAdminCtl {
             //system.debug('done casting back to list: ' + this.itemsReply.size() + ' ' + Limits.getCpuTime());
         }
 
+        /**
+         * @description creating user list which is satisfy condition of "SAユーザーの選択" or "KDDIユーザーの選択" screen.
+         * @return userType:SA user or KDDI user.
+         */
         public void createListFromInfoData(String userType){
             Map<String, Object> infoData;
             if(userType == 'KDDI') {
@@ -1337,12 +1423,12 @@ global with sharing class saMessagesEditorForAdminCtl {
             }
             List<Object> selectedItems = (List<Object>)infoData.get('items');
             Set<InquiryReplyItem> newDetails = new Set<InquiryReplyItem>();
-  
-            //init new list 
+
+            //init new list
             for (Integer i = 0; i < selectedItems.size(); i++) {
               Map<String, Object> item = (Map<String, Object>)selectedItems[i];
               InquiryReplyItem reply = new InquiryReplyItem();
-  
+
               if (item.containsKey('Id')) {
                 reply.usrId = (String)item.get('Id');
               }
@@ -1355,6 +1441,9 @@ global with sharing class saMessagesEditorForAdminCtl {
               if (item.containsKey('UserRole.DeveloperName')) {
                 reply.usrRoleCode = (String)item.get('UserRole.DeveloperName');
               }
+              if (item.containsKey('SAUserId__c')) {
+                  reply.usrSAUserId = (String)item.get('SAUserId__c');
+                }
               newDetails.add(reply);
             }
             //merge old & new list
@@ -1368,9 +1457,14 @@ global with sharing class saMessagesEditorForAdminCtl {
           refresh();
         }
 
+        /**
+         * @description creating user list with all users who are satisfied conditions.
+         * It is calld when clicking "全部を選択" button at "SAユーザーの選択" or "KDDIユーザーの選択" screen.
+         * @return userType:SA user or KDDI user.
+         */
         public void createListFromUserList(String userType){
             List<User> lsUsr;
-            if(userType == 'KDDI') { 
+            if(userType == 'KDDI') {
                 lsUsr = getUserKDDIList(lastSearchUserKddiRole5Filter,
                                                lastSearchUserKddiRole6Filter,
                                                lastSearchUserKddiUserName,
@@ -1398,22 +1492,23 @@ global with sharing class saMessagesEditorForAdminCtl {
               reply.usrId = usr.Id;
               reply.usrName = usr.Name;
               reply.usrRoleName = usr.UserRole.Name;
+              reply.usrSAUserId = usr.SAUserId__c;
               reply.usrRoleCode = usr.UserRole.DeveloperName;
               newDetails.add(reply);
             }
             //system.debug('done creating list new Details: ' + newDetails.size() + ' ' + Limits.getCpuTime());
-            
-    		/*For (InquiryReplyItem det : this.itemsReply) {
-      			det.isDeleted = true;
-    		}
-    		
+
+            /*For (InquiryReplyItem det : this.itemsReply) {
+                det.isDeleted = true;
+            }
+
             Set<InquiryReplyItem> newSet = new Set<InquiryReplyItem>();
             newSet.addAll(newDetails);
             this.itemsReply = new List<InquiryReplyItem>(newSet);
             this.itemsReply.sort();
-            
+
             refresh();*/
-            
+
             //old method by Duc
             //merge old & new list
             mergeList(newDetails);
@@ -1444,6 +1539,7 @@ global with sharing class saMessagesEditorForAdminCtl {
         public string usrId{get; set;}
         public string usrName{get; set;}
         public string usrRoleName{get; set;}
+        public string usrSAUserId{get; set;}
         public string usrRoleCode{get; set;}
         //public string technicalString{get; set;}
         public string replyId{get; set;}
@@ -1475,6 +1571,7 @@ global with sharing class saMessagesEditorForAdminCtl {
             this.usrName = target.User__r.Name;
             this.usrRoleName = target.User__r.UserRole.Name;
             this.usrRoleCode = target.User__r.UserRole.DeveloperName;
+            this.usrSAUserId = target.User__r.SAUserId__c;
             this.replyId = target.Id;
             this.isTaskDone = (target.Type__c == saConstantCmn.SA_MESSAGEDETAIL_TYPE_DONE);
             this.isDeleted = false;
@@ -1487,7 +1584,7 @@ global with sharing class saMessagesEditorForAdminCtl {
         public void deleteAction() {
             this.isDeleted = true;
         }
-        
+
         public Integer compareTo(Object compareTo) {
             InquiryReplyItem compareTarget = (InquiryReplyItem)compareTo;
             Integer returnValue = 0;

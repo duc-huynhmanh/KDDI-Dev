@@ -39,12 +39,12 @@ public without sharing class auUtilChatter
         List<auSTPD__share> lsPermissionsToRemove = [SELECT id
                                                      FROM auSTPD__share
                                                      WHERE ParentId = :stpdToShare.Id
-                                                     AND RowCause in ( :Schema.auSTPD__share.RowCause.KDDISalesUser__c, 
-                                                                       :Schema.auSTPD__share.RowCause.Account1stParent__c, 
-                                                                       :Schema.auSTPD__share.RowCause.Account2ndParent__c, 
-                                                                       :Schema.auSTPD__share.RowCause.ShopSameAccount1stParent__c, 
-                                                                       :Schema.auSTPD__share.RowCause.Role_Honbu__c, 
-                                                                       :Schema.auSTPD__share.RowCause.Role_Shisha__c, 
+                                                     AND RowCause in ( :Schema.auSTPD__share.RowCause.KDDISalesUser__c,
+                                                                       :Schema.auSTPD__share.RowCause.Account1stParent__c,
+                                                                       :Schema.auSTPD__share.RowCause.Account2ndParent__c,
+                                                                       :Schema.auSTPD__share.RowCause.ShopSameAccount1stParent__c,
+                                                                       :Schema.auSTPD__share.RowCause.Role_Honbu__c,
+                                                                       :Schema.auSTPD__share.RowCause.Role_Shisha__c,
                                                                        :Schema.auSTPD__share.RowCause.Role_Shiten__c)
                                                     ];
         Delete lsPermissionsToRemove;
@@ -106,7 +106,7 @@ public without sharing class auUtilChatter
                 perm.userOrGroupId = usrToShare.id;
                 perm.RowCause = Schema.auSTPD__share.RowCause.Account2ndParent__c;
                 perm.AccessLevel = (stpdToShare.IsCommentOnly__c ? 'Read' : 'Edit');
-                lsPermissions.add(perm);                
+                lsPermissions.add(perm);
             }
 
             if (usrToShare.Account.ParentId != NULL && usrToShare.Account.Parentid == createUser.Account.Parentid && usrToShare.id != createUser.id) {
@@ -140,11 +140,11 @@ public without sharing class auUtilChatter
         List<auOrganization__c> lsOrg = [SELECT id, DepartmentCode__c
                                          FROM auOrganization__c
                                          WHERE Category__c = '支店'
-                                         AND RegionalOfficeCode__c in (:createUser.Account.RegionalOfficeId__r.DepartmentCode__c, 
+                                         AND RegionalOfficeCode__c in (:createUser.Account.RegionalOfficeId__r.DepartmentCode__c,
                                                                        :createUser.Account.RegionalOffice2Id__r.DepartmentCode__c)];
         for (auOrganization__c org : lsOrg) {
             lsRolesCode.add(org.DepartmentCode__c);
-            lsRolesCode.add('X' + org.DepartmentCode__c);            
+            lsRolesCode.add('X' + org.DepartmentCode__c);
         }
 */
 
@@ -184,10 +184,10 @@ public without sharing class auUtilChatter
                     }
                 }
 
-                if ((createUser.Account.RegionalOfficeId__r.DepartmentCode__c != NULL && 
+                if ((createUser.Account.RegionalOfficeId__r.DepartmentCode__c != NULL &&
                                 (ur.DeveloperName == createUser.Account.RegionalOfficeId__r.DepartmentCode__c ||
                                  ur.DeveloperName == 'X' + createUser.Account.RegionalOfficeId__r.DepartmentCode__c)) ||
-                    (createUser.Account.RegionalOffice2Id__r.DepartmentCode__c != NULL && 
+                    (createUser.Account.RegionalOffice2Id__r.DepartmentCode__c != NULL &&
                                 (ur.DeveloperName == createUser.Account.RegionalOffice2Id__r.DepartmentCode__c ||
                                  ur.DeveloperName == 'X' + createUser.Account.RegionalOffice2Id__r.DepartmentCode__c))) {
                     // Role Shisha & Subordinates
@@ -233,7 +233,7 @@ public without sharing class auUtilChatter
 
 
         if (lsPermissions.size() > 0) {
-            Insert lsPermissions;    
+            Insert lsPermissions;
         }
 
     }
@@ -250,12 +250,12 @@ public without sharing class auUtilChatter
         List<auEvent__share> lsPermissionsToRemove = [SELECT id
                                                      FROM auEvent__share
                                                      WHERE ParentId = :EventToShare.Id
-                                                     AND RowCause in ( :Schema.auEvent__share.RowCause.KDDISalesUser__c, 
-                                                                       :Schema.auEvent__share.RowCause.Account1stParent__c, 
-                                                                       :Schema.auEvent__share.RowCause.Account2ndParent__c, 
-                                                                       :Schema.auEvent__share.RowCause.ShopSameAccount1stParent__c, 
-                                                                       :Schema.auEvent__share.RowCause.Role_Honbu__c, 
-                                                                       :Schema.auEvent__share.RowCause.Role_Shisha__c, 
+                                                     AND RowCause in ( :Schema.auEvent__share.RowCause.KDDISalesUser__c,
+                                                                       :Schema.auEvent__share.RowCause.Account1stParent__c,
+                                                                       :Schema.auEvent__share.RowCause.Account2ndParent__c,
+                                                                       :Schema.auEvent__share.RowCause.ShopSameAccount1stParent__c,
+                                                                       :Schema.auEvent__share.RowCause.Role_Honbu__c,
+                                                                       :Schema.auEvent__share.RowCause.Role_Shisha__c,
                                                                        :Schema.auEvent__share.RowCause.Role_Shiten__c)
                                                     ];
         Delete lsPermissionsToRemove;
@@ -317,7 +317,7 @@ public without sharing class auUtilChatter
                 perm.userOrGroupId = usrToShare.id;
                 perm.RowCause = Schema.auEvent__share.RowCause.Account2ndParent__c;
                 perm.AccessLevel = 'Edit';
-                lsPermissions.add(perm);                
+                lsPermissions.add(perm);
             }
 
             if (usrToShare.Account.ParentId != NULL && usrToShare.Account.Parentid == createUser.Account.Parentid && usrToShare.id != createUser.id) {
@@ -385,10 +385,10 @@ public without sharing class auUtilChatter
                         lsPermissions.add(perm);
                     }
 
-                    if ((createUser.Account.RegionalOfficeId__r.DepartmentCode__c != NULL && 
+                    if ((createUser.Account.RegionalOfficeId__r.DepartmentCode__c != NULL &&
                                     (ur.DeveloperName == createUser.Account.RegionalOfficeId__r.DepartmentCode__c ||
                                      ur.DeveloperName == 'X' + createUser.Account.RegionalOfficeId__r.DepartmentCode__c)) ||
-                        (createUser.Account.RegionalOffice2Id__r.DepartmentCode__c != NULL && 
+                        (createUser.Account.RegionalOffice2Id__r.DepartmentCode__c != NULL &&
                                     (ur.DeveloperName == createUser.Account.RegionalOffice2Id__r.DepartmentCode__c ||
                                      ur.DeveloperName == 'X' + createUser.Account.RegionalOffice2Id__r.DepartmentCode__c))) {
                         // Role Shisha
@@ -401,10 +401,10 @@ public without sharing class auUtilChatter
                         lsPermissions.add(perm);
                     }
 
-                    if ((createUser.Account.BranchId__r.DepartmentCode__c != NULL && 
+                    if ((createUser.Account.BranchId__r.DepartmentCode__c != NULL &&
                                     (ur.DeveloperName == createUser.Account.BranchId__r.DepartmentCode__c ||
                                      ur.DeveloperName == 'X' + createUser.Account.BranchId__r.DepartmentCode__c)) ||
-                        (createUser.Account.Branch2Id__r.DepartmentCode__c != NULL && 
+                        (createUser.Account.Branch2Id__r.DepartmentCode__c != NULL &&
                                     (ur.DeveloperName == createUser.Account.Branch2Id__r.DepartmentCode__c ||
                                      ur.DeveloperName == 'X' + createUser.Account.Branch2Id__r.DepartmentCode__c))) {
                         // Role Shiten
@@ -427,7 +427,7 @@ public without sharing class auUtilChatter
 
 
         if (lsPermissions.size() > 0) {
-            Insert lsPermissions;    
+            Insert lsPermissions;
         }
 
     }
@@ -447,15 +447,15 @@ public without sharing class auUtilChatter
         List<auCXKnowledge__share> lsPermissionsToRemove = [SELECT id
                                                             FROM auCXKnowledge__share
                                                             WHERE ParentId = :cxKnowledgeToShare.Id
-                                                            AND RowCause in ( :Schema.auCXKnowledge__share.RowCause.KDDISalesUser__c, 
-                                                                              :Schema.auCXKnowledge__share.RowCause.Account1stParent__c, 
-                                                                              :Schema.auCXKnowledge__share.RowCause.Account2ndParent__c, 
-                                                                              :Schema.auCXKnowledge__share.RowCause.ShopSameAccount1stParent__c, 
-                                                                              :Schema.auCXKnowledge__share.RowCause.Role_Honbu__c, 
-                                                                              :Schema.auCXKnowledge__share.RowCause.Role_Shisha__c, 
-                                                                              :Schema.auCXKnowledge__share.RowCause.Role_Shiten__c, 
-                                                                              :Schema.auCXKnowledge__share.RowCause.RoleAndSub_Shisha__c, 
-                                                                              :Schema.auCXKnowledge__share.RowCause.ShopSameShisha__c, 
+                                                            AND RowCause in ( :Schema.auCXKnowledge__share.RowCause.KDDISalesUser__c,
+                                                                              :Schema.auCXKnowledge__share.RowCause.Account1stParent__c,
+                                                                              :Schema.auCXKnowledge__share.RowCause.Account2ndParent__c,
+                                                                              :Schema.auCXKnowledge__share.RowCause.ShopSameAccount1stParent__c,
+                                                                              :Schema.auCXKnowledge__share.RowCause.Role_Honbu__c,
+                                                                              :Schema.auCXKnowledge__share.RowCause.Role_Shisha__c,
+                                                                              :Schema.auCXKnowledge__share.RowCause.Role_Shiten__c,
+                                                                              :Schema.auCXKnowledge__share.RowCause.RoleAndSub_Shisha__c,
+                                                                              :Schema.auCXKnowledge__share.RowCause.ShopSameShisha__c,
                                                                               :Schema.auCXKnowledge__share.RowCause.Creator__c)
                                                            ];
         Delete lsPermissionsToRemove;
@@ -492,7 +492,7 @@ public without sharing class auUtilChatter
             } else {
                 permCreator.AccessLevel = 'Read';
             }
-            lsPermissions.add(permCreator);            
+            lsPermissions.add(permCreator);
         }
 
         // Get the list of the users where sharing is necessary
@@ -554,7 +554,7 @@ public without sharing class auUtilChatter
                 } else {
                     perm.AccessLevel = 'Read';
                 }
-                lsPermissions.add(perm);                
+                lsPermissions.add(perm);
             }
 
             if (usrToShare.Account.ParentId != NULL && usrToShare.Account.Parentid == createUser.Account.Parentid && usrToShare.id != createUser.id) {
@@ -640,10 +640,10 @@ public without sharing class auUtilChatter
                     }
 
 
-                    if ((createUser.Account.RegionalOfficeId__r.DepartmentCode__c != NULL && 
+                    if ((createUser.Account.RegionalOfficeId__r.DepartmentCode__c != NULL &&
                                     (ur.DeveloperName == createUser.Account.RegionalOfficeId__r.DepartmentCode__c ||
                                      ur.DeveloperName == 'X' + createUser.Account.RegionalOfficeId__r.DepartmentCode__c)) ||
-                        (createUser.Account.RegionalOffice2Id__r.DepartmentCode__c != NULL && 
+                        (createUser.Account.RegionalOffice2Id__r.DepartmentCode__c != NULL &&
                                     (ur.DeveloperName == createUser.Account.RegionalOffice2Id__r.DepartmentCode__c ||
                                      ur.DeveloperName == 'X' + createUser.Account.RegionalOffice2Id__r.DepartmentCode__c))) {
                         // Role Shisha
@@ -675,13 +675,13 @@ public without sharing class auUtilChatter
                                 lsPermissions.add(perm2);
                             }
                         }
-                        
+
                     }
 
-                    if ((createUser.Account.BranchId__r.DepartmentCode__c != NULL && 
+                    if ((createUser.Account.BranchId__r.DepartmentCode__c != NULL &&
                                     (ur.DeveloperName == createUser.Account.BranchId__r.DepartmentCode__c ||
                                      ur.DeveloperName == 'X' + createUser.Account.BranchId__r.DepartmentCode__c)) ||
-                        (createUser.Account.Branch2Id__r.DepartmentCode__c != NULL && 
+                        (createUser.Account.Branch2Id__r.DepartmentCode__c != NULL &&
                                     (ur.DeveloperName == createUser.Account.Branch2Id__r.DepartmentCode__c ||
                                      ur.DeveloperName == 'X' + createUser.Account.Branch2Id__r.DepartmentCode__c))) {
                         // Role Shiten
@@ -753,7 +753,7 @@ public without sharing class auUtilChatter
 
 
         if (lsPermissions.size() > 0) {
-            Insert lsPermissions;    
+            Insert lsPermissions;
         }
 
     }
@@ -821,7 +821,7 @@ public without sharing class auUtilChatter
 
         }
 
-    }    
+    }
 
 
 
@@ -841,7 +841,7 @@ public without sharing class auUtilChatter
 
         ConnectApi.ChatterFeeds.postCommentToFeedElement(null, feedElementId, comment);
 
-    }    
+    }
 
 
 
@@ -952,14 +952,14 @@ public without sharing class auUtilChatter
                 currentUser = [SELECT Id, AccountId, Profile.Name, UserRole.DeveloperName FROM User WHERE Id = :currentUser.Id];
             }
 
-            if (currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_CUSTOM && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 && 
+            if (currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_CUSTOM &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 &&
                 currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2) {
                 return options;
             }
@@ -968,11 +968,11 @@ public without sharing class auUtilChatter
                 return options;
             }
 
-            for (auOrganization__c org : [SELECT id, RegionalOfficeName__c 
+            for (auOrganization__c org : [SELECT id, RegionalOfficeName__c
                                           FROM auOrganization__c
                                           WHERE Category__c = '支社'
                                           AND (DeactivateDate__c = NULL OR DeactivateDate__c > TODAY)
-                                          ORDER BY SortNo__c, RegionalOfficeName__c]) {
+                                          ORDER BY OldOrganization__c, SortNo__c NULLS FIRST, RegionalOfficeName__c]) {
                 options.add(new SelectOption(org.Id, org.RegionalOfficeName__c));
             }
             return options;
@@ -997,14 +997,14 @@ public without sharing class auUtilChatter
                 currentUser = [SELECT Id, AccountId, Profile.Name, UserRole.DeveloperName FROM User WHERE Id = :currentUser.Id];
             }
 
-            if (currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_CUSTOM && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 && 
+            if (currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_CUSTOM &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 &&
                 currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2) {
                 return options;
             }
@@ -1017,12 +1017,13 @@ public without sharing class auUtilChatter
                 // Show only the Shiten for the selected Shisha
                 String shishaCode = [SELECT RegionalOfficeCode__c FROM auOrganization__c WHERE Id = :currentShisha].RegionalOfficeCode__c;
 
-                for (auOrganization__c org : [SELECT id, name, Category__c, RegionalOfficeCode__c, DepartmentCode__c, BranchCode__c, BranchName__c 
+                for (auOrganization__c org : [SELECT id, name, Category__c, RegionalOfficeCode__c, DepartmentCode__c, BranchCode__c, BranchName__c
                                               FROM auOrganization__c
                                               WHERE Category__c = '支店'
                                               AND RegionalOfficeCode__c = :shishaCode
                                               AND (DeactivateDate__c = NULL OR DeactivateDate__c > TODAY)
-                                              ORDER BY BranchName__c]) {
+                                              ORDER BY OldOrganization__c, ShitenSortNo__c NULLS FIRST, BranchName__c
+                                              ]) {
                     options.add(new SelectOption(org.Id, org.BranchName__c));
                 }
 
@@ -1031,20 +1032,20 @@ public without sharing class auUtilChatter
             } else {
 
                 if (currentUser.UserRole.DeveloperName == ROLE_CODE_HONBU) {
-                    for (auOrganization__c org : [SELECT id, name, Category__c, RegionalOfficeCode__c, DepartmentCode__c, BranchCode__c, BranchName__c 
+                    for (auOrganization__c org : [SELECT id, name, Category__c, RegionalOfficeCode__c, DepartmentCode__c, BranchCode__c, BranchName__c
                                                   FROM auOrganization__c
                                                   WHERE Category__c = '支店'
                                                   AND (DeactivateDate__c = NULL OR DeactivateDate__c > TODAY)
-                                                  ORDER BY BranchName__c]) {
+                                                  ORDER BY OldOrganization__c, SortNo__c NULLS FIRST, ShitenSortNo__c NULLS FIRST, BranchName__c]) {
                         options.add(new SelectOption(org.Id, org.BranchName__c));
                     }
                     return options;
                 }
 
-                if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE || 
-                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH || 
-                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA && 
-                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 && 
+                if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE ||
+                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH ||
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA &&
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 &&
                     currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2) {
 
                     String sHonshaDepartmentCode = '';
@@ -1067,12 +1068,12 @@ public without sharing class auUtilChatter
                         sHonshaDepartmentCode = sHonshaDepartmentCode.substring(1);
                     }
 
-                    for (auOrganization__c org : [SELECT id, name, Category__c, RegionalOfficeCode__c, DepartmentCode__c, BranchCode__c, BranchName__c 
+                    for (auOrganization__c org : [SELECT id, name, Category__c, RegionalOfficeCode__c, DepartmentCode__c, BranchCode__c, BranchName__c
                                                   FROM auOrganization__c
                                                   WHERE Category__c = '支店'
                                                   AND (DeactivateDate__c = NULL OR DeactivateDate__c > TODAY)
                                                   AND RegionalOfficeCode__c = :sHonshaDepartmentCode
-                                                  ORDER BY BranchName__c]) {
+                                                  ORDER BY OldOrganization__c, ShitenSortNo__c NULLS FIRST, BranchName__c]) {
                         options.add(new SelectOption(org.Id, org.BranchName__c));
                     }
 
@@ -1099,14 +1100,14 @@ public without sharing class auUtilChatter
                 currentUser = [SELECT Id, AccountId, Profile.Name, UserRole.DeveloperName FROM User WHERE Id = :currentUser.Id];
             }
 
-            if (currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_CUSTOM && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 && 
+            if (currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_CUSTOM &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 &&
                 currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2) {
                 return options;
             }
@@ -1161,10 +1162,10 @@ public without sharing class auUtilChatter
                     return options;
                 }
 
-                if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE || 
-                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH || 
-                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA && 
-                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 && 
+                if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE ||
+                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH ||
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA &&
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 &&
                     currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2) {
 
                     // Show all the Dairiten of the 支社
@@ -1225,14 +1226,14 @@ public without sharing class auUtilChatter
                 currentUser = [SELECT Id, AccountId, Profile.Name, UserRole.DeveloperName FROM User WHERE Id = :currentUser.Id];
             }
 
-            if (currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_CUSTOM && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA && 
-                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 && 
+            if (currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_CUSTOM &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_HEADQUARTERS &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_BRANCH &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA &&
+                currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 &&
                 currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2 &&
                 currentUser.Profile.Name != auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT) {
                 return options;
@@ -1242,7 +1243,7 @@ public without sharing class auUtilChatter
 
                 for (Account acc : [SELECT Id, Name FROM Account WHERE ParentId = :currentUser.AccountId ORDER BY Account.Name]) {
                     options.add(new SelectOption(acc.Id, acc.Name));
-                }                                
+                }
                 return options;
 
             }
@@ -1310,10 +1311,10 @@ public without sharing class auUtilChatter
                     return options;
                 }
 
-                if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE || 
-                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH || 
-                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA && 
-                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 && 
+                if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE ||
+                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH ||
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA &&
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 &&
                     currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2) {
 
                     // Show all the UneiHojin of the 支社
@@ -1401,7 +1402,7 @@ public without sharing class auUtilChatter
                 return options;
 
             } else if (currentDairiten != NULL) {
-                
+
                 // Show only the shops for the selected Dairiten
                 for (Account acc : [SELECT id, Name
                                     FROM Account
@@ -1450,7 +1451,7 @@ public without sharing class auUtilChatter
 
                 if (currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_PRIMARY_AGENT) {
 
-                    // All accounts where the grand-parent is the current account            
+                    // All accounts where the grand-parent is the current account
                     for (Account acc : [SELECT Id, Name FROM Account WHERE Parent.ParentId = :currentUser.AccountId ORDER BY Account.Name LIMIT 1000]) {
                         options.add(new SelectOption(acc.Id, acc.Name));
                     }
@@ -1478,10 +1479,10 @@ public without sharing class auUtilChatter
                 }
 
 
-                if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE || 
-                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH || 
-                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA && 
-                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 && 
+                if (currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_REGIONAL_OFFICE ||
+                    currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_BRANCH ||
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA &&
+                    currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_1 &&
                     currentUser.Profile.Name != auConstantCmn.PROFILE_KDDI_OKINAWA_SHITEN_2) {
 
                     // Show all the Shops of the 支社
@@ -1538,7 +1539,7 @@ public without sharing class auUtilChatter
         for(auHonbuDirectDetail__c auHonbuDirectDetailToAdd: honbuDirectDetailToShare){
 
             auHonbuDirect__share perm = new auHonbuDirect__share();
-            
+
             perm.ParentId = auHonbuDirectDetailToAdd.auHonbuDirect__c;
             perm.userOrGroupId = auHonbuDirectDetailToAdd.User__c;
 
@@ -1549,18 +1550,18 @@ public without sharing class auUtilChatter
             } else if (auHonbuDirectDetailToAdd.Type__c == auConstantCmn.ACCESS_TYPE_SHOP) {
                 perm.RowCause = Schema.auHonbuDirect__share.RowCause.shared_To_This_Shop_User__c;
             }
-            
+
             System.debug('ParentId:        ' + perm.ParentId + ' | ' + auHonbuDirectDetailToAdd.auHonbuDirect__c);
             System.debug('userOrGroupId:   ' + perm.userOrGroupId + ' | ' + auHonbuDirectDetailToAdd.User__c);
             System.debug('RowCause:        ' + perm.RowCause + ' | ' + auHonbuDirectDetailToAdd.Type__c);
             System.debug('RowCausePossible: ' + Schema.auHonbuDirect__share.RowCause.shared_To_This_SA_User__c + ' | ' + Schema.auHonbuDirect__share.RowCause.shared_To_This_KDDI_User__c + ' | ' + Schema.auHonbuDirect__share.RowCause.shared_To_This_Shop_User__c);
 
             perm.AccessLevel = 'Read';
-            
+
             listOfPerm.add(perm);
         }
-        
-        Insert listOfPerm;    
+
+        Insert listOfPerm;
 
     }
 
@@ -1598,7 +1599,7 @@ public without sharing class auUtilChatter
       }
 
     }
-    
+
     //auSurvey
     public static void shareDataPermissionsSurvey(auSurvey__c SurveyToShare) {
 
@@ -1609,7 +1610,7 @@ public without sharing class auUtilChatter
                                                      	WHERE ParentId = :SurveyToShare.Id
                                                      	And RowCause = 'Manual'
                                                     	];
-       
+
 		if(lsPermissionsToRemove.size()>0){
             Delete lsPermissionsToRemove;
         }
@@ -1618,132 +1619,86 @@ public without sharing class auUtilChatter
 
         // Get the CreatedUser, the parent (運営法人) and the grand-parent (一次)
         Id ConcernedUserId = SurveyToShare.User__c;
-        if (ConcernedUserId == NULL) {
+        if (ConcernedUserId == null) {
             // Error
         }
 
-
 		//param Name to Change
-        User concernedUser = [SELECT id, Name, KDDIEmployeeId__c, Hierarchical_Code_1__c, Hierarchical_Code_2__c, Hierarchical_Code_3__c, Hierarchical_Code_4__c, 
+		List<User> concernedUserList = [SELECT id, Name, KDDIEmployeeId__c, Hierarchical_Code_1__c, Hierarchical_Code_2__c, Hierarchical_Code_3__c, Hierarchical_Code_4__c,
         						Hierarchical_Code_5__c, Hierarchical_Code_6__c, Hierarchical_Code_7__c, Hierarchical_Code_8__c, Position__c
                            		FROM User
-                           		WHERE Id = :ConcernedUserId
-                          ];
-           
-        //Identify the level of the concerned User               
-        /*Integer UserLevel = 0;
-        String requestWhereString = '';
-        if(concernedUser.Hierarchical_Code_8__c!=NULL && concernedUser.Hierarchical_Code_8__c!=''){
-        	UserLevel = 8;
-        }else if(concernedUser.Hierarchical_Code_7__c!=NULL && concernedUser.Hierarchical_Code_7__c!=''){
-        	UserLevel =7;
-        }else if(concernedUser.Hierarchical_Code_6__c!=NULL && concernedUser.Hierarchical_Code_6__c!=''){
-        	UserLevel = 6;
-        }else if(concernedUser.Hierarchical_Code_5__c!=NULL && concernedUser.Hierarchical_Code_5__c!=''){
-        	UserLevel = 5;
-        }else if(concernedUser.Hierarchical_Code_4__c!=NULL && concernedUser.Hierarchical_Code_4__c!=''){
-        	UserLevel = 4;
-        }else if(concernedUser.Hierarchical_Code_3__c!=NULL && concernedUser.Hierarchical_Code_3__c!=''){
-        	UserLevel = 3;
-        }else if(concernedUser.Hierarchical_Code_2__c!=NULL && concernedUser.Hierarchical_Code_2__c!=''){
-        	UserLevel = 2;
-        }else if(concernedUser.Hierarchical_Code_1__c!=NULL && concernedUser.Hierarchical_Code_1__c!=''){
-        	UserLevel = 1;
-        }
- 
-        //Build the request to identify the users where sharing is necessary 
-        String requestListUserBase = 'SELECT id, Name, KDDIEmployeeId__c, Hierarchical_Code_Aggregated__c FROM User ';
-                               
-        String requestListUserWhere = 'WHERE IsActive = True AND (KDDIEmployeeId__c=\''+concernedUser.Hierarchical_Code_1__c+'\' ';
-        
-        if(UserLevel>=8){
-            requestListUserWhere = ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+concernedUser.Hierarchical_Code_7__c+'\'';
-        }
-        if(UserLevel>=7){
-            requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+'\'';
-        }
-        if(UserLevel>=6){
-            requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+'\'';
-        }
-        if(UserLevel>=5){
-            requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c = \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+'\'';
-        }
-        if(UserLevel>=4){
-            requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+'\'';
-        }
-        if(UserLevel>=3){
-            requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+'\'';
-        }
-        if(UserLevel>=2){
-            requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+'\'';
-        }
-        requestListUserWhere+=')';*/
-        
-        //Build the request to identify the users where sharing is necessary 
-        String requestListUserBase = 'SELECT id, Name, KDDIEmployeeId__c, Hierarchical_Code_Aggregated__c FROM User ';                      
-        String requestListUserWhere = 'WHERE IsActive = True AND (KDDIEmployeeId__c=\''+concernedUser.KDDIEmployeeId__c+'\' ';
-        
-        //For the same level
-	    if(concernedUser.Hierarchical_Code_8__c!=NULL && concernedUser.Hierarchical_Code_8__c!=''){
-	        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+concernedUser.Hierarchical_Code_7__c+concernedUser.Hierarchical_Code_8__c+'\' and Position__c!=\'\' and Position__c!=null) ';
-	    }else if(concernedUser.Hierarchical_Code_7__c!=NULL && concernedUser.Hierarchical_Code_7__c!=''){
-	        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+concernedUser.Hierarchical_Code_7__c+'\' and Position__c!=\'\' and Position__c!=null) ';
-	    }else if(concernedUser.Hierarchical_Code_6__c!=NULL && concernedUser.Hierarchical_Code_6__c!=''){
-	        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+'\' and Position__c!=\'\' and Position__c!=null) ';
-	    }else if(concernedUser.Hierarchical_Code_5__c!=NULL && concernedUser.Hierarchical_Code_5__c!=''){
-	        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c = \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+'\' and Position__c!=\'\' and Position__c!=null) ';
-	    }else if(concernedUser.Hierarchical_Code_4__c!=NULL && concernedUser.Hierarchical_Code_4__c!=''){
-	        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+'\' and Position__c!=\'\' and Position__c!=null) ';
-	    }else if(concernedUser.Hierarchical_Code_3__c!=NULL && concernedUser.Hierarchical_Code_3__c!=''){
-	        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+'\' and Position__c!=\'\' and Position__c!=null) ';
-	    }else if(concernedUser.Hierarchical_Code_2__c!=NULL && concernedUser.Hierarchical_Code_2__c!=''){
-	        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+'\' and Position__c!=\'\' and Position__c!=null) ';
-	    }else if(concernedUser.Hierarchical_Code_1__c!=NULL && concernedUser.Hierarchical_Code_1__c!=''){
-	        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+'\' and Position__c!=\'\' and Position__c!=null) ';
-	    }
-	     
-	    //For all the higher level  
-        if(concernedUser.Hierarchical_Code_8__c!=NULL && concernedUser.Hierarchical_Code_8__c!=''){
-	    	requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+concernedUser.Hierarchical_Code_7__c+'\'';
-	    }
-	    if(concernedUser.Hierarchical_Code_7__c!=NULL && concernedUser.Hierarchical_Code_7__c!=''){
-	        requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+'\'';
-	    }
-	    if(concernedUser.Hierarchical_Code_6__c!=NULL && concernedUser.Hierarchical_Code_6__c!=''){
-	        requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+'\'';
-	    }
-	    if(concernedUser.Hierarchical_Code_5__c!=NULL && concernedUser.Hierarchical_Code_5__c!=''){
-	        requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c = \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+'\'';
-	    }
-	    if(concernedUser.Hierarchical_Code_4__c!=NULL && concernedUser.Hierarchical_Code_4__c!=''){
-	        requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+'\'';
-	    }
-	    if(concernedUser.Hierarchical_Code_3__c!=NULL && concernedUser.Hierarchical_Code_3__c!=''){
-	        requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+'\'';
-	    }
-	    if(concernedUser.Hierarchical_Code_2__c!=NULL && concernedUser.Hierarchical_Code_2__c!=''){
-	        requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+'\'';
-	    }
+                           		WHERE Id = :ConcernedUserId];
 
-        requestListUserWhere+=')';
-		
-        // Get the list of the users where sharing is necessary
-        List<User> lsUsers = database.query(requestListUserBase+requestListUserWhere);
-        
-        
-        for (User usrToShare : lsUsers) {
-        	auSurvey__share perm = new auSurvey__share();
-        	perm.ParentId = SurveyToShare.Id;
-        	perm.userOrGroupId = usrToShare.id;
-        	perm.RowCause = 'Manual';
-        	perm.AccessLevel = 'Read';
-        	lsPermissions.add(perm);
-        }
+		if(concernedUserList.size()>0){
 
-        if (lsPermissions.size() > 0) {
-            Insert lsPermissions;    
-        }
+        	User concernedUser = concernedUserList.get(0);
+
+	        //Build the request to identify the users where sharing is necessary
+	        String requestListUserBase = 'SELECT id, Name, KDDIEmployeeId__c, Hierarchical_Code_Aggregated__c FROM User ';
+	        String requestListUserWhere = 'WHERE IsActive = True AND (KDDIEmployeeId__c=\''+concernedUser.KDDIEmployeeId__c+'\' ';
+
+	        //For the same level
+		    if(concernedUser.Hierarchical_Code_8__c!=NULL && concernedUser.Hierarchical_Code_8__c!=''){
+		        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+concernedUser.Hierarchical_Code_7__c+concernedUser.Hierarchical_Code_8__c+'\' and Position__c!=\'\' and Position__c!=null) ';
+		    }else if(concernedUser.Hierarchical_Code_7__c!=NULL && concernedUser.Hierarchical_Code_7__c!=''){
+		        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+concernedUser.Hierarchical_Code_7__c+'\' and Position__c!=\'\' and Position__c!=null) ';
+		    }else if(concernedUser.Hierarchical_Code_6__c!=NULL && concernedUser.Hierarchical_Code_6__c!=''){
+		        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+'\' and Position__c!=\'\' and Position__c!=null) ';
+		    }else if(concernedUser.Hierarchical_Code_5__c!=NULL && concernedUser.Hierarchical_Code_5__c!=''){
+		        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c = \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+'\' and Position__c!=\'\' and Position__c!=null) ';
+		    }else if(concernedUser.Hierarchical_Code_4__c!=NULL && concernedUser.Hierarchical_Code_4__c!=''){
+		        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+'\' and Position__c!=\'\' and Position__c!=null) ';
+		    }else if(concernedUser.Hierarchical_Code_3__c!=NULL && concernedUser.Hierarchical_Code_3__c!=''){
+		        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+'\' and Position__c!=\'\' and Position__c!=null) ';
+		    }else if(concernedUser.Hierarchical_Code_2__c!=NULL && concernedUser.Hierarchical_Code_2__c!=''){
+		        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+'\' and Position__c!=\'\' and Position__c!=null) ';
+		    }else if(concernedUser.Hierarchical_Code_1__c!=NULL && concernedUser.Hierarchical_Code_1__c!=''){
+		        requestListUserWhere += ' OR (Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+'\' and Position__c!=\'\' and Position__c!=null) ';
+		    }
+
+		    //For all the higher level
+	        if(concernedUser.Hierarchical_Code_8__c!=NULL && concernedUser.Hierarchical_Code_8__c!=''){
+		    	requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+concernedUser.Hierarchical_Code_7__c+'\'';
+		    }
+		    if(concernedUser.Hierarchical_Code_7__c!=NULL && concernedUser.Hierarchical_Code_7__c!=''){
+		        requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+concernedUser.Hierarchical_Code_6__c+'\'';
+		    }
+		    if(concernedUser.Hierarchical_Code_6__c!=NULL && concernedUser.Hierarchical_Code_6__c!=''){
+		        requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+concernedUser.Hierarchical_Code_5__c+'\'';
+		    }
+		    if(concernedUser.Hierarchical_Code_5__c!=NULL && concernedUser.Hierarchical_Code_5__c!=''){
+		        requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c = \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+concernedUser.Hierarchical_Code_4__c+'\'';
+		    }
+		    if(concernedUser.Hierarchical_Code_4__c!=NULL && concernedUser.Hierarchical_Code_4__c!=''){
+		        requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+concernedUser.Hierarchical_Code_3__c+'\'';
+		    }
+		    if(concernedUser.Hierarchical_Code_3__c!=NULL && concernedUser.Hierarchical_Code_3__c!=''){
+		        requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+concernedUser.Hierarchical_Code_2__c+'\'';
+		    }
+		    if(concernedUser.Hierarchical_Code_2__c!=NULL && concernedUser.Hierarchical_Code_2__c!=''){
+		        requestListUserWhere += ' OR Hierarchical_Code_Aggregated__c= \''+concernedUser.Hierarchical_Code_1__c+'\'';
+		    }
+
+	        requestListUserWhere+=')';
+
+	        // Get the list of the users where sharing is necessary
+	        List<User> lsUsers = database.query(requestListUserBase+requestListUserWhere);
+
+
+	        for (User usrToShare : lsUsers) {
+	        	auSurvey__share perm = new auSurvey__share();
+	        	perm.ParentId = SurveyToShare.Id;
+	        	perm.userOrGroupId = usrToShare.id;
+	        	perm.RowCause = 'Manual';
+	        	perm.AccessLevel = 'Read';
+	        	lsPermissions.add(perm);
+	        }
+
+	        if (lsPermissions.size() > 0) {
+	            Insert lsPermissions;
+	        }
+		}
 
     }
-    
+
 }

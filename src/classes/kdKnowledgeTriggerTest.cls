@@ -6,11 +6,11 @@ private class kdKnowledgeTriggerTest {
 		k.Thema__c = 'Val6';
 		k.RecommendFlag__c = true;
 		k.DentouiriFlag__c = true;
-		k.MediumCategory__c = 'CX・ES';
+		k.MediumCategory__c = 'cate1';
 		k.Type__c = 'Value1';
 		k.Title__c = 'Test';
-		k.UpdateModificationDateTime__c = true;
 		k.LastModifiedDate__c = Datetime.now();
+		k.UpdateModificationDateTime__c=true;
 		insert k;
 		return k;
 	}

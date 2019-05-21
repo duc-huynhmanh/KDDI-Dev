@@ -131,7 +131,11 @@ public without sharing class auForgotPasswordCtrl {
 						User u = users[0];
 						EmailTemplate template = [Select Id From EmailTemplate Where DeveloperName = :rps.ResetNotificationTemplateName__c];
 						Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(template.Id, u.Contact.Account.KDDISalesUserId__c, u.Contact.AccountId);
-						mail.setTargetObjectId(u.Contact.Account.KDDISalesUserId__c);
+						//New Target For email (ChatterFree Email)
+						String targetUserIdString = auCommunityCustomSettings__c.getOrgDefaults().TargetUserForPasswordReset__c;
+						User targetUser = [Select Id From User Where Id = :targetUserIdString];
+						mail.setTargetObjectId(targetUser.Id);
+						//mail.setTargetObjectId(u.Contact.Account.KDDISalesUserId__c);
 						if (orgMailAddr != null) {
 							mail.setOrgWideEmailAddressId(orgMailAddrId);
 						} else {

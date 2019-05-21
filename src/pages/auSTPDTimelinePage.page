@@ -259,9 +259,12 @@
         obj.val('');        
       }
 
-      $j('.autogrow').attr("rows", "1");
-      autosize(document.querySelectorAll('.autogrow'));
+      setupAutogrow();
 
+    }
+    function setupAutogrow(){
+      $j('.autogrow').attr("rows", "1");    
+      autosize(document.querySelectorAll('.autogrow'));   
     }
 
     function autoGrowMemo() {
@@ -769,7 +772,7 @@
     -->                  <img class="icon is-large" src="{!urlUserPhoto}" style="width: calc(3.4rem - 2px);width:-webkit-calc(3.4rem - 2px);height: calc(3.4rem - 2px);height:-webkit-calc(3.4rem - 2px);"/>
                     </span>
                     <div class="post-section">
-                      <apex:inputField value="{!mpFeedData[feed.ParentId].TechnicalAlwaysBlank__c}" 
+                      <apex:inputField value="{!mpFeedData[feed.ParentId].TechnicalAlwaysBlank__c}" onfocus="setupAutogrow();"
                                        html-placeholder="コメントする…"
                                        styleClass="autogrow"/>
                       <div class="post-section__buttons">

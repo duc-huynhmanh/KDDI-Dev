@@ -58,13 +58,19 @@
 
     <div class="container">
       <div class="row">
-        <div class="link-title-con">
+        <div class="link-title-con" style="width: 45%;">
           <div><span class="link-title">リンク集</span><span class="link-title-note">※ 各システムのID/PWの入力が必要です。</span></div>
         </div>
+        <div style="width: 45%; padding-right: 100px;">
+        	<apex:outputLink rendered="{!isKDDIUser}" style="float: right; padding-top: 22px;padding-left: 10px; " value="{!$Resource.DevStatus}">改修状況一覧</apex:outputLink>
+    		<apex:outputLink rendered="{!isKDDIUser}" style="float: right; padding-top: 5px;" value="{!$Resource.DevStatus}">
+    			<apex:image style="width: 50px;" url="{!URLFOR($Resource.auResources, 'icons/Excel-icon.png')}"/>
+    		</apex:outputLink>
         </div>
-        </div><!--container閉じる-->
+      </div>
+    </div><!--container閉じる-->
 
-        <div class="o-sep-2"></div>
+    <div class="o-sep-2"></div>
 
         <apex:outputPanel rendered="{!!isCommunityUser}">
 

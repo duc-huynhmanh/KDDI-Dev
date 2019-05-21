@@ -164,6 +164,13 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>CCPMeeting__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>CCP商談</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>CSVExportPart1__c</fullName>
         <externalId>false</externalId>
         <formula>IF(ISNULL(AuNewMNP__c), &quot;&quot;, TEXT(AuNewMNP__c)) + &quot;,&quot; +
@@ -360,6 +367,13 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015N0000000n9yF&quot;, &quot;他&
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>NormalMeeting__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>通常商談</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>OwnerDepartment__c</fullName>
         <externalId>false</externalId>
         <formula>Owner:User.Department</formula>
@@ -377,6 +391,13 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015N0000000n9yF&quot;, &quot;他&
         <required>false</required>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ReflectOnCCP__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>CCPに反映</label>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>ReportType__c</fullName>

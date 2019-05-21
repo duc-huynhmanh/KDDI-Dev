@@ -359,6 +359,20 @@ OR(ISNULL(ValidToDatetime__c), ValidToDatetime__c &gt;= NOW())
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
+    <fields>
+        <fullName>count_reply__c</fullName>
+        <externalId>false</externalId>
+        <label>count reply</label>
+        <summaryFilterItems>
+            <field>saInquiryReply__c.DailyReportDate__c</field>
+            <operation>equals</operation>
+            <value></value>
+        </summaryFilterItems>
+        <summaryForeignKey>saInquiryReply__c.saInquiry__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
     <label>問い合わせ</label>
     <listViews>
         <fullName>All</fullName>

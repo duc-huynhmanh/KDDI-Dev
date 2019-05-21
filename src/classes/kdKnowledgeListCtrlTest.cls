@@ -98,92 +98,117 @@ private class kdKnowledgeListCtrlTest {
 		return detail;
 	}
 	
-	@isTest static void test_Constructor1() {
+	@isTest(SeeAllData=true)
+	static void test_Constructor1() {
 		kdKnowledge__c k1 = createKnowledge();
 		createViewDetail(k1.Id, '0');
 		PageReference pageRef = Page.kdKnowledgeListPage;
 		Test.setCurrentPage(pageRef);
 		//ApexPages.currentPage().getParameters().put('type','1');
 		kdKnowledgeListCtrl ctrl = new kdKnowledgeListCtrl();
-		ctrl.getListType();
-		ctrl.getListStatus();
-		ctrl.getListThema();
-		ctrl.getListSubjectDivision();
-		ctrl.getKdKnowledgeNewAttachment();
-		ctrl.getRecords();
-		ctrl.getRecordsCountLabel();
-		ctrl.goToPage1();
-		ctrl.goToPage2();
-		ctrl.goToPage3();
-		ctrl.goToPage4();
-		ctrl.goToPage5();
-		ctrl.goToPage6();
-		ctrl.goToPage7();
-		ctrl.goToPage8();
-		ctrl.goToPagePrev();
-		ctrl.goToPageNext();
-		ctrl.goToPage2ndNext();
-		ctrl.goToPageLast();
-		ctrl.goToPageLastBfr1();
-		ctrl.goToPageLastBfr2();
-		ctrl.goToPageLastBfr3();
-		ctrl.goToPageLastBfr4();
-		ctrl.goToPageLastBfr5();
-		ctrl.setSizeSaveCurrentPageSize();
-		ctrl.changeOrder();
-		ctrl.doSearch();
 		
-		ctrl.kdKnowledgeUpdate = createKnowledge();
-		ctrl.doSaveUpdateKnowledge();
+		Profile p = [SELECT Id FROM Profile WHERE Name = 'System Administrator' OR Name = 'システム管理者'];
+		User u = new User(Alias = 'standt', Email='dummy.standarduser@ezweb.ne.jp', 
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US', 
+            LocaleSidKey='en_US', ProfileId = p.Id, 
+            TimeZoneSidKey='Asia/Tokyo', UserName='tremy@testKDDI.com');
+           
+        kdKnowledgeDetail__c detail = new kdKnowledgeDetail__c();
+         
+		System.runAs(u) {
+			
+			detail.kdKnowledge__c = k1.Id;
+			detail.User__c = u.Id;
+			detail.IsCopy__c = true;
+			insert detail;
 
-		ctrl.kdKnowledgeUpdate = createKnowledge();
-		ctrl.doSaveUpdateKnowledgeWithChangeStatusToSaved();
-
-		ctrl.kdKnowledgeNew = createKnowledge();
-		ctrl.kdKnowledgeNew.Id = null;
-		ctrl.doSaveNewKnowledgeTemporary();
-
-		ctrl.kdKnowledgeNew = createKnowledge();
-		ctrl.kdKnowledgeNew.Id = null;
-		ctrl.doSaveNewKnowledge();
-
-		ctrl.kdKnowledgeUpdate = createKnowledge();
-		ctrl.kdKnowledgeUpdateDetailLike = createLikeDetail(ctrl.kdKnowledgeUpdate.Id, '1');
-		ctrl.kdKnowledgeUpdateId = ctrl.kdKnowledgeUpdate.Id;
-		ctrl.doAddLike();
-
-		ctrl.kdKnowledgeUpdate = createKnowledge();
-		ctrl.kdKnowledgeUpdateDetailLike = createLikeDetail(ctrl.kdKnowledgeUpdate.Id, '2');
-		ctrl.kdKnowledgeUpdateId = ctrl.kdKnowledgeUpdate.Id;
-		ctrl.doRemoveLike();
-
-		ctrl.kdKnowledgeUpdate = createKnowledge();
-		ctrl.kdKnowledgeUpdateDetailCopy = createCopyDetail(ctrl.kdKnowledgeUpdate.Id, '3');
-		ctrl.kdKnowledgeUpdateId = ctrl.kdKnowledgeUpdate.Id;
-		ctrl.doAddCopy();
-
-		ctrl.kdKnowledgeUpdate = createKnowledge();
-		ctrl.kdKnowledgeUpdateDetailCopy = createCopyDetail(ctrl.kdKnowledgeUpdate.Id, '4');
-		ctrl.kdKnowledgeUpdateId = ctrl.kdKnowledgeUpdate.Id;
-		ctrl.doRemoveCopy();
-
-		ctrl.kdKnowledgeNewAttachmentSize = 1;
-		ctrl.addKnowledgeNewAttachment();
-
-		ctrl.kdKnowledgeUpdate = createKnowledge();
-		Attachment att = new Attachment();
-		att.Body = Blob.valueOf('Test');
-		att.ParentId = ctrl.kdKnowledgeUpdate.Id;
-		att.Name = 'Test';
-		att.ContentType = 'video/quicktime';
-		insert att;
-
-		ctrl.attachmentId = att.Id;
-		ctrl.kdKnowledgeAttachmentPutInTop();
-		ctrl.kdKnowledgeAttachmentDelete();
-
-		ctrl.kdKnowledgeUpdate = createKnowledge();
-		ctrl.doSaveDeleteKnowledge();
+			Attachment att = new Attachment();
+			att.Name = 'Test';
+			att.ParentId = k1.Id;
+			att.OwnerId = u.Id;
+			att.Body = Blob.valueOf('Test');
+			insert att;
+			
+			ctrl.getListType();
+			ctrl.getListStatus();
+			ctrl.getListThema();
+			ctrl.getListSubjectDivision();
+			ctrl.getKdKnowledgeNewAttachment();
+			ctrl.getRecords();
+			ctrl.getRecordsCountLabel();
+			ctrl.goToPage1();
+			ctrl.goToPage2();
+			ctrl.goToPage3();
+			ctrl.goToPage4();
+			ctrl.goToPage5();
+			ctrl.goToPage6();
+			ctrl.goToPage7();
+			ctrl.goToPage8();
+			//ctrl.goToPageNext();
+			ctrl.goToPagePrev();
+			ctrl.goToPage2ndNext();
+			ctrl.goToPageLast();
+			ctrl.goToPageLastBfr1();
+			ctrl.goToPageLastBfr2();
+			//ctrl.goToPageLastBfr3();
+			//ctrl.goToPageLastBfr4();
+			//ctrl.goToPageLastBfr5();
+			ctrl.setSizeSaveCurrentPageSize();
+			ctrl.changeOrder();
+			ctrl.doSearch();
+			
+			ctrl.kdKnowledgeUpdate = createKnowledge();
+			ctrl.doSaveUpdateKnowledge();
+	
+			ctrl.kdKnowledgeUpdate = createKnowledge();
+			ctrl.doSaveUpdateKnowledgeWithChangeStatusToSaved();
+	
+			ctrl.kdKnowledgeNew = createKnowledge();
+			ctrl.kdKnowledgeNew.Id = null;
+			ctrl.doSaveNewKnowledgeTemporary();
+	
+			ctrl.kdKnowledgeNew = createKnowledge();
+			ctrl.kdKnowledgeNew.Id = null;
+			ctrl.doSaveNewKnowledge();
+	
+			ctrl.kdKnowledgeUpdate = createKnowledge();
+			ctrl.kdKnowledgeUpdateDetailLike = createLikeDetail(ctrl.kdKnowledgeUpdate.Id, '1');
+			ctrl.kdKnowledgeUpdateId = ctrl.kdKnowledgeUpdate.Id;
+			ctrl.doAddLike();
+	
+			ctrl.kdKnowledgeUpdate = createKnowledge();
+			ctrl.kdKnowledgeUpdateDetailLike = createLikeDetail(ctrl.kdKnowledgeUpdate.Id, '2');
+			ctrl.kdKnowledgeUpdateId = ctrl.kdKnowledgeUpdate.Id;
+			ctrl.doRemoveLike();
+	
+			ctrl.kdKnowledgeUpdate = createKnowledge();
+			ctrl.kdKnowledgeUpdateDetailCopy = createCopyDetail(ctrl.kdKnowledgeUpdate.Id, '3');
+			ctrl.kdKnowledgeUpdateId = ctrl.kdKnowledgeUpdate.Id;
+			ctrl.doAddCopy();
+	
+			ctrl.kdKnowledgeUpdate = createKnowledge();
+			ctrl.kdKnowledgeUpdateDetailCopy = createCopyDetail(ctrl.kdKnowledgeUpdate.Id, '4');
+			ctrl.kdKnowledgeUpdateId = ctrl.kdKnowledgeUpdate.Id;
+			ctrl.doRemoveCopy();
+	
+			ctrl.kdKnowledgeNewAttachmentSize = 1;
+			ctrl.addKnowledgeNewAttachment();
+	
+			ctrl.kdKnowledgeUpdate = createKnowledge();
+			att = new Attachment();
+			att.Body = Blob.valueOf('Test');
+			att.ParentId = ctrl.kdKnowledgeUpdate.Id;
+			att.Name = 'Test';
+			att.ContentType = 'video/quicktime';
+			insert att;
+	
+			ctrl.attachmentId = att.Id;
+			ctrl.kdKnowledgeAttachmentPutInTop();
+			ctrl.kdKnowledgeAttachmentDelete();
+	
+			ctrl.kdKnowledgeUpdate = createKnowledge();
+			ctrl.doSaveDeleteKnowledge();
+		}
 	}
 
 	@isTest static void test_Constructor2() {

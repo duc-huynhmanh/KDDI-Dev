@@ -24,11 +24,6 @@ public without sharing class auUtilCmn
 
      }
 
-
-
-
-
-
     public static String getStrValue(String val) {
         String sRtn = '';
         try{
@@ -172,6 +167,16 @@ public without sharing class auUtilCmn
     public static String appendInText(String fieldName, List<String> values) {
         return appendInText(fieldName, values, false);
     }
+
+    public static String appendMultiplePicklistInText(String fieldName, List<String> values) {
+        List<String> escapedValues = new List<String>();
+        for (String value: values) {
+            escapedValues.add(String.escapeSingleQuotes(escapeNull(value)));
+        }
+        
+        return ' ' + fieldName + ' INCLUDES ' + ' (\'' + String.join(escapedValues, '\',\'') + '\') ';
+    }
+
     public static String appendInText(String fieldName, List<String> values, boolean isNot) {
         List<String> escapedValues = new List<String>();
         for (String value: values) {

@@ -437,9 +437,9 @@ public with sharing class kdTelemarketingListCtrl {
         List<String> strList = new List<String>();
 
         if (typeLaunch == TelemaTypeLaunch.TELEMA) {
-            strList.add('Status__c IN (NULL, 0, 2)');
+            strList.add('Status__c IN (NULL, 0, 1, 2)');
         } else if (typeLaunch == TelemaTypeLaunch.RESULTS) {
-            strList.add('Status__c NOT IN (NULL, 0, 2)');
+            strList.add('Status__c NOT IN (NULL, 0, 1, 2)');
         }
 
         if (this.filterShisha != NULL && this.filterShisha.length() > 0) {

@@ -20,6 +20,7 @@ public with sharing class saMessagesCtrl {
     public String idDocumentCategory {get;set;}
 
     private boolean isMsgReadList;
+    
 
     public saMessagesCtrl () {
 
@@ -67,7 +68,7 @@ public with sharing class saMessagesCtrl {
                                        AND Type__c = :saConstantcmn.SA_MESSAGE_TYPE_MESSAGE
                                        ORDER BY PublishedDatetime__c DESC
                                        LIMIT 200];
-
+      
       lsMsg = new List<clsMessage>();
       for (saMessage__c msg : lsMessages) {
         lsMsg.add(new clsMessage(msg, true));
@@ -85,10 +86,15 @@ public with sharing class saMessagesCtrl {
                                                         FROM saMessageDetail__c
                                                         WHERE Type__c = :saConstantcmn.SA_MESSAGEDETAIL_TYPE_READ
                                                         AND User__c = :UserInfo.getUserId())
+                                        AND ID IN (SELECT saMessage__c
+                                                        FROM saMessageDetail__c
+                                                        WHERE Type__c <> :saConstantcmn.SA_MESSAGEDETAIL_TYPE_READ
+                                                        AND User__c = :UserInfo.getUserId())
                                        AND IsPublished__c = true 
                                        AND Type__c = :saConstantcmn.SA_MESSAGE_TYPE_MESSAGE
                                        ORDER BY PublishedDatetime__c ASC
                                        LIMIT 200];
+      
       lsMsg = new List<clsMessage>();
       for (saMessage__c msg : lsMessages) {
         lsMsg.add(new clsMessage(msg, false));

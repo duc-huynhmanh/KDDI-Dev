@@ -544,6 +544,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
   	
   	.graphDiv {
   		width: 372px !important;
+  		padding-bottom: 10px !important; 
   	}
   	
   	.graphMainContainer {
@@ -744,13 +745,13 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                               </span>
                               <br/>
                               <span style="padding-left: 20px; font-size: 20px; font-weight: bold">
-                                {!surveyShisha}
+                                {!hierarchicalLabel3}
                               </span>
                               <span style="padding-left: 20px; font-size: 20px; font-weight: bold">
-                                {!surveyUnifiedAgencyBranch}
+                                {!hierarchicalLabel4}
                               </span>
                               <span style="padding-left: 20px; font-size: 20px; font-weight: bold">
-                                {!surveyBusinessLocationBranchGroup}
+                                {!hierarchicalLabel5}
                               </span>
                               <span style="padding-left: 20px; font-size: 20px; font-weight: bold">
                                 {!surveyUserName}
@@ -758,7 +759,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                 
                              		<table style="width: 100%; border-spacing: 0.5rem 0 ; border-collapse: separate;">
                 						<tr>
-                							<td style="padding-left:5px; padding-top:10px; min-height: 50px;">
+                							<td style="width: 32%; padding-left:5px; padding-top:10px; min-height: 50px;">
                                 <div>
                                   <div style="width: 100%;">
                                     <span>本人：前回と今回の比較</span>
@@ -771,7 +772,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                                   </div>
                                 </div>
                               </td>
-                              <td style="padding-left:5px; padding-top:10px; min-height: 50px;">
+                              <td style="width: 32%; padding-left:5px; padding-top:10px; min-height: 50px;">
                                 <div>
                                   <div style="width: 100%;">
                                     <span>{!IF(surveyType == '営業担当アンケート', '今回の本人と全国平均の比較', '')}{!IF(surveyType == 'CSAアンケート', '今回の本人と所属平均の比較', '')}{!IF(surveyType == '職場サーベイ', '今回の本人と全メンバーの比較', '')}</span>
@@ -784,7 +785,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                                   </div>
                                 </div>
                               </td>
-                              <td style="padding-left:5px; padding-top:10px; min-height: 50px;">
+                              <td style="width: 32%; padding-left:5px; padding-top:10px; min-height: 50px;">
                                 <div>
                                   <div style="width: 100%;">
                                     <span>今回の本人と支社平均の比較</span>
@@ -799,8 +800,8 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                               </td>
                 						</tr>
                                         <tr>
-                                            <td style="width: 33%" class="graphMainContainer">
-                                                <div style="background-color: #fff; border: solid 1px #ccc; min-height: 17rem; margin-top: 5px; padding-top:30px;" class="graphDiv">
+                                            <td style="width: 32%" class="graphMainContainer">
+                                                <div style="background-color: #fff; border: solid 1px #ccc; margin-top: 5px; padding-bottom: 25px; padding-top:30px;" class="graphDiv">
                                             		<span></span>
                             						<apex:chart id="chart1" height="100%" width="100%" legend="false" data="{!data1}">
 													    <apex:axis type="Radial" position="radial" grid="true" maximum="50" dashSize="0.5"/>
@@ -820,8 +821,8 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                                                 </div>
                                             </td>
                 
-                                            <td style="width: 33%" class="graphMainContainer">
-                                                <div style="background-color: #fff; border: solid 1px #ccc; min-height: 17rem; margin-top: 5px; padding-top:30px;" class="graphDiv">
+                                            <td style="width: 32%" class="graphMainContainer">
+                                                <div style="background-color: #fff; border: solid 1px #ccc; margin-top: 5px; padding-bottom: 25px; padding-top:30px;" class="graphDiv">
                  									<apex:chart height="100%" width="100%" legend="false" data="{!data2}">
 													    <apex:axis type="Radial" position="radial" grid="true" maximum="50" dashSize="0.5"/>
 													    
@@ -840,8 +841,8 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                                                 </div>
                                             </td>
                                         
-                                            <td style="width: 33%" class="graphMainContainer">
-                                                <div style="background-color: #fff; border: solid 1px #ccc; min-height: 17rem; margin-top: 5px; padding-top:30px;" class="graphDiv">
+                                            <td style="width: 32%" class="graphMainContainer">
+                                                <div style="background-color: #fff; border: solid 1px #ccc; margin-top: 5px; padding-bottom: 25px; padding-top:30px;" class="graphDiv">
                 									<apex:chart height="100%" width="100%" legend="false" data="{!data3}">
 													    <apex:axis type="Radial" position="radial" grid="true" maximum="50" dashSize="0.5"/>
 													    

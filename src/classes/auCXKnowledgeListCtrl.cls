@@ -19,6 +19,7 @@ public with sharing class auCXKnowledgeListCtrl {
     private static final String COOKIE_STATUS = 'Status';
 //    private static final String COOKIE_CATEGORY = 'Category';
     private static final String COOKIE_FREETEXT = 'FreeText';
+    private static final String COOKIE_NAME = 'Name';
     private static final String COOKIE_FAVORITE = 'Favorite';
     private static final String COOKIE_SHISHA = 'Shisha';
     private static final String COOKIE_SHITEN = 'Shiten';
@@ -50,11 +51,13 @@ public with sharing class auCXKnowledgeListCtrl {
     public String filterStatus {get; set;}
 //    public String filterCategory {get; set;}
     public String filterFreeText {get; set;}
+    public String filterName {get; set;}
     public Boolean filterHasAttachment {get; set;}
     private String searchFilter;
     public String getSearchFilter(){
         return searchFilter;
     }
+
     public Boolean filterFavorite {get; set;}
     public String filterShisha {get; set;}
     public String filterShiten {get; set;}
@@ -86,7 +89,10 @@ public with sharing class auCXKnowledgeListCtrl {
 
     public List<OptionDetail> categoryOptions{get; set;}
     public List<OptionDetail> categoryOptionsEdit{get; set;}
+    public Boolean beforeSelectedEdit{get;set;}
     public List<OptionDetail> categoryOptionsAdd{get; set;}
+    public Map<String, List<String>> categoryMap{get;set;}
+    private Map<String, String> categoryLabelMap;
 
     public List<SelectOption> optShisha{get; set;}
     public List<SelectOption> optShiten{get; set;}
@@ -191,15 +197,19 @@ public with sharing class auCXKnowledgeListCtrl {
 
     /**
      * Constructor.
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/15
      */
-    public auCXKnowledgeListCtrl() {    
+    public auCXKnowledgeListCtrl() {
         pageNum = 1;
         pageSize = 20;
         orderBy = 'DisplayedDate__c DESC';
         errorMessage = '';
+        categoryLabelMap = new Map<String, String>();
+        for (Schema.PicklistEntry f : auCXKnowledge__c.Category1__c.getDescribe().getPicklistValues()) {
+            categoryLabelMap.put(f.getValue(), f.getLabel());
+        }
 
         Boolean hasSearchValue = initFieldFromCookie();//保持項目有無チェック
 system.debug('Status: ' + filterStatus);
@@ -241,7 +251,7 @@ system.debug('Status: ' + filterStatus);
 
         this.categoryOptions = getCategories(this.targetCategory);
         // カテゴリ項目設定
-        
+
 
 
         cxKnowledgeUpdate = new auCXKnowledge__c();
@@ -281,7 +291,7 @@ system.debug('Status: ' + filterStatus);
         List<SelectOption> options = new List<SelectOption>();
         for( Schema.PicklistEntry f : auCXKnowledge__c.Category1__c.getDescribe().getPicklistValues()) {
             options.add(new SelectOption(f.getValue(), f.getLabel()));
-        }       
+        }
 
         for (SelectOption option: options) {
             Boolean isSelected = false;
@@ -311,6 +321,7 @@ system.debug('Status: ' + filterStatus);
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_STATUS, this.filterStatus, null, COOKIE_EXPIRATION_DATE, true));
 //        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_CATEGORY, this.filterCategory, null, COOKIE_EXPIRATION_DATE, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_FREETEXT, this.searchFilter, null, COOKIE_EXPIRATION_DATE, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_NAME, this.filterName, null, COOKIE_EXPIRATION_DATE, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_FAVORITE, this.filterFavorite ? '1' : '0', null, COOKIE_EXPIRATION_DATE, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_SHISHA, this.filterShisha, null, COOKIE_EXPIRATION_DATE, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_SHITEN, this.filterShiten, null, COOKIE_EXPIRATION_DATE, true));
@@ -325,8 +336,14 @@ system.debug('Status: ' + filterStatus);
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_SHOPS, targetShopsText, null, COOKIE_EXPIRATION_DATE, true));
 
         String targetCategoryText = '';
+        List<String> selectedCategories = new List<String>();
         if (this.targetCategory != null && this.targetCategory.size() > 0) {
-            targetCategoryText = String.join(this.targetCategory, '&&');
+            for (OptionDetail detail: this.categoryOptions) {
+                if (detail.isSelected) {
+                    selectedCategories.add(detail.option.getValue());
+                }
+            }
+            targetCategoryText = String.join(selectedCategories, '&&');
         }
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_CATEGORY, targetCategoryText, null, COOKIE_EXPIRATION_DATE, true));
 
@@ -341,6 +358,7 @@ system.debug('Status: ' + filterStatus);
 
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_STATUS   , null    , null, 0, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_FREETEXT   , null    , null, 0, true));
+        cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_NAME   , null    , null, 0, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_FAVORITE   , null    , null, 0, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_SHISHA   , null    , null, 0, true));
         cookies.add(new Cookie(COOKIE_PREFIX + COOKIE_SHITEN, null    , null, 0, true));
@@ -371,6 +389,10 @@ system.debug('Status: ' + filterStatus);
         if(cookies.containsKey(COOKIE_PREFIX + COOKIE_FREETEXT)){
                 this.filterFreeText = cookies.get(COOKIE_PREFIX + COOKIE_FREETEXT).getValue();
                 this.searchFilter = filterFreeText;
+        }
+
+        if(cookies.containsKey(COOKIE_PREFIX + COOKIE_NAME)){
+            this.filterName = cookies.get(COOKIE_PREFIX + COOKIE_NAME).getValue();
         }
 
         this.filterFavorite = false;
@@ -405,14 +427,14 @@ system.debug('Status: ' + filterStatus);
                 this.targetShops = targetShopsText.split('&&');
             }
         }
-        
+
         if(cookies.containsKey(COOKIE_PREFIX + COOKIE_CATEGORY)){
             String targetCategoryText = cookies.get(COOKIE_PREFIX + COOKIE_CATEGORY).getValue();
             if (String.isNotBlank(targetCategoryText)) {
                 this.targetCategory = targetCategoryText.split('&&');
             }
         }
-                
+
         //画面起動時検索フラグチェック
         if(cookies.containsKey(COOKIE_PREFIX + COOKIE_LABEL_INIT_SEARCH_FLG) && cookies.get(COOKIE_PREFIX + COOKIE_LABEL_INIT_SEARCH_FLG).getValue().length() != 0){
             this.initSearchFlg = cookies.get(COOKIE_PREFIX + COOKIE_LABEL_INIT_SEARCH_FLG).getValue();
@@ -534,6 +556,14 @@ system.debug('Status: ' + filterStatus);
         }
     }
 
+    //クリア実行時にカテゴリ項目と傘下店舗項目の選択解除&適用を行う
+    public void clearSerchFilter() {
+    	categorySelectAllDeselect();
+    	categorySelectApply();
+    	shopsSelectAllDeselect();
+    	shopsSelectApply();
+    }
+
     //キャンセル
     public void categorySelectCancel() {
         for (OptionDetail detail : categoryOptions) {
@@ -556,8 +586,30 @@ system.debug('Status: ' + filterStatus);
         Set<String> category = new Set<String>();
         for (OptionDetail detail : categoryOptions) {
             detail.apply();
-            if (detail.isSelected) {
-                category.add(detail.option.getValue());
+            if (detail.level == 'cat-parent') {
+                //if select parent
+                if (detail.isSelected) {
+                    //add all children into the list
+                    for(OptionDetail child : categoryOptions){
+                        if(child.option.getValue().indexOf(detail.option.getValue()) >= 0){
+                            category.add(child.option.getValue());
+                        }
+                    }
+                } else { //if not select parent
+                    //browse all children
+                    Boolean childIsSelected = false;
+                    for(OptionDetail child : categoryOptions){
+                        //if child is selected
+                        if(child.option.getValue().indexOf(detail.option.getValue()) >= 0 && child.isSelected){
+                            category.add(child.option.getValue());
+                            childIsSelected = true;
+                        }
+                    }
+                    //if child is selected then select parent
+                    if (childIsSelected){
+                        category.add(detail.option.getValue());
+                    }
+                }
             }
         }
         targetCategory = new List<String>(category);
@@ -568,6 +620,7 @@ system.debug('Status: ' + filterStatus);
         for (OptionDetail detail : categoryOptionsEdit) {
             detail.apply();
             if (detail.isSelected) {
+                system.debug('detail: ' + detail);
                 category.add(detail.option.getValue());
             }
         }
@@ -589,9 +642,9 @@ system.debug('Status: ' + filterStatus);
     private void clearNewCXKnowledge() {
 
         cxKnowledgeNew = new auCXKnowledge__c();
-        cxKnowledgeNew.Contribution__c = '①取組きっかけ\n\n' + 
-                                        '②取組内容\n\n' + 
-                                        '③結果(効果)\n\n' + 
+        cxKnowledgeNew.Contribution__c = '①取組きっかけ\n\n' +
+                                        '②取組内容\n\n' +
+                                        '③結果(効果)\n\n' +
                                         '④工夫点・まねポイント\n';
         this.categoryOptionsAdd = getCategories(new List<String>());
         //TODO DUC
@@ -617,10 +670,10 @@ system.debug('Status: ' + filterStatus);
 
         list<SelectOption> options = new list<SelectOption>();
         options.add(new SelectOption('', '全て'));
-        
+
         for (Schema.PicklistEntry f : auCXKnowledge__c.Status__c.getDescribe().getPicklistValues()) {
             options.add(new SelectOption(f.getValue(), f.getLabel()));
-        }       
+        }
 
         return options;
 
@@ -630,10 +683,10 @@ system.debug('Status: ' + filterStatus);
 
         list<SelectOption> options = new list<SelectOption>();
         options.add(new SelectOption('', '全て'));
-        
+
         for (Schema.PicklistEntry f : auCXKnowledge__c.Category1__c.getDescribe().getPicklistValues()) {
             options.add(new SelectOption(f.getValue(), f.getLabel()));
-        }       
+        }
 
         return options;
 
@@ -642,7 +695,7 @@ system.debug('Status: ' + filterStatus);
 
     /**
      * Get the records to be shown.
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/15
      */
@@ -656,7 +709,7 @@ system.debug('Status: ' + filterStatus);
         queryStr += ' SELECT id, Name, Title__c, TitleShort__c, DisplayedDate__c, LastModifiedDateValue__c, ' +
                     '        CreatedBy__r.DisplayedUsernameFormula__c, CreatedBy__r.Account.Parent.Name, ' +
                     '        CreatedBy__r.Account.RegionalOfficeId__r.Name, CreatedBy__r.Account.BranchId__r.Name, ' +
-                    '        Status__c, Category1__c, Category2__c, Category3__c, Contribution__c, ScopeSharing__c,' +
+                    '        Status__c, Category1__c, Contribution__c, ScopeSharing__c,' +
                     '        ContributionShort__c, UserRecordAccess.HasEditAccess,' +
                     '        (select id, LikeCount, CommentCount from Feeds),' +
                     '        (select id, Name from Attachments)' +
@@ -666,11 +719,11 @@ system.debug('Status: ' + filterStatus);
             List<String> whereStrElems = getWhereStrList();
             whereStr = joinWhereConditions(whereStrElems);
         }
-        
+
         if (!String.isBlank(whereStr)) {
             queryStr += whereStr;
         }
-        system.debug(queryStr); 
+        system.debug(queryStr);
 
         queryStr += ' ORDER BY ' + orderBy;
 
@@ -716,7 +769,7 @@ system.debug('Status: ' + filterStatus);
                 filteredList.add(k);
                 if (filteredList.size() >= 1000) {
                     break;
-                }                    
+                }
             }
         }
 
@@ -724,7 +777,7 @@ system.debug('Status: ' + filterStatus);
         if(recordsCount > 0){
             if(math.floor((recordsCount-1) / pageSize) + 1 < pageNum) {
                 pageNum = (Integer)math.floor((recordsCount-1) / pageSize) + 1;
-            } 
+            }
             Integer max = recordsCount > pageNum*pageSize ? pageNum*pageSize : recordsCount;
             for(Integer i = (pageNum-1)*pageSize; i < max; i++) {
                 displayList.add(filteredList.get(i));
@@ -744,7 +797,7 @@ system.debug('Status: ' + filterStatus);
         //get all record filtered (max 1000 records)
         for(auCXKnowledge__c k: localSsc) {
             Boolean fFilterFilled = false;
-            if ((k.Title__c != NULL && k.Title__c.containsIgnoreCase(this.searchFilter)) || 
+            if ((k.Title__c != NULL && k.Title__c.containsIgnoreCase(this.searchFilter)) ||
                 (k.Contribution__c != NULL && k.Contribution__c.containsIgnoreCase(this.searchFilter))) {
                 fFilterFilled = true;
             } else {
@@ -760,7 +813,7 @@ system.debug('Status: ' + filterStatus);
                     filteredList.add(k);
                     if (filteredList.size() >= 1000) {
                         break;
-                    } 
+                    }
                 }
             }
         }
@@ -769,7 +822,7 @@ system.debug('Status: ' + filterStatus);
         if(recordsCount > 0){
             if(math.floor((recordsCount-1) / pageSize) + 1 < pageNum) {
                 pageNum = (Integer)math.floor((recordsCount-1) / pageSize) + 1;
-            } 
+            }
             Integer max = recordsCount > pageNum*pageSize ? pageNum*pageSize : recordsCount;
             for(Integer i = (pageNum-1)*pageSize; i < max; i++) {
                 displayList.add(filteredList.get(i));
@@ -779,7 +832,7 @@ system.debug('Status: ' + filterStatus);
     }
 
     private List<String> getWhereStrList() {
-    
+
         List<String> strList = new List<String>();
 
         if (forcedCXKnowledgeId != NULL) {
@@ -797,7 +850,7 @@ system.debug('Status: ' + filterStatus);
 
         } else {
 
-            getFilterDates();
+        	getFilterDates();
 
             strList.add('IsCommentOnly__c = False');
 
@@ -805,45 +858,38 @@ system.debug('Status: ' + filterStatus);
             if (this.filterDateFrom != null) {
                 strList.add('LastModifiedDateValue__c >= ' + String.valueOf(this.filterDateFrom));
             }
-            if (this.filterDateTo != null) {
+            if (this.filterName != null && this.filterName.length() > 0) {
+                strList.add('(Name = \'' + this.filterName +'\')');
+            }
+            if (this.filterDateTo != null ) {
                 strList.add('LastModifiedDateValue__c <= ' + String.valueOf(this.filterDateTo));
             }
-
-/*
-            if (this.filterCategory != NULL && this.filterCategory.length() > 0) {
-                strList.add('((Category1__c = \'' + this.filterCategory +'\') OR ' +
-                            ' (Category2__c = \'' + this.filterCategory +'\') OR ' +
-                            ' (Category3__c = \'' + this.filterCategory +'\'))');
-            }
-*/
 
             if (this.filterStatus != NULL && this.filterStatus.length() > 0) {
                 strList.add('(Status__c = \'' + this.filterStatus +'\')');
             }
 
             if (this.targetCategory != null && this.targetCategory.size() > 0) {
-                strList.add('((' + auUtilCmn.appendInText('Category1__c', this.targetCategory) + ')' +
-                            ' OR (' + auUtilCmn.appendInText('Category2__c', this.targetCategory) + ')' +
-                            ' OR (' + auUtilCmn.appendInText('Category3__c', this.targetCategory) + '))');
+                strList.add('(' + auUtilCmn.appendMultiplePicklistInText('Category1__c', this.targetCategory) + ')');
             }
 
             if (this.targetShops != null && this.targetShops.size() > 0) {
                 strList.add(auUtilCmn.appendInText('CreatedBy__r.AccountId', this.targetShops));
             } else if (getIsVisibleFilterUneiHojin() && this.filterUneiHojin != null && this.filterUneiHojin.length() > 0) {
                 strList.add('(CreatedBy__r.AccountId = \'' + filterUneiHojin + '\' OR ' +
-                            ' CreatedBy__r.Account.ParentId = \'' + filterUneiHojin + '\')');                
+                            ' CreatedBy__r.Account.ParentId = \'' + filterUneiHojin + '\')');
             } else if (getIsVisibleFilterDairiten() && this.filterDairiten != null && this.filterDairiten.length() > 0) {
                 strList.add('(CreatedBy__r.AccountId = \'' + filterDairiten + '\' OR ' +
                             ' CreatedBy__r.Account.ParentId = \'' + filterDairiten + '\' OR ' +
-                            ' CreatedBy__r.Account.Parent.ParentId = \'' + filterDairiten + '\')');                
+                            ' CreatedBy__r.Account.Parent.ParentId = \'' + filterDairiten + '\')');
             } else if (getIsVisibleFilterShiten() && this.filterShiten != null && this.filterShiten.length() > 0) {
                 // Filter on Shiten is used only if UneiHojin and shops have not been selected
                 strList.add('(CreatedBy__r.Account.BranchId__c = \'' + filterShiten + '\' OR ' +
-                            ' CreatedBy__r.Account.Branch2Id__c = \'' + filterShiten + '\')');                
+                            ' CreatedBy__r.Account.Branch2Id__c = \'' + filterShiten + '\')');
             } else if (getIsVisibleFilterShisha() && this.filterShisha != null && this.filterShisha.length() > 0) {
                 // Filter on Shisha is used only if UneiHojin and shops have not been selected
                 strList.add('(CreatedBy__r.Account.RegionalOfficeId__c = \'' + filterShisha + '\' OR ' +
-                            ' CreatedBy__r.Account.RegionalOffice2Id__c = \'' + filterShisha + '\')');                
+                            ' CreatedBy__r.Account.RegionalOffice2Id__c = \'' + filterShisha + '\')');
             }
 
             if (this.filterFavorite) {
@@ -860,7 +906,7 @@ system.debug('Status: ' + filterStatus);
 
         filterDateFrom = null;
         filterDateTo = null;
-        
+
         if (filterDateFromStr == NULL
              || filterDateFromStr.length() != 10
              || filterDateFromStr.substring(4, 5) != '/'
@@ -876,7 +922,7 @@ system.debug('Status: ' + filterStatus);
                 } else if (iYear > 4000) {
                     filterDateFrom = Date.newInstance(4000, 12, 31);
                 } else {
-                    filterDateFrom = Date.newInstance(iYear, iMonth, iDay);                    
+                    filterDateFrom = Date.newInstance(iYear, iMonth, iDay);
                 }
             } catch (Exception ex) {
                 filterDateFromStr = NULL;
@@ -898,7 +944,7 @@ system.debug('Status: ' + filterStatus);
                 } else if (iYear > 4000) {
                     filterDateTo = Date.newInstance(4000, 12, 31);
                 } else {
-                    filterDateTo = Date.newInstance(iYear, iMonth, iDay);                    
+                    filterDateTo = Date.newInstance(iYear, iMonth, iDay);
                 }
             } catch (Exception ex) {
                 filterDateToStr = NULL;
@@ -910,17 +956,31 @@ system.debug('Status: ' + filterStatus);
 
     /**
      * Transform the standard set controller in list viewable in VF page.
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/15
      */
     public List<auCXKnowledge__c> getRecords() {
+        categoryMap = new Map<String, List<String>>();
+        system.debug('categoryLabelMap: ' + categoryLabelMap);
+        for(auCXKnowledge__c aucx : this.ssc){
+            List<String> cats = new List<String>();
+            if(!String.isEmpty(aucx.Category1__c)){
+                system.debug('aucx.Category1__c: ' + aucx.Category1__c);
+                List<String> devCats = aucx.Category1__c.split(';');
+                cats.add(String.valueOf(devCats.size()));
+                for(String cat : devCats){
+                    cats.add('・' + categoryLabelMap.get(cat));
+                }
+            }
+            categoryMap.put(aucx.Id, cats);
+        }
         return this.ssc;
     }
 
     /**
      * Go to the 1st page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/16
      */
@@ -931,7 +991,7 @@ system.debug('Status: ' + filterStatus);
 
     /**
      * Go to the 2nd page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/16
      */
@@ -942,7 +1002,7 @@ system.debug('Status: ' + filterStatus);
 
     /**
      * Go to the 3rd page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/16
      */
@@ -953,7 +1013,7 @@ system.debug('Status: ' + filterStatus);
 
     /**
      * Go to the 4th page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/16
      */
@@ -964,7 +1024,7 @@ system.debug('Status: ' + filterStatus);
 
     /**
      * Go to the 5th page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/16
      */
@@ -975,7 +1035,7 @@ system.debug('Status: ' + filterStatus);
 
     /**
      * Go to the 6thnd page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/16
      */
@@ -986,7 +1046,7 @@ system.debug('Status: ' + filterStatus);
 
     /**
      * Go to the 7th page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/16
      */
@@ -997,7 +1057,7 @@ system.debug('Status: ' + filterStatus);
 
     /**
      * Go to the 8th page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/16
      */
@@ -1008,7 +1068,7 @@ system.debug('Status: ' + filterStatus);
 
     /**
      * Go to the previous page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/18
      */
@@ -1019,7 +1079,7 @@ system.debug('Status: ' + filterStatus);
 
     /**
      * Go to the next page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/18
      */
@@ -1030,7 +1090,7 @@ system.debug('Status: ' + filterStatus);
 
     /**
      * Go to the 2nd next page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/18
      */
@@ -1041,7 +1101,7 @@ system.debug('Status: ' + filterStatus);
 
     /**
      * Go to the last page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/18
      */
@@ -1052,7 +1112,7 @@ system.debug('Status: ' + filterStatus);
 
     /**
      * Go to 1 page before the last one
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/18
      */
@@ -1063,7 +1123,7 @@ system.debug('Status: ' + filterStatus);
 
     /**
      * Go to 2 pages before the last one
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/18
      */
@@ -1074,7 +1134,7 @@ system.debug('Status: ' + filterStatus);
 
     /**
      * Go to 3 pages before the last one
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/18
      */
@@ -1085,7 +1145,7 @@ system.debug('Status: ' + filterStatus);
 
     /**
      * Go to 4 pages before the last one
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/18
      */
@@ -1096,7 +1156,7 @@ system.debug('Status: ' + filterStatus);
 
     /**
      * Go to 5 pages before the last one
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/18
      */
@@ -1145,32 +1205,26 @@ system.debug('Status: ' + filterStatus);
 
 
     public void doSaveNewCxKnowledge() {
-        
+
         cxKnowledgeNew.Status__c = auConstantCmn.CX_KNOWLEDGE_STATUS_SAVED;
         doSaveNewCxKnowledgeReal(True);
 
     }
 
     public void doSaveNewCxKnowledgeTemporary() {
-        
+
         cxKnowledgeNew.Status__c = auConstantCmn.CX_KNOWLEDGE_STATUS_TEMPORARY_SAVED;
         doSaveNewCxKnowledgeReal(False);
 
     }
 
     private void doSaveNewCxKnowledgeReal(Boolean askApproval) {
-        
+
         cxKnowledgeNew.DisplayedDate__c = DateTime.now();
         //TODO DUC
         cxKnowledgeNew.Staff_No__c = createNewStaffNoString();
         if(targetCategoryAdd != null && targetCategoryAdd.size() > 0){
-            cxKnowledgeNew.Category1__c = targetCategoryAdd[0];
-            if(targetCategoryAdd.size() > 1){
-                cxKnowledgeNew.Category2__c = targetCategoryAdd[1];
-                if(targetCategoryAdd.size() > 2){
-                    cxKnowledgeNew.Category3__c = targetCategoryAdd[2];
-                }
-            }
+            cxKnowledgeNew.Category1__c = String.join(targetCategoryAdd, ';');
         }
         Insert cxKnowledgeNew;
 
@@ -1210,7 +1264,7 @@ system.debug('Status: ' + filterStatus);
 
         if (cxKnowledgeUpdate.AcceptComment__c != NULL && cxKnowledgeUpdate.AcceptComment__c.length() > 0) {
 
-            // Make the attachments private or public depending of PublishAlsoAttachments__c 
+            // Make the attachments private or public depending of PublishAlsoAttachments__c
             /* 2017.03.13 bpolus: No more change this for 1st approval
             for (Attachment att : lsCxKnowledgeUpdateAttachment) {
                 att.IsPrivate = !cxKnowledgeUpdate.PublishAlsoAttachments__c;
@@ -1220,14 +1274,14 @@ system.debug('Status: ' + filterStatus);
 
             cxKnowledgeUpdate.Status__c = auConstantCmn.CX_KNOWLEDGE_STATUS_APPROVED;
             cxKnowledgeUpdate.FirstApprover__c = UserInfo.getUserId();
-            doSaveUpdateCxKnowledgeReal(False);        
-            
+            doSaveUpdateCxKnowledgeReal(False);
+
         }
     }
 
     private void doNationalApproveCxKnowledgeReal(String scopeSharing) {
 
-        // Make the attachments private or public depending of PublishAlsoAttachments__c 
+        // Make the attachments private or public depending of PublishAlsoAttachments__c
         for (Attachment att : lsCxKnowledgeUpdateAttachment) {
             att.IsPrivate = (cxKnowledgeUpdate.PublishAlsoAttachmentsList__c == '0');
         }
@@ -1236,7 +1290,7 @@ system.debug('Status: ' + filterStatus);
         cxKnowledgeUpdate.Status__c = auConstantCmn.CX_KNOWLEDGE_STATUS_NATIONAL_APPROVED;
         cxKnowledgeUpdate.ScopeSharing__c = scopeSharing;
         cxKnowledgeUpdate.SecondApprover__c = UserInfo.getUserId();
-        doSaveUpdateCxKnowledgeReal(True);        
+        doSaveUpdateCxKnowledgeReal(True);
 
     }
 
@@ -1266,7 +1320,7 @@ system.debug('Status: ' + filterStatus);
 
     }
     //TODO DUC
-    
+
     private String createUpdateStaffNoString(){
         return (String.isBlank(updateStaffNo1) ? '' : updateStaffNo1 + ';') +
         (String.isBlank(updateStaffNo2) ? '' : updateStaffNo2 + ';') +
@@ -1302,33 +1356,25 @@ system.debug('Status: ' + filterStatus);
         (String.isBlank(newstaffNo14) ? '' : newStaffNo14 + ';') +
         (String.isBlank(newstaffNo15) ? '' : newStaffNo15);
     }
-    
+
     private void doSaveUpdateCxKnowledgeReal(Boolean createFeed) {
-        
+
         if (cxKnowledgeUpdate.id != null) {
 
             // Treat the case where the 2nd approver set the radio button, then next reject or save the data without approving it
             if (cxKnowledgeUpdate.Status__c != auConstantCmn.CX_KNOWLEDGE_STATUS_NATIONAL_APPROVED) {
                 cxKnowledgeUpdate.PublishAlsoAttachmentsList__c = NULL;
-                cxKnowledgeUpdate.NationalAcceptComment__c = NULL;            
-            }    
+                cxKnowledgeUpdate.NationalAcceptComment__c = NULL;
+            }
             cxKnowledgeUpdate.TechnicalFavorite__c = false;
             cxKnowledgeUpdate.DisplayedDate__c = DateTime.now();
             //TODO DUC
             cxKnowledgeUpdate.Staff_No__c = createUpdateStaffNoString();
             //update categories
             cxKnowledgeUpdate.Category1__c = '';
-            cxKnowledgeUpdate.Category2__c = '';
-            cxKnowledgeUpdate.Category3__c = '';
             system.debug('saving.. targetCategoryEdit: ' + targetCategoryEdit);
             if(targetCategoryEdit != null && targetCategoryEdit.size() > 0){
-                cxKnowledgeUpdate.Category1__c = targetCategoryEdit[0];
-                if(targetCategoryEdit.size() > 1){
-                    cxKnowledgeUpdate.Category2__c = targetCategoryEdit[1];
-                    if(targetCategoryEdit.size() > 2){
-                        cxKnowledgeUpdate.Category3__c = targetCategoryEdit[2];
-                    }
-                }
+                cxKnowledgeUpdate.Category1__c = String.join(targetCategoryEdit, ';');
             }
 
             Update cxKnowledgeUpdate;
@@ -1377,10 +1423,10 @@ system.debug('Status: ' + filterStatus);
         if(cxKnowledgeUpdateFeedId != null){
             ConnectApi.ChatterLike chatterLike = ConnectApi.ChatterFeeds.likeFeedElement(null, cxKnowledgeUpdateFeedId);
             likeId = chatterLike.Id;
-            cxKnowledgeUpdateComments = [SELECT LikeCount, 
+            cxKnowledgeUpdateComments = [SELECT LikeCount,
                                                 (SELECT id, CommentBody, CreatedDate, CreatedById FROM FeedComments ORDER BY CreatedDate DESC),
                                                 (SELECT Id FROM FeedLikes WHERE InsertedById = :currentUser.Id)
-                                         FROM auCXKnowledge__Feed 
+                                         FROM auCXKnowledge__Feed
                                          WHERE id = :cxKnowledgeUpdateFeedId
                                          LIMIT 1];
             recordSearch();
@@ -1390,10 +1436,10 @@ system.debug('Status: ' + filterStatus);
     public void removeLikeCxKnowledgeFeedElement(){
         ConnectApi.ChatterFeeds.deleteLike(null, likeId);
         likeId = null;
-        cxKnowledgeUpdateComments = [SELECT LikeCount, 
+        cxKnowledgeUpdateComments = [SELECT LikeCount,
                                            (SELECT id, CommentBody, CreatedDate, CreatedById FROM FeedComments ORDER BY CreatedDate DESC),
                                            (SELECT Id FROM FeedLikes WHERE InsertedById = :currentUser.Id)
-                                    FROM auCXKnowledge__Feed 
+                                    FROM auCXKnowledge__Feed
                                     WHERE id = :cxKnowledgeUpdateFeedId
                                     LIMIT 1];
         recordSearch();
@@ -1404,10 +1450,10 @@ system.debug('Status: ' + filterStatus);
         if(cxKnowledgeUpdateFeedId != null){
             auUtilChatter.postCommentToFeedElement(cxKnowledgeUpdateFeedId, newComment);
             newComment = null;
-            cxKnowledgeUpdateComments = [SELECT LikeCount, 
+            cxKnowledgeUpdateComments = [SELECT LikeCount,
                                                 (SELECT id, CommentBody, CreatedDate, CreatedById FROM FeedComments ORDER BY CreatedDate DESC),
                                                 (SELECT Id FROM FeedLikes WHERE InsertedById = :currentUser.Id)
-                                         FROM auCXKnowledge__Feed 
+                                         FROM auCXKnowledge__Feed
                                          WHERE id = :cxKnowledgeUpdateFeedId
                                          LIMIT 1];
             if(mpUserComment == null) {
@@ -1510,9 +1556,9 @@ system.debug('Status: ' + filterStatus);
             return false;
         }
         //TODO: check profile KDDI社員
-        if(currentUser.Profile.Name.startsWithIgnoreCase('kddi') || 
-            auConstantCmn.PROFILE_SYSADMIN_CUSTOM == currentUser.Profile.Name || 
-            auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN == currentUser.Profile.Name || 
+        if(currentUser.Profile.Name.startsWithIgnoreCase('kddi') ||
+            auConstantCmn.PROFILE_SYSADMIN_CUSTOM == currentUser.Profile.Name ||
+            auConstantCmn.PROFILE_SYSADMIN_DEFAULT_EN == currentUser.Profile.Name ||
             auConstantCmn.PROFILE_SYSADMIN_DEFAULT_JP == currentUser.Profile.Name){
             return true;
         }
@@ -1528,37 +1574,39 @@ system.debug('Status: ' + filterStatus);
             cxKnowledge.CreatedBy__r.Account.ParentId == currentUser.AccountId ||
             (cxKnowledge.CreatedBy__r.Account.ParentId != null && cxKnowledge.CreatedBy__r.Account.Parent.ParentId == currentUser.AccountId);
     }
-    
+
 
     public void refreshCxKnowledgeEdit() {
         likeId = null;
-        cxKnowledgeUpdate = [SELECT Id, Title__c, Status__c, Category1__c, Category2__c, Category3__c, Contribution__c, Staff_No__c, 
+        cxKnowledgeUpdate = [SELECT Id,Name, Title__c, Status__c, Category1__c, Contribution__c, Staff_No__c,
                                     AcceptComment__c, RejectComment__c, NationalAcceptComment__c, NationalRejectComment__c, ScopeSharing__c,
                                     IsCommentOnly__c, CommentOnly__c, PublishAlsoAttachments__c, PublishAlsoAttachmentsList__c, ScopeRecommendation__c, FirstApprover__c, SecondApprover__c,
                                     UserRecordAccess.HasEditAccess, UserRecordAccess.HasDeleteAccess,
-                                    //CreatedBy__r.Account.ParentAgencyId__c, CreatedBy__r.Account.ManagementCorpId__c, 
-                                    CreatedBy__r.Account.ParentId, CreatedBy__r.Account.Parent.ParentId, 
+                                    //CreatedBy__r.Account.ParentAgencyId__c, CreatedBy__r.Account.ManagementCorpId__c,
+                                    CreatedBy__r.Account.ParentId, CreatedBy__r.Account.Parent.ParentId,
                                     CreatedBy__r.Account.RegionalOfficeId__r.DepartmentCode__c,
                                     CreatedBy__r.Account.RegionalOffice2Id__r.DepartmentCode__c,
                                     CreatedBy__r.Account.BranchId__r.DepartmentCode__c,
-                                    CreatedBy__r.Account.Branch2Id__r.DepartmentCode__c, CreatedBy__c, TechnicalFavorite__c, DisplayedDate__c,            
+                                    CreatedBy__r.Account.Branch2Id__r.DepartmentCode__c, CreatedBy__c, TechnicalFavorite__c, DisplayedDate__c,
                                     (SELECT Id FROM Feeds),
                                     (SELECT Id FROM CXKnowledgeFavorite_CXKnowledge__r WHERE User__c = :UserInfo.getUserId())
                              FROM auCXKnowledge__c
                              WHERE id = :cxKnowledgeUpdateId];
-        
+
         targetCategoryEdit = new List<String>();
+        beforeSelectedEdit = false;
         if(!String.isEmpty(cxKnowledgeUpdate.Category1__c)){
-            targetCategoryEdit.add(cxKnowledgeUpdate.Category1__c);
+            targetCategoryEdit = cxKnowledgeUpdate.Category1__c.split(';');
+
+            if(cxKnowledgeUpdate.Category1__c.indexOf('cxcat9') >= 0 ){
+                beforeSelectedEdit = true;
+            }
         }
-        if(!String.isEmpty(cxKnowledgeUpdate.Category2__c)){
-            targetCategoryEdit.add(cxKnowledgeUpdate.Category2__c);
-        }
-        if(!String.isEmpty(cxKnowledgeUpdate.Category3__c)){
-            targetCategoryEdit.add(cxKnowledgeUpdate.Category3__c);
-        }
+
+        system.debug('beforeSelectedEdit: ' + beforeSelectedEdit);
         system.debug('targetCategoryEdit: ' + targetCategoryEdit);
         this.categoryOptionsEdit = getCategories(this.targetCategoryEdit);
+
         //TODO DUC
         staffNoVisible = checkStaffNoVisibility(cxKnowledgeUpdate);
         cxKnowledgeUpdate.TechnicalFavorite__c = cxKnowledgeUpdate.CXKnowledgeFavorite_CXKnowledge__r != NULL && cxKnowledgeUpdate.CXKnowledgeFavorite_CXKnowledge__r.size() > 0;
@@ -1582,16 +1630,16 @@ system.debug('Status: ' + filterStatus);
 
 
         lsCxKnowledgeUpdateAttachment = [SELECT id, Name, IsPrivate, OwnerId
-                                         FROM Attachment 
-                                         WHERE ParentId = :cxKnowledgeUpdateId 
+                                         FROM Attachment
+                                         WHERE ParentId = :cxKnowledgeUpdateId
                                          ORDER BY LastModifiedDate DESC];
 
         if (cxKnowledgeUpdate.Feeds != NULL && cxKnowledgeUpdate.Feeds.size() > 0) {
             cxKnowledgeUpdateFeedId = cxKnowledgeUpdate.Feeds[0].Id;
-            cxKnowledgeUpdateComments = [SELECT id, LikeCount, 
+            cxKnowledgeUpdateComments = [SELECT id, LikeCount,
                                                 (SELECT id, CommentBody, CreatedDate, CreatedById FROM FeedComments ORDER BY CreatedDate DESC),
                                                 (SELECT Id FROM FeedLikes WHERE InsertedById = :currentUser.Id)
-                                         FROM auCXKnowledge__Feed 
+                                         FROM auCXKnowledge__Feed
                                          WHERE id = :cxKnowledgeUpdate.Feeds[0].Id
                                          LIMIT 1];
             //check whether liked or not
@@ -1633,7 +1681,7 @@ system.debug('Status: ' + filterStatus);
         ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error uploading attachment'));
         return null;
       } finally {
-        cxKnowledgeNewAttachmentLocal = new Attachment(); 
+        cxKnowledgeNewAttachmentLocal = new Attachment();
       }
 
       ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'Attachment uploaded successfully'));
@@ -1658,15 +1706,15 @@ system.debug('Status: ' + filterStatus);
     public void cxKnowledgeCommentDelete() {
         ConnectApi.ChatterFeeds.deleteComment(null, commentId);
         commentId = null;
-        cxKnowledgeUpdateComments = [SELECT LikeCount, 
+        cxKnowledgeUpdateComments = [SELECT LikeCount,
                                            (SELECT id, CommentBody, CreatedDate, CreatedById FROM FeedComments ORDER BY CreatedDate DESC),
                                            (SELECT Id FROM FeedLikes WHERE InsertedById = :currentUser.Id)
-                                    FROM auCXKnowledge__Feed 
+                                    FROM auCXKnowledge__Feed
                                     WHERE id = :cxKnowledgeUpdateFeedId
                                     LIMIT 1];
         recordSearch();
     }
-    
+
     public void cxKnowledgeAttachmentPutInTop() {
 
         Attachment att = [SELECT id FROM Attachment WHERE id = :attachmentId];
@@ -1684,7 +1732,7 @@ system.debug('Status: ' + filterStatus);
     }}
 
     public void doSaveDeleteCxKnowledge() {
-        
+
         if (cxKnowledgeUpdate.id != null)
             auUtilChatter.doDeleteCxKnowledgeWithoutSharing(cxKnowledgeUpdate);
 
@@ -1792,7 +1840,7 @@ system.debug('Status: ' + filterStatus);
         shopsSelectApply();
 
     }
-    
+
     //オプション詳細クラス
     public class OptionDetail {
         public Boolean isSelected{get; set;}

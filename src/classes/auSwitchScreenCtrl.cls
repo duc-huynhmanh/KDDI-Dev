@@ -1,8 +1,8 @@
 public with sharing class auSwitchScreenCtrl {
-    
+
     public Boolean isKDDIKnowledgeOnly {get; set;}
     public Boolean isCommunityUser {get; set;}
-    
+
     private Boolean isSystemAdministrator;
     private Boolean isKDDIUser;
     private Boolean isSAorEvolvaUser;
@@ -22,8 +22,8 @@ public with sharing class auSwitchScreenCtrl {
 	private Boolean hasSBariPermissionSet;
 	private Boolean hasSTPDPermissionSet;
 	private Boolean hasTelemaPermissionSet;
-	private Boolean hasSurveyPermissionSet;		
-	
+	private Boolean hasSurveyPermissionSet;
+
     public Integer getTypeOfScreen(){return auMainTopCompCtrl.TYPE_SCREEN_SWITCH;}
 
     public auSwitchScreenCtrl() {
@@ -33,11 +33,11 @@ public with sharing class auSwitchScreenCtrl {
 
         User currentUser = [SELECT Profile.Name
                             FROM User
-                            WHERE User.ID = :UserInfo.getUserId()];							
-							
-		/* TODO: PermSet Code */              
+                            WHERE User.ID = :UserInfo.getUserId()];
+
+		/* TODO: PermSet Code */
         List<PermissionSetAssignment> permissionSet = [select PermissionSet.Name from PermissionSetAssignment where Assignee.Id = :currentUser.Id order by PermissionSet.Name];
-		
+
 		hasChannelWithAdminPermissionSet = false;
 		hasChannelWithoutAdminPermissionSet = false;
 		hasToDoPermissionSet = false;
@@ -50,7 +50,7 @@ public with sharing class auSwitchScreenCtrl {
 		hasSTPDPermissionSet = false;
 		hasTelemaPermissionSet = false;
 		hasSurveyPermissionSet = false;
-		
+
 		for(PermissionSetAssignment psa : permissionSet){
 			PermissionSet currentPermissionSet = psa.PermissionSet;
 			if(currentPermissionSet.Name == auConstantCmn.PERMISSIONSET_ACCESS_TO_CHANNEL_WITH_ADMIN){
@@ -79,9 +79,9 @@ public with sharing class auSwitchScreenCtrl {
 				hasSurveyPermissionSet = true;
 			}
 		}
-		
+
 		/* --- */
-		
+
 		//contains('Access_To_Channel');
 
         isCommunityUser = currentUser.Profile.Name == auConstantCmn.PROFILE_COMMUNITY_SHOP ||
@@ -103,7 +103,7 @@ public with sharing class auSwitchScreenCtrl {
                            currentUser.Profile.Name == auConstantCmn.PROFILE_EVOLVA_ADMIN_USER;
 
         isKDDIKnowledgeOnly = currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_KNOWLEDGE_ONLY;
-        
+
         isKDDIKnowledgeActivities = currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_KNOWLEDGE_ACTIVITIES;
 
         isOkinawaFull = currentUser.Profile.Name == auConstantCmn.PROFILE_KDDI_OKINAWA_SHISHA ||
@@ -117,8 +117,8 @@ public with sharing class auSwitchScreenCtrl {
             urlSFDCHome = auCommunityCustomSettings__c.getOrgDefaults().MainDomainUrl__c;
             urlSingleSignOn = auCommunityCustomSettings__c.getOrgDefaults().URLSingleSignOn__c;
         }*/
-		
-		
+
+
     }
 
     public PageReference redirectIfNecessary(){
@@ -134,7 +134,7 @@ public with sharing class auSwitchScreenCtrl {
 
         if (isSAorEvolvaUser) {
           PageReference pageRef = Page.saHome;
-          return pageRef;          
+          return pageRef;
         }
 
     	return null;
@@ -205,12 +205,17 @@ public with sharing class auSwitchScreenCtrl {
       return /*isKDDIUser*/ (isSystemAdministrator || hasTelemaPermissionSet) && !isIPhone;
 
     }
-    
+
     public boolean getHasAccessSurvey() {
 
       return /*isKDDIUser*/ (isSystemAdministrator || hasSurveyPermissionSet) && !isIPhone;
 
     }
 
-    
+	public boolean getHasAccessCelnavi() {
+
+      return isKDDIUser && !isIPhone;
+
+    }
+
 }

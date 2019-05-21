@@ -50,7 +50,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
     public Id accountUpdateId {get; set;}
 
     public Boolean hasData {get;set;}
-    
+
     public String errorMessage {get; set;}
 
     public Integer accountNewAttachmentSize {get; set;}
@@ -82,7 +82,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
         return false;
     }
 
-    public kdAccountWithActivitiesListCtrl() {    
+    public kdAccountWithActivitiesListCtrl() {
         pageSize = 20;
         pageNum = 1;
         orderBy = 'partnerCode, corpCode';
@@ -169,7 +169,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
         if(cookies.containsKey(COOKIE_PREFIX + COOKIE_CCPFLAG)){
                 this.filterCcpFlag = (cookies.get(COOKIE_PREFIX + COOKIE_CCPFLAG).getValue() == '1');
         }
-                
+
         //画面起動時検索フラグチェック
         if(cookies.containsKey(COOKIE_PREFIX + COOKIE_LABEL_INIT_SEARCH_FLG) && cookies.get(COOKIE_PREFIX + COOKIE_LABEL_INIT_SEARCH_FLG).getValue().length() != 0){
             this.initSearchFlg = cookies.get(COOKIE_PREFIX + COOKIE_LABEL_INIT_SEARCH_FLG).getValue();
@@ -180,16 +180,16 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
     public void recordSearch() {
         this.initSearchFlg = 'true';  // 画面起動時検索フラグON
-        String queryStr = 'SELECT Name, PartnerCode__c, ManagementCorpCode__c, ParentAgencyId__c, ParentAgencyId__r.Name, ParentAgencyId__r.PartnerCode__c, RegionalOfficeId__r.Name, ' + 
+        String queryStr = 'SELECT Name, PartnerCode__c, ManagementCorpCode__c, ParentAgencyId__c, ParentAgencyId__r.Name, ParentAgencyId__r.PartnerCode__c, RegionalOfficeId__r.Name, ' +
                     'BranchId__r.Name, KDDISalesUserId__r.Name, UserRecordAccess.HasEditAccess, Channel__c, ' +
                     '(SELECT Name FROM Attachments ORDER BY CreatedDate DESC LIMIT 1) ' +
                     'FROM Account';
-    
+
         if(String.isBlank(whereStr)) {
             List<String> whereStrElems = getWhereStrList();
             whereStr = joinWhereConditions(whereStrElems);
         }
-        
+
         if (!String.isBlank(whereStr)) {
             queryStr += whereStr;
         }
@@ -219,7 +219,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
         List<Account> accs = (List<Account>)Database.query(queryStr);
         List<kdAccountEntity> accEntities;
         if(!this.filterCcpFlag){
-            accEntities = convertAccountToEntity(accs);    
+            accEntities = convertAccountToEntity(accs);
         } else {
             List<Account> filterAccs = new List<Account>();
             for (Account acc : accs) {
@@ -227,9 +227,9 @@ public with sharing class kdAccountWithActivitiesListCtrl {
                     filterAccs.add(acc);
                 }
             }
-            accEntities = convertAccountToEntity(filterAccs);    
+            accEntities = convertAccountToEntity(filterAccs);
         }
-        
+
         List<kdAccountEntity> displayList = new List<kdAccountEntity>();
         accEntities.sort();
 
@@ -240,7 +240,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
         if(recordsCount > 0){
             if(math.floor((recordsCount-1) / pageSize) + 1 < pageNum) {
                 pageNum = (Integer)math.floor((recordsCount-1) / pageSize) + 1;
-            } 
+            }
             Integer max = recordsCount > pageNum*pageSize ? pageNum*pageSize : recordsCount;
             for(Integer i = (pageNum-1)*pageSize; i < max; i++) {
                 displayList.add(accEntities.get(i));
@@ -286,7 +286,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
         if(recordsCount > 0){
             if(math.floor((recordsCount-1) / pageSize) + 1 < pageNum) {
                 pageNum = (Integer)math.floor((recordsCount-1) / pageSize) + 1;
-            } 
+            }
             Integer max = recordsCount > pageNum*pageSize ? pageNum*pageSize : recordsCount;
             for(Integer i = (pageNum-1)*pageSize; i < max; i++) {
                 displayList.add(withAttachmentList.get(i));
@@ -318,7 +318,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
                         accItem.partnerCode = acc.ParentAgencyId__r.PartnerCode__c;
                         accItem.partnerName = acc.ParentAgencyId__r.Name;
                     }
-                    
+
                     accItem.corpCode = acc.ManagementCorpCode__c;
                     accItem.corpName = acc.Name;
                 }
@@ -354,7 +354,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
         }
 
         if (!String.isBlank(this.filterPartnerName)) {
-            strList.add('((Name LIKE \'%' + this.filterPartnerName +'%\' AND Channel__c = \'一次代理店\') ' + 
+            strList.add('((Name LIKE \'%' + this.filterPartnerName +'%\' AND Channel__c = \'一次代理店\') ' +
                 'OR (ParentAgencyId__r.Name LIKE \'%' + this.filterPartnerName +'%\' AND Channel__c = \'運営法人\'))');
         }
 
@@ -368,12 +368,12 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
         if (!String.isBlank(this.filterRegionalOffice)) {
             strList.add('(RegionalOfficeId__c = \'' + this.filterRegionalOffice + '\' OR ' +
-                            ' RegionalOffice2Id__c = \'' + this.filterRegionalOffice + '\')');     
+                            ' RegionalOffice2Id__c = \'' + this.filterRegionalOffice + '\')');
         }
 
         if (!String.isBlank(this.filterBranch)) {
             strList.add('(BranchId__c = \'' + this.filterBranch + '\' OR ' +
-                            ' Branch2Id__c = \'' + this.filterBranch + '\')');     
+                            ' Branch2Id__c = \'' + this.filterBranch + '\')');
         }
 
         if (!String.isBlank(this.filterSalesman)) {
@@ -394,7 +394,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
     private void getFilterDates() {
         filterDateFrom = null;
         filterDateTo = null;
-        
+
         if (filterDateFromStr == NULL
              || filterDateFromStr.length() != 10
              || filterDateFromStr.substring(4, 5) != '/'
@@ -410,7 +410,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
                 } else if (iYear > 4000) {
                     filterDateFrom = Date.newInstance(4000, 12, 31);
                 } else {
-                    filterDateFrom = Date.newInstance(iYear, iMonth, iDay);                    
+                    filterDateFrom = Date.newInstance(iYear, iMonth, iDay);
                 }
             } catch (Exception ex) {
                 filterDateFromStr = NULL;
@@ -432,7 +432,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
                 } else if (iYear > 4000) {
                     filterDateTo = Date.newInstance(4000, 12, 31);
                 } else {
-                    filterDateTo = Date.newInstance(iYear, iMonth, iDay);                    
+                    filterDateTo = Date.newInstance(iYear, iMonth, iDay);
                 }
             } catch (Exception ex) {
                 filterDateToStr = NULL;
@@ -442,7 +442,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
     /**
      * Go to the 1st page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/16
      */
@@ -453,7 +453,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
     /**
      * Go to the 2nd page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/16
      */
@@ -464,7 +464,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
     /**
      * Go to the 3rd page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/16
      */
@@ -475,7 +475,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
     /**
      * Go to the 4th page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/16
      */
@@ -486,7 +486,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
     /**
      * Go to the 5th page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/16
      */
@@ -497,7 +497,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
     /**
      * Go to the 6thnd page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/16
      */
@@ -508,7 +508,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
     /**
      * Go to the 7th page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/16
      */
@@ -519,7 +519,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
     /**
      * Go to the 8th page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/16
      */
@@ -530,7 +530,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
     /**
      * Go to the previous page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/18
      */
@@ -541,7 +541,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
     /**
      * Go to the next page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/18
      */
@@ -552,7 +552,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
     /**
      * Go to the 2nd next page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/18
      */
@@ -563,7 +563,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
     /**
      * Go to the last page
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/18
      */
@@ -574,7 +574,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
     /**
      * Go to 1 page before the last one
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/18
      */
@@ -585,7 +585,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
     /**
      * Go to 2 pages before the last one
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/18
      */
@@ -596,7 +596,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
     /**
      * Go to 3 pages before the last one
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/18
      */
@@ -607,7 +607,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
     /**
      * Go to 4 pages before the last one
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/18
      */
@@ -618,7 +618,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
 
     /**
      * Go to 5 pages before the last one
-     * 
+     *
      * @author Bertrand Polus
      * Created on 2017/01/18
      */
@@ -690,9 +690,9 @@ public with sharing class kdAccountWithActivitiesListCtrl {
         if (accountNewAttachmentSize == NULL) {
             errorMessage = 'ファイルは大きすぎです。25Moまでのファイルを選択してください。';
         } else {
-            insert accountNewAttachmentLocal;            
+            insert accountNewAttachmentLocal;
             For (Account acc : [SELECT Id FROM Account WHERE Id = :accountUpdateId]) {
-                Update acc;                
+                Update acc;
             }
         }
         recordSearch();
@@ -702,7 +702,7 @@ public with sharing class kdAccountWithActivitiesListCtrl {
         ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error uploading attachment'));
         return null;
       } finally {
-        accountNewAttachmentLocal = new Attachment(); 
+        accountNewAttachmentLocal = new Attachment();
       }
 
       ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'Attachment uploaded successfully'));

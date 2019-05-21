@@ -15,6 +15,7 @@
   <apex:includescript value="{!URLFOR($Resource.jQueryMin)}"/>
 
   <apex:includescript value="{!URLFOR($Resource.jQueryUIFull,'jquery-ui-1.12.1/jquery-ui.min.js')}"/> 
+  <script src="{!URLFOR($Resource.auStyling,'/js/autosize.min.js')}"/>
 
 <!--
   <apex:stylesheet value="{!URLFOR($Resource.jQueryUI, 'jquery-ui-1.12.1.custom/jquery-ui.css')}"/>
@@ -176,7 +177,7 @@
       line-height: 1.8 !important;
     }
 
-    .theme-info__icon--upload{
+    .theme-info__icon--upload, .theme-info__icon--comment{
       font-size: 2rem;
       padding-top: 0 !important;
     }
@@ -285,6 +286,66 @@
         background-color: transparent;
     }
 
+    .theme-info__icon--comment{background-color:#A5494A}
+    .theme-detail--comment{background-color:#CA7F83}
+.theme-detail--comment .theme-info__icon{padding-top:.75rem;font-weight:700}
+.theme-detail.is-lower.active{
+  width:-webkit-calc(100% - 3.333rem*4 - 16px) !important;
+  width:calc(100% - 3.333rem*4 - 16px) !important;
+}
+  .timeline__post {
+      position: inherit;;
+    }
+    .timeline__post .post-section{
+      height: 100% !important;
+    }
+
+    .timeline__post textarea {
+      width:-webkit-calc(100% - 4rem);
+      width:calc(100% - 4rem);
+    }
+
+    .section--knowledge {
+      margin-bottom: 0;
+    }
+
+    .timeline__delete {
+      position: absolute;
+      bottom: 15px;
+      right: 0;
+      font-size: .833rem;      
+    }
+
+    .timeline__title a {
+      font-weight: 800 !important;
+    }
+
+    .maincomment {
+      background-color: #ffdac5 !important;
+    }
+
+    .timeline__post {
+      padding: 1rem;
+      background-color: #eee;
+      display: flex;
+    }
+    .timeline__comment__infos {
+      color: #fff; 
+      width: 100%;
+      font-size: 0.833rem;
+    }
+    .timeline__comment__infos_date {
+      font-size: 0.833rem;
+      color: #fff; 
+      float:right;
+      text-align: right;
+    }
+    .timeline__comment__infos_date_delete {
+      color: #000; 
+    }
+    .comment-section {
+      overflow-y: auto;
+    }
   </style>
 
 
@@ -431,6 +492,7 @@
       $j('.theme-info__icon--p').height(height);
       $j('.theme-info__icon--d').height(height);
       $j('.theme-info__icon--upload').height(height);
+      $j('.theme-info__icon--comment').height(height);
 
     }
 
@@ -441,13 +503,32 @@
         jsRemoveLikeSTPDFeedElement();
     }
 
-    function callAddComment() {
-      console.log('start comment');
-        var obj = $j('.CopyCommentInput');
+    function setupAutogrow(){
+      $j('.autogrow').attr("rows", "1");    
+      autosize(document.querySelectorAll('.autogrow'));   
+    }
+
+    function callDeleteCommentStpd(key) {
+
+      if (confirm('このコメントを削除してよろしいですか？')) {
+
+        var obj = $j('.STPDFeedElementIdInput');
+        obj.val(key);
+
+        jsDeleteCommentStpdFeedElement();
+      
+      }
+    }
+
+    function callCommentStpd() {
+      var obj = $j('.CopyCommentInput');
         if (obj.val().trim().length == 0) {
-          alert('コメントを入力してください。');
+          alert('コメントをご記入ください！');
         } else {
-          jsAddCopy();
+          var comment = $j('.STPDFeedComment');
+          console.log('comment: ' + obj.val());
+          comment.val(obj.val());
+          jsCommentSTPDFeedElement();
         }
     }
 
@@ -471,11 +552,15 @@
     <apex:actionFunction name="changeOrder" action="{!changeOrder}" />
 
     <apex:actionRegion id="area51c" renderRegionOnly="false">
+      <apex:inputText styleclass="STPDFeedElementIdInput" value="{!idCurrentFeedElement}" style="display: none;" />
+      <apex:inputTextarea styleclass="STPDFeedComment" value="{!newComment}" style="display: none;" />
       <apex:inputText id="attachmentId" styleClass="AttachmentIdInput" value="{!attachmentId}" style="display: none;" />
       <apex:actionFunction name="jsStpdAttachmentDelete" action="{!stpdAttachmentDelete}" rerender="editSTPD14" />
       <apex:actionFunction name="jsStpdAttachmentPutInTop" action="{!stpdAttachmentPutInTop}" rerender="editSTPD14" />
       <apex:actionFunction name="jsLikeSTPDFeedElement" action="{!likeSTPDFeedElement}" reRender="editSTPD15"/>
       <apex:actionFunction name="jsRemoveLikeSTPDFeedElement" action="{!removeLikeSTPDFeedElement}" reRender="editSTPD15"/>
+      <apex:actionFunction name="jsDeleteCommentStpdFeedElement" action="{!deleteCommentStpdFeedElement}" reRender="editSTPD16"/>
+      <apex:actionFunction name="jsCommentSTPDFeedElement" action="{!commentSTPDFeedElement}" reRender="editSTPD16"/>
     </apex:actionRegion>
 
     <apex:actionFunction name="jsDoSaveNewSTPDTemporary" action="{!doSaveNewSTPDTemporary}" />
@@ -502,19 +587,19 @@
                           <div class="theme-info__edit">
                             <apex:outputPanel id="editSTPD15">
 
-                            <!--apex:outputPanel rendered="{!likeId != NULL && stpdUpdateFeedId != NULL}">
+                            <apex:outputPanel rendered="{!likeId != NULL && stpdUpdateFeed != NULL}">
                               <a href="javascript:void(0)" onclick="callRemoveLikeSTPD();" class="button button--update">いいねの削除</a>
                             </apex:outputPanel>
-                            <apex:outputPanel rendered="{!likeId == NULL && stpdUpdateFeedId != NULL}">
+                            <apex:outputPanel rendered="{!likeId == NULL && stpdUpdateFeed != NULL}">
                               <a href="javascript:void(0)" onclick="callLikeSTPD();" class="button button--update">いいね</a>
                             </apex:outputPanel>
-                            <apex:actionRegion renderRegionOnly="false">
-                            <apex:commandLink rendered="{!stpdUpdateFeedId != NULL}"
+                            <!-- <apex:actionRegion renderRegionOnly="false">
+                            <apex:commandLink rendered="{!stpdUpdateFeed != NULL}"
                                       styleClass="button button--update js-popup-trigger"
                                       html-data-popup=".popup--comment"
                                       reRender="DUMMY"
                                       value="コメント" />
-                            </apex:actionRegion-->
+                            </apex:actionRegion> -->
 
                             <apex:commandLink value="印刷" id="editSTPD10" styleClass="button button--update {!IF(stpdUpdate.UserRecordAccess.HasEditAccess, 'button--update--space', '')}" onclick="window.open('{!PrintUrl}?id={!stpdUpdateId}','_blank','width=960,height=600,resizable=no,toolbar=no,location=no,menubar=no,status=no,scrollbars=yes');" />
 
@@ -540,6 +625,7 @@
                                 initDatepicker();
                               </script>
                               <label >記入日</label> <apex:input value="{!SFillingDate}" disabled="{!IF(stpdUpdate.S_FillingDate__c != null, 'true', 'false')}" styleclass="datepicker selectDate" html-placeholder="yyyy/mm/dd"/>
+                              <label>&nbsp;&nbsp;{!IF(stpdUpdate.CreatedBy__r.Account.Parent != null, stpdUpdate.CreatedBy__r.Account.Parent.Name + ' / ', '')}{!stpdUpdate.CreatedBy__r.Account.Name}</label>
                               <apex:inputField value="{!stpdUpdate.Thema__c}" html-placeholder="活動テーマを入力する..." rendered="{!stpdUpdate.UserRecordAccess.HasEditAccess}" style="height: 3.5rem; margin-top: 0.5rem;"/>
                               <apex:outputPanel rendered="{!!stpdUpdate.UserRecordAccess.HasEditAccess}" >
                                 <div style="height: 3.5rem; margin-top: -0.5rem;padding: 2px;border: 1px solid black;overflow:hidden;">
@@ -709,6 +795,67 @@
                                   </apex:outputPanel>
 
                                 </div>
+                              </div>
+                            </div>
+
+
+                            <div class="theme-detail theme-detail--comment is-lower clearfix">
+                              <span class="theme-info__icon theme-info__icon--comment" data-target=".theme-detail--comment">コ<br/>メ<br/>ン<br/>ト</span>
+                              <div class="theme-desc is-lower js-theme-slide-menu clearfix">
+                                <apex:outputPanel id="editSTPD16">
+                                <div class="timeline__comment">
+                                  <apex:repeat value="{!stpdUpdateFeed.FeedComments}" var="feedCmt">
+                                    <div class="comment-section">
+                                      <span class="icon-container">
+                                        <img class="icon is-small" src="{!feedCmt.InsertedBy.SmallPhotoUrl}" style="width:30px;height:30px;float:left;"/>
+                                      </span>
+                                      <div style="float:right; width: calc(100% - 30px - 1rem);width:-webkit-calc(100% - 30px - 1rem);">
+                                        <div class="timeline__comment__infos">
+                                          {!feedCmt.InsertedBy.DisplayedUsernameFormula__c}
+                                          <div class="timeline__comment__infos_date">
+                                            <apex:outputText value="{0,date,yyyy.MM.dd HH:mm}">
+                                              <apex:param value="{!feedCmt.CreatedDate + offset}" />
+                                            </apex:outputText>
+
+                                            <apex:outputPanel rendered="{!feedCmt.InsertedById == $User.Id}"><br/>
+                                              <apex:actionRegion renderRegionOnly="false">
+                                                <apex:commandLink styleclass="timeline__comment__infos_date_delete linkstyle"
+                                                                  value="削除" 
+                                                                  onclick="callDeleteCommentStpd('{!feedCmt.Id}');" 
+                                                                  reRender="DUMMY" />
+                                              </apex:actionRegion>
+                                            </apex:outputPanel>
+
+                                          </div>
+                                        </div>
+                                        <div style="width: 100%">
+                                          <apex:outputField value="{!feedCmt.CommentBody}" />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </apex:repeat>
+                                </div>
+
+                                <apex:outputPanel rendered="{!stpdUpdateFeed != null}">
+                                <div class="timeline__post">
+                                  <span class="icon-container" style="line-height: 0;border-width: 0;">
+                                    <img class="icon is-large" src="{!urlUserPhoto}" style="width: calc(3.4rem - 2px);width:-webkit-calc(3.4rem - 2px);height: calc(3.4rem - 2px);height:-webkit-calc(3.4rem - 2px);"/>
+                                  </span>
+                                  <div class="post-section">
+                                    <apex:inputField styleclass="CopyCommentInput autogrow" onfocus="setupAutogrow();"
+                                         html-placeholder="コメントする…"
+                                         value="{!stpdUpdate.TechnicalAlwaysBlank__c}" />
+                                    <div class="post-section__buttons">
+                                      <apex:actionRegion renderRegionOnly="false">
+                                        <apex:commandLink onclick="callCommentStpd()" reRender="DUMMY">
+                                          <i class="icon icon--caption"></i>
+                                        </apex:commandLink>
+                                      </apex:actionRegion>
+                                    </div>
+                                  </div>
+                                </div>
+                              </apex:outputPanel>
+                              </apex:outputPanel>
                               </div>
                             </div>
 
@@ -1150,7 +1297,7 @@
     <apex:inputText id="stpdUpdateId" styleClass="STPDUpdateIdInput" value="{!stpdUpdateId}" style="display: none;" />
 
 
-    <apex:actionFunction name="refreshSTPDEdit" action="{!refreshSTPDEdit}" rerender="editSTPD1, editSTPD2, editSTPD4, editSTPD6, editSTPD8, editSTPD9, editSTPD10, editSTPD11, editSTPD12, editSTPD13, editSTPD14, editSTPD15" />
+    <apex:actionFunction name="refreshSTPDEdit" action="{!refreshSTPDEdit}" rerender="editSTPD1, editSTPD2, editSTPD4, editSTPD6, editSTPD8, editSTPD9, editSTPD10, editSTPD11, editSTPD12, editSTPD13, editSTPD14, editSTPD15, editSTPD16" />
 </apex:actionRegion>
 
                 <apex:repeat value="{!Records}" var="rec" >
@@ -1402,31 +1549,6 @@
               </apex:outputPanel>
 
             </div>
-
-            <!-- POPUP Comment -->
-            <apex:actionRegion renderRegionOnly="false">
-              <apex:outputPanel id="pnlPopupComment">
-                <div class="popup popup--comment">
-                  <div class="popup-inner">
-                    <div class="publification-form">
-                      <p>
-                        <apex:inputTextarea styleclass="CopyCommentInput" 
-                                         html-placeholder="コメントをご記入ください！"
-                                         value="{!newComment}" />
-                        <apex:actionFunction name="jsAddCopy" action="{!commentStpdFeedElement}" reRender="pnlPopupComment"/>
-                      </p>
-                    </div>
-                  </div>
-                  <div class="popup__button-container u-text-center">
-                    <a href="" class="button button--cancel button--cancel--copy js-popup-close">キャンセル</a>
-                    <apex:commandLink value="コメント"
-                                      styleClass="button button--post"
-                                      onclick="callAddComment();"
-                                      reRender="DUMMY"/>
-                  </div>
-                </div>
-              </apex:outputPanel>
-            </apex:actionRegion>
   </div>
 
 

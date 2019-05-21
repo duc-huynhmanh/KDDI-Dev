@@ -116,6 +116,14 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Access_To_SA_CSA_Object__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Access To SA-CSA Object</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Access_To_SBari__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -160,6 +168,14 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Access To ToDo</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Dashboard_Access_Permission__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Dashboard Access Permission</label>
         <trackFeedHistory>false</trackFeedHistory>
         <type>Checkbox</type>
     </fields>
@@ -878,6 +894,7 @@ Should always be False in the database.</description>
         <columns>CORE.USERS.LAST_LOGIN</columns>
         <columns>CORE.USER_ROLE.NAME</columns>
         <columns>CORE.USERS.ACTIVE</columns>
+        <columns>ProfileName__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>CORE.PROFILE.NAME</field>

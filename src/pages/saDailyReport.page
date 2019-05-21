@@ -19,6 +19,7 @@
   <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/jquery-3.2.1.min.js')}"/> 
   <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/flatpickr.js')}"/> 
   <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/ja.js')}"/> 
+  <apex:includescript value="{!URLFOR($Resource.auStyling,'/js/autosize.min.js')}"/>
   
   <!-- scripts -->
   <apex:includescript value="{!URLFOR($Resource.auResPortalSA,'js_sp/script_check_ua.js')}"/> 
@@ -169,7 +170,10 @@
         }
     }
 
-
+    function setupAutogrow(){
+      //$j('.autogrow').attr("rows", "1");    
+      autosize(document.querySelectorAll('.autogrow'));   
+    }
 
   </script>
 
@@ -461,7 +465,7 @@ input[type="number"] {
                 <apex:outputPanel rendered="{!mpQuestions[varQuest.saInquiryDetail__c].AnswerType__c == 'TEXT'}">
                   <ul>
                     <li>
-                      <apex:inputTextarea value="{!varQuest.ReplyText__c}" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}"/>
+                      <apex:inputTextarea value="{!varQuest.ReplyText__c}" onfocus="setupAutogrow();" styleClass="autogrow" disabled="{!currentInquiryReply.Status__c == 'REPLY_SENT'}"/>
                     </li>
                   </ul>  
                 </apex:outputPanel>
@@ -1067,7 +1071,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment2}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment2}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 1}">
                         <div class="btn btn-post">
@@ -1128,7 +1132,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment3}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment3}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 2}">
                         <div class="btn btn-post">
@@ -1189,7 +1193,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment4}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment4}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 3}">
                         <div class="btn btn-post">
@@ -1250,7 +1254,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment5}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment5}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 4}">
                         <div class="btn btn-post">
@@ -1311,7 +1315,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment6}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment6}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 5}">
                         <div class="btn btn-post">
@@ -1372,7 +1376,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment7}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment7}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 6}">
                         <div class="btn btn-post">
@@ -1433,7 +1437,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment8}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment8}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 7}">
                         <div class="btn btn-post">
@@ -1494,7 +1498,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment9}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment9}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 8}">
                         <div class="btn btn-post">
@@ -1555,7 +1559,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment10}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment10}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 9}">
                         <div class="btn btn-post">
@@ -1616,7 +1620,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment11}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment11}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 10}">
                         <div class="btn btn-post">
@@ -1677,7 +1681,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment12}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment12}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 11}">
                         <div class="btn btn-post">
@@ -1737,7 +1741,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment13}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment13}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 12}">
                         <div class="btn btn-post">
@@ -1798,7 +1802,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment14}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment14}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 13}">
                         <div class="btn btn-post">
@@ -1859,7 +1863,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment15}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment15}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 14}">
                         <div class="btn btn-post">
@@ -1920,7 +1924,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment16}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment16}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 15}">
                         <div class="btn btn-post">
@@ -1981,7 +1985,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment17}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment17}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 16}">
                         <div class="btn btn-post">
@@ -2042,7 +2046,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment18}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment18}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 17}">
                         <div class="btn btn-post">
@@ -2103,7 +2107,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment19}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment19}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 18}">
                         <div class="btn btn-post">
@@ -2164,7 +2168,7 @@ input[type="number"] {
 
                     <div class="post-comment">
 
-                      <apex:inputTextarea style="height: 7em !important;" value="{!comment20}" rows="3"/>
+                      <apex:inputTextarea style="height: 7em !important;" value="{!comment20}" onfocus="setupAutogrow();" styleClass="autogrow" rows="3"/>
 
                       <apex:outputPanel rendered="{!nbCommentsEntered == 19}">
                         <div class="btn btn-post">

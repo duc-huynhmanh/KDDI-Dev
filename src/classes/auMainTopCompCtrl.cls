@@ -41,6 +41,7 @@ public class auMainTopCompCtrl {
 
     public User currentUser {get; set;}
     public String urlReportsSFA {get; set;}
+    public String headerColor {get; set;}
 
     public String urlUserPhoto;
     public String getUrlUserPhoto() {
@@ -53,7 +54,8 @@ public class auMainTopCompCtrl {
         iTypeOfScreen = 0;
 
         urlReportsSFA = auCommunityCustomSettings__c.getOrgDefaults().URLReportsSFA__c;
-
+		headerColor = auCommunityCustomSettings__c.getOrgDefaults().headerColor__c;
+		
         currentUser = [SELECT SmallPhotoUrl, Account.Name, Name, Department,
                               Account.RegionalOfficeId__r.RegionalOfficeName__c,
                               Account.BranchId__r.BranchName__c,

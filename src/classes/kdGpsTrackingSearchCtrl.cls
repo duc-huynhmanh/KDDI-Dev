@@ -71,6 +71,8 @@ public with sharing class kdGpsTrackingSearchCtrl {
       List<SelectOption> lsReturn = new List<SelectOption>();
       lsReturn.add(new SelectOption('', ''));
 
+	  system.debug('Profile : '+currentUser.Profile.Name+' IsUserEvolva : ' +isUserProfileEvolva());
+
       if(isUserProfileEvolva()){
           for (UserRole ur : getEvolvaChildRole(NULL, auConstantCmn.ROLE_CODE_EVOLVA_SHITEN, false, false)) {
             lsReturn.add(new SelectOption(ur.DeveloperName, ur.Name));

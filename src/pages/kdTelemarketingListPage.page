@@ -29,7 +29,7 @@
 
     .detailLabel {
       margin: 0.5rem;
-      padding: 0.5rem;
+      padding: 0.5rem 0.5rem 0.5rem 0rem;
       margin-right: 0;
       width: 8rem;
       background-color: #E0EFF6;
@@ -42,7 +42,7 @@
       margin: 0.5rem;
       padding: 0.5rem;
       margin-left: 0;
-      width: calc(100% - 9rem);
+      width: calc(100% - 9.1rem);
       width: -webkit-calc(100% - 9rem);
       width: -moz-calc(100% - 9rem);
       background-color: white;
@@ -516,16 +516,32 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
         obj.val('');        
       }
     }
-
+	
+	window.onresize = function resizeTable(){
+		var tblBody = document.getElementsByClassName("dataTables_scrollBody");
+		var y = $j('#accountInfo').height();
+		var mid = $j('.mdl-grid').height();
+		//mdl-grid margin is 25px
+		tblBody[0].style.maxHeight = (window.innerHeight - y - mid - 25) + 'px';
+	}
+	
     function hideSearchCriteriaPanel() {
         $j("#open_icon").show();
         $j("#close_icon").hide();
         $j("#accountInfo").slideUp(500);
+        var tblBody = document.getElementsByClassName("dataTables_scrollBody");
+        //mdl-grid margin is 25px
+        tblBody[0].style.maxHeight = (window.innerHeight - $j('.mdl-grid').height() - 25) + 'px';
     }
     function showSearchCriteriaPanel() {
         $j("#open_icon").hide();
         $j("#close_icon").show();
-        $j("#accountInfo").slideDown(500);
+        $("#accountInfo").slideDown(500, function(){
+	        var tblBody = document.getElementsByClassName("dataTables_scrollBody");
+	        //mdl-grid margin is 25px
+	        tblBody[0].style.maxHeight = (window.innerHeight - $j('#accountInfo').height() - $j('.mdl-grid').height() - 25) + 'px';
+    	});
+
     }
 
   </script>
@@ -1004,12 +1020,12 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                       <div style="display: inline-block;width: 100%;">
 
                         <fieldset class="filter-category filter-text">
-                          <label>代理店</label>
+                          <label>代理店CD&#38;代理店名</label>
                           <apex:inputText id="filterParentAgency" styleClass="search-status__select" value="{!filterParentAgency}" style="margin-left: 0.5rem; width:10rem;" />
                         </fieldset>
 
                         <fieldset class="filter-category filter-text">
-                          <label>統括店</label>
+                          <label>統括店CD</label>
                           <apex:inputText id="filterUnifiedAgency" styleClass="search-status__select" value="{!filterUnifiedAgency}" style="margin-left: 0.5rem; width:10rem;" />
                         </fieldset>
 
@@ -1019,7 +1035,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                         </fieldset>
 
                         <fieldset class="filter-category filter-text">
-                          <label>拠点</label>
+                          <label>拠点CD&#38;拠点名</label>
                           <apex:inputText id="filterBusinessLocation" styleClass="search-status__select" value="{!filterBusinessLocation}" style="margin-left: 0.5rem; width:10rem;" />
                         </fieldset>
 
@@ -1325,11 +1341,11 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
             </div>
         <div class="theme-list">
         <apex:outputPanel id="pnlGrid">
-            <table class="mdl-data-table mdl-js-data-table table table--theme js-table-data is-long">
+            <table class="mdl-data-table mdl-js-data-table table table--theme js-table-data is-long" style="width:100%">
               <thead>
                 <tr style="height: 5rem;">
                   <th class="col1 mdl-data-table__cell--non-numeric sort">
-                    <span>
+                    <span class="thspanwithoutarrow">
 
                       <apex:outputPanel rendered="{!orderBy != 'RegionalOfficeName__c ASC NULLS LAST, BusinessLocationBranchGroup__c ASC'}">
                         <a href="javascript:void(0);" onclick="callChangeOrder('RegionalOfficeName__c ASC NULLS LAST, BusinessLocationBranchGroup__c ASC');">
@@ -1494,6 +1510,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                   </th>
 
                   <th class="col8 mdl-data-table__cell--non-numeric sort">
+                   <span class="thspanwithoutarrow">
                     <apex:outputPanel rendered="{!orderBy != 'Status__c'}">
                       <a href="javascript:void(0);" onclick="callChangeOrder('Status__c');">
                         <span class="thspanwithoutarrow">対応状況{!IF(orderBy == 'Status__c DESC', ' ▼', '')}</span>
@@ -1504,6 +1521,7 @@ body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .m
                         <span class="thspanwithoutarrow">対応状況 ▲</span>
                       </a>
                     </apex:outputPanel>                    
+                   </span>                    
                   </th>
                 </tr>
               </thead>
