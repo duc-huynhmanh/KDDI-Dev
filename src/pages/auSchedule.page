@@ -89,6 +89,7 @@
 			//if user confirms OK, set CCP+に反映 to true. Otherwise, false.
 			if(confirm('CCP＋にコピー（上書き）される活動が含まれていますがよろしいですか？')){
 				//$j(".currentEvent").parent().find(".reflect-on-ccp-checkbox").attr("checked", true);
+        $j(".flagCopyToCCP").val(true);
 			}else{
 				//$j(".currentEvent").parent().find(".reflect-on-ccp-checkbox").removeAttr("checked");
 			}
@@ -1162,7 +1163,7 @@
                 <apex:outputPanel id="pnlDailyReportItems">
 
                   <ul class="dailyreport-items">
-
+                    <apex:inputHidden html-class="flagCopyToCCP" value="{!isCopyToCCP}" />
                     <apex:repeat value="{!clsDayCurrentDay}" var="varEvent" >
 
                       <li class="dailyreport-item" style="{!IF(varEvent.isDeleted, 'display: none;', '')}">
@@ -1171,6 +1172,7 @@
                           <apex:inputHidden html-class="evtCategory" value="{!varEvent.categoryClsNm}" />
                           <apex:inputHidden html-class="evtIcon" value="{!varEvent.iconClsNm}" />
                           <apex:inputHidden html-class="evtIsDeleted" value="{!varEvent.isDeleted}" />
+                          
 <!--
                           <apex:inputHidden html-class="evtIsSelected" value="{!varEvent.isSelected}" />
 -->

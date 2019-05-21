@@ -33,6 +33,7 @@ public with sharing class auScheduleCtrl {
 
     public List<clsEventCurrentDay> clsDayCurrentDay {get;set;}
     public boolean isCurrentDaySent {get;set;}
+    public boolean isCopyToCCP {get;set;}
     public Map<Id, Id> mpContentVersion{get;set;}
 
     public List<List<clsDay>> lsDaysOfMonth {get;set;}
@@ -1095,7 +1096,12 @@ system.debug('saveDayEvents - Id:' + clsEvt.evt.Id);
                 } else {
                     // Event created or updated
                     Event evt = clsEvt.evt;
-
+                    system.debug('saveDayEvents->evt: ' + evt);
+                    system.debug('saveDayEvents->isCopyToCCP: ' + isCopyToCCP);
+                    if(isCopyToCCP){
+                      evt.ConfirmCopyToCCP__c = true;
+                    }
+                    
                     evt.Subject = clsEvt.evtTitle;
 
                     evt.Description = clsEvt.description;
@@ -1218,7 +1224,7 @@ system.debug('messageError:' + messageError);
                            '		auActivityRelated__r.EventauComprehensiveIndex__c, auActivityRelated__r.EventNPS__c, auActivityRelated__r.EventCorpPhilosophyVision__c, auActivityRelated__r.EventBusinessPlan__c, ' + 
                            '	 	auActivityRelated__r.EventStoreStrategy__c, auActivityRelated__r.EventPolicyPlanning__c, auActivityRelated__r.EventProgressManagementReporting__c, auActivityRelated__r.EventPersonnelSystem__c, ' + 
                            '		auActivityRelated__r.EventDecisionRule__c, auActivityRelated__r.EventEvaluation__c, auActivityRelated__r.EventRecruitment__c, auActivityRelated__r.EventCultivationEstablishment__c, ' + 
-                           '		auActivityRelated__r.EventCommunicationPlace__c ';
+                           '		auActivityRelated__r.EventCommunicationPlace__c, ConfirmCopyToCCP__c';
         String fromStr   = ' FROM Event ';
         String whereStr  = ' WHERE ownerId = \'' + UserInfo.getUserId() + '\'' +
                            ' AND IsRecurrence = False' ;
